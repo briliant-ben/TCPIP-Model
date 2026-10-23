@@ -1,0 +1,28 @@
+{
+  "scenario_version": "0.1",
+  "id": "user-timeout",
+  "description": "user timeout",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Control-only validated IPv4/TCP packet shapes; no payload/options."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 30000,
+      "tick": true
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {},
+    "timers": {}
+  }
+}

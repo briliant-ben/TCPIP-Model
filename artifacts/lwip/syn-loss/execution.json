@@ -1,0 +1,35 @@
+{
+  "scenario": "syn-loss",
+  "binding": {
+    "build_sha256": "93aaae14925f7c0f6bed4e769a18be5e0e57208f3ba4deba067acc0f23ef339b",
+    "scenario": "syn-loss",
+    "script_sha256": "b67d9e041e68e499c49075852dfaa83094b3dd80a201af15b4b5f43e26e41cde",
+    "expected_sha256": "16dd9c600e5f5f5711b6b425cb791a454722dd4711eb0a3d2e78a16caeda435c",
+    "model_sha256": "119322775578a6ed366379b3434c1656e6812cb21d980016340ef22ecfaffd8b"
+  },
+  "execution": "pass",
+  "returncode": 0,
+  "command": [
+    "/workspace/tcp-model/artifacts/lwip/bin/lwip-harness",
+    "syn-loss",
+    "/workspace/tcp-model/artifacts/lwip/syn-loss/capture.pcap"
+  ],
+  "summary": {
+    "implementation": "lwIP-2.2.1",
+    "clock": "virtual_ms",
+    "mode": "syn-loss",
+    "connected": 1,
+    "syn_count": 2,
+    "first_retransmit_ms": 2750
+  },
+  "comparison": "mismatch",
+  "binary_sha256": "0b8f831d28b9eefd78fcfe1329fe2acc38a0aa83827df0b83606d71e828417c7",
+  "files": {
+    "capture.pcap": "923ff343bff60cf2c2a7b2b7b83b07cb1d716de24e632c73cfa08e4c0b2564f2",
+    "packets.json": "3aa5c98526baf64b713803402db4b7b4358ce7928272b25eca92deb08363180f",
+    "metadata.json": "03e4b8504f7ea7a1249adc0031679a2a49797e38ac886cbcb70c1607d29ad6ea",
+    "difference.json": "b60ae5cd8e862030282b5e043638d228a1ad5eddba5cb114ab798ba0b2677a1e",
+    "execution.log": "53575ad171ac48a1eba4ae45672f63a1247dbaa7180b2d474e37f3836b4e4233"
+  },
+  "interpretation": "A mismatch is a profile/observation difference requiring analysis, not an automatic RFC-conformance verdict."
+}

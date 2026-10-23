@@ -1,0 +1,128 @@
+[
+  {
+    "event_id": "e0001",
+    "time_ms": 0,
+    "event": {
+      "name": "app.connect",
+      "fields": {}
+    },
+    "transition": "C-ACTIVE-OPEN",
+    "requirements": [
+      "CONN-OPEN",
+      "RTO-PROFILE"
+    ],
+    "before": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "rtx": 1000,
+        "user": 30000
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "S",
+          "seq": 1000,
+          "ack": 0,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0002",
+    "time_ms": 10,
+    "event": {
+      "name": "app.close",
+      "fields": {}
+    },
+    "transition": "C-CLOSE-SYN-SENT",
+    "requirements": [
+      "CONN-CLOSE"
+    ],
+    "before": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "rtx": 1000,
+        "user": 30000
+      }
+    },
+    "after": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "closed"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "depth": 6,
+  "initials": [
+    {},
+    {
+      "iss": 4294967295
+    }
+  ],
+  "cases": [
+    {
+      "states": [
+        "CLOSED"
+      ],
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "states": [
+        "SYN-SENT"
+      ],
+      "event": "net.synack",
+      "fields": {
+        "seq": {
+          "seq": 9000
+        },
+        "ack": {
+          "var": "snd_nxt"
+        }
+      }
+    },
+    {
+      "states": [
+        "SYN-SENT"
+      ],
+      "event": "net.synack",
+      "fields": {
+        "seq": {
+          "seq": 4294967295
+        },
+        "ack": {
+          "var": "snd_nxt"
+        }
+      }
+    },
+    {
+      "states": [
+        "SYN-SENT"
+      ],
+      "event": "net.synack",
+      "fields": {
+        "seq": {
+          "seq": 9000
+        },
+        "ack": {
+          "var": "iss"
+        }
+      },
+      "purpose": "coverage probe: invalid ACK handling intentionally unmodeled"
+    }
+  ]
+}

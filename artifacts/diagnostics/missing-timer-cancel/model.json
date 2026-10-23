@@ -1,0 +1,480 @@
+{
+  "ir_version": "0.1",
+  "protocol": "tcp-active-open",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "scope": {
+    "terminal_states": [
+      "ESTABLISHED"
+    ],
+    "excluded": [
+      "passive open",
+      "simultaneous open",
+      "FIN/RST",
+      "payload",
+      "TCP options",
+      "RTT estimation",
+      "post-handshake RTO including RFC6298 5.7",
+      "retry exhaustion",
+      "congestion control",
+      "IP behavior"
+    ]
+  },
+  "states": [
+    "CLOSED",
+    "SYN-SENT",
+    "ESTABLISHED"
+  ],
+  "initial_state": "CLOSED",
+  "variables": {
+    "iss": {
+      "type": "seq32",
+      "initial": 1000
+    },
+    "irs": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "snd_una": {
+      "type": "seq32",
+      "initial": 1000
+    },
+    "snd_nxt": {
+      "type": "seq32",
+      "initial": 1000
+    },
+    "rcv_nxt": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "rto_ms": {
+      "type": "int",
+      "initial": 1000
+    },
+    "retries": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "events": {
+    "app.connect": {
+      "origin": "application",
+      "fields": {}
+    },
+    "net.synack": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32",
+        "ack": "seq32"
+      }
+    },
+    "timer.syn_rto": {
+      "origin": "timer",
+      "fields": {}
+    }
+  },
+  "messages": {
+    "tcp": {
+      "fields": {
+        "flags": "string",
+        "seq": "seq32",
+        "ack": "seq32",
+        "window": "int"
+      }
+    }
+  },
+  "timers": {
+    "syn_rto": {
+      "event": "timer.syn_rto"
+    }
+  },
+  "requirements": {
+    "TCP-ACTIVE-OPEN": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.1",
+      "interpretation": "Active OPEN sends SYN with ISS and sets SND.UNA=ISS, SND.NXT=ISS+1, state SYN-SENT.",
+      "strength": "algorithm",
+      "kind": "protocol_interpretation"
+    },
+    "TCP-ACCEPT-SYNACK": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.3",
+      "interpretation": "Within the no-SYN-data slice, an acceptable SYN+ACK acknowledges ISS+1; initialize receive sequence, advance SND.UNA, enter ESTABLISHED and send ACK.",
+      "strength": "algorithm",
+      "kind": "protocol_interpretation"
+    },
+    "TCP-RETRANSMIT": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.8",
+      "interpretation": "On retransmission timeout, resend the segment at the front of the retransmission queue.",
+      "strength": "algorithm",
+      "kind": "protocol_interpretation"
+    },
+    "RTO-INITIAL": {
+      "source": "https://www.rfc-editor.org/rfc/rfc6298.html#section-2",
+      "interpretation": "Select the recommended initial RTO of 1 second. Other permitted initial values are outside this profile.",
+      "strength": "SHOULD",
+      "kind": "protocol_interpretation"
+    },
+    "RTO-CANCEL": {
+      "source": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5",
+      "interpretation": "Recommended algorithm, step 5.2: turn off retransmission timer when all outstanding data is acknowledged.",
+      "strength": "RECOMMENDED",
+      "kind": "protocol_interpretation"
+    },
+    "RTO-BACKOFF": {
+      "source": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5",
+      "interpretation": "Steps 5.4-5.6: retransmit earliest unacknowledged segment, double RTO, restart timer using doubled RTO. Doubling in 5.5 is MUST.",
+      "strength": "mixed",
+      "kind": "protocol_interpretation"
+    },
+    "PROFILE-SCOPE": {
+      "source": "docs/semantics.md",
+      "interpretation": "Single active opener, no payload/options/ECN/RST/FIN; modeled SYN+ACK events represent validated packet shape and matching connection. Stop at ESTABLISHED.",
+      "strength": "assumption",
+      "kind": "environment_assumption"
+    }
+  },
+  "transitions": [
+    {
+      "id": "T-ACTIVE-OPEN",
+      "from": "CLOSED",
+      "to": "SYN-SENT",
+      "event": "app.connect",
+      "guard": true,
+      "requirements": [
+        "TCP-ACTIVE-OPEN",
+        "RTO-INITIAL",
+        "PROFILE-SCOPE"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "var": "iss"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "iss"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": {
+                "var": "iss"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": 65535
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "syn_rto",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "T-SYN-RETRY",
+      "from": "SYN-SENT",
+      "to": "SYN-SENT",
+      "event": "timer.syn_rto",
+      "guard": true,
+      "requirements": [
+        "TCP-RETRANSMIT",
+        "RTO-BACKOFF"
+      ],
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": {
+                "var": "snd_una"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": 65535
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                2
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "syn_rto",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "T-ACCEPT-SYNACK",
+      "from": "SYN-SENT",
+      "to": "ESTABLISHED",
+      "event": "net.synack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "ack"
+          },
+          {
+            "var": "snd_nxt"
+          }
+        ]
+      },
+      "requirements": [
+        "TCP-ACCEPT-SYNACK",
+        "RTO-CANCEL",
+        "PROFILE-SCOPE"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "irs",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": 65535
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "INV-SYN-ONE-SEQUENCE",
+      "requirements": [
+        "TCP-ACTIVE-OPEN",
+        "TCP-RETRANSMIT"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "SYN-SENT"
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "snd_nxt"
+                  },
+                  {
+                    "op": "seq_add",
+                    "args": [
+                      {
+                        "var": "iss"
+                      },
+                      1
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "snd_una"
+                  },
+                  {
+                    "var": "iss"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "INV-SYN-TIMER",
+      "requirements": [
+        "RTO-BACKOFF"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "SYN-SENT"
+          },
+          {
+            "timer_active": "syn_rto"
+          }
+        ]
+      }
+    },
+    {
+      "id": "INV-ESTABLISHED-ACKED",
+      "requirements": [
+        "TCP-ACCEPT-SYNACK"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "ESTABLISHED"
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "snd_una"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "rcv_nxt"
+                  },
+                  {
+                    "op": "seq_add",
+                    "args": [
+                      {
+                        "var": "irs"
+                      },
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "INV-ESTABLISHED-NO-SYN-TIMER",
+      "requirements": [
+        "RTO-CANCEL"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "ESTABLISHED"
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "timer_active": "syn_rto"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "INV-RTO-LOWER-BOUND",
+      "requirements": [
+        "RTO-INITIAL",
+        "RTO-BACKOFF"
+      ],
+      "assert": {
+        "op": "ge",
+        "args": [
+          {
+            "var": "rto_ms"
+          },
+          1000
+        ]
+      }
+    }
+  ]
+}

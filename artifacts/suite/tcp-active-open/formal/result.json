@@ -1,0 +1,245 @@
+{
+  "backend": "z3-bmc",
+  "solver_version": "4.15.4",
+  "depth": 6,
+  "model_semantic_sha256": "3be892210acfc335bd0dd42fdeae7b6be9231f6ab0f72e72186f4dc9abd85b10",
+  "symbolic_initials": [
+    "iss"
+  ],
+  "sequence_width": 32,
+  "event_fields": "all_typed_values",
+  "time": "unbounded_integer_ms",
+  "scope": "defined_transitions_only",
+  "liveness": "not_checked",
+  "unbounded_proof": false,
+  "invariants": [
+    "INV-SYN-ONE-SEQUENCE",
+    "INV-SYN-TIMER",
+    "INV-ESTABLISHED-ACKED",
+    "INV-ESTABLISHED-NO-SYN-TIMER",
+    "INV-RTO-LOWER-BOUND"
+  ],
+  "safety_query": "unsat",
+  "runtime_properties": [
+    "positive_timer_duration"
+  ],
+  "status": "bounded_pass",
+  "overlap_query": "unsat",
+  "sample_witness": {
+    "initial": {
+      "iss": 2147483656,
+      "irs": 0,
+      "snd_una": 1000,
+      "snd_nxt": 1000,
+      "rcv_nxt": 0,
+      "rto_ms": 1000,
+      "retries": 0
+    },
+    "steps": [
+      {
+        "at_ms": 1,
+        "event": "app.connect",
+        "origin": "application",
+        "transition": "T-ACTIVE-OPEN",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 2147483656,
+            "irs": 0,
+            "snd_una": 2147483656,
+            "snd_nxt": 2147483657,
+            "rcv_nxt": 0,
+            "rto_ms": 1000,
+            "retries": 0
+          },
+          "timers": {
+            "syn_rto": 1001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 2147483656,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 1001,
+        "event": "timer.syn_rto",
+        "origin": "timer",
+        "transition": "T-SYN-RETRY",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 2147483656,
+            "irs": 0,
+            "snd_una": 2147483656,
+            "snd_nxt": 2147483657,
+            "rcv_nxt": 0,
+            "rto_ms": 2000,
+            "retries": 1
+          },
+          "timers": {
+            "syn_rto": 3001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 2147483656,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 3001,
+        "event": "timer.syn_rto",
+        "origin": "timer",
+        "transition": "T-SYN-RETRY",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 2147483656,
+            "irs": 0,
+            "snd_una": 2147483656,
+            "snd_nxt": 2147483657,
+            "rcv_nxt": 0,
+            "rto_ms": 4000,
+            "retries": 2
+          },
+          "timers": {
+            "syn_rto": 7001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 2147483656,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 7001,
+        "event": "timer.syn_rto",
+        "origin": "timer",
+        "transition": "T-SYN-RETRY",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 2147483656,
+            "irs": 0,
+            "snd_una": 2147483656,
+            "snd_nxt": 2147483657,
+            "rcv_nxt": 0,
+            "rto_ms": 8000,
+            "retries": 3
+          },
+          "timers": {
+            "syn_rto": 15001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 2147483656,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 15001,
+        "event": "timer.syn_rto",
+        "origin": "timer",
+        "transition": "T-SYN-RETRY",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 2147483656,
+            "irs": 0,
+            "snd_una": 2147483656,
+            "snd_nxt": 2147483657,
+            "rcv_nxt": 0,
+            "rto_ms": 16000,
+            "retries": 4
+          },
+          "timers": {
+            "syn_rto": 31001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 2147483656,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 31001,
+        "event": "timer.syn_rto",
+        "origin": "timer",
+        "transition": "T-SYN-RETRY",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 2147483656,
+            "irs": 0,
+            "snd_una": 2147483656,
+            "snd_nxt": 2147483657,
+            "rcv_nxt": 0,
+            "rto_ms": 32000,
+            "retries": 5
+          },
+          "timers": {
+            "syn_rto": 63001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 2147483656,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "replay": {
+    "status": "match",
+    "compared_steps": 6
+  },
+  "smt2_sha256": "4ea4b12b3157490c42ad1031ea761d089f90cb4138dfb248c38ce5a4beba6140",
+  "overlap_smt2_sha256": "94f843c22e2eab119f61310cbdda30823ddb70dbefcc0620b52570abc89492d4"
+}

@@ -1,0 +1,36 @@
+{
+  "scenario_version": "0.1",
+  "id": "abort-from-syn-received-passive",
+  "description": "abort from syn received passive",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Control-only validated IPv4/TCP packet shapes; no payload/options."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.listen",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.syn",
+      "fields": {
+        "seq": 9000
+      }
+    },
+    {
+      "at_ms": 50,
+      "event": "app.abort",
+      "fields": {}
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {},
+    "timers": {}
+  }
+}

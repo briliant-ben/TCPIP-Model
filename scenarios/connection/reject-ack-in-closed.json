@@ -1,0 +1,27 @@
+{
+  "scenario_version": "0.1",
+  "id": "reject-ack-in-closed",
+  "description": "reject ack in closed",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Control-only validated IPv4/TCP packet shapes; no payload/options."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 50,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9000,
+        "ack": 77
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {},
+    "timers": {}
+  }
+}

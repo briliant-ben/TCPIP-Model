@@ -1,0 +1,114 @@
+{
+  "backend": "z3-bmc",
+  "solver_version": "4.15.4",
+  "depth": 6,
+  "model_semantic_sha256": "52f61a6f61d5886ac8b1e6ba16b83df43ed533049eef84725be1bfd03f903155",
+  "symbolic_initials": [
+    "iss"
+  ],
+  "sequence_width": 32,
+  "event_fields": "all_typed_values",
+  "time": "unbounded_integer_ms",
+  "scope": "defined_transitions_only",
+  "liveness": "not_checked",
+  "unbounded_proof": false,
+  "invariants": [
+    "C-INV-TIMER-CLOSED-rtx",
+    "C-INV-TIMER-CLOSED-user",
+    "C-INV-TIMER-CLOSED-time_wait",
+    "C-INV-TIMER-LISTEN-rtx",
+    "C-INV-TIMER-LISTEN-user",
+    "C-INV-TIMER-LISTEN-time_wait",
+    "C-INV-TIMER-SYN-SENT-rtx",
+    "C-INV-TIMER-SYN-SENT-user",
+    "C-INV-TIMER-SYN-SENT-time_wait",
+    "C-INV-TIMER-SYN-RECEIVED-rtx",
+    "C-INV-TIMER-SYN-RECEIVED-user",
+    "C-INV-TIMER-SYN-RECEIVED-time_wait",
+    "C-INV-TIMER-ESTABLISHED-rtx",
+    "C-INV-TIMER-ESTABLISHED-user",
+    "C-INV-TIMER-ESTABLISHED-time_wait",
+    "C-INV-TIMER-FIN-WAIT-1-rtx",
+    "C-INV-TIMER-FIN-WAIT-1-user",
+    "C-INV-TIMER-FIN-WAIT-1-time_wait",
+    "C-INV-TIMER-FIN-WAIT-2-rtx",
+    "C-INV-TIMER-FIN-WAIT-2-user",
+    "C-INV-TIMER-FIN-WAIT-2-time_wait",
+    "C-INV-TIMER-CLOSE-WAIT-rtx",
+    "C-INV-TIMER-CLOSE-WAIT-user",
+    "C-INV-TIMER-CLOSE-WAIT-time_wait",
+    "C-INV-TIMER-CLOSING-rtx",
+    "C-INV-TIMER-CLOSING-user",
+    "C-INV-TIMER-CLOSING-time_wait",
+    "C-INV-TIMER-LAST-ACK-rtx",
+    "C-INV-TIMER-LAST-ACK-user",
+    "C-INV-TIMER-LAST-ACK-time_wait",
+    "C-INV-TIMER-TIME-WAIT-rtx",
+    "C-INV-TIMER-TIME-WAIT-user",
+    "C-INV-TIMER-TIME-WAIT-time_wait",
+    "C-INV-OUTSTANDING-CONTROL",
+    "C-INV-NOTHING-OUTSTANDING",
+    "C-INV-BOUND-rto_ms",
+    "C-INV-BOUND-retries",
+    "C-INV-BOUND-msl_ms",
+    "C-INV-BOUND-user_timeout_ms"
+  ],
+  "safety_query": "unsat",
+  "runtime_properties": [
+    "positive_timer_duration"
+  ],
+  "status": "bounded_pass",
+  "overlap_query": "unsat",
+  "sample_witness": {
+    "initial": {
+      "iss": 3964377060,
+      "irs": 0,
+      "snd_una": 1000,
+      "snd_nxt": 1000,
+      "rcv_nxt": 0,
+      "tx_seq": 1000,
+      "tx_ack": 0,
+      "tx_flags": "S",
+      "rto_ms": 1000,
+      "retries": 0,
+      "active_open": true,
+      "user_timeout_ms": 30000,
+      "msl_ms": 60000
+    },
+    "steps": [
+      {
+        "at_ms": 1,
+        "event": "app.listen",
+        "origin": "application",
+        "transition": "C-PASSIVE-OPEN",
+        "fields": {},
+        "after": {
+          "state": "LISTEN",
+          "variables": {
+            "iss": 3964377060,
+            "irs": 0,
+            "snd_una": 1000,
+            "snd_nxt": 1000,
+            "rcv_nxt": 0,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000
+          },
+          "timers": {}
+        },
+        "emitted": []
+      }
+    ]
+  },
+  "replay": {
+    "status": "match",
+    "compared_steps": 1
+  },
+  "smt2_sha256": "3fc0a58b30387affbf11f549f2167467808f168cafcddd2dad703e79d54c86c1",
+  "overlap_smt2_sha256": "010b361e2583be212417e822d8006d2d785565d0e6c339ed3d5637938c97488f"
+}

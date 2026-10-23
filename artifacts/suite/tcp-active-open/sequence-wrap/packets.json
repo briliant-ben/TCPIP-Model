@@ -1,0 +1,69 @@
+[
+  {
+    "time_ms": 0,
+    "event_id": "e0001",
+    "transition": "T-ACTIVE-OPEN",
+    "requirements": [
+      "TCP-ACTIVE-OPEN",
+      "RTO-INITIAL",
+      "PROFILE-SCOPE"
+    ],
+    "packet_id": "e0001:out:0",
+    "direction": "out",
+    "flags": "S",
+    "seq": 4294967295,
+    "ack": 0,
+    "window": 65535,
+    "dropped_after_egress": true
+  },
+  {
+    "time_ms": 1000,
+    "event_id": "e0002",
+    "transition": "T-SYN-RETRY",
+    "requirements": [
+      "TCP-RETRANSMIT",
+      "RTO-BACKOFF"
+    ],
+    "packet_id": "e0002:out:0",
+    "direction": "out",
+    "flags": "S",
+    "seq": 4294967295,
+    "ack": 0,
+    "window": 65535,
+    "dropped_after_egress": false
+  },
+  {
+    "time_ms": 1010,
+    "event_id": "e0003",
+    "transition": "T-ACCEPT-SYNACK",
+    "requirements": [
+      "TCP-ACCEPT-SYNACK",
+      "RTO-CANCEL",
+      "PROFILE-SCOPE"
+    ],
+    "packet_id": "e0003:in",
+    "direction": "in",
+    "flags": "SA",
+    "seq": 4294967295,
+    "ack": 0,
+    "window": 65535,
+    "dropped_after_egress": false
+  },
+  {
+    "time_ms": 1010,
+    "event_id": "e0003",
+    "transition": "T-ACCEPT-SYNACK",
+    "requirements": [
+      "TCP-ACCEPT-SYNACK",
+      "RTO-CANCEL",
+      "PROFILE-SCOPE"
+    ],
+    "packet_id": "e0003:out:0",
+    "direction": "out",
+    "flags": "A",
+    "seq": 0,
+    "ack": 0,
+    "window": 65535,
+    "dropped_after_egress": false
+  }
+]

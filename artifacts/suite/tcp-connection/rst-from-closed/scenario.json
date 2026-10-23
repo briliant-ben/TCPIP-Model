@@ -1,0 +1,26 @@
+{
+  "scenario_version": "0.1",
+  "id": "rst-from-closed",
+  "description": "rst from closed",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Control-only validated IPv4/TCP packet shapes; no payload/options."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 50,
+      "event": "net.rst",
+      "fields": {
+        "seq": 9001
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {},
+    "timers": {}
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "scenario_version": "0.1",
+  "id": "listen-reset",
+  "description": "listen reset",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Control-only validated IPv4/TCP packet shapes; no payload/options."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.listen",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.rst",
+      "fields": {
+        "seq": 50
+      }
+    }
+  ],
+  "expect": {
+    "state": "LISTEN",
+    "variables": {},
+    "timers": {}
+  }
+}

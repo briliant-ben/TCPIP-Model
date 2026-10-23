@@ -1,0 +1,183 @@
+{
+  "backend": "z3-bmc",
+  "solver_version": "4.15.4",
+  "depth": 6,
+  "model_semantic_sha256": "32dda1496b957dc3a551a0cf4826eb82d55df31192198e4a1002296d0a429ff6",
+  "symbolic_initials": [
+    "iss"
+  ],
+  "sequence_width": 32,
+  "event_fields": "all_typed_values",
+  "time": "unbounded_integer_ms",
+  "scope": "defined_transitions_only",
+  "liveness": "not_checked",
+  "unbounded_proof": false,
+  "invariants": [
+    "INV-SYN-ONE-SEQUENCE",
+    "INV-SYN-TIMER",
+    "INV-ESTABLISHED-ACKED",
+    "INV-ESTABLISHED-NO-SYN-TIMER",
+    "INV-RTO-LOWER-BOUND"
+  ],
+  "safety_query": "sat",
+  "runtime_properties": [
+    "positive_timer_duration"
+  ],
+  "counterexample": {
+    "initial": {
+      "iss": 805306365,
+      "irs": 0,
+      "snd_una": 1000,
+      "snd_nxt": 1000,
+      "rcv_nxt": 0,
+      "rto_ms": 1000,
+      "retries": 0
+    },
+    "steps": [
+      {
+        "at_ms": 1,
+        "event": "app.connect",
+        "origin": "application",
+        "transition": "T-ACTIVE-OPEN",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 805306365,
+            "irs": 0,
+            "snd_una": 805306365,
+            "snd_nxt": 805306366,
+            "rcv_nxt": 0,
+            "rto_ms": 1000,
+            "retries": 0
+          },
+          "timers": {
+            "syn_rto": 1001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 805306365,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 1001,
+        "event": "timer.syn_rto",
+        "origin": "timer",
+        "transition": "T-SYN-RETRY",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 805306365,
+            "irs": 0,
+            "snd_una": 805306365,
+            "snd_nxt": 805306366,
+            "rcv_nxt": 0,
+            "rto_ms": 2000,
+            "retries": 1
+          },
+          "timers": {
+            "syn_rto": 3001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 805306365,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 3001,
+        "event": "timer.syn_rto",
+        "origin": "timer",
+        "transition": "T-SYN-RETRY",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 805306365,
+            "irs": 0,
+            "snd_una": 805306365,
+            "snd_nxt": 805306366,
+            "rcv_nxt": 0,
+            "rto_ms": 4000,
+            "retries": 2
+          },
+          "timers": {
+            "syn_rto": 7001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 805306365,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 7000,
+        "event": "net.synack",
+        "origin": "network",
+        "transition": "T-ACCEPT-SYNACK",
+        "fields": {
+          "seq": 4294909949,
+          "ack": 805306366
+        },
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 805306365,
+            "irs": 4294909949,
+            "snd_una": 805306366,
+            "snd_nxt": 805306366,
+            "rcv_nxt": 4294909950,
+            "rto_ms": 4000,
+            "retries": 2
+          },
+          "timers": {
+            "syn_rto": 7001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": 805306366,
+              "ack": 4294909950,
+              "window": 65535
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "replay": {
+    "status": "runtime_rejected",
+    "step": 3,
+    "error": "Invariant failed: INV-ESTABLISHED-NO-SYN-TIMER"
+  },
+  "status": "counterexample",
+  "overlap_query": "unsat",
+  "smt2_sha256": "51404ee8b7c02c872185b7de4ee0191f6d27d3ab3d006a76eb4babbb6a00c775",
+  "overlap_smt2_sha256": "ebd0a91b1bf0eb0b8a30bc030f9b6b9179164ddb641b6363c2b5cc96145ee8a7"
+}

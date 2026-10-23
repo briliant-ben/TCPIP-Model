@@ -1,0 +1,41 @@
+{
+  "scenario_version": "0.1",
+  "id": "two-syn-losses",
+  "description": "Active open; omit peer responses for lost SYNs, then deliver a valid SYN+ACK.",
+  "initial": {
+    "iss": 1000
+  },
+  "environment": {
+    "drop_outgoing": [
+      "e0001:out:0",
+      "e0002:out:0"
+    ],
+    "assumptions": [
+      "No SYN payload, TCP options, ECN, RST, or FIN.",
+      "Peer SYN+ACK has matching connection identifiers and valid checksum."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 3010,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "retries": 2
+    },
+    "timers": {}
+  },
+  "settle_ms": 8010
+}

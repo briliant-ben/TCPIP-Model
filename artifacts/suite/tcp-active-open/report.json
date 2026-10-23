@@ -1,0 +1,127 @@
+{
+  "profile": "tcp-active-open",
+  "protocol": "tcp-active-open",
+  "status": "reference_pass",
+  "model_sha256": "119322775578a6ed366379b3434c1656e6812cb21d980016340ef22ecfaffd8b",
+  "sources": [
+    {
+      "rfc": 9293,
+      "url": "https://www.rfc-editor.org/rfc/rfc9293.txt",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "retrieved": "2026-10-18"
+    },
+    {
+      "rfc": 6298,
+      "url": "https://www.rfc-editor.org/rfc/rfc6298.txt",
+      "sha256": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+      "retrieved": "2026-10-18"
+    }
+  ],
+  "input_hashes": {
+    "model/tcp.json": "119322775578a6ed366379b3434c1656e6812cb21d980016340ef22ecfaffd8b",
+    "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+    "protocol_lab/__main__.py": "ef510a158165b3f3354da270ccbf37cdc769f98e30d7447c81b889b1fcba175a",
+    "protocol_lab/capture.py": "5868ce7a243d5f47f27133d47bfb9381fff5c88add8a303d045dcfa16426e718",
+    "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+    "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+    "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+    "protocol_lab/ir.py": "1f644ad909150e91cce294d6ff3ab01f6ed8865907a7f57aa0a69027250d3368",
+    "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+    "protocol_lab/packets.py": "e7cde0dde052698e3f2ca93352f2a6e3dff1cac60f6c4a1460ba0e6fd17cd8f2",
+    "protocol_lab/profiles.py": "8b199c10b2a8edaf7e0a2df9557a6dd6e3a383fa4178a093e1864db2387344e1",
+    "protocol_lab/symbolic.py": "0108170273e81f385fe800865b51d07c32e4b00ec82142a3aed8318cc66beefa",
+    "scenarios/handshake.json": "638341941b59c740ec8ec2927e9e6cf252bdaebf538218fb38bac5d6a848f3d2",
+    "scenarios/sequence-wrap.json": "fd66c07cb206670ecb6f4cd8378d6a8c06dd901cbb5b78595d7695b42eee8177",
+    "scenarios/syn-loss.json": "0e6602d76c241dcf23dfd55e9465c9dfe2c0e5e7f47ab9cf5deeda368772f6ff",
+    "scenarios/two-syn-losses.json": "b74d2d486c4adb506aec8c09b1424380eb71e64b36119cb2b780f8f34e2d2bb5",
+    "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
+    "profiles.json": "e35e7199d284bba8e53f8f630aaa1dbd0f2e40bb6a3266fe47b7ae4497ce8fe9",
+    "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
+    "docs/semantics.md": "eb5141cde3b7df4f562d0b16cdd812e0027676d0ff733bedc9899267a8bd3a20"
+  },
+  "scenarios": [
+    {
+      "id": "handshake",
+      "status": "reference_pass",
+      "final_state": "ESTABLISHED",
+      "events": 2,
+      "packets": 3,
+      "packetdrill": "generated_not_executed"
+    },
+    {
+      "id": "sequence-wrap",
+      "status": "reference_pass",
+      "final_state": "ESTABLISHED",
+      "events": 3,
+      "packets": 4,
+      "packetdrill": "generated_not_executed"
+    },
+    {
+      "id": "syn-loss",
+      "status": "reference_pass",
+      "final_state": "ESTABLISHED",
+      "events": 3,
+      "packets": 4,
+      "packetdrill": "generated_not_executed"
+    },
+    {
+      "id": "two-syn-losses",
+      "status": "reference_pass",
+      "final_state": "ESTABLISHED",
+      "events": 4,
+      "packets": 5,
+      "packetdrill": "generated_not_executed"
+    }
+  ],
+  "state_count": 3,
+  "transition_count": 3,
+  "visited_states": [
+    "CLOSED",
+    "ESTABLISHED",
+    "SYN-SENT"
+  ],
+  "unvisited_states": [],
+  "covered_transitions": [
+    "T-ACCEPT-SYNACK",
+    "T-ACTIVE-OPEN",
+    "T-SYN-RETRY"
+  ],
+  "uncovered_transitions": [],
+  "formal": {
+    "status": "bounded_pass",
+    "backend": "z3-bmc",
+    "depth": 6
+  },
+  "real_stack": "not_run",
+  "protocol_complete": false,
+  "artifact_hashes": {
+    "handshake/trace.json": "6f98deb1232f91f84a8dfd4b53951a7965c4bb8a1699b4d18588b71b0292a00b",
+    "handshake/packets.json": "64c2a90556a3ae1c732997ff2a009ebfd9515e129f2ecd97ba550bc2ee16bb40",
+    "handshake/scenario.json": "638341941b59c740ec8ec2927e9e6cf252bdaebf538218fb38bac5d6a848f3d2",
+    "handshake/packet-map.json": "5f7207a79fecc8264bb28d90002a49314ac1c31849d0b88414d675f79273a0f8",
+    "handshake/model.synthetic.pcap": "e63220c7e3c8a7d46ae97944cd4fc54235b65f581d5b59b4f92827947d88fb9f",
+    "handshake/test.pkt": "29c78a83dcdf91a0a2c5c2c14a0adbaf19b453e8e02dfe23220d81c508370175",
+    "sequence-wrap/trace.json": "680a6578d7d3fabe0e523247569fe3a538ee4090930ffe2c03a2562788414191",
+    "sequence-wrap/packets.json": "dbda22c56474264736fdb0358a2b30690a9e833617bf79b1805587ea2ed5a957",
+    "sequence-wrap/scenario.json": "fd66c07cb206670ecb6f4cd8378d6a8c06dd901cbb5b78595d7695b42eee8177",
+    "sequence-wrap/packet-map.json": "839f3966c78370de04e19f9d6787ab7d6b9478504fee819807442bdfaababa54",
+    "sequence-wrap/model.synthetic.pcap": "81aa7e24a39d1b877f082de4de343685f71f576e79f06b106796de210479a430",
+    "sequence-wrap/test.pkt": "b67d9e041e68e499c49075852dfaa83094b3dd80a201af15b4b5f43e26e41cde",
+    "syn-loss/trace.json": "2b08f1a5fdb85ec4a302d9e058b242efb999e813f866a8084b6419831022b699",
+    "syn-loss/packets.json": "16dd9c600e5f5f5711b6b425cb791a454722dd4711eb0a3d2e78a16caeda435c",
+    "syn-loss/scenario.json": "0e6602d76c241dcf23dfd55e9465c9dfe2c0e5e7f47ab9cf5deeda368772f6ff",
+    "syn-loss/packet-map.json": "839f3966c78370de04e19f9d6787ab7d6b9478504fee819807442bdfaababa54",
+    "syn-loss/model.synthetic.pcap": "f7a3cb5e05c34a8b788f648dd4cb3d276c6167b057431af286eff64eeca7623c",
+    "syn-loss/test.pkt": "b67d9e041e68e499c49075852dfaa83094b3dd80a201af15b4b5f43e26e41cde",
+    "two-syn-losses/trace.json": "35c9dfc24d04d58e3856918f2855017faf8519c6198488aba3cd98d5a08b3f06",
+    "two-syn-losses/packets.json": "c6f5a95044d9f0fed9e49bbd9f3608cf5cc17d2ad4df5de1e3f92db2a2b40def",
+    "two-syn-losses/scenario.json": "b74d2d486c4adb506aec8c09b1424380eb71e64b36119cb2b780f8f34e2d2bb5",
+    "two-syn-losses/packet-map.json": "56e6a3dda6a6d7d933e7548a74e2b80330b190bc55f9a46d5c73a46fe548b02e",
+    "two-syn-losses/model.synthetic.pcap": "754a9cc453ead981ce34ae65f47b2f2edb7c02946d44902357508615a87052c8",
+    "two-syn-losses/test.pkt": "38fdaa31d968f0e905fd24b7c5eeac64c03460f2b2cc6405dc816ef56fbfd11c",
+    "state-machine.dot": "dfb4240f829ab274d14a867c8e75700f881bc5cd9a8ab6369398e6059d21534e",
+    "formal/result.json": "6823ba0c270a33ad22f4583d9d48df71a687c950fae147437c56bccfcb8111ff",
+    "formal/model.smt2": "4ea4b12b3157490c42ad1031ea761d089f90cb4138dfb248c38ce5a4beba6140",
+    "formal/overlap.smt2": "94f843c22e2eab119f61310cbdda30823ddb70dbefcc0620b52570abc89492d4"
+  }
+}

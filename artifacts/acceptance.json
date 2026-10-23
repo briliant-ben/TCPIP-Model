@@ -1,0 +1,57 @@
+{
+  "status": "pending",
+  "local_build": "pass",
+  "formal": {
+    "status": "bounded_pass",
+    "backend": "z3-bmc",
+    "depth": 6,
+    "unbounded_proof": false
+  },
+  "scenarios": [
+    {
+      "id": "handshake",
+      "packetdrill": {
+        "status": "not_run"
+      },
+      "observation": {
+        "status": "not_run"
+      },
+      "status": "pending"
+    },
+    {
+      "id": "sequence-wrap",
+      "packetdrill": {
+        "status": "not_run"
+      },
+      "observation": {
+        "status": "not_run"
+      },
+      "status": "pending"
+    },
+    {
+      "id": "syn-loss",
+      "packetdrill": {
+        "status": "not_run",
+        "reason": "Requires Linux, packetdrill, /dev/net/tun, CAP_NET_ADMIN and CAP_NET_RAW."
+      },
+      "observation": {
+        "status": "synthetic_only",
+        "comparison": "match"
+      },
+      "status": "pending"
+    },
+    {
+      "id": "two-syn-losses",
+      "packetdrill": {
+        "status": "not_run"
+      },
+      "observation": {
+        "status": "not_run"
+      },
+      "status": "pending"
+    }
+  ],
+  "errors": [],
+  "build_sha256": "93aaae14925f7c0f6bed4e769a18be5e0e57208f3ba4deba067acc0f23ef339b",
+  "formal_scope": "bounded_state_safety_only; no_unbounded_or_full_TCP_claim"
+}

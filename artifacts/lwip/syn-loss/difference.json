@@ -1,0 +1,55 @@
+{
+  "status": "mismatch",
+  "oracle": "ordered-projection-v1",
+  "tolerance_ms": 50,
+  "compared_fields": [
+    "direction",
+    "flags",
+    "seq",
+    "ack",
+    "time_ms"
+  ],
+  "differences": [
+    {
+      "kind": "field",
+      "index": 1,
+      "packet_id": "e0002:out:0",
+      "event_id": "e0002",
+      "requirements": [
+        "TCP-RETRANSMIT",
+        "RTO-BACKOFF"
+      ],
+      "field": "time_ms",
+      "expected": 1000,
+      "observed": 2750.0
+    },
+    {
+      "kind": "field",
+      "index": 2,
+      "packet_id": "e0003:in",
+      "event_id": "e0003",
+      "requirements": [
+        "TCP-ACCEPT-SYNACK",
+        "RTO-CANCEL",
+        "PROFILE-SCOPE"
+      ],
+      "field": "time_ms",
+      "expected": 1010,
+      "observed": 2760.0
+    },
+    {
+      "kind": "field",
+      "index": 3,
+      "packet_id": "e0003:out:0",
+      "event_id": "e0003",
+      "requirements": [
+        "TCP-ACCEPT-SYNACK",
+        "RTO-CANCEL",
+        "PROFILE-SCOPE"
+      ],
+      "field": "time_ms",
+      "expected": 1010,
+      "observed": 2760.0
+    }
+  ]
+}

@@ -1,0 +1,452 @@
+[
+  {
+    "event_id": "e0001",
+    "time_ms": 0,
+    "event": {
+      "name": "app.listen",
+      "fields": {}
+    },
+    "transition": "C-PASSIVE-OPEN",
+    "requirements": [
+      "CONN-OPEN"
+    ],
+    "before": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "LISTEN",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "emitted": []
+  },
+  {
+    "event_id": "e0002",
+    "time_ms": 10,
+    "event": {
+      "name": "net.syn",
+      "fields": {
+        "seq": 9000
+      }
+    },
+    "transition": "C-LISTEN-SYN",
+    "requirements": [
+      "CONN-LISTEN"
+    ],
+    "before": {
+      "state": "LISTEN",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "rtx": 1010,
+        "user": 30010
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "SA",
+          "seq": 1000,
+          "ack": 9001,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0003",
+    "time_ms": 1010,
+    "event": {
+      "name": "timer.rtx",
+      "fields": {}
+    },
+    "transition": "C-RETRANSMIT-SYN-RECEIVED",
+    "requirements": [
+      "CONN-TIMEOUT",
+      "RTO-PROFILE"
+    ],
+    "before": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "rtx": 1010,
+        "user": 30010
+      }
+    },
+    "after": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 2000,
+        "retries": 1,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30010,
+        "rtx": 3010
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "SA",
+          "seq": 1000,
+          "ack": 9001,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0004",
+    "time_ms": 3010,
+    "event": {
+      "name": "timer.rtx",
+      "fields": {}
+    },
+    "transition": "C-RETRANSMIT-SYN-RECEIVED",
+    "requirements": [
+      "CONN-TIMEOUT",
+      "RTO-PROFILE"
+    ],
+    "before": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 2000,
+        "retries": 1,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30010,
+        "rtx": 3010
+      }
+    },
+    "after": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 4000,
+        "retries": 2,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30010,
+        "rtx": 7010
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "SA",
+          "seq": 1000,
+          "ack": 9001,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0005",
+    "time_ms": 7010,
+    "event": {
+      "name": "timer.rtx",
+      "fields": {}
+    },
+    "transition": "C-RETRANSMIT-SYN-RECEIVED",
+    "requirements": [
+      "CONN-TIMEOUT",
+      "RTO-PROFILE"
+    ],
+    "before": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 4000,
+        "retries": 2,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30010,
+        "rtx": 7010
+      }
+    },
+    "after": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 8000,
+        "retries": 3,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30010,
+        "rtx": 15010
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "SA",
+          "seq": 1000,
+          "ack": 9001,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0006",
+    "time_ms": 15010,
+    "event": {
+      "name": "timer.rtx",
+      "fields": {}
+    },
+    "transition": "C-RETRANSMIT-SYN-RECEIVED",
+    "requirements": [
+      "CONN-TIMEOUT",
+      "RTO-PROFILE"
+    ],
+    "before": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 8000,
+        "retries": 3,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30010,
+        "rtx": 15010
+      }
+    },
+    "after": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 16000,
+        "retries": 4,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30010,
+        "rtx": 31010
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "SA",
+          "seq": 1000,
+          "ack": 9001,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0007",
+    "time_ms": 30010,
+    "event": {
+      "name": "timer.user",
+      "fields": {}
+    },
+    "transition": "C-USER-TIMEOUT-SYN-RECEIVED",
+    "requirements": [
+      "CONN-TIMEOUT"
+    ],
+    "before": {
+      "state": "SYN-RECEIVED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 16000,
+        "retries": 4,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30010,
+        "rtx": 31010
+      }
+    },
+    "after": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 9001,
+        "tx_flags": "SA",
+        "rto_ms": 16000,
+        "retries": 4,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "timeout"
+        }
+      }
+    ]
+  }
+]

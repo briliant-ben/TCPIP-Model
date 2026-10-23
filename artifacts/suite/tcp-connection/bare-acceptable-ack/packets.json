@@ -1,0 +1,33 @@
+[
+  {
+    "time_ms": 0,
+    "event_id": "e0001",
+    "transition": "C-ACTIVE-OPEN",
+    "requirements": [
+      "CONN-OPEN",
+      "RTO-PROFILE"
+    ],
+    "packet_id": "e0001:out:0",
+    "direction": "out",
+    "flags": "S",
+    "seq": 1000,
+    "ack": 0,
+    "window": 65535,
+    "dropped_after_egress": false
+  },
+  {
+    "time_ms": 10,
+    "event_id": "e0002",
+    "transition": "C-SYN-SENT-BARE-ACK",
+    "requirements": [
+      "CONN-SYN-SENT"
+    ],
+    "packet_id": "e0002:in",
+    "direction": "in",
+    "flags": "A",
+    "seq": 77,
+    "ack": 1001,
+    "window": 65535,
+    "dropped_after_egress": false
+  }
+]

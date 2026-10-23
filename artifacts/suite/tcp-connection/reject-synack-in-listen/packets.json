@@ -1,0 +1,32 @@
+[
+  {
+    "time_ms": 50,
+    "event_id": "e0002",
+    "transition": "C-REJECT-SYNACK-LISTEN",
+    "requirements": [
+      "CONN-LISTEN"
+    ],
+    "packet_id": "e0002:in",
+    "direction": "in",
+    "flags": "SA",
+    "seq": 9000,
+    "ack": 77,
+    "window": 65535,
+    "dropped_after_egress": false
+  },
+  {
+    "time_ms": 50,
+    "event_id": "e0002",
+    "transition": "C-REJECT-SYNACK-LISTEN",
+    "requirements": [
+      "CONN-LISTEN"
+    ],
+    "packet_id": "e0002:out:0",
+    "direction": "out",
+    "flags": "R",
+    "seq": 77,
+    "ack": 0,
+    "window": 65535,
+    "dropped_after_egress": false
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-pending-connect",
+  "description": "close pending connect",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Control-only validated IPv4/TCP packet shapes; no payload/options."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "app.close",
+      "fields": {}
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {},
+    "timers": {}
+  }
+}

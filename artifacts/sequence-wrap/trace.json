@@ -1,0 +1,165 @@
+[
+  {
+    "event_id": "e0001",
+    "time_ms": 0,
+    "event": {
+      "name": "app.connect",
+      "fields": {}
+    },
+    "transition": "T-ACTIVE-OPEN",
+    "requirements": [
+      "TCP-ACTIVE-OPEN",
+      "RTO-INITIAL",
+      "PROFILE-SCOPE"
+    ],
+    "before": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 4294967295,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "rto_ms": 1000,
+        "retries": 0
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 4294967295,
+        "irs": 0,
+        "snd_una": 4294967295,
+        "snd_nxt": 0,
+        "rcv_nxt": 0,
+        "rto_ms": 1000,
+        "retries": 0
+      },
+      "timers": {
+        "syn_rto": 1000
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "S",
+          "seq": 4294967295,
+          "ack": 0,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0002",
+    "time_ms": 1000,
+    "event": {
+      "name": "timer.syn_rto",
+      "fields": {}
+    },
+    "transition": "T-SYN-RETRY",
+    "requirements": [
+      "TCP-RETRANSMIT",
+      "RTO-BACKOFF"
+    ],
+    "before": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 4294967295,
+        "irs": 0,
+        "snd_una": 4294967295,
+        "snd_nxt": 0,
+        "rcv_nxt": 0,
+        "rto_ms": 1000,
+        "retries": 0
+      },
+      "timers": {
+        "syn_rto": 1000
+      }
+    },
+    "after": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 4294967295,
+        "irs": 0,
+        "snd_una": 4294967295,
+        "snd_nxt": 0,
+        "rcv_nxt": 0,
+        "rto_ms": 2000,
+        "retries": 1
+      },
+      "timers": {
+        "syn_rto": 3000
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "S",
+          "seq": 4294967295,
+          "ack": 0,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0003",
+    "time_ms": 1010,
+    "event": {
+      "name": "net.synack",
+      "fields": {
+        "seq": 4294967295,
+        "ack": 0
+      }
+    },
+    "transition": "T-ACCEPT-SYNACK",
+    "requirements": [
+      "TCP-ACCEPT-SYNACK",
+      "RTO-CANCEL",
+      "PROFILE-SCOPE"
+    ],
+    "before": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 4294967295,
+        "irs": 0,
+        "snd_una": 4294967295,
+        "snd_nxt": 0,
+        "rcv_nxt": 0,
+        "rto_ms": 2000,
+        "retries": 1
+      },
+      "timers": {
+        "syn_rto": 3000
+      }
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 4294967295,
+        "irs": 4294967295,
+        "snd_una": 0,
+        "snd_nxt": 0,
+        "rcv_nxt": 0,
+        "rto_ms": 2000,
+        "retries": 1
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "A",
+          "seq": 0,
+          "ack": 0,
+          "window": 65535
+        }
+      }
+    ]
+  }
+]

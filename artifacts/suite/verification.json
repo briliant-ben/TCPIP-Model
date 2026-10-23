@@ -1,0 +1,26 @@
+{
+  "status": "valid_local_artifacts_stack_incomplete",
+  "full_stack_complete": false,
+  "profiles": [
+    {
+      "id": "tcp-active-open",
+      "local_integrity": "pass",
+      "formal": {
+        "status": "bounded_pass",
+        "backend": "z3-bmc",
+        "depth": 6
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "id": "tcp-connection",
+      "local_integrity": "pass",
+      "formal": {
+        "status": "bounded_pass",
+        "backend": "z3-bmc",
+        "depth": 6
+      },
+      "real_stack": "not_run"
+    }
+  ]
+}

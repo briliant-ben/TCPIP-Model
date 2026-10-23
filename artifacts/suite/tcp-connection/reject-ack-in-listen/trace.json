@@ -1,0 +1,117 @@
+[
+  {
+    "event_id": "e0001",
+    "time_ms": 0,
+    "event": {
+      "name": "app.listen",
+      "fields": {}
+    },
+    "transition": "C-PASSIVE-OPEN",
+    "requirements": [
+      "CONN-OPEN"
+    ],
+    "before": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "LISTEN",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "emitted": []
+  },
+  {
+    "event_id": "e0002",
+    "time_ms": 50,
+    "event": {
+      "name": "net.ack",
+      "fields": {
+        "seq": 9000,
+        "ack": 77
+      }
+    },
+    "transition": "C-REJECT-ACK-LISTEN",
+    "requirements": [
+      "CONN-LISTEN"
+    ],
+    "before": {
+      "state": "LISTEN",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "LISTEN",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": false,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "R",
+          "seq": 77,
+          "ack": 0,
+          "window": 65535
+        }
+      }
+    ]
+  }
+]

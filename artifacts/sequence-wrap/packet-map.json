@@ -1,0 +1,71 @@
+{
+  "capture_origin": "synthetic_model",
+  "capture_point": "local_endpoint_egress_and_ingress",
+  "packets": [
+    {
+      "pcap_frame": 1,
+      "packet_id": "e0001:out:0",
+      "event_id": "e0001",
+      "requirements": [
+        "TCP-ACTIVE-OPEN",
+        "RTO-INITIAL",
+        "PROFILE-SCOPE"
+      ],
+      "dropped_after_egress": true
+    },
+    {
+      "pcap_frame": 2,
+      "packet_id": "e0002:out:0",
+      "event_id": "e0002",
+      "requirements": [
+        "TCP-RETRANSMIT",
+        "RTO-BACKOFF"
+      ],
+      "dropped_after_egress": false
+    },
+    {
+      "pcap_frame": 3,
+      "packet_id": "e0003:in",
+      "event_id": "e0003",
+      "requirements": [
+        "TCP-ACCEPT-SYNACK",
+        "RTO-CANCEL",
+        "PROFILE-SCOPE"
+      ],
+      "dropped_after_egress": false
+    },
+    {
+      "pcap_frame": 4,
+      "packet_id": "e0003:out:0",
+      "event_id": "e0003",
+      "requirements": [
+        "TCP-ACCEPT-SYNACK",
+        "RTO-CANCEL",
+        "PROFILE-SCOPE"
+      ],
+      "dropped_after_egress": false
+    }
+  ],
+  "packetdrill_lines": [
+    {
+      "line": 8,
+      "packet_id": "e0001:out:0",
+      "event_id": "e0001"
+    },
+    {
+      "line": 10,
+      "packet_id": "e0002:out:0",
+      "event_id": "e0002"
+    },
+    {
+      "line": 12,
+      "packet_id": "e0003:in",
+      "event_id": "e0003"
+    },
+    {
+      "line": 14,
+      "packet_id": "e0003:out:0",
+      "event_id": "e0003"
+    }
+  ]
+}

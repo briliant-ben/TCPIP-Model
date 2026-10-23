@@ -1,0 +1,20 @@
+{
+  "suite_version": "0.1",
+  "deliverable": "Executable protocol reference models and verification flow",
+  "profiles": [
+    {"id": "tcp-active-open", "model": "model/tcp.json", "scenarios": "scenarios", "packetdrill": "active-open-v1"},
+    {"id": "tcp-connection", "model": "model/tcp-connection.json", "scenarios": "scenarios/connection", "packetdrill": null}
+  ],
+  "pending_modules": [
+    {"id":"tcp-data", "status":"not_implemented", "scope":"send/receive buffers, windows, segmentation, sequence validation, reassembly, retransmission queues"},
+    {"id":"tcp-recovery", "status":"not_implemented", "scope":"RTT/RTO estimator, delayed ACK, zero-window persist, fast retransmit, congestion control, optional extensions"},
+    {"id":"udp", "status":"not_implemented", "scope":"datagram service, checksums, endpoints and demultiplexing"},
+    {"id":"ipv4", "status":"not_implemented", "scope":"host send/receive, routing, fragmentation/reassembly, TTL, options policy"},
+    {"id":"ipv6", "status":"not_implemented", "scope":"host send/receive, extension headers, fragmentation/reassembly, hop limit, PMTU"},
+    {"id":"icmp", "status":"not_implemented", "scope":"ICMPv4/v6 errors, echo, transport notification, PMTU feedback"},
+    {"id":"arp-ndp", "status":"not_implemented", "scope":"neighbor resolution/cache, ARP, IPv6 NDP and configuration assumptions"},
+    {"id":"socket-service", "status":"not_implemented", "scope":"multi-connection endpoints, buffer ownership, async errors, blocking/nonblocking operations"},
+    {"id":"stack-composition", "status":"not_implemented", "scope":"layer contracts, dispatcher, network environment and end-to-end properties"},
+    {"id":"real-stack-validation", "status":"partial_lwip_memory_netif", "scope":"lwIP active handshake and loss execution adapter exists; Linux packetdrill/TUN remains blocked; stack-wide and lifecycle execution coverage is incomplete"}
+  ]
+}

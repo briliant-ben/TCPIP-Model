@@ -1,0 +1,17 @@
+// GENERATED from Protocol IR; external execution is recorded separately.
+// Linux active-open profile; default initial RTO 1s; no SYN payload.
+// Outgoing SYN options are wildcarded; timestamps/windows are outside comparison.
+0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
++0 fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK) = 0
++0 connect(3, ..., ...) = -1 EINPROGRESS (Operation now in progress)
+// e0001:out:0 T-ACTIVE-OPEN TCP-ACTIVE-OPEN RTO-INITIAL PROFILE-SCOPE
++0.000 > S 0:0(0) <...>
+// e0002:out:0 T-SYN-RETRY TCP-RETRANSMIT RTO-BACKOFF
++1.000 > S 0:0(0) <...>
+// e0003:out:0 T-SYN-RETRY TCP-RETRANSMIT RTO-BACKOFF
++2.000 > S 0:0(0) <...>
+// e0004:in T-ACCEPT-SYNACK TCP-ACCEPT-SYNACK RTO-CANCEL PROFILE-SCOPE
++0.010 < S. 0:0(0) ack 1 win 65535
+// e0004:out:0 T-ACCEPT-SYNACK TCP-ACCEPT-SYNACK RTO-CANCEL PROFILE-SCOPE
++0.000 > . 1:1(0) ack 1
++0 getsockopt(3, SOL_SOCKET, SO_ERROR, [0], [4]) = 0

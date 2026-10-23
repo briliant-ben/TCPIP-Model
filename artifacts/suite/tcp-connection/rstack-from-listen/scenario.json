@@ -1,0 +1,32 @@
+{
+  "scenario_version": "0.1",
+  "id": "rstack-from-listen",
+  "description": "rstack from listen",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Control-only validated IPv4/TCP packet shapes; no payload/options."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.listen",
+      "fields": {}
+    },
+    {
+      "at_ms": 50,
+      "event": "net.rstack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001
+      }
+    }
+  ],
+  "expect": {
+    "state": "LISTEN",
+    "variables": {},
+    "timers": {}
+  }
+}

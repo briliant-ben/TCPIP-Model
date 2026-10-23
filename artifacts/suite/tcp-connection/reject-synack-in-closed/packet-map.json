@@ -1,0 +1,21 @@
+{
+  "capture_origin": "synthetic_model",
+  "frames": [
+    {
+      "frame": 1,
+      "packet_id": "e0001:in",
+      "event_id": "e0001",
+      "requirements": [
+        "CONN-CLOSED-INPUT"
+      ]
+    },
+    {
+      "frame": 2,
+      "packet_id": "e0001:out:0",
+      "event_id": "e0001",
+      "requirements": [
+        "CONN-CLOSED-INPUT"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+[
+  {
+    "event_id": "e0001",
+    "time_ms": 0,
+    "event": {
+      "name": "app.connect",
+      "fields": {}
+    },
+    "transition": "C-ACTIVE-OPEN",
+    "requirements": [
+      "CONN-OPEN",
+      "RTO-PROFILE"
+    ],
+    "before": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "rtx": 1000,
+        "user": 30000
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "S",
+          "seq": 1000,
+          "ack": 0,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0002",
+    "time_ms": 10,
+    "event": {
+      "name": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001
+      }
+    },
+    "transition": "C-ACCEPT-SYNACK",
+    "requirements": [
+      "CONN-SYN-SENT",
+      "RTO-PROFILE"
+    ],
+    "before": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "rtx": 1000,
+        "user": 30000
+      }
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "connected"
+        }
+      },
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "A",
+          "seq": 1001,
+          "ack": 9001,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0003",
+    "time_ms": 20,
+    "event": {
+      "name": "app.close",
+      "fields": {}
+    },
+    "transition": "C-CLOSE-ESTABLISHED",
+    "requirements": [
+      "CONN-CLOSE"
+    ],
+    "before": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "FIN-WAIT-1",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1002,
+        "rcv_nxt": 9001,
+        "tx_seq": 1001,
+        "tx_ack": 9001,
+        "tx_flags": "FA",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "rtx": 1020,
+        "user": 30020
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "FA",
+          "seq": 1001,
+          "ack": 9001,
+          "window": 65535
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0004",
+    "time_ms": 30,
+    "event": {
+      "name": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002
+      }
+    },
+    "transition": "C-FIN-ACK-FIN-WAIT-1",
+    "requirements": [
+      "CONN-ACK"
+    ],
+    "before": {
+      "state": "FIN-WAIT-1",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1002,
+        "rcv_nxt": 9001,
+        "tx_seq": 1001,
+        "tx_ack": 9001,
+        "tx_flags": "FA",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "rtx": 1020,
+        "user": 30020
+      }
+    },
+    "after": {
+      "state": "FIN-WAIT-2",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1002,
+        "snd_nxt": 1002,
+        "rcv_nxt": 9001,
+        "tx_seq": 1001,
+        "tx_ack": 9001,
+        "tx_flags": "FA",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30020
+      }
+    },
+    "emitted": []
+  },
+  {
+    "event_id": "e0005",
+    "time_ms": 50,
+    "event": {
+      "name": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002
+      }
+    },
+    "transition": "C-DUPLICATE-ACK-FIN-WAIT-2",
+    "requirements": [
+      "CONN-ACK"
+    ],
+    "before": {
+      "state": "FIN-WAIT-2",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1002,
+        "snd_nxt": 1002,
+        "rcv_nxt": 9001,
+        "tx_seq": 1001,
+        "tx_ack": 9001,
+        "tx_flags": "FA",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30020
+      }
+    },
+    "after": {
+      "state": "FIN-WAIT-2",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1002,
+        "snd_nxt": 1002,
+        "rcv_nxt": 9001,
+        "tx_seq": 1001,
+        "tx_ack": 9001,
+        "tx_flags": "FA",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000
+      },
+      "timers": {
+        "user": 30020
+      }
+    },
+    "emitted": []
+  }
+]

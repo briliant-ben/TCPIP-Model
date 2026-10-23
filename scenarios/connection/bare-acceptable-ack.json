@@ -1,0 +1,35 @@
+{
+  "scenario_version": "0.1",
+  "id": "bare-acceptable-ack",
+  "description": "An acceptable ACK without SYN does not establish a pending connection.",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "No payload; ACK bit set, SYN and RST absent."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.ack",
+      "fields": {
+        "seq": 77,
+        "ack": 1001
+      }
+    }
+  ],
+  "expect": {
+    "state": "SYN-SENT",
+    "variables": {},
+    "timers": {
+      "rtx": 1000,
+      "user": 30000
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "scenario_version": "0.1",
+  "id": "closed-input",
+  "description": "closed input",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Control-only validated IPv4/TCP packet shapes; no payload/options."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "net.syn",
+      "fields": {
+        "seq": 9000
+      }
+    },
+    {
+      "at_ms": 10,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 55
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.rst",
+      "fields": {
+        "seq": 99
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {},
+    "timers": {}
+  }
+}

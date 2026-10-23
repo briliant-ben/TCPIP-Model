@@ -1,0 +1,9 @@
+digraph protocol {
+  rankdir=LR;
+  "CLOSED";
+  "SYN-SENT";
+  "ESTABLISHED";
+  "CLOSED" -> "SYN-SENT" [label="T-ACTIVE-OPEN\napp.connect"];
+  "SYN-SENT" -> "SYN-SENT" [label="T-SYN-RETRY\ntimer.syn_rto"];
+  "SYN-SENT" -> "ESTABLISHED" [label="T-ACCEPT-SYNACK\nnet.synack\n{\"op\":\"eq\",\"args\":[{\"event\":\"ack\"},{\"var\":\"snd_nxt\"}]}"];
+}

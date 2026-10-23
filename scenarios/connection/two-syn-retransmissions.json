@@ -1,0 +1,35 @@
+{
+  "scenario_version": "0.1",
+  "id": "two-syn-retransmissions",
+  "description": "two syn retransmissions",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Control-only validated IPv4/TCP packet shapes; no payload/options."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 3010,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "retries": 2,
+      "rto_ms": 4000
+    },
+    "timers": {}
+  }
+}

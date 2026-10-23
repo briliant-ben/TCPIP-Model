@@ -1,0 +1,369 @@
+{
+  "status": "bounded_pass",
+  "backend": "reference-explicit-explorer",
+  "independent_formal_proof": false,
+  "depth": 6,
+  "initials": [
+    {},
+    {
+      "iss": 4294967295
+    }
+  ],
+  "event_domains": [
+    {
+      "states": [
+        "CLOSED"
+      ],
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "states": [
+        "SYN-SENT"
+      ],
+      "event": "net.synack",
+      "fields": {
+        "seq": {
+          "seq": 9000
+        },
+        "ack": {
+          "var": "snd_nxt"
+        }
+      }
+    },
+    {
+      "states": [
+        "SYN-SENT"
+      ],
+      "event": "net.synack",
+      "fields": {
+        "seq": {
+          "seq": 4294967295
+        },
+        "ack": {
+          "var": "snd_nxt"
+        }
+      }
+    },
+    {
+      "states": [
+        "SYN-SENT"
+      ],
+      "event": "net.synack",
+      "fields": {
+        "seq": {
+          "seq": 9000
+        },
+        "ack": {
+          "var": "iss"
+        }
+      },
+      "purpose": "coverage probe: invalid ACK handling intentionally unmodeled"
+    }
+  ],
+  "visited_prefixes": 34,
+  "edges": 32,
+  "covered_transitions": [
+    "T-ACCEPT-SYNACK",
+    "T-ACTIVE-OPEN",
+    "T-SYN-RETRY"
+  ],
+  "uncovered": [
+    {
+      "initial": {
+        "iss": 4294967295
+      },
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 0,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 4294967295
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 4294967295}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    },
+    {
+      "initial": {
+        "iss": 4294967295
+      },
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 1000,
+          "tick": true
+        },
+        {
+          "at_ms": 1000,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 4294967295
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 4294967295}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    },
+    {
+      "initial": {
+        "iss": 4294967295
+      },
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 1000,
+          "tick": true
+        },
+        {
+          "at_ms": 3000,
+          "tick": true
+        },
+        {
+          "at_ms": 3000,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 4294967295
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 4294967295}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    },
+    {
+      "initial": {
+        "iss": 4294967295
+      },
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 1000,
+          "tick": true
+        },
+        {
+          "at_ms": 3000,
+          "tick": true
+        },
+        {
+          "at_ms": 7000,
+          "tick": true
+        },
+        {
+          "at_ms": 7000,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 4294967295
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 4294967295}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    },
+    {
+      "initial": {
+        "iss": 4294967295
+      },
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 1000,
+          "tick": true
+        },
+        {
+          "at_ms": 3000,
+          "tick": true
+        },
+        {
+          "at_ms": 7000,
+          "tick": true
+        },
+        {
+          "at_ms": 15000,
+          "tick": true
+        },
+        {
+          "at_ms": 15000,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 4294967295
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 4294967295}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    },
+    {
+      "initial": {},
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 0,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 1000
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 1000}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    },
+    {
+      "initial": {},
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 1000,
+          "tick": true
+        },
+        {
+          "at_ms": 1000,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 1000
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 1000}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    },
+    {
+      "initial": {},
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 1000,
+          "tick": true
+        },
+        {
+          "at_ms": 3000,
+          "tick": true
+        },
+        {
+          "at_ms": 3000,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 1000
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 1000}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    },
+    {
+      "initial": {},
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 1000,
+          "tick": true
+        },
+        {
+          "at_ms": 3000,
+          "tick": true
+        },
+        {
+          "at_ms": 7000,
+          "tick": true
+        },
+        {
+          "at_ms": 7000,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 1000
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 1000}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    },
+    {
+      "initial": {},
+      "steps": [
+        {
+          "at_ms": 0,
+          "event": "app.connect",
+          "fields": {}
+        },
+        {
+          "at_ms": 1000,
+          "tick": true
+        },
+        {
+          "at_ms": 3000,
+          "tick": true
+        },
+        {
+          "at_ms": 7000,
+          "tick": true
+        },
+        {
+          "at_ms": 15000,
+          "tick": true
+        },
+        {
+          "at_ms": 15000,
+          "event": "net.synack",
+          "fields": {
+            "seq": 9000,
+            "ack": 1000
+          }
+        }
+      ],
+      "error": "No transition: state=SYN-SENT, event={'name': 'net.synack', 'fields': {'seq': 9000, 'ack': 1000}}",
+      "classification": "model_coverage_gap; not_a_specification_verdict"
+    }
+  ],
+  "conflicts": [],
+  "counterexamples": [],
+  "cutoff_prefixes": 2,
+  "liveness": "not_checked",
+  "completeness": "not_claimed",
+  "uncovered_transitions": []
+}
