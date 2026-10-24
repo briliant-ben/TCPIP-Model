@@ -6,7 +6,7 @@
 
 `ir_version=0.1`；`semantics=flat-efsm-atomic-ordered-v1`。这是平面 EFSM 子集。当前不支持 HSM、并发区域、历史状态或任意非确定性选择，不能把这些构造静默降级为普通 FSM。
 
-类型为 `bool`、`int`、`seq32`、`string`。`seq32` 只能使用相等/不等和 `seq_add(seq32,int)`；加法模 `2^32`。整数 `le/ge` 不接受 `seq32`。当前无通用串行数排序算子；扩展数据传输时必须明确定义半空间约束及相差 `2^31` 的处理。
+v0.1 类型为 `bool`、`int`、`seq32`、`string`。`seq32` 可使用相等/不等和 `seq_add(seq32,int)`；加法模 `2^32`。整数 `le/ge` 不接受 `seq32`。v0.2 显式扩展下述数据语义；旧 v0.1 模型不自动获得新操作。
 
 表达式 AST 支持字面值、`seq`、`var`、`event`、`state`、`timer_active` 和显式 `op/args`。guard 返回 bool。禁止 Python 代码、动态导入、文件访问或 eval。
 
@@ -59,3 +59,28 @@ Z3 后端另行编码此 IR 子集，覆盖符号化 32 位 ISS、带类型的�
 PCAP 归一化器不调用合成编码器。它按显式四元组过滤连接，保留包顺序，将真实双端 ISS 映射到模型序列空间，以第一个选中 SYN 为时间原点。它支持经典 PCAP 的 IPv4/TCP active-open 切片，拒绝选中连接的分片、payload、额外控制 flags 和无效格式；不做去重、TCP 重组或通用抓包语义推断。
 
 `assess` 对构建快照和外部证据分别校验。语义文档、RFC manifest、IR、运行时代码或场景改变会使旧构建失效。观测还绑定一次成功的 packetdrill 运行，不能把旧抓包和新运行记录直接组合成通过。哈希用于检测过期或内容变化，不为操作者声明的来源提供真实性证明。
+
+## v0.2 数据语义（保留原 EFSM 提交顺序）
+
+模型使用 `ir_version=0.2`，仍采用 `flat-efsm-atomic-ordered-v1`。新增类型和操作在 v0.1 模型中显式拒绝；不改变两个旧模型的规则或版本。
+
+`bytes` 是有限八位无符号整数序列，JSON 值为 `[0,128,255]`，表达式常量为 `{"bytes":[0,128,255]}`。不是 Unicode 文本、十六进制字符串或任意 Python 对象；拒绝 bool、负数和大于 255 的元素。初值、事件、赋值、输出和轨迹快照具有值语义，调用者修改输入列表不影响已提交状态。缓冲容量由模型 guard 和不变量显式限定；类型本身不隐含协议容量或丢弃策略。
+
+| 操作 | 类型与精确结果 |
+|---|---|
+| `bytes_len(b)` | bytes → int，八位组数 |
+| `bytes_concat(a,b)` | bytes × bytes → bytes，按序连接 |
+| `bytes_slice(b,offset,count)` | bytes × int × int → bytes，截断切片；offset/count 分别取 max(0,x)，从 offset 取至多 count 字节；越尾截断，越界起点返回空串 |
+| `sub(a,b)` / `min(a,b)` | int × int → int，无界数学整数减法/最小值 |
+| `seq_distance(a,b)` | seq32 × seq32 → int，`(b-a) mod 2^32`，从 a 到 b 的前向距离，不是带符号减法 |
+| `seq_comparable(a,b)` | bool，当且仅当距离不等于 `2^31` |
+| `seq_lt(a,b)` | bool，当且仅当 `0 < distance < 2^31` |
+| `seq_le(a,b)` | bool，当且仅当 `0 <= distance < 2^31` |
+
+切片是总函数，负索引没有 Python 从尾部计数的含义。需完整读取 count 字节的模型必须用 guard/不变量约束 offset、count 和长度，不得依赖切片抛异常来限制输入。空串参与相等、长度、拼接和切片均有定义。
+
+序列谓词在相距恰好半空间时双向 lt/le 均为 false，comparable 为 false；这是显式的“不可比”，不是选定任意方向。比较不是全局传递的整数排序。建模窗口及在途范围必须小于半空间，并按同一基准使用前向距离；未知/歧义输入应在 IR 中有明确处理或报告未覆盖。`seq_add` 继续接受任意整数增量并取模（包括负增量），没有暗中加入窗口约束。
+
+规范追溯：RFC 9293 §3.4 固定 32 位模运算、累计确认及接收区间；§3.10.7.4 规定 ESTABLISHED 中 ACK/窗口处理。半空间不可比是 IR 的显式建模契约，RFC 1982 §3.2 仅作通用串行数比较的参考（其直接对象是 DNS，不宣称为 TCP 的附加 MUST）。当前 TCP 规范基线仍是仓库已哈希的 RFC 9293/6298，未更换原文。
+
+独立 Z3 后端将 bytes 编码为 `Seq(BitVec(8))`，序列号仍是 BV32，长度/offset/count 为数学整数；用 SubSeq 和显式非负截断编码切片，ULt 编码半空间谓词，BV2Int 编码前向距离。不调用参考求值器构造约束。支持的 AST 必须逐项翻译，未知操作显式拒绝。复杂的序列/整数/位向量混合查询可能返回 unknown；unknown 不得提升为 bounded_pass。该扩展仍无无界证明、跨连接组合或默认有限容量假设。

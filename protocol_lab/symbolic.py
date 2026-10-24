@@ -37,6 +37,18 @@ def replay(model, witness):
 
 
 class Encoding:
+    def solve(self):
+        """Solver resource failures are inconclusive, never a passing result."""
+        self.solver_error = None
+        try:
+            return self.solver.check()
+        except self.z.Z3Exception as exc:
+            self.solver_error = str(exc)
+            return self.z.unknown
+
+    def reason_unknown(self):
+        return self.solver_error or self.solver.reason_unknown()
+
     def __init__(self, model, depth, symbolic_initials):
         try:
             import z3
@@ -48,7 +60,8 @@ class Encoding:
         self.initials = symbolic_initials
         require(type(depth) is int and 1 <= depth <= 30, "Symbolic depth must be 1..30")
         require(all(n in model["variables"] for n in symbolic_initials), "Unknown symbolic initial variable")
-        self.sorts = {"bool": z3.BoolSort(), "int": z3.IntSort(), "seq32": z3.BitVecSort(32), "string": z3.StringSort()}
+        self.byte_sort = z3.SeqSort(z3.BitVecSort(8))
+        self.sorts = {"bool": z3.BoolSort(), "int": z3.IntSort(), "seq32": z3.BitVecSort(32), "string": z3.StringSort(), "bytes": self.byte_sort}
         self.frames = []
         self.events, self.branches, self.conflicts, self.action_faults = [], [], [], []
         self.solver = z3.Solver()
@@ -72,6 +85,9 @@ class Encoding:
         z = self.z
         if kind == "seq32":
             return z.BitVecVal(value, 32)
+        if kind == "bytes":
+            units = [z.Unit(z.BitVecVal(v, 8)) for v in value]
+            return z.Concat(*units) if len(units) > 1 else units[0] if units else z.Empty(self.byte_sort)
         if type(value) is bool:
             return z.BoolVal(value)
         if type(value) is int:
@@ -84,6 +100,8 @@ class Encoding:
             return self.literal(value)
         if "seq" in value:
             return z.BitVecVal(value["seq"], 32)
+        if "bytes" in value:
+            return self.literal(value["bytes"], "bytes")
         if "var" in value:
             return frame["values"][value["var"]]
         if "event" in value:
@@ -93,11 +111,22 @@ class Encoding:
         if "timer_active" in value:
             return frame["active"][value["timer_active"]]
         args = [self.expr(v, frame, fields) for v in value["args"]]
-        return {"eq": lambda a, b: a == b, "ne": lambda a, b: a != b,
+        operators = {"eq": lambda a, b: a == b, "ne": lambda a, b: a != b,
                 "and": z.And, "or": z.Or, "not": z.Not, "implies": z.Implies,
                 "add": lambda a, b: a+b, "mul": lambda a, b: a*b,
                 "le": lambda a, b: a <= b, "ge": lambda a, b: a >= b,
-                "seq_add": lambda a, b: a + z.Int2BV(b, 32)}[value["op"]](*args)
+                "seq_add": lambda a, b: a + z.Int2BV(b, 32),
+                "sub": lambda a, b: a - b,
+                "min": lambda a, b: z.If(a <= b, a, b),
+                "bytes_len": z.Length,
+                "bytes_concat": z.Concat,
+                "bytes_slice": lambda a, offset, count: z.SubSeq(a, z.If(offset < 0, 0, offset), z.If(count < 0, 0, count)),
+                "seq_distance": lambda a, b: z.BV2Int(b - a, is_signed=False),
+                "seq_comparable": lambda a, b: b - a != z.BitVecVal(1 << 31, 32),
+                "seq_lt": lambda a, b: z.And(a != b, z.ULT(b - a, z.BitVecVal(1 << 31, 32))),
+                "seq_le": lambda a, b: z.ULT(b - a, z.BitVecVal(1 << 31, 32))}
+        require(value["op"] in operators, f"Unsupported symbolic operator: {value['op']}")
+        return operators[value["op"]](*args)
 
     def encode_step(self, index):
         z, m = self.z, self.model
@@ -168,6 +197,9 @@ class Encoding:
             return self.z.is_true(result)
         if self.z.is_string_value(result):
             return result.as_string()
+        if result.sort() == self.byte_sort:
+            length = solution.eval(self.z.Length(value), model_completion=True).as_long()
+            return [solution.eval(value[i], model_completion=True).as_long() for i in range(length)]
         return result.as_long()
 
     def witness(self, solution):
@@ -199,13 +231,16 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     enc.solver.push()
     enc.solver.add(z.Or(z.Not(z.And(*invariants)), *enc.action_faults))
     smt = enc.solver.to_smt2()
-    answer = enc.solver.check()
+    answer = enc.solve()
     report = {"backend": "z3-bmc", "solver_version": z.get_version_string(), "depth": depth,
               "model_semantic_sha256": model_hash(model), "symbolic_initials": list(symbolic_initials),
               "sequence_width": 32, "event_fields": "all_typed_values", "time": "unbounded_integer_ms",
               "scope": "defined_transitions_only", "liveness": "not_checked", "unbounded_proof": False,
               "invariants": [i["id"] for i in model["invariants"]], "safety_query": str(answer)}
     report["runtime_properties"] = ["positive_timer_duration"]
+    if model["ir_version"] == "0.2":
+        report["byte_semantics"] = "finite_sequence_bv8_truncating_slice"
+        report["sequence_order"] = "strict_half_space_partial_order"
     if answer == z.sat:
         report["counterexample"] = enc.witness(enc.solver.model())
         report["replay"] = replay(model, report["counterexample"])
@@ -213,22 +248,22 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     elif answer == z.unsat:
         report["status"] = "bounded_pass"
     else:
-        report.update(status="unknown", reason=enc.solver.reason_unknown())
+        report.update(status="unknown", reason=enc.reason_unknown())
     enc.solver.pop()
     enc.solver.push()
     enc.solver.add(z.Or(*enc.conflicts))
     overlap_smt = enc.solver.to_smt2()
-    conflict = enc.solver.check()
+    conflict = enc.solve()
     report["overlap_query"] = str(conflict)
     if conflict == z.sat:
         report["status"] = "conflict"
     elif conflict == z.unknown and report["status"] == "bounded_pass":
-        report.update(status="unknown", reason=enc.solver.reason_unknown())
+        report.update(status="unknown", reason=enc.reason_unknown())
     enc.solver.pop()
     # A satisfying path is cross-checked against independent runtime semantics.
     if report["status"] == "bounded_pass":
         enc.solver.add(z.Int("choice_0") != -1)
-        answer = enc.solver.check()
+        answer = enc.solve()
         if answer == z.sat:
             report["sample_witness"] = enc.witness(enc.solver.model())
             report["replay"] = replay(model, report["sample_witness"])
@@ -236,6 +271,8 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
                 report["status"] = "semantic_mismatch"
         else:
             report["status"] = "unknown" if answer == z.unknown else "vacuous"
+            if answer == z.unknown:
+                report["reason"] = enc.reason_unknown()
     if out is not None:
         out = Path(out)
         out.mkdir(parents=True, exist_ok=True)

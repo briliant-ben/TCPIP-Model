@@ -4,6 +4,10 @@ import json
 from pathlib import Path
 
 MOD = 1 << 32
+HALF = MOD // 2
+TYPES = ("bool", "int", "seq32", "string", "bytes")
+DATA_OPS = {"sub", "min", "bytes_len", "bytes_concat", "bytes_slice",
+            "seq_distance", "seq_comparable", "seq_lt", "seq_le"}
 
 
 class ModelError(ValueError):
@@ -29,6 +33,7 @@ def value_ok(value, kind):
         "int": lambda: type(value) is int,
         "seq32": lambda: type(value) is int and 0 <= value < MOD,
         "string": lambda: type(value) is str,
+        "bytes": lambda: type(value) is list and all(type(x) is int and 0 <= x <= 255 for x in value),
     }.get(kind, lambda: False)()
 
 
@@ -43,6 +48,10 @@ def infer(expr, model, event=None):
     if set(expr) == {"seq"}:
         require(value_ok(expr["seq"], "seq32"), "Invalid seq32 literal")
         return "seq32"
+    if set(expr) == {"bytes"}:
+        require(model.get("ir_version") == "0.2", "bytes requires IR 0.2")
+        require(value_ok(expr["bytes"], "bytes"), "Invalid bytes literal")
+        return "bytes"
     if set(expr) == {"var"}:
         require(expr["var"] in model["variables"], "Unknown variable")
         return model["variables"][expr["var"]]["type"]
@@ -59,6 +68,7 @@ def infer(expr, model, event=None):
     require(set(expr) == {"op", "args"} and type(expr["args"]) is list,
             "Unsupported expression shape")
     op, args = expr["op"], expr["args"]
+    require(op not in DATA_OPS or model.get("ir_version") == "0.2", "Data operators require IR 0.2")
     types = [infer(x, model, event) for x in args]
     if op in ("eq", "ne"):
         require(len(types) == 2 and types[0] == types[1], "Equality type mismatch")
@@ -73,6 +83,15 @@ def infer(expr, model, event=None):
         "le": (["int", "int"], "bool"),
         "ge": (["int", "int"], "bool"),
         "seq_add": (["seq32", "int"], "seq32"),
+        "sub": (["int", "int"], "int"),
+        "min": (["int", "int"], "int"),
+        "bytes_len": (["bytes"], "int"),
+        "bytes_concat": (["bytes", "bytes"], "bytes"),
+        "bytes_slice": (["bytes", "int", "int"], "bytes"),
+        "seq_distance": (["seq32", "seq32"], "int"),
+        "seq_comparable": (["seq32", "seq32"], "bool"),
+        "seq_lt": (["seq32", "seq32"], "bool"),
+        "seq_le": (["seq32", "seq32"], "bool"),
     }
     require(op in signatures, f"Unsupported operator: {op}")
     inputs, output = signatures[op]
@@ -85,6 +104,8 @@ def evaluate(expr, machine, event=None):
         return expr
     if "seq" in expr:
         return expr["seq"]
+    if "bytes" in expr:
+        return expr["bytes"].copy()
     if "var" in expr:
         return machine.values[expr["var"]]
     if "event" in expr:
@@ -106,11 +127,21 @@ def evaluate(expr, machine, event=None):
         "le": lambda a, b: a <= b,
         "ge": lambda a, b: a >= b,
         "seq_add": lambda a, b: (a + b) % MOD,
+        "sub": lambda a, b: a - b,
+        "min": min,
+        "bytes_len": len,
+        "bytes_concat": lambda a, b: a + b,
+        # Total truncating slice: offset and count are clamped independently.
+        "bytes_slice": lambda a, offset, count: a[max(0, offset):max(0, offset) + max(0, count)],
+        "seq_distance": lambda a, b: (b - a) % MOD,
+        "seq_comparable": lambda a, b: (b - a) % MOD != HALF,
+        "seq_lt": lambda a, b: 0 < (b - a) % MOD < HALF,
+        "seq_le": lambda a, b: (b - a) % MOD < HALF,
     }[expr["op"]](*args)
 
 
 def validate(model):
-    require(model.get("ir_version") == "0.1", "Unsupported IR version")
+    require(model.get("ir_version") in ("0.1", "0.2"), "Unsupported IR version")
     require(model.get("semantics") == "flat-efsm-atomic-ordered-v1", "Unsupported semantics")
     states = model["states"]
     require(len(states) == len(set(states)), "Duplicate states")
@@ -120,10 +151,13 @@ def validate(model):
     for rid, req in requirements.items():
         require(bool(req.get("source")) and bool(req.get("interpretation")), f"Untraceable requirement {rid}")
     for name, var in model["variables"].items():
+        require(var["type"] != "bytes" or model["ir_version"] == "0.2", "bytes requires IR 0.2")
         require(value_ok(var["initial"], var["type"]), f"Bad initial value: {name}")
     for name, event in model["events"].items():
         require(event["origin"] in ("application", "network", "timer"), f"Bad origin: {name}")
-        require(all(t in ("bool", "int", "seq32", "string") for t in event["fields"].values()), "Bad event field type")
+        require(all(t in TYPES and (t != "bytes" or model["ir_version"] == "0.2") for t in event["fields"].values()), "Bad event field type")
+    for message in model["messages"].values():
+        require(all(t in TYPES and (t != "bytes" or model["ir_version"] == "0.2") for t in message["fields"].values()), "Bad message field type")
     timer_events = []
     for timer in model["timers"].values():
         event = model["events"].get(timer["event"], {})
@@ -174,18 +208,18 @@ class Machine:
     def __init__(self, model, initial=None):
         self.model = validate(copy.deepcopy(model))
         self.state = model["initial_state"]
-        self.values = {k: v["initial"] for k, v in model["variables"].items()}
+        self.values = {k: copy.deepcopy(v["initial"]) for k, v in self.model["variables"].items()}
         for key, value in (initial or {}).items():
             require(key in model["variables"], f"Unknown initial variable {key}")
             require(value_ok(value, model["variables"][key]["type"]), f"Bad initial variable {key}")
-            self.values[key] = value
+            self.values[key] = copy.deepcopy(value)
         self.timers = {}
         self.now_ms = 0
         self.trace = []
         self.check_invariants()
 
     def snapshot(self):
-        return {"state": self.state, "variables": self.values.copy(), "timers": self.timers.copy()}
+        return {"state": self.state, "variables": copy.deepcopy(self.values), "timers": self.timers.copy()}
 
     def check_invariants(self):
         for key, var in self.model["variables"].items():
@@ -213,9 +247,9 @@ class Machine:
         for action in rule["actions"]:
             kind, arg = next(iter(action.items()))
             if kind == "set":
-                self.values[arg["var"]] = evaluate(arg["value"], self, event)
+                self.values[arg["var"]] = copy.deepcopy(evaluate(arg["value"], self, event))
             elif kind == "emit":
-                emitted.append({"message": arg["message"], "fields": {k: evaluate(v, self, event) for k, v in arg["fields"].items()}})
+                emitted.append({"message": arg["message"], "fields": {k: copy.deepcopy(evaluate(v, self, event)) for k, v in arg["fields"].items()}})
             elif kind == "cancel":
                 self.timers.pop(arg, None)
             elif kind == "arm":
@@ -244,7 +278,7 @@ class Machine:
         require(name in self.model["events"], f"Unknown event {name}")
         require(self.model["events"][name]["origin"] != "timer", "Timer events cannot be injected")
         candidate.advance(self.now_ms if time_ms is None else time_ms)
-        candidate._fire(name, fields or {})
+        candidate._fire(name, copy.deepcopy(fields or {}))
         self.__dict__.update(candidate.__dict__)
 
     def tick(self, time_ms):
