@@ -37,3 +37,13 @@ Linux 通道：本机有 tcpdump，但没有 packetdrill、Linux /dev/net/tun、
 实际限制：数据深度 6 的全输入 safety 和 overlap 查询均为 unknown（求解限时），suite 如实为 formal_pending_stack_incomplete；具体场景符号重放不是替代证明。乱序重组、一般 piggyback、窗口右边缘收缩、未排空时 FIN、完整 RTO、拥塞恢复和数据独立实现闭环仍未完成。下一实施顺序见 roadmap.md。
 
 本里程碑全量回归为 103 项测试；数据 suite 另保存固定输入查询/见证/重放，以及带 payload/window 的合成 PCAP 独立解析、归一化和 Difference。合成往返标注 synthetic_codec_roundtrip_only，绝不升级为实机证据。复查还修正了接近半空间时分别对 UNA/NXT 分类旧/未来 ACK 可能重叠的问题：统一以 UNA 前向距离分区，并加入边界回归。旧模型、lwIP 和全部输入/产物哈希在当前源码上重新生成后验收。
+
+## 2026-10-24：独立状态归纳义务
+
+上一 goal turn 已提交实质进展，本轮先核对干净工作区。完整 Seq/BV32 BMC 仍受限时；尝试仅长度投影、长度+完整模整数后，深度 6 查询仍 unknown，未替换或修改原 BMC 结论。
+
+新增独立归纳路径：对内容不敏感的 guard/标量/长度状态性质使用精确长度投影（全 Seq 拼接/切片公式反例查询 unsat），序列号保留全部 2^32 取值并使用模整数。字节内容比较明确拒绝。分别保存初值、每条规则保持及每个多规则 guard 组的 SMT-LIB 和哈希，另用原完整字节/BV32 后端求非空见证并参考重放。
+
+初次检查得到 116/117 条保持义务 unsat；同时打开的任意前状态暴露缺少 SYN-SENT 中 SND.UNA=ISS 的派生关系，不能认定为可达协议故障。将该关系作为新的 IR 不变量后，初值、117 条规则和 14 个 guard 组均通过，关系自身也在保持义务中验证。删去该关系可复现归纳失败；三个已知可达数据故障变体均使相应保持义务失败。此阶段未实现新的 TCP 数据行为，乱序重组与后续完整范围仍待推进。
+
+本轮验证：113 项 unittest 通过（含 10 项新增归纳/编码测试）；导出的所有保持/重叠脚本在新 Z3 进程中重新执行得到相同 unsat；build、旧两个模型 depth=6、suite-verify 与归纳查询/模型哈希验收通过。数据 BMC 仍为 unknown，suite 保持 formal_pending_stack_incomplete。lwIP 两连接执行成功、丢包时序差异保留，lwip-verify 通过；Linux packetdrill 入口再次记录本机 darwin 环境的 not_run。没有修改上游 lwIP 或 oracle。

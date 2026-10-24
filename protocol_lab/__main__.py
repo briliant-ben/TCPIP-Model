@@ -32,6 +32,9 @@ def main():
     p = sub.add_parser("formal", help="Independent Z3 bounded check with replay")
     p.add_argument("--artifacts", type=Path, default=ROOT / "artifacts")
     p.add_argument("--depth", type=int, default=6)
+    p = sub.add_parser("inductive", help="Check separate content-insensitive invariant induction obligations")
+    p.add_argument("model", type=Path)
+    p.add_argument("--out", type=Path, required=True)
     p = sub.add_parser("observe", help="Decode, normalize and bind a PCAP to a built scenario")
     p.add_argument("pcap", type=Path)
     p.add_argument("--profile", type=Path, required=True)
@@ -87,6 +90,11 @@ def main():
             write(args.out, result)
             print(f"{result['status']}; {args.out}")
             return int(result["status"] != "match")
+        elif args.command == "inductive":
+            from .inductive import prove
+            result = prove(load(args.model), out=args.out)
+            print(f"{result['status']}; {args.out / 'result.json'}")
+            return 0 if result["status"] == "inductive_invariants_pass" else 2
         elif args.command == "formal":
             from .evidence import ensure_snapshot
             from .symbolic import check

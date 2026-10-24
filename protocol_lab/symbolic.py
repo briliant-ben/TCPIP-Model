@@ -7,7 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from .ir import Machine, ModelError, require, validate
+from .ir import MOD, Machine, ModelError, infer, require, validate
 
 
 def model_hash(model):
@@ -36,13 +36,13 @@ def replay(model, witness):
     return {"status": "match", "compared_steps": compared}
 
 
-def encode_trace(model, trace):
+def encode_trace(model, trace, **encoding_options):
     """Constrain inputs/rule choices, without assuming poststates or invariants."""
     require(bool(trace), "Cannot cross-check an empty trace")
     # Initial overrides are concrete inputs, not assumed safety properties.
     initial = trace[0]["before"]["variables"]
     overrides = [n for n, v in model["variables"].items() if initial[n] != v["initial"]]
-    enc = Encoding(model, len(trace), overrides)
+    enc = Encoding(model, len(trace), overrides, **encoding_options)
     z = enc.z
     for name, value in initial.items():
         enc.solver.add(enc.frames[0]["values"][name] == enc.literal(value, model["variables"][name]["type"]))
@@ -103,21 +103,29 @@ class Encoding:
     def reason_unknown(self):
         return self.solver_error or self.solver.reason_unknown()
 
-    def __init__(self, model, depth, symbolic_initials):
+    def __init__(self, model, depth, symbolic_initials, byte_encoding="sequence", sequence_encoding="bitvector", arbitrary_state=False):
         try:
             import z3
         except ImportError as exc:
             raise ModelError("Z3 is missing: install requirements-formal.txt in .venv") from exc
         self.z = z3
         self.model = validate(model)
+        require(byte_encoding in ("sequence", "length"), "Unsupported symbolic byte encoding")
+        self.byte_encoding = byte_encoding
+        require(sequence_encoding in ("bitvector", "modular-int"), "Unsupported sequence encoding")
+        self.sequence_encoding = sequence_encoding
+        if byte_encoding == "length":
+            self.validate_length_projection()
         self.depth = depth
         self.initials = symbolic_initials
         require(type(depth) is int and 1 <= depth <= 30, "Symbolic depth must be 1..30")
         require(all(n in model["variables"] for n in symbolic_initials), "Unknown symbolic initial variable")
-        self.byte_sort = z3.SeqSort(z3.BitVecSort(8))
-        self.sorts = {"bool": z3.BoolSort(), "int": z3.IntSort(), "seq32": z3.BitVecSort(32), "string": z3.StringSort(), "bytes": self.byte_sort}
+        self.byte_sort = z3.SeqSort(z3.BitVecSort(8)) if byte_encoding == "sequence" else z3.IntSort()
+        self.sorts = {"bool": z3.BoolSort(), "int": z3.IntSort(),
+                      "seq32": z3.BitVecSort(32) if sequence_encoding == "bitvector" else z3.IntSort(),
+                      "string": z3.StringSort(), "bytes": self.byte_sort}
         self.frames = []
-        self.events, self.branches, self.conflicts, self.action_faults = [], [], [], []
+        self.events, self.branches, self.conflicts, self.action_faults, self.enabled = [], [], [], [], []
         self.solver = z3.Solver()
         self.solver.set(timeout=10000)
         for i in range(depth + 1):
@@ -126,20 +134,60 @@ class Encoding:
                 "active": {n: z3.Bool(f"active_{i}_{n}") for n in model["timers"]},
                 "due": {n: z3.Int(f"due_{i}_{n}") for n in model["timers"]}})
         first = self.frames[0]
-        self.solver.add(first["state"] == model["states"].index(model["initial_state"]), first["now"] == 0)
+        if byte_encoding == "length":
+            for frame in self.frames:
+                self.solver.add(*[frame["values"][n] >= 0 for n, v in model["variables"].items() if v["type"] == "bytes"])
+        if sequence_encoding == "modular-int":
+            for frame in self.frames:
+                for n, v in model["variables"].items():
+                    if v["type"] == "seq32":
+                        self.solver.add(frame["values"][n] >= 0, frame["values"][n] < MOD)
+        if arbitrary_state:
+            self.solver.add(first["state"] >= 0, first["state"] < len(model["states"]), first["now"] >= 0)
+        else:
+            self.solver.add(first["state"] == model["states"].index(model["initial_state"]), first["now"] == 0)
         for n, var in model["variables"].items():
             if n not in symbolic_initials:
                 self.solver.add(first["values"][n] == self.literal(var["initial"], var["type"]))
         for n in model["timers"]:
-            self.solver.add(z3.Not(first["active"][n]), first["due"][n] == 0)
+            if arbitrary_state:
+                self.solver.add(z3.Implies(first["active"][n], first["due"][n] >= first["now"]))
+            else:
+                self.solver.add(z3.Not(first["active"][n]), first["due"][n] == 0)
         for i in range(depth):
             self.encode_step(i)
+
+    def validate_length_projection(self):
+        """Reject every content observation; do not approximate bytes equality."""
+        def visit(expr, event=None):
+            if type(expr) is not dict or "op" not in expr:
+                return
+            if expr["op"] in ("eq", "ne"):
+                require(infer(expr["args"][0], self.model, event) != "bytes",
+                        "Length projection does not support byte-content equality")
+            for arg in expr["args"]:
+                visit(arg, event)
+        for rule in self.model["transitions"]:
+            visit(rule["guard"], rule["event"])
+            for action in rule["actions"]:
+                kind, arg = next(iter(action.items()))
+                if kind == "set":
+                    visit(arg["value"], rule["event"])
+                elif kind == "arm":
+                    visit(arg["delay_ms"], rule["event"])
+                elif kind == "emit":
+                    for expr in arg["fields"].values():
+                        visit(expr, rule["event"])
+        for inv in self.model["invariants"]:
+            visit(inv["assert"])
 
     def literal(self, value, kind=None):
         z = self.z
         if kind == "seq32":
-            return z.BitVecVal(value, 32)
+            return z.BitVecVal(value, 32) if self.sequence_encoding == "bitvector" else z.IntVal(value)
         if kind == "bytes":
+            if self.byte_encoding == "length":
+                return z.IntVal(len(value))
             units = [z.Unit(z.BitVecVal(v, 8)) for v in value]
             return z.Concat(*units) if len(units) > 1 else units[0] if units else z.Empty(self.byte_sort)
         if type(value) is bool:
@@ -153,7 +201,7 @@ class Encoding:
         if type(value) is not dict:
             return self.literal(value)
         if "seq" in value:
-            return z.BitVecVal(value["seq"], 32)
+            return self.literal(value["seq"], "seq32")
         if "bytes" in value:
             return self.literal(value["bytes"], "bytes")
         if "var" in value:
@@ -179,6 +227,20 @@ class Encoding:
                 "seq_comparable": lambda a, b: b - a != z.BitVecVal(1 << 31, 32),
                 "seq_lt": lambda a, b: z.And(a != b, z.ULT(b - a, z.BitVecVal(1 << 31, 32))),
                 "seq_le": lambda a, b: z.ULT(b - a, z.BitVecVal(1 << 31, 32))}
+        if self.byte_encoding == "length":
+            def slice_length(length, offset, count):
+                start = z.If(offset < 0, 0, offset)
+                size = z.If(count < 0, 0, count)
+                remaining = z.If(length > start, length - start, 0)
+                return z.If(size < remaining, size, remaining)
+            operators.update(bytes_len=lambda a: a, bytes_concat=lambda a, b: a+b,
+                             bytes_slice=slice_length)
+        if self.sequence_encoding == "modular-int":
+            operators.update(seq_add=lambda a, b: (a+b) % MOD,
+                             seq_distance=lambda a, b: (b-a) % MOD,
+                             seq_comparable=lambda a, b: (b-a) % MOD != MOD//2,
+                             seq_lt=lambda a, b: z.And((b-a) % MOD > 0, (b-a) % MOD < MOD//2),
+                             seq_le=lambda a, b: (b-a) % MOD < MOD//2)
         require(value["op"] in operators, f"Unsupported symbolic operator: {value['op']}")
         return operators[value["op"]](*args)
 
@@ -188,6 +250,14 @@ class Encoding:
         fields = {name: {n: z.Const(f"input_{index}_{name}_{n}", self.sorts[kind]) for n, kind in spec["fields"].items()}
                   for name, spec in m["events"].items()}
         self.events.append(fields)
+        if self.byte_encoding == "length":
+            self.solver.add(*[fields[name][n] >= 0 for name, spec in m["events"].items()
+                              for n, kind in spec["fields"].items() if kind == "bytes"])
+        if self.sequence_encoding == "modular-int":
+            for name, spec in m["events"].items():
+                for n, kind in spec["fields"].items():
+                    if kind == "seq32":
+                        self.solver.add(fields[name][n] >= 0, fields[name][n] < MOD)
         choice = z.Int(f"choice_{index}")
         branches, enabled = [], []
         not_terminal = z.And(*[old["state"] != m["states"].index(s) for s in m["scope"]["terminal_states"]])
@@ -244,6 +314,7 @@ class Encoding:
             self.solver.add(z.Implies(z.Int(f"choice_{index-1}") == -1, choice == -1))
         self.conflicts.append(z.Or(*[z.And(a, b) for i, (ea, a) in enumerate(enabled)
                                        for eb, b in enabled[i+1:] if ea == eb]))
+        self.enabled.append(enabled)
 
     def concrete(self, solution, value):
         result = solution.eval(value, model_completion=True)
@@ -251,14 +322,18 @@ class Encoding:
             return self.z.is_true(result)
         if self.z.is_string_value(result):
             return result.as_string()
-        if result.sort() == self.byte_sort:
+        if self.byte_encoding == "sequence" and result.sort() == self.byte_sort:
             length = solution.eval(self.z.Length(value), model_completion=True).as_long()
             return [solution.eval(value[i], model_completion=True).as_long() for i in range(length)]
         return result.as_long()
 
     def witness(self, solution):
         m = self.model
-        initial = {n: self.concrete(solution, v) for n, v in self.frames[0]["values"].items()}
+        def typed(value, kind):
+            if self.byte_encoding == "length" and kind == "bytes":
+                return {"byte_length": self.concrete(solution, value)}
+            return self.concrete(solution, value)
+        initial = {n: typed(v, m["variables"][n]["type"]) for n, v in self.frames[0]["values"].items()}
         steps = []
         for i in range(self.depth):
             choice = self.concrete(solution, self.z.Int(f"choice_{i}"))
@@ -269,11 +344,11 @@ class Encoding:
             emitted = next(e for index, j, e in self.branches if index == i and j == choice)
             steps.append({"at_ms": self.concrete(solution, frame["now"]), "event": rule["event"],
                           "origin": m["events"][rule["event"]]["origin"], "transition": rule["id"],
-                          "fields": {n: self.concrete(solution, v) for n, v in self.events[i][rule["event"]].items()},
+                          "fields": {n: typed(v, m["events"][rule["event"]]["fields"][n]) for n, v in self.events[i][rule["event"]].items()},
                           "after": {"state": m["states"][self.concrete(solution, frame["state"])],
-                                    "variables": {n: self.concrete(solution, v) for n, v in frame["values"].items()},
+                                    "variables": {n: typed(v, m["variables"][n]["type"]) for n, v in frame["values"].items()},
                                     "timers": {n: self.concrete(solution, frame["due"][n]) for n, active in frame["active"].items() if self.concrete(solution, active)}},
-                          "emitted": [{"message": e["message"], "fields": {n: self.concrete(solution, v) for n, v in e["fields"].items()}} for e in emitted]})
+                          "emitted": [{"message": e["message"], "fields": {n: typed(v, m["messages"][e["message"]]["fields"][n]) for n, v in e["fields"].items()}} for e in emitted]})
         return {"initial": initial, "steps": steps}
 
 

@@ -16,6 +16,8 @@ GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP
 
 2026-10-24：已恢复本地基线并推进 [IR 数据语义](docs/semantics.md) 和 [有限 TCP 数据切片](docs/tcp-data.md)。数据切片的 15 个场景具有参考轨迹和独立 Z3 固定输入重放；全输入混合查询可能为 `unknown`，suite 明确保留 `formal_pending`。这不影响旧模型的独立有界检查，也不将合成 PCAP 计为 Linux/lwIP 数据验证。持续实施记录见 [实施日志](docs/implementation-log.md)。
 
+新增的[状态不变量归纳义务](docs/inductive.md)独立保存初值、117 条规则保持性和 14 个 guard 组检查；当前数据模型通过这些长度/标量性质义务。它拒绝字节内容比较，不替换原 BMC 结果，也不构成完整 TCP 或 payload 内容正确性证明。
+
 运行新增流程：
 
 ```bash

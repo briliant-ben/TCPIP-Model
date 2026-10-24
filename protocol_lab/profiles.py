@@ -13,7 +13,8 @@ def profile_inputs(profile, model):
     inputs = {str(p.relative_to(ROOT)): digest(p) for p in model_files(ROOT / profile["model"])}
     paths = sorted((ROOT / "protocol_lab").glob("*.py"))
     paths += sorted((ROOT / profile["scenarios"]).glob("*.json"))
-    paths += [ROOT / "spec/sources/manifest.json", ROOT / "profiles.json", ROOT / "requirements-formal.txt", ROOT / "docs/semantics.md"]
+    paths += [ROOT / "spec/sources/manifest.json", ROOT / "profiles.json", ROOT / "requirements-formal.txt", ROOT / "docs/semantics.md",
+              ROOT / "docs/inductive.md", ROOT / "formal/README.md"]
     if profile.get("wire_projection"):
         paths.append(ROOT / "packet-profile.json")
     inputs.update({str(p.relative_to(ROOT)): digest(p) for p in paths})
@@ -139,12 +140,18 @@ def run_profile(profile, out, formal=False, depth=6):
     if formal:
         formal_result = check(model, depth=depth, out=out / "formal")
         generated += [out / "formal" / n for n in ("result.json", "model.smt2", "overlap.smt2")]
+    induction = {"status": "not_run"}
+    if formal and profile.get("inductive"):
+        from .inductive import prove
+        induction = prove(model, out=out / "inductive")
+        generated += [out / "inductive" / n for n in (*induction["query_hashes"], "result.json")]
     result = {"profile": profile["id"], "protocol": model["protocol"], "status": "reference_pass",
               "model_sha256": digest(model_path), "sources": sources, "input_hashes": inputs,
               "scenarios": scenarios, "state_count": len(model["states"]), "transition_count": len(model["transitions"]),
               "visited_states": sorted(states), "unvisited_states": sorted(set(model["states"]) - states),
               "covered_transitions": sorted(covered), "uncovered_transitions": sorted({r["id"] for r in model["transitions"]} - covered),
               "formal": {k: formal_result[k] for k in ("status", "backend", "depth", "reason", "safety_query", "overlap_query") if k in formal_result},
+              "inductive": {k: induction[k] for k in ("status", "backend", "byte_encoding", "sequence_encoding") if k in induction},
               "real_stack": "not_run", "protocol_complete": False,
               "artifact_hashes": {str(p.relative_to(out)): digest(p) for p in generated}}
     if formal and formal_result["status"] != "bounded_pass":
@@ -153,6 +160,8 @@ def run_profile(profile, out, formal=False, depth=6):
         result["status"] = "formal_pending"
     if any(status not in ("match", "unknown") for status in trace_statuses):
         result["status"] = "fail"
+    if induction["status"] not in ("not_run", "inductive_invariants_pass"):
+        result["status"] = "formal_pending" if induction["status"] in ("unknown", "vacuous") and result["status"] != "fail" else "fail"
     write(out / "report.json", result)
     return result
 
@@ -202,6 +211,10 @@ def verify_suite(out):
             require(formal["model_semantic_sha256"] == model_hash(model), "Formal model mismatch")
             require(formal["safety_query"] == "unsat" and formal["overlap_query"] == "unsat", "Formal queries did not pass")
             require(formal["replay"]["status"] == "match", "Formal witness did not replay")
-        result["profiles"].append({"id": profile["id"], "local_integrity": "pass", "formal": report["formal"], "real_stack": "not_run"})
+        if report.get("inductive", {}).get("status") == "inductive_invariants_pass":
+            from .inductive import verify
+            verify(model, target / "inductive")
+        result["profiles"].append({"id": profile["id"], "local_integrity": "pass", "formal": report["formal"],
+                                   "inductive": report.get("inductive", {"status": "not_run"}), "real_stack": "not_run"})
     write(out / "verification.json", result)
     return result

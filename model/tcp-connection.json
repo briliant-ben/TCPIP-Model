@@ -6016,6 +6016,32 @@
       "requirements": [
         "CONNECTION-PROFILE"
       ]
+    },
+    {
+      "id": "C-INV-SYN-SENT-ISS",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "SYN-SENT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "snd_una"
+              },
+              {
+                "var": "iss"
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONN-OPEN",
+        "CONN-SIMULTANEOUS"
+      ]
     }
   ]
 }
