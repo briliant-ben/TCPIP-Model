@@ -9,10 +9,24 @@ from .packets import compare, packetdrill, write_pcap
 from .symbolic import check, crosscheck_trace, model_hash
 
 
+def scenario_paths(profile):
+    sources = profile["scenarios"]
+    require(type(sources) in (str, list), "Invalid scenario source list")
+    sources = [sources] if type(sources) is str else sources
+    require(bool(sources) and all(type(p) is str for p in sources), "Invalid scenario source list")
+    paths = []
+    for source in sources:
+        directory = (ROOT / source).resolve()
+        require(directory.is_relative_to(ROOT), "Scenario source escapes repository")
+        paths.extend(sorted(directory.glob("*.json")))
+    require(len({p.stem for p in paths}) == len(paths), "Duplicate scenario ID across sources")
+    return paths
+
+
 def profile_inputs(profile, model):
     inputs = {str(p.relative_to(ROOT)): digest(p) for p in model_files(ROOT / profile["model"])}
     paths = sorted((ROOT / "protocol_lab").glob("*.py"))
-    paths += sorted((ROOT / profile["scenarios"]).glob("*.json"))
+    paths += scenario_paths(profile)
     paths += [ROOT / "spec/sources/manifest.json", ROOT / "profiles.json", ROOT / "requirements-formal.txt", ROOT / "docs/semantics.md",
               ROOT / "docs/inductive.md", ROOT / "formal/README.md"]
     if profile.get("wire_projection"):
@@ -83,7 +97,7 @@ def run_profile(profile, out, formal=False, depth=6):
     generated = []
     scenarios = []
     trace_statuses = []
-    paths = sorted((ROOT / profile["scenarios"]).glob("*.json"))
+    paths = scenario_paths(profile)
     require(bool(paths), "Profile has no scenarios")
     for path in paths:
         scenario = read(path)

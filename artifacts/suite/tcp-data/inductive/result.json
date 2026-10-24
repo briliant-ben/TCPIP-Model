@@ -711,12 +711,14 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "app.listen",
-        "origin": "application",
-        "transition": "C-PASSIVE-OPEN",
-        "fields": {},
+        "event": "net.syn",
+        "origin": "network",
+        "transition": "C-CLOSED-SYN",
+        "fields": {
+          "seq": 0
+        },
         "after": {
-          "state": "LISTEN",
+          "state": "CLOSED",
           "variables": {
             "iss": 4294967293,
             "irs": 0,
@@ -728,7 +730,7 @@
             "tx_flags": "S",
             "rto_ms": 1000,
             "retries": 0,
-            "active_open": false,
+            "active_open": true,
             "user_timeout_ms": 30000,
             "msl_ms": 60000,
             "local_window": 16,
@@ -743,7 +745,17 @@
           },
           "timers": {}
         },
-        "emitted": []
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "RA",
+              "seq": 0,
+              "ack": 1,
+              "window": 16
+            }
+          }
+        ]
       }
     ]
   },
@@ -752,10 +764,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "1e17736e8aee9b493410ed0f2938efc9b73e0a3b5cb091bb45ff1671d4735f10",
-    "initial.smt2": "af2e4dbccaa46402257230931a060c41dd415315198cd98f4b8513c71ecb9b00",
-    "preservation.smt2": "fafddb20a3b6daafe4cc4f049eab2d0cf3396ff9e35ae93d52b05cb7ff2d5309",
-    "overlap.smt2": "66335595b7f32bb47e5e701a5c35c77fdb57802c6f5a07a72e431ebb6027832e",
-    "sample.smt2": "f835adfd336b0d49c34684f29bf57e5a6ea2fada36d785a3c84dcab7dc5f8dd4"
+    "length-lemmas.smt2": "76a9fc7603ba14b7bb79a480eba5b54c064a5a58f211494060253846cae5f3b2",
+    "initial.smt2": "e268d4f14a004062104d0f919cfa64e4d6e970f659d5aa3e5424d1e53bf706d9",
+    "preservation.smt2": "0a320098e3c592c79b0ef0d2853431d2f0eef8bff7a18f08ae50dee794a9b133",
+    "overlap.smt2": "d498e4cda35c0b26960aa59f6ce90f55e05a73ade555d9aeebc17de8dcce72b9",
+    "sample.smt2": "3d7b1f5aff0c220df5e822fcd758992eb8491beee372962d3b35ecf3e24fcd29"
   }
 }

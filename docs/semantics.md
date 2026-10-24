@@ -72,12 +72,15 @@ PCAP 归一化器不调用合成编码器。它按显式四元组过滤连接，
 | `bytes_concat(a,b)` | bytes × bytes → bytes，按序连接 |
 | `bytes_slice(b,offset,count)` | bytes × int × int → bytes，截断切片；offset/count 分别取 max(0,x)，从 offset 取至多 count 字节；越尾截断，越界起点返回空串 |
 | `sub(a,b)` / `min(a,b)` | int × int → int，无界数学整数减法/最小值 |
+| `ite(condition,yes,no)` | bool × T × T → T；两个分支必须同型，选择对应值；无隐式类型转换 |
 | `seq_distance(a,b)` | seq32 × seq32 → int，`(b-a) mod 2^32`，从 a 到 b 的前向距离，不是带符号减法 |
 | `seq_comparable(a,b)` | bool，当且仅当距离不等于 `2^31` |
 | `seq_lt(a,b)` | bool，当且仅当 `0 < distance < 2^31` |
 | `seq_le(a,b)` | bool，当且仅当 `0 <= distance < 2^31` |
 
 切片是总函数，负索引没有 Python 从尾部计数的含义。需完整读取 count 字节的模型必须用 guard/不变量约束 offset、count 和长度，不得依赖切片抛异常来限制输入。空串参与相等、长度、拼接和切片均有定义。
+
+`ite` 在 IR 0.2 中可用；与其他操作一样，纯表达式参数按现有方式先求值，因此没有短路或 action 副作用。两个分支都必须通过静态类型检查。返回的 bytes 继续遵守赋值、emit 与快照的值语义；旧版 IR 不自动获得该操作。独立 Seq 后端用同型 Z3 If，长度投影用同一条件选择分支长度，并另行检查 `len(If(c,a,b))=If(c,len(a),len(b))` 的全序列义务。
 
 序列谓词在相距恰好半空间时双向 lt/le 均为 false，comparable 为 false；这是显式的“不可比”，不是选定任意方向。比较不是全局传递的整数排序。建模窗口及在途范围必须小于半空间，并按同一基准使用前向距离；未知/歧义输入应在 IR 中有明确处理或报告未覆盖。`seq_add` 继续接受任意整数增量并取模（包括负增量），没有暗中加入窗口约束。
 
@@ -92,6 +95,8 @@ PCAP 归一化器不调用合成编码器。它按显式四元组过滤连接，
 `amend_transitions` 每项以唯一 ID 指定已有规则，可提供 `and_guard`（与原 guard 做显式 and）和 `append_actions`（在原 actions 后按序执行）；禁止回调或未知补丁操作。组合后删除组合元数据，对整个展开模型执行相同的类型、规则及不变量校验。调用者不能将未展开 overlay 直接传给 Machine/形式后端。
 
 组合是通用 IR 加载机制，不添加协议事件、序列号转换或定时器调度。suite 保存 expanded-model.json 并将所有基模型和 overlay 纳入输入哈希；模型语义哈希针对展开后的 IR。连接规则变更会使组合模型旧证据失效。
+
+Profile 的 `scenarios` 可为一个目录字符串或多个目录字符串组成的列表，用于复用原有回归输入。目录必须位于仓库内，跨目录重复场景 ID 明确拒绝；所有实际输入文件均进入哈希绑定，不通过复制/改写旧证据伪造复用。
 
 ## 独立归纳义务的可选编码
 

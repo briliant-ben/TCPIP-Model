@@ -1,0 +1,116 @@
+{
+  "scenario_version": "0.1",
+  "id": "sequence-wrap-data",
+  "description": "sequence wrap data",
+  "initial": {
+    "iss": 4294967293
+  },
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite tcp-data profile; validated connection/packet/checksum; no advancing ACK or window update in payload events."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 4294967293,
+        "ack": 4294967294,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 4294967294,
+        "ack": 0,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 1030,
+      "tick": true
+    },
+    {
+      "at_ms": 1040,
+      "event": "net.ack",
+      "fields": {
+        "seq": 4294967294,
+        "ack": 2,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 1050,
+      "event": "net.data",
+      "fields": {
+        "seq": 4294967294,
+        "ack": 2,
+        "window": 8,
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 1060,
+      "event": "net.data",
+      "fields": {
+        "seq": 4294967295,
+        "ack": 2,
+        "window": 8,
+        "data": [
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_nxt": 2,
+      "snd_una": 2,
+      "rtx_buf": [],
+      "rcv_nxt": 3,
+      "rcv_buf": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "timers": {}
+  }
+}

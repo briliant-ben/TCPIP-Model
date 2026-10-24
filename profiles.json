@@ -22,13 +22,25 @@
       "symbolic_replay": true,
       "wire_projection": "tcp-data-v1",
       "inductive": true
+    },
+    {
+      "id": "tcp-reassembly",
+      "model": "model/tcp-reassembly.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-data-v1",
+      "inductive": true
     }
   ],
   "pending_modules": [
     {
       "id": "tcp-data",
       "status": "partial_finite_data_profile",
-      "scope": "16-byte buffers, MSS segmentation, cumulative/partial ACK, nonshrinking peer window, prefix retransmission, receive trimming, duplication and wrap; out-of-order reassembly and general piggyback handling pending"
+      "scope": "finite send/receive buffers, segmentation, cumulative/partial ACK, nonshrinking window, prefix retransmission, receive trimming and explicit multi-hole reassembly profile; general piggyback and closing with data pending"
     },
     {
       "id": "tcp-recovery",

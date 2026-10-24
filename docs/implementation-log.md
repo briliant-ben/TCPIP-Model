@@ -47,3 +47,13 @@ Linux 通道：本机有 tcpdump，但没有 packetdrill、Linux /dev/net/tun、
 初次检查得到 116/117 条保持义务 unsat；同时打开的任意前状态暴露缺少 SYN-SENT 中 SND.UNA=ISS 的派生关系，不能认定为可达协议故障。将该关系作为新的 IR 不变量后，初值、117 条规则和 14 个 guard 组均通过，关系自身也在保持义务中验证。删去该关系可复现归纳失败；三个已知可达数据故障变体均使相应保持义务失败。此阶段未实现新的 TCP 数据行为，乱序重组与后续完整范围仍待推进。
 
 本轮验证：113 项 unittest 通过（含 10 项新增归纳/编码测试）；导出的所有保持/重叠脚本在新 Z3 进程中重新执行得到相同 unsat；build、旧两个模型 depth=6、suite-verify 与归纳查询/模型哈希验收通过。数据 BMC 仍为 unknown，suite 保持 formal_pending_stack_incomplete。lwIP 两连接执行成功、丢包时序差异保留，lwip-verify 通过；Linux packetdrill 入口再次记录本机 darwin 环境的 not_run。没有修改上游 lwIP 或 oracle。
+
+## 2026-10-24：显式有限乱序重组
+
+上一 goal turn 已提交独立归纳能力，本轮工作区核对为干净。核对 RFC 9293 §3.10.7.4 Table 6、SHLD-31 和 MUST-59 后，新增 `tcp-reassembly.json` 声明式继承数据与连接模型，替换五条接收规则为一个显式队列转移。16 个单字节/空槽共用原 16 字节接收容量，支持多个缺口、重叠/重复、回绕、窗口裁剪和读出后的队列位移；先接受的字节保留，作为明确的冲突策略，不冒充 RFC 唯一要求。数据全部连续排空后才发一次累计 ACK；复位/ABORT 清理队列，关闭须队列也排空。
+
+仅新增通用同型条件表达式 ite，参考、完整 Seq/BV32 与长度后端同步实现，条件长度恒等式加入原语检查；所有协议决策在展开 JSON 内。Profile 可引用多个场景目录并绑定全部来源，跨目录 ID 冲突或目录逃逸拒绝。旧数据模型和两个连接基线继续独立运行，没有分叉序列或定时器实现。
+
+重组 profile 复用 15 个数据场景并新增 11 个队列场景。针对性测试已覆盖 24 种四段排列、重复、非零字节、读/移位/回绕、Table 6 全跨窗口情况及清理。丢槽与同长度错误覆盖由内容场景发现，提前 ACK 由 Difference 发现，错误移位产生并重放完整字节求解反例，失败事务回滚。该 profile 的独立初值、113 条保持义务、13 个 guard 组、84 个不变量通过；长度证书仍不宣称证明字节内容。
+
+本轮完整验证：127 项测试通过。build、旧 active-open/connection 的 depth=6、四 profile suite 与 suite-verify 通过本地执行/完整性门槛；data 与 reassembly 的原始 BMC 均为 unknown，suite 状态仍 formal_pending_stack_incomplete。重组 26 个场景完整字节符号重放均 match，合成 PCAP 独立归一化/Difference 均 match_synthetic_only，自己的归纳证书通过。lwIP 重建并重新绑定当前源，普通握手匹配、丢包场景连接成功且 2750ms 差异保留，lwip-verify 通过；Linux 入口记录 not_run。未修改上游或放宽 oracle/哈希。一般 ACK/window 与 payload 组合、带数据关闭、完整恢复及后续协议仍未完成。

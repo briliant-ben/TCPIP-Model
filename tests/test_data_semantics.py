@@ -57,6 +57,20 @@ class DataSemanticsTests(unittest.TestCase):
                 self.assertEqual(evaluate(op(name, {"seq": a}, {"seq": b}), self.m), want, (name, a, b))
         self.assertEqual(evaluate(op("seq_add", {"seq": 0}, -1), self.m), MOD-1)
 
+    def test_typed_conditionals_select_values_without_type_coercion(self):
+        for yes, no, kind, expected in [(3, 8, "int", 3), (True, False, "bool", True),
+                                       ("left", "right", "string", "left"),
+                                       ({"seq": MOD-1}, {"seq": 0}, "seq32", MOD-1),
+                                       ({"bytes": [0, 128, 255]}, {"bytes": []}, "bytes", [0, 128, 255])]:
+            expr = op("ite", True, yes, no)
+            self.assertEqual(infer(expr, self.m.model), kind)
+            self.assertEqual(evaluate(expr, self.m), expected)
+            self.assertEqual(evaluate(op("ite", False, yes, no), self.m), evaluate(no, self.m))
+        for expr in [op("ite", 1, 2, 3), op("ite", True, {"seq": 0}, 0), op("ite", True, 1),
+                     op("ite", False, {"bytes": []}, "")]:
+            with self.assertRaises(ModelError):
+                infer(expr, self.m.model)
+
     def test_invalid_types_unknown_operators_and_old_version_are_rejected(self):
         for expr in [{"bytes": [-1]}, {"bytes": [256]}, {"bytes": [True]}, {"bytes": "ff"},
                      op("bytes_slice", {"bytes": []}, {"seq": 0}, 1),
@@ -98,6 +112,18 @@ class DataSemanticsTests(unittest.TestCase):
 
 @unittest.skipUnless(importlib.util.find_spec("z3"), "optional Z3 backend not installed")
 class SymbolicDataTests(unittest.TestCase):
+    def test_symbolic_conditional_matches_reference_in_full_and_length_modes(self):
+        model = buffer_model()
+        for mode in ("sequence", "length"):
+            enc = Encoding(model, 1, (), byte_encoding=mode)
+            for condition in (False, True):
+                expr = op("ite", condition, {"bytes": [0, 128, 255]}, {"bytes": [7]})
+                s = enc.z.Solver()
+                self.assertEqual(s.check(), enc.z.sat)
+                value = enc.concrete(s.model(), enc.expr(expr, enc.frames[0]))
+                want = evaluate(expr, Machine(model))
+                self.assertEqual(value, len(want) if mode == "length" else want)
+
     def test_symbolic_byte_capacity_and_wrap_witness_replay(self):
         model = buffer_model()
         capacity_model = copy.deepcopy(model)

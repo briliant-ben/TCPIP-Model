@@ -220,6 +220,7 @@ class Encoding:
                 "seq_add": lambda a, b: a + z.Int2BV(b, 32),
                 "sub": lambda a, b: a - b,
                 "min": lambda a, b: z.If(a <= b, a, b),
+                "ite": z.If,
                 "bytes_len": z.Length,
                 "bytes_concat": z.Concat,
                 "bytes_slice": lambda a, offset, count: z.SubSeq(a, z.If(offset < 0, 0, offset), z.If(count < 0, 0, count)),

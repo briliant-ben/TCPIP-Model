@@ -41,12 +41,14 @@ def prove(model, symbolic_initials=("iss",), out=None):
     sort = z.SeqSort(z.BitVecSort(8))
     a, b = z.Consts("lemma_a lemma_b", sort)
     offset, count = z.Ints("lemma_offset lemma_count")
+    condition = z.Bool("lemma_condition")
     start, size = z.If(offset < 0, 0, offset), z.If(count < 0, 0, count)
     rest = z.If(z.Length(a) > start, z.Length(a)-start, 0)
     length = z.If(size < rest, size, rest)
     lemma_solver = z.Solver()
     lemma_solver.set(timeout=10000)
     lemma_solver.add(z.Or(z.Length(z.Concat(a, b)) != z.Length(a)+z.Length(b),
+                         z.Length(z.If(condition, a, b)) != z.If(condition, z.Length(a), z.Length(b)),
                          z.Length(z.SubSeq(a, start, size)) != length))
     files["length-lemmas.smt2"] = lemma_solver.to_smt2()
     result["length_lemmas"] = str(lemma_solver.check())

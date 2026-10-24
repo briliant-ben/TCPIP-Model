@@ -6,7 +6,7 @@ from pathlib import Path
 MOD = 1 << 32
 HALF = MOD // 2
 TYPES = ("bool", "int", "seq32", "string", "bytes")
-DATA_OPS = {"sub", "min", "bytes_len", "bytes_concat", "bytes_slice",
+DATA_OPS = {"sub", "min", "ite", "bytes_len", "bytes_concat", "bytes_slice",
             "seq_distance", "seq_comparable", "seq_lt", "seq_le"}
 
 
@@ -70,6 +70,9 @@ def infer(expr, model, event=None):
     op, args = expr["op"], expr["args"]
     require(op not in DATA_OPS or model.get("ir_version") == "0.2", "Data operators require IR 0.2")
     types = [infer(x, model, event) for x in args]
+    if op == "ite":
+        require(len(types) == 3 and types[0] == "bool" and types[1] == types[2], "Conditional type mismatch")
+        return types[1]
     if op in ("eq", "ne"):
         require(len(types) == 2 and types[0] == types[1], "Equality type mismatch")
         return "bool"
@@ -129,6 +132,7 @@ def evaluate(expr, machine, event=None):
         "seq_add": lambda a, b: (a + b) % MOD,
         "sub": lambda a, b: a - b,
         "min": min,
+        "ite": lambda condition, yes, no: yes if condition else no,
         "bytes_len": len,
         "bytes_concat": lambda a, b: a + b,
         # Total truncating slice: offset and count are clamped independently.
