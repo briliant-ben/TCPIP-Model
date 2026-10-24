@@ -1,0 +1,90 @@
+{
+  "capture_origin": "synthetic_model",
+  "frames": [
+    {
+      "frame": 1,
+      "packet_id": "e0001:out:0",
+      "event_id": "e0001",
+      "requirements": [
+        "CONN-OPEN",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "frame": 2,
+      "packet_id": "e0002:in",
+      "event_id": "e0002",
+      "requirements": [
+        "CONN-SYN-SENT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "frame": 3,
+      "packet_id": "e0002:out:1",
+      "event_id": "e0002",
+      "requirements": [
+        "CONN-SYN-SENT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "frame": 4,
+      "packet_id": "e0003:in",
+      "event_id": "e0003",
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "frame": 5,
+      "packet_id": "e0003:out:0",
+      "event_id": "e0003",
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "frame": 6,
+      "packet_id": "e0004:in",
+      "event_id": "e0004",
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SEQ",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "frame": 7,
+      "packet_id": "e0004:out:0",
+      "event_id": "e0004",
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SEQ",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "frame": 8,
+      "packet_id": "e0005:in",
+      "event_id": "e0005",
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SEQ",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "frame": 9,
+      "packet_id": "e0005:out:0",
+      "event_id": "e0005",
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SEQ",
+        "DATA-SCOPE"
+      ]
+    }
+  ]
+}

@@ -84,3 +84,11 @@ PCAP 归一化器不调用合成编码器。它按显式四元组过滤连接，
 规范追溯：RFC 9293 §3.4 固定 32 位模运算、累计确认及接收区间；§3.10.7.4 规定 ESTABLISHED 中 ACK/窗口处理。半空间不可比是 IR 的显式建模契约，RFC 1982 §3.2 仅作通用串行数比较的参考（其直接对象是 DNS，不宣称为 TCP 的附加 MUST）。当前 TCP 规范基线仍是仓库已哈希的 RFC 9293/6298，未更换原文。
 
 独立 Z3 后端将 bytes 编码为 `Seq(BitVec(8))`，序列号仍是 BV32，长度/offset/count 为数学整数；用 SubSeq 和显式非负截断编码切片，ULt 编码半空间谓词，BV2Int 编码前向距离。不调用参考求值器构造约束。支持的 AST 必须逐项翻译，未知操作显式拒绝。复杂的序列/整数/位向量混合查询可能返回 unknown；unknown 不得提升为 bounded_pass。该扩展仍无无界证明、跨连接组合或默认有限容量假设。
+
+## v0.2 声明式模型组合
+
+`load()` 可解析同目录下的相对 `extends` 基模型（可递归，禁止目录逃逸和循环）。requirements、variables、events、messages、timers 按名称合并；同名项由 overlay 完整替换，不能隐式深合并字段。states、scope 和其他标量/列表由 overlay 整体替换。transitions/invariants 默认保留基模型并追加；`remove_transitions`/`remove_invariants` 必须逐项列出已有 ID，未知 ID 拒绝。
+
+`amend_transitions` 每项以唯一 ID 指定已有规则，可提供 `and_guard`（与原 guard 做显式 and）和 `append_actions`（在原 actions 后按序执行）；禁止回调或未知补丁操作。组合后删除组合元数据，对整个展开模型执行相同的类型、规则及不变量校验。调用者不能将未展开 overlay 直接传给 Machine/形式后端。
+
+组合是通用 IR 加载机制，不添加协议事件、序列号转换或定时器调度。suite 保存 expanded-model.json 并将所有基模型和 overlay 纳入输入哈希；模型语义哈希针对展开后的 IR。连接规则变更会使组合模型旧证据失效。

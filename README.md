@@ -12,6 +12,9 @@ GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP
 |---|---|
 | `model/tcp.json` | 原有主动握手回归基线，3 状态 |
 | `model/tcp-connection.json` | 11 状态连接控制模型，97 条声明规则，101 个控制场景；仍排除 payload/窗口/拥塞等行为 |
+| `model/tcp-data.json` | IR 0.2 声明式组合连接模型；有限缓冲、分段、累计/部分 ACK、窗口、字节前缀重传和接收裁剪；数据恢复与完整 TCP 仍未完成 |
+
+2026-10-24：已恢复本地基线并推进 [IR 数据语义](docs/semantics.md) 和 [有限 TCP 数据切片](docs/tcp-data.md)。数据切片的 15 个场景具有参考轨迹和独立 Z3 固定输入重放；全输入混合查询可能为 `unknown`，suite 明确保留 `formal_pending`。这不影响旧模型的独立有界检查，也不将合成 PCAP 计为 Linux/lwIP 数据验证。持续实施记录见 [实施日志](docs/implementation-log.md)。
 
 运行新增流程：
 

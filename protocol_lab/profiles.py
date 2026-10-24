@@ -2,17 +2,20 @@
 import json
 from pathlib import Path
 
+from .capture import normalize
 from .flow import ROOT, digest, read, run_scenario, verify_sources, write
-from .ir import load, require
-from .packets import packetdrill, write_pcap
-from .symbolic import check, model_hash
+from .ir import load, model_files, require
+from .packets import compare, packetdrill, write_pcap
+from .symbolic import check, crosscheck_trace, model_hash
 
 
 def profile_inputs(profile, model):
-    inputs = {profile["model"]: digest(ROOT / profile["model"])}
+    inputs = {str(p.relative_to(ROOT)): digest(p) for p in model_files(ROOT / profile["model"])}
     paths = sorted((ROOT / "protocol_lab").glob("*.py"))
     paths += sorted((ROOT / profile["scenarios"]).glob("*.json"))
-    paths += [ROOT / "spec/sources/manifest.json", ROOT / "profiles.json", ROOT / "requirements-formal.txt"]
+    paths += [ROOT / "spec/sources/manifest.json", ROOT / "profiles.json", ROOT / "requirements-formal.txt", ROOT / "docs/semantics.md"]
+    if profile.get("wire_projection"):
+        paths.append(ROOT / "packet-profile.json")
     inputs.update({str(p.relative_to(ROOT)): digest(p) for p in paths})
     for requirement in model["requirements"].values():
         source = requirement["source"]
@@ -25,7 +28,7 @@ def profile_inputs(profile, model):
 
 def control_packets(machine, scenario):
     shapes = {"net.syn": "S", "net.synack": "SA", "net.ack": "A", "net.fin": "FA",
-              "net.rst": "R", "net.rstack": "RA"}
+              "net.rst": "R", "net.rstack": "RA", "net.data_ack": "A", "net.data": "A"}
     packets = []
     drops = set(scenario.get("environment", {}).get("drop_outgoing", []))
     for row in machine.trace:
@@ -37,15 +40,20 @@ def control_packets(machine, scenario):
             fields = row["event"]["fields"]
             packets.append({**common, "packet_id": row["event_id"] + ":in", "direction": "in",
                             "flags": shapes[name], "seq": fields["seq"], "ack": fields.get("ack", 0),
-                            "window": 65535, "dropped_after_egress": False})
+                            "window": fields.get("window", 65535),
+                            **({"payload": fields["data"]} if "data" in fields else {}),
+                            "dropped_after_egress": False})
         for i, message in enumerate(row["emitted"]):
-            if message["message"] == "application":
+            if message["message"] in ("application", "application_data"):
                 continue
-            require(message["message"] == "tcp", "Unimplemented wire adapter")
+            require(message["message"] in ("tcp", "tcp_data"), "Unimplemented wire adapter")
             pid = f"{row['event_id']}:out:{i}"
             packets.append({**common, "packet_id": pid, "direction": "out", **message["fields"],
                             "dropped_after_egress": pid in drops})
     require(drops <= {p["packet_id"] for p in packets if p["direction"] == "out"}, "Invalid packet drop pointer")
+    if "tcp_data" in machine.model["messages"]:
+        for packet in packets:
+            packet.setdefault("payload", [])
     return packets
 
 
@@ -73,6 +81,7 @@ def run_profile(profile, out, formal=False, depth=6):
     states, covered = {model["initial_state"]}, set()
     generated = []
     scenarios = []
+    trace_statuses = []
     paths = sorted((ROOT / profile["scenarios"]).glob("*.json"))
     require(bool(paths), "Profile has no scenarios")
     for path in paths:
@@ -92,6 +101,18 @@ def run_profile(profile, out, formal=False, depth=6):
             for i, p in enumerate(packets)]})
         write_pcap(target / "model.synthetic.pcap", packets)
         names = ["trace.json", "packets.json", "scenario.json", "packet-map.json", "model.synthetic.pcap"]
+        wire_roundtrip = "not_run"
+        if profile.get("wire_projection"):
+            projection = profile["wire_projection"]
+            observed, metadata = normalize(target / "model.synthetic.pcap", read(ROOT / "packet-profile.json"), packets,
+                                           origin="synthetic", projection=projection)
+            difference = compare(packets, observed, projection=projection)
+            write(target / "normalized.synthetic.json", observed)
+            write(target / "capture-metadata.json", metadata)
+            write(target / "difference.json", {**difference, "evidence_scope": "synthetic_codec_roundtrip_only"})
+            require(difference["status"] == "match", "Synthetic codec roundtrip mismatch")
+            names += ["normalized.synthetic.json", "capture-metadata.json", "difference.json"]
+            wire_roundtrip = "match_synthetic_only"
         adapter = "unavailable_for_profile"
         if profile.get("packetdrill") == "active-open-v1":
             script, _ = packetdrill(packets)
@@ -99,13 +120,21 @@ def run_profile(profile, out, formal=False, depth=6):
             names.append("test.pkt")
             adapter = "generated_not_executed"
         generated += [target / n for n in names]
+        trace_check = {"status": "not_run"}
+        if formal and profile.get("symbolic_replay"):
+            trace_check = crosscheck_trace(model, machine.trace, target / "symbolic")
+            trace_statuses.append(trace_check["status"])
+            generated += [target / "symbolic" / n for n in ("path.smt2", "result.json")]
         for row in machine.trace:
             covered.add(row["transition"])
             states.update((row["before"]["state"], row["after"]["state"]))
         scenarios.append({"id": name, "status": "reference_pass", "final_state": machine.state,
-                          "events": len(machine.trace), "packets": len(packets), "packetdrill": adapter})
+                          "events": len(machine.trace), "packets": len(packets), "packetdrill": adapter,
+                          "symbolic_replay": trace_check["status"], "wire_roundtrip": wire_roundtrip})
     (out / "state-machine.dot").write_text(graph(model))
     generated.append(out / "state-machine.dot")
+    write(out / "expanded-model.json", model)
+    generated.append(out / "expanded-model.json")
     formal_result = {"status": "not_run"}
     if formal:
         formal_result = check(model, depth=depth, out=out / "formal")
@@ -115,11 +144,15 @@ def run_profile(profile, out, formal=False, depth=6):
               "scenarios": scenarios, "state_count": len(model["states"]), "transition_count": len(model["transitions"]),
               "visited_states": sorted(states), "unvisited_states": sorted(set(model["states"]) - states),
               "covered_transitions": sorted(covered), "uncovered_transitions": sorted({r["id"] for r in model["transitions"]} - covered),
-              "formal": {k: formal_result[k] for k in ("status", "backend", "depth") if k in formal_result},
+              "formal": {k: formal_result[k] for k in ("status", "backend", "depth", "reason", "safety_query", "overlap_query") if k in formal_result},
               "real_stack": "not_run", "protocol_complete": False,
               "artifact_hashes": {str(p.relative_to(out)): digest(p) for p in generated}}
     if formal and formal_result["status"] != "bounded_pass":
         result["status"] = "formal_pending" if formal_result["status"] in ("unknown", "vacuous") else "fail"
+    if "unknown" in trace_statuses and result["status"] != "fail":
+        result["status"] = "formal_pending"
+    if any(status not in ("match", "unknown") for status in trace_statuses):
+        result["status"] = "fail"
     write(out / "report.json", result)
     return result
 
@@ -159,6 +192,11 @@ def verify_suite(out):
             path = (target / rel).resolve()
             require(path.is_relative_to(target), "Profile artifact path escapes directory")
             require(digest(path) == expected_hash, f"Profile artifact changed: {rel}")
+        for scenario in report["scenarios"]:
+            if scenario.get("symbolic_replay") == "match":
+                trace_result = read(target / scenario["id"] / "symbolic/result.json")
+                require(trace_result["model_semantic_sha256"] == model_hash(model), "Trace model mismatch")
+                require(trace_result["query"] == "sat" and trace_result["replay"]["status"] == "match", "Trace replay did not match")
         if report["formal"]["status"] == "bounded_pass":
             formal = read(target / "formal/result.json")
             require(formal["model_semantic_sha256"] == model_hash(model), "Formal model mismatch")

@@ -8,7 +8,9 @@
       "formal": {
         "status": "bounded_pass",
         "backend": "z3-bmc",
-        "depth": 6
+        "depth": 6,
+        "safety_query": "unsat",
+        "overlap_query": "unsat"
       },
       "real_stack": "not_run"
     },
@@ -18,7 +20,22 @@
       "formal": {
         "status": "bounded_pass",
         "backend": "z3-bmc",
-        "depth": 6
+        "depth": 6,
+        "safety_query": "unsat",
+        "overlap_query": "unsat"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "id": "tcp-data",
+      "local_integrity": "pass",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
       },
       "real_stack": "not_run"
     }

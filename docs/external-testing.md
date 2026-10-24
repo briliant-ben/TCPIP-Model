@@ -34,6 +34,8 @@ packetdrill 运行成功本身就是对脚本中 socket/packet 期望的检查�
 
 解析器支持经典 PCAP v2.4，大小端、微秒/纳秒时间戳，以及 RAW IPv4、Ethernet（含 VLAN）、Linux cooked v1 链路。当前不支持 PCAPNG、IPv6、Linux cooked v2、分片重组、TCP payload 或此切片之外的 TCP flags。选中连接的格式/长度/IPv4 校验和错误会终止导入；无关连接会计数并过滤。
 
+以上为既有 active-open observe/assess 通道，边界保持不变。新增显式 `tcp-data-v1` Python 归一化/比较投影可处理 ACK payload 和控制 flags，并额外比较窗口和字节内容；它目前只用于数据 profile 的编解码与差异测试，尚未接入数据实机验收。没有为旧通道放宽 payload 或哈希门槛，详见 `docs/tcp-data.md`。
+
 默认严格检查 TCP 校验和。确有发送校验和 offload 的抓包可显式选择 `--checksum-policy record_offload`，但验收会标记 `checksum_review_required`，不会自动放行。解析器不自动去重；应在单一明确观测点采集，避免把真正的重传误删。
 
 真实抓包转为比较器输入前需完成：连接过滤、去除观测点造成的重复包、明确 offload 对校验和的影响、原点时间归一化和双端 ISS 映射。用下式把真实序列空间映射为模型值：

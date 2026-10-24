@@ -36,6 +36,60 @@ def replay(model, witness):
     return {"status": "match", "compared_steps": compared}
 
 
+def encode_trace(model, trace):
+    """Constrain inputs/rule choices, without assuming poststates or invariants."""
+    require(bool(trace), "Cannot cross-check an empty trace")
+    # Initial overrides are concrete inputs, not assumed safety properties.
+    initial = trace[0]["before"]["variables"]
+    overrides = [n for n, v in model["variables"].items() if initial[n] != v["initial"]]
+    enc = Encoding(model, len(trace), overrides)
+    z = enc.z
+    for name, value in initial.items():
+        enc.solver.add(enc.frames[0]["values"][name] == enc.literal(value, model["variables"][name]["type"]))
+    for i, row in enumerate(trace):
+        indices = [j for j, r in enumerate(model["transitions"]) if r["id"] == row["transition"]]
+        require(len(indices) == 1, "Trace references unknown transition")
+        require(model["transitions"][indices[0]]["event"] == row["event"]["name"], "Trace event/transition mismatch")
+        enc.solver.add(z.Int(f"choice_{i}") == indices[0], enc.frames[i+1]["now"] == row["time_ms"])
+        schema = model["events"][row["event"]["name"]]["fields"]
+        require(set(row["event"]["fields"]) == set(schema), "Trace event fields mismatch")
+        for name, value in row["event"]["fields"].items():
+            enc.solver.add(enc.events[i][row["event"]["name"]][name] == enc.literal(value, schema[name]))
+    return enc
+
+
+def crosscheck_trace(model, trace, out=None):
+    enc = encode_trace(model, trace)
+    query = enc.solver.to_smt2()
+    answer = enc.solve()
+    result = {"backend": "z3-constrained-trace", "scope": "fixed_inputs_and_rule_choices",
+              "all_input_safety": "not_claimed", "steps": len(trace), "query": str(answer),
+              "model_semantic_sha256": model_hash(model), "solver_version": enc.z.get_version_string(),
+              "smt2_sha256": hashlib.sha256(query.encode()).hexdigest()}
+    if answer == enc.z.sat:
+        result["witness"] = enc.witness(enc.solver.model())
+        result["replay"] = replay(model, result["witness"])
+        result["status"] = result["replay"]["status"]
+        # Verify the supplied reference trace as well, not only a new replay.
+        before = {"state": model["initial_state"], "variables": result["witness"]["initial"], "timers": {}}
+        for row, step in zip(trace, result["witness"]["steps"]):
+            if (row["before"] != before or row["after"] != step["after"] or row["emitted"] != step["emitted"]
+                    or row["event"] != {"name": step["event"], "fields": step["fields"]}
+                    or row["time_ms"] != step["at_ms"]):
+                result["status"] = "semantic_mismatch"
+            before = step["after"]
+    elif answer == enc.z.unknown:
+        result.update(status="unknown", reason=enc.reason_unknown())
+    else:
+        result["status"] = "symbolic_rejected_trace"
+    if out is not None:
+        out = Path(out)
+        out.mkdir(parents=True, exist_ok=True)
+        (out / "path.smt2").write_text(query)
+        (out / "result.json").write_text(json.dumps(result, indent=2) + "\n")
+    return result
+
+
 class Encoding:
     def solve(self):
         """Solver resource failures are inconclusive, never a passing result."""

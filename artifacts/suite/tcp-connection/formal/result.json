@@ -2,7 +2,7 @@
   "backend": "z3-bmc",
   "solver_version": "4.15.4",
   "depth": 6,
-  "model_semantic_sha256": "52f61a6f61d5886ac8b1e6ba16b83df43ed533049eef84725be1bfd03f903155",
+  "model_semantic_sha256": "297468de42539d23a59fbd0a40384a369f1d9e9ecfb3b98e02bd229baa4558fb",
   "symbolic_initials": [
     "iss"
   ],
@@ -61,7 +61,7 @@
   "overlap_query": "unsat",
   "sample_witness": {
     "initial": {
-      "iss": 3964377060,
+      "iss": 3221225472,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -73,7 +73,8 @@
       "retries": 0,
       "active_open": true,
       "user_timeout_ms": 30000,
-      "msl_ms": 60000
+      "msl_ms": 60000,
+      "local_window": 65535
     },
     "steps": [
       {
@@ -85,7 +86,7 @@
         "after": {
           "state": "LISTEN",
           "variables": {
-            "iss": 3964377060,
+            "iss": 3221225472,
             "irs": 0,
             "snd_una": 1000,
             "snd_nxt": 1000,
@@ -97,7 +98,185 @@
             "retries": 0,
             "active_open": false,
             "user_timeout_ms": 30000,
-            "msl_ms": 60000
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {}
+        },
+        "emitted": []
+      },
+      {
+        "at_ms": 2,
+        "event": "net.syn",
+        "origin": "network",
+        "transition": "C-LISTEN-SYN",
+        "fields": {
+          "seq": 136314895
+        },
+        "after": {
+          "state": "SYN-RECEIVED",
+          "variables": {
+            "iss": 3221225472,
+            "irs": 136314895,
+            "snd_una": 3221225472,
+            "snd_nxt": 3221225473,
+            "rcv_nxt": 136314896,
+            "tx_seq": 3221225472,
+            "tx_ack": 136314896,
+            "tx_flags": "SA",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {
+            "rtx": 1002,
+            "user": 30002
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "SA",
+              "seq": 3221225472,
+              "ack": 136314896,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 3,
+        "event": "net.rst",
+        "origin": "network",
+        "transition": "C-SYN-RECEIVED-NET-RST-PASSIVE",
+        "fields": {
+          "seq": 136314896
+        },
+        "after": {
+          "state": "LISTEN",
+          "variables": {
+            "iss": 3221225472,
+            "irs": 136314895,
+            "snd_una": 3221225472,
+            "snd_nxt": 3221225473,
+            "rcv_nxt": 136314896,
+            "tx_seq": 3221225472,
+            "tx_ack": 136314896,
+            "tx_flags": "SA",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {}
+        },
+        "emitted": []
+      },
+      {
+        "at_ms": 4,
+        "event": "net.syn",
+        "origin": "network",
+        "transition": "C-LISTEN-SYN",
+        "fields": {
+          "seq": 302527487
+        },
+        "after": {
+          "state": "SYN-RECEIVED",
+          "variables": {
+            "iss": 3221225472,
+            "irs": 302527487,
+            "snd_una": 3221225472,
+            "snd_nxt": 3221225473,
+            "rcv_nxt": 302527488,
+            "tx_seq": 3221225472,
+            "tx_ack": 302527488,
+            "tx_flags": "SA",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {
+            "rtx": 1004,
+            "user": 30004
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "SA",
+              "seq": 3221225472,
+              "ack": 302527488,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 5,
+        "event": "net.rstack",
+        "origin": "network",
+        "transition": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+        "fields": {
+          "seq": 302527488,
+          "ack": 0
+        },
+        "after": {
+          "state": "LISTEN",
+          "variables": {
+            "iss": 3221225472,
+            "irs": 302527487,
+            "snd_una": 3221225472,
+            "snd_nxt": 3221225473,
+            "rcv_nxt": 302527488,
+            "tx_seq": 3221225472,
+            "tx_ack": 302527488,
+            "tx_flags": "SA",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {}
+        },
+        "emitted": []
+      },
+      {
+        "at_ms": 1005,
+        "event": "net.rst",
+        "origin": "network",
+        "transition": "C-IGNORE-NET-RST-LISTEN",
+        "fields": {
+          "seq": 0
+        },
+        "after": {
+          "state": "LISTEN",
+          "variables": {
+            "iss": 3221225472,
+            "irs": 302527487,
+            "snd_una": 3221225472,
+            "snd_nxt": 3221225473,
+            "rcv_nxt": 302527488,
+            "tx_seq": 3221225472,
+            "tx_ack": 302527488,
+            "tx_flags": "SA",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
           },
           "timers": {}
         },
@@ -107,8 +286,8 @@
   },
   "replay": {
     "status": "match",
-    "compared_steps": 1
+    "compared_steps": 6
   },
-  "smt2_sha256": "3fc0a58b30387affbf11f549f2167467808f168cafcddd2dad703e79d54c86c1",
-  "overlap_smt2_sha256": "010b361e2583be212417e822d8006d2d785565d0e6c339ed3d5637938c97488f"
+  "smt2_sha256": "ce0e134a9195d296312e087abc4e296c34aa8c7b3c0c10a96f92d7a80bd5c7f5",
+  "overlap_smt2_sha256": "eb40440829ce9e4c8dd6dc79ae39cda6c64d5f059b8cbdabbbb7ba7a8038e2f5"
 }

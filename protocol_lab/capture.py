@@ -80,7 +80,9 @@ def decode(path):
                "ip": raw[:ihl], "tcp": tcp, "fragmented": bool(int.from_bytes(raw[6:8], "big") & 0x3fff)}
 
 
-def normalize(pcap, profile, expected, origin="unverified", checksum_policy="strict"):
+def normalize(pcap, profile, expected, origin="unverified", checksum_policy="strict", projection="active-open-v1"):
+    require(projection in ("active-open-v1", "tcp-data-v1"), "Unsupported TCP projection")
+    data_mode = projection == "tcp-data-v1"
     require(origin in ("unverified", "synthetic", "external_capture"), "Invalid capture origin")
     require(checksum_policy in ("strict", "record_offload"), "Invalid checksum policy")
     require(bool(expected), "Expected packet trace is empty")
@@ -104,10 +106,14 @@ def normalize(pcap, profile, expected, origin="unverified", checksum_policy="str
         require(len(tcp) >= 20, "Truncated selected TCP header")
         size = (tcp[12] >> 4)*4
         require(20 <= size <= len(tcp), "Invalid selected TCP data offset")
-        require(size == len(tcp), "TCP payload is outside this active-open slice")
+        require(data_mode or size == len(tcp), "TCP payload is outside this active-open slice")
         require(tcp[12] & 15 == 0, "Reserved/extended TCP flags unsupported")
-        flags = {2: "S", 18: "SA", 16: "A"}.get(tcp[13])
+        shapes = {2: "S", 18: "SA", 16: "A"}
+        if data_mode:
+            shapes.update({1: "F", 17: "FA", 4: "R", 20: "RA"})
+        flags = shapes.get(tcp[13])
         require(flags is not None, "TCP control flags outside this active-open slice")
+        require(size == len(tcp) or flags == "A", "Payload on SYN/FIN/RST is outside this data slice")
         require(sum_ok(record["ip"]), "Invalid IPv4 checksum")
         pseudo = record["ip"][12:20] + b"\x00\x06" + len(tcp).to_bytes(2, "big")
         if not sum_ok(pseudo + tcp):
@@ -115,6 +121,7 @@ def normalize(pcap, profile, expected, origin="unverified", checksum_policy="str
             checksum_warnings.append(record["frame"])
         selected.append({"direction": direction, "flags": flags, "seq": int.from_bytes(tcp[4:8], "big"),
                          "ack": int.from_bytes(tcp[8:12], "big") if tcp[13] & 16 else 0,
+                         **({"window": int.from_bytes(tcp[14:16], "big"), "payload": list(tcp[size:])} if data_mode else {}),
                          "frame": record["frame"], "timestamp_ns": record["timestamp_ns"]})
     require(bool(selected) and selected[0]["direction"] == "out" and selected[0]["flags"] == "S", "Capture must begin with this connection's initial outgoing SYN")
     synack = next((p for p in selected if p["direction"] == "in" and p["flags"] == "SA"), None)
@@ -132,10 +139,14 @@ def normalize(pcap, profile, expected, origin="unverified", checksum_policy="str
                        "ack": (packet["ack"] - (wire_peer if out else wire_local) + (model_peer if out else model_local)) % MOD if "A" in packet["flags"] else 0,
                        "time_ms": (packet["timestamp_ns"] - selected[0]["timestamp_ns"])/1000000 + expected[0]["time_ms"],
                        "capture_frame": packet["frame"]})
+        if data_mode:
+            result[-1].update(window=packet["window"], payload=packet["payload"])
     metadata = {"normalizer": "classic-pcap-ipv4-tcp-v1", "capture_origin": origin,
                 "capture_sha256": sha(pcap), "profile": profile, "profile_sha256": hashlib.sha256(json.dumps(profile, sort_keys=True).encode()).hexdigest(),
                 "selected_packets": len(result), "ignored_frames": ignored,
                 "time_origin_ns": selected[0]["timestamp_ns"], "wire_local_iss": wire_local, "wire_peer_iss": wire_peer,
                 "checksum_policy": checksum_policy, "checksum_warning_frames": checksum_warnings,
                 "deduplication": "none", "origin_is_user_assertion": True}
+    if data_mode:
+        metadata.update(normalizer="classic-pcap-ipv4-tcp-data-v1", projection=projection)
     return result, metadata

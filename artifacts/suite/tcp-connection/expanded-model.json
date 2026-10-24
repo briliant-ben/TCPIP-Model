@@ -1,0 +1,6021 @@
+{
+  "ir_version": "0.1",
+  "protocol": "tcp-connection",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "payload and flow control",
+      "congestion control",
+      "TCP options and RTT estimation",
+      "general receive window and challenge ACK",
+      "closing before SYN is acknowledged",
+      "multi-connection demultiplexing",
+      "TCP-AO and IPsec",
+      "general unacceptable-segment handling"
+    ]
+  },
+  "states": [
+    "CLOSED",
+    "LISTEN",
+    "SYN-SENT",
+    "SYN-RECEIVED",
+    "ESTABLISHED",
+    "FIN-WAIT-1",
+    "FIN-WAIT-2",
+    "CLOSE-WAIT",
+    "CLOSING",
+    "LAST-ACK",
+    "TIME-WAIT"
+  ],
+  "initial_state": "CLOSED",
+  "variables": {
+    "iss": {
+      "type": "seq32",
+      "initial": 1000
+    },
+    "irs": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "snd_una": {
+      "type": "seq32",
+      "initial": 1000
+    },
+    "snd_nxt": {
+      "type": "seq32",
+      "initial": 1000
+    },
+    "rcv_nxt": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "tx_seq": {
+      "type": "seq32",
+      "initial": 1000
+    },
+    "tx_ack": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "tx_flags": {
+      "type": "string",
+      "initial": "S"
+    },
+    "rto_ms": {
+      "type": "int",
+      "initial": 1000
+    },
+    "retries": {
+      "type": "int",
+      "initial": 0
+    },
+    "active_open": {
+      "type": "bool",
+      "initial": true
+    },
+    "user_timeout_ms": {
+      "type": "int",
+      "initial": 30000
+    },
+    "msl_ms": {
+      "type": "int",
+      "initial": 60000
+    },
+    "local_window": {
+      "type": "int",
+      "initial": 65535
+    }
+  },
+  "events": {
+    "app.connect": {
+      "origin": "application",
+      "fields": {}
+    },
+    "app.listen": {
+      "origin": "application",
+      "fields": {}
+    },
+    "app.close": {
+      "origin": "application",
+      "fields": {}
+    },
+    "app.abort": {
+      "origin": "application",
+      "fields": {}
+    },
+    "net.syn": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32"
+      }
+    },
+    "net.synack": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32",
+        "ack": "seq32"
+      }
+    },
+    "net.ack": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32",
+        "ack": "seq32"
+      }
+    },
+    "net.fin": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32",
+        "ack": "seq32"
+      }
+    },
+    "net.rst": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32"
+      }
+    },
+    "net.rstack": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32",
+        "ack": "seq32"
+      }
+    },
+    "timer.rtx": {
+      "origin": "timer",
+      "fields": {}
+    },
+    "timer.user": {
+      "origin": "timer",
+      "fields": {}
+    },
+    "timer.time_wait": {
+      "origin": "timer",
+      "fields": {}
+    }
+  },
+  "messages": {
+    "tcp": {
+      "fields": {
+        "flags": "string",
+        "seq": "seq32",
+        "ack": "seq32",
+        "window": "int"
+      }
+    },
+    "application": {
+      "fields": {
+        "code": "string"
+      }
+    }
+  },
+  "timers": {
+    "rtx": {
+      "event": "timer.rtx"
+    },
+    "user": {
+      "event": "timer.user"
+    },
+    "time_wait": {
+      "event": "timer.time_wait"
+    }
+  },
+  "requirements": {
+    "CONN-OPEN": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.1",
+      "interpretation": "Select ISS; active OPEN enters SYN-SENT, passive OPEN enters LISTEN.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-LISTEN": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.2",
+      "interpretation": "A SYN in LISTEN initializes receive state and emits SYN+ACK; ACK-bearing input emits RST; RST is ignored.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-SYN-SENT": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.3",
+      "interpretation": "Validate ACK before processing SYN/RST; valid SYN+ACK establishes, bare SYN enters SYN-RECEIVED.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-SIMULTANEOUS": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.5",
+      "interpretation": "Figure 7: active vs passive origin is retained in SYN-RECEIVED; simultaneous SYN+ACK completes synchronization.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-ACK": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "interpretation": "In-order ACK completes synchronization or acknowledges FIN, with per-state transitions.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-FIN": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "interpretation": "FIN consumes one receive sequence number, is acknowledged, and changes per-state close progression.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-CLOSE": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.4",
+      "interpretation": "CLOSE in ESTABLISHED or CLOSE-WAIT emits FIN and enters FIN-WAIT-1 or LAST-ACK; repeated close does not emit a second FIN.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-ABORT": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.5",
+      "interpretation": "ABORT sends RST in the specified synchronized states; other states discard the TCB without output RST.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-RESET": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "interpretation": "Exact RCV.NXT resets the connection; passive SYN-RECEIVED returns to LISTEN, active origin closes.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-CLOSED-INPUT": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.1",
+      "interpretation": "CLOSED ignores resets and emits a correctly formatted reset for other control segments.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "CONN-TIMEOUT": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.8",
+      "interpretation": "User timeout deletes the TCB; retransmission timeout repeats oldest outstanding segment; TIME-WAIT timeout closes.",
+      "kind": "protocol_interpretation",
+      "strength": "algorithm"
+    },
+    "RTO-PROFILE": {
+      "source": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5",
+      "interpretation": "Use 1000ms initial SYN RTO and exponential doubling for control retransmission. After a SYN timeout use at least 3000ms for subsequent FIN, retaining a larger backed-off value; no RTT estimator is modeled.",
+      "kind": "profile_choice",
+      "strength": "mixed"
+    },
+    "CONNECTION-PROFILE": {
+      "source": "docs/tcp-connection.md",
+      "interpretation": "Single connection; zero payload; validated control shapes; exact sequence checks; no window/challenge-ACK/RTT/congestion behavior; 30s configurable user deadline and 60s configurable MSL.",
+      "kind": "environment_assumption",
+      "strength": "assumption"
+    }
+  },
+  "transitions": [
+    {
+      "id": "C-ACTIVE-OPEN",
+      "from": "CLOSED",
+      "to": "SYN-SENT",
+      "event": "app.connect",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": 1000
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "var": "iss"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "iss"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "active_open",
+            "value": true
+          }
+        },
+        {
+          "set": {
+            "var": "tx_flags",
+            "value": "S"
+          }
+        },
+        {
+          "set": {
+            "var": "tx_seq",
+            "value": {
+              "var": "iss"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_ack",
+            "value": {
+              "seq": 0
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "user",
+            "delay_ms": {
+              "var": "user_timeout_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-OPEN",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-PASSIVE-OPEN",
+      "from": "CLOSED",
+      "to": "LISTEN",
+      "event": "app.listen",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "set": {
+            "var": "active_open",
+            "value": false
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-OPEN"
+      ]
+    },
+    {
+      "id": "C-LISTEN-SYN",
+      "from": "LISTEN",
+      "to": "SYN-RECEIVED",
+      "event": "net.syn",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": 1000
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "var": "iss"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "iss"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "irs",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_flags",
+            "value": "SA"
+          }
+        },
+        {
+          "set": {
+            "var": "tx_seq",
+            "value": {
+              "var": "iss"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_ack",
+            "value": {
+              "var": "rcv_nxt"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "user",
+            "delay_ms": {
+              "var": "user_timeout_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-LISTEN"
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYN",
+      "from": "SYN-SENT",
+      "to": "SYN-RECEIVED",
+      "event": "net.syn",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "irs",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_flags",
+            "value": "SA"
+          }
+        },
+        {
+          "set": {
+            "var": "tx_seq",
+            "value": {
+              "var": "iss"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_ack",
+            "value": {
+              "var": "rcv_nxt"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SYN-SENT",
+        "CONN-SIMULTANEOUS"
+      ]
+    },
+    {
+      "id": "C-ACCEPT-SYNACK",
+      "from": "SYN-SENT",
+      "to": "ESTABLISHED",
+      "event": "net.synack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "retries"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "irs",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SYN-SENT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-ACCEPT-ACK",
+      "from": "SYN-RECEIVED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  {
+                    "var": "rcv_nxt"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "retries"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ACK",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYNACK",
+      "from": "SYN-RECEIVED",
+      "to": "ESTABLISHED",
+      "event": "net.synack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  {
+                    "var": "irs"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "retries"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SIMULTANEOUS",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-ACCEPT-SYNACK-AFTER-RETRY",
+      "from": "SYN-SENT",
+      "to": "ESTABLISHED",
+      "event": "net.synack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "retries"
+              },
+              1
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "irs",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": 3000
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SYN-SENT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-ACCEPT-ACK-AFTER-RETRY",
+      "from": "SYN-RECEIVED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  {
+                    "var": "rcv_nxt"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "retries"
+              },
+              1
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": 3000
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ACK",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+      "from": "SYN-RECEIVED",
+      "to": "ESTABLISHED",
+      "event": "net.synack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  {
+                    "var": "irs"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "retries"
+              },
+              1
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": 3000
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SIMULTANEOUS",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "from": "SYN-SENT",
+      "to": "ESTABLISHED",
+      "event": "net.synack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "retries"
+              },
+              2
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "irs",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SYN-SENT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+      "from": "SYN-RECEIVED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  {
+                    "var": "rcv_nxt"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "retries"
+              },
+              2
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ACK",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "from": "SYN-RECEIVED",
+      "to": "ESTABLISHED",
+      "event": "net.synack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  {
+                    "var": "irs"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "retries"
+              },
+              2
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SIMULTANEOUS",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-BAD-ACK",
+      "from": "SYN-SENT",
+      "to": "SYN-SENT",
+      "event": "net.ack",
+      "guard": {
+        "op": "ne",
+        "args": [
+          {
+            "event": "ack"
+          },
+          {
+            "var": "snd_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "event": "ack"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SYN-SENT"
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-BAD-SYNACK",
+      "from": "SYN-SENT",
+      "to": "SYN-SENT",
+      "event": "net.synack",
+      "guard": {
+        "op": "ne",
+        "args": [
+          {
+            "event": "ack"
+          },
+          {
+            "var": "snd_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "event": "ack"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SYN-SENT"
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-BARE-ACK",
+      "from": "SYN-SENT",
+      "to": "SYN-SENT",
+      "event": "net.ack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "ack"
+          },
+          {
+            "var": "snd_nxt"
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "CONN-SYN-SENT"
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-BAD-ACK",
+      "from": "SYN-RECEIVED",
+      "to": "SYN-RECEIVED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "ne",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "event": "ack"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-CLOSE-ESTABLISHED",
+      "from": "ESTABLISHED",
+      "to": "FIN-WAIT-1",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "tx_flags",
+            "value": "FA"
+          }
+        },
+        {
+          "set": {
+            "var": "tx_seq",
+            "value": {
+              "var": "snd_nxt"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_ack",
+            "value": {
+              "var": "rcv_nxt"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "snd_nxt"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "user",
+            "delay_ms": {
+              "var": "user_timeout_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-CLOSE-CLOSE-WAIT",
+      "from": "CLOSE-WAIT",
+      "to": "LAST-ACK",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "tx_flags",
+            "value": "FA"
+          }
+        },
+        {
+          "set": {
+            "var": "tx_seq",
+            "value": {
+              "var": "snd_nxt"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_ack",
+            "value": {
+              "var": "rcv_nxt"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "snd_nxt"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "user",
+            "delay_ms": {
+              "var": "user_timeout_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-CLOSE-LISTEN",
+      "from": "LISTEN",
+      "to": "CLOSED",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "closed"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-CLOSE-SYN-SENT",
+      "from": "SYN-SENT",
+      "to": "CLOSED",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "closed"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-FIN-WAIT-1",
+      "from": "FIN-WAIT-1",
+      "to": "FIN-WAIT-1",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "already_closing"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-FIN-WAIT-2",
+      "from": "FIN-WAIT-2",
+      "to": "FIN-WAIT-2",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "already_closing"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-CLOSING",
+      "from": "CLOSING",
+      "to": "CLOSING",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "already_closing"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-LAST-ACK",
+      "from": "LAST-ACK",
+      "to": "LAST-ACK",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "already_closing"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-TIME-WAIT",
+      "from": "TIME-WAIT",
+      "to": "TIME-WAIT",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "already_closing"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-ACK-ESTABLISHED",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-ACK-CLOSE-WAIT",
+      "from": "CLOSE-WAIT",
+      "to": "CLOSE-WAIT",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-ACK-FIN-WAIT-2",
+      "from": "FIN-WAIT-2",
+      "to": "FIN-WAIT-2",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-FIN-ACK-FIN-WAIT-1",
+      "from": "FIN-WAIT-1",
+      "to": "FIN-WAIT-2",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        }
+      ],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-OLD-ACK-FIN-WAIT-1",
+      "from": "FIN-WAIT-1",
+      "to": "FIN-WAIT-1",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_una"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-FIN-ACK-CLOSING",
+      "from": "CLOSING",
+      "to": "TIME-WAIT",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "arm": {
+            "timer": "time_wait",
+            "delay_ms": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "msl_ms"
+                },
+                2
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-OLD-ACK-CLOSING",
+      "from": "CLOSING",
+      "to": "CLOSING",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_una"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-FIN-ACK-LAST-ACK",
+      "from": "LAST-ACK",
+      "to": "CLOSED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "closed"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-OLD-ACK-LAST-ACK",
+      "from": "LAST-ACK",
+      "to": "LAST-ACK",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_una"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-PEER-FIN",
+      "from": "ESTABLISHED",
+      "to": "CLOSE-WAIT",
+      "event": "net.fin",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_ack",
+            "value": {
+              "var": "rcv_nxt"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "peer_eof"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-FIN"
+      ]
+    },
+    {
+      "id": "C-PEER-FIN-FW2",
+      "from": "FIN-WAIT-2",
+      "to": "TIME-WAIT",
+      "event": "net.fin",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_ack",
+            "value": {
+              "var": "rcv_nxt"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "peer_eof"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "arm": {
+            "timer": "time_wait",
+            "delay_ms": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "msl_ms"
+                },
+                2
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-FIN"
+      ]
+    },
+    {
+      "id": "C-PEER-FIN-FW1-ACKED",
+      "from": "FIN-WAIT-1",
+      "to": "TIME-WAIT",
+      "event": "net.fin",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_ack",
+            "value": {
+              "var": "rcv_nxt"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "peer_eof"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "arm": {
+            "timer": "time_wait",
+            "delay_ms": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "msl_ms"
+                },
+                2
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-FIN"
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-FIN",
+      "from": "FIN-WAIT-1",
+      "to": "CLOSING",
+      "event": "net.fin",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_una"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "event": "seq"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "tx_ack",
+            "value": {
+              "var": "rcv_nxt"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "peer_eof"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-FIN"
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-FIN-CLOSE-WAIT",
+      "from": "CLOSE-WAIT",
+      "to": "CLOSE-WAIT",
+      "event": "net.fin",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "seq_add",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  1
+                ]
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_una"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-FIN"
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-FIN-CLOSING",
+      "from": "CLOSING",
+      "to": "CLOSING",
+      "event": "net.fin",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "seq_add",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  1
+                ]
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_una"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-FIN"
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-FIN-LAST-ACK",
+      "from": "LAST-ACK",
+      "to": "LAST-ACK",
+      "event": "net.fin",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "seq_add",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  1
+                ]
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_una"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-FIN"
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-FIN-TIME-WAIT",
+      "from": "TIME-WAIT",
+      "to": "TIME-WAIT",
+      "event": "net.fin",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "seq_add",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  1
+                ]
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_una"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ack"
+                  },
+                  {
+                    "var": "snd_nxt"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "time_wait",
+            "delay_ms": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "msl_ms"
+                },
+                2
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-FIN"
+      ]
+    },
+    {
+      "id": "C-RETRANSMIT-SYN-SENT",
+      "from": "SYN-SENT",
+      "to": "SYN-SENT",
+      "event": "timer.rtx",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                2
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-RETRANSMIT-SYN-RECEIVED",
+      "from": "SYN-RECEIVED",
+      "to": "SYN-RECEIVED",
+      "event": "timer.rtx",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                2
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-RETRANSMIT-FIN-WAIT-1",
+      "from": "FIN-WAIT-1",
+      "to": "FIN-WAIT-1",
+      "event": "timer.rtx",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                2
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-RETRANSMIT-CLOSING",
+      "from": "CLOSING",
+      "to": "CLOSING",
+      "event": "timer.rtx",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                2
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-RETRANSMIT-LAST-ACK",
+      "from": "LAST-ACK",
+      "to": "LAST-ACK",
+      "event": "timer.rtx",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": {
+                "var": "tx_flags"
+              },
+              "seq": {
+                "var": "tx_seq"
+              },
+              "ack": {
+                "var": "tx_ack"
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                2
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT",
+        "RTO-PROFILE"
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-SYN-SENT",
+      "from": "SYN-SENT",
+      "to": "CLOSED",
+      "event": "timer.user",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "timeout"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-SYN-RECEIVED",
+      "from": "SYN-RECEIVED",
+      "to": "CLOSED",
+      "event": "timer.user",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "timeout"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-FIN-WAIT-1",
+      "from": "FIN-WAIT-1",
+      "to": "CLOSED",
+      "event": "timer.user",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "timeout"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-FIN-WAIT-2",
+      "from": "FIN-WAIT-2",
+      "to": "CLOSED",
+      "event": "timer.user",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "timeout"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-CLOSING",
+      "from": "CLOSING",
+      "to": "CLOSED",
+      "event": "timer.user",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "timeout"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-LAST-ACK",
+      "from": "LAST-ACK",
+      "to": "CLOSED",
+      "event": "timer.user",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "timeout"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-TIME-WAIT-EXPIRED",
+      "from": "TIME-WAIT",
+      "to": "CLOSED",
+      "event": "timer.time_wait",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "closed"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-ABORT-CLOSED",
+      "from": "CLOSED",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-LISTEN",
+      "from": "LISTEN",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-SYN-SENT",
+      "from": "SYN-SENT",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-SYN-RECEIVED",
+      "from": "SYN-RECEIVED",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-ESTABLISHED",
+      "from": "ESTABLISHED",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-FIN-WAIT-1",
+      "from": "FIN-WAIT-1",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-FIN-WAIT-2",
+      "from": "FIN-WAIT-2",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-CLOSE-WAIT",
+      "from": "CLOSE-WAIT",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-CLOSING",
+      "from": "CLOSING",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-LAST-ACK",
+      "from": "LAST-ACK",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-ABORT-TIME-WAIT",
+      "from": "TIME-WAIT",
+      "to": "CLOSED",
+      "event": "app.abort",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-ABORT"
+      ]
+    },
+    {
+      "id": "C-IGNORE-NET-RST-CLOSED",
+      "from": "CLOSED",
+      "to": "CLOSED",
+      "event": "net.rst",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "CONN-CLOSED-INPUT"
+      ]
+    },
+    {
+      "id": "C-IGNORE-NET-RST-LISTEN",
+      "from": "LISTEN",
+      "to": "LISTEN",
+      "event": "net.rst",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "CONN-LISTEN"
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-NET-RST",
+      "from": "SYN-SENT",
+      "to": "SYN-SENT",
+      "event": "net.rst",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "CONN-SYN-SENT"
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-NET-RST-PASSIVE",
+      "from": "SYN-RECEIVED",
+      "to": "LISTEN",
+      "event": "net.rst",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "active_open"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-NET-RST-ACTIVE",
+      "from": "SYN-RECEIVED",
+      "to": "CLOSED",
+      "event": "net.rst",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "active_open"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "refused"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-ESTABLISHED-rst",
+      "from": "ESTABLISHED",
+      "to": "CLOSED",
+      "event": "net.rst",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-FIN-WAIT-1-rst",
+      "from": "FIN-WAIT-1",
+      "to": "CLOSED",
+      "event": "net.rst",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-FIN-WAIT-2-rst",
+      "from": "FIN-WAIT-2",
+      "to": "CLOSED",
+      "event": "net.rst",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-CLOSE-WAIT-rst",
+      "from": "CLOSE-WAIT",
+      "to": "CLOSED",
+      "event": "net.rst",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-CLOSING-rst",
+      "from": "CLOSING",
+      "to": "CLOSED",
+      "event": "net.rst",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-LAST-ACK-rst",
+      "from": "LAST-ACK",
+      "to": "CLOSED",
+      "event": "net.rst",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-TIME-WAIT-rst",
+      "from": "TIME-WAIT",
+      "to": "CLOSED",
+      "event": "net.rst",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-IGNORE-NET-RSTACK-CLOSED",
+      "from": "CLOSED",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "CONN-CLOSED-INPUT"
+      ]
+    },
+    {
+      "id": "C-IGNORE-NET-RSTACK-LISTEN",
+      "from": "LISTEN",
+      "to": "LISTEN",
+      "event": "net.rstack",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "CONN-LISTEN"
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-NET-RSTACK",
+      "from": "SYN-SENT",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "ack"
+          },
+          {
+            "var": "snd_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "refused"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-SYN-SENT"
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+      "from": "SYN-RECEIVED",
+      "to": "LISTEN",
+      "event": "net.rstack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "active_open"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+      "from": "SYN-RECEIVED",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "seq"
+              },
+              {
+                "var": "rcv_nxt"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "active_open"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "refused"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-ESTABLISHED-rstack",
+      "from": "ESTABLISHED",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-FIN-WAIT-1-rstack",
+      "from": "FIN-WAIT-1",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-FIN-WAIT-2-rstack",
+      "from": "FIN-WAIT-2",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-CLOSE-WAIT-rstack",
+      "from": "CLOSE-WAIT",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-CLOSING-rstack",
+      "from": "CLOSING",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-LAST-ACK-rstack",
+      "from": "LAST-ACK",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-RESET-TIME-WAIT-rstack",
+      "from": "TIME-WAIT",
+      "to": "CLOSED",
+      "event": "net.rstack",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "seq"
+          },
+          {
+            "var": "rcv_nxt"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "rtx"
+        },
+        {
+          "cancel": "user"
+        },
+        {
+          "cancel": "time_wait"
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "reset"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-RESET"
+      ]
+    },
+    {
+      "id": "C-REJECT-ACK-CLOSED",
+      "from": "CLOSED",
+      "to": "CLOSED",
+      "event": "net.ack",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "event": "ack"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSED-INPUT"
+      ]
+    },
+    {
+      "id": "C-REJECT-ACK-LISTEN",
+      "from": "LISTEN",
+      "to": "LISTEN",
+      "event": "net.ack",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "event": "ack"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-LISTEN"
+      ]
+    },
+    {
+      "id": "C-REJECT-SYNACK-CLOSED",
+      "from": "CLOSED",
+      "to": "CLOSED",
+      "event": "net.synack",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "event": "ack"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSED-INPUT"
+      ]
+    },
+    {
+      "id": "C-REJECT-SYNACK-LISTEN",
+      "from": "LISTEN",
+      "to": "LISTEN",
+      "event": "net.synack",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "event": "ack"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-LISTEN"
+      ]
+    },
+    {
+      "id": "C-REJECT-FIN-CLOSED",
+      "from": "CLOSED",
+      "to": "CLOSED",
+      "event": "net.fin",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "event": "ack"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSED-INPUT"
+      ]
+    },
+    {
+      "id": "C-REJECT-FIN-LISTEN",
+      "from": "LISTEN",
+      "to": "LISTEN",
+      "event": "net.fin",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": {
+                "event": "ack"
+              },
+              "ack": {
+                "seq": 0
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-LISTEN"
+      ]
+    },
+    {
+      "id": "C-CLOSED-SYN",
+      "from": "CLOSED",
+      "to": "CLOSED",
+      "event": "net.syn",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp",
+            "fields": {
+              "flags": "RA",
+              "seq": {
+                "seq": 0
+              },
+              "ack": {
+                "op": "seq_add",
+                "args": [
+                  {
+                    "event": "seq"
+                  },
+                  1
+                ]
+              },
+              "window": {
+                "var": "local_window"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CONN-CLOSED-INPUT"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "C-INV-TIMER-CLOSED-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "CLOSED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-CLOSED-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "CLOSED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-CLOSED-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "CLOSED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-LISTEN-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "LISTEN"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-LISTEN-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "LISTEN"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-LISTEN-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "LISTEN"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-SYN-SENT-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "SYN-SENT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-SYN-SENT-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "SYN-SENT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-SYN-SENT-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "SYN-SENT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-SYN-RECEIVED-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "SYN-RECEIVED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-SYN-RECEIVED-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "SYN-RECEIVED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-SYN-RECEIVED-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "SYN-RECEIVED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-ESTABLISHED-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "ESTABLISHED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-ESTABLISHED-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "ESTABLISHED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-ESTABLISHED-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "ESTABLISHED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-FIN-WAIT-1-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "FIN-WAIT-1"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-FIN-WAIT-1-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "FIN-WAIT-1"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-FIN-WAIT-1-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "FIN-WAIT-1"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-FIN-WAIT-2-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "FIN-WAIT-2"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-FIN-WAIT-2-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "FIN-WAIT-2"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-FIN-WAIT-2-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "FIN-WAIT-2"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-CLOSE-WAIT-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "CLOSE-WAIT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-CLOSE-WAIT-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "CLOSE-WAIT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-CLOSE-WAIT-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "CLOSE-WAIT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-CLOSING-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "CLOSING"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-CLOSING-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "CLOSING"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-CLOSING-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "CLOSING"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-LAST-ACK-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "LAST-ACK"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-LAST-ACK-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "LAST-ACK"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-LAST-ACK-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "LAST-ACK"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-TIME-WAIT-rtx",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "TIME-WAIT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-TIME-WAIT-user",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "TIME-WAIT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "user"
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-TIMER-TIME-WAIT-time_wait",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "TIME-WAIT"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "time_wait"
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE",
+        "CONN-TIMEOUT"
+      ]
+    },
+    {
+      "id": "C-INV-OUTSTANDING-CONTROL",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "or",
+                    "args": [
+                      {
+                        "op": "or",
+                        "args": [
+                          {
+                            "op": "or",
+                            "args": [
+                              false,
+                              {
+                                "state": "SYN-SENT"
+                              }
+                            ]
+                          },
+                          {
+                            "state": "SYN-RECEIVED"
+                          }
+                        ]
+                      },
+                      {
+                        "state": "FIN-WAIT-1"
+                      }
+                    ]
+                  },
+                  {
+                    "state": "CLOSING"
+                  }
+                ]
+              },
+              {
+                "state": "LAST-ACK"
+              }
+            ]
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "snd_nxt"
+                  },
+                  {
+                    "op": "seq_add",
+                    "args": [
+                      {
+                        "var": "tx_seq"
+                      },
+                      1
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "snd_una"
+                  },
+                  {
+                    "var": "tx_seq"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONN-OPEN",
+        "CONN-CLOSE"
+      ]
+    },
+    {
+      "id": "C-INV-NOTHING-OUTSTANDING",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "or",
+                    "args": [
+                      {
+                        "op": "or",
+                        "args": [
+                          false,
+                          {
+                            "state": "ESTABLISHED"
+                          }
+                        ]
+                      },
+                      {
+                        "state": "CLOSE-WAIT"
+                      }
+                    ]
+                  },
+                  {
+                    "state": "FIN-WAIT-2"
+                  }
+                ]
+              },
+              {
+                "state": "TIME-WAIT"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "snd_una"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "C-INV-BOUND-rto_ms",
+      "assert": {
+        "op": "ge",
+        "args": [
+          {
+            "var": "rto_ms"
+          },
+          1000
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE"
+      ]
+    },
+    {
+      "id": "C-INV-BOUND-retries",
+      "assert": {
+        "op": "ge",
+        "args": [
+          {
+            "var": "retries"
+          },
+          0
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE"
+      ]
+    },
+    {
+      "id": "C-INV-BOUND-msl_ms",
+      "assert": {
+        "op": "ge",
+        "args": [
+          {
+            "var": "msl_ms"
+          },
+          1
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE"
+      ]
+    },
+    {
+      "id": "C-INV-BOUND-user_timeout_ms",
+      "assert": {
+        "op": "ge",
+        "args": [
+          {
+            "var": "user_timeout_ms"
+          },
+          1
+        ]
+      },
+      "requirements": [
+        "CONNECTION-PROFILE"
+      ]
+    }
+  ]
+}

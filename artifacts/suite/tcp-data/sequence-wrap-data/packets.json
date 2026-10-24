@@ -1,0 +1,218 @@
+[
+  {
+    "time_ms": 0,
+    "event_id": "e0001",
+    "transition": "C-ACTIVE-OPEN",
+    "requirements": [
+      "CONN-OPEN",
+      "RTO-PROFILE"
+    ],
+    "packet_id": "e0001:out:0",
+    "direction": "out",
+    "flags": "S",
+    "seq": 4294967293,
+    "ack": 0,
+    "window": 16,
+    "dropped_after_egress": false,
+    "payload": []
+  },
+  {
+    "time_ms": 10,
+    "event_id": "e0002",
+    "transition": "C-ACCEPT-SYNACK",
+    "requirements": [
+      "CONN-SYN-SENT",
+      "RTO-PROFILE"
+    ],
+    "packet_id": "e0002:in",
+    "direction": "in",
+    "flags": "SA",
+    "seq": 4294967293,
+    "ack": 4294967294,
+    "window": 8,
+    "dropped_after_egress": false,
+    "payload": []
+  },
+  {
+    "time_ms": 10,
+    "event_id": "e0002",
+    "transition": "C-ACCEPT-SYNACK",
+    "requirements": [
+      "CONN-SYN-SENT",
+      "RTO-PROFILE"
+    ],
+    "packet_id": "e0002:out:1",
+    "direction": "out",
+    "flags": "A",
+    "seq": 4294967294,
+    "ack": 4294967294,
+    "window": 16,
+    "dropped_after_egress": false,
+    "payload": []
+  },
+  {
+    "time_ms": 21,
+    "event_id": "e0004",
+    "transition": "D-FLUSH-FIRST",
+    "requirements": [
+      "DATA-SEND",
+      "DATA-WINDOW",
+      "DATA-SEQ",
+      "DATA-RTO"
+    ],
+    "packet_id": "e0004:out:0",
+    "direction": "out",
+    "flags": "A",
+    "seq": 4294967294,
+    "ack": 4294967294,
+    "window": 16,
+    "payload": [
+      0,
+      128,
+      255,
+      4
+    ],
+    "dropped_after_egress": false
+  },
+  {
+    "time_ms": 30,
+    "event_id": "e0005",
+    "transition": "D-ACK-PARTIAL-WINDOW",
+    "requirements": [
+      "DATA-ACK",
+      "DATA-WINDOW",
+      "DATA-SEQ",
+      "DATA-RTO"
+    ],
+    "packet_id": "e0005:in",
+    "direction": "in",
+    "flags": "A",
+    "seq": 4294967294,
+    "ack": 0,
+    "window": 8,
+    "dropped_after_egress": false,
+    "payload": []
+  },
+  {
+    "time_ms": 1030,
+    "event_id": "e0006",
+    "transition": "D-RETRANSMIT",
+    "requirements": [
+      "DATA-RTX",
+      "DATA-RTO",
+      "DATA-SEQ"
+    ],
+    "packet_id": "e0006:out:0",
+    "direction": "out",
+    "flags": "A",
+    "seq": 0,
+    "ack": 4294967294,
+    "window": 16,
+    "payload": [
+      255,
+      4
+    ],
+    "dropped_after_egress": false
+  },
+  {
+    "time_ms": 1040,
+    "event_id": "e0007",
+    "transition": "D-ACK-FULL-WINDOW",
+    "requirements": [
+      "DATA-ACK",
+      "DATA-WINDOW",
+      "DATA-SEQ",
+      "DATA-RTO"
+    ],
+    "packet_id": "e0007:in",
+    "direction": "in",
+    "flags": "A",
+    "seq": 4294967294,
+    "ack": 2,
+    "window": 8,
+    "dropped_after_egress": false,
+    "payload": []
+  },
+  {
+    "time_ms": 1050,
+    "event_id": "e0008",
+    "transition": "D-RECEIVE-IN-ORDER",
+    "requirements": [
+      "DATA-RECEIVE",
+      "DATA-SEQ",
+      "DATA-SCOPE"
+    ],
+    "packet_id": "e0008:in",
+    "direction": "in",
+    "flags": "A",
+    "seq": 4294967294,
+    "ack": 2,
+    "window": 8,
+    "payload": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "dropped_after_egress": false
+  },
+  {
+    "time_ms": 1050,
+    "event_id": "e0008",
+    "transition": "D-RECEIVE-IN-ORDER",
+    "requirements": [
+      "DATA-RECEIVE",
+      "DATA-SEQ",
+      "DATA-SCOPE"
+    ],
+    "packet_id": "e0008:out:0",
+    "direction": "out",
+    "flags": "A",
+    "seq": 2,
+    "ack": 2,
+    "window": 12,
+    "payload": [],
+    "dropped_after_egress": false
+  },
+  {
+    "time_ms": 1060,
+    "event_id": "e0009",
+    "transition": "D-RECEIVE-OVERLAP",
+    "requirements": [
+      "DATA-RECEIVE",
+      "DATA-SEQ",
+      "DATA-SCOPE"
+    ],
+    "packet_id": "e0009:in",
+    "direction": "in",
+    "flags": "A",
+    "seq": 4294967295,
+    "ack": 2,
+    "window": 8,
+    "payload": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "dropped_after_egress": false
+  },
+  {
+    "time_ms": 1060,
+    "event_id": "e0009",
+    "transition": "D-RECEIVE-OVERLAP",
+    "requirements": [
+      "DATA-RECEIVE",
+      "DATA-SEQ",
+      "DATA-SCOPE"
+    ],
+    "packet_id": "e0009:out:0",
+    "direction": "out",
+    "flags": "A",
+    "seq": 2,
+    "ack": 3,
+    "window": 11,
+    "payload": [],
+    "dropped_after_egress": false
+  }
+]

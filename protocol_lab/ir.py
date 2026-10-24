@@ -141,6 +141,7 @@ def evaluate(expr, machine, event=None):
 
 
 def validate(model):
+    require("extends" not in model, "Resolve model extension with load() before validation")
     require(model.get("ir_version") in ("0.1", "0.2"), "Unsupported IR version")
     require(model.get("semantics") == "flat-efsm-atomic-ordered-v1", "Unsupported semantics")
     states = model["states"]
@@ -200,8 +201,52 @@ def validate(model):
     return model
 
 
+def model_files(path, seen=()):
+    """Enumerate declarative base files; used by evidence hashing as well."""
+    path = Path(path).resolve()
+    require(path not in seen, "Cyclic model extension")
+    raw = json.loads(path.read_text())
+    files = [path]
+    if "extends" in raw:
+        require(type(raw["extends"]) is str, "Invalid model base path")
+        require(not Path(raw["extends"]).is_absolute(), "Model base path must be relative")
+        base = (path.parent / raw["extends"]).resolve()
+        require(base.is_relative_to(path.parent), "Model base escapes model directory")
+        files += model_files(base, (*seen, path))
+    return files
+
+
 def load(path):
-    return validate(json.loads(Path(path).read_text()))
+    files = model_files(path)
+    model = json.loads(files[-1].read_text())
+    for source in reversed(files[:-1]):
+        overlay = json.loads(source.read_text())
+        require(overlay.get("ir_version") == "0.2", "Model extension requires IR 0.2")
+        for group in ("transitions", "invariants"):
+            removals = overlay.get("remove_" + group, [])
+            require(type(removals) is list and len(removals) == len(set(removals)), "Invalid removal IDs")
+            require(set(removals) <= {r["id"] for r in model[group]}, f"Unknown base {group} removal")
+            model[group] = [r for r in model[group] if r["id"] not in removals] + overlay.get(group, [])
+        amended = set()
+        for amendment in overlay.get("amend_transitions", []):
+            require(set(amendment) <= {"id", "and_guard", "append_actions"}, "Unsupported transition amendment")
+            rid = amendment["id"]
+            require(rid not in amended, "Duplicate transition amendment")
+            amended.add(rid)
+            matches = [r for r in model["transitions"] if r["id"] == rid]
+            require(len(matches) == 1, "Unknown/ambiguous transition amendment")
+            rule = matches[0]
+            if "and_guard" in amendment:
+                rule["guard"] = {"op": "and", "args": [rule["guard"], amendment["and_guard"]]}
+            rule["actions"] += amendment.get("append_actions", [])
+        for key, value in overlay.items():
+            if key in ("extends", "transitions", "invariants", "remove_transitions", "remove_invariants", "amend_transitions"):
+                continue
+            if key in ("requirements", "variables", "events", "messages", "timers"):
+                model[key].update(value)
+            else:
+                model[key] = value
+    return validate(model)
 
 
 class Machine:

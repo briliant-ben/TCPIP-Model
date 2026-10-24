@@ -46,6 +46,7 @@ def main():
     p.add_argument("expected", type=Path)
     p.add_argument("observed", type=Path)
     p.add_argument("--tolerance-ms", type=int, default=50)
+    p.add_argument("--projection", choices=("active-open-v1", "tcp-data-v1"), default="active-open-v1")
     p.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     try:
@@ -80,7 +81,7 @@ def main():
             print(json.dumps(result, ensure_ascii=False))
             return 0 if result["status"] == "pass" else 2
         elif args.command == "compare":
-            result = compare(read(args.expected), read(args.observed), args.tolerance_ms)
+            result = compare(read(args.expected), read(args.observed), args.tolerance_ms, args.projection)
             result["observation_source"] = str(args.observed.resolve())
             args.out.parent.mkdir(parents=True, exist_ok=True)
             write(args.out, result)

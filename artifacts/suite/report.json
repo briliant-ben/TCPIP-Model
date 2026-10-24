@@ -1,5 +1,5 @@
 {
-  "status": "local_profiles_pass_stack_incomplete",
+  "status": "formal_pending_stack_incomplete",
   "implemented_profiles": [
     {
       "profile": "tcp-active-open",
@@ -23,24 +23,24 @@
       "input_hashes": {
         "model/tcp.json": "119322775578a6ed366379b3434c1656e6812cb21d980016340ef22ecfaffd8b",
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "ef510a158165b3f3354da270ccbf37cdc769f98e30d7447c81b889b1fcba175a",
-        "protocol_lab/capture.py": "5868ce7a243d5f47f27133d47bfb9381fff5c88add8a303d045dcfa16426e718",
+        "protocol_lab/__main__.py": "0f318f2868fc6429ac4edb0d3e5aba22fbb2a49dff68d1d786712bc7ced9a3cc",
+        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
-        "protocol_lab/ir.py": "0708d6f7747f32b8b8a9318a15536bd93e5d283db8d9b5061a388811c2ec52a5",
+        "protocol_lab/ir.py": "4a27cc525fab1255a349c371cb59514d3ef1a7d9c05832716f5fe01be549cd06",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
-        "protocol_lab/packets.py": "e7cde0dde052698e3f2ca93352f2a6e3dff1cac60f6c4a1460ba0e6fd17cd8f2",
-        "protocol_lab/profiles.py": "8b199c10b2a8edaf7e0a2df9557a6dd6e3a383fa4178a093e1864db2387344e1",
-        "protocol_lab/symbolic.py": "3924fc62789e7f233313749f1d91ef2967d997069e0b0f74a453b20bf30c6d2a",
+        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+        "protocol_lab/profiles.py": "13cfca9fa61dc9212f222766fbd50d294957fb788ef3ee1c12a0e0ffcf648063",
+        "protocol_lab/symbolic.py": "ecb3f3aa708d441e28a78ab8abb56379d477a7a397ea88f794546e68bd2821b2",
         "scenarios/handshake.json": "638341941b59c740ec8ec2927e9e6cf252bdaebf538218fb38bac5d6a848f3d2",
         "scenarios/sequence-wrap.json": "fd66c07cb206670ecb6f4cd8378d6a8c06dd901cbb5b78595d7695b42eee8177",
         "scenarios/syn-loss.json": "0e6602d76c241dcf23dfd55e9465c9dfe2c0e5e7f47ab9cf5deeda368772f6ff",
         "scenarios/two-syn-losses.json": "b74d2d486c4adb506aec8c09b1424380eb71e64b36119cb2b780f8f34e2d2bb5",
         "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
-        "profiles.json": "e35e7199d284bba8e53f8f630aaa1dbd0f2e40bb6a3266fe47b7ae4497ce8fe9",
+        "profiles.json": "4ce56a3163d15e54b9a79e484b32b4e977b517fae8b8d73cb1c62ce1f56753f0",
         "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
-        "docs/semantics.md": "d94a9fabb1e38e4783fa6754b64ba440a3ab4c71f453421a26f556a0f2a6e045"
+        "docs/semantics.md": "1fb3eb6020be563bee37dd9cdd4507fdb46c9b32389d324033e4df9d436ae81d"
       },
       "scenarios": [
         {
@@ -49,7 +49,9 @@
           "final_state": "ESTABLISHED",
           "events": 2,
           "packets": 3,
-          "packetdrill": "generated_not_executed"
+          "packetdrill": "generated_not_executed",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "sequence-wrap",
@@ -57,7 +59,9 @@
           "final_state": "ESTABLISHED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "generated_not_executed"
+          "packetdrill": "generated_not_executed",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "syn-loss",
@@ -65,7 +69,9 @@
           "final_state": "ESTABLISHED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "generated_not_executed"
+          "packetdrill": "generated_not_executed",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "two-syn-losses",
@@ -73,7 +79,9 @@
           "final_state": "ESTABLISHED",
           "events": 4,
           "packets": 5,
-          "packetdrill": "generated_not_executed"
+          "packetdrill": "generated_not_executed",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         }
       ],
       "state_count": 3,
@@ -93,7 +101,9 @@
       "formal": {
         "status": "bounded_pass",
         "backend": "z3-bmc",
-        "depth": 6
+        "depth": 6,
+        "safety_query": "unsat",
+        "overlap_query": "unsat"
       },
       "real_stack": "not_run",
       "protocol_complete": false,
@@ -123,6 +133,7 @@
         "two-syn-losses/model.synthetic.pcap": "754a9cc453ead981ce34ae65f47b2f2edb7c02946d44902357508615a87052c8",
         "two-syn-losses/test.pkt": "38fdaa31d968f0e905fd24b7c5eeac64c03460f2b2cc6405dc816ef56fbfd11c",
         "state-machine.dot": "dfb4240f829ab274d14a867c8e75700f881bc5cd9a8ab6369398e6059d21534e",
+        "expanded-model.json": "119322775578a6ed366379b3434c1656e6812cb21d980016340ef22ecfaffd8b",
         "formal/result.json": "6823ba0c270a33ad22f4583d9d48df71a687c950fae147437c56bccfcb8111ff",
         "formal/model.smt2": "4ea4b12b3157490c42ad1031ea761d089f90cb4138dfb248c38ce5a4beba6140",
         "formal/overlap.smt2": "94f843c22e2eab119f61310cbdda30823ddb70dbefcc0620b52570abc89492d4"
@@ -132,7 +143,7 @@
       "profile": "tcp-connection",
       "protocol": "tcp-connection",
       "status": "reference_pass",
-      "model_sha256": "7b1c7f8f6904c3d84d12e7f74e2b9b8d267fe79fd56c11a3c38f98811116199c",
+      "model_sha256": "ed2a423368b27e0c427a54e183d87b03b086a45d642ca46d11f66d01a429cd8b",
       "sources": [
         {
           "rfc": 9293,
@@ -148,18 +159,18 @@
         }
       ],
       "input_hashes": {
-        "model/tcp-connection.json": "7b1c7f8f6904c3d84d12e7f74e2b9b8d267fe79fd56c11a3c38f98811116199c",
+        "model/tcp-connection.json": "ed2a423368b27e0c427a54e183d87b03b086a45d642ca46d11f66d01a429cd8b",
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "ef510a158165b3f3354da270ccbf37cdc769f98e30d7447c81b889b1fcba175a",
-        "protocol_lab/capture.py": "5868ce7a243d5f47f27133d47bfb9381fff5c88add8a303d045dcfa16426e718",
+        "protocol_lab/__main__.py": "0f318f2868fc6429ac4edb0d3e5aba22fbb2a49dff68d1d786712bc7ced9a3cc",
+        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
-        "protocol_lab/ir.py": "0708d6f7747f32b8b8a9318a15536bd93e5d283db8d9b5061a388811c2ec52a5",
+        "protocol_lab/ir.py": "4a27cc525fab1255a349c371cb59514d3ef1a7d9c05832716f5fe01be549cd06",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
-        "protocol_lab/packets.py": "e7cde0dde052698e3f2ca93352f2a6e3dff1cac60f6c4a1460ba0e6fd17cd8f2",
-        "protocol_lab/profiles.py": "8b199c10b2a8edaf7e0a2df9557a6dd6e3a383fa4178a093e1864db2387344e1",
-        "protocol_lab/symbolic.py": "3924fc62789e7f233313749f1d91ef2967d997069e0b0f74a453b20bf30c6d2a",
+        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+        "protocol_lab/profiles.py": "13cfca9fa61dc9212f222766fbd50d294957fb788ef3ee1c12a0e0ffcf648063",
+        "protocol_lab/symbolic.py": "ecb3f3aa708d441e28a78ab8abb56379d477a7a397ea88f794546e68bd2821b2",
         "scenarios/connection/abort-established.json": "9c06d5c93398e8fa66c50a11c3f977ace67ab01e8a3253e02c341b7697b92d1e",
         "scenarios/connection/abort-from-close-wait.json": "2f1a93fdf771a1db41241bdf2cc8883f0b73a312a532d3fde56b09f327c7514e",
         "scenarios/connection/abort-from-closed.json": "bb460a25b12b45070eb10e3f78cd22afce1bd64d970411b39569de2e99454192",
@@ -262,9 +273,10 @@
         "scenarios/connection/two-syn-retransmissions.json": "5fb47850fdf66f1ef60d66940df814fb90a418ab49220e02d9b2c18c78afd592",
         "scenarios/connection/user-timeout.json": "48ac6e8053ec9e3d4c99cb78c85bf16c1a7c4bedcccf9973470b6ab84af06bc2",
         "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
-        "profiles.json": "e35e7199d284bba8e53f8f630aaa1dbd0f2e40bb6a3266fe47b7ae4497ce8fe9",
+        "profiles.json": "4ce56a3163d15e54b9a79e484b32b4e977b517fae8b8d73cb1c62ce1f56753f0",
         "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
-        "docs/tcp-connection.md": "d62c978a173a54c9c7fe18101faa89aad313d367ae3e598d0213b550c817f5bb"
+        "docs/semantics.md": "1fb3eb6020be563bee37dd9cdd4507fdb46c9b32389d324033e4df9d436ae81d",
+        "docs/tcp-connection.md": "2af73a3a6c33d51927896d775f8217e5ec4bb804c705e68d185b44dbc4858c6c"
       },
       "scenarios": [
         {
@@ -273,7 +285,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-close-wait",
@@ -281,7 +295,9 @@
           "final_state": "CLOSED",
           "events": 4,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-closed",
@@ -289,7 +305,9 @@
           "final_state": "CLOSED",
           "events": 1,
           "packets": 0,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-closing",
@@ -297,7 +315,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-established",
@@ -305,7 +325,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-fin-wait-1",
@@ -313,7 +335,9 @@
           "final_state": "CLOSED",
           "events": 4,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-fin-wait-2",
@@ -321,7 +345,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-last-ack",
@@ -329,7 +355,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-listen",
@@ -337,7 +365,9 @@
           "final_state": "CLOSED",
           "events": 2,
           "packets": 0,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-syn-received-active",
@@ -345,7 +375,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-syn-received-passive",
@@ -353,7 +385,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 3,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-syn-sent",
@@ -361,7 +395,9 @@
           "final_state": "CLOSED",
           "events": 2,
           "packets": 1,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-from-time-wait",
@@ -369,7 +405,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "abort-syn-sent",
@@ -377,7 +415,9 @@
           "final_state": "CLOSED",
           "events": 2,
           "packets": 1,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "active-close",
@@ -385,7 +425,9 @@
           "final_state": "CLOSED",
           "events": 6,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "active-syn-retransmission",
@@ -393,7 +435,9 @@
           "final_state": "ESTABLISHED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "bad-bare-ack",
@@ -401,7 +445,9 @@
           "final_state": "SYN-SENT",
           "events": 2,
           "packets": 3,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "bad-passive-ack",
@@ -409,7 +455,9 @@
           "final_state": "ESTABLISHED",
           "events": 4,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "bad-synack",
@@ -417,7 +465,9 @@
           "final_state": "ESTABLISHED",
           "events": 3,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "bare-acceptable-ack",
@@ -425,7 +475,9 @@
           "final_state": "SYN-SENT",
           "events": 2,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "close-listener",
@@ -433,7 +485,9 @@
           "final_state": "CLOSED",
           "events": 2,
           "packets": 0,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "close-pending-connect",
@@ -441,7 +495,9 @@
           "final_state": "CLOSED",
           "events": 2,
           "packets": 1,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "closed-input",
@@ -449,7 +505,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "combined-fin-ack",
@@ -457,7 +515,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "duplicate-ack-in-close-wait",
@@ -465,7 +525,9 @@
           "final_state": "CLOSE-WAIT",
           "events": 4,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "duplicate-ack-in-established",
@@ -473,7 +535,9 @@
           "final_state": "ESTABLISHED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "duplicate-ack-in-fin-wait-2",
@@ -481,7 +545,9 @@
           "final_state": "FIN-WAIT-2",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "duplicate-fin-close-wait",
@@ -489,7 +555,9 @@
           "final_state": "CLOSE-WAIT",
           "events": 4,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "duplicate-fin-time-wait",
@@ -497,7 +565,9 @@
           "final_state": "TIME-WAIT",
           "events": 5,
           "packets": 8,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "fin-retransmission",
@@ -505,7 +575,9 @@
           "final_state": "CLOSED",
           "events": 7,
           "packets": 8,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "fin-wait-two-timeout",
@@ -513,7 +585,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "listen-reset",
@@ -521,7 +595,9 @@
           "final_state": "LISTEN",
           "events": 2,
           "packets": 1,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "old-ack-from-closing",
@@ -529,7 +605,9 @@
           "final_state": "CLOSING",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "old-ack-from-fin-wait-1",
@@ -537,7 +615,9 @@
           "final_state": "FIN-WAIT-1",
           "events": 4,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "old-ack-from-last-ack",
@@ -545,7 +625,9 @@
           "final_state": "LAST-ACK",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "passive-ack-after-1-retries",
@@ -553,7 +635,9 @@
           "final_state": "ESTABLISHED",
           "events": 4,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "passive-ack-after-2-retries",
@@ -561,7 +645,9 @@
           "final_state": "ESTABLISHED",
           "events": 5,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "passive-close",
@@ -569,7 +655,9 @@
           "final_state": "CLOSED",
           "events": 6,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "refused-active",
@@ -577,7 +665,9 @@
           "final_state": "CLOSED",
           "events": 2,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "reject-ack-in-closed",
@@ -585,7 +675,9 @@
           "final_state": "CLOSED",
           "events": 1,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "reject-ack-in-listen",
@@ -593,7 +685,9 @@
           "final_state": "LISTEN",
           "events": 2,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "reject-fin-in-closed",
@@ -601,7 +695,9 @@
           "final_state": "CLOSED",
           "events": 1,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "reject-fin-in-listen",
@@ -609,7 +705,9 @@
           "final_state": "LISTEN",
           "events": 2,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "reject-synack-in-closed",
@@ -617,7 +715,9 @@
           "final_state": "CLOSED",
           "events": 1,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "reject-synack-in-listen",
@@ -625,7 +725,9 @@
           "final_state": "LISTEN",
           "events": 2,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "repeat-close-closing",
@@ -633,7 +735,9 @@
           "final_state": "CLOSING",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "repeat-close-last-ack",
@@ -641,7 +745,9 @@
           "final_state": "LAST-ACK",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "repeat-close-time-wait",
@@ -649,7 +755,9 @@
           "final_state": "TIME-WAIT",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "repeat-fin-in-close-wait",
@@ -657,7 +765,9 @@
           "final_state": "CLOSE-WAIT",
           "events": 4,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "repeat-fin-in-closing",
@@ -665,7 +775,9 @@
           "final_state": "CLOSING",
           "events": 5,
           "packets": 8,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "repeat-fin-in-last-ack",
@@ -673,7 +785,9 @@
           "final_state": "LAST-ACK",
           "events": 5,
           "packets": 8,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "repeat-fin-in-time-wait",
@@ -681,7 +795,9 @@
           "final_state": "TIME-WAIT",
           "events": 5,
           "packets": 8,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "repeated-close",
@@ -689,7 +805,9 @@
           "final_state": "CLOSED",
           "events": 8,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "reset-established",
@@ -697,7 +815,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "reset-syn-received-active",
@@ -705,7 +825,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "reset-syn-received-passive",
@@ -713,7 +835,9 @@
           "final_state": "LISTEN",
           "events": 3,
           "packets": 3,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "retransmit-from-closing",
@@ -721,7 +845,9 @@
           "final_state": "CLOSING",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "retransmit-from-fin-wait-1",
@@ -729,7 +855,9 @@
           "final_state": "FIN-WAIT-1",
           "events": 4,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "retransmit-from-last-ack",
@@ -737,7 +865,9 @@
           "final_state": "LAST-ACK",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "retransmit-from-syn-received-passive",
@@ -745,7 +875,9 @@
           "final_state": "SYN-RECEIVED",
           "events": 3,
           "packets": 3,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "retransmit-from-syn-sent",
@@ -753,7 +885,9 @@
           "final_state": "SYN-SENT",
           "events": 2,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-close-wait",
@@ -761,7 +895,9 @@
           "final_state": "CLOSED",
           "events": 4,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-closed",
@@ -769,7 +905,9 @@
           "final_state": "CLOSED",
           "events": 1,
           "packets": 1,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-closing",
@@ -777,7 +915,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-established",
@@ -785,7 +925,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-fin-wait-1",
@@ -793,7 +935,9 @@
           "final_state": "CLOSED",
           "events": 4,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-fin-wait-2",
@@ -801,7 +945,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-last-ack",
@@ -809,7 +955,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-listen",
@@ -817,7 +965,9 @@
           "final_state": "LISTEN",
           "events": 2,
           "packets": 1,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-syn-received-active",
@@ -825,7 +975,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-syn-received-passive",
@@ -833,7 +985,9 @@
           "final_state": "LISTEN",
           "events": 3,
           "packets": 3,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-syn-sent",
@@ -841,7 +995,9 @@
           "final_state": "SYN-SENT",
           "events": 2,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rst-from-time-wait",
@@ -849,7 +1005,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-close-wait",
@@ -857,7 +1015,9 @@
           "final_state": "CLOSED",
           "events": 4,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-closed",
@@ -865,7 +1025,9 @@
           "final_state": "CLOSED",
           "events": 1,
           "packets": 1,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-closing",
@@ -873,7 +1035,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-established",
@@ -881,7 +1045,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-fin-wait-1",
@@ -889,7 +1055,9 @@
           "final_state": "CLOSED",
           "events": 4,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-fin-wait-2",
@@ -897,7 +1065,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-last-ack",
@@ -905,7 +1075,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-listen",
@@ -913,7 +1085,9 @@
           "final_state": "LISTEN",
           "events": 2,
           "packets": 1,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-syn-received-active",
@@ -921,7 +1095,9 @@
           "final_state": "CLOSED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-syn-received-passive",
@@ -929,7 +1105,9 @@
           "final_state": "LISTEN",
           "events": 3,
           "packets": 3,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-syn-sent",
@@ -937,7 +1115,9 @@
           "final_state": "CLOSED",
           "events": 2,
           "packets": 2,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "rstack-from-time-wait",
@@ -945,7 +1125,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "sequence-wrap-close",
@@ -953,7 +1135,9 @@
           "final_state": "CLOSED",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "simultaneous-ack-after-1-retries",
@@ -961,7 +1145,9 @@
           "final_state": "ESTABLISHED",
           "events": 4,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "simultaneous-ack-after-2-retries",
@@ -969,7 +1155,9 @@
           "final_state": "ESTABLISHED",
           "events": 5,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "simultaneous-close",
@@ -977,7 +1165,9 @@
           "final_state": "CLOSED",
           "events": 6,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "simultaneous-open-ack",
@@ -985,7 +1175,9 @@
           "final_state": "ESTABLISHED",
           "events": 3,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "simultaneous-open-retry",
@@ -993,7 +1185,9 @@
           "final_state": "ESTABLISHED",
           "events": 4,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "simultaneous-open",
@@ -1001,7 +1195,9 @@
           "final_state": "ESTABLISHED",
           "events": 3,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "simultaneous-synack-after-1-retries",
@@ -1009,7 +1205,9 @@
           "final_state": "ESTABLISHED",
           "events": 4,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "simultaneous-synack-after-2-retries",
@@ -1017,7 +1215,9 @@
           "final_state": "ESTABLISHED",
           "events": 5,
           "packets": 7,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "synack-retransmission",
@@ -1025,7 +1225,9 @@
           "final_state": "ESTABLISHED",
           "events": 4,
           "packets": 4,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "timeout-from-closing",
@@ -1033,7 +1235,9 @@
           "final_state": "CLOSED",
           "events": 9,
           "packets": 10,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "timeout-from-fin-wait-1",
@@ -1041,7 +1245,9 @@
           "final_state": "CLOSED",
           "events": 8,
           "packets": 8,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "timeout-from-last-ack",
@@ -1049,7 +1255,9 @@
           "final_state": "CLOSED",
           "events": 9,
           "packets": 10,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "timeout-from-syn-received-passive",
@@ -1057,7 +1265,9 @@
           "final_state": "CLOSED",
           "events": 7,
           "packets": 6,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "two-syn-retransmissions",
@@ -1065,7 +1275,9 @@
           "final_state": "ESTABLISHED",
           "events": 4,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         },
         {
           "id": "user-timeout",
@@ -1073,7 +1285,9 @@
           "final_state": "CLOSED",
           "events": 6,
           "packets": 5,
-          "packetdrill": "unavailable_for_profile"
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "not_run",
+          "wire_roundtrip": "not_run"
         }
       ],
       "state_count": 11,
@@ -1195,528 +1409,1044 @@
       "formal": {
         "status": "bounded_pass",
         "backend": "z3-bmc",
-        "depth": 6
+        "depth": 6,
+        "safety_query": "unsat",
+        "overlap_query": "unsat"
       },
       "real_stack": "not_run",
       "protocol_complete": false,
       "artifact_hashes": {
-        "abort-established/trace.json": "c8f675c1ea8577c31729693ee239aa27269c91c47f5494c17d502d72212eed51",
+        "abort-established/trace.json": "9d2b7a73fa8a9ef5899a67ce1d4879e9c187b5c8a6e30b8e562ecddba22c3bc9",
         "abort-established/packets.json": "22bee95ac013e1be2cbe58f878d79c22f1b2f6dfe12880a1b400f3f682fe9052",
         "abort-established/scenario.json": "9c06d5c93398e8fa66c50a11c3f977ace67ab01e8a3253e02c341b7697b92d1e",
         "abort-established/packet-map.json": "18865e8b8887b5c4fb723e3cafde6c0d73b3814c9be3f57ebcf7773fc07ec81c",
         "abort-established/model.synthetic.pcap": "b11a8cc8d501597052dc695a8e94110691ee081a1b99c422b5e2a43c73b0c4a6",
-        "abort-from-close-wait/trace.json": "bd31cae3e7dfe2e1bf156fde06068afb9c4ee22ac2962073ef5adfc7c37703be",
+        "abort-from-close-wait/trace.json": "b69a5cc75ad822f16bd580322673770cbc7f54f81e2cfaaa4f78ed11e2f33806",
         "abort-from-close-wait/packets.json": "5430cacd29b3c8d03205301affd519c7e7ca269c40b8b0c8b610be8f58d6113c",
         "abort-from-close-wait/scenario.json": "2f1a93fdf771a1db41241bdf2cc8883f0b73a312a532d3fde56b09f327c7514e",
         "abort-from-close-wait/packet-map.json": "a46add7331d25a2ba305ac6de6480a370bb2ed91f8b6d8b4f76912dbf169a988",
         "abort-from-close-wait/model.synthetic.pcap": "eef71fe6c637cf76380352d156a6711ef57b97956264a523a461c14ea56519d4",
-        "abort-from-closed/trace.json": "dd366c49959eea5fc399f5928a7bb4806240e91684d373494e8ae27e0a7fbbb0",
+        "abort-from-closed/trace.json": "9576dab0e0d2d393e187941fda1f99b92bc9de5e4da928a6378c3208776c62e4",
         "abort-from-closed/packets.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
         "abort-from-closed/scenario.json": "bb460a25b12b45070eb10e3f78cd22afce1bd64d970411b39569de2e99454192",
         "abort-from-closed/packet-map.json": "18f6235c32997abe5940500d4a88f2551eca60e3e606f710d05e395a6bad8d4e",
         "abort-from-closed/model.synthetic.pcap": "7fc34f2f51797bc1deb12f9f856941cf6e997187a347bd09ed065dc34bbe969d",
-        "abort-from-closing/trace.json": "634fe5e9a3c22e250f63de1f6a1d79d4201cc777650f5eac05c1dcd40a935e6a",
+        "abort-from-closing/trace.json": "7960b24a810e0510b908fc81c46ca0b06a5d58acace7e06f5e2d7e7aa93a1067",
         "abort-from-closing/packets.json": "746bf1c2055cb91c72da59627fa7e1465d786ff6b01950ddb1bad8d0980d0617",
         "abort-from-closing/scenario.json": "b72e824ef7edd00f9bc941b9c80c6daae201aa4549f49647fd0c3f106540ac4b",
         "abort-from-closing/packet-map.json": "ad2140eb0877bef1a0b36cd5d4a453f4bd0447649679e6934b6bbadbb73ffd05",
         "abort-from-closing/model.synthetic.pcap": "b28333199bedb777451ccc775a4bf5bc5f8f2d9c1629b6ba68da4ba52ba51a1d",
-        "abort-from-established/trace.json": "b7b91f5fd6b41dc2627839f88403a77dc1860025ad4bfa0d3e298bdafa43d2fb",
+        "abort-from-established/trace.json": "189a2c48d92cb3a1d5a7d990336cc84df0938ccdccf24e4bb8da54de707dc954",
         "abort-from-established/packets.json": "a06055abba3870545a4ec13b928eb7f77c86e3048f0c3688daf0490a8a30eabf",
         "abort-from-established/scenario.json": "c6b7080d339eb0e75881b6a4624eeb29d3d48446b6a38ebcbe47db21c923961a",
         "abort-from-established/packet-map.json": "18865e8b8887b5c4fb723e3cafde6c0d73b3814c9be3f57ebcf7773fc07ec81c",
         "abort-from-established/model.synthetic.pcap": "45523a967665781a1dfb046ae1b85a4055a98454efc5a1f19262a3147c141500",
-        "abort-from-fin-wait-1/trace.json": "b94a663c64ab44114cfd419fa6e086c38aa9c37b188fcacea831d2004555d6c9",
+        "abort-from-fin-wait-1/trace.json": "f666a07466d98ad827fb3941dc957519982c72fcab36a628e1140078fc8c04be",
         "abort-from-fin-wait-1/packets.json": "ae9e7a0db346742a7c6eb91ad1a681281394f551b130a42865c6551c4dfb608a",
         "abort-from-fin-wait-1/scenario.json": "834ce9b45ce7d9bbf0ffb86ba23f74c3f2922ce693047eef67d3d188dcaa39db",
         "abort-from-fin-wait-1/packet-map.json": "b66dae5e7c6ac55e9841581efb96193e48877296c407920a40083defff4e6fb9",
         "abort-from-fin-wait-1/model.synthetic.pcap": "96ac4efb53f92dc9d8ee861c54c336af704023698c74f007c2b7c5d23deb3fe1",
-        "abort-from-fin-wait-2/trace.json": "673c73741538413b89adca95f49b2f92804991483ca888f33630579acd4f9d7f",
+        "abort-from-fin-wait-2/trace.json": "b123a4287a16e87ec845217410e1f3bd0c558e61b8c6575ef967347d70681647",
         "abort-from-fin-wait-2/packets.json": "6df3f34b5c1f244cd2099f0b5ffbcaba66da8e754bcf7eaa1ae41bbf3e558165",
         "abort-from-fin-wait-2/scenario.json": "23c944ea5d4d82429e88c7d21ba9f85c6e27dd9bef2436d2a89e97f500f7485b",
         "abort-from-fin-wait-2/packet-map.json": "fff8593d5789bb8f4c8b5ba5c08053ed9c485d085d16a76dbbb15f9e41afdeaf",
         "abort-from-fin-wait-2/model.synthetic.pcap": "6096ab8b8d52951e47f8aff3e934b20d18e69734b36dfdf501e37fc0b5b95875",
-        "abort-from-last-ack/trace.json": "b03371242526f4adc7eaa966d82eb6742f2a1db18159a471989b07a039bbed9e",
+        "abort-from-last-ack/trace.json": "fa3e19d6aff0e87c5a3db3214fecb5707a284b3150f473bade4bfe7079cedccb",
         "abort-from-last-ack/packets.json": "b57276bfaaac777e71ebaa88aeb266710b86eb07f03aebf4a37ddfacb2e97e1d",
         "abort-from-last-ack/scenario.json": "8a4f2a32beda1ea84c8ea10125e48c70a22fa6228d1951ca6806bc4dc94c9333",
         "abort-from-last-ack/packet-map.json": "8e321ec31cd3db5335c795497b37073e9b5d6e956023151240f9032db7a1e6e8",
         "abort-from-last-ack/model.synthetic.pcap": "587ce9da08f94cf709ae4ba0ed453a52fd9d5b7a15f454d558332ddb58e20480",
-        "abort-from-listen/trace.json": "24f688d4dadad402e0645e5d207e213e15b814df43eff687cf9eec361874ce6f",
+        "abort-from-listen/trace.json": "e378c81c452b4fdd2bd827c4e4800f50c704a2da42f56bcd68b4a34cc027c31b",
         "abort-from-listen/packets.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
         "abort-from-listen/scenario.json": "d19ef17ab310e7f13f54da22852c1a51f2a91fa819c0e0dda1d9976277748dda",
         "abort-from-listen/packet-map.json": "18f6235c32997abe5940500d4a88f2551eca60e3e606f710d05e395a6bad8d4e",
         "abort-from-listen/model.synthetic.pcap": "7fc34f2f51797bc1deb12f9f856941cf6e997187a347bd09ed065dc34bbe969d",
-        "abort-from-syn-received-active/trace.json": "e2bf763c2f4c63d97234bac2c8144f85a1e4394cc1a8fa3723d22ddeccba82e2",
+        "abort-from-syn-received-active/trace.json": "83b5c7d50409cfd860b73ed41d3b784d90321f1b049feb842daf1fc91129e071",
         "abort-from-syn-received-active/packets.json": "7425ee86e366e96679d09d1d02291f1d32b858c376da4bbdcff6902cb69f84ef",
         "abort-from-syn-received-active/scenario.json": "def72d996eb649f7c393b79d28b85b968512a566024290ddb1cd8240b4316735",
         "abort-from-syn-received-active/packet-map.json": "3b138c226e5a1e3bcba2b36dc314c7288718f4d42ec9a444789e634e964e6fbd",
         "abort-from-syn-received-active/model.synthetic.pcap": "d72fcc32f6e93e308eef91e0af0519e24e7d36e606415e3d2e6611e729352b48",
-        "abort-from-syn-received-passive/trace.json": "652d89b3bd2b660de29fafb0c0af8eb84d32323f8a0dbdf11793b0f9140baabe",
+        "abort-from-syn-received-passive/trace.json": "a83c3cf22dfc540bfd673a5481550cfffe4c6a44af17432480ba8ea235b1722f",
         "abort-from-syn-received-passive/packets.json": "22d9ff9c2ff84e625eb07de87ac41ae0d14cb7a7396f9180f539bf2a03b37be8",
         "abort-from-syn-received-passive/scenario.json": "1dc6a0e7afcac36b5498f0461ddee89123e92688aae1ade54ac16b4877c90065",
         "abort-from-syn-received-passive/packet-map.json": "c2237ab573a48591863c20d3ee00e0753c65ef5a3a9ec282868d6adf9be8b357",
         "abort-from-syn-received-passive/model.synthetic.pcap": "64de57f8739f510466cf69a67d99cb443b05f2b0421f78a7eb7b8c6c59246cbd",
-        "abort-from-syn-sent/trace.json": "f60bb4538cbe80133fe56f2a0bd8866a98294fe9b82c0a33d47faed974c23b55",
+        "abort-from-syn-sent/trace.json": "850ac3bd449434cc85cbe931fb422516f964e5bc645f95753e817a21af5d4b6a",
         "abort-from-syn-sent/packets.json": "33013ea09898f0d685a3689e1e37bd00ded4077284e1c0593ac53ecbb8bf1728",
         "abort-from-syn-sent/scenario.json": "250a436de6484bf6dbc0f471082fca8afba3694ace88876a8819de1f877217cf",
         "abort-from-syn-sent/packet-map.json": "3e2e85bce87cb2e964ba2792ee10d51d304f26dae07a007cdb899af31a311bfb",
         "abort-from-syn-sent/model.synthetic.pcap": "911398178450ce7838706e3e402f2c713f6f76ca356bc201a793043174e692e8",
-        "abort-from-time-wait/trace.json": "d51ada4fdbbd1b22ab6a1f8add4d91a8f8c42cbc09e2196d2e7c98d5fd471707",
+        "abort-from-time-wait/trace.json": "522c13afa09047000c2e6b59d306f1946e4989db0da1ab4b8fe5a213a85a9490",
         "abort-from-time-wait/packets.json": "6480ae151f7c69611ce2e9d54098b3accd0f442860deffda7b64029f857c7409",
         "abort-from-time-wait/scenario.json": "e1acf09f53d8a13a9f039bc05bfc7af6106634f3fb133e85fd10e64f006aeb91",
         "abort-from-time-wait/packet-map.json": "ad2140eb0877bef1a0b36cd5d4a453f4bd0447649679e6934b6bbadbb73ffd05",
         "abort-from-time-wait/model.synthetic.pcap": "a9aeedb77738e42bd0dcc69ad54115def4f753db5245feebd345407c6be685bf",
-        "abort-syn-sent/trace.json": "38635a1fe48a40356b0c11f7c0ba224c471ea67e526d37e1675c502e3da52537",
+        "abort-syn-sent/trace.json": "fe6c5d67063ec775733ae9312d69df35486b534bd6e60755be09b224d4bfc55c",
         "abort-syn-sent/packets.json": "33013ea09898f0d685a3689e1e37bd00ded4077284e1c0593ac53ecbb8bf1728",
         "abort-syn-sent/scenario.json": "311a5a6917fab64a5dcdc44502a59df2823d108aaed723d2278b9c3f8314c067",
         "abort-syn-sent/packet-map.json": "3e2e85bce87cb2e964ba2792ee10d51d304f26dae07a007cdb899af31a311bfb",
         "abort-syn-sent/model.synthetic.pcap": "911398178450ce7838706e3e402f2c713f6f76ca356bc201a793043174e692e8",
-        "active-close/trace.json": "eb332f3aee310e43d7917c5aef21223033740a7860ce8768a2fb6718d1e3603d",
+        "active-close/trace.json": "c419afc2d1fbcd594abf75f29311bdcc4112f0a953984af0e79a08a381ee342f",
         "active-close/packets.json": "dbd530f22ab84bace3064046acfde85648aa0b2eb58642c470b482655c27adcc",
         "active-close/scenario.json": "c6f076674a7a02610eb13d0bedbe1f99a441f0127114951a564afcbe6c9fa6e5",
         "active-close/packet-map.json": "36e80089223bb6590a376927835941fb8feba13e944b55ce5cbd05025ee08145",
         "active-close/model.synthetic.pcap": "16bad3cc49599f357fa2d6df37835a01e8fbdad3ffd0252f22024e60cf1522c5",
-        "active-syn-retransmission/trace.json": "4d1fa9f8dec6302e52de5f5d814a54d3a8519aebcf435979b6ca73e703b54b71",
+        "active-syn-retransmission/trace.json": "3174686a3f60877fb8a19e2fc12ec0c054d515049309643d6e358d7aa9fd4581",
         "active-syn-retransmission/packets.json": "13b1312029367dabaa6ca1fc02f893002a9d478e4e96ccbccae24a6256c05c21",
         "active-syn-retransmission/scenario.json": "3c3021cb63b55db8e14ca9baa0699128ecff4a4e137574e5d00e67264ec00eaa",
         "active-syn-retransmission/packet-map.json": "28e75e0e5981a038ea4e700071e35fd1f9382e6340fdd578c4ce392c88949e43",
         "active-syn-retransmission/model.synthetic.pcap": "f7a3cb5e05c34a8b788f648dd4cb3d276c6167b057431af286eff64eeca7623c",
-        "bad-bare-ack/trace.json": "64a763864b11b665b48155594f3520ff607347ba30bca1d6384b8e870e6bad28",
+        "bad-bare-ack/trace.json": "68c74dcbedeabe421251a172a021c53f3bf5999288cca1794d1e826714b6d16f",
         "bad-bare-ack/packets.json": "882fe469a35510b53c71a5ea0711c89023c10f832f9aad2b85895c4fc03fb48e",
         "bad-bare-ack/scenario.json": "f2154cc085b5551e66785c6ffe61edf78ed8acc584938dc0281365b437189a67",
         "bad-bare-ack/packet-map.json": "f53c7419e52974ef88ad6835816fc5e872e0d843e4a4ef387cea59c99ff8edd9",
         "bad-bare-ack/model.synthetic.pcap": "c534747f02cc029dc58fee03ab82c9d6deb6d180f046f3602144b3febcc2c2e8",
-        "bad-passive-ack/trace.json": "42663eb08bad0d7d2502a14bdb3e678da925cf00c09b2474c360bec844cf3d34",
+        "bad-passive-ack/trace.json": "c64e357da0ae2b41a2f1250f0055f8280963112b372a2df72cce9c797084d239",
         "bad-passive-ack/packets.json": "e3865f4319c51ae46ddc9ab5ffd59dd8721b91dc6a786ee385555596f33f4a82",
         "bad-passive-ack/scenario.json": "6c1b37f52d8fc09d155828312ba9d912ed979a6a7d27d03fa3d95d3190a11720",
         "bad-passive-ack/packet-map.json": "b9548d79c0f85fdc25bc2307c06657041f0ee89fbd514e73248d453276e2a580",
         "bad-passive-ack/model.synthetic.pcap": "987047895b1dfa42c2dd63d18d61812defbba2b4bf3096849acae94e62a01d22",
-        "bad-synack/trace.json": "477835b1d263909f756c53ef6b1e23216f000ac41d0228e729ccfd028290f10f",
+        "bad-synack/trace.json": "74c47db17514e642a0d061f28188531e1ddd83604975ec423b3e9155d5e2de2a",
         "bad-synack/packets.json": "ce45c8ee19227ec9a8d155fa340f3d6d15583155ccdb43fdd0658081ff16b86c",
         "bad-synack/scenario.json": "d031775014f8da634d56acd42f2aaaa07fcffe014dbbacb0c3798abbce65a87f",
         "bad-synack/packet-map.json": "b1947f9efbdc84e26a2fea7c2638f1be35c35a20bfd0c54448031122dabe8e1d",
         "bad-synack/model.synthetic.pcap": "0ab75f797e456f2659ce76891459623355e25c97db91539eacf820277126d7cc",
-        "bare-acceptable-ack/trace.json": "fdef3364866bd7e845b0decec8be0ccb601b22f6fc950e75715fb0bb4d392f80",
+        "bare-acceptable-ack/trace.json": "ff73f48f85a13f156b951cd11e12fceccec4745ea33a10b3e955d68a889edf40",
         "bare-acceptable-ack/packets.json": "74b808a01befb4c843bb0783ca97eb2c4a38087497f1f7e901a5441713481647",
         "bare-acceptable-ack/scenario.json": "1ebf2475a7edebf4438b01229ea751fa4c7d210da00784cbe03a706f005bba74",
         "bare-acceptable-ack/packet-map.json": "811665604c8a3be72e45d133469f0f0897d2a1282053f67813c1421caf3dc9eb",
         "bare-acceptable-ack/model.synthetic.pcap": "7f65c53692c08e17cb3f680ab3f5f19a9c12161a45325504d579ac486313a4c4",
-        "close-listener/trace.json": "a7ec75bef8461d0e3d137391c97480858da36eb2f215cf95fc8e1ea1403306eb",
+        "close-listener/trace.json": "027118b5e7c9322608920c7b36e923b768b5a0a29490f93f560840b530b2473e",
         "close-listener/packets.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
         "close-listener/scenario.json": "7503e41347438fd7e25e47125b9d2530c3140af3f61b4868627f8ce9f96a3f5f",
         "close-listener/packet-map.json": "18f6235c32997abe5940500d4a88f2551eca60e3e606f710d05e395a6bad8d4e",
         "close-listener/model.synthetic.pcap": "7fc34f2f51797bc1deb12f9f856941cf6e997187a347bd09ed065dc34bbe969d",
-        "close-pending-connect/trace.json": "5673bc1862199efe50b365f6b2a86b3f7c58947e6df14290c8bee76aefab423d",
+        "close-pending-connect/trace.json": "8bb1a0151d9928d549b4588a9c8189a5bf6699fe085171760ae319f8fcd6d48a",
         "close-pending-connect/packets.json": "33013ea09898f0d685a3689e1e37bd00ded4077284e1c0593ac53ecbb8bf1728",
         "close-pending-connect/scenario.json": "4ea9e3effd5eafc44be0ae93a851d345fd0a6b4b1ab1392a2bdb486c418faa73",
         "close-pending-connect/packet-map.json": "3e2e85bce87cb2e964ba2792ee10d51d304f26dae07a007cdb899af31a311bfb",
         "close-pending-connect/model.synthetic.pcap": "911398178450ce7838706e3e402f2c713f6f76ca356bc201a793043174e692e8",
-        "closed-input/trace.json": "b2b3e82965f96160747154594ec3f2efa7e378c26fd80f42351b97d5eae26d46",
+        "closed-input/trace.json": "ec792f9bb3958218a81cf10b2d86b77bfc73facca8c5d7b52227760b21f94dae",
         "closed-input/packets.json": "16642f484fdebd5ad63cc81fea12c42df76885d8406c05fea2aa587fff66d53f",
         "closed-input/scenario.json": "f8dc134bce98c3dbe290eff1b004e841eefaf524b1d0c04943b51c4882e4e77d",
         "closed-input/packet-map.json": "f16eb5a63240f23930d46391dd1cbaae15bdb8a40f52b7ed893618a887636acf",
         "closed-input/model.synthetic.pcap": "e5c355d962035b54bd763bb2f86b0d1946ae369419e43479da273162948d2851",
-        "combined-fin-ack/trace.json": "7192b4f17030442287c421c679249d785d9c0ac61471d58bab68532627d635cf",
+        "combined-fin-ack/trace.json": "5c628d793dff716369bab652cbc90cb816a4cae1f3d60e44558a3482543be75b",
         "combined-fin-ack/packets.json": "6480ae151f7c69611ce2e9d54098b3accd0f442860deffda7b64029f857c7409",
         "combined-fin-ack/scenario.json": "3b4015522a36d19c34475f807e808569bc3bec7b2c07951a0510e661efb2d5dc",
         "combined-fin-ack/packet-map.json": "ad2140eb0877bef1a0b36cd5d4a453f4bd0447649679e6934b6bbadbb73ffd05",
         "combined-fin-ack/model.synthetic.pcap": "a9aeedb77738e42bd0dcc69ad54115def4f753db5245feebd345407c6be685bf",
-        "duplicate-ack-in-close-wait/trace.json": "f3ffff61f5093d0d59f77cf2b6a1a4c79db069e80a7e9b18f47b9a8da8839965",
+        "duplicate-ack-in-close-wait/trace.json": "d44cf6610be1ab9330d927ef10513033d75fda039c762bd24d8a04623b207952",
         "duplicate-ack-in-close-wait/packets.json": "8b1de172baacc4b7670e43fe9370ecd5d15a2a6e42435ece254e40ac3f51c545",
         "duplicate-ack-in-close-wait/scenario.json": "3f1df39697415681fbe65291bedc84289140d4335739bf940200f733d63825bb",
         "duplicate-ack-in-close-wait/packet-map.json": "82a4a1755dd78f3cab0b20752943d5800d14257fe99eb3312d40c3faca82dc3e",
         "duplicate-ack-in-close-wait/model.synthetic.pcap": "016618fd202d3fb0d8852306b230cd3c67ed5d98d61ab87b0623e190357298bc",
-        "duplicate-ack-in-established/trace.json": "3454f1111377ff6da667ad3656c2ac6eac17dd52267921684b3e4dab156a1d0d",
+        "duplicate-ack-in-established/trace.json": "7cf2cd66d67c68c4e6c101d1123e1a51c9a0c762c55712b31a26ee8f2da0b3a7",
         "duplicate-ack-in-established/packets.json": "a5ab9338c6ef545b4d7e3197837075a071ff83581f55fbb02610fd93e5545e7d",
         "duplicate-ack-in-established/scenario.json": "71a794518947121761067c5814f694034a175b3060ffcd636b05bb3cc2eb3c65",
         "duplicate-ack-in-established/packet-map.json": "d66033877b8699c9e73361c1d3d472a98f83c2e9f66a663eb55fc641623cda1c",
         "duplicate-ack-in-established/model.synthetic.pcap": "8ead04c08d742d0e3b3df317955cd0d4f9723281f91fdc22faa72e3d7305800e",
-        "duplicate-ack-in-fin-wait-2/trace.json": "cebde38513fe75712a9ef90f7d1202e61fccb483b0cf44516917820cba7bce8b",
+        "duplicate-ack-in-fin-wait-2/trace.json": "943c3be57a1cd823f74ae90dfb8216b534867d91dfe81199c73e1af3cbeb8236",
         "duplicate-ack-in-fin-wait-2/packets.json": "8ae7a8e76b72e14925bd325b07d2ab0663c49c991aec51fd388c49d34ba0d46c",
         "duplicate-ack-in-fin-wait-2/scenario.json": "841155544959ea9eeeb571786daa61485914bf04075e8eb65a27a2481d8156ed",
         "duplicate-ack-in-fin-wait-2/packet-map.json": "947373f4ae245b1c4aff2f65726edb3930e867018dc60814bc667cdf971aa8e5",
         "duplicate-ack-in-fin-wait-2/model.synthetic.pcap": "4159b2a39db2abd9f10ba1a759eeabc095a11fb117a6780fea169863dd516d74",
-        "duplicate-fin-close-wait/trace.json": "68383e023283e70855d2134488c96d9dfe4280852558fffd8feb47ffa3032063",
+        "duplicate-fin-close-wait/trace.json": "52836ba922b02cc34a17e7ffbf7acbf7f6300ce91b617eb4c9c1777a12fd8624",
         "duplicate-fin-close-wait/packets.json": "e4b769305880469372bf562f474920dc1af0cc2340581626f0bf06effb8423f5",
         "duplicate-fin-close-wait/scenario.json": "179a90c3fdd9c36a3ff7c3079d456f65739da90c6e687fd4fe3c36730e39a393",
         "duplicate-fin-close-wait/packet-map.json": "5aec2ca32ef56b093fc12da11c048afea26fc966d5c89062249a8d027b11c239",
         "duplicate-fin-close-wait/model.synthetic.pcap": "7e23639bcfa649e6db53673a2a5e06f370b6a4e06ef5b986418f284b7e382000",
-        "duplicate-fin-time-wait/trace.json": "20f04a751baea1ec5eec2160c5ad0028cfd3ac088162f55892cd319cc6a34b18",
+        "duplicate-fin-time-wait/trace.json": "f566e766285afbcfd2f91693e552dd930b0a7d8996c6356aaf3f2c3573795049",
         "duplicate-fin-time-wait/packets.json": "2c4ea05517ef6ebf1090739ea8d3c53ceecf4229ce7687b6a855ea6a4012def8",
         "duplicate-fin-time-wait/scenario.json": "2e62bc3b4b35960e5469266b45c5a4d04e188f357d528bb660060400c7a7d8e3",
         "duplicate-fin-time-wait/packet-map.json": "7925b8a2041c21a9275658429eee2bf03ea568bf269defadd618c060b3612b27",
         "duplicate-fin-time-wait/model.synthetic.pcap": "b690e6ea41af358e1789fb737f14feac66713960f2ca9a253a2d9c3320ea4156",
-        "fin-retransmission/trace.json": "e320eb4dd706781e2f260a1913d4f7c05fb432ef7e3e99bbd2027537216107d1",
+        "fin-retransmission/trace.json": "bc95e20f1dd94ed3fb99a3141943f51262fd829920dbb6f39565a91d466e0703",
         "fin-retransmission/packets.json": "16885b419f8e811444d19ee6d539eee2233fbf3d83f60400b463c5263cbc968b",
         "fin-retransmission/scenario.json": "8f2df87e5b582f5467d85dd9c02e58db5303dbd0ec8d1c9b1120a9ce525b9e4b",
         "fin-retransmission/packet-map.json": "afbc11257858f101fc8774a5bec8518bdff9ca6102e7ecc78795af8a96019d37",
         "fin-retransmission/model.synthetic.pcap": "dfec57e7f7fdcc3cee8068d6598e6f280b6db9fb1d7c27b9037d25ad7fd52f87",
-        "fin-wait-two-timeout/trace.json": "9420de9c0b67dbf5962e8293aa83336c22a9a4716944658bb734ed50f0691716",
+        "fin-wait-two-timeout/trace.json": "f6f37cfd9f6a29841b5bcccd2e45b17c3f06844491d8c1141314b506c7c80ee9",
         "fin-wait-two-timeout/packets.json": "9aa9eed9dd89206dcab08bf8e2c273650eabfa57e4e3647e435eaef15d1654d5",
         "fin-wait-two-timeout/scenario.json": "ec349a5f608e4935c78df35e490ab095a099e50c1f5570d88761c2940cfe8178",
         "fin-wait-two-timeout/packet-map.json": "319da7ed5766dbdd938cc5ce3e0530fa484d20a22783e13d3060d59cc9e981f5",
         "fin-wait-two-timeout/model.synthetic.pcap": "34078ca6bd850ac7ee9e758aae9ba17c98ad02862f7ba2b12c93024c297c2571",
-        "listen-reset/trace.json": "cb9d7cff68154478fac532554d7de86a70e2732cac3b17abb1d5f068a71edab2",
+        "listen-reset/trace.json": "175357c6369038f7b7b713f69c998f6b3bcfc243e91614887e1cfd6a31bdcbcf",
         "listen-reset/packets.json": "29dd32447a01aa81d306637137446d704419711d4c0315b5b6af68326a105d6f",
         "listen-reset/scenario.json": "e2086a89c9f1e045ef771811f8e5a6dcc6cb31e84b16bba6821a0e520c8c07c6",
         "listen-reset/packet-map.json": "cb8655a95c5a0b833cb8681d248ed06a964074fc7722550a071e20d1369ccfd6",
         "listen-reset/model.synthetic.pcap": "f790f4e073b128beb77c0d339ffbf855cffecf8a2ddedd7d5137a21f87b6d197",
-        "old-ack-from-closing/trace.json": "318977cdf36a1fa1de8f1bdf7bb186ed5d4d73d0fa130eba6bd6b4278d1689e4",
+        "old-ack-from-closing/trace.json": "317597733daa150f5a1dc4fa2c39fedbfd0e673657237935ef04faacd0afcbb6",
         "old-ack-from-closing/packets.json": "5ef82c8dd76d13f47ee790b538b489c1f2ced8e904ba861562a54b945461afc5",
         "old-ack-from-closing/scenario.json": "9496f14afb33f6fd3f7af6dd11ec97a9134b80b901ff1472d62d269d3b20c4ba",
         "old-ack-from-closing/packet-map.json": "0d44584471fc435cd3eedc088d007d3ad900ff1215f89a03f6f498e933540bfe",
         "old-ack-from-closing/model.synthetic.pcap": "4ca18da1afdf34a3e4f79eae030904c130b013a03c0ba27e64e05b92ac633d6b",
-        "old-ack-from-fin-wait-1/trace.json": "6fc3b956c40cd39ffe5805b6d4b95acd6c5bbd6306f2336253de6b971efd5f8e",
+        "old-ack-from-fin-wait-1/trace.json": "170601c05a523b016ec9ee3c18835d73445512f127dc79d9d60bc12700f1d5b6",
         "old-ack-from-fin-wait-1/packets.json": "32c7f5f2a7c5c841831c0ed684b02f8c8b38dceba7b078e648f211292500323d",
         "old-ack-from-fin-wait-1/scenario.json": "cd13635af5ab84799ff8c654d10ebe82d4aeb5ccae72ab166d695d6d6ffbae26",
         "old-ack-from-fin-wait-1/packet-map.json": "319da7ed5766dbdd938cc5ce3e0530fa484d20a22783e13d3060d59cc9e981f5",
         "old-ack-from-fin-wait-1/model.synthetic.pcap": "4ef6922bb287cc15f409e11a893c4eb512a7bf7093282e475a1bbd218fa0761e",
-        "old-ack-from-last-ack/trace.json": "1063076f8b9750f78a5e3b0da75ad837b1693a918bb4153270c39623204f9e48",
+        "old-ack-from-last-ack/trace.json": "0d902abd540370dd207892bb2810f98eaad4eafb414860bd579bcaef73172163",
         "old-ack-from-last-ack/packets.json": "66250aeb1494c070e66912cd91514d932bce07c92e59d1dd4b76a1870907bcf0",
         "old-ack-from-last-ack/scenario.json": "d047f0caf0c6fe2173267bb8d4f9049f1318579ed3a7f86dac7a57ede7793020",
         "old-ack-from-last-ack/packet-map.json": "315be2d4cc3a303310593881dc3e6bfdc472e01087902f579daa9c516e5d737e",
         "old-ack-from-last-ack/model.synthetic.pcap": "7bd99909e0f9e573b660ba12cb32390d1b58902f5fd0668e9873c83e65be6ec0",
-        "passive-ack-after-1-retries/trace.json": "9ff7b9ad645b4b2c18c582319ebdc04ebc74916a514f5c4d4e66aaf0c10dbca3",
+        "passive-ack-after-1-retries/trace.json": "b7409e1222526d528210559a787483815ed35d66109cce398c407dff45892570",
         "passive-ack-after-1-retries/packets.json": "d046434b5621ee6660bbf0fcc4f4ae7e2ae34cd3145b18bd7ed42401f0ba6676",
         "passive-ack-after-1-retries/scenario.json": "3bf96a41573588ef74befecf4130a60539a31661adbc68df71deb9509b57639a",
         "passive-ack-after-1-retries/packet-map.json": "e05590393302b3c8e53ba0d1695caa27663b8418c7ca9dda97a14e01695e66cc",
         "passive-ack-after-1-retries/model.synthetic.pcap": "b5dd5c9ffb54c61ecaf6a99eb0f8fc0483b352a776dac5e8c651f6569b59ccfd",
-        "passive-ack-after-2-retries/trace.json": "03b1463ffea80114c4dd13cd94168a2480439a2dcba8626b12c5e5a9c3a61692",
+        "passive-ack-after-2-retries/trace.json": "915f441a8a670975cb473439dd7efa8e0ae32dba6502ecfd983a86e3b7992a89",
         "passive-ack-after-2-retries/packets.json": "f3fb76e8deae00bd726281a5d2a9eb99ced4327adcbd310b9101ce07387dece5",
         "passive-ack-after-2-retries/scenario.json": "6afe6f300c9d12a26a169a79ad96d2cb782e1a88bcc570d1f104f099c28324f5",
         "passive-ack-after-2-retries/packet-map.json": "9375c543c86e36f838773095d973571e01c02885ab01e77fc401c608f68ae295",
         "passive-ack-after-2-retries/model.synthetic.pcap": "cb654d821f90ef2381887a44ef691d4006ce18aabe2dea931073d7cb076d3055",
-        "passive-close/trace.json": "0387d5b38e399f03abfcee0bedfac7a71472fcf67770332fea74275979cd4072",
+        "passive-close/trace.json": "8bdfe377e57883cc1b09ec41fef59e306f7073f8c2b45d66a20d6738746381bd",
         "passive-close/packets.json": "3bbe66ac17422432ffed72cc719bba41957dc770882adf1ea951ad04f06ba1d2",
         "passive-close/scenario.json": "7d8a74c373b11ec5d57c741baea7f0259e4e34a2a5bd50e4e66b0e642e9ca982",
         "passive-close/packet-map.json": "33a70054e04a1b9c9a0f64a0ee135e1acb1b3aa2cff04ba43e16b88f223c42d0",
         "passive-close/model.synthetic.pcap": "f76689feabc47054dec402727edfe6c00c3565282d309a59d6c079879faf61bc",
-        "refused-active/trace.json": "84c0cfce3b5fda7c80ba37e32d39f39a1cfe228e043c101bbecead42b84b0bea",
+        "refused-active/trace.json": "fd4da42d654b8eb1c13c61f810216ea6e82f6965648ec938e3d70d919f325e86",
         "refused-active/packets.json": "7a393f330ed989ccf61933104b8f20b8e0b2677339dfd98bed30f6dc64c6e408",
         "refused-active/scenario.json": "a7e1804afd54effe363d36c3f9b69cd6848560344746a5a968519504088e4e09",
         "refused-active/packet-map.json": "811665604c8a3be72e45d133469f0f0897d2a1282053f67813c1421caf3dc9eb",
         "refused-active/model.synthetic.pcap": "3eed6a9867c95d93d93aea2f71b6798f1750d2e661b1b97e297c209d44e50fa3",
-        "reject-ack-in-closed/trace.json": "77eaab7120956edbe64fecbe99a62dc13b0bd24dfd6871899c5b869284d8fb47",
+        "reject-ack-in-closed/trace.json": "2b4abdab645eeae49aa2ce92197c3c0d4469ca000c060c2211c4c0897a3e1996",
         "reject-ack-in-closed/packets.json": "28cd2d2cad00cfe55b97e71bb1638a7c134282665e537db6fd95b8577885b07b",
         "reject-ack-in-closed/scenario.json": "6e4135f375c0d2183eaf7a349825c30a5a645b1c3535f90dba5d51ba116c3339",
         "reject-ack-in-closed/packet-map.json": "678e2f649d3de21f3323480882ac607e1dcbabf06deb72df4393e23d965a3d4c",
         "reject-ack-in-closed/model.synthetic.pcap": "8c486273bdcd1f597f6efaf66a9172037b7336835a83eb9b54c9514ffdb1596e",
-        "reject-ack-in-listen/trace.json": "88cfac940e80c2f9d40edd7b61ad219c87789d16c1642dc14127492516c95bcb",
+        "reject-ack-in-listen/trace.json": "1d467fa479259ef62976efdd34034b801eb002d15f996e7be6848e7bf5a95f55",
         "reject-ack-in-listen/packets.json": "f78e2b979aa2e0d45d55739110b565c882054001f8c8f4a0d45da38c8cbee76d",
         "reject-ack-in-listen/scenario.json": "d5889545611ee3f9494b7ad5683fe63895e124822066e52022f9aa7c88c371c9",
         "reject-ack-in-listen/packet-map.json": "cee705abf491678235781353fbf3d38864d2b263af151f2afd87058f8ed9afb0",
         "reject-ack-in-listen/model.synthetic.pcap": "8c486273bdcd1f597f6efaf66a9172037b7336835a83eb9b54c9514ffdb1596e",
-        "reject-fin-in-closed/trace.json": "c0695c3ab8a4e1f70029cc9a9ce63f5aefe478b88065aac7e7d186414e0fe05a",
+        "reject-fin-in-closed/trace.json": "9c21e8b6a792eec7c416209a678bdcd5cb2a08e6a59e6dc586155d90feab50ec",
         "reject-fin-in-closed/packets.json": "863d677d7b9668c9a5d17cbb927a281b5353f41829703d56e68d69a186f06d3b",
         "reject-fin-in-closed/scenario.json": "7a85611fa6765e0d367721f0b63e6b83374bef7500da9238d9760d882d3a9de8",
         "reject-fin-in-closed/packet-map.json": "678e2f649d3de21f3323480882ac607e1dcbabf06deb72df4393e23d965a3d4c",
         "reject-fin-in-closed/model.synthetic.pcap": "d8bf24f5eb1e16defd3628ddb9fd47b6f85828c2bd6c2c3e7582857152823a09",
-        "reject-fin-in-listen/trace.json": "81dedbea01bb9baf267e54f1ddacaf297f9f52556e3a39693a6c744f87cdd293",
+        "reject-fin-in-listen/trace.json": "7c8edc4a0dcb2b83f8283818da4060d1c01a122e2f2a4380e1339e42db37cc47",
         "reject-fin-in-listen/packets.json": "590a34388222e83b253e7e57ae443d8dad5ca477a0a2ac3ff873e52ad60cb3ca",
         "reject-fin-in-listen/scenario.json": "d4c61a3d90101e6f803eb0ccedcce687f7ff6696e9919c0c99e5f560ebcec7b8",
         "reject-fin-in-listen/packet-map.json": "cee705abf491678235781353fbf3d38864d2b263af151f2afd87058f8ed9afb0",
         "reject-fin-in-listen/model.synthetic.pcap": "d8bf24f5eb1e16defd3628ddb9fd47b6f85828c2bd6c2c3e7582857152823a09",
-        "reject-synack-in-closed/trace.json": "a070c3702aa70a99ef29abd73890d8eecc1d9c761d30e1cdf921a064f7f9e9b0",
+        "reject-synack-in-closed/trace.json": "e7a810107e3572db44ee1aeb0a2e74270dbae01634a15e33de334be3674e2976",
         "reject-synack-in-closed/packets.json": "d769fe84fae3d3217a0eaad0a7c5246de5a880cf3519ca1898b5cfdd0a2bb1af",
         "reject-synack-in-closed/scenario.json": "79cb1b70b3c845e1a4a034e46edd0bfb2fc7e8572de2cbc85480275b5121de14",
         "reject-synack-in-closed/packet-map.json": "678e2f649d3de21f3323480882ac607e1dcbabf06deb72df4393e23d965a3d4c",
         "reject-synack-in-closed/model.synthetic.pcap": "fadd2e2733a706507912779797d4e3d6d8f4e887236f6e4d557ea02a0c1a1e06",
-        "reject-synack-in-listen/trace.json": "333555af5d511f3d0dcdbe7d91b4dc5e1e815cc80813ac8d9419f89cccff5c99",
+        "reject-synack-in-listen/trace.json": "c02d8b601e9f42ba5590907d8cf69328f15acfb8034713d2d3c351d563b976f4",
         "reject-synack-in-listen/packets.json": "dc5fee0b6ba5926cac36236bcb3180c7a1c7294edc8ed2ae22a89d54204ee853",
         "reject-synack-in-listen/scenario.json": "0b2af6e756494619b02e224719b528e85666ec925bf46331ba26fb9581c8b0fb",
         "reject-synack-in-listen/packet-map.json": "cee705abf491678235781353fbf3d38864d2b263af151f2afd87058f8ed9afb0",
         "reject-synack-in-listen/model.synthetic.pcap": "fadd2e2733a706507912779797d4e3d6d8f4e887236f6e4d557ea02a0c1a1e06",
-        "repeat-close-closing/trace.json": "dc43549b9bc1782aa58593c4a23ab798991029a1b8e0058051628b905ccbb80e",
+        "repeat-close-closing/trace.json": "3c673e54eb327d16ec64e542de2960a40329152ee54a46627f511ed1c7b1c1c3",
         "repeat-close-closing/packets.json": "746bf1c2055cb91c72da59627fa7e1465d786ff6b01950ddb1bad8d0980d0617",
         "repeat-close-closing/scenario.json": "50390c81f24535b46da9d5cf582dc8916740b184940664c1470a64087569056a",
         "repeat-close-closing/packet-map.json": "ad2140eb0877bef1a0b36cd5d4a453f4bd0447649679e6934b6bbadbb73ffd05",
         "repeat-close-closing/model.synthetic.pcap": "b28333199bedb777451ccc775a4bf5bc5f8f2d9c1629b6ba68da4ba52ba51a1d",
-        "repeat-close-last-ack/trace.json": "4f5195a690e4da0dc06c904334375ad5c35fc7a039894c686d3151dbd126f471",
+        "repeat-close-last-ack/trace.json": "0bac7a1c2efbbab92defbc2ca9397165691c87f1d84c53df8b60756eeae4065c",
         "repeat-close-last-ack/packets.json": "b57276bfaaac777e71ebaa88aeb266710b86eb07f03aebf4a37ddfacb2e97e1d",
         "repeat-close-last-ack/scenario.json": "1f6c2558f488fa01307b79e7e61911db7cd03d724b420c21b2ad84565e12a7ef",
         "repeat-close-last-ack/packet-map.json": "8e321ec31cd3db5335c795497b37073e9b5d6e956023151240f9032db7a1e6e8",
         "repeat-close-last-ack/model.synthetic.pcap": "587ce9da08f94cf709ae4ba0ed453a52fd9d5b7a15f454d558332ddb58e20480",
-        "repeat-close-time-wait/trace.json": "9ccec8f31c804cb581d336bdb3a8c2100cdf3807987f89533d567a7d225e54ee",
+        "repeat-close-time-wait/trace.json": "dfa3b7a442559b167ca3b706805e9d2e87f239334324cd9a7390f4be72f25a29",
         "repeat-close-time-wait/packets.json": "6480ae151f7c69611ce2e9d54098b3accd0f442860deffda7b64029f857c7409",
         "repeat-close-time-wait/scenario.json": "06d696bc6bcc7fc712646e5cf18bd0eef25679298e6aa543cf13f96f9f859bb1",
         "repeat-close-time-wait/packet-map.json": "ad2140eb0877bef1a0b36cd5d4a453f4bd0447649679e6934b6bbadbb73ffd05",
         "repeat-close-time-wait/model.synthetic.pcap": "a9aeedb77738e42bd0dcc69ad54115def4f753db5245feebd345407c6be685bf",
-        "repeat-fin-in-close-wait/trace.json": "f372eb45d9e145531b1c7f2481b849e1a35b976c3e9d0d127d83da30de5d5cb0",
+        "repeat-fin-in-close-wait/trace.json": "a98b1190422c52953036f3a5f90127c36ec4b075c17181a45b12271c7c6a517f",
         "repeat-fin-in-close-wait/packets.json": "19782d1aaa3b39914a0ef665e0fdf288b324867185d58571326427608dc642fe",
         "repeat-fin-in-close-wait/scenario.json": "7ad9ed63e4f68f9695a702d12fa2fadfb5d064ac54a0159e1089812a2b4f4a98",
         "repeat-fin-in-close-wait/packet-map.json": "5aec2ca32ef56b093fc12da11c048afea26fc966d5c89062249a8d027b11c239",
         "repeat-fin-in-close-wait/model.synthetic.pcap": "5d376a38720309ab4288cfabc5db9c96a8c7ec3f8e34020585664ad436cec788",
-        "repeat-fin-in-closing/trace.json": "63172addf93ad4226654522fab16195d6404fd3e3c7db215dc19199ffb29cfc7",
+        "repeat-fin-in-closing/trace.json": "4ff60663c2b9b5f01c1de5cb1a6c396519410413de7da551548ea4d665ef7bd3",
         "repeat-fin-in-closing/packets.json": "a553540d54aa88d7215e31d771280657a3e5c3f46062cdc91e22c45e2ffe883d",
         "repeat-fin-in-closing/scenario.json": "c6402c2454d450f24760f1f0ccd366b5a5752f08ce2a55b727d620f03fd4ad96",
         "repeat-fin-in-closing/packet-map.json": "7925b8a2041c21a9275658429eee2bf03ea568bf269defadd618c060b3612b27",
         "repeat-fin-in-closing/model.synthetic.pcap": "c1c6a80b79941797cb6cc75d2fac43f9c382e5d03d9211549dcb3fe04ca4f562",
-        "repeat-fin-in-last-ack/trace.json": "6dab25230942e49838669a2b90143c48d23538f7d4b11e0657217b7a2515edd4",
+        "repeat-fin-in-last-ack/trace.json": "9afbad2fa408694a5b2ceade9581be4f45d9a5959516394b7fe4040c028b71b4",
         "repeat-fin-in-last-ack/packets.json": "51a27466118e8b694d164bff1e06efcd0a744a7bb3b97bf767761ee01ee3f458",
         "repeat-fin-in-last-ack/scenario.json": "02b7a628f7f4dc38e8a32a355ccfed090d2bb52bc2ab778048ff1a634935ab0c",
         "repeat-fin-in-last-ack/packet-map.json": "072c70bccdf9ce013060d33842fe2a89ad2caf84f3950cf182145f51a991391c",
         "repeat-fin-in-last-ack/model.synthetic.pcap": "a29c856b80b8e98f01af294428a8fd04af0d11c9c91fd089da0f482b928eed0a",
-        "repeat-fin-in-time-wait/trace.json": "3edc54aa29a3eef8ec4c45e9707d7e69bfdec5b1816a7dde49bf4f8f749fc45a",
+        "repeat-fin-in-time-wait/trace.json": "2916aca00fce609b80d21d1b46da599c84624db4c6a43c4059e21f5a3b1b1f18",
         "repeat-fin-in-time-wait/packets.json": "cd984ce62e3c3b4adda37f44491df4e0b6d8345860f74434cfa487be9d9382ee",
         "repeat-fin-in-time-wait/scenario.json": "3daf0cb06e543d61c3644ea1062c766084fd090fc0684f68905be214674ce89d",
         "repeat-fin-in-time-wait/packet-map.json": "7925b8a2041c21a9275658429eee2bf03ea568bf269defadd618c060b3612b27",
         "repeat-fin-in-time-wait/model.synthetic.pcap": "ebe4f27fbf571089f4e374f491a38eed294dbcfa5c5e241618b3a53cd02c0219",
-        "repeated-close/trace.json": "b35145630677f765dfea13ac7f20026c57ca532dff39626382425f84c70a25a1",
+        "repeated-close/trace.json": "201c36084f2cb268f43610648563a8a326f6e736245b1951817ea351617e2b78",
         "repeated-close/packets.json": "f60e344cd22e107555a1ebe019e4f4420b2823ef442125e4408b4caeb6741bde",
         "repeated-close/scenario.json": "2830449e696631bd9300eb0ea776966770bbb25cf49fd7eec25b64a0b57dcbba",
         "repeated-close/packet-map.json": "8d065e482e3f1cb5ea1a12cf7accbe5a385919cfeb4e5a185d1c3a09643177d3",
         "repeated-close/model.synthetic.pcap": "b862d0e617feded0a8c53f8c80c0c280cec2c59c2e6f3c9dc5c540f354d1c4eb",
-        "reset-established/trace.json": "d011dff42ade6b05918804a65e7e30629f31b7a75374aa860d3b019439993c44",
+        "reset-established/trace.json": "d48b6b8e309fd5fcf1b1f68447c669bdc6f9cee64c492c651c1e6aeb7e8bd6a8",
         "reset-established/packets.json": "8c1ee48dde8e3cf976f344353ff10d2777c9263b7ca46dda9dc66ab1602c1ac2",
         "reset-established/scenario.json": "cbb3a2e73da0427db717e3d03c2adca21dbdfdf1f18c758d75c8a1c8c71c0255",
         "reset-established/packet-map.json": "de871a1eb1d2db1a94436769dd234a524000f84d9edfa9889254f07d8170b635",
         "reset-established/model.synthetic.pcap": "1d4cf0f99ed4df0e31109e575be72ea115bc7cfb85728c3288a36ceaa9165790",
-        "reset-syn-received-active/trace.json": "f31daef7b70f9c3b9e67702a00d6c97aa6c5098625e784716bdbf6e035151842",
+        "reset-syn-received-active/trace.json": "69e7e7ae790e68dcc77473d77818491f0ede95976acc2ea33a9431335ca2c4e2",
         "reset-syn-received-active/packets.json": "f94ae63b6db1157ae1393d990de0b7f599181353c99e1038811e0b5eb58e6044",
         "reset-syn-received-active/scenario.json": "9a29d238aa20a6b69acdb54dfdf240ec4dec63e65411398843419ca88cf77b1a",
         "reset-syn-received-active/packet-map.json": "1eaf21e2c0b0a249584189476d52af17e44fa2ff129f905968e165dfe9af0071",
         "reset-syn-received-active/model.synthetic.pcap": "bc05176475330989066fbc23b0395224e427f1793c15a3395ad39332d9e42a07",
-        "reset-syn-received-passive/trace.json": "6de19c6e8fe34ef3659c4fc77cdc801cd812db3ebcf92bd12505a497210b174f",
+        "reset-syn-received-passive/trace.json": "d4b21e89d9478bced6c0b17d56aa877c4e26340c27da48052728560f01934520",
         "reset-syn-received-passive/packets.json": "1009b24eb42f21cc3edf3956fdf719cf9a96ff3f668dfc9692652048157e3b2a",
         "reset-syn-received-passive/scenario.json": "68f3f7a3b1d636f317e962c472694d627e945b9842ff3e36ec3c59c120e198cd",
         "reset-syn-received-passive/packet-map.json": "5a0820c6b320b70e9642ce91b9d8fa9522781ea2ee67c7e496b194b4d81a7c8a",
         "reset-syn-received-passive/model.synthetic.pcap": "251bf8e70cdb3a42014a9e024d253d065cedb7f6275db9a34742e8e68ee75a42",
-        "retransmit-from-closing/trace.json": "9044c96f0eacf8f07834f5512a9f1dc53febe91ce28551c8703569ef80742bd7",
+        "retransmit-from-closing/trace.json": "26be545e46cb23c396f6e79f3bc45e63b8a189d692bc831adf3a4410cff08cc8",
         "retransmit-from-closing/packets.json": "8190de6ed9b556b92c145554f362c0eff486e1b881358ef7d2315190f7c62678",
         "retransmit-from-closing/scenario.json": "14d94ce83f1d68a978da453641a511557fb6fa1e9900fe2eb8af5bf2c576e469",
         "retransmit-from-closing/packet-map.json": "1013e3afa0458cf22e803a63af419e262b2feebcbef79247f2b37f8325e16da6",
         "retransmit-from-closing/model.synthetic.pcap": "0afb837477f1a70ce604f48dcff2407630f2d283a673f5383e1a6a5fbc294030",
-        "retransmit-from-fin-wait-1/trace.json": "9fce138793583d1f5f45b11fb8383d980ab93ca0477a4fe884ed7a59ba54f0ed",
+        "retransmit-from-fin-wait-1/trace.json": "f56e560ac0f36eb1c833531adc1621f34245d198f5a51d9216ff1ecbcae00bdf",
         "retransmit-from-fin-wait-1/packets.json": "75a1fd7238b8b9337dfd2339282971514fb85ca221d15f54c9122a5cac6458c7",
         "retransmit-from-fin-wait-1/scenario.json": "6a291fa768d9e9e6353307df8425415c502fed01da43fae86415972020d58394",
         "retransmit-from-fin-wait-1/packet-map.json": "0da787b339d325841b111bfa8129efa8962d185be6de0e5926ef74e50b0c73ec",
         "retransmit-from-fin-wait-1/model.synthetic.pcap": "49ea29ffd32324b6ca55068821c05081daaed89be45e1548bad6dd7ef66c0465",
-        "retransmit-from-last-ack/trace.json": "bebf38a197c59bbd95295186dd36e0476e9697baa7f4da9ba456812d6deacce0",
+        "retransmit-from-last-ack/trace.json": "2386e44ec617cdb99684f2b4a5b1c9c6d74b8f25530c6c3723a560441f9bedbd",
         "retransmit-from-last-ack/packets.json": "6f1930866aeef24d40b19611b4141542c5de9c8a697b7c69aab1f36e096483af",
         "retransmit-from-last-ack/scenario.json": "96614c46f334a13d0682688bdf171f85e4dee8a1044dc17fc27ea9728c5f18c7",
         "retransmit-from-last-ack/packet-map.json": "15c9d445d8ac82b7ca2e0b5d2dff141a74feeb0a59050776df9d2bcd6dd86d11",
         "retransmit-from-last-ack/model.synthetic.pcap": "c2a40f821c2f2d63ce2ef37a75d8a60eca543a2c0085f516872d6adb9aa8dd54",
-        "retransmit-from-syn-received-passive/trace.json": "e5c8097c802c113fab070922d2bd72fac57fbb1ebdf964b5986c8b2aa602bed2",
+        "retransmit-from-syn-received-passive/trace.json": "666be6cb082e459af981b3aa7bebfed6a8ed28e61c95a84d0f117eb8ce826372",
         "retransmit-from-syn-received-passive/packets.json": "b16c86c21c11e3a26b663a7209932618ee187c591fcfefe45c825517fc807fe4",
         "retransmit-from-syn-received-passive/scenario.json": "827f94362ee63688292705601d44c6b0343bda2f70841804c7f3bcdcfc300c67",
         "retransmit-from-syn-received-passive/packet-map.json": "d62bec1f66a254d59814d8c7b6cc6316cae5f8bcb9546915dd366559b5f345bb",
         "retransmit-from-syn-received-passive/model.synthetic.pcap": "c766c6f6a356f0bc2515f60ad0cbfa6c846da6d02486528821fc94732988f770",
-        "retransmit-from-syn-sent/trace.json": "fe1d125aa8e0e7d570c9b9d18e3cf5bcafe4c5b278543f4794802bf1175242ca",
+        "retransmit-from-syn-sent/trace.json": "d731eaf08d34e3927edea9d9ea5eab3c54f9e0240ffe65942a4479b41f6872ac",
         "retransmit-from-syn-sent/packets.json": "d4312fc02fb28bb91d45dbeb1a59915ed18d056b073a94d2e511d75bc0f54157",
         "retransmit-from-syn-sent/scenario.json": "2f3534d93452d6dffae44aa219db4e1afecace206cbad9cad4b4cd080fac1036",
         "retransmit-from-syn-sent/packet-map.json": "f86830c2a97ca8f6b4d5190e27d2103d99d72112819314bacacbc94799df4b55",
         "retransmit-from-syn-sent/model.synthetic.pcap": "98161e742aef53cbb84c0d1c7b89b3104b729994051398cf91678d61120f1152",
-        "rst-from-close-wait/trace.json": "ff462c8bd950ecb56ca62611535202653903a7406dae2fc54b2aa891d5e5502e",
+        "rst-from-close-wait/trace.json": "2e3a34382502a44879c13c0a90d2c23a589b8ea956a860c8acaa3b23b4654be1",
         "rst-from-close-wait/packets.json": "0c3af94ebe090ec6358fa92c09831973c2cf810e4d7779c61152f149422250e9",
         "rst-from-close-wait/scenario.json": "e5d5234a7d00697c6b2fbddc2fcb3b76465cf681bd4a54e58e072848c2605eaf",
         "rst-from-close-wait/packet-map.json": "a85d1c31d71307a97b87e987c0c8ed0ff8fd71e2bb127f68fd42645a896de053",
         "rst-from-close-wait/model.synthetic.pcap": "9b120e3a7840f265b3b87fef6fdecba7e96bc40cce8ada56179dadbe47343ecf",
-        "rst-from-closed/trace.json": "b11a5cc351a62965519f6d1e844e1e7ce06f9a1f20c693bfaf0b4a7a372dec08",
+        "rst-from-closed/trace.json": "8274769b40d3656055c5ad68f1d491fde3f269d066a0c7b3e0cf54e0d9e8f191",
         "rst-from-closed/packets.json": "f7f7083657928eaaf2d3f169dc53e62aa5f26f155f0bf4185f4dd59d8ce82395",
         "rst-from-closed/scenario.json": "f02f3792300fd583a23cbe1bf34f582a6625dde91d378145662139fe110aaba7",
         "rst-from-closed/packet-map.json": "9147357166df5179dbcd0a893f64566cebd8c3a65137070c060c3186bffd2216",
         "rst-from-closed/model.synthetic.pcap": "7a78f58f9cd0787841784c68cec0a19f04405afeb970e7059a3e2ec53dc5ac57",
-        "rst-from-closing/trace.json": "33bd08fd4a5cb9f301587279f352fea29e17bba1d895b63ae05b5f3d37f96fa8",
+        "rst-from-closing/trace.json": "bd481248ba641d7a751549b9f6746fe20bd6914467858c48c6452b990f73dda1",
         "rst-from-closing/packets.json": "afa69e7d13a4b9d77a12b293caaa8efb925f5a5f09dbbb20e1d5780896b53c31",
         "rst-from-closing/scenario.json": "bbc97579ff2bfe48e3d2c385666598261546d9f8925b00adbd548456a6b5b25a",
         "rst-from-closing/packet-map.json": "98c8fd6f258136f5ebb6d15b585d3eac94d65b4f56709cb5b2eeab20a41f5971",
         "rst-from-closing/model.synthetic.pcap": "2f6233c0510267e920220a5e8cbd48235f7dbaf701aaa923bd7b0b691cfcbb88",
-        "rst-from-established/trace.json": "72b1d9775c24bd0625787deebc3ab4cbbec49e3aa1f784a250c7c3849d3dac01",
+        "rst-from-established/trace.json": "50e5941828007f5b91fa7224375a127ed3bfb65d9cbaea0dd15f242e3b6b4682",
         "rst-from-established/packets.json": "dbae40018f08c4bccb487e7d3c084a985cd24de7bc2fec7ea49330a2ccae05c8",
         "rst-from-established/scenario.json": "c7c513440388a4516f42e3015abbff5d7d33cb2b7d78ce08eeb6a61981c71fcc",
         "rst-from-established/packet-map.json": "de871a1eb1d2db1a94436769dd234a524000f84d9edfa9889254f07d8170b635",
         "rst-from-established/model.synthetic.pcap": "ab365efe7789aa7d3e77e84a54ae186414da6a2adc8ae6fb28cbb3d756f5da6a",
-        "rst-from-fin-wait-1/trace.json": "25d64d5c4e554312fa4d724923be0f778098456decff08f290a57c27eb42ae5c",
+        "rst-from-fin-wait-1/trace.json": "e7241a02525064696a368aebea4bf24b338aca1301261f871b60939f68c86225",
         "rst-from-fin-wait-1/packets.json": "11ffce296c5d6bf8908a02f8b10221ade0b503c8807c025d240ebb5fe48289e7",
         "rst-from-fin-wait-1/scenario.json": "9b80939e6865f25fb0f86b3caf99129ee423cd41b1da7f85fede20009a7c70f8",
         "rst-from-fin-wait-1/packet-map.json": "58f364f0076834e158342fda932e75bfe7e37f5a7a64c718764669a5b957248a",
         "rst-from-fin-wait-1/model.synthetic.pcap": "0884efb850f928c073b5530b1ca088bfffb18ff0f22c411ec7e28981fb8f5a5c",
-        "rst-from-fin-wait-2/trace.json": "7be70d44981e1d5d4db457f1a15a245e7d52264bd62fee6b2a4ed33c846ae593",
+        "rst-from-fin-wait-2/trace.json": "f2cbb0c14dde80fc7b76a73d6fe29f49ca0d9a67354205e2c742a37e62b6ae64",
         "rst-from-fin-wait-2/packets.json": "dd5a6dd38e732b5ad7b0590df69b6abd835f6c8a3e1a17f76f603af279e9358f",
         "rst-from-fin-wait-2/scenario.json": "f2688f5e22dbd2797d5c71da82cbe720d9eb8deedcbe9424b9be6fd4e63f4b68",
         "rst-from-fin-wait-2/packet-map.json": "e50a1e0e26d2498c7d8ec3ddee5c47515e7ddc53527d9e007672363d039ff15d",
         "rst-from-fin-wait-2/model.synthetic.pcap": "3a502707892eb8110f294714bc77de45b8774028b56ee8c66555dc58d0d0b301",
-        "rst-from-last-ack/trace.json": "3c7fa736d09aaca7024087f527c97ad300fee2b2e34a7224257de1ee25223d8f",
+        "rst-from-last-ack/trace.json": "74d8a14c032034ed3c4f9d1e15e241b9c356824356e7a7a70c196cb78401b359",
         "rst-from-last-ack/packets.json": "3d07fc1a9d7670a8d7baa8291a5565eadb0c2b5c7ca895523690d3c4a085b1bf",
         "rst-from-last-ack/scenario.json": "5297ad84cfbeb21c39ccbfb5e59faa42c62cf10ba88d3139c290362ed9c53af4",
         "rst-from-last-ack/packet-map.json": "3819ac13d52b1240f06e294771fe00734f85ffd1a54873919e54a502c408de41",
         "rst-from-last-ack/model.synthetic.pcap": "10801681c798ad49ca89c5fdd18d3cc33d4d3ad93bb4b5839310834120ae3c91",
-        "rst-from-listen/trace.json": "519c63dd115ceac75cce3eb0bb80a8b136f52196f2111e292ce685776e3e9e7e",
+        "rst-from-listen/trace.json": "90f0e9250a69cd026627c1a01e3c16ac28203f93d87e309cd3261bfb0f285b68",
         "rst-from-listen/packets.json": "82c3f921f20337fb1f93c9922911b430e4bad77af2105af8d6bab13a5e668475",
         "rst-from-listen/scenario.json": "c3084c658d4669fc808505c34ee805d986800a22d0cf7aed5cf4b8b9ca18dbba",
         "rst-from-listen/packet-map.json": "cb8655a95c5a0b833cb8681d248ed06a964074fc7722550a071e20d1369ccfd6",
         "rst-from-listen/model.synthetic.pcap": "7a78f58f9cd0787841784c68cec0a19f04405afeb970e7059a3e2ec53dc5ac57",
-        "rst-from-syn-received-active/trace.json": "6031ee9ddde1accfe1e3c9416531bbf7f4a0abaf5626ed15520f163b07468e5f",
+        "rst-from-syn-received-active/trace.json": "b9b06d7dd4dabb4ce66669ff5fe459ce7fee44b0df686667427d2e1b4bbe004b",
         "rst-from-syn-received-active/packets.json": "561a20c5ff06276056d61d8a36c49bc6ed7017660543fcc4bbbcb2c68ccb7c94",
         "rst-from-syn-received-active/scenario.json": "39c7248d6f29fcb8deb7a07d54ee0d2cda988e2fde2c6bdf0bed0382bdbdf7be",
         "rst-from-syn-received-active/packet-map.json": "1eaf21e2c0b0a249584189476d52af17e44fa2ff129f905968e165dfe9af0071",
         "rst-from-syn-received-active/model.synthetic.pcap": "338db58af6ac007cc08540fd0b6fc2ca5179b8fdce1891a5b9703c32a53a0e9a",
-        "rst-from-syn-received-passive/trace.json": "089d30a5d2f584c289ebeeebd75f0cc180a7dad8c0f4add3b86f3b19a1ee218f",
+        "rst-from-syn-received-passive/trace.json": "b82a6fae5a5385a7c2888d5ef1b8bc3a783f127f1d59f976d1f83f333d5fc24a",
         "rst-from-syn-received-passive/packets.json": "600efcc20fac8ab91f3d8372d7b90c556f2affa80dd5ea013d1447e7f7b2ffb3",
         "rst-from-syn-received-passive/scenario.json": "73b679c0faa90c70de371f93d1a7020e59326bf731a6bafe045c83acf1595998",
         "rst-from-syn-received-passive/packet-map.json": "5a0820c6b320b70e9642ce91b9d8fa9522781ea2ee67c7e496b194b4d81a7c8a",
         "rst-from-syn-received-passive/model.synthetic.pcap": "52b7ff41d1bced9949a2b26324a7a2879a9977822e8886bafb6af2781a3e6154",
-        "rst-from-syn-sent/trace.json": "27d1705f115ea1019ab5631e7564d2ab9803a48bc2be65a9e1b1740fbbecf0b1",
+        "rst-from-syn-sent/trace.json": "cb3203cfe7e95ae8ae8680308107781f77b1926575604f965b887a0befafa5b0",
         "rst-from-syn-sent/packets.json": "6fa99670ef3d8afab957b34a7b8bc5b89b0b777e99205916513dfcc16aa66496",
         "rst-from-syn-sent/scenario.json": "95f2d2e8bab58c5dd060c3203d08a3a5ac99dec25ebf289cdcd67a10fdc12fc1",
         "rst-from-syn-sent/packet-map.json": "811665604c8a3be72e45d133469f0f0897d2a1282053f67813c1421caf3dc9eb",
         "rst-from-syn-sent/model.synthetic.pcap": "dcbad5cf4a5c2c61c7254cb4014803786ede3268423c0a5799960ac1bd3db442",
-        "rst-from-time-wait/trace.json": "14723e329d1a02acb365d46735baa950fa6de2795ba89ea4e0ffb4c724f0a11a",
+        "rst-from-time-wait/trace.json": "dfae3ca835e3c57283b0b77aaf9a743105d3df93b063ecc77df9741dff810f58",
         "rst-from-time-wait/packets.json": "b0912e9d6e3042d29d6db80b3939813c02145b96ab4b3a237a407bcc465469e3",
         "rst-from-time-wait/scenario.json": "43dd486e36c73ec14dc5f3fcd3db6427252995928af28d1a48734a281c8ddde1",
         "rst-from-time-wait/packet-map.json": "98c8fd6f258136f5ebb6d15b585d3eac94d65b4f56709cb5b2eeab20a41f5971",
         "rst-from-time-wait/model.synthetic.pcap": "08f23b457c7ebb1d8cf76cc9815091f68a103f4c2e76f40d760165ff3dc73470",
-        "rstack-from-close-wait/trace.json": "74674101901ff793cb4efe73e7ebf21a88a69fb8de989c8588b8a528b0e86017",
+        "rstack-from-close-wait/trace.json": "77df91672c8ebf8b8359835bb924520bec396a4540c245ddb4a66dc4a803726b",
         "rstack-from-close-wait/packets.json": "4ee847292a2c400a29e3f2121f70c338d69387666f6be27ab91dc5cfae3bb29d",
         "rstack-from-close-wait/scenario.json": "80f9fd89c9c0426bdec260e6cc67f4ca09c919c710fbb3dec6cb75dfb7dc9a79",
         "rstack-from-close-wait/packet-map.json": "a85d1c31d71307a97b87e987c0c8ed0ff8fd71e2bb127f68fd42645a896de053",
         "rstack-from-close-wait/model.synthetic.pcap": "edfbd5ed2b8f29f3e118c4f1038569e8b6783f965f8a21e5fe61759641676c5c",
-        "rstack-from-closed/trace.json": "36dd36f4162dd5dee9cfb32d101e0ed291109aef7d105b23bbc0784409cb9968",
+        "rstack-from-closed/trace.json": "0f032624e019f62a62ccc5b0fad7cece20c745d5a1522238d509d2f660790f10",
         "rstack-from-closed/packets.json": "1ba13a01d6bb6f0e3a466d00aac372f0e6b44ab429282d971091d54c4627237f",
         "rstack-from-closed/scenario.json": "f95dd560e9c4e623ebec2ae43681bc451161fdde5a3cc1d7900c0efe7531a75a",
         "rstack-from-closed/packet-map.json": "9147357166df5179dbcd0a893f64566cebd8c3a65137070c060c3186bffd2216",
         "rstack-from-closed/model.synthetic.pcap": "80db4b240845d1b2db8859ae9d6d3f8910270640c2d53fde8701c58474c06c13",
-        "rstack-from-closing/trace.json": "ed906276671c4cc21f2bd7b3e2b7fa26bb4ae74ebbbae37a76428a52c6cdfc13",
+        "rstack-from-closing/trace.json": "b07e3f0290da0607594fcd25e0b4ca94f03eaa22abe8d864bd64c4bcb21e2f46",
         "rstack-from-closing/packets.json": "58f480df2a2606268fc9a251555a983d757b351a967d103de5f6edc82b947556",
         "rstack-from-closing/scenario.json": "0a6ad19c951175e1b47056a826b5ea0ac4191447fd7d083ad35e7d9ea67f06b5",
         "rstack-from-closing/packet-map.json": "98c8fd6f258136f5ebb6d15b585d3eac94d65b4f56709cb5b2eeab20a41f5971",
         "rstack-from-closing/model.synthetic.pcap": "1d4fdbece421bb6e2d37b9f94f856c2d8678eef4522903ca82f40931fcfb9390",
-        "rstack-from-established/trace.json": "83f142151b96597f49bdf55783dc6dd49df493bf6fee825fd07065bd0882c2f2",
+        "rstack-from-established/trace.json": "bc40eda69ab42ad3a4e2e94dcd7221cac3f15a21287d4f8ea935c66ba0ee338b",
         "rstack-from-established/packets.json": "958c818dd4833507428f5b63270f0859ac4f24d86608002497beca013ddcac00",
         "rstack-from-established/scenario.json": "6b095673ab8550d700299d0b31ffa3da4b7b9cd7c4b29676dc9aee0b4ad2f849",
         "rstack-from-established/packet-map.json": "de871a1eb1d2db1a94436769dd234a524000f84d9edfa9889254f07d8170b635",
         "rstack-from-established/model.synthetic.pcap": "56da38aef8772b2aaff1a76eb1cde3c3567bea20079c3c3e84919863755b8fcd",
-        "rstack-from-fin-wait-1/trace.json": "66c95fad2a65e56817a230c576375216d1a37984d620abbccd4bd4c53316b977",
+        "rstack-from-fin-wait-1/trace.json": "fc519f07b6f0f8eddbc0408c0c2581ae5361d30d1809e6bdb218071d7e45e7cf",
         "rstack-from-fin-wait-1/packets.json": "eb5f8036150b9a183865946061983c771bb292ff8c2ff4a1cbace41118bcc6e8",
         "rstack-from-fin-wait-1/scenario.json": "8d28523e347a4a26e91792c4e3f72c5bfdeaa578346606da172bc743a9bb906e",
         "rstack-from-fin-wait-1/packet-map.json": "58f364f0076834e158342fda932e75bfe7e37f5a7a64c718764669a5b957248a",
         "rstack-from-fin-wait-1/model.synthetic.pcap": "4bb6890f667729a119ab87186165e0b5f76576c568c39283b72b0ab0a0186ea2",
-        "rstack-from-fin-wait-2/trace.json": "d49ff61a0fd1a2e73eb6ca2f5eff178283b3bfb01bdcd4722186b9ece19964d3",
+        "rstack-from-fin-wait-2/trace.json": "0a6f0cbc92dee683136e5568f5218bd40a774a13dae88b7ed27c927aa0ed438d",
         "rstack-from-fin-wait-2/packets.json": "523fddbdfec63794e64df64e7eb4b3bde5e05afd8d89dcbb2115ad832f93dcdf",
         "rstack-from-fin-wait-2/scenario.json": "37b91a6e0808daf3aedef1945437c68b41fbf27cb15eb11f783466680c6075bf",
         "rstack-from-fin-wait-2/packet-map.json": "e50a1e0e26d2498c7d8ec3ddee5c47515e7ddc53527d9e007672363d039ff15d",
         "rstack-from-fin-wait-2/model.synthetic.pcap": "bd9daa1e54af36a6886efea4cdf30dac20dc98bbabdec260f4579a0c32e1c345",
-        "rstack-from-last-ack/trace.json": "348a81bb5599b77c23c28def5ab5487d3202ea8fef9fbb4defa466c9997d6f1e",
+        "rstack-from-last-ack/trace.json": "ed95193d18f99e51c14dc2962533a87c848cffd55fdb69c9df1d96ef1cb022ea",
         "rstack-from-last-ack/packets.json": "cc4d97d424d969f5bf62ffa61efd23ccc54974f7dd291d5baeffc8cabc2b3484",
         "rstack-from-last-ack/scenario.json": "00f010ee900e465bacdf6e6902e7044d81e1605f48e010a2d80f26eb7758498e",
         "rstack-from-last-ack/packet-map.json": "3819ac13d52b1240f06e294771fe00734f85ffd1a54873919e54a502c408de41",
         "rstack-from-last-ack/model.synthetic.pcap": "7d8171a9595154e53d0badf2d1a8e11ec5a02c81da426e7d53ed65433051236b",
-        "rstack-from-listen/trace.json": "a24c7f8cfc2ab5f8749e2542696643d71e484d9be12f960f929cbe058a7f887d",
+        "rstack-from-listen/trace.json": "44b7c5e402bc874b2db1d2151de9cf87f15ff2ed5846643a58f86f6ab9194fba",
         "rstack-from-listen/packets.json": "02b8bb73b3ee2fa920de0c466e6047826df9659f6180c4d6f05f781f1cf5db7e",
         "rstack-from-listen/scenario.json": "aaa0f10d49947e2a2c2513432155a9915ed930fddef05432d17d1d0946b8bff3",
         "rstack-from-listen/packet-map.json": "cb8655a95c5a0b833cb8681d248ed06a964074fc7722550a071e20d1369ccfd6",
         "rstack-from-listen/model.synthetic.pcap": "80db4b240845d1b2db8859ae9d6d3f8910270640c2d53fde8701c58474c06c13",
-        "rstack-from-syn-received-active/trace.json": "875e424abec7ab230944faaf3c54a8ba70a89a2de754c03581c87eb80507c86d",
+        "rstack-from-syn-received-active/trace.json": "0efee8e0471ade657588ae1c05ff3b82e0b462eee99f70cb2d1b7198017feb23",
         "rstack-from-syn-received-active/packets.json": "2a94e2c280ae8da32d4974286c972e1bbed9bc4607b09cbe2227224ffc3130bf",
         "rstack-from-syn-received-active/scenario.json": "33c9df5963a28d491d1f2bb1031bd9f22f39ecd94b89736a943be6ec9f1bc410",
         "rstack-from-syn-received-active/packet-map.json": "1eaf21e2c0b0a249584189476d52af17e44fa2ff129f905968e165dfe9af0071",
         "rstack-from-syn-received-active/model.synthetic.pcap": "0c365289cbf488c0c21c8547c4ae6966b777d1a93d7296cda6f09ce3bbb9c0b2",
-        "rstack-from-syn-received-passive/trace.json": "18caaf150aef563fc947a5ffda58c81e50e41b1b84086651d7d8baa5f645ace0",
+        "rstack-from-syn-received-passive/trace.json": "86ff766a270671ca865c592ee02173dd0468ea4d49f325fedca2f5bb4d0eae7a",
         "rstack-from-syn-received-passive/packets.json": "657e1614fde708d0b40c5c72a3eb956966d50a4db0f24087867234a453b81edc",
         "rstack-from-syn-received-passive/scenario.json": "ad00f92a5662c509cfe9865eeca3f0d31e96752e9b5d5cc75601afe8662d977c",
         "rstack-from-syn-received-passive/packet-map.json": "5a0820c6b320b70e9642ce91b9d8fa9522781ea2ee67c7e496b194b4d81a7c8a",
         "rstack-from-syn-received-passive/model.synthetic.pcap": "02e2fdda0663ef555ad51d1b84e378d558626bdf4a1f443f097f304e123eb539",
-        "rstack-from-syn-sent/trace.json": "9ae2aed1933f96f3642cbe959a8fcafcbc7459a351843e97885178f99d3a68fe",
+        "rstack-from-syn-sent/trace.json": "301ea79d8101126eb6d087fce398d682cd01d24c852f97fa193aa43589e5990b",
         "rstack-from-syn-sent/packets.json": "fa61367f8fb88b6ad9f593ec29140f5f25e32df292984ffab6c153e2636184a4",
         "rstack-from-syn-sent/scenario.json": "60fc06270dbe9ef88e09fbd4d36c0ae01bdf31c70c5c23dd17bbe68969f8fc0d",
         "rstack-from-syn-sent/packet-map.json": "811665604c8a3be72e45d133469f0f0897d2a1282053f67813c1421caf3dc9eb",
         "rstack-from-syn-sent/model.synthetic.pcap": "c7ae9af219a7de94909e042494f9c721c957676ee1d0b564bd83b61e92c8b0fc",
-        "rstack-from-time-wait/trace.json": "7ac2cecce35b0c054efe183bab6a92d676f9410b5df786e9ea90f76748bb3a1a",
+        "rstack-from-time-wait/trace.json": "78d31092064d9dcddf7fee405fa9d33303811167899809ece97259fa763f4f2d",
         "rstack-from-time-wait/packets.json": "d4bb7c67e18c8160cfb9b13601e772df7f49b8a5615e00d902b33e0d9cfeb23b",
         "rstack-from-time-wait/scenario.json": "de20bde4bb19c3dfeec6f8cb539b484f296f3dd508128e9dfc2b37036f12b9f6",
         "rstack-from-time-wait/packet-map.json": "98c8fd6f258136f5ebb6d15b585d3eac94d65b4f56709cb5b2eeab20a41f5971",
         "rstack-from-time-wait/model.synthetic.pcap": "228d0d32db8482158804d2c904e0002246c9c92d95b885f148e8e25b9636f7d7",
-        "sequence-wrap-close/trace.json": "c25cae2c2a878725eb4936b112ca701b2f6eb7e8661e7b37ca09ccc209932ce3",
+        "sequence-wrap-close/trace.json": "32eebd1ada8aed652f7a9f111e10d7140052ef71fe3b236b1ba54c243de3e550",
         "sequence-wrap-close/packets.json": "f82acc4965a9a6c380b5b2ba85e6d87fd7ef7d202abe994c286e023e85592950",
         "sequence-wrap-close/scenario.json": "57edaf084fdd87e65ec66cd1e92b6ca8de54e882699438e8b7daf72e9d087eb4",
         "sequence-wrap-close/packet-map.json": "ad2140eb0877bef1a0b36cd5d4a453f4bd0447649679e6934b6bbadbb73ffd05",
         "sequence-wrap-close/model.synthetic.pcap": "8c580c668798bb7e5de80f85738f30279a757d72e36e9026cc8fdcc8f0df1f1d",
-        "simultaneous-ack-after-1-retries/trace.json": "fcb4860f307c12d26bb203d36368aee3d710df8b5e0a53f637fd1d8ec0555fb0",
+        "simultaneous-ack-after-1-retries/trace.json": "70ed04718b3a9056c53d5c14dd0272c0949e54360e4fe5db19e6ad5418b39643",
         "simultaneous-ack-after-1-retries/packets.json": "1c19d03b0148e35baf95723adc69280f22d06727b8e54c93ba68d820e75f60dc",
         "simultaneous-ack-after-1-retries/scenario.json": "7412211af9b40d8bb958450fa047e4c0a16788abc6adc981fb6fc645bae1d57b",
         "simultaneous-ack-after-1-retries/packet-map.json": "3edc1f2ac3befa284c2671938053b976ab2890338377e380e90fe4aee020ab10",
         "simultaneous-ack-after-1-retries/model.synthetic.pcap": "c9e58be1b603db674cce3f55881107d8f9e938d783bfe1b540f2e2c293db4695",
-        "simultaneous-ack-after-2-retries/trace.json": "b80a30ee7fb74937095a53b248e52eac4e52d5eed83b503e07c0cff059bfbfb5",
+        "simultaneous-ack-after-2-retries/trace.json": "20f3ad1cccf2772f0b73d44f27b0d694d41e4000ad5cdac2110cab26c3840651",
         "simultaneous-ack-after-2-retries/packets.json": "e5d1a2a78b8dd89b60922b006e6aa2e32c87412da405b5f7a1ad57b3b2ea6027",
         "simultaneous-ack-after-2-retries/scenario.json": "f71e2003635430ccf67e7978b2d78e1509a2ee32225200289a355970c29fa680",
         "simultaneous-ack-after-2-retries/packet-map.json": "56a7a374002cc140363325ddafb1160ad30c9eda2f5de6f397a26682cb9193af",
         "simultaneous-ack-after-2-retries/model.synthetic.pcap": "67112798f869c72dd3d8976892c92d989f383eb4fc365bc2b808f5625282298e",
-        "simultaneous-close/trace.json": "8055d4e7e279d428a3e5afffe7774c95613c7108fba468a75c814553aac0950e",
+        "simultaneous-close/trace.json": "c995598aacdb56e4a666db954a7821b8b2aa78505638ed543a51493eb238f88f",
         "simultaneous-close/packets.json": "0f078e57c8c809e8cac522479367a8a53f1ea8aefa480ac6646eb55363c7fdd9",
         "simultaneous-close/scenario.json": "08da97e2eef2dd812885e013c9fe7f3dd57d3d0f9ed347eb8dd181abda289f9c",
         "simultaneous-close/packet-map.json": "0d44584471fc435cd3eedc088d007d3ad900ff1215f89a03f6f498e933540bfe",
         "simultaneous-close/model.synthetic.pcap": "081e4f05f9875bd41ccb506997236744c9932b6a15c4d228c2472d3375a75b33",
-        "simultaneous-open-ack/trace.json": "f6953bd0d9d31fd11035e64999c1e68ac09df77c446e102a452b7334011ec92b",
+        "simultaneous-open-ack/trace.json": "90ed296ed2616ab310d9c349acfc38966969fef9782a725baf37f45780033680",
         "simultaneous-open-ack/packets.json": "d0e3d2f5924cba746829b786c348f130b94d023e732e0b83c9d5820d33ba03e6",
         "simultaneous-open-ack/scenario.json": "9e796b426a38db5747663fe3d05bb2526ab920824f59f2cdedc26b5afec0fa18",
         "simultaneous-open-ack/packet-map.json": "74e36e13d0de7bd1516e10fcc8bfabf08c966884fdb431c2a939fa7925237952",
         "simultaneous-open-ack/model.synthetic.pcap": "10dde167272bb97a73be80792bc2d0103b42b160b5c5a07ee1e6c8d72332cc59",
-        "simultaneous-open-retry/trace.json": "16ba8cedbaab53e3e7432e57f0cf385242b882a3af478d9f30db22c0f07c9dc0",
+        "simultaneous-open-retry/trace.json": "c6a599a59bf515261af4d341532c6ce2775888f7c2dccbe39840636fe5ebfb1a",
         "simultaneous-open-retry/packets.json": "e963e23f3d6e189bff497c902ca703844db93d93abc4b1d7e860ac0721812b98",
         "simultaneous-open-retry/scenario.json": "a8102b85161af8f5ffba9c4dd73b32d4f726847e87dd03a4ed46ec2f371b37ce",
         "simultaneous-open-retry/packet-map.json": "6a40e2608a1931c700909db6209848bef7c27c4ed0e5e93337be732a079aa3b9",
         "simultaneous-open-retry/model.synthetic.pcap": "65bb794456081969686ff931546e44dd4173a6bb199b2c56a2009ad477968a2e",
-        "simultaneous-open/trace.json": "7b5a847e0b18dac77f005603835adc39debe44e955ddee4001916679f65ca5c6",
+        "simultaneous-open/trace.json": "af8d09fb6602bdbdec9e4dfab49f2cbf797c8b786a3a0bf1992deb9ea78db0a1",
         "simultaneous-open/packets.json": "477bffece558c547473a6db2606305c4a49a2138c14acac15583d08340ab8a4b",
         "simultaneous-open/scenario.json": "16bf6762f5338110b86d5912096c09687987c8c86615b18f34d8d80e701ca7a0",
         "simultaneous-open/packet-map.json": "3ad77e4e25ee00864bc1e1eca67b9f2849fb90ad7302e514661846ab144d7bdc",
         "simultaneous-open/model.synthetic.pcap": "146442ebd7070220170d751c189a305dbae810441c12d456e821da5d83902224",
-        "simultaneous-synack-after-1-retries/trace.json": "bb87c242c855962dbdd463efe5040be54c7687351cdf9fed93e65e7fb5c20700",
+        "simultaneous-synack-after-1-retries/trace.json": "9cd989ed02b1da17106571d3816b353f60e551d069d9427a2c3ba8eaf2188d1d",
         "simultaneous-synack-after-1-retries/packets.json": "fd2f5afb5f6b08ba9daafbe5f01f606290437b5893c4e4dedb741fdedc0c1c3e",
         "simultaneous-synack-after-1-retries/scenario.json": "1a7e010f9d0c5b27347169818088ad32c197c0bd477502ab3e887ef326418a9c",
         "simultaneous-synack-after-1-retries/packet-map.json": "6a40e2608a1931c700909db6209848bef7c27c4ed0e5e93337be732a079aa3b9",
         "simultaneous-synack-after-1-retries/model.synthetic.pcap": "c9198330c755507a330c45f7e65370762056ed9a3abc5637791f6adac137ae65",
-        "simultaneous-synack-after-2-retries/trace.json": "d0716d14bfc3a5fe487688704674312a001ed62e9a6c08d1d87471e1dfc550fd",
+        "simultaneous-synack-after-2-retries/trace.json": "9c4f3a61211e0a95966d868bbbab3953a94adc95fe16181ca11f830b9ff47a52",
         "simultaneous-synack-after-2-retries/packets.json": "936b68d486153b7e37a10304ab2f843afa8f8fe132bad7f68e74c742cad18a5f",
         "simultaneous-synack-after-2-retries/scenario.json": "29444f85e4f595294e5b49df2f784515148b7a148f6e0b635e8307077b8daff1",
         "simultaneous-synack-after-2-retries/packet-map.json": "4190ae250f0e91ce9db3f60c36d6f6d84622354e73a3a2bfa7e6ea626c75eebf",
         "simultaneous-synack-after-2-retries/model.synthetic.pcap": "b33255e37c0e0fe3eeac838b87edf62d2301d0538d324219da33fed46871bc60",
-        "synack-retransmission/trace.json": "9ff7b9ad645b4b2c18c582319ebdc04ebc74916a514f5c4d4e66aaf0c10dbca3",
+        "synack-retransmission/trace.json": "b7409e1222526d528210559a787483815ed35d66109cce398c407dff45892570",
         "synack-retransmission/packets.json": "d046434b5621ee6660bbf0fcc4f4ae7e2ae34cd3145b18bd7ed42401f0ba6676",
         "synack-retransmission/scenario.json": "b44b3f7bb5be63691c63ebd180e387713bd2cd572771b73fa72e651b854a6230",
         "synack-retransmission/packet-map.json": "e05590393302b3c8e53ba0d1695caa27663b8418c7ca9dda97a14e01695e66cc",
         "synack-retransmission/model.synthetic.pcap": "b5dd5c9ffb54c61ecaf6a99eb0f8fc0483b352a776dac5e8c651f6569b59ccfd",
-        "timeout-from-closing/trace.json": "94e4d6b8d021b3d773beabaaea7be3a597f94520d8cf146f83b97d8d28c1e783",
+        "timeout-from-closing/trace.json": "200a0b20d238fec728d70ba62b28092a26011c48caf8cce8b4540affc582af16",
         "timeout-from-closing/packets.json": "05d57fa40b937d501c231535496f5fd3f4594cf283ab3e356d985a6530228bb4",
         "timeout-from-closing/scenario.json": "558a10cc5e2f5ad744399d1e2b25fedf3b938c80259612d02df51b70aad202b4",
         "timeout-from-closing/packet-map.json": "56c534bf9989bef46e057b4382511c65f15245232a0468c849e28f81115cb11c",
         "timeout-from-closing/model.synthetic.pcap": "bfd75cde1415c7ecda3d33aec60ba753c5f40bcac73e6ed2b220f76818c0600e",
-        "timeout-from-fin-wait-1/trace.json": "40d2597019058eab064ca9d321668787fd42895c167d148e24b51c5e30c783eb",
+        "timeout-from-fin-wait-1/trace.json": "ee002e744fddc3f04dd79941170debccacdfa57204a47e1822e35723100610df",
         "timeout-from-fin-wait-1/packets.json": "71076cda98f3abb4fde9a718c2632856b6a8ea802b779fec05ae9ddcb02acea8",
         "timeout-from-fin-wait-1/scenario.json": "41d848ff1239d56a730a197509d21e629aaed15a37f0a193766f4c4f017a2279",
         "timeout-from-fin-wait-1/packet-map.json": "3831dae475d9328e944a451d765942aa8b7b86d455ce5282c86354db11eda91a",
         "timeout-from-fin-wait-1/model.synthetic.pcap": "9881c44fff548fe3cce7dd0c868f7b0060a39fa15e885f2d0ae34b738ee208d6",
-        "timeout-from-last-ack/trace.json": "e40a8f1fe96d1a7f44766d11754b6a9559fb68dd577070823fa710518037e79c",
+        "timeout-from-last-ack/trace.json": "2c854b8703fcaac226f91c798dcc048e357e0b73823721b27f4affc1b730e279",
         "timeout-from-last-ack/packets.json": "8325feb590f67fbf8eef7f19b901fe2542d6bcae130025f6911d12477ec4424b",
         "timeout-from-last-ack/scenario.json": "ccf764e1ad3d9d6e35d63759fd42aac33e36a0a698489f9f2d109247ec29e4e1",
         "timeout-from-last-ack/packet-map.json": "4c9937a9b71e798a149354afd987d5f74f3831a4e766588c0a48b2a04819509c",
         "timeout-from-last-ack/model.synthetic.pcap": "a249c9991f9edd5758ab8aa0c28760793ba823b322aecfb6cf9b96ba51c38405",
-        "timeout-from-syn-received-passive/trace.json": "04bc8bf79ed4116f81d939411cac6a74dbf22e648efef4732512e09c4e5d4a7b",
+        "timeout-from-syn-received-passive/trace.json": "c4a3a4a3ae56d926db0cb116ba0a38327ad38256309dbe4133006bac419232ee",
         "timeout-from-syn-received-passive/packets.json": "f8d65c80e5f618a6e5da88da0e09719f6a5ba8835001c55ae53bb2b86a1931ba",
         "timeout-from-syn-received-passive/scenario.json": "4e58d4aece4178573b457d329e58880ef4f7a4183fcda4ed0fbda2e0cfb0aa57",
         "timeout-from-syn-received-passive/packet-map.json": "09f26335984bcb81b85fd114c99c88d79db99d61e25e5be29ae0e15ed8f59d1d",
         "timeout-from-syn-received-passive/model.synthetic.pcap": "0920647b9337cdef5b0a6d42c69177c8ca2eaf90d0c900dde239c3f9cb19e33c",
-        "two-syn-retransmissions/trace.json": "68322c9027682f99aebb5dbc03d96d8c9ec686ab5e40ddd89cb39484ebb80d04",
+        "two-syn-retransmissions/trace.json": "56c9020fef9b466c738f5517da70b3f3136c66ec22286784572a0fa00673ff86",
         "two-syn-retransmissions/packets.json": "9bbfa8f26c60193287abd45a0f7753be95b92f07cd3abb2bfb4074dec743d30b",
         "two-syn-retransmissions/scenario.json": "5fb47850fdf66f1ef60d66940df814fb90a418ab49220e02d9b2c18c78afd592",
         "two-syn-retransmissions/packet-map.json": "6721587218165a6c2b98d9e5cfc5b7144d0393ea61968c17bac3d533d5846d43",
         "two-syn-retransmissions/model.synthetic.pcap": "754a9cc453ead981ce34ae65f47b2f2edb7c02946d44902357508615a87052c8",
-        "user-timeout/trace.json": "daf1e0667efa4c6e942c9adcfaeef3d6f2eed6eee08d1e6d252ec47280346ece",
+        "user-timeout/trace.json": "174f8a58fe9d4a6d29183be0233b52d91c1bbf43aa3ada85995c9937ab3682ba",
         "user-timeout/packets.json": "63a5748b545b5e6601d4ee90f49995e77b7de6b8c5539a1042e56a84cc4c7d58",
         "user-timeout/scenario.json": "48ac6e8053ec9e3d4c99cb78c85bf16c1a7c4bedcccf9973470b6ab84af06bc2",
         "user-timeout/packet-map.json": "68593ce696032509ebd8ca743c41a3e4a63cd740e94ae502e169dc5c269ada50",
         "user-timeout/model.synthetic.pcap": "b2010e958fbfad7f985480be5f6d473c9a3187427f95599373a911fa953cdfbd",
         "state-machine.dot": "b5256bb21b408b0b38f15f37098727a119ad395c45f1f7d5c9c038402b02caf9",
-        "formal/result.json": "37ee2316db21578684e39b61ec85dfc2c831cfebdd343a1aba5090a394558cd3",
-        "formal/model.smt2": "3fc0a58b30387affbf11f549f2167467808f168cafcddd2dad703e79d54c86c1",
-        "formal/overlap.smt2": "010b361e2583be212417e822d8006d2d785565d0e6c339ed3d5637938c97488f"
+        "expanded-model.json": "ed2a423368b27e0c427a54e183d87b03b086a45d642ca46d11f66d01a429cd8b",
+        "formal/result.json": "84e1bd98e40d0300a094eb2a9e76fa808a8562eb57c1d538ab387004eb457498",
+        "formal/model.smt2": "ce0e134a9195d296312e087abc4e296c34aa8c7b3c0c10a96f92d7a80bd5c7f5",
+        "formal/overlap.smt2": "eb40440829ce9e4c8dd6dc79ae39cda6c64d5f059b8cbdabbbb7ba7a8038e2f5"
+      }
+    },
+    {
+      "profile": "tcp-data",
+      "protocol": "tcp-data",
+      "status": "formal_pending",
+      "model_sha256": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
+      "sources": [
+        {
+          "rfc": 9293,
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.txt",
+          "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+          "retrieved": "2026-10-18"
+        },
+        {
+          "rfc": 6298,
+          "url": "https://www.rfc-editor.org/rfc/rfc6298.txt",
+          "sha256": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+          "retrieved": "2026-10-18"
+        }
+      ],
+      "input_hashes": {
+        "model/tcp-data.json": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
+        "model/tcp-connection.json": "ed2a423368b27e0c427a54e183d87b03b086a45d642ca46d11f66d01a429cd8b",
+        "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+        "protocol_lab/__main__.py": "0f318f2868fc6429ac4edb0d3e5aba22fbb2a49dff68d1d786712bc7ced9a3cc",
+        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
+        "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+        "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+        "protocol_lab/ir.py": "4a27cc525fab1255a349c371cb59514d3ef1a7d9c05832716f5fe01be549cd06",
+        "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+        "protocol_lab/profiles.py": "13cfca9fa61dc9212f222766fbd50d294957fb788ef3ee1c12a0e0ffcf648063",
+        "protocol_lab/symbolic.py": "ecb3f3aa708d441e28a78ab8abb56379d477a7a397ea88f794546e68bd2821b2",
+        "scenarios/data/discard-data-on-app-abort.json": "8cbb307923060ff8915bde20ed28fcb99b53b6c30ae1461ec5d3370a8c71d464",
+        "scenarios/data/discard-data-on-net-rst.json": "310adaaf3875122417de1204c6dfd583b7c720515f02642913a390f94da4bc51",
+        "scenarios/data/discard-data-on-net-rstack.json": "20a2cc996478a470e6498346141d137d5266a71e9c700e1e3857a3b2d2efff32",
+        "scenarios/data/drain-before-active-close.json": "87ca3b78e730381cf96c0318a657b438505347d668c6ade64b9312f3d6ab97cf",
+        "scenarios/data/duplicate-old-future-ack.json": "47c3f14a8a5f0a4a6fce15221dffea929c9c3b39f5e88fcdb4c9782028bbe04e",
+        "scenarios/data/partial-ack-retransmission.json": "38cb60f621f49df8235e06754dce6af69a838455a8b90a72f56de2c80341675c",
+        "scenarios/data/receive-ahead-then-retransmit.json": "b860e1ac881fc633fca00ebaaf07dc43cd21900c1343cd38d3c78295b709a6a3",
+        "scenarios/data/receive-overlap.json": "ccb670c9298f79617ea9a3ad17a721932e1a19e054bb91b8a6f81f0f5ec7dec2",
+        "scenarios/data/receive-read-duplicate.json": "e827a658312ea81131fdc213af554dd3712b1e483cbae146952fbb2db9a998f8",
+        "scenarios/data/receive-right-edge-zero-window.json": "b2bdb27a9da0cad5dc60e0f4df4349a1d4c4bcdc6538871df273ca0cc9669370",
+        "scenarios/data/segmentation-cumulative-ack.json": "b0caf9fd68c470ab63667bd7ce3968ad1d9ef48c4aa61382c4fbc629b81d17a3",
+        "scenarios/data/send-buffer-full.json": "dfc63a76368429066c225a22bb592d0c1eb66f4025a082bd656cd62b946bd69d",
+        "scenarios/data/sequence-wrap-data.json": "ec7f3a7517cf6b5b80625b26cb1325ff32cef71baa47f2a8371efdfff63cbae5",
+        "scenarios/data/two-data-losses.json": "dd05b90e1800d7b5a5807dc40906c089edbfc08135cff2ab45de58d27fe5c9db",
+        "scenarios/data/zero-window-reopen.json": "2119bbdc6243a0800768ea7851b26b177037f5f5c2bb275aae38f679605f1b47",
+        "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
+        "profiles.json": "4ce56a3163d15e54b9a79e484b32b4e977b517fae8b8d73cb1c62ce1f56753f0",
+        "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
+        "docs/semantics.md": "1fb3eb6020be563bee37dd9cdd4507fdb46c9b32389d324033e4df9d436ae81d",
+        "packet-profile.json": "8585bfeb9e967e0329ca5b011db4ed71a50e537df4b6c56b3cb328585d112fd9",
+        "docs/tcp-data.md": "e8b21004b7fd2a9d04096db8aaaa59d5e5cc44cccd041a53fc6675e3efcdb481"
+      },
+      "scenarios": [
+        {
+          "id": "discard-data-on-app-abort",
+          "status": "reference_pass",
+          "final_state": "CLOSED",
+          "events": 5,
+          "packets": 5,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "discard-data-on-net-rst",
+          "status": "reference_pass",
+          "final_state": "CLOSED",
+          "events": 5,
+          "packets": 5,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "discard-data-on-net-rstack",
+          "status": "reference_pass",
+          "final_state": "CLOSED",
+          "events": 5,
+          "packets": 5,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "drain-before-active-close",
+          "status": "reference_pass",
+          "final_state": "CLOSED",
+          "events": 9,
+          "packets": 9,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "duplicate-old-future-ack",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 8,
+          "packets": 9,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "partial-ack-retransmission",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 8,
+          "packets": 8,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "receive-ahead-then-retransmit",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 5,
+          "packets": 9,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "receive-overlap",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 4,
+          "packets": 7,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "receive-read-duplicate",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 6,
+          "packets": 9,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "receive-right-edge-zero-window",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 7,
+          "packets": 12,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "segmentation-cumulative-ack",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 8,
+          "packets": 8,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "send-buffer-full",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 6,
+          "packets": 4,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "sequence-wrap-data",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 9,
+          "packets": 11,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "two-data-losses",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 7,
+          "packets": 7,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        },
+        {
+          "id": "zero-window-reopen",
+          "status": "reference_pass",
+          "final_state": "ESTABLISHED",
+          "events": 7,
+          "packets": 6,
+          "packetdrill": "unavailable_for_profile",
+          "symbolic_replay": "match",
+          "wire_roundtrip": "match_synthetic_only"
+        }
+      ],
+      "state_count": 11,
+      "transition_count": 117,
+      "visited_states": [
+        "CLOSED",
+        "ESTABLISHED",
+        "FIN-WAIT-1",
+        "FIN-WAIT-2",
+        "SYN-SENT",
+        "TIME-WAIT"
+      ],
+      "unvisited_states": [
+        "CLOSE-WAIT",
+        "CLOSING",
+        "LAST-ACK",
+        "LISTEN",
+        "SYN-RECEIVED"
+      ],
+      "covered_transitions": [
+        "C-ABORT-ESTABLISHED",
+        "C-ACCEPT-SYNACK",
+        "C-ACTIVE-OPEN",
+        "C-CLOSE-ESTABLISHED",
+        "C-FIN-ACK-FIN-WAIT-1",
+        "C-PEER-FIN-FW2",
+        "C-RESET-ESTABLISHED-rst",
+        "C-RESET-ESTABLISHED-rstack",
+        "C-TIME-WAIT-EXPIRED",
+        "D-ACK-DUP-WINDOW",
+        "D-ACK-FULL-WINDOW",
+        "D-ACK-FUTURE",
+        "D-ACK-OLD",
+        "D-ACK-PARTIAL-WINDOW",
+        "D-APPLICATION-READ",
+        "D-FLUSH-BLOCKED",
+        "D-FLUSH-FIRST",
+        "D-FLUSH-MORE",
+        "D-QUEUE",
+        "D-RECEIVE-AHEAD",
+        "D-RECEIVE-DUPLICATE",
+        "D-RECEIVE-IN-ORDER",
+        "D-RECEIVE-OVERLAP",
+        "D-RECEIVE-ZERO-WINDOW",
+        "D-RETRANSMIT",
+        "D-SEND-EMPTY",
+        "D-SEND-FULL"
+      ],
+      "uncovered_transitions": [
+        "C-ABORT-CLOSE-WAIT",
+        "C-ABORT-CLOSED",
+        "C-ABORT-CLOSING",
+        "C-ABORT-FIN-WAIT-1",
+        "C-ABORT-FIN-WAIT-2",
+        "C-ABORT-LAST-ACK",
+        "C-ABORT-LISTEN",
+        "C-ABORT-SYN-RECEIVED",
+        "C-ABORT-SYN-SENT",
+        "C-ABORT-TIME-WAIT",
+        "C-ACCEPT-ACK",
+        "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+        "C-ACCEPT-ACK-AFTER-RETRY",
+        "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+        "C-ACCEPT-SYNACK-AFTER-RETRY",
+        "C-CLOSE-CLOSE-WAIT",
+        "C-CLOSE-LISTEN",
+        "C-CLOSE-SYN-SENT",
+        "C-CLOSED-SYN",
+        "C-DUPLICATE-ACK-CLOSE-WAIT",
+        "C-DUPLICATE-ACK-FIN-WAIT-2",
+        "C-DUPLICATE-FIN-CLOSE-WAIT",
+        "C-DUPLICATE-FIN-CLOSING",
+        "C-DUPLICATE-FIN-LAST-ACK",
+        "C-DUPLICATE-FIN-TIME-WAIT",
+        "C-FIN-ACK-CLOSING",
+        "C-FIN-ACK-LAST-ACK",
+        "C-IGNORE-NET-RST-CLOSED",
+        "C-IGNORE-NET-RST-LISTEN",
+        "C-IGNORE-NET-RSTACK-CLOSED",
+        "C-IGNORE-NET-RSTACK-LISTEN",
+        "C-LISTEN-SYN",
+        "C-OLD-ACK-CLOSING",
+        "C-OLD-ACK-FIN-WAIT-1",
+        "C-OLD-ACK-LAST-ACK",
+        "C-PASSIVE-OPEN",
+        "C-PEER-FIN",
+        "C-PEER-FIN-FW1-ACKED",
+        "C-REJECT-ACK-CLOSED",
+        "C-REJECT-ACK-LISTEN",
+        "C-REJECT-FIN-CLOSED",
+        "C-REJECT-FIN-LISTEN",
+        "C-REJECT-SYNACK-CLOSED",
+        "C-REJECT-SYNACK-LISTEN",
+        "C-REPEATED-CLOSE-CLOSING",
+        "C-REPEATED-CLOSE-FIN-WAIT-1",
+        "C-REPEATED-CLOSE-FIN-WAIT-2",
+        "C-REPEATED-CLOSE-LAST-ACK",
+        "C-REPEATED-CLOSE-TIME-WAIT",
+        "C-RESET-CLOSE-WAIT-rst",
+        "C-RESET-CLOSE-WAIT-rstack",
+        "C-RESET-CLOSING-rst",
+        "C-RESET-CLOSING-rstack",
+        "C-RESET-FIN-WAIT-1-rst",
+        "C-RESET-FIN-WAIT-1-rstack",
+        "C-RESET-FIN-WAIT-2-rst",
+        "C-RESET-FIN-WAIT-2-rstack",
+        "C-RESET-LAST-ACK-rst",
+        "C-RESET-LAST-ACK-rstack",
+        "C-RESET-TIME-WAIT-rst",
+        "C-RESET-TIME-WAIT-rstack",
+        "C-RETRANSMIT-CLOSING",
+        "C-RETRANSMIT-FIN-WAIT-1",
+        "C-RETRANSMIT-LAST-ACK",
+        "C-RETRANSMIT-SYN-RECEIVED",
+        "C-RETRANSMIT-SYN-SENT",
+        "C-SIMULTANEOUS-FIN",
+        "C-SIMULTANEOUS-SYN",
+        "C-SIMULTANEOUS-SYNACK",
+        "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+        "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+        "C-SYN-RECEIVED-BAD-ACK",
+        "C-SYN-RECEIVED-NET-RST-ACTIVE",
+        "C-SYN-RECEIVED-NET-RST-PASSIVE",
+        "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+        "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+        "C-SYN-SENT-BAD-ACK",
+        "C-SYN-SENT-BAD-SYNACK",
+        "C-SYN-SENT-BARE-ACK",
+        "C-SYN-SENT-NET-RST",
+        "C-SYN-SENT-NET-RSTACK",
+        "C-USER-TIMEOUT-CLOSING",
+        "C-USER-TIMEOUT-FIN-WAIT-1",
+        "C-USER-TIMEOUT-FIN-WAIT-2",
+        "C-USER-TIMEOUT-LAST-ACK",
+        "C-USER-TIMEOUT-SYN-RECEIVED",
+        "C-USER-TIMEOUT-SYN-SENT",
+        "D-ACK-DUP-STALE-WINDOW",
+        "D-ACK-FULL-STALE-WINDOW",
+        "D-ACK-PARTIAL-STALE-WINDOW"
+      ],
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "real_stack": "not_run",
+      "protocol_complete": false,
+      "artifact_hashes": {
+        "discard-data-on-app-abort/trace.json": "baccb1ac85ab5f215adade721a5e0a4337077bc94b0b1ee59721b0765d371e7d",
+        "discard-data-on-app-abort/packets.json": "f5c949dadd4866f16f4125da146ba05ad6e4b949402d8a3a144697161cbfdb03",
+        "discard-data-on-app-abort/scenario.json": "8cbb307923060ff8915bde20ed28fcb99b53b6c30ae1461ec5d3370a8c71d464",
+        "discard-data-on-app-abort/packet-map.json": "082ab2d363709839a030dd14c9d3d59988161ef577dcaf6a46a5d04a7567c8b4",
+        "discard-data-on-app-abort/model.synthetic.pcap": "fe7467f42d5ccfbcaded0caf64de8d1d8c0049e8d77e993729c102d74824b905",
+        "discard-data-on-app-abort/normalized.synthetic.json": "92c91300a9401afadc7aba67f938b4a2a91f2d80ca0b95d1772505f24a178ec4",
+        "discard-data-on-app-abort/capture-metadata.json": "885f41a88651af7f505d66979545cc17b8f4e1e7514d2b26a5bf9e75f7ee6e14",
+        "discard-data-on-app-abort/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "discard-data-on-app-abort/symbolic/path.smt2": "43660adb14456a928fa4ade79755aa1f3b279c2b8e8439ed152cbbe04d8f1341",
+        "discard-data-on-app-abort/symbolic/result.json": "4b0ac9a4b59664ed52a35bc57f84f797437948665d391af57320cc590a169eb6",
+        "discard-data-on-net-rst/trace.json": "44977d09df117ea9c5bc2b50073ab173a5397ca7444e37c3bde10eff8432f9dc",
+        "discard-data-on-net-rst/packets.json": "dfe158ac6c6fe951e634a437406f157cde8633a1b220bb2f4bd9c1ef7e48be93",
+        "discard-data-on-net-rst/scenario.json": "310adaaf3875122417de1204c6dfd583b7c720515f02642913a390f94da4bc51",
+        "discard-data-on-net-rst/packet-map.json": "b1bc604bcce3090005e0358255f0ed8de01d6055e6b31627c104f7d2e1930234",
+        "discard-data-on-net-rst/model.synthetic.pcap": "6ba8f8ae50b4b19aef92daf746ca8c0e9d702301a48134183900089cd431157b",
+        "discard-data-on-net-rst/normalized.synthetic.json": "609448be963fcfde532de4efff3e2d0d977f3624ebadf204343317bd0e482642",
+        "discard-data-on-net-rst/capture-metadata.json": "57afebd26ffffd4dfbcaa6ab40cbcd5c8dc59eaf3dfc783c8c736808ccf39e9c",
+        "discard-data-on-net-rst/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "discard-data-on-net-rst/symbolic/path.smt2": "b12ab050aa9fe9b0795d951922b235055b6e95902a3186b1fc1ab9e50cbe1f90",
+        "discard-data-on-net-rst/symbolic/result.json": "486fa478ddca8d2203b9dfccd7f036035fe7c932d9dbc43d78128ecaa5c793db",
+        "discard-data-on-net-rstack/trace.json": "889f11bda92740b7d8dbc3f7ebfc00b11af2ed695ca197e51da9fcef7bcd2205",
+        "discard-data-on-net-rstack/packets.json": "7165fd66b2463128a38eebfbe689c8d2423d9fe5686f7ad7fafa53c68d7ea7cc",
+        "discard-data-on-net-rstack/scenario.json": "20a2cc996478a470e6498346141d137d5266a71e9c700e1e3857a3b2d2efff32",
+        "discard-data-on-net-rstack/packet-map.json": "b1bc604bcce3090005e0358255f0ed8de01d6055e6b31627c104f7d2e1930234",
+        "discard-data-on-net-rstack/model.synthetic.pcap": "df8e85b35f61d9712c2b40d82f25d8fa6c2bd8be46c6fbd93a627a48c29a1f16",
+        "discard-data-on-net-rstack/normalized.synthetic.json": "a38fd79649704773e36dc5d5d0f99b8298ed3a8e9f9928ae28f764d9bf6fd221",
+        "discard-data-on-net-rstack/capture-metadata.json": "2aa8923858f7700d58a55733d37498d17b605f4652b10331a0b1c9dc86b41466",
+        "discard-data-on-net-rstack/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "discard-data-on-net-rstack/symbolic/path.smt2": "02566ef4565d0cbc6356d1c68a3f7300b4a4a1791dbc75a970f22b1a60944fe9",
+        "discard-data-on-net-rstack/symbolic/result.json": "b89129e8d98728091025d9b911c5562dba06b0444360053000a378adce59e737",
+        "drain-before-active-close/trace.json": "39cf73cb4f0fe001d64ff6fe372a5d9ee458d4adede630ca46030b858ca38dfd",
+        "drain-before-active-close/packets.json": "15c1fad6c3b14b0d37fe2170e0af379cb77afa7cadc26c41c753e31105ccc43d",
+        "drain-before-active-close/scenario.json": "87ca3b78e730381cf96c0318a657b438505347d668c6ade64b9312f3d6ab97cf",
+        "drain-before-active-close/packet-map.json": "806dabd10ec178736f732096c7598101da02b9188a958bd01aacc3c4dc572861",
+        "drain-before-active-close/model.synthetic.pcap": "14fb1a47981708b2e61d91f68b8735c7e8d0ad74e3140b5170d596f0817567ad",
+        "drain-before-active-close/normalized.synthetic.json": "534c59ef9f3da9092b9bee3021cc1767a33cfdd50281602fc0b3eb5ebfd95bcb",
+        "drain-before-active-close/capture-metadata.json": "fe32f7842af537cf460fe518e710f7d0cbc312a3c175668d67eb1015bc8c31e0",
+        "drain-before-active-close/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "drain-before-active-close/symbolic/path.smt2": "ba3578aed72b0b84ee6256b6beb232cb0619ca536ecd4eccb2d71f7cc210c5fd",
+        "drain-before-active-close/symbolic/result.json": "f64aa20c620b7bb935b1b8685b38398b239b129a9eca37cf74fb926cf803123c",
+        "duplicate-old-future-ack/trace.json": "5f3218b66ef8520ba9a0887fcc435db00d16c217198183812cbb847508996203",
+        "duplicate-old-future-ack/packets.json": "6673a2c56bdb0082a5e85021c5ad38535505a8d95238d882b1bc251a3893875c",
+        "duplicate-old-future-ack/scenario.json": "47c3f14a8a5f0a4a6fce15221dffea929c9c3b39f5e88fcdb4c9782028bbe04e",
+        "duplicate-old-future-ack/packet-map.json": "f5fba5d570a30af71cecf26d485c03c8850a7bc8e87da253c488a3ec7ded68ad",
+        "duplicate-old-future-ack/model.synthetic.pcap": "d6a7b7a9b8a87ae287c21c868befb8904b5e5a491b368e4c43e8591efb543d50",
+        "duplicate-old-future-ack/normalized.synthetic.json": "896100670d5ae08125bd6bb9e85e47fa18c3b85af336fe288511ede4148f253a",
+        "duplicate-old-future-ack/capture-metadata.json": "4e8291cc986468c9657ee11bb45ffb6c97642e2f72f0c0e53713e598cf5dee69",
+        "duplicate-old-future-ack/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "duplicate-old-future-ack/symbolic/path.smt2": "cb1122452a03d3f61717a2a23cf4bb846c138e4c11e0d7bebc0e6b90be684139",
+        "duplicate-old-future-ack/symbolic/result.json": "047e2cf64746c3a5a96d8cd25f766daf5a24edbc6b73a4a1f294714fdfd54460",
+        "partial-ack-retransmission/trace.json": "654dc8ce6d1118d928d396fc91a21f36d395bd10bc8e2405791e356b4c3590d6",
+        "partial-ack-retransmission/packets.json": "b696da37c211ce26a50d958fa11cdeba547bbbae206b2ff1c6cc6a82b610a1fa",
+        "partial-ack-retransmission/scenario.json": "38cb60f621f49df8235e06754dce6af69a838455a8b90a72f56de2c80341675c",
+        "partial-ack-retransmission/packet-map.json": "461ada62212b0331346f521889a2cea21b615fca6daa1fb4994055a5a8112710",
+        "partial-ack-retransmission/model.synthetic.pcap": "b09df0b114efb9e0338e2a14d25a3f3b8d9c626e8d9aab1164909ecf65d71961",
+        "partial-ack-retransmission/normalized.synthetic.json": "b2c4a75ec2f8a0bd7e9c0cb47ce905e6ff984d7cd57bff9fd91fdefd8f107fbc",
+        "partial-ack-retransmission/capture-metadata.json": "6b30b634c7bad8dadaac072d13f3e63867d4390fa472cc50f266bbc7bef4551d",
+        "partial-ack-retransmission/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "partial-ack-retransmission/symbolic/path.smt2": "935bc70c828261428111aeffbb7f23a914e24781d8ba511a36e946422d0f5703",
+        "partial-ack-retransmission/symbolic/result.json": "98b687a392e68d74eeeb44e709fad1a625a228ef0303f745679d722185c264bd",
+        "receive-ahead-then-retransmit/trace.json": "75e3151a131d6dc8cc364f3546b61f9cd3e74e13161d204ddb29f9809a2ba4ca",
+        "receive-ahead-then-retransmit/packets.json": "12ca4c48de4b0365910b64a54701806a9d016b596440f439f8b2d51cf6781f09",
+        "receive-ahead-then-retransmit/scenario.json": "b860e1ac881fc633fca00ebaaf07dc43cd21900c1343cd38d3c78295b709a6a3",
+        "receive-ahead-then-retransmit/packet-map.json": "e2d0c591b6a64b8bec1868035eafc59f8c49d38d63c8199ec9fa328b8a728108",
+        "receive-ahead-then-retransmit/model.synthetic.pcap": "8bebcba0f172d783536a2f5ee43a391f98ac415a273718c8a115ddef9780ea39",
+        "receive-ahead-then-retransmit/normalized.synthetic.json": "d79d7699fef9a45759c4a200d7e1456541587ef0aa48f8f846084bdc3460bf64",
+        "receive-ahead-then-retransmit/capture-metadata.json": "7cc97f79ac2e21e8a0792fe4682810ec57440bf36cf4c632914ac6511297839b",
+        "receive-ahead-then-retransmit/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "receive-ahead-then-retransmit/symbolic/path.smt2": "69e6068ab0f520746ae5b6509083fefd0b1bd4b593fb30e69a4eab3abe875c3e",
+        "receive-ahead-then-retransmit/symbolic/result.json": "a4c896a9411f9eff0ff6c393c5b6f7c5fafb5b4ee7e5e7dedf06d2ee451757bc",
+        "receive-overlap/trace.json": "f492fd9fd25e74f018773390bf75d31e6d7516ae4fcc1f6f44861de6bbfae8e1",
+        "receive-overlap/packets.json": "bc6e1483660d5a63733340927094bf754239fe8f691776ab92cfe76732e92d04",
+        "receive-overlap/scenario.json": "ccb670c9298f79617ea9a3ad17a721932e1a19e054bb91b8a6f81f0f5ec7dec2",
+        "receive-overlap/packet-map.json": "0ca6ec7ce026bf5697330ca59c504b2f350a408b20f427b39ba63e584f7c2604",
+        "receive-overlap/model.synthetic.pcap": "18e67a4c8484a19f9b4ff465b9cd3ed8b2a1897aef56f07155955cb7e0979991",
+        "receive-overlap/normalized.synthetic.json": "1732b0abd022fc5f30d06cdba0a80aac8d0c3f08110d438661879f05f7821756",
+        "receive-overlap/capture-metadata.json": "f0bd402199389b96edf6477c662ab4f50612d3df2af60ac60e15549b29d750fd",
+        "receive-overlap/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "receive-overlap/symbolic/path.smt2": "66c028f9967d97a69b5cf5815990785d31dd23f2b4a5dc26989b861aec75fe04",
+        "receive-overlap/symbolic/result.json": "e484e470c4e4b240ca0a8e0f232071279e0246b9fb68766a720c8ad94aea913a",
+        "receive-read-duplicate/trace.json": "f06ce5c431dbd8c6c416009b28788c2c6e797692944d84fe60c3f17ed4232092",
+        "receive-read-duplicate/packets.json": "7d29340464759facb7c9a11657e72de7e2756bd666a7cc58496529c5828d344f",
+        "receive-read-duplicate/scenario.json": "e827a658312ea81131fdc213af554dd3712b1e483cbae146952fbb2db9a998f8",
+        "receive-read-duplicate/packet-map.json": "3a194083c6f8f4d60e2148f413455ef017b62fdd774b403ec95c8ab284807dfe",
+        "receive-read-duplicate/model.synthetic.pcap": "e3c9d161fcff960d5dc95e2293da2246d7a2008041b702f87e0743e26883e9c0",
+        "receive-read-duplicate/normalized.synthetic.json": "3a66faae76446ad428093155c2c9950639b075661239115585ea7bcedb2c5d0e",
+        "receive-read-duplicate/capture-metadata.json": "9e331bd3666a525f7293786cad348e715df0a0b06fe6ea2de76bf6bb613aac7f",
+        "receive-read-duplicate/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "receive-read-duplicate/symbolic/path.smt2": "6bb64fb4b33962b374f84057e560d15c96a841b4c5a2480044f33f76a99716ad",
+        "receive-read-duplicate/symbolic/result.json": "1624da717cdb5c6d1fef55189069190cf2afbe441480a204538b749c98000953",
+        "receive-right-edge-zero-window/trace.json": "64b284fc569c8c2b69127a76df8052fae3565e559704d2960e2a93fbae7fd75e",
+        "receive-right-edge-zero-window/packets.json": "a2c03c6ff27126800ef0eb91ee9d9ed2008b00e96f7253278773124c74ba1849",
+        "receive-right-edge-zero-window/scenario.json": "b2bdb27a9da0cad5dc60e0f4df4349a1d4c4bcdc6538871df273ca0cc9669370",
+        "receive-right-edge-zero-window/packet-map.json": "a869a51c050c40fe1b6c861cd588d616a1445bc32c38689990811f602cbb4fc8",
+        "receive-right-edge-zero-window/model.synthetic.pcap": "8a23322b5e48a08a85155d8ec34144de45aaf55a1d53286cf1eb028242b2bf00",
+        "receive-right-edge-zero-window/normalized.synthetic.json": "95f4e2a0026f4004c17f310907497b9a7ca031babe655ddd506f52cbab50a66f",
+        "receive-right-edge-zero-window/capture-metadata.json": "f55335fc0f776e6d3bd674637e070e55033a8254f9520e14f148ed76fc5511eb",
+        "receive-right-edge-zero-window/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "receive-right-edge-zero-window/symbolic/path.smt2": "ff5ea550b2b10e684c4825756a92fa60fc3912403332614b85a3b70a0b912b64",
+        "receive-right-edge-zero-window/symbolic/result.json": "00133966feb1165d4d46536b52dfbde1ccbbcf32de96feef2e054b255f1bd625",
+        "segmentation-cumulative-ack/trace.json": "3593e04a6b55b71b355622d86790c83acafcb6e907057e84802c35705b7cc4f7",
+        "segmentation-cumulative-ack/packets.json": "1122777ed606e968f81303e1accadd233af19a5f3cb245536416527fc3810b57",
+        "segmentation-cumulative-ack/scenario.json": "b0caf9fd68c470ab63667bd7ce3968ad1d9ef48c4aa61382c4fbc629b81d17a3",
+        "segmentation-cumulative-ack/packet-map.json": "8bc54ebedd564ce783a5fa254d0ba1d9470b7b0bc8ab14eb52d7696960d001a1",
+        "segmentation-cumulative-ack/model.synthetic.pcap": "e3450a5fdd3f46d7d19db50f790382085e5083a8e20a7e624443991f0e0253ec",
+        "segmentation-cumulative-ack/normalized.synthetic.json": "d08c21e9701947e0018eec5f38f612a0e48ceaba98d8b3bd8b7be30f2107d02e",
+        "segmentation-cumulative-ack/capture-metadata.json": "57d8344027a0053bc536ba3360bb69d443c89ba742c12bdef8c1af0e41178e3e",
+        "segmentation-cumulative-ack/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "segmentation-cumulative-ack/symbolic/path.smt2": "a32e19e44353857aab120f419722458a9216cf4cfde073c69895c5762e9d4046",
+        "segmentation-cumulative-ack/symbolic/result.json": "d20582cf09cf59b5067915dfe1fb9df0a6808e39cb9731acbe5a8d6c6eecb0d9",
+        "send-buffer-full/trace.json": "b27d287a7448dea7de5ddbdc8e837261205af07d826875e6342d6945e15b9f12",
+        "send-buffer-full/packets.json": "526e818e4943111f223e5d671a2b3b0530b1749940850a60037556bc6e4dd572",
+        "send-buffer-full/scenario.json": "dfc63a76368429066c225a22bb592d0c1eb66f4025a082bd656cd62b946bd69d",
+        "send-buffer-full/packet-map.json": "1fcc9c2e5e13db7d15637648364d60e7370cc1101670f13fd6cc130a58dff975",
+        "send-buffer-full/model.synthetic.pcap": "ce931760e196553c9d026b98e70efa8c617eb6250617d7985c3fa2944f3d6de0",
+        "send-buffer-full/normalized.synthetic.json": "eaccaab1606d043a05fd03828a71223185121d9f2ffcca5e701eb7a3bc0896b4",
+        "send-buffer-full/capture-metadata.json": "6b0b4c116b0f251beb84aad8a6fea7ac41ea4f19dd262391c99873d5d4f993a4",
+        "send-buffer-full/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "send-buffer-full/symbolic/path.smt2": "b85e402fc10b7224636429d794c0bea1439a256df16d3682a0dd7c15de7ea1be",
+        "send-buffer-full/symbolic/result.json": "4546f0bd7c344a216e6479527b7a829cb0d30e019f6155931ddc8df9fd1f27b6",
+        "sequence-wrap-data/trace.json": "3a9d33d6bbacbe003b999ed25ce14785d41c0fd3a2f3d423e4e5c236a9511708",
+        "sequence-wrap-data/packets.json": "69860eb675d60273d928770bf86ff529f226d8d07ea6688282252d875ffe8c2c",
+        "sequence-wrap-data/scenario.json": "ec7f3a7517cf6b5b80625b26cb1325ff32cef71baa47f2a8371efdfff63cbae5",
+        "sequence-wrap-data/packet-map.json": "61d309e72f3db4e6d64c4b68ea25dc1fda876aa1b2ba32df1f74c8383c2db486",
+        "sequence-wrap-data/model.synthetic.pcap": "b3c6b14301f301c8be1bb0b9e13511cc5f744d1c7a59048e28523cfc2a64c5ee",
+        "sequence-wrap-data/normalized.synthetic.json": "a57227986d6e9e70423b5b518e653e4d2635536364857f6620e310d9904ad231",
+        "sequence-wrap-data/capture-metadata.json": "ce0a80b1e174167dc309f5ee13376e856d971dfe15752ae933d21a70f7133056",
+        "sequence-wrap-data/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "sequence-wrap-data/symbolic/path.smt2": "52bba81b92c98327abe3abf6e784efcc0084f5e20d54d623641a8f85a6c5c01f",
+        "sequence-wrap-data/symbolic/result.json": "45984b13420ccfae4922e3ad21c64546df0947a52908f0f4e1dc16afcea5390b",
+        "two-data-losses/trace.json": "98f3dac63f681e93b22f0436e52182f49d36600ba531250850ed479c445181bc",
+        "two-data-losses/packets.json": "2b36146954d110882e253a4a7e570142f012072b4da36a913d3eca112110af9f",
+        "two-data-losses/scenario.json": "dd05b90e1800d7b5a5807dc40906c089edbfc08135cff2ab45de58d27fe5c9db",
+        "two-data-losses/packet-map.json": "5a3fadde2ef58fd5f4349f8e54dd79783f80ed6ce841e74a1a7ef8d198844c22",
+        "two-data-losses/model.synthetic.pcap": "41dfc6f34815f6517b507c7333e998e1914e21f72ea476b90e3a544af8b1e862",
+        "two-data-losses/normalized.synthetic.json": "2ae20bb3cddc0758a5af6a3b623105a6de5f6184a0a84b436a5fe882ef8cf05c",
+        "two-data-losses/capture-metadata.json": "36febe8be92a89f58972f872d5d0f2304c3eb47f80dc0925ab35115a80edf5d2",
+        "two-data-losses/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "two-data-losses/symbolic/path.smt2": "4dd0fc98007dd34a98cde9b7d36a363a4dab75f7647a1275724a2b2efe256d8d",
+        "two-data-losses/symbolic/result.json": "e1f6f6362473ce6921d5f298e352e885608cd1b5da948ebd367484b7e79aefad",
+        "zero-window-reopen/trace.json": "946c22dba01f0a339509e18f72ebec804147ddbbaafeebf0fc78cc0edecf9acd",
+        "zero-window-reopen/packets.json": "457fbbdf4c79ff34187571ff5c5294459d03792668b694e06d7047e03a750a66",
+        "zero-window-reopen/scenario.json": "2119bbdc6243a0800768ea7851b26b177037f5f5c2bb275aae38f679605f1b47",
+        "zero-window-reopen/packet-map.json": "77dfda66cd2f989e3de781bf3fc86a163a1d60ad52e0a0128c3a8317b6484c42",
+        "zero-window-reopen/model.synthetic.pcap": "ff4c3960194038a4a506f390db799d437226d0137536c9092bf9b9411b3466a0",
+        "zero-window-reopen/normalized.synthetic.json": "a551031aa5149aa8f1002cd9c6cd7ce31aabc792fe89898fff6ded8669d5139a",
+        "zero-window-reopen/capture-metadata.json": "030ab4bbe242bbf8b526eecf0b9747776b1c45dbd21d3b6b1d5902eddeb5e6a1",
+        "zero-window-reopen/difference.json": "a1e2899b2c3d20cea1b0d823ec177885148ba82d943eb4e8a6f7aa2c2739d5d9",
+        "zero-window-reopen/symbolic/path.smt2": "d011064f78993b941cd2f099bacb38c1597e49d3552f6ee6298462390623e0fa",
+        "zero-window-reopen/symbolic/result.json": "1a15325e83a951c6b38e972c89046789f221240fd746ae5a1b89c0a2dc4705c5",
+        "state-machine.dot": "bbb5fc9086247b9c81c3f1c1077426f6dc55fd142e394d9aa3320e7fba2d6dd6",
+        "expanded-model.json": "8c498e91d2b5c43920f924f776c602494cad3214a5c65d35e41ea170005bcc34",
+        "formal/result.json": "2d7eae810f11c830d9a5a7cf183682f2fdb506af982fa4e3dd79e8a9ac46cd6e",
+        "formal/model.smt2": "db316db7689c0eadaa24b097fbd76fe760cf4cb7a81ccbb5529eaa585f579a03",
+        "formal/overlap.smt2": "269eac3039ebdacc4966eab305a60d1bdb5799a5f8ad69359d75211050962013"
       }
     }
   ],
   "pending_modules": [
     {
       "id": "tcp-data",
-      "status": "not_implemented",
-      "scope": "send/receive buffers, windows, segmentation, sequence validation, reassembly, retransmission queues"
+      "status": "partial_finite_data_profile",
+      "scope": "16-byte buffers, MSS segmentation, cumulative/partial ACK, nonshrinking peer window, prefix retransmission, receive trimming, duplication and wrap; out-of-order reassembly and general piggyback handling pending"
     },
     {
       "id": "tcp-recovery",
@@ -1766,7 +2496,8 @@
   ],
   "full_stack_complete": false,
   "profile_report_hashes": {
-    "tcp-active-open": "999727aca3ad010ad3680d17a4ed365a5acdf7b17d870f95d5da0366fdb3f387",
-    "tcp-connection": "9be9532eec17a70c9652a7e78c405c5ae8673a86dda13d128cb3f2dd8194f4d8"
+    "tcp-active-open": "90a790a3fad9122dca47e19a4ab4ca50cff7d40b89ea64b5cb5a989359a1c7fa",
+    "tcp-connection": "972aa0b13f19eca7d5b815fc92db389a1dc6cb6e3c243876ffbb7b4dea51fd5a",
+    "tcp-data": "d97a92b48b0439022ac8902562298f89d92ed36db2f6d99f6db6f7e884a60f5a"
   }
 }

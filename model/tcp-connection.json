@@ -81,6 +81,10 @@
     "msl_ms": {
       "type": "int",
       "initial": 60000
+    },
+    "local_window": {
+      "type": "int",
+      "initial": 65535
     }
   },
   "events": {
@@ -351,7 +355,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -502,7 +508,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -591,7 +599,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -687,7 +697,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -852,7 +864,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -954,7 +968,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -1131,7 +1147,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -1227,7 +1245,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -1392,7 +1412,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -1430,7 +1452,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -1467,7 +1491,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -1541,7 +1567,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -1598,7 +1626,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -1685,7 +1715,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -2354,7 +2386,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -2437,7 +2471,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -2548,7 +2584,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -2651,7 +2689,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -2734,7 +2774,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -2809,7 +2851,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -2884,7 +2928,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -2959,7 +3005,9 @@
               "ack": {
                 "var": "rcv_nxt"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3002,7 +3050,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3068,7 +3118,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3134,7 +3186,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3200,7 +3254,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3266,7 +3322,9 @@
               "ack": {
                 "var": "tx_ack"
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3620,7 +3678,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3664,7 +3724,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3708,7 +3770,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3752,7 +3816,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -3796,7 +3862,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         },
@@ -4763,7 +4831,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -4790,7 +4860,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -4817,7 +4889,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -4844,7 +4918,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -4871,7 +4947,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -4898,7 +4976,9 @@
               "ack": {
                 "seq": 0
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }
@@ -4931,7 +5011,9 @@
                   1
                 ]
               },
-              "window": 65535
+              "window": {
+                "var": "local_window"
+              }
             }
           }
         }

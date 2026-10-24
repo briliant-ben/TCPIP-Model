@@ -175,7 +175,7 @@ class ConnectionTests(unittest.TestCase):
     def test_suite_reuses_both_models_and_lists_remaining_modules(self):
         with tempfile.TemporaryDirectory() as tmp:
             report = run_suite(tmp)
-            self.assertEqual(len(report["implemented_profiles"]),2)
+            self.assertEqual(len(report["implemented_profiles"]),len(read(ROOT/"profiles.json")["profiles"]))
             self.assertFalse(report["full_stack_complete"])
             self.assertTrue(any(m["id"]=="ipv4" for m in report["pending_modules"]))
 

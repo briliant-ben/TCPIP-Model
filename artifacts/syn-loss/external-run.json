@@ -1,27 +1,22 @@
 {
   "status": "not_run",
   "preflight": {
-    "platform": "linux",
+    "platform": "darwin",
     "packetdrill": null,
     "ivy_check": null,
     "tun": false,
     "cap_net_admin": false,
     "cap_net_raw": false
   },
-  "script": "/workspace/tcp-model/artifacts/syn-loss/test.pkt",
+  "script": "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/syn-loss/test.pkt",
   "script_sha256": "b67d9e041e68e499c49075852dfaa83094b3dd80a201af15b4b5f43e26e41cde",
-  "run_id": "089cd47f079e4fa4a5e538b384c907ef",
-  "kernel": "6.18.55",
+  "run_id": "cbce09fd118040a982d56ac60bd1a28b",
+  "kernel": "27.0.0",
   "python": "3.12.14",
   "reason": "Requires Linux, packetdrill, /dev/net/tun, CAP_NET_ADMIN and CAP_NET_RAW.",
-  "tcp_profile": {
-    "tcp_syn_retries": "6",
-    "tcp_syn_linear_timeouts": "4",
-    "tcp_timestamps": "1",
-    "tcp_ecn": "2"
-  },
+  "tcp_profile": {},
   "binding": {
-    "build_sha256": "93aaae14925f7c0f6bed4e769a18be5e0e57208f3ba4deba067acc0f23ef339b",
+    "build_sha256": "e37a92665c1919f9971fb9275e2274628aecb357a316c031cdb4bca180810908",
     "scenario": "syn-loss",
     "script_sha256": "b67d9e041e68e499c49075852dfaa83094b3dd80a201af15b4b5f43e26e41cde",
     "expected_sha256": "16dd9c600e5f5f5711b6b425cb791a454722dd4711eb0a3d2e78a16caeda435c",
