@@ -1,9 +1,8 @@
 import copy
-from fractions import Fraction
 import importlib.util
 import unittest
 
-from protocol_lab.ir import CLOCK_SEMANTICS, Machine, ModelError, evaluate, infer, validate, value_ok
+from protocol_lab.ir import CLOCK_SEMANTICS, Machine, ModelError, evaluate, validate, value_ok
 from protocol_lab.symbolic import Encoding, check, crosscheck_trace
 
 
@@ -70,8 +69,17 @@ class SymbolicRationalClockTests(unittest.TestCase):
     def test_all_rational_ceil_values_and_dispatch_clock_have_independent_queries(self):
         m=model();enc=Encoding(m,1,(),byte_encoding='length',sequence_encoding='modular-int')
         z=enc.z;x=z.Real('arbitrary_rational')
-        ceil=-z.ToInt(-x);solver=z.Solver();solver.add(z.Or(ceil<x,ceil>=x+1))
+        frame={**enc.frames[0],'values':{**enc.frames[0]['values'],'x':x}}
+        ceil=enc.expr({'op':'rat_ceil','args':[{'var':'x'}]},frame,{})
+        solver=z.Solver();solver.add(z.Or(ceil<x,ceil>=x+1))
         self.assertEqual(solver.check(),z.unsat)
         enc.solver.add(z.Int('choice_0')==0,enc.frames[1]['now']==7,enc.events[0]['go']['n']==1)
         self.assertEqual(enc.solve(),z.sat)
         self.assertEqual(enc.witness(enc.solver.model())['steps'][0]['after']['variables']['seen'],7)
+
+    def test_backend_rejects_nonrational_witness_instead_of_rounding_it(self):
+        enc=Encoding(model(),1,());z=enc.z;x=z.Real('unsupported_irrational')
+        solver=z.Solver();solver.add(x*x==2,x>0)
+        self.assertEqual(solver.check(),z.sat)
+        with self.assertRaisesRegex(ModelError,'Non-rational symbolic witness'):
+            enc.concrete(solver.model(),x)

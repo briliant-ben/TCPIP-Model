@@ -137,3 +137,7 @@ tcp-rto 的声明规则覆盖首次／后续 RTT 估计、先 RTTVAR 后 SRTT、
 新增采样统计在关闭时清理，保留继承 rto_ms 作为最后诊断值，避免无依据改写旧场景期望。一般原始分段发送历史时序仍未建模，不能宣称完整 RFC 6298 §5 的不提前重传性质；Rocq 六原语也不证明估计器或解释／翻译对应。全量验证、八 profile 的重建及新 Rocq 输入绑定将在后续补记。
 
 一般时序缺口已用当前模型实际复现：21ms 发送两字节，1000ms 追加四字节，继承前缀重传在 1021ms 发送四字节，其中后两字节距首次发送仅 21ms。完整参考轨迹和模型语义哈希保存于 artifacts/diagnostics/tcp-rto-initial/no-early-history-gap.json，明确不是验收通过证据。下一里程碑应显式加入发送历史及对应时序约束，不能用当前状态归纳消除此反例。
+
+新源绑定 Rocq 已实际验收：提交 d317429 的 push 作业 40212417377 / job 121226304836 success。下载 artifact 12605924177，ZIP SHA256 3c321e362f54fc8bd1dea8c8ef8d6387950aff1059a3aaaea603dda87ce83308；核对当前输入、全部下载产物及六个空公理审计后保存新证据。原始下载 result 保存在 artifacts/rocq-ci-downloaded-result.json；仅本地 ci-origin 来源元数据及其绑定哈希在核验后更新，证明对象和检查日志原样保存。通用六原语不证明 IR 0.3 有理估计器、EFSM 翻译、TCP 或 Linux 实机。
+
+IR 数值测试补充独立 ceil 编码性质和代数无理见证拒绝，共 7 项通过；RTO 新场景完整字节重放通过。一次早期 196 项回归运行期间 profiles 范围清单被本轮更新，原运行严格报 Stack scope changed（1 error），没有绕过绑定。已在固定全部输入后重新运行完整回归；最终结果待该进程结束记录。
