@@ -76,6 +76,22 @@
       "symbolic_replay": true,
       "wire_projection": "tcp-fin-v1",
       "inductive": true
+    },
+    {
+      "id": "tcp-rto",
+      "model": "model/tcp-rto.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments",
+        "scenarios/close",
+        "scenarios/fin",
+        "scenarios/rto"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-fin-v1",
+      "inductive": true
     }
   ],
   "pending_modules": [
@@ -86,8 +102,8 @@
     },
     {
       "id": "tcp-recovery",
-      "status": "not_implemented",
-      "scope": "RTT/RTO estimator, delayed ACK, zero-window persist, fast retransmit, congestion control, optional extensions"
+      "status": "partial_rtt_rto_karn_profile",
+      "scope": "exact RTT/RTO/Karn overlay; general no-early retransmission history, delayed ACK, no-flight persist, fast retransmit and congestion/recovery remain incomplete"
     },
     {
       "id": "udp",

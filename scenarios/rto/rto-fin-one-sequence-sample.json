@@ -1,0 +1,60 @@
+{
+  "scenario_version": "0.2",
+  "id": "rto-fin-one-sequence-sample",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.close",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002,
+        "window": 16,
+        "data": [
+          0,
+          128
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "TIME-WAIT",
+    "variables": {
+      "rtt_samples": 2,
+      "srtt_ms": {
+        "n": 10,
+        "d": 1
+      },
+      "rttvar_ms": {
+        "n": 15,
+        "d": 4
+      },
+      "rcv_buf": [
+        0,
+        128
+      ],
+      "fin_acknowledged": true
+    },
+    "timers": {
+      "time_wait": 120030
+    }
+  }
+}

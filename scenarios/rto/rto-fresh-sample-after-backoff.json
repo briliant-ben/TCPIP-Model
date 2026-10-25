@@ -1,0 +1,93 @@
+{
+  "scenario_version": "0.2",
+  "id": "rto-fresh-sample-after-backoff",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 1021,
+      "tick": true
+    },
+    {
+      "at_ms": 1100,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 1200,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 1201,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 1301,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1009,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "srtt_ms": {
+        "n": 85,
+        "d": 4
+      },
+      "rttvar_ms": {
+        "n": 105,
+        "d": 4
+      },
+      "rto_ms": 1000,
+      "rtt_samples": 2,
+      "rtt_last_ms": 100
+    },
+    "timers": {}
+  }
+}

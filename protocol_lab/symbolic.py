@@ -7,7 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from .ir import MOD, Machine, ModelError, infer, require, validate
+from .ir import CLOCK_SEMANTICS, MOD, Machine, ModelError, infer, require, validate
 
 
 def model_hash(model):
@@ -136,7 +136,7 @@ class Encoding:
         self.byte_sort = z3.SeqSort(z3.BitVecSort(8)) if byte_encoding == "sequence" else z3.IntSort()
         self.sorts = {"bool": z3.BoolSort(), "int": z3.IntSort(),
                       "seq32": z3.BitVecSort(32) if sequence_encoding == "bitvector" else z3.IntSort(),
-                      "string": z3.StringSort(), "bytes": self.byte_sort}
+                      "string": z3.StringSort(), "bytes": self.byte_sort, "rational": z3.RealSort()}
         self.frames = []
         self.events, self.branches, self.conflicts, self.action_faults, self.enabled = [], [], [], [], []
         self.solver = z3.Solver()
@@ -204,6 +204,8 @@ class Encoding:
 
     def literal(self, value, kind=None):
         z = self.z
+        if kind == "rational":
+            return z.RealVal(f"{value['n']}/{value['d']}")
         if kind == "seq32":
             return z.BitVecVal(value, 32) if self.sequence_encoding == "bitvector" else z.IntVal(value)
         if kind == "bytes":
@@ -221,6 +223,10 @@ class Encoding:
         z = self.z
         if type(value) is not dict:
             return self.literal(value)
+        if "clock_ms" in value:
+            return frame["now"]
+        if "rat" in value:
+            return self.literal({"n": value["rat"][0], "d": value["rat"][1]}, "rational")
         if "seq" in value:
             return self.literal(value["seq"], "seq32")
         if "bytes" in value:
@@ -234,7 +240,11 @@ class Encoding:
         if "timer_active" in value:
             return frame["active"][value["timer_active"]]
         args = [self.expr(v, frame, fields) for v in value["args"]]
-        operators = {"eq": lambda a, b: a == b, "ne": lambda a, b: a != b,
+        operators = {"rat_from_int": z.ToReal,
+                "rat_add": lambda a, b: a+b, "rat_sub": lambda a, b: a-b,
+                "rat_scale": lambda a, b: a*b, "rat_abs": lambda a: z.If(a >= 0, a, -a),
+                "rat_le": lambda a, b: a <= b, "rat_ceil": lambda a: -z.ToInt(-a),
+                "eq": lambda a, b: a == b, "ne": lambda a, b: a != b,
                 "and": z.And, "or": z.Or, "not": z.Not, "implies": z.Implies,
                 "add": lambda a, b: a+b, "mul": lambda a, b: a*b,
                 "le": lambda a, b: a <= b, "ge": lambda a, b: a >= b,
@@ -286,8 +296,9 @@ class Encoding:
         for j, rule in enumerate(m["transitions"]):
             name = rule["event"]
             origin = m["events"][name]["origin"]
+            guard_frame = {**old, "now": new["now"]} if m["semantics"] == CLOCK_SEMANTICS else old
             conditions = [not_terminal, old["state"] == m["states"].index(rule["from"]),
-                          new["now"] >= old["now"], self.expr(rule["guard"], old, fields[name])]
+                          new["now"] >= old["now"], self.expr(rule["guard"], guard_frame, fields[name])]
             expiring = None
             if origin == "timer":
                 matches = [n for n, spec in m["timers"].items() if spec["event"] == name]
@@ -348,6 +359,9 @@ class Encoding:
 
     def concrete(self, solution, value):
         result = solution.eval(value, model_completion=True)
+        if value.sort() == self.z.RealSort():
+            require(self.z.is_rational_value(result), "Non-rational symbolic witness is unsupported")
+            return {"n": result.numerator_as_long(), "d": result.denominator_as_long()}
         if self.z.is_bool(result):
             return self.z.is_true(result)
         if self.z.is_string_value(result):

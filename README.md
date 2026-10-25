@@ -17,6 +17,7 @@ GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP
 | `model/tcp-segments.json` | 继承重组/数据/连接模型，组合 ACK/window 与 payload，支持窗口收缩及有在途数据的零窗口探测；完整 persist、带数据关闭及恢复仍未完成 |
 | `model/tcp-close.json` | 组合待发送／在途数据、独立 FIN 序列标记、半关闭读取和 FIN-WAIT 重组；FIN+payload、乱序 FIN 缓存及完整恢复仍待实现 |
 | `model/tcp-fin.json` | 显式 FIN 窗口／payload、乱序 EOF 标记与字节重组、单次 FIN 消费及条件关闭目标；完整恢复与独立实现闭环仍未完成 |
+| `model/tcp-rto.json` | IR 0.3 精确有理 RTT/RTO、Karn 歧义采样、部分 ACK 与 SYN/FIN 组合；一般发送历史时序、delayed ACK、persist、拥塞／恢复仍未完成 |
 
 2026-10-24：已恢复本地基线并推进 [IR 数据语义](docs/semantics.md) 和 [有限 TCP 数据切片](docs/tcp-data.md)。数据切片的 15 个场景具有参考轨迹和独立 Z3 固定输入重放；全输入混合查询可能为 `unknown`，suite 明确保留 `formal_pending`。这不影响旧模型的独立有界检查，也不将合成 PCAP 计为 Linux/lwIP 数据验证。持续实施记录见 [实施日志](docs/implementation-log.md)。
 

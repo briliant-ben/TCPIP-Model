@@ -1,0 +1,1 @@
+Historical arbitrary-prestate induction failures before explicit new-connection RTT initialization. This is not a reachability proof or current acceptance. Original result retains semantic/query hashes; matching SMT-LIB queries are preserved here.

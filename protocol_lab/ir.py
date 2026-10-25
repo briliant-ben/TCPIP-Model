@@ -1,12 +1,18 @@
 """A typed, deliberately small EFSM IR. No eval or embedded host code."""
 import copy
 import json
+from fractions import Fraction
+from math import gcd, ceil
 from pathlib import Path
 
 MOD = 1 << 32
 HALF = MOD // 2
 POST_SEMANTICS = "flat-efsm-atomic-ordered-post-target-v2"
-TYPES = ("bool", "int", "seq32", "string", "bytes")
+CLOCK_SEMANTICS = "flat-efsm-atomic-ordered-clock-v3"
+POST_SEMANTICS_VERSIONS = (POST_SEMANTICS, CLOCK_SEMANTICS)
+DATA_VERSIONS = ("0.2", "0.3")
+TYPES = ("bool", "int", "seq32", "string", "bytes", "rational")
+RAT_OPS = {"rat_from_int", "rat_add", "rat_sub", "rat_scale", "rat_abs", "rat_le", "rat_ceil"}
 DATA_OPS = {"sub", "min", "ite", "bytes_len", "bytes_concat", "bytes_slice",
             "seq_distance", "seq_comparable", "seq_lt", "seq_le"}
 
@@ -28,12 +34,23 @@ def require(condition, message):
         raise ModelError(message)
 
 
+def rational_value(value):
+    return {"n": value.numerator, "d": value.denominator}
+
+
+def fraction(value):
+    return Fraction(value["n"], value["d"])
+
+
 def value_ok(value, kind):
     return {
         "bool": lambda: type(value) is bool,
         "int": lambda: type(value) is int,
         "seq32": lambda: type(value) is int and 0 <= value < MOD,
         "string": lambda: type(value) is str,
+        "rational": lambda: type(value) is dict and set(value) == {"n", "d"}
+            and type(value["n"]) is int and type(value["d"]) is int and value["d"] > 0
+            and gcd(value["n"], value["d"]) == 1,
         "bytes": lambda: type(value) is list and all(type(x) is int and 0 <= x <= 255 for x in value),
     }.get(kind, lambda: False)()
 
@@ -49,8 +66,16 @@ def infer(expr, model, event=None):
     if set(expr) == {"seq"}:
         require(value_ok(expr["seq"], "seq32"), "Invalid seq32 literal")
         return "seq32"
+    if set(expr) == {"clock_ms"}:
+        require(expr["clock_ms"] is True and model.get("semantics") == CLOCK_SEMANTICS, "Clock requires clock-v3 semantics")
+        return "int"
+    if set(expr) == {"rat"}:
+        require(model.get("ir_version") == "0.3", "Rational values require IR 0.3")
+        require(type(expr["rat"]) is list and len(expr["rat"]) == 2
+                and value_ok({"n": expr["rat"][0], "d": expr["rat"][1]}, "rational"), "Bad rational literal")
+        return "rational"
     if set(expr) == {"bytes"}:
-        require(model.get("ir_version") == "0.2", "bytes requires IR 0.2")
+        require(model.get("ir_version") in DATA_VERSIONS, "bytes requires IR 0.2")
         require(value_ok(expr["bytes"], "bytes"), "Invalid bytes literal")
         return "bytes"
     if set(expr) == {"var"}:
@@ -69,8 +94,11 @@ def infer(expr, model, event=None):
     require(set(expr) == {"op", "args"} and type(expr["args"]) is list,
             "Unsupported expression shape")
     op, args = expr["op"], expr["args"]
-    require(op not in DATA_OPS or model.get("ir_version") == "0.2", "Data operators require IR 0.2")
+    require(op not in DATA_OPS or model.get("ir_version") in DATA_VERSIONS, "Data operators require IR 0.2")
+    require(op not in RAT_OPS or model.get("ir_version") == "0.3", "Rational operators require IR 0.3")
     types = [infer(x, model, event) for x in args]
+    if op == "rat_scale":
+        require(len(args) == 2 and type(args[1]) is dict and set(args[1]) == {"rat"}, "Rational scale requires a literal coefficient")
     if op == "ite":
         require(len(types) == 3 and types[0] == "bool" and types[1] == types[2], "Conditional type mismatch")
         return types[1]
@@ -82,6 +110,13 @@ def infer(expr, model, event=None):
         require(len(types) == arity and all(t == "bool" for t in types), "Boolean type mismatch")
         return "bool"
     signatures = {
+        "rat_from_int": (["int"], "rational"),
+        "rat_add": (["rational", "rational"], "rational"),
+        "rat_sub": (["rational", "rational"], "rational"),
+        "rat_scale": (["rational", "rational"], "rational"),
+        "rat_abs": (["rational"], "rational"),
+        "rat_le": (["rational", "rational"], "bool"),
+        "rat_ceil": (["rational"], "int"),
         "add": (["int", "int"], "int"),
         "mul": (["int", "int"], "int"),
         "le": (["int", "int"], "bool"),
@@ -106,6 +141,10 @@ def infer(expr, model, event=None):
 def evaluate(expr, machine, event=None):
     if type(expr) is not dict:
         return expr
+    if "clock_ms" in expr:
+        return machine.now_ms
+    if "rat" in expr:
+        return {"n": expr["rat"][0], "d": expr["rat"][1]}
     if "seq" in expr:
         return expr["seq"]
     if "bytes" in expr:
@@ -120,6 +159,13 @@ def evaluate(expr, machine, event=None):
         return expr["timer_active"] in machine.timers
     args = [evaluate(x, machine, event) for x in expr["args"]]
     return {
+        "rat_from_int": lambda a: {"n": a, "d": 1},
+        "rat_add": lambda a, b: rational_value(fraction(a) + fraction(b)),
+        "rat_sub": lambda a, b: rational_value(fraction(a) - fraction(b)),
+        "rat_scale": lambda a, b: rational_value(fraction(a) * fraction(b)),
+        "rat_abs": lambda a: rational_value(abs(fraction(a))),
+        "rat_le": lambda a, b: fraction(a) <= fraction(b),
+        "rat_ceil": lambda a: ceil(fraction(a)),
         "eq": lambda a, b: a == b,
         "ne": lambda a, b: a != b,
         "and": lambda a, b: a and b,
@@ -147,8 +193,9 @@ def evaluate(expr, machine, event=None):
 
 def validate(model):
     require("extends" not in model, "Resolve model extension with load() before validation")
-    require(model.get("ir_version") in ("0.1", "0.2"), "Unsupported IR version")
-    require(model.get("semantics") in ("flat-efsm-atomic-ordered-v1", POST_SEMANTICS), "Unsupported semantics")
+    require(model.get("ir_version") in ("0.1", "0.2", "0.3"), "Unsupported IR version")
+    require(model.get("semantics") in ("flat-efsm-atomic-ordered-v1", *POST_SEMANTICS_VERSIONS), "Unsupported semantics")
+    require(model.get("semantics") != CLOCK_SEMANTICS or model["ir_version"] == "0.3", "Clock-v3 requires IR 0.3")
     states = model["states"]
     require(len(states) == len(set(states)), "Duplicate states")
     require(model["initial_state"] in states, "Unknown initial state")
@@ -157,13 +204,14 @@ def validate(model):
     for rid, req in requirements.items():
         require(bool(req.get("source")) and bool(req.get("interpretation")), f"Untraceable requirement {rid}")
     for name, var in model["variables"].items():
-        require(var["type"] != "bytes" or model["ir_version"] == "0.2", "bytes requires IR 0.2")
+        require(var["type"] != "bytes" or model["ir_version"] in DATA_VERSIONS, "bytes requires IR 0.2")
+        require(var["type"] != "rational" or model["ir_version"] == "0.3", "Rational values require IR 0.3")
         require(value_ok(var["initial"], var["type"]), f"Bad initial value: {name}")
     for name, event in model["events"].items():
         require(event["origin"] in ("application", "network", "timer"), f"Bad origin: {name}")
-        require(all(t in TYPES and (t != "bytes" or model["ir_version"] == "0.2") for t in event["fields"].values()), "Bad event field type")
+        require(all(t in TYPES and (t != "bytes" or model["ir_version"] in DATA_VERSIONS) and (t != "rational" or model["ir_version"] == "0.3") for t in event["fields"].values()), "Bad event field type")
     for message in model["messages"].values():
-        require(all(t in TYPES and (t != "bytes" or model["ir_version"] == "0.2") for t in message["fields"].values()), "Bad message field type")
+        require(all(t in TYPES and (t != "bytes" or model["ir_version"] in DATA_VERSIONS) and (t != "rational" or model["ir_version"] == "0.3") for t in message["fields"].values()), "Bad message field type")
     timer_events = []
     for timer in model["timers"].values():
         event = model["events"].get(timer["event"], {})
@@ -176,7 +224,7 @@ def validate(model):
         ids.add(rule["id"])
         require(rule["from"] in states and rule["to"] in states, "Unknown transition state")
         if "target_cases" in rule:
-            require(model["semantics"] == POST_SEMANTICS and model["ir_version"] == "0.2", "Post targets require versioned post-target semantics")
+            require(model["semantics"] in POST_SEMANTICS_VERSIONS and model["ir_version"] in DATA_VERSIONS, "Post targets require versioned post-target semantics")
             require(type(rule["target_cases"]) is list and bool(rule["target_cases"]), "Bad post target list")
             for case in rule["target_cases"]:
                 require(type(case) is dict and set(case) == {"when", "to"}, "Bad post target case")
@@ -193,7 +241,7 @@ def validate(model):
                 require(infer(arg["value"], model, rule["event"]) == model["variables"][arg["var"]]["type"], "Assignment type mismatch")
             elif kind in ("emit", "emit_if"):
                 if kind == "emit_if":
-                    require(model["semantics"] == POST_SEMANTICS and model["ir_version"] == "0.2", "Conditional emit requires versioned post-target semantics")
+                    require(model["semantics"] in POST_SEMANTICS_VERSIONS and model["ir_version"] in DATA_VERSIONS, "Conditional emit requires versioned post-target semantics")
                     require(set(arg) == {"when", "message", "fields"}, "Bad conditional emit shape")
                     require(infer(arg["when"], model, rule["event"]) == "bool", "Conditional emit requires bool")
                 schema = model["messages"].get(arg["message"])
@@ -203,7 +251,7 @@ def validate(model):
                     require(infer(expr, model, rule["event"]) == schema["fields"][field], f"Message field type mismatch: {field}")
             elif kind in ("arm", "arm_if"):
                 if kind == "arm_if":
-                    require(model["ir_version"] == "0.2", "Conditional timers require IR 0.2")
+                    require(model["ir_version"] in DATA_VERSIONS, "Conditional timers require IR 0.2")
                     require(set(arg) == {"when", "timer", "delay_ms"}, "Bad conditional arm shape")
                     require(infer(arg["when"], model, rule["event"]) == "bool", "Conditional timer requires bool")
                 require(arg["timer"] in model["timers"], "Unknown timer")
@@ -211,7 +259,7 @@ def validate(model):
             elif kind == "cancel":
                 require(arg in model["timers"], "Unknown timer")
             elif kind == "cancel_if":
-                require(model["ir_version"] == "0.2", "Conditional timers require IR 0.2")
+                require(model["ir_version"] in DATA_VERSIONS, "Conditional timers require IR 0.2")
                 require(set(arg) == {"when", "timer"}, "Bad conditional cancel shape")
                 require(arg["timer"] in model["timers"], "Unknown timer")
                 require(infer(arg["when"], model, rule["event"]) == "bool", "Conditional timer requires bool")
@@ -246,7 +294,7 @@ def load(path):
     model = json.loads(files[-1].read_text())
     for source in reversed(files[:-1]):
         overlay = json.loads(source.read_text())
-        require(overlay.get("ir_version") == "0.2", "Model extension requires IR 0.2")
+        require(overlay.get("ir_version") in DATA_VERSIONS, "Model extension requires IR 0.2 or 0.3")
         for group in ("transitions", "invariants"):
             removals = overlay.get("remove_" + group, [])
             require(type(removals) is list and len(removals) == len(set(removals)), "Invalid removal IDs")

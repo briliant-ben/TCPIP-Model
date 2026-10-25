@@ -113,3 +113,13 @@ IR 0.2 可显式选择 `semantics=flat-efsm-atomic-ordered-post-target-v2`；旧
 场景 0.2 可在 step 中声明 `expect_trace`：完整列出该调用新产生的 `{at_ms, emitted}` 行，包含 advance 自动触发的所有定时器行；messages 及字段必须是符合模型 schema 的严格类型字面值，时间为非负整数。与实际行逐项精确比较，不忽略额外输出，不把 bool 当 int。0.1 场景禁止此契约字段。失败为独立 TraceContractMismatch，附预期/实际行；不是不变量证明或独立实现观测。没有声明契约的步骤仍仅有原场景终态检查。
 
 固定输入符号重放可对原本已约束的初值、事件、时间及 rule choice 做等价常量化；不引入任何参考后态、输出或不变量假设。该优化只影响固定输入查询，不缩小原 BMC 的事件域。
+
+## v0.3 精确有理数与事件时钟
+
+`ir_version=0.3` 保留 0.2 的字节、序列空间和声明式组合，增加 `rational` 类型。值为恰含 `n`、`d` 两个整数的 JSON 对象，要求 `d>0`、`gcd(n,d)=1`；bool 不算整数，零只能写作 `{"n":0,"d":1}`。字面 AST 为 `{"rat":[n,d]}`，遵守同一约束。禁止浮点数、自动约分输入或分母为零。参考执行以 Fraction 计算、规范 JSON 值存储／输出；快照、事件和输出遵守已有复制语义。
+
+`rat_from_int(int)` 精确嵌入；`rat_add` / `rat_sub` 是有理数加减；`rat_abs` 是绝对值；`rat_le` 是小于等于；`rat_ceil` 返回最小的不小于参数的整数（包括负数）。`rat_scale(x,c)` 第二参数必须是有理数字面常数，表示精确乘法；不支持变量间有理乘除，未知操作明确拒绝。eq/ne 和同型 ite 支持 rational；没有隐式 int/rational 转换。
+
+显式选择 `semantics=flat-efsm-atomic-ordered-clock-v3` 才可使用 `{"clock_ms":true}`，返回当前事件的整数毫秒时刻。该语义继承 post-target-v2：先执行到期定时器，再将当前时刻推进到本事件时刻，然后选择 guard 和按序执行动作；不变量读取提交时刻，定时器事件读取其真实截止时刻。失败连同时钟回滚。0.1/0.2、v1/post-target-v2 均不自动获得时钟表达式。
+
+独立 Z3 后端使用 RealSort、精确有理常数、ToReal、线性常系数算术、If 和 `-ToInt(-x)` 编码 ceil；guard 明确读取新事件时刻，不错误读取上一步时刻。Real 域对有理状态是过近似，因此 unsat 可用于有理状态安全义务；sat 见证必须全部转换为规范有理数，不接受代数无理数或浮点近似。当前语法不引入有理变量间非线性乘除。该编码没有证明 Python/JSON 与 SMT 翻译等价，也不提升 Rocq 原语试点的证明范围。精确分数用于 TCP 估计器避免中间舍入导致不保守的 RTO；只有最终定时器毫秒数向上取整。
