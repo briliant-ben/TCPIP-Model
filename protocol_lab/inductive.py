@@ -78,26 +78,41 @@ def prove(model, symbolic_initials=("iss",), out=None):
     # before solving, rather than retaining every unrelated transition and
     # incremental learned clause in each case. This is exact constant reduction;
     # no precondition, invariant, timer fault or byte domain is dropped.
+    # Its source state follows from the selected branch and is fixed equally.
     preservation_base = list(step.solver.assertions())
     preservation_script = []
+    result["target_coverage"] = "all_declared_destinations"
     for j, rule in enumerate(model["transitions"]):
         selected = z.IntVal(j)
-        step.solver = z.Solver()
-        step.solver.set(timeout=10000)
-        step.solver.add(*[z.simplify(z.substitute(a, (z.Int("choice_0"), selected)))
-                          for a in preservation_base])
-        step.solver.add(z.Int("choice_0") == selected)
-        preservation_script.append(f"; {rule['id']}\n(reset)\n" + step.solver.to_smt2())
-        answer = step.solve()
-        row = {"transition": rule["id"], "query": str(answer)}
-        if answer == z.unknown:
-            row["reason"] = step.reason_unknown()
-        elif answer == z.sat:
-            solution = step.solver.model()
-            row.update(classification="inductive_obligation_failure_not_reachability_proof",
-                       pre_state=model["states"][step.concrete(solution, step.frames[0]["state"])],
-                       projection=step.witness(solution),
-                       failed_invariants=[i["id"] for i in model["invariants"] if not step.concrete(solution, step.expr(i["assert"], new))])
+        source_state = z.IntVal(model["states"].index(rule["from"]))
+        destinations = {rule["to"], *[c["to"] for c in rule.get("target_cases", [])]}
+        row = {"transition": rule["id"], "targets": []}
+        # The encoded final state is always one of these explicit destinations.
+        # Partitioning by every destination is exhaustive, including the default;
+        # it assumes no invariant in the poststate.
+        for destination in sorted(destinations, key=model["states"].index):
+            target_state = z.IntVal(model["states"].index(destination))
+            step.solver = z.Solver()
+            step.solver.set(timeout=10000)
+            step.solver.add(*[z.simplify(z.substitute(a, (z.Int("choice_0"), selected),
+                              (step.frames[0]["state"], source_state), (new["state"], target_state)))
+                              for a in preservation_base])
+            step.solver.add(z.Int("choice_0") == selected, step.frames[0]["state"] == source_state,
+                            new["state"] == target_state)
+            preservation_script.append(f"; {rule['id']} -> {destination}\n(reset)\n" + step.solver.to_smt2())
+            answer = step.solve()
+            target = {"state": destination, "query": str(answer)}
+            if answer == z.unknown:
+                target["reason"] = step.reason_unknown()
+            elif answer == z.sat and "classification" not in row:
+                solution = step.solver.model()
+                row.update(classification="inductive_obligation_failure_not_reachability_proof",
+                           pre_state=model["states"][step.concrete(solution, step.frames[0]["state"])],
+                           projection=step.witness(solution),
+                           failed_invariants=[i["id"] for i in model["invariants"] if not step.concrete(solution, step.expr(i["assert"], new))])
+            row["targets"].append(target)
+        answers = [target["query"] for target in row["targets"]]
+        row["query"] = "sat" if "sat" in answers else "unknown" if "unknown" in answers else "unsat"
         result["preservation"].append(row)
     files["preservation.smt2"] = "".join(preservation_script)
 
@@ -163,6 +178,11 @@ def verify(model, out):
     require(result["status"] == "inductive_invariants_pass", "Inductive obligations did not pass")
     require(result["initial_query"] == "unsat" and result["length_lemmas"] == "unsat", "Induction initial/length queries did not pass")
     require([r["transition"] for r in result["preservation"]] == [r["id"] for r in model["transitions"]], "Missing preservation obligation")
+    require(result.get("target_coverage") == "all_declared_destinations", "Missing induction target coverage")
+    for rule, row in zip(model["transitions"], result["preservation"]):
+        targets = sorted({rule["to"], *[c["to"] for c in rule.get("target_cases", [])]}, key=model["states"].index)
+        require([t["state"] for t in row["targets"]] == targets, "Missing target preservation obligation")
+        require(all(t["query"] == "unsat" for t in row["targets"]), "Target preservation queries did not pass")
     require(all(r["query"] == "unsat" for r in result["preservation"] + result["overlap"]), "Inductive queries did not pass")
     expected_groups = {}
     for r in model["transitions"]:

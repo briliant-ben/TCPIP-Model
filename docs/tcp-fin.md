@@ -1,0 +1,25 @@
+# TCP FIN segments and queued receive EOF
+
+`model/tcp-fin.json` extends the close/data/reassembly/connection chain. It uses IR 0.2 with explicitly versioned `flat-efsm-atomic-ordered-post-target-v2` semantics. All protocol decisions, conditional outputs, timer effects and post-action targets are explicit IR; the interpreter has no TCP callback.
+
+## Declared scope
+
+One connection, 16-octet send/receive buffers, 16 receive cells, MSS 4 and full 32-bit sequence arithmetic. `net.fin_segment` represents a matching, checksum-validated ACK+FIN segment with explicit seq/ack/window/data (payload 0..16). Its payload and FIN share segment sequence validation; SEG.LEN includes the control octet after the payload (RFC 9293 §3.4). The explicit wire window participates in the inherited raw-header WL1/WL2 update and cumulative ACK processing before text/FIN. The earlier header-on-arrival interpretation remains: acceptable ahead segments may acknowledge local bytes/FIN before their receive text becomes contiguous.
+
+The shared byte receiver retains first-accepted overlapping octets. A separate pending FIN marker has a full sequence position and a bounded offset relative to RCV.NXT; an invariant ties those representations. The first accepted FIN position wins if contradictory FIN positions arrive. Cells at/after that EOF are discarded, as an explicit finite policy for inconsistent peer streams. A FIN marker is not a fake payload octet or application byte.
+
+An accepted marker is held until every preceding byte becomes contiguous. The event drains the entire contiguous byte prefix, then consumes FIN exactly once, advances RCV.NXT by one control position and emits one cumulative ACK followed by one peer_eof notification. Unacceptable sequence or future ACK cannot install/consume FIN or update peer window. A FIN outside the offered receive interval is trimmed, including the right-edge FIN after 16 accepted octets; a zero-window FIN must be retransmitted after space reopens. Exact half-space ambiguous input remains outside this finite model.
+
+Local FIN acknowledgment and receive EOF are combined after ordered actions. This handles FIN+payload in ESTABLISHED, FIN-WAIT-1/2, close pending before local FIN has been sent, simultaneous close, CLOSING/LAST-ACK, and TIME-WAIT duplicate FIN. Duplicate FIN cannot notify EOF again. Only a FIN ending at the already consumed EOF restarts TIME-WAIT; other data/FIN does not restart it or reopen the stream. New canonical FIN also has the inherited CLOSED/LISTEN reset behavior. General SYN/URG/options/reset hardening and arbitrary traffic during opening remain outside this profile.
+
+Legacy `net.fin` remains an explicitly limited compatibility event with no observed window/payload; canonical FIN tests use `net.fin_segment`. It does not validate wire-window behavior for legacy inputs. The opt-in `tcp-fin-v1` codec/oracle compares ordered direction/flags/seq/ack/window/payload/time, permitting payload on ACK+FIN while retaining the old projections' rejection. Default and `tcp-data-v1` behavior are unchanged. Synthetic PCAP is codec evidence only, not Linux or lwIP execution.
+
+## Contracts and proof boundary
+
+Scenario version 0.2 `expect_trace` clauses bind exact newly produced trace rows (times and all ordered messages), including automatic timer events before a requested event. They use typed literal message fields and independent expected values; they do not assume those outputs in symbolic queries. EOF duplication, premature ACK, wrong byte identity and delayed/reordered outputs must fail those contracts even when final state/lengths agree.
+
+State invariants cover marker location, offset/domain, EOF/state consistency, no bytes beyond a pending marker, and the exact consumed FIN sequence. Length projection still does not establish universal byte identity or output/timing correctness. Fixed-input full-byte replay, explicit message contracts, state induction and original BMC results are reported separately; unknown is never a proof. The new post-target/conditional-output semantics are independently encoded but their translator correspondence is not kernel-proved. Existing Rocq primitive lemmas cover only their stated value operations.
+
+Normative baseline: saved RFC 9293 (August 2022), §§3.4 and 3.10.7.4 (Table 6, ACK/window processing, text before FIN, MUST-59 and close transitions), plus inherited RFC 6298 timer subset. Fixed buffers, scheduling requests, overlap/contradictory-marker choices and legacy events are model choices. Full RTT/Karn, delayed ACK, complete persist, congestion/recovery, implementation refinement, independent data/close execution and full TCP remain unfinished.
+
+Current expanded declaration: 176 rules, 105 state invariants; 23 new FIN inputs plus 61 inherited data/close inputs. Rule counts are not RFC coverage. The independent destination-partitioned induction query count can exceed the rule count because it checks every declared post target; original BMC status remains separate.

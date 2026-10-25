@@ -1,0 +1,1 @@
+Historical diagnostic: the 176-rule FIN model had three unknown combined-destination preservation queries. Exact destination partitioning is checked separately over all declared destinations, without assuming poststate invariants or increasing the per-query timeout. This snapshot is not a passing certificate.

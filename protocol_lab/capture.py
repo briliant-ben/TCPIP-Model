@@ -81,8 +81,8 @@ def decode(path):
 
 
 def normalize(pcap, profile, expected, origin="unverified", checksum_policy="strict", projection="active-open-v1"):
-    require(projection in ("active-open-v1", "tcp-data-v1"), "Unsupported TCP projection")
-    data_mode = projection == "tcp-data-v1"
+    require(projection in ("active-open-v1", "tcp-data-v1", "tcp-fin-v1"), "Unsupported TCP projection")
+    data_mode = projection in ("tcp-data-v1", "tcp-fin-v1")
     require(origin in ("unverified", "synthetic", "external_capture"), "Invalid capture origin")
     require(checksum_policy in ("strict", "record_offload"), "Invalid checksum policy")
     require(bool(expected), "Expected packet trace is empty")
@@ -113,7 +113,7 @@ def normalize(pcap, profile, expected, origin="unverified", checksum_policy="str
             shapes.update({1: "F", 17: "FA", 4: "R", 20: "RA"})
         flags = shapes.get(tcp[13])
         require(flags is not None, "TCP control flags outside this active-open slice")
-        require(size == len(tcp) or flags == "A", "Payload on SYN/FIN/RST is outside this data slice")
+        require(size == len(tcp) or flags == "A" or (projection == "tcp-fin-v1" and flags == "FA"), "Payload on SYN/FIN/RST is outside this data slice")
         require(sum_ok(record["ip"]), "Invalid IPv4 checksum")
         pseudo = record["ip"][12:20] + b"\x00\x06" + len(tcp).to_bytes(2, "big")
         if not sum_ok(pseudo + tcp):
@@ -148,5 +148,5 @@ def normalize(pcap, profile, expected, origin="unverified", checksum_policy="str
                 "checksum_policy": checksum_policy, "checksum_warning_frames": checksum_warnings,
                 "deduplication": "none", "origin_is_user_assertion": True}
     if data_mode:
-        metadata.update(normalizer="classic-pcap-ipv4-tcp-data-v1", projection=projection)
+        metadata.update(normalizer="classic-pcap-ipv4-" + projection, projection=projection)
     return result, metadata

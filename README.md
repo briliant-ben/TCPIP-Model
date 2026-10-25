@@ -16,6 +16,7 @@ GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP
 | `model/tcp-reassembly.json` | 继承数据/连接模型，加入 16 位置显式乱序队列、多缺口重组、重复/重叠裁剪与回绕；一般 piggyback、FIN 数据和完整恢复仍未完成 |
 | `model/tcp-segments.json` | 继承重组/数据/连接模型，组合 ACK/window 与 payload，支持窗口收缩及有在途数据的零窗口探测；完整 persist、带数据关闭及恢复仍未完成 |
 | `model/tcp-close.json` | 组合待发送／在途数据、独立 FIN 序列标记、半关闭读取和 FIN-WAIT 重组；FIN+payload、乱序 FIN 缓存及完整恢复仍待实现 |
+| `model/tcp-fin.json` | 显式 FIN 窗口／payload、乱序 EOF 标记与字节重组、单次 FIN 消费及条件关闭目标；完整恢复与独立实现闭环仍未完成 |
 
 2026-10-24：已恢复本地基线并推进 [IR 数据语义](docs/semantics.md) 和 [有限 TCP 数据切片](docs/tcp-data.md)。数据切片的 15 个场景具有参考轨迹和独立 Z3 固定输入重放；全输入混合查询可能为 `unknown`，suite 明确保留 `formal_pending`。这不影响旧模型的独立有界检查，也不将合成 PCAP 计为 Linux/lwIP 数据验证。持续实施记录见 [实施日志](docs/implementation-log.md)。
 
@@ -178,3 +179,5 @@ docs/                  语义、外部测试约定、里程碑
 [Rocq 原语试点](formal/rocq/README.md)已在锁定 9.2.0 容器中完成六个通用值运算命题的编译、公理审计与 proof object 内核复查，错误证明和公理注入负控制通过；证据见 artifacts/rocq。它不证明 TCP 行为、Python/SMT 翻译或实际协议栈，不能替换上述 Z3 unknown。
 
 [数据与关闭组合](docs/tcp-close.md)保留此前 40 个输入并新增 21 个关闭场景；FIN 与字节队列分别计数，共享一个重传定时器。未宣称完整 TCP 关闭、恢复或数据实机闭环。
+
+[FIN 组合 profile](docs/tcp-fin.md)新增 23 个输入，连同既有 61 个输入分别保存参考执行、完整字节符号重放和合成 codec 证据。场景 0.2 可显式约束消息内容、顺序与时间；新 post-target-v2 语义由参考与独立后端实现。所有声明目标均须纳入状态归纳义务，Rocq 原语证明不代表该翻译器或 TCP 已获内核证明。

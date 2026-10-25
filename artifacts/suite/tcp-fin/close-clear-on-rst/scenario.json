@@ -1,0 +1,63 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-clear-on-rst",
+  "description": "Finite close/data/FIN composition; independent final-state and timer expectations",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          128,
+          255,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 30,
+      "event": "app.close"
+    },
+    {
+      "at_ms": 40,
+      "event": "net.rst",
+      "fields": {
+        "seq": 9001
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "timers": {},
+    "variables": {
+      "fin_requested": false,
+      "fin_sent": false,
+      "snd_buf": [],
+      "rtx_buf": []
+    }
+  }
+}

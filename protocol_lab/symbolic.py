@@ -1,4 +1,4 @@
-"""Independent bounded symbolic semantics for IR 0.1 (Z3 optional).
+"""Independent bounded symbolic semantics for IR 0.1/0.2 (Z3 optional).
 
 No call to runtime evaluate/dispatch is used to construct the transition system.
 The runtime is invoked only afterwards to cross-check solver witnesses.
@@ -44,17 +44,30 @@ def encode_trace(model, trace, **encoding_options):
     overrides = [n for n, v in model["variables"].items() if initial[n] != v["initial"]]
     enc = Encoding(model, len(trace), overrides, **encoding_options)
     z = enc.z
+    fixed = []
     for name, value in initial.items():
+        fixed.append((enc.frames[0]["values"][name], enc.literal(value, model["variables"][name]["type"])))
         enc.solver.add(enc.frames[0]["values"][name] == enc.literal(value, model["variables"][name]["type"]))
     for i, row in enumerate(trace):
         indices = [j for j, r in enumerate(model["transitions"]) if r["id"] == row["transition"]]
         require(len(indices) == 1, "Trace references unknown transition")
         require(model["transitions"][indices[0]]["event"] == row["event"]["name"], "Trace event/transition mismatch")
+        fixed += [(z.Int(f"choice_{i}"), z.IntVal(indices[0])),
+                  (enc.frames[i+1]["now"], z.IntVal(row["time_ms"]))]
         enc.solver.add(z.Int(f"choice_{i}") == indices[0], enc.frames[i+1]["now"] == row["time_ms"])
         schema = model["events"][row["event"]["name"]]["fields"]
         require(set(row["event"]["fields"]) == set(schema), "Trace event fields mismatch")
         for name, value in row["event"]["fields"].items():
-            enc.solver.add(enc.events[i][row["event"]["name"]][name] == enc.literal(value, schema[name]))
+            literal = enc.literal(value, schema[name])
+            fixed.append((enc.events[i][row["event"]["name"]][name], literal))
+            enc.solver.add(enc.events[i][row["event"]["name"]][name] == literal)
+    # Exact partial evaluation of the already fixed inputs/rule choices. No
+    # reference poststate, invariant or expected output enters these constraints.
+    assertions = list(enc.solver.assertions())
+    enc.solver = z.Solver()
+    enc.solver.set(timeout=10000)
+    enc.solver.add(*[z.simplify(z.substitute(assertion, *fixed)) for assertion in assertions])
+    enc.solver.add(*[symbol == literal for symbol, literal in fixed])
     return enc
 
 
@@ -63,7 +76,7 @@ def crosscheck_trace(model, trace, out=None):
     query = enc.solver.to_smt2()
     answer = enc.solve()
     result = {"backend": "z3-constrained-trace", "scope": "fixed_inputs_and_rule_choices",
-              "all_input_safety": "not_claimed", "steps": len(trace), "query": str(answer),
+              "all_input_safety": "not_claimed", "query_strategy": "exact_fixed_input_and_rule_substitution", "steps": len(trace), "query": str(answer),
               "model_semantic_sha256": model_hash(model), "solver_version": enc.z.get_version_string(),
               "smt2_sha256": hashlib.sha256(query.encode()).hexdigest()}
     if answer == enc.z.sat:
@@ -169,6 +182,8 @@ class Encoding:
                 visit(arg, event)
         for rule in self.model["transitions"]:
             visit(rule["guard"], rule["event"])
+            for case in rule.get("target_cases", []):
+                visit(case["when"], rule["event"])
             for action in rule["actions"]:
                 kind, arg = next(iter(action.items()))
                 if kind == "set":
@@ -179,7 +194,9 @@ class Encoding:
                         visit(arg["when"], rule["event"])
                 elif kind == "cancel_if":
                     visit(arg["when"], rule["event"])
-                elif kind == "emit":
+                elif kind in ("emit", "emit_if"):
+                    if kind == "emit_if":
+                        visit(arg["when"], rule["event"])
                     for expr in arg["fields"].values():
                         visit(expr, rule["event"])
         for inv in self.model["invariants"]:
@@ -304,11 +321,15 @@ class Encoding:
                     self.action_faults.append(z.And(*conditions, choice == j, when, delay <= 0))
                     work["active"][arg["timer"]] = z.If(when, z.BoolVal(True), work["active"][arg["timer"]])
                     work["due"][arg["timer"]] = z.If(when, new["now"] + delay, work["due"][arg["timer"]])
-                elif kind == "emit":
-                    emitted.append({"message": arg["message"], "fields": {n: self.expr(v, work, fields[name]) for n, v in arg["fields"].items()}})
+                elif kind in ("emit", "emit_if"):
+                    emitted.append({"message": arg["message"], "fields": {n: self.expr(v, work, fields[name]) for n, v in arg["fields"].items()},
+                                    **({"when": self.expr(arg["when"], work, fields[name])} if kind == "emit_if" else {})})
                 else:
                     raise ModelError(f"Unsupported symbolic action: {kind}")
-            conditions += [choice == j, new["state"] == m["states"].index(rule["to"])]
+            target = z.IntVal(m["states"].index(rule["to"]))
+            for case in reversed(rule.get("target_cases", [])):
+                target = z.If(self.expr(case["when"], work, fields[name]), m["states"].index(case["to"]), target)
+            conditions += [choice == j, new["state"] == target]
             for group in ("values", "active", "due"):
                 conditions += [new[group][n] == work[group][n] for n in work[group]]
             branches.append(z.And(*conditions))
@@ -357,7 +378,7 @@ class Encoding:
                           "after": {"state": m["states"][self.concrete(solution, frame["state"])],
                                     "variables": {n: typed(v, m["variables"][n]["type"]) for n, v in frame["values"].items()},
                                     "timers": {n: self.concrete(solution, frame["due"][n]) for n, active in frame["active"].items() if self.concrete(solution, active)}},
-                          "emitted": [{"message": e["message"], "fields": {n: typed(v, m["messages"][e["message"]]["fields"][n]) for n, v in e["fields"].items()}} for e in emitted]})
+                          "emitted": [{"message": e["message"], "fields": {n: typed(v, m["messages"][e["message"]]["fields"][n]) for n, v in e["fields"].items()}} for e in emitted if "when" not in e or self.concrete(solution, e["when"])]})
         return {"initial": initial, "steps": steps}
 
 

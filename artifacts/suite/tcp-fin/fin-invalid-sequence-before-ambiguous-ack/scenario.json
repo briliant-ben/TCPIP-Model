@@ -1,0 +1,62 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-invalid-sequence-before-ambiguous-ack",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9017,
+        "ack": 2147484649,
+        "window": 0,
+        "data": []
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1001,
+      "rtx_buf": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "snd_wnd": 8,
+      "rx_fin_pending": false
+    },
+    "timers": {
+      "rtx": 1021
+    }
+  }
+}

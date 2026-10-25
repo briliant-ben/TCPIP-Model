@@ -75,3 +75,17 @@ class ClaimTests(unittest.TestCase):
         formal["status"] = "bounded_pass"
         with self.assertRaisesRegex(ModelError, "Cannot promote inconclusive"):
             build(*args, formal, {"status": "not_run"}, artifact_hashes)
+
+    def test_induction_claim_cannot_omit_a_declared_target(self):
+        from protocol_lab.inductive import prove
+        induction=prove(self.model,out=self.out/'inductive')
+        self.assertEqual(induction['status'],'inductive_invariants_pass')
+        formal=read(self.out/'formal/result.json')
+        artifacts=dict(self.report['artifact_hashes'])
+        for name in [*induction['query_hashes'],'result.json']:
+            artifacts['inductive/'+name]=digest(self.out/'inductive'/name)
+        result=build(self.model,self.profile,self.report['input_hashes'],self.report['scenarios'],formal,induction,artifacts)
+        self.assertEqual(result['claims'][1]['statement']['target_coverage'],'all_declared_destinations')
+        induction['preservation'][0]['targets']=[]
+        with self.assertRaisesRegex(ModelError,'target obligation'):
+            build(self.model,self.profile,self.report['input_hashes'],self.report['scenarios'],formal,induction,artifacts)

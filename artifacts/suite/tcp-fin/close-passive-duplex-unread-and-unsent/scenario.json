@@ -1,0 +1,112 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-passive-duplex-unread-and-unsent",
+  "description": "Finite close/data/FIN composition; independent final-state and timer expectations",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 15,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          7,
+          8
+        ]
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          128,
+          255,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin",
+      "fields": {
+        "seq": 9003,
+        "ack": 1003
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          6
+        ]
+      }
+    },
+    {
+      "at_ms": 50,
+      "event": "app.close"
+    },
+    {
+      "at_ms": 60,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 61,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 62,
+      "event": "app.receive",
+      "fields": {
+        "count": 2
+      }
+    },
+    {
+      "at_ms": 70,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9004,
+        "ack": 1009,
+        "window": 8
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "timers": {},
+    "variables": {
+      "snd_nxt": 1009,
+      "snd_una": 1009,
+      "fin_requested": false,
+      "fin_sent": false,
+      "rcv_buf": [],
+      "rtx_buf": []
+    }
+  }
+}

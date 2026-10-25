@@ -43,7 +43,7 @@ def profile_inputs(profile, model):
 
 def control_packets(machine, scenario):
     shapes = {"net.syn": "S", "net.synack": "SA", "net.ack": "A", "net.fin": "FA",
-              "net.rst": "R", "net.rstack": "RA", "net.data_ack": "A", "net.data": "A"}
+              "net.rst": "R", "net.rstack": "RA", "net.data_ack": "A", "net.data": "A", "net.fin_segment": "FA"}
     packets = []
     drops = set(scenario.get("environment", {}).get("drop_outgoing", []))
     for row in machine.trace:
@@ -81,7 +81,10 @@ def graph(model):
         label = rule["id"] + "\n" + rule["event"]
         if rule["guard"] is not True:
             label += "\n" + json.dumps(rule["guard"], separators=(",", ":"))
-        lines.append(f"  {json.dumps(rule['from'])} -> {json.dumps(rule['to'])} [label={json.dumps(label)}];")
+        targets = [(rule["to"], "default" if rule.get("target_cases") else "")]
+        targets += [(case["to"], f"post case {i+1}") for i, case in enumerate(rule.get("target_cases", []))]
+        for target, suffix in targets:
+            lines.append(f"  {json.dumps(rule['from'])} -> {json.dumps(target)} [label={json.dumps(label + (chr(10) + suffix if suffix else ""))}];")
     return "\n".join(lines + ["}", ""])
 
 

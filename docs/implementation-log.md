@@ -105,3 +105,21 @@ Rocq 试点实际验收完成：提交 425f034 的 push 作业 40173581044 / job
 最终运行时版本全量 165 项 unittest 通过；补充的第 21 个关闭输入已通过当前 161 输入（含 101 连接回归）的场景测试和全部关闭场景完整字节符号重放；查询策略元数据/反例所选规则诊断也经针对性检查。lwIP 两连接执行成功、2750ms 差异保留，lwip-verify 通过；Linux 入口仍 not_run。Rocq 六原语的全部源和产物哈希未变，未声称新 TCP 或归纳后端已获 Rocq 证明。未改动上游 lwIP、oracle 或哈希门槛。
 
 后续继续 FIN 携带 payload、FIN 头部窗口与乱序 FIN 缓存，然后 RTT/RTO、delayed ACK、完整 persist、拥塞/恢复及独立实现数据闭环；UDP 等后续协议和实现精化仍未完成。完整目标保持 active。
+
+## 2026-10-25：FIN payload/window、队列 EOF 与 post-target-v2（验收进行中）
+
+核对当前 e478e09 分支，工作区干净。新增声明式 tcp-fin 扩展：canonical net.fin_segment 显式提供 seq/ack/window/data，SEG.LEN 包含末尾 FIN；单一标记与相对 offset 由不变量绑定全 32 位序号，直到此前所有字节连续后才消费并发一次累计 ACK/EOF。接受窗口裁剪、零窗口、先前字节冲突、重复/矛盾 FIN、半关闭和自己的 FIN ACK 同段处理有明确有限策略，legacy net.fin 不冒充完整 header。
+
+新增显式 post-target-v2 语义版本，条件输出及动作后优先目标表全部在 IR；独立后端编码同样位置和选择，旧语义拒绝新特性。场景 0.2 的 typed expect_trace 逐项检查新产生的完整消息行、顺序和时间，区分 TraceContractMismatch 并保存预期/实际。新 tcp-fin-v1 投影允许 FIN payload，保留原投影的拒绝范围，字段/哈希/来源门槛未放宽。
+
+初版状态归纳若干查询限时 unknown；显式 offset 消除重复模距离并增加 FIN 位置约束后减少不确定分支，再将归纳查询按每个声明目标（含默认）穷尽分解，保留全部不变量/输入域/动作故障，不假定后态安全或提高限时；176 条规则、105 不变量的该轮义务通过。一个完整字节固定输入重放限时 unknown 后，仅将已有初值/事件/时间/choice 约束等价常量化，不使用参考后态/输出约束；23 新输入重放匹配。历史查询将单独保留，实际全量重建结果在后续补记。
+
+新增 23 个输入，并继承 61 数据/关闭输入和 101 连接回归。正反场景及故障变体检查乱序 EOF、窗口更新、控制序号+1、尾部裁剪、重复 EOF、目标遗漏及输出时间顺序。Rocq 旧证据的语义/解释器源绑定已过期，不能直接重新标记；将实际重跑 CI 的原语检查并保存新绑定，不声称它证明新的 EFSM 翻译。独立实现数据闭环和完整恢复仍未完成。
+
+## 2026-10-26：FIN 组合阶段本地验收
+
+当前源码全量 190 项 unittest 通过。七个 profile 重建并经 suite-verify 验收：原主动打开/连接 depth=6 bounded_pass；五个数据 profile 的原 BMC 仍 unknown，各自状态归纳通过。tcp-fin 的 176 规则、105 不变量、201 个穷尽目标子检查、26 个 guard 组与非空完整字节样本通过；84 固定输入重放 match，合成 codec/Difference 均 match_synthetic_only。初值、长度公式、201 保持子查询及 26 重叠查询在独立 Z3 进程全部 unsat，样本 sat，记录 artifacts/tcp-fin-query-check.json。
+
+旧投影仍拒绝 FIN payload，新投影逐项比较原字段和窗口/字节，未放宽 oracle。漏目标、错 FIN 消费、缺少 EOF 尾部裁剪、重复 EOF、自动定时器输出遗漏/乱序及错误字面值类型均有正反测试。历史 unknown 查询和一次固定重放限时日志保存在 diagnostics，不当作当前通过证据。lwIP 两连接执行成功、2750ms 差异保持，lwip-verify 通过；本机 Linux 入口仍 not_run。
+
+Rocq 原语的旧源绑定已过期，以下提交将触发锁定工具链 CI 真正重检，再下载并逐项核对新证据。该原语证明不会提升为 post-target 翻译或 TCP/实现正确性证明。完整恢复、独立数据/关闭实现观测和后续协议仍未完成，目标保持 active。

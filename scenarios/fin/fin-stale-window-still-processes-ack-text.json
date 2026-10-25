@@ -1,0 +1,85 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-stale-window-still-processes-ack-text",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          128,
+          255,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9004,
+        "ack": 1001,
+        "window": 12
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 1,
+        "data": [
+          7,
+          8
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSE-WAIT",
+    "variables": {
+      "snd_una": 1003,
+      "rtx_buf": [
+        128,
+        255,
+        4,
+        5
+      ],
+      "snd_wnd": 12,
+      "snd_wl1": 9004,
+      "rcv_nxt": 9004,
+      "rcv_buf": [
+        7,
+        8
+      ]
+    },
+    "timers": {
+      "rtx": 1040
+    }
+  }
+}

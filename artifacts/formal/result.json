@@ -70,123 +70,24 @@
         ]
       },
       {
-        "at_ms": 1001,
-        "event": "timer.syn_rto",
-        "origin": "timer",
-        "transition": "T-SYN-RETRY",
-        "fields": {},
-        "after": {
-          "state": "SYN-SENT",
-          "variables": {
-            "iss": 0,
-            "irs": 0,
-            "snd_una": 0,
-            "snd_nxt": 1,
-            "rcv_nxt": 0,
-            "rto_ms": 2000,
-            "retries": 1
-          },
-          "timers": {
-            "syn_rto": 3001
-          }
-        },
-        "emitted": [
-          {
-            "message": "tcp",
-            "fields": {
-              "flags": "S",
-              "seq": 0,
-              "ack": 0,
-              "window": 65535
-            }
-          }
-        ]
-      },
-      {
-        "at_ms": 3001,
-        "event": "timer.syn_rto",
-        "origin": "timer",
-        "transition": "T-SYN-RETRY",
-        "fields": {},
-        "after": {
-          "state": "SYN-SENT",
-          "variables": {
-            "iss": 0,
-            "irs": 0,
-            "snd_una": 0,
-            "snd_nxt": 1,
-            "rcv_nxt": 0,
-            "rto_ms": 4000,
-            "retries": 2
-          },
-          "timers": {
-            "syn_rto": 7001
-          }
-        },
-        "emitted": [
-          {
-            "message": "tcp",
-            "fields": {
-              "flags": "S",
-              "seq": 0,
-              "ack": 0,
-              "window": 65535
-            }
-          }
-        ]
-      },
-      {
-        "at_ms": 7001,
-        "event": "timer.syn_rto",
-        "origin": "timer",
-        "transition": "T-SYN-RETRY",
-        "fields": {},
-        "after": {
-          "state": "SYN-SENT",
-          "variables": {
-            "iss": 0,
-            "irs": 0,
-            "snd_una": 0,
-            "snd_nxt": 1,
-            "rcv_nxt": 0,
-            "rto_ms": 8000,
-            "retries": 3
-          },
-          "timers": {
-            "syn_rto": 15001
-          }
-        },
-        "emitted": [
-          {
-            "message": "tcp",
-            "fields": {
-              "flags": "S",
-              "seq": 0,
-              "ack": 0,
-              "window": 65535
-            }
-          }
-        ]
-      },
-      {
-        "at_ms": 7002,
+        "at_ms": 2,
         "event": "net.synack",
         "origin": "network",
         "transition": "T-ACCEPT-SYNACK",
         "fields": {
-          "seq": 536870912,
+          "seq": 0,
           "ack": 1
         },
         "after": {
           "state": "ESTABLISHED",
           "variables": {
             "iss": 0,
-            "irs": 536870912,
+            "irs": 0,
             "snd_una": 1,
             "snd_nxt": 1,
-            "rcv_nxt": 536870913,
-            "rto_ms": 8000,
-            "retries": 3
+            "rcv_nxt": 1,
+            "rto_ms": 1000,
+            "retries": 0
           },
           "timers": {}
         },
@@ -196,7 +97,7 @@
             "fields": {
               "flags": "A",
               "seq": 1,
-              "ack": 536870913,
+              "ack": 1,
               "window": 65535
             }
           }
@@ -206,9 +107,9 @@
   },
   "replay": {
     "status": "match",
-    "compared_steps": 5
+    "compared_steps": 2
   },
-  "smt2_sha256": "be3b0d59038008107c128a86da30c526f12f22bdc600060ecd92eebebe7e67cb",
-  "overlap_smt2_sha256": "72c27e220ce179f83f15674359af291d3be05fea67f2e92e6c58ad8f38ec99c5",
-  "build_sha256": "23a5e6d072b99cc78c24f17a8621fe4f1a3f28defbca2552693bb88ab189a0af"
+  "smt2_sha256": "752ad33b28920b996b91c9c022e3a03a31ed67903bf803d58fa9e97218439856",
+  "overlap_smt2_sha256": "40d89c517bca1ff4e15fd2cc94010abbc85656317fe86ca45872a99fcd8ee69b",
+  "build_sha256": "6fc363216d1a0f638924762171cb13c51718cbba32b3ae69edfb0abb3e29c38a"
 }

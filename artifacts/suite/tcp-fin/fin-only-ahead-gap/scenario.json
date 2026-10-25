@@ -1,0 +1,56 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-only-ahead-gap",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9004,
+        "ack": 1001,
+        "window": 8,
+        "data": []
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          0,
+          128,
+          255
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSE-WAIT",
+    "variables": {
+      "rcv_nxt": 9005,
+      "rcv_buf": [
+        0,
+        128,
+        255
+      ],
+      "rx_fin_done": true
+    },
+    "timers": {}
+  }
+}

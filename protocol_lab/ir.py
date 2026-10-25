@@ -5,6 +5,7 @@ from pathlib import Path
 
 MOD = 1 << 32
 HALF = MOD // 2
+POST_SEMANTICS = "flat-efsm-atomic-ordered-post-target-v2"
 TYPES = ("bool", "int", "seq32", "string", "bytes")
 DATA_OPS = {"sub", "min", "ite", "bytes_len", "bytes_concat", "bytes_slice",
             "seq_distance", "seq_comparable", "seq_lt", "seq_le"}
@@ -147,7 +148,7 @@ def evaluate(expr, machine, event=None):
 def validate(model):
     require("extends" not in model, "Resolve model extension with load() before validation")
     require(model.get("ir_version") in ("0.1", "0.2"), "Unsupported IR version")
-    require(model.get("semantics") == "flat-efsm-atomic-ordered-v1", "Unsupported semantics")
+    require(model.get("semantics") in ("flat-efsm-atomic-ordered-v1", POST_SEMANTICS), "Unsupported semantics")
     states = model["states"]
     require(len(states) == len(set(states)), "Duplicate states")
     require(model["initial_state"] in states, "Unknown initial state")
@@ -174,6 +175,13 @@ def validate(model):
         require(rule["id"] not in ids, "Duplicate transition ID")
         ids.add(rule["id"])
         require(rule["from"] in states and rule["to"] in states, "Unknown transition state")
+        if "target_cases" in rule:
+            require(model["semantics"] == POST_SEMANTICS and model["ir_version"] == "0.2", "Post targets require versioned post-target semantics")
+            require(type(rule["target_cases"]) is list and bool(rule["target_cases"]), "Bad post target list")
+            for case in rule["target_cases"]:
+                require(type(case) is dict and set(case) == {"when", "to"}, "Bad post target case")
+                require(case["to"] in states, "Unknown post target state")
+                require(infer(case["when"], model, rule["event"]) == "bool", "Post target requires bool")
         require(rule["event"] in model["events"], "Unknown transition event")
         require(bool(rule["requirements"]) and all(r in requirements for r in rule["requirements"]), "Unknown requirement")
         require(infer(rule["guard"], model, rule["event"]) == "bool", "Non-boolean guard")
@@ -183,7 +191,11 @@ def validate(model):
             if kind == "set":
                 require(arg["var"] in model["variables"], "Unknown assignment target")
                 require(infer(arg["value"], model, rule["event"]) == model["variables"][arg["var"]]["type"], "Assignment type mismatch")
-            elif kind == "emit":
+            elif kind in ("emit", "emit_if"):
+                if kind == "emit_if":
+                    require(model["semantics"] == POST_SEMANTICS and model["ir_version"] == "0.2", "Conditional emit requires versioned post-target semantics")
+                    require(set(arg) == {"when", "message", "fields"}, "Bad conditional emit shape")
+                    require(infer(arg["when"], model, rule["event"]) == "bool", "Conditional emit requires bool")
                 schema = model["messages"].get(arg["message"])
                 require(schema is not None, "Unknown message")
                 require(set(arg["fields"]) == set(schema["fields"]), "Message fields mismatch")
@@ -320,7 +332,9 @@ class Machine:
             kind, arg = next(iter(action.items()))
             if kind == "set":
                 self.values[arg["var"]] = copy.deepcopy(evaluate(arg["value"], self, event))
-            elif kind == "emit":
+            elif kind in ("emit", "emit_if"):
+                if kind == "emit_if" and not evaluate(arg["when"], self, event):
+                    continue
                 emitted.append({"message": arg["message"], "fields": {k: copy.deepcopy(evaluate(v, self, event)) for k, v in arg["fields"].items()}})
             elif kind == "cancel":
                 self.timers.pop(arg, None)
@@ -333,7 +347,12 @@ class Machine:
                 delay = evaluate(arg["delay_ms"], self, event)
                 require(type(delay) is int and delay > 0, "Timer duration must be positive")
                 self.timers[arg["timer"]] = self.now_ms + delay
-        self.state = rule["to"]
+        target = rule["to"]
+        for case in rule.get("target_cases", []):
+            if evaluate(case["when"], self, event):
+                target = case["to"]
+                break
+        self.state = target
         record = {"event_id": f"e{len(self.trace)+1:04d}", "time_ms": self.now_ms,
                   "event": event, "transition": rule["id"], "requirements": rule["requirements"],
                   "before": before, "after": self.snapshot(), "emitted": emitted}

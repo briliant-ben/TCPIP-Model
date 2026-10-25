@@ -70,470 +70,1172 @@
   "preservation": [
     {
       "transition": "C-ACTIVE-OPEN",
+      "targets": [
+        {
+          "state": "SYN-SENT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-PASSIVE-OPEN",
+      "targets": [
+        {
+          "state": "LISTEN",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-LISTEN-SYN",
+      "targets": [
+        {
+          "state": "SYN-RECEIVED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SIMULTANEOUS-SYN",
+      "targets": [
+        {
+          "state": "SYN-RECEIVED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ACCEPT-SYNACK",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ACCEPT-ACK",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SIMULTANEOUS-SYNACK",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ACCEPT-SYNACK-AFTER-RETRY",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ACCEPT-ACK-AFTER-RETRY",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-SENT-BAD-ACK",
+      "targets": [
+        {
+          "state": "SYN-SENT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-SENT-BAD-SYNACK",
+      "targets": [
+        {
+          "state": "SYN-SENT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-SENT-BARE-ACK",
+      "targets": [
+        {
+          "state": "SYN-SENT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-RECEIVED-BAD-ACK",
+      "targets": [
+        {
+          "state": "SYN-RECEIVED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-CLOSE-ESTABLISHED",
+      "targets": [
+        {
+          "state": "FIN-WAIT-1",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-CLOSE-CLOSE-WAIT",
+      "targets": [
+        {
+          "state": "LAST-ACK",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-CLOSE-LISTEN",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-CLOSE-SYN-SENT",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REPEATED-CLOSE-FIN-WAIT-1",
+      "targets": [
+        {
+          "state": "FIN-WAIT-1",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REPEATED-CLOSE-FIN-WAIT-2",
+      "targets": [
+        {
+          "state": "FIN-WAIT-2",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REPEATED-CLOSE-CLOSING",
+      "targets": [
+        {
+          "state": "CLOSING",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REPEATED-CLOSE-LAST-ACK",
+      "targets": [
+        {
+          "state": "LAST-ACK",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REPEATED-CLOSE-TIME-WAIT",
+      "targets": [
+        {
+          "state": "TIME-WAIT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-DUPLICATE-ACK-CLOSE-WAIT",
+      "targets": [
+        {
+          "state": "CLOSE-WAIT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-DUPLICATE-ACK-FIN-WAIT-2",
+      "targets": [
+        {
+          "state": "FIN-WAIT-2",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-FIN-ACK-FIN-WAIT-1",
+      "targets": [
+        {
+          "state": "FIN-WAIT-2",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-OLD-ACK-FIN-WAIT-1",
+      "targets": [
+        {
+          "state": "FIN-WAIT-1",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-FIN-ACK-CLOSING",
+      "targets": [
+        {
+          "state": "TIME-WAIT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-OLD-ACK-CLOSING",
+      "targets": [
+        {
+          "state": "CLOSING",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-FIN-ACK-LAST-ACK",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-OLD-ACK-LAST-ACK",
+      "targets": [
+        {
+          "state": "LAST-ACK",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-PEER-FIN",
+      "targets": [
+        {
+          "state": "CLOSE-WAIT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-PEER-FIN-FW2",
+      "targets": [
+        {
+          "state": "TIME-WAIT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-PEER-FIN-FW1-ACKED",
+      "targets": [
+        {
+          "state": "TIME-WAIT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SIMULTANEOUS-FIN",
+      "targets": [
+        {
+          "state": "CLOSING",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-DUPLICATE-FIN-CLOSE-WAIT",
+      "targets": [
+        {
+          "state": "CLOSE-WAIT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-DUPLICATE-FIN-CLOSING",
+      "targets": [
+        {
+          "state": "CLOSING",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-DUPLICATE-FIN-LAST-ACK",
+      "targets": [
+        {
+          "state": "LAST-ACK",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-DUPLICATE-FIN-TIME-WAIT",
+      "targets": [
+        {
+          "state": "TIME-WAIT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RETRANSMIT-SYN-SENT",
+      "targets": [
+        {
+          "state": "SYN-SENT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RETRANSMIT-SYN-RECEIVED",
+      "targets": [
+        {
+          "state": "SYN-RECEIVED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RETRANSMIT-FIN-WAIT-1",
+      "targets": [
+        {
+          "state": "FIN-WAIT-1",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RETRANSMIT-CLOSING",
+      "targets": [
+        {
+          "state": "CLOSING",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RETRANSMIT-LAST-ACK",
+      "targets": [
+        {
+          "state": "LAST-ACK",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-USER-TIMEOUT-SYN-SENT",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-USER-TIMEOUT-SYN-RECEIVED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-USER-TIMEOUT-FIN-WAIT-1",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-USER-TIMEOUT-FIN-WAIT-2",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-USER-TIMEOUT-CLOSING",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-USER-TIMEOUT-LAST-ACK",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-TIME-WAIT-EXPIRED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-CLOSED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-LISTEN",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-SYN-SENT",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-SYN-RECEIVED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-ESTABLISHED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-FIN-WAIT-1",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-FIN-WAIT-2",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-CLOSE-WAIT",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-CLOSING",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-LAST-ACK",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-ABORT-TIME-WAIT",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-IGNORE-NET-RST-CLOSED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-IGNORE-NET-RST-LISTEN",
+      "targets": [
+        {
+          "state": "LISTEN",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-SENT-NET-RST",
+      "targets": [
+        {
+          "state": "SYN-SENT",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-RECEIVED-NET-RST-PASSIVE",
+      "targets": [
+        {
+          "state": "LISTEN",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-RECEIVED-NET-RST-ACTIVE",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-ESTABLISHED-rst",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-FIN-WAIT-1-rst",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-FIN-WAIT-2-rst",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-CLOSE-WAIT-rst",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-CLOSING-rst",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-LAST-ACK-rst",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-TIME-WAIT-rst",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-IGNORE-NET-RSTACK-CLOSED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-IGNORE-NET-RSTACK-LISTEN",
+      "targets": [
+        {
+          "state": "LISTEN",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-SENT-NET-RSTACK",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+      "targets": [
+        {
+          "state": "LISTEN",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-ESTABLISHED-rstack",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-FIN-WAIT-1-rstack",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-FIN-WAIT-2-rstack",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-CLOSE-WAIT-rstack",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-CLOSING-rstack",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-LAST-ACK-rstack",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-RESET-TIME-WAIT-rstack",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REJECT-ACK-CLOSED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REJECT-ACK-LISTEN",
+      "targets": [
+        {
+          "state": "LISTEN",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REJECT-SYNACK-CLOSED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REJECT-SYNACK-LISTEN",
+      "targets": [
+        {
+          "state": "LISTEN",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REJECT-FIN-CLOSED",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-REJECT-FIN-LISTEN",
+      "targets": [
+        {
+          "state": "LISTEN",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "C-CLOSED-SYN",
+      "targets": [
+        {
+          "state": "CLOSED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-QUEUE",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-SEND-EMPTY",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-SEND-FULL",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-FLUSH-FIRST",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-FLUSH-MORE",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-FLUSH-BLOCKED",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-ACK-FULL-WINDOW",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-ACK-FULL-STALE-WINDOW",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-ACK-PARTIAL-WINDOW",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-ACK-PARTIAL-STALE-WINDOW",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-ACK-DUP-WINDOW",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-ACK-DUP-STALE-WINDOW",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-ACK-OLD",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-ACK-FUTURE",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-RETRANSMIT",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-RECEIVE-IN-ORDER",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-RECEIVE-OVERLAP",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-RECEIVE-DUPLICATE",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-RECEIVE-AHEAD",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-RECEIVE-ZERO-WINDOW",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     },
     {
       "transition": "D-APPLICATION-READ",
+      "targets": [
+        {
+          "state": "ESTABLISHED",
+          "query": "unsat"
+        }
+      ],
       "query": "unsat"
     }
   ],
@@ -683,6 +1385,7 @@
   ],
   "length_lemmas": "unsat",
   "initial_query": "unsat",
+  "target_coverage": "all_declared_destinations",
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
@@ -712,11 +1415,13 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "net.syn",
+        "event": "net.ack",
         "origin": "network",
-        "transition": "C-CLOSED-SYN",
+        "transition": "C-REJECT-ACK-CLOSED",
         "fields": {
-          "seq": 0
+          "seq": 0,
+          "ack": 0,
+          "window": 0
         },
         "after": {
           "state": "CLOSED",
@@ -750,9 +1455,9 @@
           {
             "message": "tcp",
             "fields": {
-              "flags": "RA",
+              "flags": "R",
               "seq": 0,
-              "ack": 1,
+              "ack": 0,
               "window": 16
             }
           }
@@ -765,10 +1470,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "d6432c5e80cecf3344faac14fbd8b18eaf37fcb0ae20e98726e4e49d47248840",
-    "initial.smt2": "58793d13f0077b74d192339e8a5a9272d5b2c754caac0e7f3b135ff917764b43",
-    "preservation.smt2": "22fbe1454b0d2af002d7919f51041e8c770aca4b0cbc496e0d82abede7dd1695",
-    "overlap.smt2": "0d26217ad48c4b5c0a35a3babc9a2e65578793d1c1ea157471163718e06165fb",
-    "sample.smt2": "fe2fa6f36ddc12ef11334883967b0b3584abaab361264e944b06e10d7cafbc5d"
+    "length-lemmas.smt2": "50478ebf7d8b8dd470621ab97866087c1b30d27bb49fb02278f32971e34294cf",
+    "initial.smt2": "4805887bebefcf0122f2bf47f44d61528d701b10c1307146b28e3874288f1bd9",
+    "preservation.smt2": "a9592d222b8c7b7cac151428144f42eabf5889e5c305dd4e761ad835d315f887",
+    "overlap.smt2": "7b5e3a0bcbeb8e4d71b5052f4e1975814cc28f36b0d12230d872d75816eb1aab",
+    "sample.smt2": "d3d545cda9f4a8b834361b390baf0d7bf8dc9632f5838333293b378bd9653723"
   }
 }

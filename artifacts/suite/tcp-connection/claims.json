@@ -30,18 +30,18 @@
   "input_hashes": {
     "model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
     "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-    "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
-    "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
-    "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+    "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+    "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
+    "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
     "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
     "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
-    "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
-    "protocol_lab/inductive.py": "99da3a345f9ac49408262fa48f9b1de55978873ec7cc105c8ba30b7cc8330055",
-    "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+    "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
+    "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
+    "protocol_lab/ir.py": "5dff631fadd82ff3994eaf5eec7915da195b88c140e50f5ac54813afea891e31",
     "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
-    "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
-    "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
-    "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73",
+    "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
+    "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
+    "protocol_lab/symbolic.py": "ac39f286df5837983ac3b25a1f8be2578714e7a06f56b231040935650ee5be9f",
     "scenarios/connection/abort-established.json": "9c06d5c93398e8fa66c50a11c3f977ace67ab01e8a3253e02c341b7697b92d1e",
     "scenarios/connection/abort-from-close-wait.json": "2f1a93fdf771a1db41241bdf2cc8883f0b73a312a532d3fde56b09f327c7514e",
     "scenarios/connection/abort-from-closed.json": "bb460a25b12b45070eb10e3f78cd22afce1bd64d970411b39569de2e99454192",
@@ -144,12 +144,12 @@
     "scenarios/connection/two-syn-retransmissions.json": "5fb47850fdf66f1ef60d66940df814fb90a418ab49220e02d9b2c18c78afd592",
     "scenarios/connection/user-timeout.json": "48ac6e8053ec9e3d4c99cb78c85bf16c1a7c4bedcccf9973470b6ab84af06bc2",
     "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
-    "profiles.json": "eea7aaa4917190bd88adb44de450f6ef7833a9cc379c6181c65f39b6b107d0a6",
+    "profiles.json": "4a2fd334582c46cfd62fb2ea70a4eb08d5f53c9e23c1bc9142f1842fd2a43446",
     "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
-    "docs/semantics.md": "71c9c894129fe0ea68f9003583b26cf0f02331cfa16509974de3e1459884ab2c",
-    "docs/inductive.md": "b53d4c4211a620ba2852acdf3df9c82ec64983c18a2b8bae2e0cf6f1238f145f",
-    "docs/claims.md": "38047139d04e3e3c5a677d24c4c6ea006a762dc1fb244922213230677902dfeb",
-    "formal/README.md": "05f60e3c28b14acce3e67b139c57ce21765f589fb137728181881d9584648c25",
+    "docs/semantics.md": "d2b3359a98465b7944767deb1f21a28b4a114c03635bc857dac636ed42a3ba36",
+    "docs/inductive.md": "277199b1b198088110b39d46e6b96e756c9ad0d2b0676753b16b28bb35f06f25",
+    "docs/claims.md": "b957201e62bd805edcd016dabb4da1acbb23befb26e64b8b76741db6a55f4972",
+    "formal/README.md": "a9a39d2b33db0ec9ec412617d3ae3e74525b1e3c0ed722c9130d946a11499bdc",
     "docs/tcp-connection.md": "ed79a7ea60688efd79f44acf44c65f22c62f013b212cdf7ffa4805255968b458"
   },
   "claims": [
@@ -1037,29 +1037,29 @@
         "time": "unbounded_integer_ms",
         "unbounded": false
       },
-      "proposition_sha256": "34ded67846c14d8f79d53ff41b7fafd5fcdf90ff9321eb2dc30aa0832cff384b",
+      "proposition_sha256": "c709add55b4a7d4bf1965aa7f4eac7d34c867f4881194546c0aa0c2120e5f93d",
       "status": "verified_bounded",
       "checker": "z3-bmc",
       "checker_version": "4.15.4",
       "checker_code_hashes": {
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
-        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
-        "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+        "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+        "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
+        "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
-        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
-        "protocol_lab/inductive.py": "99da3a345f9ac49408262fa48f9b1de55978873ec7cc105c8ba30b7cc8330055",
-        "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+        "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
+        "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
+        "protocol_lab/ir.py": "5dff631fadd82ff3994eaf5eec7915da195b88c140e50f5ac54813afea891e31",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
-        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
-        "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
-        "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73"
+        "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
+        "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
+        "protocol_lab/symbolic.py": "ac39f286df5837983ac3b25a1f8be2578714e7a06f56b231040935650ee5be9f"
       },
       "evidence_hashes": {
-        "formal/result.json": "1177f6bf2f80dd5bacd9ec34eec6041696e4bf629b6d706f56fcb92f77f0fe7a",
-        "formal/model.smt2": "60f72a8fd668cae43238da3de2dbc9a2f315900c59f1c9df8f06e50a85e4adcd",
-        "formal/overlap.smt2": "085087f07ba710ffc43b27c0c18631317e4b6c14c1d9aa19ba3bc9dfc75f68f2"
+        "formal/result.json": "a23015ef7f7289b10842ef4511c183026d0e96517a65d51719074cf57566013d",
+        "formal/model.smt2": "9ec4750755a84503ca86e5197af8265a3fce0f961d302968a43bb5b8c6f2ac56",
+        "formal/overlap.smt2": "bfa068e396c164ba97c3b921666e3658eea26d3fee32a8e52d1a4bf220b4e88e"
       },
       "kernel_checked_proof": false,
       "trusted_components": [
@@ -2047,27 +2047,515 @@
         "poststate_invariants_assumed": false,
         "byte_encoding": null,
         "sequence_encoding": null,
+        "target_coverage": null,
+        "transition_targets": [
+          {
+            "id": "C-ACTIVE-OPEN",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-PASSIVE-OPEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-LISTEN-SYN",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYN",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-SYNACK",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-ACK",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYNACK",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-SYNACK-AFTER-RETRY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-ACK-AFTER-RETRY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-BAD-ACK",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-BAD-SYNACK",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-BARE-ACK",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-BAD-ACK",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-ESTABLISHED",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-CLOSE-WAIT",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-LISTEN",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-SYN-SENT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-ACK-ESTABLISHED",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-ACK-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-ACK-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "C-FIN-ACK-FIN-WAIT-1",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "C-OLD-ACK-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "C-FIN-ACK-CLOSING",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-OLD-ACK-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-FIN-ACK-LAST-ACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-OLD-ACK-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-PEER-FIN",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-PEER-FIN-FW2",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-PEER-FIN-FW1-ACKED",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-FIN",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-SYN-SENT",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-SYN-RECEIVED",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-SYN-SENT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-SYN-RECEIVED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-FIN-WAIT-1",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-FIN-WAIT-2",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-CLOSING",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-LAST-ACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-TIME-WAIT-EXPIRED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-LISTEN",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-SYN-SENT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-SYN-RECEIVED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-ESTABLISHED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-FIN-WAIT-1",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-FIN-WAIT-2",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-CLOSE-WAIT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-CLOSING",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-LAST-ACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-TIME-WAIT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RST-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RST-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-NET-RST",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RST-PASSIVE",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RST-ACTIVE",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-ESTABLISHED-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-1-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-2-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSE-WAIT-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSING-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-LAST-ACK-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-TIME-WAIT-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RSTACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RSTACK-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-NET-RSTACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-ESTABLISHED-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-1-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-2-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSE-WAIT-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSING-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-LAST-ACK-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-TIME-WAIT-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-ACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-ACK-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-SYNACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-SYNACK-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-FIN-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-FIN-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSED-SYN",
+            "default": "CLOSED",
+            "cases": []
+          }
+        ],
         "content_properties": "not_supported_by_length_projection",
         "protocol_completeness": false
       },
-      "proposition_sha256": "5949baf028b69ae4b9ff699c75c58b501b2eb7c5b1742a966e845ddfe6208ac9",
+      "proposition_sha256": "78cae0059a68cf1bf213706df4c1b6c2b7cd32fb546987363788c118a977421e",
       "status": "not_run",
       "checker": "z3-invariant-induction",
       "checker_version": null,
       "checker_code_hashes": {
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
-        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
-        "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+        "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+        "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
+        "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
-        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
-        "protocol_lab/inductive.py": "99da3a345f9ac49408262fa48f9b1de55978873ec7cc105c8ba30b7cc8330055",
-        "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+        "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
+        "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
+        "protocol_lab/ir.py": "5dff631fadd82ff3994eaf5eec7915da195b88c140e50f5ac54813afea891e31",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
-        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
-        "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
-        "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73"
+        "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
+        "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
+        "protocol_lab/symbolic.py": "ac39f286df5837983ac3b25a1f8be2578714e7a06f56b231040935650ee5be9f"
       },
       "evidence_hashes": {},
       "kernel_checked_proof": false,
@@ -2091,24 +2579,24 @@
           "emitted_fields"
         ]
       },
-      "proposition_sha256": "0c9fd1b699ad827a49bfd37bfa4fb48366c91816862be90e4a10b722bf394ed9",
+      "proposition_sha256": "a561c04de801cbcc5943ee9b91eff16a6b75ce8f25df8fad0f5b223449e4b314",
       "status": "not_run",
       "checker": "z3-constrained-trace-and-reference-replay",
       "checker_version": "4.15.4",
       "checker_code_hashes": {
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
-        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
-        "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+        "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+        "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
+        "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
-        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
-        "protocol_lab/inductive.py": "99da3a345f9ac49408262fa48f9b1de55978873ec7cc105c8ba30b7cc8330055",
-        "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+        "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
+        "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
+        "protocol_lab/ir.py": "5dff631fadd82ff3994eaf5eec7915da195b88c140e50f5ac54813afea891e31",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
-        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
-        "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
-        "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73"
+        "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
+        "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
+        "protocol_lab/symbolic.py": "ac39f286df5837983ac3b25a1f8be2578714e7a06f56b231040935650ee5be9f"
       },
       "evidence_hashes": {},
       "kernel_checked_proof": false,

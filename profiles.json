@@ -61,13 +61,28 @@
       "symbolic_replay": true,
       "wire_projection": "tcp-data-v1",
       "inductive": true
+    },
+    {
+      "id": "tcp-fin",
+      "model": "model/tcp-fin.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments",
+        "scenarios/close",
+        "scenarios/fin"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-fin-v1",
+      "inductive": true
     }
   ],
   "pending_modules": [
     {
       "id": "tcp-data",
       "status": "partial_finite_data_profile",
-      "scope": "finite data/ACK/window/reassembly plus close with queued or outstanding bytes and separate FIN; FIN+payload, queued FIN and full recovery pending"
+      "scope": "finite data/ACK/window/reassembly and close including explicit FIN payload/window and queued receive EOF; opening traffic, options/reset hardening and full recovery pending"
     },
     {
       "id": "tcp-recovery",

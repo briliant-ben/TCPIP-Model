@@ -55,3 +55,9 @@ Rocq 首个原语试点已实际通过锁定容器的编译、空公理审计和
 新增 tcp-close profile，把待发送/在途字节与 FIN 控制序列号分开计数，保持一个重传定时器。支持未排空关闭、FIN 前分段、部分 ACK/数据与 FIN 分别重传、被动/同时关闭、FIN-WAIT 重组、未读字节保留、零窗口延后 FIN 和清理。范围文档见 tcp-close.md。FIN-only 的队列缓存、FIN 携带 payload、FIN 头部窗口更新及完整重置处理仍须继续补齐，再进入 RTT/RTO、delayed ACK、完整 persist、拥塞与恢复。有限 profile 仍不代表整个 M3 完成。
 
 当前 close 的 173 条状态保持与 31 guard 组通过，61 输入完整字节重放匹配；原始 depth=6 BMC unknown 保留。独立 Z3 进程复查全部导出义务也通过。逐规则保持采用等价固定 choice/新 Solver，历史共享求解 unknown 保存在 diagnostics，未削减不变量或规则；字节内容、输出、时序的通用正确性及实现对应仍须后续证明。
+
+## 2026-10-25：显式 FIN header、重组 EOF 与动作后状态
+
+新增 tcp-fin profile，把 canonical FIN 的窗口/payload 显式纳入 IR，独立 EOF 标记与有界相对游标绑定全序列位置，支持缺口补齐后一次性消费 FIN 和累计 ACK。first accepted FIN/重叠策略明确为模型选择；legacy FIN 仍仅作有限兼容。IR 版本化 post-target-v2 增加条件输出和动作后目标，不使用 Python TCP 回调。场景 0.2 的 typed expect_trace 检查每步全部新消息与时间，含自动定时器；完整字节固定输入查询仅对已固定输入/选择等价常量化。状态归纳穷尽规则所有声明目标，缺失目标拒绝验收。
+
+该阶段不代表 TCP 完成。继续恢复算法（RTT/RTO/Karn、delayed ACK、无在途数据 persist、拥塞/恢复）、一般打开/重置/选项及独立实现数据/关闭闭环；随后继续用户给定的 UDP、IPv4、ICMP、ARP、IPv6/NDP、socket 与跨层组合。通用内容/输出/时间契约、解释/翻译/实现精化仍需扩大，Rocq 仅证明已声明原语。

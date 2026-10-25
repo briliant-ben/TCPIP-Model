@@ -58,6 +58,9 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts):
         "prestate_assumption": "typed_state_and_all_listed_invariants",
         "poststate_invariants_assumed": False, "byte_encoding": induction.get("byte_encoding"),
         "sequence_encoding": induction.get("sequence_encoding"),
+        "target_coverage": induction.get("target_coverage"),
+        "transition_targets": [{"id": r["id"], "default": r["to"], "cases": r.get("target_cases", [])}
+                               for r in model["transitions"]],
         "content_properties": "not_supported_by_length_projection", "protocol_completeness": False}
     istatus = induction["status"]
     ins = "verified_inductive_state_properties" if istatus == "inductive_invariants_pass" else "not_run" if istatus == "not_run" else "unknown" if istatus in ("unknown", "vacuous") else "rejected"
@@ -65,6 +68,11 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts):
         require(induction.get("backend") == "z3-invariant-induction", "Unsupported claim checker")
         require({"inductive/result.json", *["inductive/"+p for p in induction["query_hashes"]]} <= artifacts.keys(), "Missing induction claim evidence")
     if istatus == "inductive_invariants_pass":
+        require(induction.get("target_coverage") == "all_declared_destinations", "Missing target coverage for induction claim")
+        require([r["transition"] for r in induction["preservation"]] == [r["id"] for r in model["transitions"]], "Missing claim rule obligation")
+        for rule, row in zip(model["transitions"], induction["preservation"]):
+            expected_targets = sorted({rule["to"], *[c["to"] for c in rule.get("target_cases", [])]}, key=model["states"].index)
+            require([t["state"] for t in row["targets"]] == expected_targets and all(t["query"] == "unsat" for t in row["targets"]), "Missing/inconclusive claim target obligation")
         require(induction.get("initial_query") == "unsat" and induction.get("length_lemmas") == "unsat"
                 and all(r["query"] == "unsat" for r in induction["preservation"] + induction["overlap"])
                 and induction.get("replay", {}).get("status") == "match", "Cannot promote inconclusive induction evidence")
