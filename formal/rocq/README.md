@@ -2,7 +2,7 @@
 
 This additive proof channel checks six generic value-operation statements in `Check.v`: concatenation length, clamped slice length, prefix/suffix byte-content reconstruction, negative-count slicing, full 32-bit modular-add range and modular-add composition. List statements are polymorphic and therefore apply to octet lists. There are no TCP rules in these files; Protocol IR remains the only protocol model.
 
-`IRPrimitives.v` supplies proofs; `Check.v` fixes the exact theorem wrappers and prints assumptions. Changes to wrappers, definitions, orchestration or CI require independent review. The pilot uses an empty axiom allowlist, compiles fresh sources, audits all six wrappers and runs `rocq chk` over both proof objects. Negative controls require an invalid proof to fail compilation and an injected axiom to be exposed and rejected by the audit.
+`IRPrimitives.v` supplies proofs; `Check.v` fixes the exact theorem wrappers and prints assumptions. Changes to wrappers, definitions, orchestration or CI require independent review. The pilot uses an empty axiom allowlist, compiles fresh sources, audits all six wrappers and runs `rocq check` over both proof objects. Negative controls require an invalid proof to fail compilation and an injected axiom to be exposed and rejected by the audit.
 
 Run on a host with Rocq 9.2.0 installed:
 

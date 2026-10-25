@@ -81,7 +81,7 @@ def check(out, docker=False):
             _, audit = run('assumptions', ['rocq', 'compile', '-Q', '.', 'ProtocolIR', 'Check.v'])
             if not closed(audit, len(THEOREMS)):
                 raise RuntimeError('Unexpected theorem assumptions or missing audit')
-            run('kernel', ['rocq', 'chk', '-Q', '.', 'ProtocolIR', 'ProtocolIR.IRPrimitives', 'ProtocolIR.Check'])
+            run('kernel', ['rocq', 'check', '-Q', '.', 'ProtocolIR', 'ProtocolIR.IRPrimitives', 'ProtocolIR.Check'])
             (work/'FalseProof.v').write_text('Theorem bad : False. Proof. exact I. Qed.\n')
             code, _ = run('reject-false-proof', ['rocq', 'compile', 'FalseProof.v'], success=False)
             if code == 0:
