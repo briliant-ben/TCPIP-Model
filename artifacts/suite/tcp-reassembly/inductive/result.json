@@ -103,6 +103,7 @@
     "positive_timer_duration",
     "active_timer_not_in_past"
   ],
+  "preservation_query_strategy": "exact_selected_rule_substitution_fresh_solver",
   "preservation": [
     {
       "transition": "C-ACTIVE-OPEN",
@@ -738,9 +739,9 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "net.rstack",
+        "event": "net.fin",
         "origin": "network",
-        "transition": "C-IGNORE-NET-RSTACK-CLOSED",
+        "transition": "C-REJECT-FIN-CLOSED",
         "fields": {
           "seq": 0,
           "ack": 0
@@ -791,7 +792,17 @@
           },
           "timers": {}
         },
-        "emitted": []
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": 0,
+              "ack": 0,
+              "window": 16
+            }
+          }
+        ]
       }
     ]
   },
@@ -800,10 +811,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "86466113b226554a5a8ca28e8414f9aa4d5e0864211ebd69d543952ccf9c1950",
-    "initial.smt2": "05d0070e16b2e0f34237998ea729dd4f763a4bb26db07d4f10b87b36e7c67b7f",
-    "preservation.smt2": "ced7a129cd7f548eb57ebeee3dbbc14cf9193a312f089e238948859fd423ed2c",
-    "overlap.smt2": "a6addeaaae235cbf89f678b04f7d4bb5c4245c32aa0d47720ed576ba682227a7",
-    "sample.smt2": "f3e3136b5cc5b8819bb47c51c328060e50ac0cdbb7ddb71a630d209893d1aaa0"
+    "length-lemmas.smt2": "deb56fd6b0c0ab1985a9d543a75a6278d0dddb7333027411f455c77b7636d602",
+    "initial.smt2": "a28f5c3da216c389c06258d946cb024b2c6808594a49beb47277f81172694f58",
+    "preservation.smt2": "ea7930355bfc2beb22c62102137385341f5a6ade0aed5fa2b12bb5c5c183f8e3",
+    "overlap.smt2": "5d9ada07c97b8c6404612f749d5c125ed48f0ba3086780f86489cdcb522ae79d",
+    "sample.smt2": "54e9d4d131159a9c23c4eee20715c004717304c5d896a9ae39ae2a86ba14701f"
   }
 }

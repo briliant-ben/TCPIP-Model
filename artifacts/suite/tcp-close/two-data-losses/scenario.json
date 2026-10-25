@@ -1,0 +1,71 @@
+{
+  "scenario_version": "0.1",
+  "id": "two-data-losses",
+  "description": "two data losses",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [
+      "e0004:out:0",
+      "e0005:out:0"
+    ],
+    "assumptions": [
+      "Finite tcp-data profile; validated connection/packet/checksum; no advancing ACK or window update in payload events."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 3021,
+      "tick": true
+    },
+    {
+      "at_ms": 3030,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 8
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_nxt": 1005,
+      "snd_una": 1005,
+      "rto_ms": 4000,
+      "retries": 2
+    },
+    "timers": {}
+  }
+}

@@ -103,6 +103,7 @@
     "positive_timer_duration",
     "active_timer_not_in_past"
   ],
+  "preservation_query_strategy": "exact_selected_rule_substitution_fresh_solver",
   "preservation": [
     {
       "transition": "C-ACTIVE-OPEN",
@@ -682,7 +683,7 @@
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 4294967293,
+      "iss": 1644167167,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -732,23 +733,19 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "net.ack",
-        "origin": "network",
-        "transition": "C-REJECT-ACK-CLOSED",
-        "fields": {
-          "seq": 0,
-          "ack": 0,
-          "window": 0
-        },
+        "event": "app.connect",
+        "origin": "application",
+        "transition": "C-ACTIVE-OPEN",
+        "fields": {},
         "after": {
-          "state": "CLOSED",
+          "state": "SYN-SENT",
           "variables": {
-            "iss": 4294967293,
+            "iss": 1644167167,
             "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
+            "snd_una": 1644167167,
+            "snd_nxt": 1644167168,
             "rcv_nxt": 0,
-            "tx_seq": 1000,
+            "tx_seq": 1644167167,
             "tx_ack": 0,
             "tx_flags": "S",
             "rto_ms": 1000,
@@ -790,14 +787,17 @@
             "ack_advance": false,
             "ack_window_update": false
           },
-          "timers": {}
+          "timers": {
+            "rtx": 1000,
+            "user": 30000
+          }
         },
         "emitted": [
           {
             "message": "tcp",
             "fields": {
-              "flags": "R",
-              "seq": 0,
+              "flags": "S",
+              "seq": 1644167167,
               "ack": 0,
               "window": 16
             }
@@ -811,10 +811,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "d0383e1450f95b830af4bad1398c870af6f132af23b249e653326d7bc74373c2",
-    "initial.smt2": "dbf1d36b28820512442978827c6b2a82df437f06724ea443c6613bff01f38654",
-    "preservation.smt2": "b9c080a4eeceae6896dc890932839f83c71903322fcea193c72f7831bee08503",
-    "overlap.smt2": "972dc1298f66dc25cf1b77484d75abff1957232d6f0906db095ff136092b4151",
-    "sample.smt2": "e09b00410c22bdfe772904c032a0ea7e082f6c674f6247fdc8bf2746296e9dbd"
+    "length-lemmas.smt2": "41d37f8be8d2c9df07be26e104e3670604884e34b2a1f43d5b2cb12cf29b6ef1",
+    "initial.smt2": "d074ba4c9c24d9e389d8c64ffc88f4749e69d19b97d8047e09782364a07d484e",
+    "preservation.smt2": "0f55089452d5f889bf1f1a6bf994c202ea758dfb65f0335cd4665c9baa921ba2",
+    "overlap.smt2": "cd25514d9248594b8a2cdde8daa30fc2bd603f9fa6805df38e519ea52f955785",
+    "sample.smt2": "9bc44c3b9d14148cda1a3cbfea303d86947e35c2eb3794e2ccb8a084592e48de"
   }
 }

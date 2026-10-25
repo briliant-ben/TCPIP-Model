@@ -35,6 +35,7 @@ def prove(model, symbolic_initials=("iss",), out=None):
               "content_properties": "not_supported_by_length_projection",
               "reachability_of_failed_prestates": "not_claimed", "unbounded_protocol_proof": False,
               "runtime_properties": ["positive_timer_duration", "active_timer_not_in_past"],
+              "preservation_query_strategy": "exact_selected_rule_substitution_fresh_solver",
               "preservation": [], "overlap": []}
 
     # These solver obligations validate the length formulas against full Seq(BV8).
@@ -73,12 +74,20 @@ def prove(model, symbolic_initials=("iss",), out=None):
     post = [step.expr(i["assert"], new) for i in model["invariants"]]
     post += [z.Implies(new["active"][n], new["due"][n] >= new["now"]) for n in model["timers"]]
     step.solver.add(z.Or(z.Not(z.And(*post)), *step.action_faults))
-    preservation_script = [assertions(step.solver)]
+    # A preservation obligation fixes exactly one rule. Substitute that choice
+    # before solving, rather than retaining every unrelated transition and
+    # incremental learned clause in each case. This is exact constant reduction;
+    # no precondition, invariant, timer fault or byte domain is dropped.
+    preservation_base = list(step.solver.assertions())
+    preservation_script = []
     for j, rule in enumerate(model["transitions"]):
-        case = z.Int("choice_0") == j
-        preservation_script += [f"; {rule['id']}\n(push 1)\n(assert {case.sexpr()})\n(check-sat)\n(pop 1)\n"]
-        step.solver.push()
-        step.solver.add(case)
+        selected = z.IntVal(j)
+        step.solver = z.Solver()
+        step.solver.set(timeout=10000)
+        step.solver.add(*[z.simplify(z.substitute(a, (z.Int("choice_0"), selected)))
+                          for a in preservation_base])
+        step.solver.add(z.Int("choice_0") == selected)
+        preservation_script.append(f"; {rule['id']}\n(reset)\n" + step.solver.to_smt2())
         answer = step.solve()
         row = {"transition": rule["id"], "query": str(answer)}
         if answer == z.unknown:
@@ -90,7 +99,6 @@ def prove(model, symbolic_initials=("iss",), out=None):
                        projection=step.witness(solution),
                        failed_invariants=[i["id"] for i in model["invariants"] if not step.concrete(solution, step.expr(i["assert"], new))])
         result["preservation"].append(row)
-        step.solver.pop()
     files["preservation.smt2"] = "".join(preservation_script)
 
     overlap = arbitrary()

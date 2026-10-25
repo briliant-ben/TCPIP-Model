@@ -83,3 +83,25 @@ ACK/window 里程碑 9ca8d44 已经通过 GitHub 官方 SSH 443 端口推送（2
 Rocq 试点实际验收完成：提交 425f034 的 push 作业 40173581044 / job 121109429495 和 PR 作业 40173583793 均 success。六个冻结命题均 Closed under the global context；rocq check 报告 Modules were successfully checked；错误证明由编译器拒绝，注入公理由审计拒绝。包版本 9.2.0、实际展示版本 9.2 与锁定镜像 digest 一并保存。
 
 下载 artifact 12591032715，归档 SHA256 aa56254d616c8ae4ef0a1a57640eb56c653048041214b99fd322b5a02294b58a；逐项核对当前源码与全部产物哈希后保存 artifacts/rocq，含两份 .vo、精确命题源、编译/内核/公理/负控制日志及 CI 来源。不是本机执行，不是 Linux TCP 证据，不证明解释器/翻译器对应或 TCP 内容正确性。原平台 suite-verify、lwip-verify 再验收通过。下一协议实施项仍是带未确认数据的关闭/FIN 与恢复机制；Rocq 则继续扩展实际 AST 对应和内容/输出/时序契约。完整目标仍未完成。
+
+## 2026-10-25：待发送/在途数据与关闭组合（验收进行中）
+
+上一 goal turn 已推送 ACK/window 与 Rocq 原语证据，本轮核对分支 dd7880e，工作区干净。核对已保存及官方 RFC 9293 §3.10.4、§3.10.7.4 和 §3.6.1 后新增 tcp-close 声明式模型：fin_requested、fin_sent、fin_seq 显式记录关闭排队及控制序列空间；先分段此前 SEND，再发一个 FIN；ACK 删除真实字节前缀并单独确认 FIN。待发送/在途数据关闭、窗口阻塞 FIN、FIN-WAIT 重组、被动/同时关闭、未读字节保留和 abort/reset/user-timeout 清理均共用原变量和 rtx 定时器。
+
+初版任意前状态归纳暴露不可接受接收序列却提前转换 FIN 状态的问题，已将接收序列有效性加入转换 guard；ACK 分类统一使用 UNA 前向距离并显式记录 fin_acknowledged，避免重复模比较导致求解限时。修正后当时的 168 条保持、31 个 guard 组和 84 不变量义务通过；后续三个调度空操作及 LAST-ACK 返回行为还需随最终版本再验收。20 个新关闭场景与独立输出/故障测试检查内容、顺序、定时器和 FIN 计数；曾有一项测试把退避后当前 2s RTO 误写为 1s，已按实际 RFC 固定/退避语义修正，并把 FIN 丢包轨迹延伸至真正触发重传。
+
+目前 FIN-only 事件隐含保持对端窗口；提前/乱序 FIN 采取 ACK+drop 等待重传的有限策略，不声称完成乱序 FIN 缓存或 FIN+payload。数据/关闭独立实现证据、完整恢复仍待推进。未改动 Python IR 语义、形式后端、oracle 或上游 lwIP；原 Rocq 原语证据输入仍保持。最终回归/查询/证据结果在后续补记。
+
+最终 171 规则版本的 60 个完整字节固定输入重放全部 match，BMC unknown；状态归纳中一条 FIN-WAIT-1 接收保持义务为 unknown，其余义务通过，未宣称归纳通过。将原复合 guard 等价分割成四个互斥分支（未发送 FIN、接收序列不接受、非 FIN 确认、FIN 确认），输入域和原不变量未削减，展开规则数为 173。后续验收针对这个精确分区版本。
+
+173 规则的共享增量求解仍有两项 unknown，已连同精确查询保存在 artifacts/diagnostics（171 规则的原始 unknown 也单独保存）。改进通用归纳编码：每项保持义务先固定 choice，再等价常量化原约束，并使用新 Solver；保留所有前置不变量、后态违反条件、动作故障和全部逐规则枚举。未增大限时、未假定后态安全。首次该策略对同一 173 规则/84 不变量模型得到全部保持、31 guard 组通过；旧故障/导出查询回归与全部源码绑定证据仍需重建后验收。
+
+补充 peer FIN 先于本地分段到达的场景：进入 CLOSING 时本地 FIN 尚未发送，继续分段此前 SEND，再发送 FIN；精确输出顺序和完整字节后端匹配。关闭输入总数为 21（组合 profile 共 61），不是仅覆盖 FIN 已发出的同时关闭。最终源码版本全量 165 项测试通过；随后新增输入已独立执行并符号重放，继续纳入 profile 重建。
+
+重建过程中补充了第 21 个输入及范围说明，旧 60 输入快照被 suite-verify 正确拒绝为 stale，未改写旧哈希来通过；随后仅对变更的 close profile 完整重建 61 输入并重新聚合/验收其余已有效的五 profile。FIN-only 未观察 wire window，合成编码器默认窗口 65535 只是填充值，不是 FIN-window 行为证据；该真实字段的建模/实现接入仍待补齐。
+
+最终验收完成：六个 profile 当前输入/产物及命题绑定有效。close profile 61 个固定输入完整字节重放全部 match，合成 PCAP 的 codec/Difference 全部 match_synthetic_only；173 条保持、31 guard 组、84 不变量及非空完整字节样本重放通过。初值、长度原语、173 保持和 31 重叠查询在新 Z3 进程重新执行，全部 unsat，记录在 artifacts/tcp-close-query-check.json。旧主动打开/连接 depth=6 bounded_pass；四个数据 profile 原 BMC 仍 unknown，suite 仍 formal_pending_stack_incomplete。
+
+最终运行时版本全量 165 项 unittest 通过；补充的第 21 个关闭输入已通过当前 161 输入（含 101 连接回归）的场景测试和全部关闭场景完整字节符号重放；查询策略元数据/反例所选规则诊断也经针对性检查。lwIP 两连接执行成功、2750ms 差异保留，lwip-verify 通过；Linux 入口仍 not_run。Rocq 六原语的全部源和产物哈希未变，未声称新 TCP 或归纳后端已获 Rocq 证明。未改动上游 lwIP、oracle 或哈希门槛。
+
+后续继续 FIN 携带 payload、FIN 头部窗口与乱序 FIN 缓存，然后 RTT/RTO、delayed ACK、完整 persist、拥塞/恢复及独立实现数据闭环；UDP 等后续协议和实现精化仍未完成。完整目标保持 active。

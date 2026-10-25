@@ -15,6 +15,7 @@ GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP
 | `model/tcp-data.json` | IR 0.2 声明式组合连接模型；有限缓冲、分段、累计/部分 ACK、窗口、字节前缀重传和接收裁剪；数据恢复与完整 TCP 仍未完成 |
 | `model/tcp-reassembly.json` | 继承数据/连接模型，加入 16 位置显式乱序队列、多缺口重组、重复/重叠裁剪与回绕；一般 piggyback、FIN 数据和完整恢复仍未完成 |
 | `model/tcp-segments.json` | 继承重组/数据/连接模型，组合 ACK/window 与 payload，支持窗口收缩及有在途数据的零窗口探测；完整 persist、带数据关闭及恢复仍未完成 |
+| `model/tcp-close.json` | 组合待发送／在途数据、独立 FIN 序列标记、半关闭读取和 FIN-WAIT 重组；FIN+payload、乱序 FIN 缓存及完整恢复仍待实现 |
 
 2026-10-24：已恢复本地基线并推进 [IR 数据语义](docs/semantics.md) 和 [有限 TCP 数据切片](docs/tcp-data.md)。数据切片的 15 个场景具有参考轨迹和独立 Z3 固定输入重放；全输入混合查询可能为 `unknown`，suite 明确保留 `formal_pending`。这不影响旧模型的独立有界检查，也不将合成 PCAP 计为 Linux/lwIP 数据验证。持续实施记录见 [实施日志](docs/implementation-log.md)。
 
@@ -175,3 +176,5 @@ docs/                  语义、外部测试约定、里程碑
 [ACK/window 与 payload 组合](docs/tcp-segments.md)复用 26 个数据/重组场景并增加 14 个输入；109 条规则、84 个状态不变量及 14 个 guard 组分别检查。每个 profile 的 [claims.json 声明](docs/claims.md)绑定实际命题、假设、检查器版本和证据哈希；哈希验收不构成翻译器正确性或 Rocq 内核证明。
 
 [Rocq 原语试点](formal/rocq/README.md)已在锁定 9.2.0 容器中完成六个通用值运算命题的编译、公理审计与 proof object 内核复查，错误证明和公理注入负控制通过；证据见 artifacts/rocq。它不证明 TCP 行为、Python/SMT 翻译或实际协议栈，不能替换上述 Z3 unknown。
+
+[数据与关闭组合](docs/tcp-close.md)保留此前 40 个输入并新增 21 个关闭场景；FIN 与字节队列分别计数，共享一个重传定时器。未宣称完整 TCP 关闭、恢复或数据实机闭环。

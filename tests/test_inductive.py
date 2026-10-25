@@ -28,6 +28,7 @@ class InductiveTests(unittest.TestCase):
         self.assertEqual(len(r["preservation"]), len(self.model["transitions"]))
         self.assertTrue(all(x["query"] == "unsat" for x in r["preservation"] + r["overlap"]))
         self.assertEqual(r["replay"]["status"], "match")
+        self.assertEqual(r["preservation_query_strategy"], "exact_selected_rule_substitution_fresh_solver")
         self.assertFalse(r["unbounded_protocol_proof"])
         self.assertEqual(verify(self.model, self.out)["status"], "valid_inductive_artifacts")
 
@@ -52,6 +53,7 @@ class InductiveTests(unittest.TestCase):
         self.assertEqual(row["query"], "sat")
         self.assertEqual(row["classification"], "inductive_obligation_failure_not_reachability_proof")
         self.assertIn("C-INV-OUTSTANDING-CONTROL", row["failed_invariants"])
+        self.assertEqual(row["projection"]["steps"][0]["transition"], "C-SIMULTANEOUS-SYN")
 
     def test_three_reachable_data_mutations_fail_preservation(self):
         model = copy.deepcopy(self.model)

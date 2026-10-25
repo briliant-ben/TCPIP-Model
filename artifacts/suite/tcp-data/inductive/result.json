@@ -66,6 +66,7 @@
     "positive_timer_duration",
     "active_timer_not_in_past"
   ],
+  "preservation_query_strategy": "exact_selected_rule_substitution_fresh_solver",
   "preservation": [
     {
       "transition": "C-ACTIVE-OPEN",
@@ -685,7 +686,7 @@
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 4227858431,
+      "iss": 4294967293,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -711,19 +712,21 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "app.connect",
-        "origin": "application",
-        "transition": "C-ACTIVE-OPEN",
-        "fields": {},
+        "event": "net.syn",
+        "origin": "network",
+        "transition": "C-CLOSED-SYN",
+        "fields": {
+          "seq": 0
+        },
         "after": {
-          "state": "SYN-SENT",
+          "state": "CLOSED",
           "variables": {
-            "iss": 4227858431,
+            "iss": 4294967293,
             "irs": 0,
-            "snd_una": 4227858431,
-            "snd_nxt": 4227858432,
+            "snd_una": 1000,
+            "snd_nxt": 1000,
             "rcv_nxt": 0,
-            "tx_seq": 4227858431,
+            "tx_seq": 1000,
             "tx_ack": 0,
             "tx_flags": "S",
             "rto_ms": 1000,
@@ -741,18 +744,15 @@
             "take": 0,
             "rx_chunk": []
           },
-          "timers": {
-            "rtx": 1000,
-            "user": 30000
-          }
+          "timers": {}
         },
         "emitted": [
           {
             "message": "tcp",
             "fields": {
-              "flags": "S",
-              "seq": 4227858431,
-              "ack": 0,
+              "flags": "RA",
+              "seq": 0,
+              "ack": 1,
               "window": 16
             }
           }
@@ -767,8 +767,8 @@
   "query_hashes": {
     "length-lemmas.smt2": "d6432c5e80cecf3344faac14fbd8b18eaf37fcb0ae20e98726e4e49d47248840",
     "initial.smt2": "58793d13f0077b74d192339e8a5a9272d5b2c754caac0e7f3b135ff917764b43",
-    "preservation.smt2": "247a2b56ea67f43dc57ab79edafef702bd9f305faecf0952c572b97e9ba207a5",
-    "overlap.smt2": "d52b81fc19d021371602f2878f5b51d7b9959cf7f58e31090ae0936764d9a635",
-    "sample.smt2": "950d284695ddcfb4605d60beb8d4f9962cc7e927b8bf7e26160f74f7d4be277e"
+    "preservation.smt2": "22fbe1454b0d2af002d7919f51041e8c770aca4b0cbc496e0d82abede7dd1695",
+    "overlap.smt2": "0d26217ad48c4b5c0a35a3babc9a2e65578793d1c1ea157471163718e06165fb",
+    "sample.smt2": "fe2fa6f36ddc12ef11334883967b0b3584abaab361264e944b06e10d7cafbc5d"
   }
 }

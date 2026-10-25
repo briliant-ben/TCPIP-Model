@@ -1,0 +1,106 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-zero-window-pending-fin",
+  "description": "Finite close/data/FIN composition; independent final-state and timer expectations",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          128,
+          255,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 0
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "app.close"
+    },
+    {
+      "tick": true,
+      "at_ms": 1021
+    },
+    {
+      "at_ms": 1100,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1007,
+        "window": 0
+      }
+    },
+    {
+      "at_ms": 1110,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 1200,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1007,
+        "window": 1
+      }
+    },
+    {
+      "at_ms": 1201,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 1300,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1008,
+        "window": 1
+      }
+    }
+  ],
+  "expect": {
+    "state": "FIN-WAIT-2",
+    "timers": {
+      "user": 30040
+    },
+    "variables": {
+      "fin_seq": 1007,
+      "snd_nxt": 1008,
+      "fin_sent": false,
+      "snd_buf": []
+    }
+  }
+}

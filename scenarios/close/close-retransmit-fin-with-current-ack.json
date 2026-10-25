@@ -1,0 +1,55 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-retransmit-fin-with-current-ack",
+  "description": "Finite close/data/FIN composition; independent final-state and timer expectations",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.close"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001
+      }
+    },
+    {
+      "tick": true,
+      "at_ms": 1020
+    },
+    {
+      "at_ms": 1100,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9002,
+        "ack": 1002,
+        "window": 8
+      }
+    }
+  ],
+  "expect": {
+    "state": "TIME-WAIT",
+    "timers": {
+      "time_wait": 121100
+    },
+    "variables": {
+      "snd_nxt": 1002,
+      "rcv_nxt": 9002
+    }
+  }
+}

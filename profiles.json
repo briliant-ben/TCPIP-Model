@@ -47,13 +47,27 @@
       "symbolic_replay": true,
       "wire_projection": "tcp-data-v1",
       "inductive": true
+    },
+    {
+      "id": "tcp-close",
+      "model": "model/tcp-close.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments",
+        "scenarios/close"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-data-v1",
+      "inductive": true
     }
   ],
   "pending_modules": [
     {
       "id": "tcp-data",
       "status": "partial_finite_data_profile",
-      "scope": "finite buffers, segmentation, cumulative/partial ACK, multi-hole reassembly, accepted ACK+payload/window composition and window shrinking; closing with data and full recovery pending"
+      "scope": "finite data/ACK/window/reassembly plus close with queued or outstanding bytes and separate FIN; FIN+payload, queued FIN and full recovery pending"
     },
     {
       "id": "tcp-recovery",

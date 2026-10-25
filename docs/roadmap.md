@@ -49,3 +49,9 @@ ACK/window 与 payload 已在 tcp-segments 有限 profile 中组合：接收序�
 TCP 后按 UDP、IPv4、ICMP、ARP、IPv6/NDP、socket 和跨层组合推进，分别明确规范、范围和验收。M4 的其他协议示例不取代这一实施顺序。
 
 Rocq 首个原语试点已实际通过锁定容器的编译、空公理审计和 proof object 复查（六个切片/拼接/模加法命题，含两个负控制）。当前只是通用值语义数学引理；接下来需要验证其与实际 IR AST 解释/翻译的对应，并扩大到字节内容和输出/时序契约。该结果不提升 TCP profile 的 BMC 状态，也不计作 Linux TCP 实机证据。
+
+## 2026-10-25：数据与关闭的有限组合
+
+新增 tcp-close profile，把待发送/在途字节与 FIN 控制序列号分开计数，保持一个重传定时器。支持未排空关闭、FIN 前分段、部分 ACK/数据与 FIN 分别重传、被动/同时关闭、FIN-WAIT 重组、未读字节保留、零窗口延后 FIN 和清理。范围文档见 tcp-close.md。FIN-only 的队列缓存、FIN 携带 payload、FIN 头部窗口更新及完整重置处理仍须继续补齐，再进入 RTT/RTO、delayed ACK、完整 persist、拥塞与恢复。有限 profile 仍不代表整个 M3 完成。
+
+当前 close 的 173 条状态保持与 31 guard 组通过，61 输入完整字节重放匹配；原始 depth=6 BMC unknown 保留。独立 Z3 进程复查全部导出义务也通过。逐规则保持采用等价固定 choice/新 Solver，历史共享求解 unknown 保存在 diagnostics，未削减不变量或规则；字节内容、输出、时序的通用正确性及实现对应仍须后续证明。
