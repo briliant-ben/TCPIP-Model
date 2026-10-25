@@ -123,3 +123,5 @@ Rocq 试点实际验收完成：提交 425f034 的 push 作业 40173581044 / job
 旧投影仍拒绝 FIN payload，新投影逐项比较原字段和窗口/字节，未放宽 oracle。漏目标、错 FIN 消费、缺少 EOF 尾部裁剪、重复 EOF、自动定时器输出遗漏/乱序及错误字面值类型均有正反测试。历史 unknown 查询和一次固定重放限时日志保存在 diagnostics，不当作当前通过证据。lwIP 两连接执行成功、2750ms 差异保持，lwip-verify 通过；本机 Linux 入口仍 not_run。
 
 Rocq 原语的旧源绑定已过期，以下提交将触发锁定工具链 CI 真正重检，再下载并逐项核对新证据。该原语证明不会提升为 post-target 翻译或 TCP/实现正确性证明。完整恢复、独立数据/关闭实现观测和后续协议仍未完成，目标保持 active。
+
+Rocq 新源绑定已实际验收：提交 27d3ae2 的 push 作业 40209751198 / job 121218249808 和 PR 作业 40209753935 均 success。六个命题均 Closed under the global context，rocq check 成功，错误证明和注入公理负控制通过。下载 artifact 12605034480，归档 SHA256 483d61c8fbff1d512015f0038153e3c24f0afa7fa5238762ea046831508b04f8；核对全部当前输入和产物哈希后更新 artifacts/rocq 及 CI 来源。只是通用原语的新绑定，不是 post-target 翻译、TCP 内容/时序或实现精化证明，也不是 Linux TCP 证据。
