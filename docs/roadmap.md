@@ -47,3 +47,5 @@ ACK/window 与 payload 已在 tcp-segments 有限 profile 中组合：接收序�
 借鉴 Anthropic/Theorem 的可检查证明流程（见 research/2026-10-25-anthropic-formal-verification.md），保持 IR 与 Z3；新增命题/假设/检查器/产物绑定，随后增量试点 Rocq 的通用 IR 语义引理，再验证解释、翻译及实现对应。未安装检查器或未完成检查时必须标为 not_run，不能以证明文本替代检查。字节内容、输出顺序与时序契约逐步增强；长度归纳和场景匹配不足以证明这些通用性质。
 
 TCP 后按 UDP、IPv4、ICMP、ARP、IPv6/NDP、socket 和跨层组合推进，分别明确规范、范围和验收。M4 的其他协议示例不取代这一实施顺序。
+
+Rocq 首个原语试点已实际通过锁定容器的编译、空公理审计和 proof object 复查（六个切片/拼接/模加法命题，含两个负控制）。当前只是通用值语义数学引理；接下来需要验证其与实际 IR AST 解释/翻译的对应，并扩大到字节内容和输出/时序契约。该结果不提升 TCP profile 的 BMC 状态，也不计作 Linux TCP 实机证据。

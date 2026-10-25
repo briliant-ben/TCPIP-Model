@@ -79,3 +79,7 @@ ACK/window 里程碑 9ca8d44 已经通过 GitHub 官方 SSH 443 端口推送（2
 首轮 CI 未通过版本门槛：官方 9.2.0 镜像的编译器实际打印 9.2；未执行后续证明。修正为记录实际展示版本并在锁定容器内额外检查已安装 rocq-runtime 包版本 9.2.0，保留精确 digest；没有放宽证明或公理门槛。
 
 第二轮 CI 已通过六个命题编译、公理审计和精确包版本检查；后续内核复查因命令拼写 chk 被官方 CLI 拒绝。根据实际 help 修正为 rocq check；此前没有将编译通过升级为整个试点通过。
+
+Rocq 试点实际验收完成：提交 425f034 的 push 作业 40173581044 / job 121109429495 和 PR 作业 40173583793 均 success。六个冻结命题均 Closed under the global context；rocq check 报告 Modules were successfully checked；错误证明由编译器拒绝，注入公理由审计拒绝。包版本 9.2.0、实际展示版本 9.2 与锁定镜像 digest 一并保存。
+
+下载 artifact 12591032715，归档 SHA256 aa56254d616c8ae4ef0a1a57640eb56c653048041214b99fd322b5a02294b58a；逐项核对当前源码与全部产物哈希后保存 artifacts/rocq，含两份 .vo、精确命题源、编译/内核/公理/负控制日志及 CI 来源。不是本机执行，不是 Linux TCP 证据，不证明解释器/翻译器对应或 TCP 内容正确性。原平台 suite-verify、lwip-verify 再验收通过。下一协议实施项仍是带未确认数据的关闭/FIN 与恢复机制；Rocq 则继续扩展实际 AST 对应和内容/输出/时序契约。完整目标仍未完成。
