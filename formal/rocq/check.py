@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -61,13 +62,21 @@ def check(out, docker=False):
             result['commands'].append({'command': args, 'container_prefix': prefix if docker else [],
                 'returncode': completed.returncode, 'log': name+'.log'})
             if success and completed.returncode != 0:
+                print(output, flush=True)
                 raise RuntimeError(f'{name} failed ({completed.returncode})')
             return completed.returncode, output
         try:
             _, version = run('version', ['rocq', 'compile', '--version'])
             result['checker_version'] = version.strip()
-            if '9.2.0' not in version:
-                raise RuntimeError('Expected locked Rocq 9.2.0')
+            # Rocq 9.2.0 reports its compiler version as 9.2. The pinned
+            # image plus installed package metadata binds the patch release.
+            if not re.search(r'version 9\.2(?:\.0)?(?:\s|$)', version):
+                raise RuntimeError('Expected Rocq 9.2 compiler')
+            if docker:
+                _, package_version = run('package-version', ['opam', 'var', 'rocq-runtime:version'])
+                result['checker_package_version'] = package_version.strip()
+                if package_version.strip() != '9.2.0':
+                    raise RuntimeError('Expected locked rocq-runtime 9.2.0 package')
             run('primitives', ['rocq', 'compile', '-Q', '.', 'ProtocolIR', 'IRPrimitives.v'])
             _, audit = run('assumptions', ['rocq', 'compile', '-Q', '.', 'ProtocolIR', 'Check.v'])
             if not closed(audit, len(THEOREMS)):
@@ -94,6 +103,7 @@ def check(out, docker=False):
                                  if p.is_file() and p.name != 'result.json'}
     result['statement_sha256'] = result['input_hashes']['formal/rocq/Check.v']
     save()
+    print(result['status'] + ': ' + result.get('reason', 'six audited primitive lemmas'), flush=True)
     return 0 if result['kernel_checked_proof'] else 1
 
 
