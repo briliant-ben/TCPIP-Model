@@ -11,7 +11,7 @@ from protocol_lab.flow import ROOT, read, run_scenario, write
 from protocol_lab.ir import HALF, MOD, Machine, ModelError, Uncovered, load, model_files
 from protocol_lab.packets import compare, write_pcap
 from protocol_lab.profiles import control_packets, profile_inputs, run_profile
-from protocol_lab.symbolic import crosscheck_trace, encode_trace, replay
+from protocol_lab.symbolic import crosscheck_trace, encode_trace, model_hash, replay
 
 
 def established(window=8, initial=None):
@@ -261,7 +261,8 @@ class SymbolicTCPDataTests(unittest.TestCase):
                 out.mkdir()
                 for name in ("result.json", "model.smt2", "overlap.smt2"):
                     (out / name).write_text("{}")
-                return {"status": "unknown", "depth": 6}
+                return {"status": "unknown", "depth": 6, "backend": "z3-bmc",
+                        "model_semantic_sha256": model_hash(args[0]), "solver_version": "unit-fixture"}
             with patch("protocol_lab.profiles.check", side_effect=inconclusive):
                 result = run_profile(profile, tmp, formal=True)
             self.assertEqual(result["status"], "formal_pending")

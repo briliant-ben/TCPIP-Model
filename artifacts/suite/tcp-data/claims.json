@@ -1,0 +1,2607 @@
+{
+  "claims_version": "0.1",
+  "profile": "tcp-data",
+  "model_semantic_sha256": "7d94b7dc5d1822714329c854450a55d4a1be60242fe37c1a2f70e4f36e59faaf",
+  "assumptions": {
+    "model_scope": {
+      "terminal_states": [],
+      "excluded": [
+        "full TCP conformance",
+        "data outside ESTABLISHED",
+        "close with undrained buffers",
+        "ACK advancement or window update piggybacked on payload",
+        "out-of-order reassembly queue (future segments are discarded with duplicate ACK)",
+        "window shrinking below remaining flight",
+        "congestion control and fast recovery",
+        "RTT estimator and Karn algorithm",
+        "delayed ACK and persist",
+        "SACK/options/multiple connections"
+      ]
+    },
+    "semantics": "flat-efsm-atomic-ordered-v1",
+    "ir_version": "0.2",
+    "environment_requirements": {
+      "CONNECTION-PROFILE": {
+        "source": "docs/tcp-data.md",
+        "interpretation": "Inherited single-connection control paths retain validated control shapes, exact sequence checks and configurable user/MSL deadlines. The data extension supersedes the base zero-payload assumption only in ESTABLISHED, within the explicit DATA-SCOPE boundary; data in other lifecycle states remains excluded.",
+        "kind": "environment_assumption",
+        "strength": "assumption"
+      },
+      "DATA-SCOPE": {
+        "source": "docs/tcp-data.md",
+        "interpretation": "Finite single-connection profile, 16-byte send and receive capacity, MSS=4, handshake-advertised peer window, immediate ACK and explicit flush scheduler. Future/out-of-order data discarded without reassembly. Close requires buffers drained. No implementation conformance claim.",
+        "category": "environment_assumption",
+        "strength": "profile_choice"
+      }
+    }
+  },
+  "input_hashes": {
+    "model/tcp-data.json": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
+    "model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
+    "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+    "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
+    "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
+    "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+    "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+    "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+    "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+    "protocol_lab/inductive.py": "c4faa70fad24f3e0b393d8b4397f084153aae8610d3b36184fd9dc34ce692146",
+    "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+    "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+    "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+    "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
+    "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73",
+    "scenarios/data/discard-data-on-app-abort.json": "8cbb307923060ff8915bde20ed28fcb99b53b6c30ae1461ec5d3370a8c71d464",
+    "scenarios/data/discard-data-on-net-rst.json": "310adaaf3875122417de1204c6dfd583b7c720515f02642913a390f94da4bc51",
+    "scenarios/data/discard-data-on-net-rstack.json": "20a2cc996478a470e6498346141d137d5266a71e9c700e1e3857a3b2d2efff32",
+    "scenarios/data/drain-before-active-close.json": "87ca3b78e730381cf96c0318a657b438505347d668c6ade64b9312f3d6ab97cf",
+    "scenarios/data/duplicate-old-future-ack.json": "47c3f14a8a5f0a4a6fce15221dffea929c9c3b39f5e88fcdb4c9782028bbe04e",
+    "scenarios/data/partial-ack-retransmission.json": "38cb60f621f49df8235e06754dce6af69a838455a8b90a72f56de2c80341675c",
+    "scenarios/data/receive-ahead-then-retransmit.json": "b860e1ac881fc633fca00ebaaf07dc43cd21900c1343cd38d3c78295b709a6a3",
+    "scenarios/data/receive-overlap.json": "ccb670c9298f79617ea9a3ad17a721932e1a19e054bb91b8a6f81f0f5ec7dec2",
+    "scenarios/data/receive-read-duplicate.json": "e827a658312ea81131fdc213af554dd3712b1e483cbae146952fbb2db9a998f8",
+    "scenarios/data/receive-right-edge-zero-window.json": "b2bdb27a9da0cad5dc60e0f4df4349a1d4c4bcdc6538871df273ca0cc9669370",
+    "scenarios/data/segmentation-cumulative-ack.json": "b0caf9fd68c470ab63667bd7ce3968ad1d9ef48c4aa61382c4fbc629b81d17a3",
+    "scenarios/data/send-buffer-full.json": "dfc63a76368429066c225a22bb592d0c1eb66f4025a082bd656cd62b946bd69d",
+    "scenarios/data/sequence-wrap-data.json": "ec7f3a7517cf6b5b80625b26cb1325ff32cef71baa47f2a8371efdfff63cbae5",
+    "scenarios/data/two-data-losses.json": "dd05b90e1800d7b5a5807dc40906c089edbfc08135cff2ab45de58d27fe5c9db",
+    "scenarios/data/zero-window-reopen.json": "2119bbdc6243a0800768ea7851b26b177037f5f5c2bb275aae38f679605f1b47",
+    "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
+    "profiles.json": "45f7bfcda3badf7e5ee6f6b6a5b0c8c53b01f5986bc0d6ce53f90ea6ed5fb3a2",
+    "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
+    "docs/semantics.md": "71c9c894129fe0ea68f9003583b26cf0f02331cfa16509974de3e1459884ab2c",
+    "docs/inductive.md": "d801b9a78614dc63b5912426725d003936f3a05872aef221e6acf96f4be7a540",
+    "docs/claims.md": "38047139d04e3e3c5a677d24c4c6ea006a762dc1fb244922213230677902dfeb",
+    "formal/README.md": "05f60e3c28b14acce3e67b139c57ce21765f589fb137728181881d9584648c25",
+    "packet-profile.json": "8585bfeb9e967e0329ca5b011db4ed71a50e537df4b6c56b3cb328585d112fd9",
+    "docs/tcp-data.md": "f3e800456870da2c22283c065e858d442d181aed377b3e8b04e39d101f27b393"
+  },
+  "claims": [
+    {
+      "id": "bounded-state",
+      "statement": {
+        "kind": "bounded_state_safety_and_guard_overlap",
+        "defined_transitions_only": true,
+        "invariants": [
+          {
+            "id": "C-INV-TIMER-CLOSED-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-ESTABLISHED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-ESTABLISHED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-OUTSTANDING-CONTROL",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            {
+                              "op": "or",
+                              "args": [
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    false,
+                                    {
+                                      "state": "SYN-SENT"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "state": "SYN-RECEIVED"
+                                }
+                              ]
+                            },
+                            {
+                              "state": "FIN-WAIT-1"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "CLOSING"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "LAST-ACK"
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_nxt"
+                        },
+                        {
+                          "op": "seq_add",
+                          "args": [
+                            {
+                              "var": "tx_seq"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "var": "tx_seq"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-rto_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                1000
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-retries",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                0
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-msl_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "msl_ms"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-user_timeout_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "user_timeout_ms"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "C-INV-SYN-SENT-ISS",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "var": "iss"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-TIMER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-SEQUENCE-BUFFER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_nxt"
+                    },
+                    {
+                      "op": "seq_add",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-SEND-CAPACITY",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                16
+              ]
+            }
+          },
+          {
+            "id": "D-INV-RECEIVE-CAPACITY",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rcv_buf"
+                    }
+                  ]
+                },
+                16
+              ]
+            }
+          },
+          {
+            "id": "D-INV-WINDOW",
+            "assert": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "var": "snd_wnd"
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "var": "snd_wnd"
+                    },
+                    65535
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-NO-DATA-OUTSIDE-ESTABLISHED",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "state": "ESTABLISHED"
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "bytes_len",
+                                  "args": [
+                                    {
+                                      "var": "snd_buf"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rtx_buf"
+                                }
+                              ]
+                            },
+                            0
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-ADVERTISED-WINDOW",
+            "assert": {
+              "op": "eq",
+              "args": [
+                {
+                  "var": "local_window"
+                },
+                {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-CONTROL-DRAINED",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            false,
+                            {
+                              "state": "CLOSE-WAIT"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "FIN-WAIT-2"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "TIME-WAIT"
+                    }
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "var": "snd_nxt"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-FLIGHT-WINDOW",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    }
+                  ]
+                },
+                {
+                  "var": "snd_wnd"
+                }
+              ]
+            }
+          }
+        ],
+        "runtime_properties": [
+          "positive_timer_duration"
+        ],
+        "depth": 6,
+        "symbolic_initials": [
+          "iss"
+        ],
+        "other_initial_values": "declared_IR_initial_values",
+        "event_domain": "all_typed_values",
+        "sequence_width": 32,
+        "time": "unbounded_integer_ms",
+        "unbounded": false
+      },
+      "proposition_sha256": "8c8658beb5bb7cbe15a3db16b403c0906af8f14d849e8162336ed7fe6f3d074a",
+      "status": "unknown",
+      "checker": "z3-bmc",
+      "checker_version": "4.15.4",
+      "checker_code_hashes": {
+        "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+        "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
+        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
+        "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+        "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+        "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+        "protocol_lab/inductive.py": "c4faa70fad24f3e0b393d8b4397f084153aae8610d3b36184fd9dc34ce692146",
+        "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+        "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+        "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
+        "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73"
+      },
+      "evidence_hashes": {
+        "formal/result.json": "5aa4ea753f501932658209347a853b735c02a7169854b03f6d58c9b3ab1dd945",
+        "formal/model.smt2": "9f0b10395de68bfce677ef17c48f08948b56add2b24ecf363cbee45ff2b02136",
+        "formal/overlap.smt2": "7a1e0ad0e5252a52aeb448106c3fbbf305e06b29cc91d9d01c4f0a526e50f919"
+      },
+      "kernel_checked_proof": false,
+      "trusted_components": [
+        "IR parsing and validation",
+        "IR-to-solver translation",
+        "Z3 solver",
+        "Python checker/evidence integration"
+      ],
+      "solver_result": {
+        "status": "unknown",
+        "safety_query": "unknown",
+        "overlap_query": "unknown",
+        "reason": "canceled"
+      }
+    },
+    {
+      "id": "inductive-state",
+      "statement": {
+        "kind": "initial_and_per_rule_invariant_preservation_and_guard_groups",
+        "invariants": [
+          {
+            "id": "C-INV-TIMER-CLOSED-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-ESTABLISHED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-ESTABLISHED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-OUTSTANDING-CONTROL",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            {
+                              "op": "or",
+                              "args": [
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    false,
+                                    {
+                                      "state": "SYN-SENT"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "state": "SYN-RECEIVED"
+                                }
+                              ]
+                            },
+                            {
+                              "state": "FIN-WAIT-1"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "CLOSING"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "LAST-ACK"
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_nxt"
+                        },
+                        {
+                          "op": "seq_add",
+                          "args": [
+                            {
+                              "var": "tx_seq"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "var": "tx_seq"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-rto_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                1000
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-retries",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                0
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-msl_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "msl_ms"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-user_timeout_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "user_timeout_ms"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "C-INV-SYN-SENT-ISS",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "var": "iss"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-TIMER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-SEQUENCE-BUFFER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_nxt"
+                    },
+                    {
+                      "op": "seq_add",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-SEND-CAPACITY",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                16
+              ]
+            }
+          },
+          {
+            "id": "D-INV-RECEIVE-CAPACITY",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rcv_buf"
+                    }
+                  ]
+                },
+                16
+              ]
+            }
+          },
+          {
+            "id": "D-INV-WINDOW",
+            "assert": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "var": "snd_wnd"
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "var": "snd_wnd"
+                    },
+                    65535
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-NO-DATA-OUTSIDE-ESTABLISHED",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "state": "ESTABLISHED"
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "bytes_len",
+                                  "args": [
+                                    {
+                                      "var": "snd_buf"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rtx_buf"
+                                }
+                              ]
+                            },
+                            0
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-ADVERTISED-WINDOW",
+            "assert": {
+              "op": "eq",
+              "args": [
+                {
+                  "var": "local_window"
+                },
+                {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-CONTROL-DRAINED",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            false,
+                            {
+                              "state": "CLOSE-WAIT"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "FIN-WAIT-2"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "TIME-WAIT"
+                    }
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "var": "snd_nxt"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-FLIGHT-WINDOW",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    }
+                  ]
+                },
+                {
+                  "var": "snd_wnd"
+                }
+              ]
+            }
+          }
+        ],
+        "rules": [
+          "C-ACTIVE-OPEN",
+          "C-PASSIVE-OPEN",
+          "C-LISTEN-SYN",
+          "C-SIMULTANEOUS-SYN",
+          "C-ACCEPT-SYNACK",
+          "C-ACCEPT-ACK",
+          "C-SIMULTANEOUS-SYNACK",
+          "C-ACCEPT-SYNACK-AFTER-RETRY",
+          "C-ACCEPT-ACK-AFTER-RETRY",
+          "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+          "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+          "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+          "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+          "C-SYN-SENT-BAD-ACK",
+          "C-SYN-SENT-BAD-SYNACK",
+          "C-SYN-SENT-BARE-ACK",
+          "C-SYN-RECEIVED-BAD-ACK",
+          "C-CLOSE-ESTABLISHED",
+          "C-CLOSE-CLOSE-WAIT",
+          "C-CLOSE-LISTEN",
+          "C-CLOSE-SYN-SENT",
+          "C-REPEATED-CLOSE-FIN-WAIT-1",
+          "C-REPEATED-CLOSE-FIN-WAIT-2",
+          "C-REPEATED-CLOSE-CLOSING",
+          "C-REPEATED-CLOSE-LAST-ACK",
+          "C-REPEATED-CLOSE-TIME-WAIT",
+          "C-DUPLICATE-ACK-CLOSE-WAIT",
+          "C-DUPLICATE-ACK-FIN-WAIT-2",
+          "C-FIN-ACK-FIN-WAIT-1",
+          "C-OLD-ACK-FIN-WAIT-1",
+          "C-FIN-ACK-CLOSING",
+          "C-OLD-ACK-CLOSING",
+          "C-FIN-ACK-LAST-ACK",
+          "C-OLD-ACK-LAST-ACK",
+          "C-PEER-FIN",
+          "C-PEER-FIN-FW2",
+          "C-PEER-FIN-FW1-ACKED",
+          "C-SIMULTANEOUS-FIN",
+          "C-DUPLICATE-FIN-CLOSE-WAIT",
+          "C-DUPLICATE-FIN-CLOSING",
+          "C-DUPLICATE-FIN-LAST-ACK",
+          "C-DUPLICATE-FIN-TIME-WAIT",
+          "C-RETRANSMIT-SYN-SENT",
+          "C-RETRANSMIT-SYN-RECEIVED",
+          "C-RETRANSMIT-FIN-WAIT-1",
+          "C-RETRANSMIT-CLOSING",
+          "C-RETRANSMIT-LAST-ACK",
+          "C-USER-TIMEOUT-SYN-SENT",
+          "C-USER-TIMEOUT-SYN-RECEIVED",
+          "C-USER-TIMEOUT-FIN-WAIT-1",
+          "C-USER-TIMEOUT-FIN-WAIT-2",
+          "C-USER-TIMEOUT-CLOSING",
+          "C-USER-TIMEOUT-LAST-ACK",
+          "C-TIME-WAIT-EXPIRED",
+          "C-ABORT-CLOSED",
+          "C-ABORT-LISTEN",
+          "C-ABORT-SYN-SENT",
+          "C-ABORT-SYN-RECEIVED",
+          "C-ABORT-ESTABLISHED",
+          "C-ABORT-FIN-WAIT-1",
+          "C-ABORT-FIN-WAIT-2",
+          "C-ABORT-CLOSE-WAIT",
+          "C-ABORT-CLOSING",
+          "C-ABORT-LAST-ACK",
+          "C-ABORT-TIME-WAIT",
+          "C-IGNORE-NET-RST-CLOSED",
+          "C-IGNORE-NET-RST-LISTEN",
+          "C-SYN-SENT-NET-RST",
+          "C-SYN-RECEIVED-NET-RST-PASSIVE",
+          "C-SYN-RECEIVED-NET-RST-ACTIVE",
+          "C-RESET-ESTABLISHED-rst",
+          "C-RESET-FIN-WAIT-1-rst",
+          "C-RESET-FIN-WAIT-2-rst",
+          "C-RESET-CLOSE-WAIT-rst",
+          "C-RESET-CLOSING-rst",
+          "C-RESET-LAST-ACK-rst",
+          "C-RESET-TIME-WAIT-rst",
+          "C-IGNORE-NET-RSTACK-CLOSED",
+          "C-IGNORE-NET-RSTACK-LISTEN",
+          "C-SYN-SENT-NET-RSTACK",
+          "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+          "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+          "C-RESET-ESTABLISHED-rstack",
+          "C-RESET-FIN-WAIT-1-rstack",
+          "C-RESET-FIN-WAIT-2-rstack",
+          "C-RESET-CLOSE-WAIT-rstack",
+          "C-RESET-CLOSING-rstack",
+          "C-RESET-LAST-ACK-rstack",
+          "C-RESET-TIME-WAIT-rstack",
+          "C-REJECT-ACK-CLOSED",
+          "C-REJECT-ACK-LISTEN",
+          "C-REJECT-SYNACK-CLOSED",
+          "C-REJECT-SYNACK-LISTEN",
+          "C-REJECT-FIN-CLOSED",
+          "C-REJECT-FIN-LISTEN",
+          "C-CLOSED-SYN",
+          "D-QUEUE",
+          "D-SEND-EMPTY",
+          "D-SEND-FULL",
+          "D-FLUSH-FIRST",
+          "D-FLUSH-MORE",
+          "D-FLUSH-BLOCKED",
+          "D-ACK-FULL-WINDOW",
+          "D-ACK-FULL-STALE-WINDOW",
+          "D-ACK-PARTIAL-WINDOW",
+          "D-ACK-PARTIAL-STALE-WINDOW",
+          "D-ACK-DUP-WINDOW",
+          "D-ACK-DUP-STALE-WINDOW",
+          "D-ACK-OLD",
+          "D-ACK-FUTURE",
+          "D-RETRANSMIT",
+          "D-RECEIVE-IN-ORDER",
+          "D-RECEIVE-OVERLAP",
+          "D-RECEIVE-DUPLICATE",
+          "D-RECEIVE-AHEAD",
+          "D-RECEIVE-ZERO-WINDOW",
+          "D-APPLICATION-READ"
+        ],
+        "prestate_assumption": "typed_state_and_all_listed_invariants",
+        "poststate_invariants_assumed": false,
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain",
+        "content_properties": "not_supported_by_length_projection",
+        "protocol_completeness": false
+      },
+      "proposition_sha256": "2ed55dc9fff930fd04898dbb0f5fc7a4e5ef0c0e89bb747ee7139ff7036c185c",
+      "status": "verified_inductive_state_properties",
+      "checker": "z3-invariant-induction",
+      "checker_version": "4.15.4",
+      "checker_code_hashes": {
+        "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+        "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
+        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
+        "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+        "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+        "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+        "protocol_lab/inductive.py": "c4faa70fad24f3e0b393d8b4397f084153aae8610d3b36184fd9dc34ce692146",
+        "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+        "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+        "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
+        "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73"
+      },
+      "evidence_hashes": {
+        "inductive/length-lemmas.smt2": "d6432c5e80cecf3344faac14fbd8b18eaf37fcb0ae20e98726e4e49d47248840",
+        "inductive/initial.smt2": "58793d13f0077b74d192339e8a5a9272d5b2c754caac0e7f3b135ff917764b43",
+        "inductive/preservation.smt2": "247a2b56ea67f43dc57ab79edafef702bd9f305faecf0952c572b97e9ba207a5",
+        "inductive/overlap.smt2": "d52b81fc19d021371602f2878f5b51d7b9959cf7f58e31090ae0936764d9a635",
+        "inductive/sample.smt2": "950d284695ddcfb4605d60beb8d4f9962cc7e927b8bf7e26160f74f7d4be277e",
+        "inductive/result.json": "29009405d5bf41cd93f2d2daa5f5798059b6ac1234dc2010e839a891f0788a9b"
+      },
+      "kernel_checked_proof": false,
+      "trusted_components": [
+        "IR parsing and validation",
+        "IR-to-solver translation",
+        "Z3 solver",
+        "Python checker/evidence integration"
+      ]
+    },
+    {
+      "id": "fixed-traces",
+      "statement": {
+        "kind": "fixed_input_and_rule_choice_replay",
+        "scenario_ids": [
+          "discard-data-on-app-abort",
+          "discard-data-on-net-rst",
+          "discard-data-on-net-rstack",
+          "drain-before-active-close",
+          "duplicate-old-future-ack",
+          "partial-ack-retransmission",
+          "receive-ahead-then-retransmit",
+          "receive-overlap",
+          "receive-read-duplicate",
+          "receive-right-edge-zero-window",
+          "segmentation-cumulative-ack",
+          "send-buffer-full",
+          "sequence-wrap-data",
+          "two-data-losses",
+          "zero-window-reopen"
+        ],
+        "universal_event_sequences": false,
+        "compared": [
+          "prestate",
+          "poststate",
+          "timers",
+          "emitted_fields"
+        ]
+      },
+      "proposition_sha256": "baed744679e162a05a76b2e6d60963836d0553641388feab80e3afe547c4f2de",
+      "status": "matched_fixed_inputs",
+      "checker": "z3-constrained-trace-and-reference-replay",
+      "checker_version": "4.15.4",
+      "checker_code_hashes": {
+        "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+        "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
+        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
+        "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+        "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+        "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+        "protocol_lab/inductive.py": "c4faa70fad24f3e0b393d8b4397f084153aae8610d3b36184fd9dc34ce692146",
+        "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+        "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+        "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
+        "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73"
+      },
+      "evidence_hashes": {
+        "discard-data-on-app-abort/symbolic/path.smt2": "edb7067942c6ec180fac21b5a2e24dc9193f90198caaf508f95008dcbdf4032a",
+        "discard-data-on-app-abort/symbolic/result.json": "4b5ad5022cd186a8cec0fccbda27a3892cfc43fe22bc831cee55013023f72c8a",
+        "discard-data-on-net-rst/symbolic/path.smt2": "c7b65997ac2a3bc11f726213d7bad499beca1fb5ba17559dbebe36336e67d97e",
+        "discard-data-on-net-rst/symbolic/result.json": "fedcf009f5872342047e718c91aa0108a0271272a01ab08434b502516a0aaacd",
+        "discard-data-on-net-rstack/symbolic/path.smt2": "978304ae9cd0d83e935b087ce49c3f460766ba6307d860857a846fc1ba8490ca",
+        "discard-data-on-net-rstack/symbolic/result.json": "549f195dbc6c98314132eff0bd63dac09734dabd8968a1fbd1349045e4ccdc4b",
+        "drain-before-active-close/symbolic/path.smt2": "c1915f91020a73b9c2fbf6d854cec77620e2ad5d3668beaf7b83f53c02590adb",
+        "drain-before-active-close/symbolic/result.json": "1059e6ea9bea66a70c9d7c45dc48f98952d86a35630195fc9efe34dcc87ad559",
+        "duplicate-old-future-ack/symbolic/path.smt2": "fc6ff755ecdecb17a35c6c8c8548f79281a1fa61581adedcb65cb81c4ee81a75",
+        "duplicate-old-future-ack/symbolic/result.json": "039bd3edc9753ad0181768703bcc407e27acf43267f255374e1eb8fd695c1a59",
+        "partial-ack-retransmission/symbolic/path.smt2": "c7edb971a0d2d8d8c9689503e0ab51bb1fa48404d57760dbd4b2119c252f1284",
+        "partial-ack-retransmission/symbolic/result.json": "591c858c188c7403825112066eb868c790a69b7e16d4d1eeaf739bc4ef2de1e3",
+        "receive-ahead-then-retransmit/symbolic/path.smt2": "4ea16e623a79fcfb48eae6730095139a457b8738c54aad42f20520daf1e07d54",
+        "receive-ahead-then-retransmit/symbolic/result.json": "7ee3c0da177152aeb195e9e3589f566a6722ee139ad7d8bc2ba26eab6690a415",
+        "receive-overlap/symbolic/path.smt2": "5cf337a75e3dd20282b7145146c471e9913a51658c7a0bf42be24862f8e6cfca",
+        "receive-overlap/symbolic/result.json": "7fa2d89b41820b0505e17597de48ec616679bbb412c70f04a703f2eb3a042861",
+        "receive-read-duplicate/symbolic/path.smt2": "c90f66d8e6a582315550b15c20efb924063e4f356846494b7865c68c19d9f40e",
+        "receive-read-duplicate/symbolic/result.json": "2e32716f877ed2dcb6e461480786fb739eccaf4ad2a51b39e24ad9393410ae6c",
+        "receive-right-edge-zero-window/symbolic/path.smt2": "76b3244cc4f105635c20143a9227d0f76057d47526d6ae1a98a1123d5ad38ca3",
+        "receive-right-edge-zero-window/symbolic/result.json": "10dd8f818cc31d30bcd738fd3a4a80574e2eb52359e8fb1a68278076d6434222",
+        "segmentation-cumulative-ack/symbolic/path.smt2": "e8d6b98e53b9035ca46f67b808c080d6faffd58a835b17a77be33f673489c0ba",
+        "segmentation-cumulative-ack/symbolic/result.json": "934d9179a3cec60fcb3f737cfc533dca085654c9ce7e7d144b8584a73c6aa105",
+        "send-buffer-full/symbolic/path.smt2": "830191061a10ce9da41b4cc6f21152465b0ca7945adb5683b2a5412e7447586c",
+        "send-buffer-full/symbolic/result.json": "aee4935be5a22e6f762c592ee481a11b4c6d110ebb796459b35b5a1e0319e6e9",
+        "sequence-wrap-data/symbolic/path.smt2": "4a10b935c67189ccf8d95e99dba943da3ccd0c4511a5351f4f8b001901450bf0",
+        "sequence-wrap-data/symbolic/result.json": "4f0a2ea08853e1bf585b9ca1952af8ec1a41b3176cc02ac95be10b61972322ad",
+        "two-data-losses/symbolic/path.smt2": "2b102d7ef35165efb91e34964baf75df89d86d08a7dd045acd93260600fbe777",
+        "two-data-losses/symbolic/result.json": "147641bc8ce516a47f46f64866f270bde1a8c7e8083dec7b334d395297639830",
+        "zero-window-reopen/symbolic/path.smt2": "27de20aecca602be621f70b719013ea5f2e635b0da6308eb1bd032215c463ba7",
+        "zero-window-reopen/symbolic/result.json": "b8dc4c4bf34d91b8e41de9f6ae2ff7b84499dbf62d5c8e6bafee8fb4e578903a"
+      },
+      "kernel_checked_proof": false,
+      "trusted_components": [
+        "IR parsing and validation",
+        "IR-to-solver translation",
+        "Z3 solver",
+        "Python checker/evidence integration"
+      ]
+    }
+  ],
+  "protocol_complete": false,
+  "this_manifest_does_not_establish": [
+    "RFC coverage completeness",
+    "IR translator correctness",
+    "universal byte-content correctness",
+    "implementation refinement",
+    "liveness/fairness",
+    "Linux implementation execution",
+    "Rocq kernel-checked proofs"
+  ],
+  "integrity_is_not_authenticity_or_semantic_validity": true
+}

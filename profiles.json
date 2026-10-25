@@ -34,13 +34,26 @@
       "symbolic_replay": true,
       "wire_projection": "tcp-data-v1",
       "inductive": true
+    },
+    {
+      "id": "tcp-segments",
+      "model": "model/tcp-segments.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-data-v1",
+      "inductive": true
     }
   ],
   "pending_modules": [
     {
       "id": "tcp-data",
       "status": "partial_finite_data_profile",
-      "scope": "finite send/receive buffers, segmentation, cumulative/partial ACK, nonshrinking window, prefix retransmission, receive trimming and explicit multi-hole reassembly profile; general piggyback and closing with data pending"
+      "scope": "finite buffers, segmentation, cumulative/partial ACK, multi-hole reassembly, accepted ACK+payload/window composition and window shrinking; closing with data and full recovery pending"
     },
     {
       "id": "tcp-recovery",

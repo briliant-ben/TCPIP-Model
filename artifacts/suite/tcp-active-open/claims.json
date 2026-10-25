@@ -1,0 +1,484 @@
+{
+  "claims_version": "0.1",
+  "profile": "tcp-active-open",
+  "model_semantic_sha256": "3be892210acfc335bd0dd42fdeae7b6be9231f6ab0f72e72186f4dc9abd85b10",
+  "assumptions": {
+    "model_scope": {
+      "terminal_states": [
+        "ESTABLISHED"
+      ],
+      "excluded": [
+        "passive open",
+        "simultaneous open",
+        "FIN/RST",
+        "payload",
+        "TCP options",
+        "RTT estimation",
+        "post-handshake RTO including RFC6298 5.7",
+        "retry exhaustion",
+        "congestion control",
+        "IP behavior"
+      ]
+    },
+    "semantics": "flat-efsm-atomic-ordered-v1",
+    "ir_version": "0.1",
+    "environment_requirements": {
+      "PROFILE-SCOPE": {
+        "source": "docs/semantics.md",
+        "interpretation": "Single active opener, no payload/options/ECN/RST/FIN; modeled SYN+ACK events represent validated packet shape and matching connection. Stop at ESTABLISHED.",
+        "strength": "assumption",
+        "kind": "environment_assumption"
+      }
+    }
+  },
+  "input_hashes": {
+    "model/tcp.json": "119322775578a6ed366379b3434c1656e6812cb21d980016340ef22ecfaffd8b",
+    "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+    "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
+    "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
+    "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+    "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+    "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+    "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+    "protocol_lab/inductive.py": "c4faa70fad24f3e0b393d8b4397f084153aae8610d3b36184fd9dc34ce692146",
+    "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+    "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+    "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+    "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
+    "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73",
+    "scenarios/handshake.json": "638341941b59c740ec8ec2927e9e6cf252bdaebf538218fb38bac5d6a848f3d2",
+    "scenarios/sequence-wrap.json": "fd66c07cb206670ecb6f4cd8378d6a8c06dd901cbb5b78595d7695b42eee8177",
+    "scenarios/syn-loss.json": "0e6602d76c241dcf23dfd55e9465c9dfe2c0e5e7f47ab9cf5deeda368772f6ff",
+    "scenarios/two-syn-losses.json": "b74d2d486c4adb506aec8c09b1424380eb71e64b36119cb2b780f8f34e2d2bb5",
+    "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
+    "profiles.json": "45f7bfcda3badf7e5ee6f6b6a5b0c8c53b01f5986bc0d6ce53f90ea6ed5fb3a2",
+    "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
+    "docs/semantics.md": "71c9c894129fe0ea68f9003583b26cf0f02331cfa16509974de3e1459884ab2c",
+    "docs/inductive.md": "d801b9a78614dc63b5912426725d003936f3a05872aef221e6acf96f4be7a540",
+    "docs/claims.md": "38047139d04e3e3c5a677d24c4c6ea006a762dc1fb244922213230677902dfeb",
+    "formal/README.md": "05f60e3c28b14acce3e67b139c57ce21765f589fb137728181881d9584648c25"
+  },
+  "claims": [
+    {
+      "id": "bounded-state",
+      "statement": {
+        "kind": "bounded_state_safety_and_guard_overlap",
+        "defined_transitions_only": true,
+        "invariants": [
+          {
+            "id": "INV-SYN-ONE-SEQUENCE",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_nxt"
+                        },
+                        {
+                          "op": "seq_add",
+                          "args": [
+                            {
+                              "var": "iss"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "var": "iss"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "INV-SYN-TIMER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "timer_active": "syn_rto"
+                }
+              ]
+            }
+          },
+          {
+            "id": "INV-ESTABLISHED-ACKED",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "var": "snd_nxt"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "rcv_nxt"
+                        },
+                        {
+                          "op": "seq_add",
+                          "args": [
+                            {
+                              "var": "irs"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "INV-ESTABLISHED-NO-SYN-TIMER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "timer_active": "syn_rto"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "INV-RTO-LOWER-BOUND",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                1000
+              ]
+            }
+          }
+        ],
+        "runtime_properties": [
+          "positive_timer_duration"
+        ],
+        "depth": 6,
+        "symbolic_initials": [
+          "iss"
+        ],
+        "other_initial_values": "declared_IR_initial_values",
+        "event_domain": "all_typed_values",
+        "sequence_width": 32,
+        "time": "unbounded_integer_ms",
+        "unbounded": false
+      },
+      "proposition_sha256": "636ad2e564d978006a2c5e63109c4f2756dc016c6ed2afc9cfd2e4283720c64b",
+      "status": "verified_bounded",
+      "checker": "z3-bmc",
+      "checker_version": "4.15.4",
+      "checker_code_hashes": {
+        "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+        "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
+        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
+        "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+        "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+        "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+        "protocol_lab/inductive.py": "c4faa70fad24f3e0b393d8b4397f084153aae8610d3b36184fd9dc34ce692146",
+        "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+        "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+        "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
+        "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73"
+      },
+      "evidence_hashes": {
+        "formal/result.json": "2fa3db1ab607df7450cb2cac174147e00c8fdf7e0901fb7fbb54aa4e1ca4afa0",
+        "formal/model.smt2": "be3b0d59038008107c128a86da30c526f12f22bdc600060ecd92eebebe7e67cb",
+        "formal/overlap.smt2": "72c27e220ce179f83f15674359af291d3be05fea67f2e92e6c58ad8f38ec99c5"
+      },
+      "kernel_checked_proof": false,
+      "trusted_components": [
+        "IR parsing and validation",
+        "IR-to-solver translation",
+        "Z3 solver",
+        "Python checker/evidence integration"
+      ],
+      "solver_result": {
+        "status": "bounded_pass",
+        "safety_query": "unsat",
+        "overlap_query": "unsat"
+      }
+    },
+    {
+      "id": "inductive-state",
+      "statement": {
+        "kind": "initial_and_per_rule_invariant_preservation_and_guard_groups",
+        "invariants": [
+          {
+            "id": "INV-SYN-ONE-SEQUENCE",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_nxt"
+                        },
+                        {
+                          "op": "seq_add",
+                          "args": [
+                            {
+                              "var": "iss"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "var": "iss"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "INV-SYN-TIMER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "timer_active": "syn_rto"
+                }
+              ]
+            }
+          },
+          {
+            "id": "INV-ESTABLISHED-ACKED",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "var": "snd_nxt"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "rcv_nxt"
+                        },
+                        {
+                          "op": "seq_add",
+                          "args": [
+                            {
+                              "var": "irs"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "INV-ESTABLISHED-NO-SYN-TIMER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "timer_active": "syn_rto"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "INV-RTO-LOWER-BOUND",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                1000
+              ]
+            }
+          }
+        ],
+        "rules": [
+          "T-ACTIVE-OPEN",
+          "T-SYN-RETRY",
+          "T-ACCEPT-SYNACK"
+        ],
+        "prestate_assumption": "typed_state_and_all_listed_invariants",
+        "poststate_invariants_assumed": false,
+        "byte_encoding": null,
+        "sequence_encoding": null,
+        "content_properties": "not_supported_by_length_projection",
+        "protocol_completeness": false
+      },
+      "proposition_sha256": "a7d1b965e6badc8a53cd4d36a0f7d6966bc1ef794219a76074fe592d8d4900d9",
+      "status": "not_run",
+      "checker": "z3-invariant-induction",
+      "checker_version": null,
+      "checker_code_hashes": {
+        "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+        "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
+        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
+        "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+        "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+        "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+        "protocol_lab/inductive.py": "c4faa70fad24f3e0b393d8b4397f084153aae8610d3b36184fd9dc34ce692146",
+        "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+        "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+        "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
+        "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73"
+      },
+      "evidence_hashes": {},
+      "kernel_checked_proof": false,
+      "trusted_components": [
+        "IR parsing and validation",
+        "IR-to-solver translation",
+        "Z3 solver",
+        "Python checker/evidence integration"
+      ]
+    },
+    {
+      "id": "fixed-traces",
+      "statement": {
+        "kind": "fixed_input_and_rule_choice_replay",
+        "scenario_ids": [],
+        "universal_event_sequences": false,
+        "compared": [
+          "prestate",
+          "poststate",
+          "timers",
+          "emitted_fields"
+        ]
+      },
+      "proposition_sha256": "38fdecb42b58e443075add811188c490bf8fcf102e28f4129c8e62b8c90ac4af",
+      "status": "not_run",
+      "checker": "z3-constrained-trace-and-reference-replay",
+      "checker_version": "4.15.4",
+      "checker_code_hashes": {
+        "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+        "protocol_lab/__main__.py": "b4e62cd39023d36a32a40f3b3c87684e4961e5463448ced2f83daeac227cecce",
+        "protocol_lab/capture.py": "18d54c91c3a89f7f570623d40cc08e24ac6632f297e528122a78b69e424a27cf",
+        "protocol_lab/claims.py": "37a1a9945d22a93634b949c563375d434420f7e553af1abee95fd02923aaa2d8",
+        "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+        "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+        "protocol_lab/flow.py": "199834e3a1b44d04c57f5842de5dcb0d3397f00ee08da1647cb6f286bc95a074",
+        "protocol_lab/inductive.py": "c4faa70fad24f3e0b393d8b4397f084153aae8610d3b36184fd9dc34ce692146",
+        "protocol_lab/ir.py": "b594aaaa63323935526d7cac007081c010853c777547fd71db4c6fdd5520fba8",
+        "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+        "protocol_lab/packets.py": "2e5bb8d4e21e15a7b7414fce8bf67222afedecf75017eb10fda1aeb96324ea26",
+        "protocol_lab/profiles.py": "5a40509eefae7454b3e30434820f229f41608b866001d8aa3984a68d3f258c69",
+        "protocol_lab/symbolic.py": "95fc1090162ff3b564df97c77e3d3c30e388a5a2ce79e21a0e05cb445e40fb73"
+      },
+      "evidence_hashes": {},
+      "kernel_checked_proof": false,
+      "trusted_components": [
+        "IR parsing and validation",
+        "IR-to-solver translation",
+        "Z3 solver",
+        "Python checker/evidence integration"
+      ]
+    }
+  ],
+  "protocol_complete": false,
+  "this_manifest_does_not_establish": [
+    "RFC coverage completeness",
+    "IR translator correctness",
+    "universal byte-content correctness",
+    "implementation refinement",
+    "liveness/fairness",
+    "Linux implementation execution",
+    "Rocq kernel-checked proofs"
+  ],
+  "integrity_is_not_authenticity_or_semantic_validity": true
+}

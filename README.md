@@ -14,6 +14,7 @@ GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP
 | `model/tcp-connection.json` | 11 状态连接控制模型，97 条声明规则，101 个控制场景；仍排除 payload/窗口/拥塞等行为 |
 | `model/tcp-data.json` | IR 0.2 声明式组合连接模型；有限缓冲、分段、累计/部分 ACK、窗口、字节前缀重传和接收裁剪；数据恢复与完整 TCP 仍未完成 |
 | `model/tcp-reassembly.json` | 继承数据/连接模型，加入 16 位置显式乱序队列、多缺口重组、重复/重叠裁剪与回绕；一般 piggyback、FIN 数据和完整恢复仍未完成 |
+| `model/tcp-segments.json` | 继承重组/数据/连接模型，组合 ACK/window 与 payload，支持窗口收缩及有在途数据的零窗口探测；完整 persist、带数据关闭及恢复仍未完成 |
 
 2026-10-24：已恢复本地基线并推进 [IR 数据语义](docs/semantics.md) 和 [有限 TCP 数据切片](docs/tcp-data.md)。数据切片的 15 个场景具有参考轨迹和独立 Z3 固定输入重放；全输入混合查询可能为 `unknown`，suite 明确保留 `formal_pending`。这不影响旧模型的独立有界检查，也不将合成 PCAP 计为 Linux/lwIP 数据验证。持续实施记录见 [实施日志](docs/implementation-log.md)。
 
@@ -170,3 +171,5 @@ docs/                  语义、外部测试约定、里程碑
 ```
 
 下一步在真实测试主机执行并采集独立观测，再扩展 TCP 行为；Ivy 是后续可替换后端之一。见 [后续里程碑](docs/roadmap.md)。
+
+[ACK/window 与 payload 组合](docs/tcp-segments.md)复用 26 个数据/重组场景并增加 14 个输入；109 条规则、84 个状态不变量及 14 个 guard 组分别检查。每个 profile 的 [claims.json 声明](docs/claims.md)绑定实际命题、假设、检查器版本和证据哈希；哈希验收不构成翻译器正确性或 Rocq 内核证明。

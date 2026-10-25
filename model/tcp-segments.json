@@ -1,0 +1,2713 @@
+{
+  "ir_version": "0.2",
+  "extends": "tcp-reassembly.json",
+  "protocol": "tcp-segments",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "full TCP conformance",
+      "data outside ESTABLISHED",
+      "close with undrained buffers or queue",
+      "FIN payload and general RST validation",
+      "RTT estimator, Karn and maximum retry policy",
+      "persist when zero window has no outstanding flight",
+      "delayed ACK, SWS avoidance, congestion and fast recovery",
+      "SACK/options/multiple connections",
+      "half-space ambiguous inputs"
+    ]
+  },
+  "requirements": {
+    "SEG-ORDER": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "interpretation": "Validate receive sequence first; reject unacceptable segments before ACK/window processing; process ACK/window before text. Future ACK causes ACK+drop; old ACK does not discard accepted payload.",
+      "kind": "protocol_behavior",
+      "strength": "specified processing subset"
+    },
+    "SEG-ACK": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "interpretation": "Cumulative ACK removes acknowledged retransmission prefix. Full ACK cancels rtx, new partial ACK restarts it, duplicate/old ACK leaves its deadline. ACK-only valid segments do not cause ACK loops.",
+      "kind": "protocol_behavior",
+      "strength": "specified processing subset"
+    },
+    "SEG-WINDOW": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "interpretation": "Update advertised peer window only for SND.UNA <= SEG.ACK <= SND.NXT with fresh WL1/WL2; SEG.SEQ uses the original accepted wire header in this profile.",
+      "kind": "protocol_behavior",
+      "strength": "specified processing subset"
+    },
+    "SEG-SHRINK": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.8.6",
+      "interpretation": "Sender remains robust when the usable window becomes negative (MUST-34). No new data is sent beyond the current window; retransmit oldest outstanding data within the positive window (SHLD-15/16).",
+      "kind": "protocol_behavior",
+      "strength": "MUST/SHOULD subset"
+    },
+    "SEG-ZERO-FLIGHT": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.8.6.1",
+      "interpretation": "With outstanding data and zero peer window, the existing timeout sends one oldest octet as a probe and backs off. Zero window with only unsent data still requires the later persist mechanism.",
+      "kind": "protocol_behavior",
+      "strength": "partial probing scope"
+    },
+    "SEG-SCOPE": {
+      "source": "docs/tcp-segments.md",
+      "interpretation": "Inherit finite buffers/connection and explicit reassembly, expand accepted ACK+payload/window composition and shrinking windows; first accepted byte wins, raw accepted SEG.SEQ used for WL1. Only ESTABLISHED, no FIN data or full recovery/persist implementation.",
+      "kind": "environment_assumption",
+      "strength": "profile_choice"
+    },
+    "DATA-SCOPE": {
+      "source": "docs/tcp-segments.md",
+      "interpretation": "Inherit finite buffers/connection and explicit reassembly, expand accepted ACK+payload/window composition and shrinking windows; first accepted byte wins, raw accepted SEG.SEQ used for WL1. Only ESTABLISHED, no FIN data or full recovery/persist implementation.",
+      "kind": "environment_assumption",
+      "strength": "profile_choice"
+    },
+    "RX-SCOPE": {
+      "source": "docs/tcp-segments.md",
+      "interpretation": "Inherit finite buffers/connection and explicit reassembly, expand accepted ACK+payload/window composition and shrinking windows; first accepted byte wins, raw accepted SEG.SEQ used for WL1. Only ESTABLISHED, no FIN data or full recovery/persist implementation.",
+      "kind": "environment_assumption",
+      "strength": "profile_choice"
+    }
+  },
+  "variables": {
+    "seg_acceptable": {
+      "type": "bool",
+      "initial": false
+    },
+    "ack_delta": {
+      "type": "int",
+      "initial": 0
+    },
+    "ack_is_new": {
+      "type": "bool",
+      "initial": false
+    },
+    "ack_is_future": {
+      "type": "bool",
+      "initial": false
+    },
+    "ack_advance": {
+      "type": "bool",
+      "initial": false
+    },
+    "ack_window_update": {
+      "type": "bool",
+      "initial": false
+    }
+  },
+  "remove_transitions": [
+    "D-ACK-FULL-WINDOW",
+    "D-ACK-FULL-STALE-WINDOW",
+    "D-ACK-PARTIAL-WINDOW",
+    "D-ACK-PARTIAL-STALE-WINDOW",
+    "D-ACK-DUP-WINDOW",
+    "D-ACK-DUP-STALE-WINDOW",
+    "D-ACK-OLD",
+    "D-ACK-FUTURE",
+    "D-RETRANSMIT"
+  ],
+  "remove_invariants": [
+    "D-INV-FLIGHT-WINDOW"
+  ],
+  "amend_transitions": [
+    {
+      "id": "R-RECEIVE",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  true,
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      {
+                                        "event": "window"
+                                      },
+                                      0
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "window"
+                                  },
+                                  65535
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "seq_comparable",
+                            "args": [
+                              {
+                                "event": "seq"
+                              },
+                              {
+                                "var": "rcv_nxt"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "data"
+                          }
+                        ]
+                      },
+                      1
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "le",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "data"
+                      }
+                    ]
+                  },
+                  16
+                ]
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  false,
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "sub",
+                                    "args": [
+                                      16,
+                                      {
+                                        "op": "bytes_len",
+                                        "args": [
+                                          {
+                                            "var": "rcv_buf"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "or",
+                            "args": [
+                              {
+                                "op": "or",
+                                "args": [
+                                  false,
+                                  {
+                                    "op": "le",
+                                    "args": [
+                                      {
+                                        "op": "seq_distance",
+                                        "args": [
+                                          {
+                                            "var": "rcv_nxt"
+                                          },
+                                          {
+                                            "event": "seq"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "sub",
+                                        "args": [
+                                          {
+                                            "op": "sub",
+                                            "args": [
+                                              16,
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "var": "rcv_buf"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "op": "seq_distance",
+                                    "args": [
+                                      {
+                                        "var": "rcv_nxt"
+                                      },
+                                      {
+                                        "op": "seq_add",
+                                        "args": [
+                                          {
+                                            "event": "seq"
+                                          },
+                                          {
+                                            "op": "sub",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "data"
+                                                  }
+                                                ]
+                                              },
+                                              1
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "sub",
+                                    "args": [
+                                      {
+                                        "op": "sub",
+                                        "args": [
+                                          16,
+                                          {
+                                            "op": "bytes_len",
+                                            "args": [
+                                              {
+                                                "var": "rcv_buf"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      1
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "seq_comparable",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_comparable",
+                    "args": [
+                      {
+                        "var": "snd_nxt"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "seg_acceptable",
+            "value": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "op": "sub",
+                          "args": [
+                            16,
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rcv_buf"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        false,
+                        {
+                          "op": "le",
+                          "args": [
+                            {
+                              "op": "seq_distance",
+                              "args": [
+                                {
+                                  "var": "rcv_nxt"
+                                },
+                                {
+                                  "event": "seq"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "sub",
+                              "args": [
+                                {
+                                  "op": "sub",
+                                  "args": [
+                                    16,
+                                    {
+                                      "op": "bytes_len",
+                                      "args": [
+                                        {
+                                          "var": "rcv_buf"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                1
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "le",
+                      "args": [
+                        {
+                          "op": "seq_distance",
+                          "args": [
+                            {
+                              "var": "rcv_nxt"
+                            },
+                            {
+                              "op": "seq_add",
+                              "args": [
+                                {
+                                  "event": "seq"
+                                },
+                                {
+                                  "op": "sub",
+                                  "args": [
+                                    {
+                                      "op": "bytes_len",
+                                      "args": [
+                                        {
+                                          "event": "data"
+                                        }
+                                      ]
+                                    },
+                                    1
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "sub",
+                          "args": [
+                            {
+                              "op": "sub",
+                              "args": [
+                                16,
+                                {
+                                  "op": "bytes_len",
+                                  "args": [
+                                    {
+                                      "var": "rcv_buf"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_delta",
+            "value": {
+              "op": "seq_distance",
+              "args": [
+                {
+                  "var": "snd_una"
+                },
+                {
+                  "event": "ack"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_is_new",
+            "value": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "op": "seq_distance",
+                          "args": [
+                            {
+                              "var": "snd_una"
+                            },
+                            {
+                              "event": "ack"
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "seq_distance",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "event": "ack"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_is_future",
+            "value": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "op": "seq_distance",
+                          "args": [
+                            {
+                              "var": "snd_una"
+                            },
+                            {
+                              "event": "ack"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rtx_buf"
+                                }
+                              ]
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "seq_distance",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "event": "ack"
+                        }
+                      ]
+                    },
+                    2147483647
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_advance",
+            "value": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "var": "seg_acceptable"
+                    }
+                  ]
+                },
+                {
+                  "var": "ack_is_new"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_window_update",
+            "value": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        true,
+                        {
+                          "var": "seg_acceptable"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "le",
+                      "args": [
+                        {
+                          "var": "ack_delta"
+                        },
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        false,
+                        {
+                          "op": "seq_lt",
+                          "args": [
+                            {
+                              "var": "snd_wl1"
+                            },
+                            {
+                              "event": "seq"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "var": "snd_wl1"
+                                },
+                                {
+                                  "event": "seq"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "seq_le",
+                          "args": [
+                            {
+                              "var": "snd_wl2"
+                            },
+                            {
+                              "event": "ack"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_advance"
+                },
+                {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    {
+                      "var": "ack_delta"
+                    },
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "var": "rtx_buf"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_advance"
+                },
+                {
+                  "event": "ack"
+                },
+                {
+                  "var": "snd_una"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_window_update"
+                },
+                {
+                  "event": "window"
+                },
+                {
+                  "var": "snd_wnd"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_window_update"
+                },
+                {
+                  "event": "seq"
+                },
+                {
+                  "var": "snd_wl1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_window_update"
+                },
+                {
+                  "event": "ack"
+                },
+                {
+                  "var": "snd_wl2"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "cancel_if": {
+            "when": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "var": "ack_advance"
+                    }
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            },
+            "timer": "rtx"
+          }
+        },
+        {
+          "arm_if": {
+            "when": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "var": "ack_advance"
+                    }
+                  ]
+                },
+                {
+                  "op": "ge",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    },
+                    1
+                  ]
+                }
+              ]
+            },
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 0,
+          "expected": {
+            "set": {
+              "var": "rx_acceptable",
+              "value": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "op": "sub",
+                            "args": [
+                              16,
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "var": "rcv_buf"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          1
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "or",
+                    "args": [
+                      {
+                        "op": "or",
+                        "args": [
+                          false,
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "seq_distance",
+                                "args": [
+                                  {
+                                    "var": "rcv_nxt"
+                                  },
+                                  {
+                                    "event": "seq"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "sub",
+                                "args": [
+                                  {
+                                    "op": "sub",
+                                    "args": [
+                                      16,
+                                      {
+                                        "op": "bytes_len",
+                                        "args": [
+                                          {
+                                            "var": "rcv_buf"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "le",
+                        "args": [
+                          {
+                            "op": "seq_distance",
+                            "args": [
+                              {
+                                "var": "rcv_nxt"
+                              },
+                              {
+                                "op": "seq_add",
+                                "args": [
+                                  {
+                                    "event": "seq"
+                                  },
+                                  {
+                                    "op": "sub",
+                                    "args": [
+                                      {
+                                        "op": "bytes_len",
+                                        "args": [
+                                          {
+                                            "event": "data"
+                                          }
+                                        ]
+                                      },
+                                      1
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "op": "sub",
+                                "args": [
+                                  16,
+                                  {
+                                    "op": "bytes_len",
+                                    "args": [
+                                      {
+                                        "var": "rcv_buf"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              1
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "rx_acceptable",
+                "value": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        true,
+                        {
+                          "var": "seg_acceptable"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "not",
+                      "args": [
+                        {
+                          "var": "ack_is_future"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "SEG-ORDER",
+        "SEG-ACK",
+        "SEG-WINDOW",
+        "SEG-SHRINK"
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "S-ACK-VALID",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  true,
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      {
+                                        "event": "window"
+                                      },
+                                      0
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "window"
+                                  },
+                                  65535
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "seq_comparable",
+                            "args": [
+                              {
+                                "event": "seq"
+                              },
+                              {
+                                "var": "rcv_nxt"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "or",
+                    "args": [
+                      {
+                        "op": "or",
+                        "args": [
+                          false,
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  true,
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "var": "local_window"
+                                      },
+                                      0
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "event": "seq"
+                                  },
+                                  {
+                                    "var": "rcv_nxt"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "var": "local_window"
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "seq_distance",
+                                "args": [
+                                  {
+                                    "var": "rcv_nxt"
+                                  },
+                                  {
+                                    "event": "seq"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "sub",
+                                "args": [
+                                  {
+                                    "var": "local_window"
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "seq_comparable",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_comparable",
+                    "args": [
+                      {
+                        "var": "snd_nxt"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "op": "seq_distance",
+                            "args": [
+                              {
+                                "var": "snd_una"
+                              },
+                              {
+                                "event": "ack"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "var": "rtx_buf"
+                                  }
+                                ]
+                              },
+                              1
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "op": "seq_distance",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      },
+                      2147483647
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "seg_acceptable",
+            "value": {
+              "op": "or",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    false,
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "var": "local_window"
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "event": "seq"
+                            },
+                            {
+                              "var": "rcv_nxt"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        true,
+                        {
+                          "op": "ge",
+                          "args": [
+                            {
+                              "var": "local_window"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "le",
+                      "args": [
+                        {
+                          "op": "seq_distance",
+                          "args": [
+                            {
+                              "var": "rcv_nxt"
+                            },
+                            {
+                              "event": "seq"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "sub",
+                          "args": [
+                            {
+                              "var": "local_window"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_delta",
+            "value": {
+              "op": "seq_distance",
+              "args": [
+                {
+                  "var": "snd_una"
+                },
+                {
+                  "event": "ack"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_is_new",
+            "value": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "op": "seq_distance",
+                          "args": [
+                            {
+                              "var": "snd_una"
+                            },
+                            {
+                              "event": "ack"
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "seq_distance",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "event": "ack"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_is_future",
+            "value": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "op": "seq_distance",
+                          "args": [
+                            {
+                              "var": "snd_una"
+                            },
+                            {
+                              "event": "ack"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rtx_buf"
+                                }
+                              ]
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "seq_distance",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "event": "ack"
+                        }
+                      ]
+                    },
+                    2147483647
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_advance",
+            "value": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "var": "seg_acceptable"
+                    }
+                  ]
+                },
+                {
+                  "var": "ack_is_new"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "ack_window_update",
+            "value": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        true,
+                        {
+                          "var": "seg_acceptable"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "le",
+                      "args": [
+                        {
+                          "var": "ack_delta"
+                        },
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        false,
+                        {
+                          "op": "seq_lt",
+                          "args": [
+                            {
+                              "var": "snd_wl1"
+                            },
+                            {
+                              "event": "seq"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "var": "snd_wl1"
+                                },
+                                {
+                                  "event": "seq"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "seq_le",
+                          "args": [
+                            {
+                              "var": "snd_wl2"
+                            },
+                            {
+                              "event": "ack"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_advance"
+                },
+                {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    {
+                      "var": "ack_delta"
+                    },
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "var": "rtx_buf"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_advance"
+                },
+                {
+                  "event": "ack"
+                },
+                {
+                  "var": "snd_una"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_window_update"
+                },
+                {
+                  "event": "window"
+                },
+                {
+                  "var": "snd_wnd"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_window_update"
+                },
+                {
+                  "event": "seq"
+                },
+                {
+                  "var": "snd_wl1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "var": "ack_window_update"
+                },
+                {
+                  "event": "ack"
+                },
+                {
+                  "var": "snd_wl2"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "cancel_if": {
+            "when": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "var": "ack_advance"
+                    }
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            },
+            "timer": "rtx"
+          }
+        },
+        {
+          "arm_if": {
+            "when": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "var": "ack_advance"
+                    }
+                  ]
+                },
+                {
+                  "op": "ge",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    },
+                    1
+                  ]
+                }
+              ]
+            },
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "SEG-ORDER",
+        "SEG-ACK",
+        "SEG-WINDOW",
+        "SEG-SHRINK"
+      ]
+    },
+    {
+      "id": "S-ACK-FUTURE",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  true,
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      {
+                                        "event": "window"
+                                      },
+                                      0
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "window"
+                                  },
+                                  65535
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "seq_comparable",
+                            "args": [
+                              {
+                                "event": "seq"
+                              },
+                              {
+                                "var": "rcv_nxt"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "or",
+                    "args": [
+                      {
+                        "op": "or",
+                        "args": [
+                          false,
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  true,
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "var": "local_window"
+                                      },
+                                      0
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "event": "seq"
+                                  },
+                                  {
+                                    "var": "rcv_nxt"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "var": "local_window"
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "seq_distance",
+                                "args": [
+                                  {
+                                    "var": "rcv_nxt"
+                                  },
+                                  {
+                                    "event": "seq"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "sub",
+                                "args": [
+                                  {
+                                    "var": "local_window"
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "seq_comparable",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_comparable",
+                    "args": [
+                      {
+                        "var": "snd_nxt"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  true,
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "op": "seq_distance",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "rtx_buf"
+                              }
+                            ]
+                          },
+                          1
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "le",
+                "args": [
+                  {
+                    "op": "seq_distance",
+                    "args": [
+                      {
+                        "var": "snd_una"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  },
+                  2147483647
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "bytes": []
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "SEG-ORDER",
+        "SEG-ACK"
+      ]
+    },
+    {
+      "id": "S-ACK-UNACCEPTABLE-SEQUENCE",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "event": "window"
+                              },
+                              0
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "le",
+                        "args": [
+                          {
+                            "event": "window"
+                          },
+                          65535
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_comparable",
+                    "args": [
+                      {
+                        "event": "seq"
+                      },
+                      {
+                        "var": "rcv_nxt"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "or",
+                    "args": [
+                      false,
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "var": "local_window"
+                                  },
+                                  0
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "event": "seq"
+                              },
+                              {
+                                "var": "rcv_nxt"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "var": "local_window"
+                              },
+                              1
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "le",
+                        "args": [
+                          {
+                            "op": "seq_distance",
+                            "args": [
+                              {
+                                "var": "rcv_nxt"
+                              },
+                              {
+                                "event": "seq"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "var": "local_window"
+                              },
+                              1
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "bytes": []
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "SEG-ORDER"
+      ]
+    },
+    {
+      "id": "S-RETRANSMIT-WINDOW",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "timer.rtx",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      }
+                    ]
+                  },
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "snd_wnd"
+              },
+              1
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_una"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "var": "rtx_buf"
+                  },
+                  0,
+                  {
+                    "op": "min",
+                    "args": [
+                      4,
+                      {
+                        "op": "min",
+                        "args": [
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "rtx_buf"
+                              }
+                            ]
+                          },
+                          {
+                            "var": "snd_wnd"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                2
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-RTX",
+        "DATA-RTO",
+        "DATA-SEQ",
+        "SEG-SHRINK",
+        "SEG-ZERO-FLIGHT"
+      ]
+    },
+    {
+      "id": "S-RETRANSMIT-ZERO-WINDOW",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "timer.rtx",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      }
+                    ]
+                  },
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "snd_wnd"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_una"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "var": "rtx_buf"
+                  },
+                  0,
+                  1
+                ]
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                2
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-RTX",
+        "DATA-RTO",
+        "DATA-SEQ",
+        "SEG-SHRINK",
+        "SEG-ZERO-FLIGHT"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "S-INV-ACK-DISTANCE-DOMAIN",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "ack_delta"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "ack_delta"
+              },
+              4294967295
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "DATA-SEQ",
+        "SEG-ACK"
+      ]
+    }
+  ]
+}

@@ -20,7 +20,7 @@ v0.1 类型为 `bool`、`int`、`seq32`、`string`。`seq32` 可使用相等/不
 6. action 按列表顺序执行，后续表达式看到之前的赋值。输出字段在 emit 时求值并固定。状态在 action 列表执行完成后切换到目标状态。
 7. 检查变量类型和全部状态不变量，写出事件记录。`dispatch` / `tick` 操作全部成功后才提交；失败会回滚整个调用，调用者应终止该失败分支。
 
-`arm` 启动或替换定时器，延迟必须为正整数；`cancel` 取消不存在的定时器无副作用。定时器事件由运行时生成，禁止外部伪造。
+`arm` 启动或替换定时器，延迟必须为正整数；`cancel` 取消不存在的定时器无副作用。IR 0.2 的 `arm_if` / `cancel_if` 在同样字段之外显式要求布尔 `when`：条件为 false 时不改变定时器，也不检查未使用延迟的正值；静态类型始终检查。条件为 true 时执行普通 arm/cancel。所有表达式按当前有序 action 前状态求值，失败仍回滚整个事件。独立形式后端的非正延迟故障也必须受 when 约束。定时器事件由运行时生成，禁止外部伪造。
 
 不变量在初始状态和每个已完成的事件后检查，当前没有中间 action 不变量或时序逻辑。输出包正确性另由独立手写预期值、编码校验测试覆盖；状态不变量并未证明所有输出字段正确。
 
@@ -92,7 +92,7 @@ PCAP 归一化器不调用合成编码器。它按显式四元组过滤连接，
 
 `load()` 可解析同目录下的相对 `extends` 基模型（可递归，禁止目录逃逸和循环）。requirements、variables、events、messages、timers 按名称合并；同名项由 overlay 完整替换，不能隐式深合并字段。states、scope 和其他标量/列表由 overlay 整体替换。transitions/invariants 默认保留基模型并追加；`remove_transitions`/`remove_invariants` 必须逐项列出已有 ID，未知 ID 拒绝。
 
-`amend_transitions` 每项以唯一 ID 指定已有规则，可提供 `and_guard`（与原 guard 做显式 and）和 `append_actions`（在原 actions 后按序执行）；禁止回调或未知补丁操作。组合后删除组合元数据，对整个展开模型执行相同的类型、规则及不变量校验。调用者不能将未展开 overlay 直接传给 Machine/形式后端。
+`amend_transitions` 每项以唯一 ID 指定已有规则，可提供互斥的 `guard`（完整替换）或 `and_guard`（与原 guard 做显式 and），以及 `prepend_actions`、`append_actions`、`edit_actions` 和 `add_requirements`。edit_actions 依次按当前索引检查 `{at, expected, with}` 的 exact expected action 后替换，再执行 prepend/append；索引或锚点变化必须拒绝展开。新增 requirement ID 必须唯一且未存在于该规则，引用仍须通过展开模型校验。禁止回调或未知补丁操作。组合后删除组合元数据，对整个展开模型执行相同的类型、规则及不变量校验。调用者不能将未展开 overlay 直接传给 Machine/形式后端。
 
 组合是通用 IR 加载机制，不添加协议事件、序列号转换或定时器调度。suite 保存 expanded-model.json 并将所有基模型和 overlay 纳入输入哈希；模型语义哈希针对展开后的 IR。连接规则变更会使组合模型旧证据失效。
 

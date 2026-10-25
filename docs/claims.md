@@ -1,0 +1,13 @@
+# Claim manifests and trust boundary
+
+Each suite profile emits `claims.json`. It binds the expanded IR semantic hash, source/input hashes, scope, environmental requirements, actual invariant expressions, rule set, checker version/code hashes and evidence hashes. Its proposition digest covers both statement and context; changing a depth or assumption changes the proposition.
+
+Three claims remain separate:
+
+* `bounded-state`: actual safety/overlap results for typed defined executions up to the recorded depth. `unknown` and vacuity remain inconclusive; neither is a bounded pass.
+* `inductive-state`: initial establishment and per-rule preservation of the listed state invariants, plus guard-group disjointness. The prestate assumes all invariants; the poststate does not. Length projection rejects unsupported byte-content decisions and does not prove byte identity.
+* `fixed-traces`: full-byte constrained replay for the explicitly listed fixed inputs/rule choices, comparing pre/post state, timers and emitted fields. This is not universal event-sequence verification.
+
+`suite-verify` regenerates the manifest from the current model and saved evidence, checks required artifacts/statuses and compares exact bindings. Rehashing a manifest cannot promote it to a kernel-checked proof. This is an integrity and consistency gate, not authenticity or a second semantic proof of solver answers. Existing artifact/source and induction gates still apply.
+
+Current trusted components include IR parsing/validation, the Python IR-to-solver translator, Z3 and checker/evidence integration. All current claims explicitly set `kernel_checked_proof` to false. No claim establishes full RFC coverage, translator correctness, universal payload identity, implementation refinement, liveness or Linux execution. Rocq evidence will require an actual kernel check with a bound theorem, assumptions, checker version and checked artifact; generated proof text alone is insufficient.

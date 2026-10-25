@@ -62,7 +62,7 @@
   "overlap_query": "unsat",
   "sample_witness": {
     "initial": {
-      "iss": 1001,
+      "iss": 944242688,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -80,161 +80,39 @@
     "steps": [
       {
         "at_ms": 1,
-        "event": "app.listen",
+        "event": "app.connect",
         "origin": "application",
-        "transition": "C-PASSIVE-OPEN",
+        "transition": "C-ACTIVE-OPEN",
         "fields": {},
         "after": {
-          "state": "LISTEN",
+          "state": "SYN-SENT",
           "variables": {
-            "iss": 1001,
+            "iss": 944242688,
             "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
+            "snd_una": 944242688,
+            "snd_nxt": 944242689,
             "rcv_nxt": 0,
-            "tx_seq": 1000,
+            "tx_seq": 944242688,
             "tx_ack": 0,
             "tx_flags": "S",
             "rto_ms": 1000,
             "retries": 0,
-            "active_open": false,
+            "active_open": true,
             "user_timeout_ms": 30000,
             "msl_ms": 60000,
             "local_window": 65535
           },
-          "timers": {}
-        },
-        "emitted": []
-      },
-      {
-        "at_ms": 2,
-        "event": "net.rstack",
-        "origin": "network",
-        "transition": "C-IGNORE-NET-RSTACK-LISTEN",
-        "fields": {
-          "seq": 16384,
-          "ack": 67117056
-        },
-        "after": {
-          "state": "LISTEN",
-          "variables": {
-            "iss": 1001,
-            "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
-            "rcv_nxt": 0,
-            "tx_seq": 1000,
-            "tx_ack": 0,
-            "tx_flags": "S",
-            "rto_ms": 1000,
-            "retries": 0,
-            "active_open": false,
-            "user_timeout_ms": 30000,
-            "msl_ms": 60000,
-            "local_window": 65535
-          },
-          "timers": {}
-        },
-        "emitted": []
-      },
-      {
-        "at_ms": 3,
-        "event": "app.abort",
-        "origin": "application",
-        "transition": "C-ABORT-LISTEN",
-        "fields": {},
-        "after": {
-          "state": "CLOSED",
-          "variables": {
-            "iss": 1001,
-            "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
-            "rcv_nxt": 0,
-            "tx_seq": 1000,
-            "tx_ack": 0,
-            "tx_flags": "S",
-            "rto_ms": 1000,
-            "retries": 0,
-            "active_open": false,
-            "user_timeout_ms": 30000,
-            "msl_ms": 60000,
-            "local_window": 65535
-          },
-          "timers": {}
-        },
-        "emitted": [
-          {
-            "message": "application",
-            "fields": {
-              "code": "aborted"
-            }
+          "timers": {
+            "rtx": 1001,
+            "user": 30001
           }
-        ]
-      },
-      {
-        "at_ms": 4,
-        "event": "app.listen",
-        "origin": "application",
-        "transition": "C-PASSIVE-OPEN",
-        "fields": {},
-        "after": {
-          "state": "LISTEN",
-          "variables": {
-            "iss": 1001,
-            "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
-            "rcv_nxt": 0,
-            "tx_seq": 1000,
-            "tx_ack": 0,
-            "tx_flags": "S",
-            "rto_ms": 1000,
-            "retries": 0,
-            "active_open": false,
-            "user_timeout_ms": 30000,
-            "msl_ms": 60000,
-            "local_window": 65535
-          },
-          "timers": {}
-        },
-        "emitted": []
-      },
-      {
-        "at_ms": 5,
-        "event": "net.fin",
-        "origin": "network",
-        "transition": "C-REJECT-FIN-LISTEN",
-        "fields": {
-          "seq": 1,
-          "ack": 66560
-        },
-        "after": {
-          "state": "LISTEN",
-          "variables": {
-            "iss": 1001,
-            "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
-            "rcv_nxt": 0,
-            "tx_seq": 1000,
-            "tx_ack": 0,
-            "tx_flags": "S",
-            "rto_ms": 1000,
-            "retries": 0,
-            "active_open": false,
-            "user_timeout_ms": 30000,
-            "msl_ms": 60000,
-            "local_window": 65535
-          },
-          "timers": {}
         },
         "emitted": [
           {
             "message": "tcp",
             "fields": {
-              "flags": "R",
-              "seq": 66560,
+              "flags": "S",
+              "seq": 944242688,
               "ack": 0,
               "window": 65535
             }
@@ -242,40 +120,207 @@
         ]
       },
       {
-        "at_ms": 6,
-        "event": "net.synack",
-        "origin": "network",
-        "transition": "C-REJECT-SYNACK-LISTEN",
-        "fields": {
-          "seq": 3336138011,
-          "ack": 1000
-        },
+        "at_ms": 1001,
+        "event": "timer.rtx",
+        "origin": "timer",
+        "transition": "C-RETRANSMIT-SYN-SENT",
+        "fields": {},
         "after": {
-          "state": "LISTEN",
+          "state": "SYN-SENT",
           "variables": {
-            "iss": 1001,
+            "iss": 944242688,
             "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
+            "snd_una": 944242688,
+            "snd_nxt": 944242689,
             "rcv_nxt": 0,
-            "tx_seq": 1000,
+            "tx_seq": 944242688,
             "tx_ack": 0,
             "tx_flags": "S",
-            "rto_ms": 1000,
-            "retries": 0,
-            "active_open": false,
+            "rto_ms": 2000,
+            "retries": 1,
+            "active_open": true,
             "user_timeout_ms": 30000,
             "msl_ms": 60000,
             "local_window": 65535
           },
-          "timers": {}
+          "timers": {
+            "rtx": 3001,
+            "user": 30001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 944242688,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 3001,
+        "event": "timer.rtx",
+        "origin": "timer",
+        "transition": "C-RETRANSMIT-SYN-SENT",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 944242688,
+            "irs": 0,
+            "snd_una": 944242688,
+            "snd_nxt": 944242689,
+            "rcv_nxt": 0,
+            "tx_seq": 944242688,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 4000,
+            "retries": 2,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {
+            "rtx": 7001,
+            "user": 30001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 944242688,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 7001,
+        "event": "timer.rtx",
+        "origin": "timer",
+        "transition": "C-RETRANSMIT-SYN-SENT",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 944242688,
+            "irs": 0,
+            "snd_una": 944242688,
+            "snd_nxt": 944242689,
+            "rcv_nxt": 0,
+            "tx_seq": 944242688,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 8000,
+            "retries": 3,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {
+            "rtx": 15001,
+            "user": 30001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 944242688,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 15001,
+        "event": "timer.rtx",
+        "origin": "timer",
+        "transition": "C-RETRANSMIT-SYN-SENT",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 944242688,
+            "irs": 0,
+            "snd_una": 944242688,
+            "snd_nxt": 944242689,
+            "rcv_nxt": 0,
+            "tx_seq": 944242688,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 16000,
+            "retries": 4,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {
+            "rtx": 31001,
+            "user": 30001
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 944242688,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 30000,
+        "event": "net.synack",
+        "origin": "network",
+        "transition": "C-SYN-SENT-BAD-SYNACK",
+        "fields": {
+          "seq": 1073741824,
+          "ack": 16802816
+        },
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 944242688,
+            "irs": 0,
+            "snd_una": 944242688,
+            "snd_nxt": 944242689,
+            "rcv_nxt": 0,
+            "tx_seq": 944242688,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 16000,
+            "retries": 4,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {
+            "rtx": 31001,
+            "user": 30001
+          }
         },
         "emitted": [
           {
             "message": "tcp",
             "fields": {
               "flags": "R",
-              "seq": 1000,
+              "seq": 16802816,
               "ack": 0,
               "window": 65535
             }
@@ -288,6 +333,6 @@
     "status": "match",
     "compared_steps": 6
   },
-  "smt2_sha256": "9a13f55d9d1fd7f0bccdaef0a7cbd6b5256868e00be4645f8a6acd76621ec9f7",
-  "overlap_smt2_sha256": "0f026eab967d5efd9c73f75013e26f476b5f72b496566d77ef0536fb87ffea08"
+  "smt2_sha256": "60f72a8fd668cae43238da3de2dbc9a2f315900c59f1c9df8f06e50a85e4adcd",
+  "overlap_smt2_sha256": "085087f07ba710ffc43b27c0c18631317e4b6c14c1d9aa19ba3bc9dfc75f68f2"
 }

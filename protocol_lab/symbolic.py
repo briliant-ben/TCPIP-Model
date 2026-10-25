@@ -173,8 +173,12 @@ class Encoding:
                 kind, arg = next(iter(action.items()))
                 if kind == "set":
                     visit(arg["value"], rule["event"])
-                elif kind == "arm":
+                elif kind in ("arm", "arm_if"):
                     visit(arg["delay_ms"], rule["event"])
+                    if kind == "arm_if":
+                        visit(arg["when"], rule["event"])
+                elif kind == "cancel_if":
+                    visit(arg["when"], rule["event"])
                 elif kind == "emit":
                     for expr in arg["fields"].values():
                         visit(expr, rule["event"])
@@ -291,11 +295,15 @@ class Encoding:
                     work["values"][arg["var"]] = self.expr(arg["value"], work, fields[name])
                 elif kind == "cancel":
                     work["active"][arg] = z.BoolVal(False)
-                elif kind == "arm":
+                elif kind == "cancel_if":
+                    when = self.expr(arg["when"], work, fields[name])
+                    work["active"][arg["timer"]] = z.If(when, z.BoolVal(False), work["active"][arg["timer"]])
+                elif kind in ("arm", "arm_if"):
+                    when = z.BoolVal(True) if kind == "arm" else self.expr(arg["when"], work, fields[name])
                     delay = self.expr(arg["delay_ms"], work, fields[name])
-                    self.action_faults.append(z.And(*conditions, choice == j, delay <= 0))
-                    work["active"][arg["timer"]] = z.BoolVal(True)
-                    work["due"][arg["timer"]] = new["now"] + delay
+                    self.action_faults.append(z.And(*conditions, choice == j, when, delay <= 0))
+                    work["active"][arg["timer"]] = z.If(when, z.BoolVal(True), work["active"][arg["timer"]])
+                    work["due"][arg["timer"]] = z.If(when, new["now"] + delay, work["due"][arg["timer"]])
                 elif kind == "emit":
                     emitted.append({"message": arg["message"], "fields": {n: self.expr(v, work, fields[name]) for n, v in arg["fields"].items()}})
                 else:

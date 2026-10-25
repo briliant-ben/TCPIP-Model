@@ -1,0 +1,820 @@
+{
+  "backend": "z3-invariant-induction",
+  "model_semantic_sha256": "8e52a835e6341026bcd6dd2294d2ab1e635e781fc690eeed7e2e2546f997db59",
+  "solver_version": "4.15.4",
+  "status": "inductive_invariants_pass",
+  "byte_encoding": "exact_length_projection_content_insensitive_subset",
+  "sequence_encoding": "modular_integer_full_32bit_domain",
+  "symbolic_initials": [
+    "iss"
+  ],
+  "sequence_width": 32,
+  "invariants": [
+    "C-INV-TIMER-CLOSED-rtx",
+    "C-INV-TIMER-CLOSED-user",
+    "C-INV-TIMER-CLOSED-time_wait",
+    "C-INV-TIMER-LISTEN-rtx",
+    "C-INV-TIMER-LISTEN-user",
+    "C-INV-TIMER-LISTEN-time_wait",
+    "C-INV-TIMER-SYN-SENT-rtx",
+    "C-INV-TIMER-SYN-SENT-user",
+    "C-INV-TIMER-SYN-SENT-time_wait",
+    "C-INV-TIMER-SYN-RECEIVED-rtx",
+    "C-INV-TIMER-SYN-RECEIVED-user",
+    "C-INV-TIMER-SYN-RECEIVED-time_wait",
+    "C-INV-TIMER-ESTABLISHED-user",
+    "C-INV-TIMER-ESTABLISHED-time_wait",
+    "C-INV-TIMER-FIN-WAIT-1-rtx",
+    "C-INV-TIMER-FIN-WAIT-1-user",
+    "C-INV-TIMER-FIN-WAIT-1-time_wait",
+    "C-INV-TIMER-FIN-WAIT-2-rtx",
+    "C-INV-TIMER-FIN-WAIT-2-user",
+    "C-INV-TIMER-FIN-WAIT-2-time_wait",
+    "C-INV-TIMER-CLOSE-WAIT-rtx",
+    "C-INV-TIMER-CLOSE-WAIT-user",
+    "C-INV-TIMER-CLOSE-WAIT-time_wait",
+    "C-INV-TIMER-CLOSING-rtx",
+    "C-INV-TIMER-CLOSING-user",
+    "C-INV-TIMER-CLOSING-time_wait",
+    "C-INV-TIMER-LAST-ACK-rtx",
+    "C-INV-TIMER-LAST-ACK-user",
+    "C-INV-TIMER-LAST-ACK-time_wait",
+    "C-INV-TIMER-TIME-WAIT-rtx",
+    "C-INV-TIMER-TIME-WAIT-user",
+    "C-INV-TIMER-TIME-WAIT-time_wait",
+    "C-INV-OUTSTANDING-CONTROL",
+    "C-INV-BOUND-rto_ms",
+    "C-INV-BOUND-retries",
+    "C-INV-BOUND-msl_ms",
+    "C-INV-BOUND-user_timeout_ms",
+    "C-INV-SYN-SENT-ISS",
+    "D-INV-TIMER",
+    "D-INV-SEQUENCE-BUFFER",
+    "D-INV-SEND-CAPACITY",
+    "D-INV-RECEIVE-CAPACITY",
+    "D-INV-WINDOW",
+    "D-INV-NO-DATA-OUTSIDE-ESTABLISHED",
+    "D-INV-ADVERTISED-WINDOW",
+    "D-INV-CONTROL-DRAINED",
+    "R-INV-CELL-00",
+    "R-INV-RIGHT-EDGE-00",
+    "R-INV-CELL-01",
+    "R-INV-RIGHT-EDGE-01",
+    "R-INV-CELL-02",
+    "R-INV-RIGHT-EDGE-02",
+    "R-INV-CELL-03",
+    "R-INV-RIGHT-EDGE-03",
+    "R-INV-CELL-04",
+    "R-INV-RIGHT-EDGE-04",
+    "R-INV-CELL-05",
+    "R-INV-RIGHT-EDGE-05",
+    "R-INV-CELL-06",
+    "R-INV-RIGHT-EDGE-06",
+    "R-INV-CELL-07",
+    "R-INV-RIGHT-EDGE-07",
+    "R-INV-CELL-08",
+    "R-INV-RIGHT-EDGE-08",
+    "R-INV-CELL-09",
+    "R-INV-RIGHT-EDGE-09",
+    "R-INV-CELL-10",
+    "R-INV-RIGHT-EDGE-10",
+    "R-INV-CELL-11",
+    "R-INV-RIGHT-EDGE-11",
+    "R-INV-CELL-12",
+    "R-INV-RIGHT-EDGE-12",
+    "R-INV-CELL-13",
+    "R-INV-RIGHT-EDGE-13",
+    "R-INV-CELL-14",
+    "R-INV-RIGHT-EDGE-14",
+    "R-INV-CELL-15",
+    "R-INV-RIGHT-EDGE-15",
+    "R-INV-NO-CONTIGUOUS-QUEUED-HEAD",
+    "R-INV-NO-QUEUE-OUTSIDE-ESTABLISHED",
+    "R-INV-TOTAL-RECEIVE-CAPACITY",
+    "R-INV-ADVANCE-BOUND",
+    "R-INV-ADVANCE-CHUNK",
+    "S-INV-ACK-DISTANCE-DOMAIN"
+  ],
+  "scope": "defined_nonterminal_transitions_and_listed_state_invariants",
+  "content_properties": "not_supported_by_length_projection",
+  "reachability_of_failed_prestates": "not_claimed",
+  "unbounded_protocol_proof": false,
+  "runtime_properties": [
+    "positive_timer_duration",
+    "active_timer_not_in_past"
+  ],
+  "preservation": [
+    {
+      "transition": "C-ACTIVE-OPEN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-PASSIVE-OPEN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-LISTEN-SYN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SIMULTANEOUS-SYN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ACCEPT-SYNACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ACCEPT-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SIMULTANEOUS-SYNACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ACCEPT-SYNACK-AFTER-RETRY",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ACCEPT-ACK-AFTER-RETRY",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-SENT-BAD-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-SENT-BAD-SYNACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-SENT-BARE-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-RECEIVED-BAD-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-CLOSE-ESTABLISHED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-CLOSE-CLOSE-WAIT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-CLOSE-LISTEN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-CLOSE-SYN-SENT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REPEATED-CLOSE-FIN-WAIT-1",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REPEATED-CLOSE-FIN-WAIT-2",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REPEATED-CLOSE-CLOSING",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REPEATED-CLOSE-LAST-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REPEATED-CLOSE-TIME-WAIT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-DUPLICATE-ACK-CLOSE-WAIT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-DUPLICATE-ACK-FIN-WAIT-2",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-FIN-ACK-FIN-WAIT-1",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-OLD-ACK-FIN-WAIT-1",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-FIN-ACK-CLOSING",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-OLD-ACK-CLOSING",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-FIN-ACK-LAST-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-OLD-ACK-LAST-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-PEER-FIN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-PEER-FIN-FW2",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-PEER-FIN-FW1-ACKED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SIMULTANEOUS-FIN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-DUPLICATE-FIN-CLOSE-WAIT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-DUPLICATE-FIN-CLOSING",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-DUPLICATE-FIN-LAST-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-DUPLICATE-FIN-TIME-WAIT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RETRANSMIT-SYN-SENT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RETRANSMIT-SYN-RECEIVED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RETRANSMIT-FIN-WAIT-1",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RETRANSMIT-CLOSING",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RETRANSMIT-LAST-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-USER-TIMEOUT-SYN-SENT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-USER-TIMEOUT-SYN-RECEIVED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-USER-TIMEOUT-FIN-WAIT-1",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-USER-TIMEOUT-FIN-WAIT-2",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-USER-TIMEOUT-CLOSING",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-USER-TIMEOUT-LAST-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-TIME-WAIT-EXPIRED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-CLOSED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-LISTEN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-SYN-SENT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-SYN-RECEIVED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-ESTABLISHED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-FIN-WAIT-1",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-FIN-WAIT-2",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-CLOSE-WAIT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-CLOSING",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-LAST-ACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-ABORT-TIME-WAIT",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-IGNORE-NET-RST-CLOSED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-IGNORE-NET-RST-LISTEN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-SENT-NET-RST",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-RECEIVED-NET-RST-PASSIVE",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-RECEIVED-NET-RST-ACTIVE",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-ESTABLISHED-rst",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-FIN-WAIT-1-rst",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-FIN-WAIT-2-rst",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-CLOSE-WAIT-rst",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-CLOSING-rst",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-LAST-ACK-rst",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-TIME-WAIT-rst",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-IGNORE-NET-RSTACK-CLOSED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-IGNORE-NET-RSTACK-LISTEN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-SENT-NET-RSTACK",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-ESTABLISHED-rstack",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-FIN-WAIT-1-rstack",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-FIN-WAIT-2-rstack",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-CLOSE-WAIT-rstack",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-CLOSING-rstack",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-LAST-ACK-rstack",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-RESET-TIME-WAIT-rstack",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REJECT-ACK-CLOSED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REJECT-ACK-LISTEN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REJECT-SYNACK-CLOSED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REJECT-SYNACK-LISTEN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REJECT-FIN-CLOSED",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-REJECT-FIN-LISTEN",
+      "query": "unsat"
+    },
+    {
+      "transition": "C-CLOSED-SYN",
+      "query": "unsat"
+    },
+    {
+      "transition": "D-QUEUE",
+      "query": "unsat"
+    },
+    {
+      "transition": "D-SEND-EMPTY",
+      "query": "unsat"
+    },
+    {
+      "transition": "D-SEND-FULL",
+      "query": "unsat"
+    },
+    {
+      "transition": "D-FLUSH-FIRST",
+      "query": "unsat"
+    },
+    {
+      "transition": "D-FLUSH-MORE",
+      "query": "unsat"
+    },
+    {
+      "transition": "D-FLUSH-BLOCKED",
+      "query": "unsat"
+    },
+    {
+      "transition": "D-APPLICATION-READ",
+      "query": "unsat"
+    },
+    {
+      "transition": "R-RECEIVE",
+      "query": "unsat"
+    },
+    {
+      "transition": "S-ACK-VALID",
+      "query": "unsat"
+    },
+    {
+      "transition": "S-ACK-FUTURE",
+      "query": "unsat"
+    },
+    {
+      "transition": "S-ACK-UNACCEPTABLE-SEQUENCE",
+      "query": "unsat"
+    },
+    {
+      "transition": "S-RETRANSMIT-WINDOW",
+      "query": "unsat"
+    },
+    {
+      "transition": "S-RETRANSMIT-ZERO-WINDOW",
+      "query": "unsat"
+    }
+  ],
+  "overlap": [
+    {
+      "state": "CLOSING",
+      "event": "net.ack",
+      "query": "unsat",
+      "transitions": [
+        "C-FIN-ACK-CLOSING",
+        "C-OLD-ACK-CLOSING"
+      ]
+    },
+    {
+      "state": "ESTABLISHED",
+      "event": "app.send",
+      "query": "unsat",
+      "transitions": [
+        "D-QUEUE",
+        "D-SEND-EMPTY",
+        "D-SEND-FULL"
+      ]
+    },
+    {
+      "state": "ESTABLISHED",
+      "event": "app.transmit",
+      "query": "unsat",
+      "transitions": [
+        "D-FLUSH-FIRST",
+        "D-FLUSH-MORE",
+        "D-FLUSH-BLOCKED"
+      ]
+    },
+    {
+      "state": "ESTABLISHED",
+      "event": "net.ack",
+      "query": "unsat",
+      "transitions": [
+        "S-ACK-VALID",
+        "S-ACK-FUTURE",
+        "S-ACK-UNACCEPTABLE-SEQUENCE"
+      ]
+    },
+    {
+      "state": "ESTABLISHED",
+      "event": "timer.rtx",
+      "query": "unsat",
+      "transitions": [
+        "S-RETRANSMIT-WINDOW",
+        "S-RETRANSMIT-ZERO-WINDOW"
+      ]
+    },
+    {
+      "state": "FIN-WAIT-1",
+      "event": "net.ack",
+      "query": "unsat",
+      "transitions": [
+        "C-FIN-ACK-FIN-WAIT-1",
+        "C-OLD-ACK-FIN-WAIT-1"
+      ]
+    },
+    {
+      "state": "FIN-WAIT-1",
+      "event": "net.fin",
+      "query": "unsat",
+      "transitions": [
+        "C-PEER-FIN-FW1-ACKED",
+        "C-SIMULTANEOUS-FIN"
+      ]
+    },
+    {
+      "state": "LAST-ACK",
+      "event": "net.ack",
+      "query": "unsat",
+      "transitions": [
+        "C-FIN-ACK-LAST-ACK",
+        "C-OLD-ACK-LAST-ACK"
+      ]
+    },
+    {
+      "state": "SYN-RECEIVED",
+      "event": "net.ack",
+      "query": "unsat",
+      "transitions": [
+        "C-ACCEPT-ACK",
+        "C-ACCEPT-ACK-AFTER-RETRY",
+        "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+        "C-SYN-RECEIVED-BAD-ACK"
+      ]
+    },
+    {
+      "state": "SYN-RECEIVED",
+      "event": "net.rst",
+      "query": "unsat",
+      "transitions": [
+        "C-SYN-RECEIVED-NET-RST-PASSIVE",
+        "C-SYN-RECEIVED-NET-RST-ACTIVE"
+      ]
+    },
+    {
+      "state": "SYN-RECEIVED",
+      "event": "net.rstack",
+      "query": "unsat",
+      "transitions": [
+        "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+        "C-SYN-RECEIVED-NET-RSTACK-ACTIVE"
+      ]
+    },
+    {
+      "state": "SYN-RECEIVED",
+      "event": "net.synack",
+      "query": "unsat",
+      "transitions": [
+        "C-SIMULTANEOUS-SYNACK",
+        "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+        "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES"
+      ]
+    },
+    {
+      "state": "SYN-SENT",
+      "event": "net.ack",
+      "query": "unsat",
+      "transitions": [
+        "C-SYN-SENT-BAD-ACK",
+        "C-SYN-SENT-BARE-ACK"
+      ]
+    },
+    {
+      "state": "SYN-SENT",
+      "event": "net.synack",
+      "query": "unsat",
+      "transitions": [
+        "C-ACCEPT-SYNACK",
+        "C-ACCEPT-SYNACK-AFTER-RETRY",
+        "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+        "C-SYN-SENT-BAD-SYNACK"
+      ]
+    }
+  ],
+  "length_lemmas": "unsat",
+  "initial_query": "unsat",
+  "sample_query": "sat",
+  "sample_witness": {
+    "initial": {
+      "iss": 4294967293,
+      "irs": 0,
+      "snd_una": 1000,
+      "snd_nxt": 1000,
+      "rcv_nxt": 0,
+      "tx_seq": 1000,
+      "tx_ack": 0,
+      "tx_flags": "S",
+      "rto_ms": 1000,
+      "retries": 0,
+      "active_open": true,
+      "user_timeout_ms": 30000,
+      "msl_ms": 60000,
+      "local_window": 16,
+      "snd_buf": [],
+      "rtx_buf": [],
+      "rcv_buf": [],
+      "snd_wnd": 8,
+      "snd_wl1": 0,
+      "snd_wl2": 0,
+      "take": 0,
+      "rx_chunk": [],
+      "rx_slot_00": [],
+      "rx_slot_01": [],
+      "rx_slot_02": [],
+      "rx_slot_03": [],
+      "rx_slot_04": [],
+      "rx_slot_05": [],
+      "rx_slot_06": [],
+      "rx_slot_07": [],
+      "rx_slot_08": [],
+      "rx_slot_09": [],
+      "rx_slot_10": [],
+      "rx_slot_11": [],
+      "rx_slot_12": [],
+      "rx_slot_13": [],
+      "rx_slot_14": [],
+      "rx_slot_15": [],
+      "rx_advance": 0,
+      "rx_acceptable": false,
+      "seg_acceptable": false,
+      "ack_delta": 0,
+      "ack_is_new": false,
+      "ack_is_future": false,
+      "ack_advance": false,
+      "ack_window_update": false
+    },
+    "steps": [
+      {
+        "at_ms": 0,
+        "event": "net.ack",
+        "origin": "network",
+        "transition": "C-REJECT-ACK-CLOSED",
+        "fields": {
+          "seq": 0,
+          "ack": 0,
+          "window": 0
+        },
+        "after": {
+          "state": "CLOSED",
+          "variables": {
+            "iss": 4294967293,
+            "irs": 0,
+            "snd_una": 1000,
+            "snd_nxt": 1000,
+            "rcv_nxt": 0,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 0,
+            "snd_wl2": 0,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": 0,
+              "ack": 0,
+              "window": 16
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "replay": {
+    "status": "match",
+    "compared_steps": 1
+  },
+  "query_hashes": {
+    "length-lemmas.smt2": "d0383e1450f95b830af4bad1398c870af6f132af23b249e653326d7bc74373c2",
+    "initial.smt2": "dbf1d36b28820512442978827c6b2a82df437f06724ea443c6613bff01f38654",
+    "preservation.smt2": "b9c080a4eeceae6896dc890932839f83c71903322fcea193c72f7831bee08503",
+    "overlap.smt2": "972dc1298f66dc25cf1b77484d75abff1957232d6f0906db095ff136092b4151",
+    "sample.smt2": "e09b00410c22bdfe772904c032a0ea7e082f6c674f6247fdc8bf2746296e9dbd"
+  }
+}

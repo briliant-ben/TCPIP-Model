@@ -28,7 +28,7 @@ def profile_inputs(profile, model):
     paths = sorted((ROOT / "protocol_lab").glob("*.py"))
     paths += scenario_paths(profile)
     paths += [ROOT / "spec/sources/manifest.json", ROOT / "profiles.json", ROOT / "requirements-formal.txt", ROOT / "docs/semantics.md",
-              ROOT / "docs/inductive.md", ROOT / "formal/README.md"]
+              ROOT / "docs/inductive.md", ROOT / "docs/claims.md", ROOT / "formal/README.md"]
     if profile.get("wire_projection"):
         paths.append(ROOT / "packet-profile.json")
     inputs.update({str(p.relative_to(ROOT)): digest(p) for p in paths})
@@ -176,6 +176,9 @@ def run_profile(profile, out, formal=False, depth=6):
         result["status"] = "fail"
     if induction["status"] not in ("not_run", "inductive_invariants_pass"):
         result["status"] = "formal_pending" if induction["status"] in ("unknown", "vacuous") and result["status"] != "fail" else "fail"
+    from .claims import build as build_claims
+    write(out / "claims.json", build_claims(model, profile, inputs, scenarios, formal_result, induction, result["artifact_hashes"]))
+    result["artifact_hashes"]["claims.json"] = digest(out / "claims.json")
     write(out / "report.json", result)
     return result
 
@@ -228,6 +231,8 @@ def verify_suite(out):
         if report.get("inductive", {}).get("status") == "inductive_invariants_pass":
             from .inductive import verify
             verify(model, target / "inductive")
+        from .claims import verify as verify_claims
+        verify_claims(model, profile, report, target)
         result["profiles"].append({"id": profile["id"], "local_integrity": "pass", "formal": report["formal"],
                                    "inductive": report.get("inductive", {"status": "not_run"}), "real_stack": "not_run"})
     write(out / "verification.json", result)

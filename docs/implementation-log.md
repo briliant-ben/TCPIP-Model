@@ -57,3 +57,15 @@ Linux 通道：本机有 tcpdump，但没有 packetdrill、Linux /dev/net/tun、
 重组 profile 复用 15 个数据场景并新增 11 个队列场景。针对性测试已覆盖 24 种四段排列、重复、非零字节、读/移位/回绕、Table 6 全跨窗口情况及清理。丢槽与同长度错误覆盖由内容场景发现，提前 ACK 由 Difference 发现，错误移位产生并重放完整字节求解反例，失败事务回滚。该 profile 的独立初值、113 条保持义务、13 个 guard 组、84 个不变量通过；长度证书仍不宣称证明字节内容。
 
 本轮完整验证：127 项测试通过。build、旧 active-open/connection 的 depth=6、四 profile suite 与 suite-verify 通过本地执行/完整性门槛；data 与 reassembly 的原始 BMC 均为 unknown，suite 状态仍 formal_pending_stack_incomplete。重组 26 个场景完整字节符号重放均 match，合成 PCAP 独立归一化/Difference 均 match_synthetic_only，自己的归纳证书通过。lwIP 重建并重新绑定当前源，普通握手匹配、丢包场景连接成功且 2750ms 差异保留，lwip-verify 通过；Linux 入口记录 not_run。未修改上游或放宽 oracle/哈希。一般 ACK/window 与 payload 组合、带数据关闭、完整恢复及后续协议仍未完成。
+
+## 2026-10-25：ACK/window 与 payload 组合及命题绑定
+
+继续当前分支未提交工作，没有回退已提交基线。新增 tcp-segments 声明式扩展重组/数据/连接链，109 条规则与 84 个状态不变量：接收序列有效性先于 ACK/window；接受段的累计/部分 ACK 与文本重组在一个有序事件中处理；未来 ACK 不填补缺口，旧 ACK 仍可携带文本；WL1/WL2 使用明确记录的原始头部选择。允许窗口收缩，阻止负可用窗口的新数据，正窗口限制重传前缀，零窗口且仍有在途数据时只探测最旧一字节。无在途数据 persist、未排空关闭和完整恢复仍待实现。
+
+IR 0.2 新增显式 arm_if/cancel_if，参考及完整字节/长度后端同步编码启用条件与故障条件。组合新增 guard 替换、prepend、精确锚定 action edit 和 requirement 追加；父模型动作变化必须拒绝锚定编辑，未将协议逻辑放进 Python 回调。新增 14 场景并复用 26 输入；独立期望和故障变体分别检查处理顺序、窗口 freshness、部分 ACK 重启、错误未来 ACK 和定时器取消。
+
+研究 Anthropic/Theorem 后保留 IR/Z3 主线，新增每 profile 的 claims.json，绑定实际命题、范围、假设、源与查询哈希、检查器版本和可信组件。哈希验收仅是完整性/一致性检查，不冒充翻译器正确性或 Rocq 内核检查。未知、归纳状态性质和固定输入重放分别记录；后续 Rocq 语义引理及实现精化仍须实际机器检查。调研资料与适用性记录在 docs/research 中。
+
+全量 unittest：152 项通过。独立实现重新执行 lwIP，两连接成功、2750ms 与固定 1000ms 的差异保持，lwip-verify 通过。Linux 入口在当前 darwin 缺工具/权限的环境记录 not_run。没有修改上游 lwIP 或放宽 oracle/哈希。完整 suite 的实际查询结果与验收在本条后续补记。
+
+完整证据重建及 suite-verify 已完成：五个 profile 的当前产物/输入与 claims 绑定有效；active-open/connection 的 depth=6 均 bounded_pass；data/reassembly/segments 的原 BMC 均 unknown，三者各自状态归纳通过，15/26/40 个固定输入完整字节重放 match。suite 仍为 formal_pending_stack_incomplete，合成 PCAP 仅作为 codec 检查，未产生数据实机证据。

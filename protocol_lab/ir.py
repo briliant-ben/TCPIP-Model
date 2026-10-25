@@ -189,11 +189,20 @@ def validate(model):
                 require(set(arg["fields"]) == set(schema["fields"]), "Message fields mismatch")
                 for field, expr in arg["fields"].items():
                     require(infer(expr, model, rule["event"]) == schema["fields"][field], f"Message field type mismatch: {field}")
-            elif kind == "arm":
+            elif kind in ("arm", "arm_if"):
+                if kind == "arm_if":
+                    require(model["ir_version"] == "0.2", "Conditional timers require IR 0.2")
+                    require(set(arg) == {"when", "timer", "delay_ms"}, "Bad conditional arm shape")
+                    require(infer(arg["when"], model, rule["event"]) == "bool", "Conditional timer requires bool")
                 require(arg["timer"] in model["timers"], "Unknown timer")
                 require(infer(arg["delay_ms"], model, rule["event"]) == "int", "Bad timer duration type")
             elif kind == "cancel":
                 require(arg in model["timers"], "Unknown timer")
+            elif kind == "cancel_if":
+                require(model["ir_version"] == "0.2", "Conditional timers require IR 0.2")
+                require(set(arg) == {"when", "timer"}, "Bad conditional cancel shape")
+                require(arg["timer"] in model["timers"], "Unknown timer")
+                require(infer(arg["when"], model, rule["event"]) == "bool", "Conditional timer requires bool")
             else:
                 raise ModelError(f"Unsupported action: {kind}")
     invariant_ids = set()
@@ -233,16 +242,30 @@ def load(path):
             model[group] = [r for r in model[group] if r["id"] not in removals] + overlay.get(group, [])
         amended = set()
         for amendment in overlay.get("amend_transitions", []):
-            require(set(amendment) <= {"id", "and_guard", "append_actions"}, "Unsupported transition amendment")
+            require(set(amendment) <= {"id", "and_guard", "guard", "prepend_actions", "append_actions", "edit_actions", "add_requirements"}, "Unsupported transition amendment")
             rid = amendment["id"]
             require(rid not in amended, "Duplicate transition amendment")
             amended.add(rid)
             matches = [r for r in model["transitions"] if r["id"] == rid]
             require(len(matches) == 1, "Unknown/ambiguous transition amendment")
             rule = matches[0]
+            require(not ("guard" in amendment and "and_guard" in amendment), "Ambiguous guard amendment")
+            if "guard" in amendment:
+                rule["guard"] = amendment["guard"]
             if "and_guard" in amendment:
                 rule["guard"] = {"op": "and", "args": [rule["guard"], amendment["and_guard"]]}
-            rule["actions"] += amendment.get("append_actions", [])
+            for edit in amendment.get("edit_actions", []):
+                require(set(edit) == {"at", "expected", "with"}, "Bad action edit shape")
+                index = edit["at"]
+                require(type(index) is int and 0 <= index < len(rule["actions"]), "Action edit index out of range")
+                require(rule["actions"][index] == edit["expected"], "Action edit anchor changed")
+                require(type(edit["with"]) is list, "Action edit replacement must be a list")
+                rule["actions"][index:index+1] = edit["with"]
+            rule["actions"] = amendment.get("prepend_actions", []) + rule["actions"] + amendment.get("append_actions", [])
+            added = amendment.get("add_requirements", [])
+            require(type(added) is list and len(added) == len(set(added))
+                    and not set(added).intersection(rule["requirements"]), "Duplicate added requirement")
+            rule["requirements"] += added
         for key, value in overlay.items():
             if key in ("extends", "transitions", "invariants", "remove_transitions", "remove_invariants", "amend_transitions"):
                 continue
@@ -301,7 +324,12 @@ class Machine:
                 emitted.append({"message": arg["message"], "fields": {k: copy.deepcopy(evaluate(v, self, event)) for k, v in arg["fields"].items()}})
             elif kind == "cancel":
                 self.timers.pop(arg, None)
-            elif kind == "arm":
+            elif kind == "cancel_if":
+                if evaluate(arg["when"], self, event):
+                    self.timers.pop(arg["timer"], None)
+            elif kind in ("arm", "arm_if"):
+                if kind == "arm_if" and not evaluate(arg["when"], self, event):
+                    continue
                 delay = evaluate(arg["delay_ms"], self, event)
                 require(type(delay) is int and delay > 0, "Timer duration must be positive")
                 self.timers[arg["timer"]] = self.now_ms + delay

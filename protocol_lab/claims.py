@@ -1,0 +1,107 @@
+"""Bind exact model propositions, assumptions and checker trust to evidence.
+
+This is a claim manifest, not a new proof checker or a proof of the translator.
+"""
+import hashlib
+import json
+from pathlib import Path
+
+from .ir import require
+from .symbolic import model_hash
+
+
+def sha(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def build(model, profile, inputs, scenarios, formal, induction, artifacts):
+    model_sha = model_hash(model)
+    for record in (formal, induction):
+        if record["status"] != "not_run":
+            require(record["model_semantic_sha256"] == model_sha, "Claim evidence model mismatch")
+    scope = {"model_scope": model["scope"], "semantics": model["semantics"], "ir_version": model["ir_version"],
+             "environment_requirements": {rid: req for rid, req in model["requirements"].items()
+                if req.get("kind", req.get("category")) == "environment_assumption"}}
+    checker_code = {name: digest for name, digest in inputs.items() if name.startswith("protocol_lab/")}
+    context = {"model_semantic_sha256": model_sha, "assumptions": scope, "input_hashes": inputs}
+
+    def claim(cid, statement, status, checker, version, evidence):
+        proposition = {"context": context, "statement": statement}
+        return {"id": cid, "statement": statement, "proposition_sha256": sha(proposition),
+                "status": status, "checker": checker, "checker_version": version,
+                "checker_code_hashes": checker_code, "evidence_hashes": evidence,
+                "kernel_checked_proof": False,
+                "trusted_components": ["IR parsing and validation", "IR-to-solver translation",
+                                       "Z3 solver", "Python checker/evidence integration"]}
+
+    safety_statement = {"kind": "bounded_state_safety_and_guard_overlap", "defined_transitions_only": True,
+                        "invariants": [{"id": i["id"], "assert": i["assert"]} for i in model["invariants"]],
+                        "runtime_properties": formal.get("runtime_properties", []), "depth": formal.get("depth"),
+                        "symbolic_initials": formal.get("symbolic_initials", []),
+                        "other_initial_values": "declared_IR_initial_values", "event_domain": "all_typed_values",
+                        "sequence_width": 32, "time": "unbounded_integer_ms", "unbounded": False}
+    fstatus = formal["status"]
+    fs = "verified_bounded" if fstatus == "bounded_pass" else "not_run" if fstatus == "not_run" else "unknown" if fstatus in ("unknown", "vacuous") else "rejected"
+    if fstatus != "not_run":
+        require(formal.get("backend") == "z3-bmc", "Unsupported claim checker")
+        require(type(formal.get("depth")) is int and formal["depth"] >= 1, "Missing bounded claim depth")
+        require({"formal/result.json", "formal/model.smt2", "formal/overlap.smt2"} <= artifacts.keys(), "Missing bounded claim evidence")
+    if fstatus == "bounded_pass":
+        require(formal.get("safety_query") == "unsat" and formal.get("overlap_query") == "unsat"
+                and formal.get("replay", {}).get("status") == "match", "Cannot promote inconclusive solver evidence")
+    safety = claim("bounded-state", safety_statement, fs, "z3-bmc", formal.get("solver_version"),
+                   {p: h for p, h in artifacts.items() if p.startswith("formal/")})
+    safety["solver_result"] = {k: formal[k] for k in ("status", "safety_query", "overlap_query", "reason") if k in formal}
+
+    induction_statement = {"kind": "initial_and_per_rule_invariant_preservation_and_guard_groups",
+        "invariants": safety_statement["invariants"], "rules": [r["id"] for r in model["transitions"]],
+        "prestate_assumption": "typed_state_and_all_listed_invariants",
+        "poststate_invariants_assumed": False, "byte_encoding": induction.get("byte_encoding"),
+        "sequence_encoding": induction.get("sequence_encoding"),
+        "content_properties": "not_supported_by_length_projection", "protocol_completeness": False}
+    istatus = induction["status"]
+    ins = "verified_inductive_state_properties" if istatus == "inductive_invariants_pass" else "not_run" if istatus == "not_run" else "unknown" if istatus in ("unknown", "vacuous") else "rejected"
+    if istatus != "not_run":
+        require(induction.get("backend") == "z3-invariant-induction", "Unsupported claim checker")
+        require({"inductive/result.json", *["inductive/"+p for p in induction["query_hashes"]]} <= artifacts.keys(), "Missing induction claim evidence")
+    if istatus == "inductive_invariants_pass":
+        require(induction.get("initial_query") == "unsat" and induction.get("length_lemmas") == "unsat"
+                and all(r["query"] == "unsat" for r in induction["preservation"] + induction["overlap"])
+                and induction.get("replay", {}).get("status") == "match", "Cannot promote inconclusive induction evidence")
+    inductive = claim("inductive-state", induction_statement, ins, "z3-invariant-induction", induction.get("solver_version"),
+                      {p: h for p, h in artifacts.items() if p.startswith("inductive/")})
+
+    matched = [r["id"] for r in scenarios if r.get("symbolic_replay") == "match"]
+    trace_statement = {"kind": "fixed_input_and_rule_choice_replay", "scenario_ids": matched,
+                       "universal_event_sequences": False, "compared": ["prestate", "poststate", "timers", "emitted_fields"]}
+    trace = claim("fixed-traces", trace_statement, "matched_fixed_inputs" if matched else "not_run",
+                  "z3-constrained-trace-and-reference-replay", formal.get("solver_version"),
+                  {p: h for p, h in artifacts.items() if "/symbolic/" in p})
+    return {"claims_version": "0.1", "profile": profile["id"], **context,
+            "claims": [safety, inductive, trace], "protocol_complete": False,
+            "this_manifest_does_not_establish": ["RFC coverage completeness", "IR translator correctness",
+                "universal byte-content correctness", "implementation refinement", "liveness/fairness",
+                "Linux implementation execution", "Rocq kernel-checked proofs"],
+            "integrity_is_not_authenticity_or_semantic_validity": True}
+
+
+def verify(model, profile, report, out):
+    out = Path(out).resolve()
+    def record(name, summary):
+        if summary["status"] == "not_run":
+            return {"status": "not_run"}
+        value = json.loads((out / name / "result.json").read_text())
+        require(value["status"] == summary["status"], "Claim summary/evidence status mismatch")
+        return value
+    formal = record("formal", report["formal"])
+    induction = record("inductive", report.get("inductive", {"status": "not_run"}))
+    expected = build(model, profile, report["input_hashes"], report["scenarios"], formal, induction,
+                     {p: h for p, h in report["artifact_hashes"].items() if p != "claims.json"})
+    for claim in expected["claims"]:
+        for name, digest in claim["evidence_hashes"].items():
+            path = (out / name).resolve()
+            require(path.is_relative_to(out) and path.is_file()
+                    and hashlib.sha256(path.read_bytes()).hexdigest() == digest, "Claim evidence changed")
+    actual = json.loads((out / "claims.json").read_text())
+    require(actual == expected, "Proof claim manifest mismatch")
+    return {"status": "valid_claim_bindings", "protocol_complete": False}

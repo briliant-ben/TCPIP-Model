@@ -27,7 +27,7 @@
   "overlap_query": "unsat",
   "sample_witness": {
     "initial": {
-      "iss": 2147483656,
+      "iss": 0,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -45,10 +45,10 @@
         "after": {
           "state": "SYN-SENT",
           "variables": {
-            "iss": 2147483656,
+            "iss": 0,
             "irs": 0,
-            "snd_una": 2147483656,
-            "snd_nxt": 2147483657,
+            "snd_una": 0,
+            "snd_nxt": 1,
             "rcv_nxt": 0,
             "rto_ms": 1000,
             "retries": 0
@@ -62,7 +62,7 @@
             "message": "tcp",
             "fields": {
               "flags": "S",
-              "seq": 2147483656,
+              "seq": 0,
               "ack": 0,
               "window": 65535
             }
@@ -78,10 +78,10 @@
         "after": {
           "state": "SYN-SENT",
           "variables": {
-            "iss": 2147483656,
+            "iss": 0,
             "irs": 0,
-            "snd_una": 2147483656,
-            "snd_nxt": 2147483657,
+            "snd_una": 0,
+            "snd_nxt": 1,
             "rcv_nxt": 0,
             "rto_ms": 2000,
             "retries": 1
@@ -95,7 +95,7 @@
             "message": "tcp",
             "fields": {
               "flags": "S",
-              "seq": 2147483656,
+              "seq": 0,
               "ack": 0,
               "window": 65535
             }
@@ -111,10 +111,10 @@
         "after": {
           "state": "SYN-SENT",
           "variables": {
-            "iss": 2147483656,
+            "iss": 0,
             "irs": 0,
-            "snd_una": 2147483656,
-            "snd_nxt": 2147483657,
+            "snd_una": 0,
+            "snd_nxt": 1,
             "rcv_nxt": 0,
             "rto_ms": 4000,
             "retries": 2
@@ -128,7 +128,7 @@
             "message": "tcp",
             "fields": {
               "flags": "S",
-              "seq": 2147483656,
+              "seq": 0,
               "ack": 0,
               "window": 65535
             }
@@ -144,10 +144,10 @@
         "after": {
           "state": "SYN-SENT",
           "variables": {
-            "iss": 2147483656,
+            "iss": 0,
             "irs": 0,
-            "snd_una": 2147483656,
-            "snd_nxt": 2147483657,
+            "snd_una": 0,
+            "snd_nxt": 1,
             "rcv_nxt": 0,
             "rto_ms": 8000,
             "retries": 3
@@ -161,7 +161,7 @@
             "message": "tcp",
             "fields": {
               "flags": "S",
-              "seq": 2147483656,
+              "seq": 0,
               "ack": 0,
               "window": 65535
             }
@@ -169,66 +169,34 @@
         ]
       },
       {
-        "at_ms": 15001,
-        "event": "timer.syn_rto",
-        "origin": "timer",
-        "transition": "T-SYN-RETRY",
-        "fields": {},
+        "at_ms": 7002,
+        "event": "net.synack",
+        "origin": "network",
+        "transition": "T-ACCEPT-SYNACK",
+        "fields": {
+          "seq": 536870912,
+          "ack": 1
+        },
         "after": {
-          "state": "SYN-SENT",
+          "state": "ESTABLISHED",
           "variables": {
-            "iss": 2147483656,
-            "irs": 0,
-            "snd_una": 2147483656,
-            "snd_nxt": 2147483657,
-            "rcv_nxt": 0,
-            "rto_ms": 16000,
-            "retries": 4
+            "iss": 0,
+            "irs": 536870912,
+            "snd_una": 1,
+            "snd_nxt": 1,
+            "rcv_nxt": 536870913,
+            "rto_ms": 8000,
+            "retries": 3
           },
-          "timers": {
-            "syn_rto": 31001
-          }
+          "timers": {}
         },
         "emitted": [
           {
             "message": "tcp",
             "fields": {
-              "flags": "S",
-              "seq": 2147483656,
-              "ack": 0,
-              "window": 65535
-            }
-          }
-        ]
-      },
-      {
-        "at_ms": 31001,
-        "event": "timer.syn_rto",
-        "origin": "timer",
-        "transition": "T-SYN-RETRY",
-        "fields": {},
-        "after": {
-          "state": "SYN-SENT",
-          "variables": {
-            "iss": 2147483656,
-            "irs": 0,
-            "snd_una": 2147483656,
-            "snd_nxt": 2147483657,
-            "rcv_nxt": 0,
-            "rto_ms": 32000,
-            "retries": 5
-          },
-          "timers": {
-            "syn_rto": 63001
-          }
-        },
-        "emitted": [
-          {
-            "message": "tcp",
-            "fields": {
-              "flags": "S",
-              "seq": 2147483656,
-              "ack": 0,
+              "flags": "A",
+              "seq": 1,
+              "ack": 536870913,
               "window": 65535
             }
           }
@@ -238,9 +206,9 @@
   },
   "replay": {
     "status": "match",
-    "compared_steps": 6
+    "compared_steps": 5
   },
-  "smt2_sha256": "975031aa09b0b7040bca4126bbe7199690d4a8ac4463d08d28a0a7d7bdf43b4c",
-  "overlap_smt2_sha256": "48e6f636816541a5ae1a246c85729796aa6ebfd42fd5b89c9e53da1a74dad044",
-  "build_sha256": "410ba4a0536427f43c4c039d9e5b9e0904990aeb632b0e37b79047f8994e0e49"
+  "smt2_sha256": "be3b0d59038008107c128a86da30c526f12f22bdc600060ecd92eebebe7e67cb",
+  "overlap_smt2_sha256": "72c27e220ce179f83f15674359af291d3be05fea67f2e92e6c58ad8f38ec99c5",
+  "build_sha256": "87df993ab6a572e187786e637649700f0427fe2e08bc35fd03174fad3b859b0b"
 }
