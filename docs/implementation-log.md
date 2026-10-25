@@ -69,3 +69,9 @@ IR 0.2 新增显式 arm_if/cancel_if，参考及完整字节/长度后端同步�
 全量 unittest：152 项通过。独立实现重新执行 lwIP，两连接成功、2750ms 与固定 1000ms 的差异保持，lwip-verify 通过。Linux 入口在当前 darwin 缺工具/权限的环境记录 not_run。没有修改上游 lwIP 或放宽 oracle/哈希。完整 suite 的实际查询结果与验收在本条后续补记。
 
 完整证据重建及 suite-verify 已完成：五个 profile 的当前产物/输入与 claims 绑定有效；active-open/connection 的 depth=6 均 bounded_pass；data/reassembly/segments 的原 BMC 均 unknown，三者各自状态归纳通过，15/26/40 个固定输入完整字节重放 match。suite 仍为 formal_pending_stack_incomplete，合成 PCAP 仅作为 codec 检查，未产生数据实机证据。
+
+## 2026-10-25：Rocq 原语试点接入（检查结果待 CI）
+
+ACK/window 里程碑 9ca8d44 已经通过 GitHub 官方 SSH 443 端口推送（22 端口被关闭）。新增独立 Rocq 原语证明/冻结命题包装器和空公理审计，锁定官方 9.2.0 容器 digest；CI 依次编译、新检查 proof objects，并运行错误证明/注入公理负控制。此次只涉及通用切片、拼接和模加法，没有手写第二套 TCP 状态机。绑定源/产物、版本、命令、定理和可信边界；Python/SMT 对应和 TCP 内容性质仍待证明。
+
+本机实际调用检查入口返回 not_run（rocq 不可用），未产生内核证明通过声明。Python 编排语法检查通过；远端 CI 必须实际通过后才验收此试点。未修改运行时语义或上一里程碑证据绑定。
