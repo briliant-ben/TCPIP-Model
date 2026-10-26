@@ -147,3 +147,21 @@ IR 数值测试补充独立 ceil 编码性质和代数无理见证拒绝，共 7
 八个 profile 的完整重建已结束：93 个 RTT/RTO 固定输入完整字节重放全部 match，合成 codec/Difference 全部 match_synthetic_only。主动打开／连接 depth=6 bounded_pass；六个数据 profile BMC 均保留 unknown。RTO 在整个 suite 进程中的一次 FIN-WAIT-1 保持子查询超时 unknown，其余子查询 unsat；原结果与完整保持查询保存在 artifacts/diagnostics/tcp-rto-suite-unknown，不能删除或直接提升状态。
 
 同一模型语义哈希 697682c7041608e5e897a60193ca9719f0a27fa297ba28d344c2169565c06579 在干净进程、相同逐查询 10000ms 限时完整重查：初值／长度、201 个目标保持、26 个 guard 组及非空完整字节样本通过。仅以实际新查询／结果重建 RTO 的报告、命题绑定和顶层摘要，重建前断言所有当前输入哈希未变。独立 CLI 再执行导出文件得到 201 保持及 26 guard 全部 unsat、样本 sat；该 CLI 的进程限时不同，结果单独保存，未用来替换内部 unknown。上下文见 artifacts/tcp-rto-clean-recheck.json、tcp-rto-query-check.json。close／FIN 的独立导出复查也已重新生成；suite-verify 和 lwip-verify 通过。该里程碑仍保留一般过早重传的真实反例与完整恢复／独立数据实现缺口，完整目标未完成。
+
+## 2026-10-26：逐字节发送历史与精确查询分组（开发检查点）
+
+在已验收并推送的 272b77b 之后继续修复真实提前重传反例。tcp-tx-history overlay 以 16 个显式整数时间槽和独立 FIN 时刻保存历史；新发送登记、累计／部分 ACK 移位和清理、实际重传更新均为 IR 动作。timer.rtx 只选择达到当前退避前 RTO 时龄的最旧连续前缀，窗口／MSS 约束保持；若尚未到期，明确等待且不输出空包、不退避或虚增重试。Karn 使用实际裁剪长度。1021ms 的输出现为旧字节 [0,1]，后发字节仍保留 1000ms 的时间。
+
+首版 176 规则／143 不变量归纳初值、长度和 guard 组通过，两个 FIN-WAIT-1 保持目标 unknown；原 overlay、结果与完整查询保存在 artifacts/diagnostics/tcp-tx-history-v1。对两个规则的 ACK 域作重复／在途新确认／其他的互斥穷尽显式分解，不改变动作或输入范围；结构比较、完整 SMT 互斥／穷尽断言及六个具体分支均经测试。当前 180 规则／217 目标中 215 unsat、2 unknown，原报告保存在 artifacts/tcp-tx-history/inductive，未改成通过。
+
+新增独立 formal/partition_queries.py：保留原查询的每条其他断言，完整划分所选违例析取式，先检查等价、再逐组检查，导出全部查询；verify 校验源码／求解器／查询哈希、完整项覆盖、原约束逐项一致，并重新求解。拒绝不支持的脚本命令。两个 unknown 的 160／161 项分别分成 10／11 组，全部组和两个等价义务 unsat，独立进程 verify 通过。六个正反测试检查可满足分支不能被隐藏、遗漏约束后重新哈希仍拒绝、缺组、unknown 重标、源／版本变化及不支持语义。该结果仅是独立查询精化，尚未进入标准 suite/claims 验收，不能替换原 unknown 或提升为内核证明。
+
+当前发送历史模块 14 项测试通过（367.647s），包括继承的全部 194 个参考场景、四个手算时序契约完整字节符号重放、FIN 独立计时、1ms 边界、零窗口导致的非单调历史、部分 ACK／回绕、早定时器故障注入、缺失时间登记和错误资格阈值。独立输出年龄断言从实际输出重建历史，不依赖模型自报的时间槽，保留旧模型的违规对照。结合 272b77b 已检查且源未变的 208 个方法，当前 228 个唯一测试方法均有通过日志，分批覆盖而非一次执行；精确方法集合及输入／日志哈希见 artifacts/tcp-tx-history/validation。
+
+新模型仍是开发模型，未注册为正式 suite profile；标准归纳精化集成、非空正式见证、完整新 profile 证据、SYN 超时历史及输出／实现精化待推进。旧八 profile 的 suite-verify、lwip-verify 再次通过，2750ms 差异、Linux 未运行及后续协议缺口均保持。完整目标仍 active。
+
+聚合复查发现共享全局 Z3 context 的资源敏感性：原独立 verify 均通过，但后来在同一聚合过程中某个组再次 unknown；旧工具、完整查询与结果均保存在 artifacts/diagnostics/query-partition-global-context。辅助检查器改为每条查询使用新 context，翻译全部原公式，不删约束、不增限时；6 项测试重新通过，分组证据必须用新源码实际重建及复查。此变化不修改标准后端或原 unknown 报告。
+
+独立 context 的 16 项分组仍有 pending 的 group-003 在 10s 内 unknown，结果及日志保存在 artifacts/diagnostics/query-partition-isolated-16。保持所有项和原断言，将该目标的每组大小从 16 精确细分到 8（160 项／20 组）；other 仍为 161 项／11 组。当前两者全部 31 组及等价义务实际 unsat，分别在新进程 verify 通过；不是更换随机种子或扩大限时。原标准归纳两个 unknown 保持，尚未接入 suite／claims。
+
+当前新 context／细分证据最终聚合复查也通过：两个 unknown 的 31 组及两个等价义务重新求解 unsat。验证摘要逐项检查两条原 unknown 都被精确覆盖、原 SMT 文件／当前模型哈希一致，校验旧 208 方法源未变、当前新增 20 方法日志通过，并核对当前 unittest discovery 的 228 个方法 ID 无缺漏。摘要及输入哈希保存在 artifacts/tcp-tx-history/validation/result.json。标准归纳报告仍 unknown，开发模型仍未注册 suite，后续统一验收集成和其余恢复／协议范围继续。

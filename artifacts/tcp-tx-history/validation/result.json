@@ -1,0 +1,68 @@
+{
+  "status": "development_evidence_checked_not_suite_integrated",
+  "created_at": "2026-10-26T15:08:54.278342+00:00",
+  "model_semantic_sha256": "af3b362e2345acf8db0768e1d0209d7382b2b3e83d117b36abc8f5429bd7552f",
+  "rules": 180,
+  "invariants": 143,
+  "primary_induction_status": "unknown",
+  "primary_target_checks": 217,
+  "primary_unknown_targets": [
+    "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> FIN-WAIT-1",
+    "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> FIN-WAIT-1"
+  ],
+  "exact_partition_rechecks": [
+    {
+      "path": "artifacts/tcp-tx-history/query-partitions/other",
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> FIN-WAIT-1",
+      "status": "query_partition_unsat",
+      "groups": 11,
+      "result_sha256": "4461c8fbecf824e9276d84b44b6e949402250e77ba99e485be108dc0df263741",
+      "verification_sha256": "456312a84d34ed38cc5a3ba9f135229b19c61e5a9823846c8e8da0265c2c90e8"
+    },
+    {
+      "path": "artifacts/tcp-tx-history/query-partitions/pending",
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> FIN-WAIT-1",
+      "status": "query_partition_unsat",
+      "groups": 20,
+      "result_sha256": "581eef41406919d9fd9e5119aabc0a8f8e774ebcc7c4a5f843d1e095ab09f9d9",
+      "verification_sha256": "3c7e77163d8dac64117a765076a206d83867df545c50e9c788249c16fd3e3430"
+    }
+  ],
+  "induction_claim_not_promoted": true,
+  "new_test_methods": 20,
+  "all_current_unique_test_methods_covered": 228,
+  "test_execution_note": "208 previously checked methods retain identical source hashes; current 14-method history and 6-method partition modules pass. Combined passing method IDs exactly equal current discovery; not a single 228-method execution.",
+  "input_hashes": {
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-tx-history.json": "e2d0b6d24a150cd16bb750f1bcd9ae9b7552fe0d2544da99bbabd1415ad8b9ec",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-rto.json": "cdce8eb9a20851130a74f1755f09eca954b0d21013938987e214bd5d802ab3ec",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-fin.json": "f2e9367a86e5d88643a29dc1c05150b5123fe4e5b37c470d83b833e92f4c7499",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-close.json": "b112909d1b63ac2096c5a88dea2b22e006b62adbc002d79d213f4c4b97d3498f",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-segments.json": "53eb104e2e411c6d627308b165dd9b5ea883aada0deeaa2f2a8e386c2f63f04d",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-reassembly.json": "6bbbfb08ab747cbc0ecdcfb82ab3a2cebd13245403d8d79d3289818dccafdda9",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-data.json": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
+    "docs/tcp-tx-history.md": "c639c04bc4eac3a4ac482695fb92da73922e2b4920690050ff2cc067eab6d843",
+    "docs/query-partition.md": "9359e64736311aa2f67f6a4b81d308dcf417f9aa0bf0b54009ceec344607be59",
+    "formal/partition_queries.py": "aaa46ed1e0a57302da05994cb1e08632311f310e5dfefcff0be762826777caf8",
+    "tests/test_query_partition.py": "05c8010bff054face38b5a364aaf816f3fd7ff995993a9a61c78b88ac4f2081d",
+    "tests/test_tx_history.py": "f34fc6869f123f2a3bce0127e9a023e0557c67a93d57b2c3c4b293ef5cf83baa",
+    "scenarios/tx-history/history-old-prefix-ack-releases-aged-tail.json": "d09acf14c5a7b5cbbdb4c151a270c70959001283bd55837e11b62812e4b53798",
+    "scenarios/tx-history/history-partial-ack-moves-histories.json": "647077ee146f7b9e5fece640cc6c9612afdaeb4b686d1d69af6d2ffa1a3ce26d",
+    "scenarios/tx-history/history-recent-tail-not-retransmitted.json": "7b0703ff6e220370ebf50fb4979442507d20aeb43b1e3fc983c8d2c38bc6c539",
+    "scenarios/tx-history/history-zero-window-only-oldest-byte.json": "29c3cfbdff794fce199888b8ac8a7cd392606d1f7e726f80b0abc9e933776f29"
+  },
+  "log_hashes": {
+    "artifacts/rto-validation/regression-206.log": "b64eef79373b455369371d40ffa9d7a942c4d6582df71577b0417262f4c6909b",
+    "artifacts/rto-validation/rational-7.log": "ff33cf35b252a9171be1561e51daf14702f75b246e58908215bf86027635ada9",
+    "artifacts/rto-validation/long-rtt-cap.log": "56abbd83ab468f9fb64f4bad27b88175c337004586e818973c6f8383d6aab6a7",
+    "artifacts/tcp-tx-history/validation/history-14.log": "2924f8e5532a17de731519d90e4be399830df730fbaecae5b71de3d3eb751641",
+    "artifacts/tcp-tx-history/validation/partition-6.log": "cfb4049a837b9ccc3f0cf54e0922c6cfb910c61e8a37260db93f0adffc892364"
+  },
+  "does_not_establish": [
+    "full TCP recovery",
+    "SYN timeout-history conformance",
+    "universal output/translation refinement",
+    "Linux or lwIP data execution",
+    "Rocq proof of this model"
+  ]
+}

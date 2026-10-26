@@ -1,0 +1,19 @@
+test_complete_byte_backend_checks_new_handwritten_time_contracts (test_tx_history.TransmissionHistoryTests.test_complete_byte_backend_checks_new_handwritten_time_contracts) ... ok
+test_fin_keeps_independent_time_while_data_prefix_retransmits (test_tx_history.TransmissionHistoryTests.test_fin_keeps_independent_time_while_data_prefix_retransmits) ... ok
+test_fin_wait_partition_branches_keep_pending_and_sent_fin_behavior (test_tx_history.TransmissionHistoryTests.test_fin_wait_partition_branches_keep_pending_and_sent_fin_behavior) ... ok
+test_full_cumulative_ack_clears_all_slots_and_uses_actual_clip_for_karn (test_tx_history.TransmissionHistoryTests.test_full_cumulative_ack_clears_all_slots_and_uses_actual_clip_for_karn) ... ok
+test_guard_partition_is_exhaustive_disjoint_and_keeps_all_actions (test_tx_history.TransmissionHistoryTests.test_guard_partition_is_exhaustive_disjoint_and_keeps_all_actions) ... ok
+test_handwritten_scenarios_and_actual_output_ages (test_tx_history.TransmissionHistoryTests.test_handwritten_scenarios_and_actual_output_ages) ... ok
+test_inherited_data_fin_rto_and_connection_reference_corpus (test_tx_history.TransmissionHistoryTests.test_inherited_data_fin_rto_and_connection_reference_corpus) ... ok
+test_injected_early_timer_waits_without_emission_backoff_or_retry (test_tx_history.TransmissionHistoryTests.test_injected_early_timer_waits_without_emission_backoff_or_retry) ... ok
+test_missing_fresh_timestamp_is_detected_by_output_history_oracle (test_tx_history.TransmissionHistoryTests.test_missing_fresh_timestamp_is_detected_by_output_history_oracle) ... ok
+test_one_millisecond_younger_tail_remains_queued_at_exact_deadline (test_tx_history.TransmissionHistoryTests.test_one_millisecond_younger_tail_remains_queued_at_exact_deadline) ... ok
+test_original_model_exhibits_the_retained_reachable_time_violation (test_tx_history.TransmissionHistoryTests.test_original_model_exhibits_the_retained_reachable_time_violation) ... ok
+test_wrap_and_partial_ack_shift_the_history_with_octets (test_tx_history.TransmissionHistoryTests.test_wrap_and_partial_ack_shift_the_history_with_octets) ... ok
+test_wrong_eligibility_threshold_fails_invariant_and_rolls_back (test_tx_history.TransmissionHistoryTests.test_wrong_eligibility_threshold_fails_invariant_and_rolls_back) ... ok
+test_zero_probe_then_larger_window_handles_nonmonotone_slot_times (test_tx_history.TransmissionHistoryTests.test_zero_probe_then_larger_window_handles_nonmonotone_slot_times) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 367.647s
+
+OK
