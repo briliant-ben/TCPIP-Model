@@ -192,3 +192,8 @@ SYN 切片 11 项测试通过（235.167s）：三个手算契约完整字节重�
 保留原 clock-only-invariant-gap 诊断，IR 新增显式 RTT 采样时刻及边界不变量；RTO／发送历史／SYN overlay 同步更新严格动作锚点。参考 tick 在最终时刻也检查不变量，失败回滚整个调用；dispatch 仍是时间推进和外部事件的原子操作。独立 Z3 新增不越过定时器的纯时钟步及归纳保持查询，claims／精化均拒绝遗漏或未解决的时钟义务。空时钟不能充当非空声明规则样本。
 
 固定输入查询提前只编码所选动作，但保留全部 guard／故障／输入条件及独立参考重放；与完整关系的等价和冲突故障已检查。15 项新增时钟／负控制、6 项 claims、14 项发送历史、10 项归纳测试通过。RTO 新纯时钟义务 unsat，主归纳仍 unknown。完整回归、九 profile 重建及实际新源绑定 Rocq 检查仍待完成；旧快照不改哈希冒充新证据。
+
+
+当前修复的独立诊断保存在 artifacts/diagnostics/clock-progress-correction：三个继承模型 ACK(10) 后 tick(20/99) 的完整快照、零新增协议事件及全部不变量检查，另保留 RTO 纯时钟 SMT 和独立 Z3 进程 unsat 结果。此前错误诊断未修改。SYN 当前开发模型的 180 规则／148 不变量、纯时钟 unsat、主归纳 unknown 和补充 refinement_unknown 原始查询，保存在 diagnostics/syn-clock-progress-e6880f3，仍未注册为已验收 profile。
+
+Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713157227 success，artifact 12668593429，ZIP SHA256 24fc8bea40b4cdf12e6effe100d5b4fec42e47aeab3ec8fda57b89fc5b4bee60。下载后逐项核对六个当前输入及全部原产物哈希、六个空公理审计和两个负控制；保存原下载 manifest，仅更新本地来源元数据及对应摘要。仍仅证明六个通用原语，不证明此次时钟修复、估计器、翻译或 TCP／Linux 实机。
