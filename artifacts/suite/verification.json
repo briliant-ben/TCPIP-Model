@@ -126,6 +126,25 @@
         "sequence_encoding": "modular_integer_full_32bit_domain"
       },
       "real_stack": "not_run"
+    },
+    {
+      "id": "tcp-rto",
+      "local_integrity": "pass",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "inductive_invariants_pass",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "real_stack": "not_run"
     }
   ]
 }

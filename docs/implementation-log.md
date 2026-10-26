@@ -141,3 +141,9 @@ tcp-rto 的声明规则覆盖首次／后续 RTT 估计、先 RTTVAR 后 SRTT、
 新源绑定 Rocq 已实际验收：提交 d317429 的 push 作业 40212417377 / job 121226304836 success。下载 artifact 12605924177，ZIP SHA256 3c321e362f54fc8bd1dea8c8ef8d6387950aff1059a3aaaea603dda87ce83308；核对当前输入、全部下载产物及六个空公理审计后保存新证据。原始下载 result 保存在 artifacts/rocq-ci-downloaded-result.json；仅本地 ci-origin 来源元数据及其绑定哈希在核验后更新，证明对象和检查日志原样保存。通用六原语不证明 IR 0.3 有理估计器、EFSM 翻译、TCP 或 Linux 实机。
 
 IR 数值测试补充独立 ceil 编码性质和代数无理见证拒绝，共 7 项通过；RTO 新场景完整字节重放通过。一次早期 196 项回归运行期间 profiles 范围清单被本轮更新，原运行严格报 Stack scope changed（1 error），没有绕过绑定。已在固定全部输入后重新运行完整回归；最终结果待该进程结束记录。
+
+固定输入后的完整回归 206 项通过（754.286s）。之后新增无理见证拒绝和估计器长样本封顶两项：当前 rational 模块 7 项及长 RTT 封顶单项复查通过；将全部日志中的通过方法 ID 与当前 unittest discovery 集合逐项比较，恰覆盖当前 208 个唯一方法，无遗漏。日志、方法覆盖说明和当前输入哈希在 artifacts/rto-validation；不声称一次执行运行了 208 项。长样本 78977ms 得到 SRTT=79047/8、RTTVAR=39491/2，并将估计器 RTO 封顶 60000ms。
+
+八个 profile 的完整重建已结束：93 个 RTT/RTO 固定输入完整字节重放全部 match，合成 codec/Difference 全部 match_synthetic_only。主动打开／连接 depth=6 bounded_pass；六个数据 profile BMC 均保留 unknown。RTO 在整个 suite 进程中的一次 FIN-WAIT-1 保持子查询超时 unknown，其余子查询 unsat；原结果与完整保持查询保存在 artifacts/diagnostics/tcp-rto-suite-unknown，不能删除或直接提升状态。
+
+同一模型语义哈希 697682c7041608e5e897a60193ca9719f0a27fa297ba28d344c2169565c06579 在干净进程、相同逐查询 10000ms 限时完整重查：初值／长度、201 个目标保持、26 个 guard 组及非空完整字节样本通过。仅以实际新查询／结果重建 RTO 的报告、命题绑定和顶层摘要，重建前断言所有当前输入哈希未变。独立 CLI 再执行导出文件得到 201 保持及 26 guard 全部 unsat、样本 sat；该 CLI 的进程限时不同，结果单独保存，未用来替换内部 unknown。上下文见 artifacts/tcp-rto-clean-recheck.json、tcp-rto-query-check.json。close／FIN 的独立导出复查也已重新生成；suite-verify 和 lwip-verify 通过。该里程碑仍保留一般过早重传的真实反例与完整恢复／独立数据实现缺口，完整目标未完成。

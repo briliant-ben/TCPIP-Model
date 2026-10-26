@@ -1,0 +1,89 @@
+{
+  "scenario_version": "0.1",
+  "id": "seg-ahead-ack-sequence-and-stale-window",
+  "description": "seg ahead ack sequence and stale window",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite ACK+payload/window profile; validated ACK flag and payload shape, first accepted receive byte wins; raw accepted SEG.SEQ drives WL1."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9003,
+        "ack": 1001,
+        "window": 12
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 1,
+        "data": [
+          0,
+          128
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1003,
+      "snd_nxt": 1005,
+      "rtx_buf": [
+        3,
+        4
+      ],
+      "snd_wnd": 12,
+      "snd_wl1": 9003,
+      "snd_wl2": 1001,
+      "rcv_nxt": 9003,
+      "rcv_buf": [
+        0,
+        128
+      ]
+    },
+    "timers": {
+      "rtx": 1040
+    }
+  }
+}

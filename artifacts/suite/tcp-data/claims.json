@@ -46,11 +46,11 @@
     "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
     "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
     "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
-    "protocol_lab/ir.py": "5dff631fadd82ff3994eaf5eec7915da195b88c140e50f5ac54813afea891e31",
+    "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
     "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
     "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
     "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-    "protocol_lab/symbolic.py": "ac39f286df5837983ac3b25a1f8be2578714e7a06f56b231040935650ee5be9f",
+    "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
     "scenarios/data/discard-data-on-app-abort.json": "8cbb307923060ff8915bde20ed28fcb99b53b6c30ae1461ec5d3370a8c71d464",
     "scenarios/data/discard-data-on-net-rst.json": "310adaaf3875122417de1204c6dfd583b7c720515f02642913a390f94da4bc51",
     "scenarios/data/discard-data-on-net-rstack.json": "20a2cc996478a470e6498346141d137d5266a71e9c700e1e3857a3b2d2efff32",
@@ -67,12 +67,12 @@
     "scenarios/data/two-data-losses.json": "dd05b90e1800d7b5a5807dc40906c089edbfc08135cff2ab45de58d27fe5c9db",
     "scenarios/data/zero-window-reopen.json": "2119bbdc6243a0800768ea7851b26b177037f5f5c2bb275aae38f679605f1b47",
     "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
-    "profiles.json": "4a2fd334582c46cfd62fb2ea70a4eb08d5f53c9e23c1bc9142f1842fd2a43446",
+    "profiles.json": "3b3418aae24b0b6bad3e5f33b50c76c2446214759e91d3c8c123abb54e5e301a",
     "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
-    "docs/semantics.md": "d2b3359a98465b7944767deb1f21a28b4a114c03635bc857dac636ed42a3ba36",
-    "docs/inductive.md": "277199b1b198088110b39d46e6b96e756c9ad0d2b0676753b16b28bb35f06f25",
+    "docs/semantics.md": "c497967ed8ab03c769f41124741c926c2fce05f2cdd72e3e40057aecdd46d442",
+    "docs/inductive.md": "223654e626bbd554e79d8baf915fd63aeac23ac0050e4d733eb1494e8dad377a",
     "docs/claims.md": "b957201e62bd805edcd016dabb4da1acbb23befb26e64b8b76741db6a55f4972",
-    "formal/README.md": "a9a39d2b33db0ec9ec412617d3ae3e74525b1e3c0ed722c9130d946a11499bdc",
+    "formal/README.md": "b8d662da7bd1182283cce8a1269b29132debcd1ecbff50f4edf9fe523f3808de",
     "packet-profile.json": "8585bfeb9e967e0329ca5b011db4ed71a50e537df4b6c56b3cb328585d112fd9",
     "docs/tcp-data.md": "f3e800456870da2c22283c065e858d442d181aed377b3e8b04e39d101f27b393"
   },
@@ -1198,7 +1198,7 @@
         "time": "unbounded_integer_ms",
         "unbounded": false
       },
-      "proposition_sha256": "f3ebea8324cd630a24e12160827c0f76c05d44190d7d1c3f71e1f6e539e4bdda",
+      "proposition_sha256": "de73196b766a4e2b65b584ab03ce136f35887b3f047210bfba9e2ec8f2aac78a",
       "status": "unknown",
       "checker": "z3-bmc",
       "checker_version": "4.15.4",
@@ -1211,11 +1211,11 @@
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
         "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
-        "protocol_lab/ir.py": "5dff631fadd82ff3994eaf5eec7915da195b88c140e50f5ac54813afea891e31",
+        "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
         "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
         "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-        "protocol_lab/symbolic.py": "ac39f286df5837983ac3b25a1f8be2578714e7a06f56b231040935650ee5be9f"
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770"
       },
       "evidence_hashes": {
         "formal/result.json": "5bbc173dded203d99e40e1520ea438d75679213fdb71ac473532c559fa6aadbe",
@@ -3057,7 +3057,7 @@
         "content_properties": "not_supported_by_length_projection",
         "protocol_completeness": false
       },
-      "proposition_sha256": "063e79043b0701f356a0203da1b4cedc8a32ca72187bce2e6601308b00a86cf2",
+      "proposition_sha256": "7ac56313c571e3ece4b3fba5c4525d777d381a0fd87f24dab836d3ed655acb2f",
       "status": "verified_inductive_state_properties",
       "checker": "z3-invariant-induction",
       "checker_version": "4.15.4",
@@ -3070,11 +3070,11 @@
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
         "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
-        "protocol_lab/ir.py": "5dff631fadd82ff3994eaf5eec7915da195b88c140e50f5ac54813afea891e31",
+        "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
         "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
         "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-        "protocol_lab/symbolic.py": "ac39f286df5837983ac3b25a1f8be2578714e7a06f56b231040935650ee5be9f"
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770"
       },
       "evidence_hashes": {
         "inductive/length-lemmas.smt2": "50478ebf7d8b8dd470621ab97866087c1b30d27bb49fb02278f32971e34294cf",
@@ -3121,7 +3121,7 @@
           "emitted_fields"
         ]
       },
-      "proposition_sha256": "96b7b15c62c7c5eec3271ccccf9dc7333843af410bc84716e3abbfad73f18481",
+      "proposition_sha256": "4fc8579af9d5d5ef35fd85c5312424c88dc19edd68fa152da7484aa14adc8034",
       "status": "matched_fixed_inputs",
       "checker": "z3-constrained-trace-and-reference-replay",
       "checker_version": "4.15.4",
@@ -3134,11 +3134,11 @@
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
         "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
-        "protocol_lab/ir.py": "5dff631fadd82ff3994eaf5eec7915da195b88c140e50f5ac54813afea891e31",
+        "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
         "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
         "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-        "protocol_lab/symbolic.py": "ac39f286df5837983ac3b25a1f8be2578714e7a06f56b231040935650ee5be9f"
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770"
       },
       "evidence_hashes": {
         "discard-data-on-app-abort/symbolic/path.smt2": "a26597ef8e03d561e64b2b683b1b86c847adb5ebc730692c5c8a54c3c333088e",

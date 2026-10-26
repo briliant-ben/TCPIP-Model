@@ -1,0 +1,124 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-queued-read-with-gap",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9004,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          128
+        ]
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "at_ms": 35,
+      "event": "app.receive",
+      "fields": {
+        "count": 1
+      },
+      "expect_trace": [
+        {
+          "at_ms": 35,
+          "emitted": [
+            {
+              "message": "application_data",
+              "fields": {
+                "data": [
+                  0
+                ]
+              }
+            },
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9003,
+                "window": 15,
+                "payload": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 40,
+      "event": "net.data",
+      "fields": {
+        "seq": 9003,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          255
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 40,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9006,
+                "window": 13,
+                "payload": []
+              }
+            },
+            {
+              "message": "application",
+              "fields": {
+                "code": "peer_eof"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "CLOSE-WAIT",
+    "variables": {
+      "rcv_nxt": 9006,
+      "rcv_buf": [
+        1,
+        255,
+        128
+      ],
+      "local_window": 13
+    },
+    "timers": {}
+  }
+}

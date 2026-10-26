@@ -1374,7 +1374,7 @@
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 4227842046,
+      "iss": 4160749567,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -1418,17 +1418,14 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "net.rstack",
-        "origin": "network",
-        "transition": "C-IGNORE-NET-RSTACK-CLOSED",
-        "fields": {
-          "seq": 0,
-          "ack": 0
-        },
+        "event": "app.abort",
+        "origin": "application",
+        "transition": "C-ABORT-CLOSED",
+        "fields": {},
         "after": {
           "state": "CLOSED",
           "variables": {
-            "iss": 4227842046,
+            "iss": 4160749567,
             "irs": 0,
             "snd_una": 1000,
             "snd_nxt": 1000,
@@ -1471,7 +1468,14 @@
           },
           "timers": {}
         },
-        "emitted": []
+        "emitted": [
+          {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        ]
       }
     ]
   },
@@ -1480,10 +1484,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "2a2f7dd94978b51d4628ba404c795c9ddb081085c98162812e8f556af72afb42",
-    "initial.smt2": "4eb326954433590eab642c5036a6fd1b3ff6d21e2707f41516aa8b149e3a19af",
-    "preservation.smt2": "696d5fd9173ff552c41bb6f572ec2a130200c6affeecb277799610edb8894b67",
-    "overlap.smt2": "96bff56984e2f911e83713236b83ec405cc1f9994e6d3998b4c24d44248b7492",
-    "sample.smt2": "54dfe83cf974638b1388fa03611a9df41f818c9c85e06330a02e0445b082c824"
+    "length-lemmas.smt2": "a0046a3481b2ed5f7c10fb7da9f1b8dd8eb3d040d952fc653be700f5d2e180e8",
+    "initial.smt2": "50aad759a2375ac410805e747a9c7a6be23470d7193c349384d6514c4da66386",
+    "preservation.smt2": "5efde52503c060bbc99afc150c9ef85897761b813171af62749b18b3f9ba66e5",
+    "overlap.smt2": "ecabcaa1b4a08424a1cab79251e850a0d97de9b9fa7383b5bce8f8cb7e86c3ba",
+    "sample.smt2": "e4dee1fd9abfced139a3c6d6f7a2052ee7fb5ae102e369e274aa7d6362bfa650"
   }
 }

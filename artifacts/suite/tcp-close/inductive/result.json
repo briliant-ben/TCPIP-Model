@@ -2157,7 +2157,7 @@
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 4294967291,
+      "iss": 4294967293,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -2211,16 +2211,17 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "net.rst",
+        "event": "net.fin",
         "origin": "network",
-        "transition": "C-IGNORE-NET-RST-CLOSED",
+        "transition": "C-REJECT-FIN-CLOSED",
         "fields": {
-          "seq": 0
+          "seq": 0,
+          "ack": 0
         },
         "after": {
           "state": "CLOSED",
           "variables": {
-            "iss": 4294967291,
+            "iss": 4294967293,
             "irs": 0,
             "snd_una": 1000,
             "snd_nxt": 1000,
@@ -2273,7 +2274,17 @@
           },
           "timers": {}
         },
-        "emitted": []
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": 0,
+              "ack": 0,
+              "window": 16
+            }
+          }
+        ]
       }
     ]
   },
@@ -2282,10 +2293,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "3dba3d7532d5370b205761bf5eb7736755fd8780c6751c4d7103db3b35e2623b",
-    "initial.smt2": "68b6e979db84f2c0af82fb1a6e1686561671bfa034fde6c82abc9c5332c8a8e7",
-    "preservation.smt2": "59cd35281d8f7f0c1b0e1019148a8ecd32a3d7c41ff40d2d57054937cc13b6ef",
-    "overlap.smt2": "0a98a691a663354a2e44286135bdfcd2b94589ab7e741ff400a3da0e73e87e5f",
-    "sample.smt2": "1e8b8f77e4210cb709f8fb13d83ed564880c90945c68cfe70e0acde318d7b5c6"
+    "length-lemmas.smt2": "546cb51c93b4fe5b12481602966b61aee6746e4438f20461934bf09b88d6444a",
+    "initial.smt2": "7e91edecb8801d08c689d2f622465a5fd37ac0fb9fded33efe12d58acc4de236",
+    "preservation.smt2": "44a298b9054b0cc8923c33ff40bade0222ea5c2d836f55d92ee5b520829f95c4",
+    "overlap.smt2": "7297ec909c5dad20d9fc7ace65240e81502e6376bbe985d0456b4446b1c312e6",
+    "sample.smt2": "78a7226018cec65134c3285209e0748ae2994fe9d944873c329de5888540c538"
   }
 }

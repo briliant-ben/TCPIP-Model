@@ -1,0 +1,59 @@
+{
+  "scenario_version": "0.2",
+  "id": "rto-partial-ack-retains-anchor",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "rtt_samples": 1,
+      "rtt_active": true,
+      "rtt_remaining": 2,
+      "rtt_start_ms": 21,
+      "rtt_end": 1005
+    },
+    "timers": {
+      "rtx": 1030
+    }
+  }
+}

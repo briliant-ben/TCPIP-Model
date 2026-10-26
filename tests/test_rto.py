@@ -90,6 +90,20 @@ class RtoTests(unittest.TestCase):
             self.assertEqual(m.timers['rtx'],deadline+expected)
         self.assertTrue(m.values['rtt_ambiguous']);self.assertEqual(m.values['rtt_samples'],1)
 
+    def test_estimator_itself_caps_a_long_unambiguous_sample(self):
+        m=established();send(m,20,[0,1,2,3]);m.tick(1021)
+        send(m,1022,[4,5,6,7])
+        while m.timers['rtx']<80000:
+            m.tick(m.timers['rtx'])
+        self.assertFalse(m.values['rtt_ambiguous'])
+        ack(m,80000,1009)
+        self.assertEqual(m.values['rtt_last_ms'],78977)
+        self.assertEqual(m.values['srtt_ms'],{'n':79047,'d':8})
+        self.assertEqual(m.values['rttvar_ms'],{'n':39491,'d':2})
+        self.assertEqual(m.values['rto_base_ms'],60000)
+        self.assertEqual(m.values['rto_ms'],60000)
+        self.assertEqual(m.timers,{})
+
     def test_karn_fault_is_rejected_with_atomic_rollback(self):
         model=load(ROOT/'model/tcp-rto.json')
         for rule in model['transitions']:

@@ -1,0 +1,21 @@
+{
+  "status": "same_model_fresh_process_induction_pass",
+  "previous_status": "unknown",
+  "model_semantic_sha256": "697682c7041608e5e897a60193ca9719f0a27fa297ba28d344c2169565c06579",
+  "previous_result": "artifacts/diagnostics/tcp-rto-suite-unknown/result.json",
+  "previous_result_sha256": "aa883884b07768fb68b6af5f8a863f7b1482ae71eb5e657d254c2012a5a703a9",
+  "current_result": "artifacts/suite/tcp-rto/inductive/result.json",
+  "current_result_sha256": "a1e2e7455f16bd5061d33d09c17370501fce303168326fcd1f993c2080b808c2",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "protocol_lab",
+    "inductive",
+    "model/tcp-rto.json",
+    "--out",
+    "/tmp/tcp-rto-clean-recheck"
+  ],
+  "per_query_timeout_ms": 10000,
+  "model_invariant_or_input_reduction": false,
+  "note": "Actual complete fresh-process induction; BMC unknown unchanged; no runtime or oracle changes. Current report, claims and hashes regenerated from new evidence after asserting identical current profile inputs."
+}

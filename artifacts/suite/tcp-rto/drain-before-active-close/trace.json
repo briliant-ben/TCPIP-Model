@@ -1,0 +1,2008 @@
+[
+  {
+    "event_id": "e0001",
+    "time_ms": 0,
+    "event": {
+      "name": "app.connect",
+      "fields": {}
+    },
+    "transition": "C-ACTIVE-OPEN",
+    "requirements": [
+      "CONN-OPEN",
+      "RTO-PROFILE",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE"
+    ],
+    "before": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 0,
+        "snd_wl2": 0,
+        "take": 0,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": false,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": false,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": false,
+        "rtt_previous_measured": false,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 0,
+        "rtt_end": 0,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 0,
+        "rtt_samples": 0,
+        "rto_base_ms": 1000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 0,
+        "snd_wl2": 0,
+        "take": 0,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": false,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": false,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": false,
+        "rtt_previous_measured": false,
+        "rtt_active": true,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 0,
+        "rtt_end": 1001,
+        "rtt_remaining": 1,
+        "rtt_start_new": true,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 0,
+        "rtt_samples": 0,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "rtx": 1000,
+        "user": 30000
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "S",
+          "seq": 1000,
+          "ack": 0,
+          "window": 16
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0002",
+    "time_ms": 10,
+    "event": {
+      "name": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    "transition": "C-ACCEPT-SYNACK",
+    "requirements": [
+      "CONN-SYN-SENT",
+      "RTO-PROFILE",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE"
+    ],
+    "before": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 0,
+        "snd_wl2": 0,
+        "take": 0,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": false,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": false,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": false,
+        "rtt_previous_measured": false,
+        "rtt_active": true,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 0,
+        "rtt_end": 1001,
+        "rtt_remaining": 1,
+        "rtt_start_new": true,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 0,
+        "rtt_samples": 0,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "rtx": 1000,
+        "user": 30000
+      }
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": false,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": false,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": false,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 0,
+        "rtt_end": 1001,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": true,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 1,
+        "rto_base_ms": 1000
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "connected"
+        }
+      },
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "A",
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0003",
+    "time_ms": 20,
+    "event": {
+      "name": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2
+        ]
+      }
+    },
+    "transition": "D-QUEUE",
+    "requirements": [
+      "DATA-SEND",
+      "DATA-SCOPE",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE"
+    ],
+    "before": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": false,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": false,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": false,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 0,
+        "rtt_end": 1001,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": true,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 1,
+        "rto_base_ms": 1000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [
+          1,
+          2
+        ],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": false,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": false,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": false,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 0,
+        "rtt_end": 1001,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 1,
+        "rto_base_ms": 1000
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "queued"
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0004",
+    "time_ms": 21,
+    "event": {
+      "name": "app.transmit",
+      "fields": {}
+    },
+    "transition": "D-FLUSH-FIRST",
+    "requirements": [
+      "DATA-SEND",
+      "DATA-WINDOW",
+      "DATA-SEQ",
+      "DATA-RTO",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE"
+    ],
+    "before": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [
+          1,
+          2
+        ],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": false,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": false,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": false,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 0,
+        "rtt_end": 1001,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 1,
+        "rto_base_ms": 1000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1003,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [
+          1,
+          2
+        ],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": false,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": false,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": false,
+        "rtt_active": true,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 21,
+        "rtt_end": 1003,
+        "rtt_remaining": 2,
+        "rtt_start_new": true,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 1,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "rtx": 1021
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp_data",
+        "fields": {
+          "flags": "A",
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            1,
+            2
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0005",
+    "time_ms": 30,
+    "event": {
+      "name": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 8
+      }
+    },
+    "transition": "S-ACK-VALID",
+    "requirements": [
+      "SEG-ORDER",
+      "SEG-ACK",
+      "SEG-WINDOW",
+      "SEG-SHRINK",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE"
+    ],
+    "before": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1003,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [
+          1,
+          2
+        ],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": false,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": false,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": false,
+        "rtt_active": true,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 21,
+        "rtt_end": 1003,
+        "rtt_remaining": 2,
+        "rtt_start_new": true,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 1,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "rtx": 1021
+      }
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1003,
+        "snd_nxt": 1003,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9001,
+        "snd_wl2": 1003,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": true,
+        "ack_delta": 2,
+        "ack_is_new": true,
+        "ack_is_future": false,
+        "ack_advance": true,
+        "ack_window_update": true,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 79,
+          "d": 8
+        },
+        "rttvar_ms": {
+          "n": 4,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 1,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": true,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 21,
+        "rtt_end": 1003,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": true,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 9,
+        "rtt_samples": 2,
+        "rto_base_ms": 1000
+      },
+      "timers": {}
+    },
+    "emitted": []
+  },
+  {
+    "event_id": "e0006",
+    "time_ms": 40,
+    "event": {
+      "name": "app.close",
+      "fields": {}
+    },
+    "transition": "CL-CLOSE-ESTABLISHED-FIN",
+    "requirements": [
+      "CL-QUEUE",
+      "CL-ACK",
+      "CL-HALF",
+      "CL-TIMER",
+      "CL-SCOPE",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE"
+    ],
+    "before": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1003,
+        "snd_nxt": 1003,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9001,
+        "snd_wl2": 1003,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": true,
+        "ack_delta": 2,
+        "ack_is_new": true,
+        "ack_is_future": false,
+        "ack_advance": true,
+        "ack_window_update": true,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 0,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 79,
+          "d": 8
+        },
+        "rttvar_ms": {
+          "n": 4,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 1,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": true,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 21,
+        "rtt_end": 1003,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": true,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 9,
+        "rtt_samples": 2,
+        "rto_base_ms": 1000
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "FIN-WAIT-1",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1003,
+        "snd_nxt": 1004,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9001,
+        "snd_wl2": 1003,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": true,
+        "ack_delta": 2,
+        "ack_is_new": true,
+        "ack_is_future": false,
+        "ack_advance": true,
+        "ack_window_update": true,
+        "fin_requested": true,
+        "fin_sent": true,
+        "fin_seq": 1003,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 79,
+          "d": 8
+        },
+        "rttvar_ms": {
+          "n": 4,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 1,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": true,
+        "rtt_active": true,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 40,
+        "rtt_end": 1004,
+        "rtt_remaining": 1,
+        "rtt_start_new": true,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 9,
+        "rtt_samples": 2,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "user": 30040,
+        "rtx": 1040
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "FA",
+          "seq": 1003,
+          "ack": 9001,
+          "window": 16
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0007",
+    "time_ms": 50,
+    "event": {
+      "name": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1004,
+        "window": 8
+      }
+    },
+    "transition": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-2",
+    "requirements": [
+      "SEG-ORDER",
+      "SEG-ACK",
+      "SEG-WINDOW",
+      "SEG-SHRINK",
+      "CL-SCOPE",
+      "CL-ACK",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE"
+    ],
+    "before": {
+      "state": "FIN-WAIT-1",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1003,
+        "snd_nxt": 1004,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9001,
+        "snd_wl2": 1003,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": true,
+        "ack_delta": 2,
+        "ack_is_new": true,
+        "ack_is_future": false,
+        "ack_advance": true,
+        "ack_window_update": true,
+        "fin_requested": true,
+        "fin_sent": true,
+        "fin_seq": 1003,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 79,
+          "d": 8
+        },
+        "rttvar_ms": {
+          "n": 4,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 1,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 10,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 5,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": true,
+        "rtt_active": true,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 40,
+        "rtt_end": 1004,
+        "rtt_remaining": 1,
+        "rtt_start_new": true,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 9,
+        "rtt_samples": 2,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "user": 30040,
+        "rtx": 1040
+      }
+    },
+    "after": {
+      "state": "FIN-WAIT-2",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1004,
+        "snd_nxt": 1004,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9001,
+        "snd_wl2": 1004,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": true,
+        "ack_delta": 1,
+        "ack_is_new": true,
+        "ack_is_future": false,
+        "ack_advance": true,
+        "ack_window_update": true,
+        "fin_requested": true,
+        "fin_sent": false,
+        "fin_seq": 1003,
+        "fin_acknowledged": true,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 633,
+          "d": 64
+        },
+        "rttvar_ms": {
+          "n": 97,
+          "d": 32
+        },
+        "rtt_error_ms": {
+          "n": 1,
+          "d": 8
+        },
+        "rtt_previous_srtt": {
+          "n": 79,
+          "d": 8
+        },
+        "rtt_previous_var": {
+          "n": 4,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": true,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 40,
+        "rtt_end": 1004,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": true,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 3,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "user": 30040
+      }
+    },
+    "emitted": []
+  },
+  {
+    "event_id": "e0008",
+    "time_ms": 60,
+    "event": {
+      "name": "net.fin",
+      "fields": {
+        "seq": 9001,
+        "ack": 1004
+      }
+    },
+    "transition": "F-RECEIVE-FIN-WAIT-2-net-fin",
+    "requirements": [
+      "FIN-SPACE",
+      "FIN-QUEUE",
+      "FIN-WINDOW",
+      "FIN-CLOSE",
+      "FIN-SCOPE",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE"
+    ],
+    "before": {
+      "state": "FIN-WAIT-2",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1004,
+        "snd_nxt": 1004,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9001,
+        "snd_wl2": 1004,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": false,
+        "seg_acceptable": true,
+        "ack_delta": 1,
+        "ack_is_new": true,
+        "ack_is_future": false,
+        "ack_advance": true,
+        "ack_window_update": true,
+        "fin_requested": true,
+        "fin_sent": false,
+        "fin_seq": 1003,
+        "fin_acknowledged": true,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 0,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 633,
+          "d": 64
+        },
+        "rttvar_ms": {
+          "n": 97,
+          "d": 32
+        },
+        "rtt_error_ms": {
+          "n": 1,
+          "d": 8
+        },
+        "rtt_previous_srtt": {
+          "n": 79,
+          "d": 8
+        },
+        "rtt_previous_var": {
+          "n": 4,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": true,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 40,
+        "rtt_end": 1004,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": true,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 3,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "user": 30040
+      }
+    },
+    "after": {
+      "state": "TIME-WAIT",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1004,
+        "snd_nxt": 1004,
+        "rcv_nxt": 9002,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9001,
+        "snd_wl2": 1004,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": true,
+        "seg_acceptable": true,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": true,
+        "fin_requested": true,
+        "fin_sent": false,
+        "fin_seq": 1003,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 9001,
+        "rx_fin_offset": 0,
+        "rx_fin_done": true,
+        "rx_fin_consumed": true,
+        "srtt_ms": {
+          "n": 633,
+          "d": 64
+        },
+        "rttvar_ms": {
+          "n": 97,
+          "d": 32
+        },
+        "rtt_error_ms": {
+          "n": 1,
+          "d": 8
+        },
+        "rtt_previous_srtt": {
+          "n": 79,
+          "d": 8
+        },
+        "rtt_previous_var": {
+          "n": 4,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": true,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 40,
+        "rtt_end": 1004,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 3,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "time_wait": 120060
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp_data",
+        "fields": {
+          "flags": "A",
+          "seq": 1004,
+          "ack": 9002,
+          "window": 16,
+          "payload": []
+        }
+      },
+      {
+        "message": "application",
+        "fields": {
+          "code": "peer_eof"
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0009",
+    "time_ms": 120060,
+    "event": {
+      "name": "timer.time_wait",
+      "fields": {}
+    },
+    "transition": "C-TIME-WAIT-EXPIRED",
+    "requirements": [
+      "CONN-TIMEOUT",
+      "FIN-QUEUE",
+      "FIN-SCOPE",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE"
+    ],
+    "before": {
+      "state": "TIME-WAIT",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1004,
+        "snd_nxt": 1004,
+        "rcv_nxt": 9002,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9001,
+        "snd_wl2": 1004,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": true,
+        "seg_acceptable": true,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": true,
+        "fin_requested": true,
+        "fin_sent": false,
+        "fin_seq": 1003,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 9001,
+        "rx_fin_offset": 0,
+        "rx_fin_done": true,
+        "rx_fin_consumed": true,
+        "srtt_ms": {
+          "n": 633,
+          "d": 64
+        },
+        "rttvar_ms": {
+          "n": 97,
+          "d": 32
+        },
+        "rtt_error_ms": {
+          "n": 1,
+          "d": 8
+        },
+        "rtt_previous_srtt": {
+          "n": 79,
+          "d": 8
+        },
+        "rtt_previous_var": {
+          "n": 4,
+          "d": 1
+        },
+        "rtt_measured": true,
+        "rtt_previous_measured": true,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 40,
+        "rtt_end": 1004,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 10,
+        "rtt_samples": 3,
+        "rto_base_ms": 1000
+      },
+      "timers": {
+        "time_wait": 120060
+      }
+    },
+    "after": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1004,
+        "snd_nxt": 1004,
+        "rcv_nxt": 9002,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9001,
+        "snd_wl2": 1004,
+        "take": 2,
+        "rx_chunk": [],
+        "rx_slot_00": [],
+        "rx_slot_01": [],
+        "rx_slot_02": [],
+        "rx_slot_03": [],
+        "rx_slot_04": [],
+        "rx_slot_05": [],
+        "rx_slot_06": [],
+        "rx_slot_07": [],
+        "rx_slot_08": [],
+        "rx_slot_09": [],
+        "rx_slot_10": [],
+        "rx_slot_11": [],
+        "rx_slot_12": [],
+        "rx_slot_13": [],
+        "rx_slot_14": [],
+        "rx_slot_15": [],
+        "rx_advance": 0,
+        "rx_acceptable": true,
+        "seg_acceptable": true,
+        "ack_delta": 0,
+        "ack_is_new": false,
+        "ack_is_future": false,
+        "ack_advance": false,
+        "ack_window_update": true,
+        "fin_requested": false,
+        "fin_sent": false,
+        "fin_seq": 1003,
+        "fin_acknowledged": false,
+        "rx_fin_pending": false,
+        "rx_fin_seq": 9001,
+        "rx_fin_offset": 0,
+        "rx_fin_done": false,
+        "rx_fin_consumed": false,
+        "srtt_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rttvar_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_error_ms": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_srtt": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_previous_var": {
+          "n": 0,
+          "d": 1
+        },
+        "rtt_measured": false,
+        "rtt_previous_measured": false,
+        "rtt_active": false,
+        "rtt_ambiguous": false,
+        "rtt_start_ms": 0,
+        "rtt_end": 0,
+        "rtt_remaining": 0,
+        "rtt_start_new": false,
+        "rtt_sample_used": false,
+        "rtt_sample_was_ambiguous": false,
+        "rtt_last_ms": 0,
+        "rtt_samples": 0,
+        "rto_base_ms": 1000
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "closed"
+        }
+      }
+    ]
+  }
+]

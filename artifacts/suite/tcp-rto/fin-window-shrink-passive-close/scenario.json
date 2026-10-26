@@ -1,0 +1,90 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-window-shrink-passive-close",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          128,
+          255,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 1,
+        "data": [
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "app.close"
+    },
+    {
+      "at_ms": 50,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9003,
+        "ack": 1007,
+        "window": 2
+      }
+    },
+    {
+      "at_ms": 60,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 70,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9003,
+        "ack": 1008,
+        "window": 2
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {
+      "snd_nxt": 1008,
+      "snd_una": 1008,
+      "rx_fin_done": false,
+      "rx_fin_pending": false,
+      "rcv_buf": []
+    },
+    "timers": {}
+  }
+}

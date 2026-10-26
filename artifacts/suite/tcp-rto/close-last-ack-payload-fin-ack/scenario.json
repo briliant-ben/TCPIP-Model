@@ -1,0 +1,57 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-last-ack-payload-fin-ack",
+  "steps": [
+    {
+      "event": "app.connect",
+      "at_ms": 0
+    },
+    {
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      },
+      "at_ms": 10
+    },
+    {
+      "event": "net.fin",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001
+      },
+      "at_ms": 20
+    },
+    {
+      "event": "app.close",
+      "at_ms": 30
+    },
+    {
+      "event": "app.transmit",
+      "at_ms": 35
+    },
+    {
+      "event": "net.data",
+      "fields": {
+        "seq": 9002,
+        "ack": 1002,
+        "window": 8,
+        "data": [
+          99
+        ]
+      },
+      "at_ms": 40
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {
+      "snd_nxt": 1002,
+      "snd_una": 1002,
+      "rcv_nxt": 9002,
+      "rcv_buf": []
+    },
+    "timers": {}
+  }
+}
