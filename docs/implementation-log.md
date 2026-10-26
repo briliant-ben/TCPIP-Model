@@ -197,3 +197,8 @@ SYN 切片 11 项测试通过（235.167s）：三个手算契约完整字节重�
 当前修复的独立诊断保存在 artifacts/diagnostics/clock-progress-correction：三个继承模型 ACK(10) 后 tick(20/99) 的完整快照、零新增协议事件及全部不变量检查，另保留 RTO 纯时钟 SMT 和独立 Z3 进程 unsat 结果。此前错误诊断未修改。SYN 当前开发模型的 180 规则／148 不变量、纯时钟 unsat、主归纳 unknown 和补充 refinement_unknown 原始查询，保存在 diagnostics/syn-clock-progress-e6880f3，仍未注册为已验收 profile。
 
 Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713157227 success，artifact 12668593429，ZIP SHA256 24fc8bea40b4cdf12e6effe100d5b4fec42e47aeab3ec8fda57b89fc5b4bee60。下载后逐项核对六个当前输入及全部原产物哈希、六个空公理审计和两个负控制；保存原下载 manifest，仅更新本地来源元数据及对应摘要。仍仅证明六个通用原语，不证明此次时钟修复、估计器、翻译或 TCP／Linux 实机。
+
+
+## 2026-10-27：SYN 未知目标的完整单项分组验收
+
+保持当前代码／模型输入冻结。针对 SYN 开发模型剩余的困难查询，原每组 8 项在一组超时；改用已有 API 的 group_size=1，不改检查器、不删约束、不延长 10000ms 时限。三个原 unknown 目标的 166／166／167 项全部保留，499 个分组及各等价义务均 unsat，生成阶段独立复查通过；完整字节非空声明规则样本 match，随后完整 verify 进程也通过。原主归纳 unknown 与原 8 项分组 unknown 记录保持。新补充原始产物和验证日志在 artifacts/diagnostics/syn-singleton-refinement-e6880f3，绑定同一 e6880f3 原模型／主查询／检查器。仅为已列状态性质的补充归纳证据；SYN 仍未注册 suite，不代表 BMC、安全全覆盖、输出／时间精化、Rocq 或 Linux 实机。
