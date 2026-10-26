@@ -1388,13 +1388,10 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "net.fin",
-        "origin": "network",
-        "transition": "C-REJECT-FIN-CLOSED",
-        "fields": {
-          "seq": 0,
-          "ack": 0
-        },
+        "event": "app.abort",
+        "origin": "application",
+        "transition": "C-ABORT-CLOSED",
+        "fields": {},
         "after": {
           "state": "CLOSED",
           "variables": {
@@ -1449,12 +1446,9 @@
         },
         "emitted": [
           {
-            "message": "tcp",
+            "message": "application",
             "fields": {
-              "flags": "R",
-              "seq": 0,
-              "ack": 0,
-              "window": 16
+              "code": "aborted"
             }
           }
         ]
@@ -1466,10 +1460,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "487b91800dc755fbf8edd766cd964b16d93dae37b5ed1e79ca4540882adbee50",
-    "initial.smt2": "fe1e4623bd5b5e26e29c9228dd29473e67f00f4f8ca05410896e6e48d5ec8af7",
-    "preservation.smt2": "23cffa557377f143cb13f5fd5cc76c5c74bd3fde1215b55f41f0d5968dec41c5",
-    "overlap.smt2": "33e72d411dc4b0809e760a7e64c9f743a1ab29ab1d3bab09b123cd966cad2838",
-    "sample.smt2": "db9baf101f35cf99891489dc511715ff16f484cbf5c74a9c6fc283e037f9b298"
+    "length-lemmas.smt2": "3b4c430c7e29a8d33dd6b05ddd17c590ffbb70e0b9c60ce1a5a5e824c0391848",
+    "initial.smt2": "d7ca71baa6c9cde93170ffb9714505734c319d73c2ba6d2ee9732fed1f1b4f27",
+    "preservation.smt2": "6a738fd7da2ca3be2eb8be5eae18ca82192655271bc85524a15c2176c0797f6a",
+    "overlap.smt2": "c1a503afd147494cd0b2fc515b5382c9361bb806b0d8e7975cec3f1e224acb40",
+    "sample.smt2": "b1fb49074b615bc653db5dc9a873bbeb15a9d537322d0bee148fce7a030b98e1"
   }
 }

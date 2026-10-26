@@ -173,3 +173,15 @@ IR 数值测试补充独立 ceil 编码性质和代数无理见证拒绝，共 7
 新增 CLI inductive-refine / inductive-refine-verify、profile 可选配置及第四个独立 claims 命题。原 inductive-state unknown 和 BMC unknown 不改名；只有原始义务全部覆盖、补充查询与非空见证实际通过，才标 verified_refined_inductive_state_properties。formal/partition_queries.py 及全部相关运行时代码进入输入／检查器哈希。tcp-tx-history 已注册为第九个 profile，有限数据 profile 启用同一可选机制。尚未声称 TCP 或内核证明完成。
 
 14 项新集成测试通过：漏目标／错标签、主查询丢失后重新哈希、删约束后层层重绑、辅助复查超时、未解决初值、可满足主义务、缺文件／源码绑定、不支持的编码、迁移目录及空／不同初值见证都不会误验收。已有 claims 六项和辅助检查器六项针对性回归通过。真实发送历史主查询的实际补充生成与独立验收已通过；接下来固定源码／文档／profile 输入，运行全部回归和九 profile 统一重建，再记录实际结论，不使用旧证据改绑哈希。
+
+新发现并保留后续必须修复的纯时钟范围缺口：普通 SYNACK 在 10ms 取得 RTT 后，调用无到期事件的 tick(20)，rtt_sample_used 仍为 true，T-INV-KARN 把已存样本与后来的全局时钟比较而为 false；该无事件 tick 没有触发不变量失败，也没有新增轨迹行。实际前后状态和直接求值保存在 artifacts/diagnostics/clock-only-invariant-gap/report.json。当前形式命题仅覆盖初值及已声明规则的保持，不覆盖纯时钟推进或解释器／翻译对应，因此此诊断不被现有子集结论排除。后续应优先修正样本时刻的 IR 不变量，并显式补齐无事件时间推进的参考检查和独立形式覆盖，再扩大恢复机制；不能把当前集成验收当作这一范围已经证明。
+
+## 2026-10-27：当前集成验收结果及 SYN 开发切片
+
+完整回归 242 项通过（1567.990s），九个 profile 完整重建，suite-verify 与 lwip-verify 通过。active-open／connection depth=6 bounded_pass；七个数据 profile 的 BMC 都保留 unknown。data／reassembly／segments／close／fin 的主归纳通过，补充层写 not_needed_primary_pass。RTO 主归纳仍 unknown，其一个未知目标的完整补充精化／非空样本通过，claims 同时保留原 unknown 与 verified_refined_inductive_state_properties；发送历史主归纳四个未知目标中三个补充通过、一个分组仍 unknown，补充层整体 refinement_unknown，未提升。发送历史 97 个固定输入完整字节重放均 match，合成 codec 均 match_synthetic_only。外部 CLI 对当前导出查询单独复查，预算为每进程 120s，不替换主 10s 查询结论；发送历史复查未完成全部目标则如实为 inconclusive。旧 272b77b 的干净 RTO 复查记录和精确原 SMT 已移入 diagnostics/tcp-rto-clean-recheck-272b77b，未重绑旧哈希。
+
+另新增未注册的 tcp-syn-history 开发 overlay，复用单一序列空间／rtx 及数据／FIN历史。即时同时打开 SYNACK 回复在 900ms 登记实际 SYN 时刻，并把替换报文的 RTX 截止点设为 1900ms，用户 30000ms 超时不延长；1000ms 不产生事件／重传，1900ms 才发送并退避。资格等待分支只处理提前定时器故障／任意归纳前态，不把普通回复误计为真实 SYN 超时或伪造 Karn 样本。按 RFC 6298 §5／5.7、RFC 9293 §3.10.7.3／3.10.8 记录解释，保留原模型实际 100ms 间隔的对照。初版等待旧截止点的策略与原 unknown 查询亦保留；当前规则改为直接重设回复截止点，避免制造 §5.7 的解释歧义。
+
+SYN 切片 11 项测试通过（235.167s）：三个手算契约完整字节重放、继承的 97 个数据／FIN／RTO输入、ACK 在新截止点前完成、真实超时与同刻回复排序、3s 数据初始化、回绕、被动 abort、用户超时及早截止／错资格／漏登记故障。当前 180 规则／147 不变量的主归纳四个 FIN 处理目标 unknown，补充 refinement_unknown；原报告和所有分组保留于 artifacts/tcp-syn-history，开发模型不标为验收通过。合并既有 242 与新增 11 的通过方法 ID，恰覆盖当前 253 个方法，分批而非一次执行。
+
+旧实验精确分组的检查器源码已从 git 1cd5a3b 原样保存为 artifacts/tcp-tx-history/legacy-checker-1cd5a3b.py，其 SHA 与原两份记录完全匹配，未修改旧证明绑定。当前统一流程使用新的 suite 目录和实际新源码证据。纯时钟推进诊断仍未修复，接下来必须优先补齐该语义／采样时刻不变量及参考和形式检查，再推进 SYN 正式验收、delayed ACK、persist、拥塞与恢复、独立实现和后续协议。2750ms 差异与 Linux 未运行保持，完整目标 active。

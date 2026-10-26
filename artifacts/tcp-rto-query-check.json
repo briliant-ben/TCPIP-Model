@@ -1,29 +1,14 @@
 {
   "status": "independent_process_query_recheck_pass",
   "model_semantic_sha256": "697682c7041608e5e897a60193ca9719f0a27fa297ba28d344c2169565c06579",
+  "original_induction_status": "unknown",
   "checker_version": "4.15.4",
   "checker_binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
   "platform": "macOS-27.0.1-arm64-arm-64bit",
   "records": [
     {
-      "query": "artifacts/suite/tcp-rto/inductive/initial.smt2",
-      "query_sha256": "0699d7d908600cd3ff6e72685aa88449c2a85fa4825d79c2888d6d6de183af93",
-      "arguments": [
-        "-T:120",
-        "artifacts/suite/tcp-rto/inductive/initial.smt2"
-      ],
-      "returncode": 0,
-      "answers": [
-        "unsat"
-      ],
-      "stderr": "",
-      "expected_answers": [
-        "unsat"
-      ]
-    },
-    {
       "query": "artifacts/suite/tcp-rto/inductive/length-lemmas.smt2",
-      "query_sha256": "6c1d0a6ceda992cc387af6998ce4e82d8fc65a78cfe7a4a67189bc00513406a6",
+      "query_sha256": "6ef6a765f70426c1d2ba54a7261a16b5215b7631b053b468b1690513356fec3f",
       "arguments": [
         "-T:120",
         "artifacts/suite/tcp-rto/inductive/length-lemmas.smt2"
@@ -38,8 +23,24 @@
       ]
     },
     {
+      "query": "artifacts/suite/tcp-rto/inductive/initial.smt2",
+      "query_sha256": "1f1a1d00722a0bfb102f9e4584c5a6864b173694e0bc8c3ad640a78b2509643a",
+      "arguments": [
+        "-T:120",
+        "artifacts/suite/tcp-rto/inductive/initial.smt2"
+      ],
+      "returncode": 0,
+      "answers": [
+        "unsat"
+      ],
+      "stderr": "",
+      "expected_answers": [
+        "unsat"
+      ]
+    },
+    {
       "query": "artifacts/suite/tcp-rto/inductive/preservation.smt2",
-      "query_sha256": "c04b3c4265849a45fcdd87e34812bddbb8d69540c3a1918869d3562e56885451",
+      "query_sha256": "702016153839d28ca706f6fb102c0a9ccedb1eec158e70c0996c29331ddc1416",
       "arguments": [
         "-T:120",
         "artifacts/suite/tcp-rto/inductive/preservation.smt2"
@@ -455,7 +456,7 @@
     },
     {
       "query": "artifacts/suite/tcp-rto/inductive/overlap.smt2",
-      "query_sha256": "a90be42380e1551ea161c3986a2737ff678cb7e90d7b7bad522a1d88bfe113d9",
+      "query_sha256": "eff9a3fc5e4d7b1e1eb14530084cba405b92b80c8a80503df2573bcbd44f553a",
       "arguments": [
         "-T:120",
         "artifacts/suite/tcp-rto/inductive/overlap.smt2"
@@ -518,23 +519,8 @@
         "unsat",
         "unsat"
       ]
-    },
-    {
-      "query": "artifacts/suite/tcp-rto/inductive/sample.smt2",
-      "query_sha256": "d8b5a65d112523913d54b6789ae057ead7d0a00be90b44e982e7025eec5dd670",
-      "arguments": [
-        "-T:120",
-        "artifacts/suite/tcp-rto/inductive/sample.smt2"
-      ],
-      "returncode": 0,
-      "answers": [
-        "sat"
-      ],
-      "stderr": "",
-      "expected_answers": [
-        "sat"
-      ]
     }
   ],
-  "scope": "Exact exported state-induction queries only; no general byte-content/output/time or implementation-refinement proof."
+  "original_result_not_promoted": true,
+  "execution_note": "External CLI total process limit is 120s, not the primary Python 10s per-query limit. This is separate export rechecking and cannot relabel the primary result or establish clock-only progression/runtime refinement."
 }

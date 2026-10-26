@@ -51,9 +51,9 @@
     "model/tcp-data.json": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
     "model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
     "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-    "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+    "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
     "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-    "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+    "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
     "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
     "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
     "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -61,7 +61,8 @@
     "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
     "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
     "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-    "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
+    "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+    "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
     "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
     "scenarios/data/discard-data-on-app-abort.json": "8cbb307923060ff8915bde20ed28fcb99b53b6c30ae1461ec5d3370a8c71d464",
     "scenarios/data/discard-data-on-net-rst.json": "310adaaf3875122417de1204c6dfd583b7c720515f02642913a390f94da4bc51",
@@ -125,12 +126,13 @@
     "scenarios/close/close-user-timeout-pending-zero-window.json": "bc48c4d4c2255d628018e499417e2a97bb14966f1fe99f06dc5609ac4ae558d2",
     "scenarios/close/close-zero-window-pending-fin.json": "98392db8291c6717c1e930f34d03e1122972581d07febc0e09ad1adc8894bfd0",
     "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
-    "profiles.json": "3b3418aae24b0b6bad3e5f33b50c76c2446214759e91d3c8c123abb54e5e301a",
+    "profiles.json": "dc21515e0f523204699f34930293e34bd87289e9bbd667f092d7cd86868d8e6c",
     "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
     "docs/semantics.md": "c497967ed8ab03c769f41124741c926c2fce05f2cdd72e3e40057aecdd46d442",
-    "docs/inductive.md": "223654e626bbd554e79d8baf915fd63aeac23ac0050e4d733eb1494e8dad377a",
-    "docs/claims.md": "b957201e62bd805edcd016dabb4da1acbb23befb26e64b8b76741db6a55f4972",
-    "formal/README.md": "b8d662da7bd1182283cce8a1269b29132debcd1ecbff50f4edf9fe523f3808de",
+    "docs/inductive.md": "1d179bba924c87134c53d478be94a1f2aabde79f02c79d91958669cf91c11b2a",
+    "docs/claims.md": "ee1c1f77b50d6f4de79fd71cbd1ebd13ce8c7774ab5dc02a4c183c393a405f23",
+    "formal/README.md": "1ea5485a9bd8a0f07d9f95332111587ebf6a6609e9186c9f546b986ccf8d0291",
+    "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b",
     "packet-profile.json": "8585bfeb9e967e0329ca5b011db4ed71a50e537df4b6c56b3cb328585d112fd9",
     "docs/tcp-data.md": "f3e800456870da2c22283c065e858d442d181aed377b3e8b04e39d101f27b393",
     "docs/tcp-segments.md": "6b0267ecdfa43f5523e54905ca68832b02e2cf8af265f796aaa8faa746525afb",
@@ -3250,15 +3252,15 @@
         "time": "unbounded_integer_ms",
         "unbounded": false
       },
-      "proposition_sha256": "1ca8ce0e927f54c17b6c40f2a30ee3bcae977fd69ee0c2d3680c7659a210bbfa",
+      "proposition_sha256": "47e8cef7404e5156f26ecfba0b2ca9e5c6bde355dad30a90e304bb7af7d68b29",
       "status": "unknown",
       "checker": "z3-bmc",
       "checker_version": "4.15.4",
       "checker_code_hashes": {
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+        "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
         "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-        "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+        "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -3266,13 +3268,15 @@
         "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
         "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-        "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770"
+        "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+        "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+        "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
       },
       "evidence_hashes": {
-        "formal/result.json": "6a36373096e0c87028aa240f72bda279efe595dc5c86a87557fa864f1404f26e",
-        "formal/model.smt2": "898cf885e36a2d4815160c8a97454fa8fb8db5577db9ee51bbf86357e5b140f3",
-        "formal/overlap.smt2": "907dae0876b5ecea225ea757464287b3d231fb7159c985f7426d5aa29b1a94c9"
+        "formal/result.json": "35da2d5fd15b99a2f678b1b7999668146e5384f34161456dc288eccaf31bf640",
+        "formal/model.smt2": "e06d9c65611e5d0c8c848de1f1151459c00165efacd30bc250f3cc35efadd854",
+        "formal/overlap.smt2": "54cb3e2dcd4e2888ebf3ce3402746916192c746983b0299e417d4bb7e99b5ab7"
       },
       "kernel_checked_proof": false,
       "trusted_components": [
@@ -6567,6 +6571,10 @@
         "byte_encoding": "exact_length_projection_content_insensitive_subset",
         "sequence_encoding": "modular_integer_full_32bit_domain",
         "target_coverage": "all_declared_destinations",
+        "symbolic_initials": [
+          "iss"
+        ],
+        "other_initial_values": "declared_IR_initial_values",
         "transition_targets": [
           {
             "id": "C-ACTIVE-OPEN",
@@ -7437,15 +7445,15 @@
         "content_properties": "not_supported_by_length_projection",
         "protocol_completeness": false
       },
-      "proposition_sha256": "147eaafa697ad4bd162dd37a5ad85f9f1bb71c58d81b1bfc983cedaf57a18ec7",
+      "proposition_sha256": "a8ae764b59665bb95e9b77bb5160454e296ab831f5520b0c4e449c55caa8f021",
       "status": "verified_inductive_state_properties",
       "checker": "z3-invariant-induction",
       "checker_version": "4.15.4",
       "checker_code_hashes": {
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+        "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
         "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-        "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+        "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -7453,16 +7461,18 @@
         "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
         "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-        "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770"
+        "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+        "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+        "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
       },
       "evidence_hashes": {
-        "inductive/length-lemmas.smt2": "546cb51c93b4fe5b12481602966b61aee6746e4438f20461934bf09b88d6444a",
-        "inductive/initial.smt2": "7e91edecb8801d08c689d2f622465a5fd37ac0fb9fded33efe12d58acc4de236",
-        "inductive/preservation.smt2": "44a298b9054b0cc8923c33ff40bade0222ea5c2d836f55d92ee5b520829f95c4",
-        "inductive/overlap.smt2": "7297ec909c5dad20d9fc7ace65240e81502e6376bbe985d0456b4446b1c312e6",
-        "inductive/sample.smt2": "78a7226018cec65134c3285209e0748ae2994fe9d944873c329de5888540c538",
-        "inductive/result.json": "48df9dba4d34d68d061002046daa2dcd90c04497601ce07db3494bad090bc6f1"
+        "inductive/length-lemmas.smt2": "c6b1c5926fe6191d12c4b0e52787b927e6c2a3941c70adb4f79c1b93c6e76b07",
+        "inductive/initial.smt2": "0fd60face93720c8ef5f178a7be1da3a3d03d8830f05cf61afbb9c999052c6e9",
+        "inductive/preservation.smt2": "75e2cc87fcc469c15e01b0f741d659b839a96c649b241bd11537abc261d552c4",
+        "inductive/overlap.smt2": "a38a12d71f59566475a57ef46a97743e1ec44389795c2c6bfdc76c04a0ef7950",
+        "inductive/sample.smt2": "6ed49f59c4b62c1741a68409277c777e7b3e594779d64bad6dc5930fa6ab564c",
+        "inductive/result.json": "2e7927838d90010b2c511e92a2afba090125e9decab2da2a5b88251003461605"
       },
       "kernel_checked_proof": false,
       "trusted_components": [
@@ -7547,15 +7557,15 @@
           "emitted_fields"
         ]
       },
-      "proposition_sha256": "cc31422a497c57dfd37afed2b5ac78c3372e000d7a61fa3649c46164ba6f8400",
+      "proposition_sha256": "de3567eaaf0d40ede349ca91c4d3d99da974573e3cf91a8d64abd7a6a407656a",
       "status": "matched_fixed_inputs",
       "checker": "z3-constrained-trace-and-reference-replay",
       "checker_version": "4.15.4",
       "checker_code_hashes": {
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+        "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
         "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-        "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+        "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -7563,132 +7573,134 @@
         "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
         "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-        "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770"
+        "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+        "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+        "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
       },
       "evidence_hashes": {
-        "discard-data-on-app-abort/symbolic/path.smt2": "058ae904bfc9b9e7c21deb51507576bbc1f5d50565ecddc0661d71071b98d479",
-        "discard-data-on-app-abort/symbolic/result.json": "7bd8b5eef480bf08c9c9741a6771136161efad9321410bb288a0012cbe59daf9",
-        "discard-data-on-net-rst/symbolic/path.smt2": "0ebad9e198e7223e8d3ec035191a69a0d9dfb09a2e58ecd81abd73725c460477",
-        "discard-data-on-net-rst/symbolic/result.json": "d561315283eee1a244ff6c81fb71bf1618f8f46781c570f27669440bd8524687",
-        "discard-data-on-net-rstack/symbolic/path.smt2": "c552ea779e9282efd862969992e2fe38237343fdb549c6c4027ea2345a645b52",
-        "discard-data-on-net-rstack/symbolic/result.json": "34e3ceaebc5a77f381495b91e7334bce69cadf37072dfd9faf34d28d3001848e",
-        "drain-before-active-close/symbolic/path.smt2": "2a1f55b782170ac43cc5d2e362a57f9b4642d70aeac24516b31eee1b1b9a2c04",
-        "drain-before-active-close/symbolic/result.json": "c0e7ca64cb1ae8343939c9ece3ce4d9098bb783f4cabf65ea98b5c367abd1480",
-        "duplicate-old-future-ack/symbolic/path.smt2": "638521be8221632c6759a162945d9c96b571cdd2355681e4bce0d857600fa94c",
-        "duplicate-old-future-ack/symbolic/result.json": "eadb39d418270a3d35210ccb5a0e0a93e48e7be834a05141a39f2760a2dcbd6a",
-        "partial-ack-retransmission/symbolic/path.smt2": "10e89955c12ac2016768971aededd3975bbcf86ccd8327f4bae0f0f3da95eaaf",
-        "partial-ack-retransmission/symbolic/result.json": "62c381827f012c0807d50dbba1e392f7a68a934a2cfa79abd0ded6b6bf56a436",
-        "receive-ahead-then-retransmit/symbolic/path.smt2": "b4b98442da868f60addf3f1e66cad504fb60b04a64f1c8cf2d06552d7869fbd5",
-        "receive-ahead-then-retransmit/symbolic/result.json": "5a88ff5ced4746ad77f87de8a3c2ee90e873f0e4dec56773320883f58560dfb5",
-        "receive-overlap/symbolic/path.smt2": "99ddf59e04ff3ffb33e1ae7f087a74285a6b3e810be87a462601ea5ab7dec17a",
-        "receive-overlap/symbolic/result.json": "c8e1882d59b808472332efbee69637d3562af7f2c707cde22aa99f0c6905bcc1",
-        "receive-read-duplicate/symbolic/path.smt2": "eb757a4fba38f206590fba729955e1cfb7a73ff4a519b70b7deb217c7a930bfb",
-        "receive-read-duplicate/symbolic/result.json": "0e621e731614e22cc41488a0218aec0c8c40d5c852b2d04d407a2c031e20253e",
-        "receive-right-edge-zero-window/symbolic/path.smt2": "d6e35e2996c5aca58cb8be6a557c2105e16a533f6338feb881883594b6999572",
-        "receive-right-edge-zero-window/symbolic/result.json": "0a9f55b4ac50fc46c575515b072dcb679028160402e3943e848e4a765700e0ef",
-        "segmentation-cumulative-ack/symbolic/path.smt2": "baa769cb5d361024f3f6514d7f24e5f8c6b9b45b31e1150b9922e59486f1aaec",
-        "segmentation-cumulative-ack/symbolic/result.json": "a09ac109219971fcdbde14d5ea93d883b3d6fede855167e660c333c64d5c3d49",
-        "send-buffer-full/symbolic/path.smt2": "ab06f91f4baafc05ea2cc248d0e0b68fee6392ce1cc50980a48f63e3bd21e687",
-        "send-buffer-full/symbolic/result.json": "bc7acb032a6d6a21e61b9bf5afa9da22ac85733f359ff3cf98ef8eb950abc073",
-        "sequence-wrap-data/symbolic/path.smt2": "31aa35e50ba38c259a42cfb6fff3eb1e9fd9fddff741172d018e46ed3e027f0e",
-        "sequence-wrap-data/symbolic/result.json": "f6322b6fcdba9d3ac29b7b7578e7e9f7cbeaa64c81aef84be247a42693272b86",
-        "two-data-losses/symbolic/path.smt2": "b1c4d7cc7663ea71b04d8a6ecf1daa1840607ac184e45cdae27973cbbe3f2f84",
-        "two-data-losses/symbolic/result.json": "c81dddaacaf7b7d0ea04f8d57bab40289fd40066d38e9cc58767c370d4e5e7e7",
-        "zero-window-reopen/symbolic/path.smt2": "b0b0e7bdb5b01fd64014c83fb18215967b98d7ee3af4809a3f425b1853358126",
-        "zero-window-reopen/symbolic/result.json": "999d4d475006380cdfecfb844b83e0f74959a99826b6f332da8f37a3a8628943",
-        "ooo-clear-on-app-abort/symbolic/path.smt2": "fdec3fcb6ce883e392fd84cd4c24f156dfd7c179bf12737b028990960c9e377d",
-        "ooo-clear-on-app-abort/symbolic/result.json": "510035a770297ee04c46527409559828a80f0658dad2cf609022377e5a225e56",
-        "ooo-clear-on-net-rst/symbolic/path.smt2": "1e2d84d42ddac6bc19087e03a6fbcc8d6678d48037ba39107bc61fa1e0c5b6c8",
-        "ooo-clear-on-net-rst/symbolic/result.json": "942757d9cd3dea32f0ca3ea1c684f240bd37e7c548a48d3012001c2a6d9d8c0c",
-        "ooo-clear-on-net-rstack/symbolic/path.smt2": "ec2889494ca1c4d9f1d08d49c5888e7150b4707db877a431f9cc31e5b8798614",
-        "ooo-clear-on-net-rstack/symbolic/result.json": "4602ee30faef224343ad0b56395b4c59ccdd56f087d6fb95648f9461d931c4c7",
-        "ooo-conflicting-overlap-first-wins/symbolic/path.smt2": "0f6019d4bd4ee8d3e5a9a87417dca8adb4fcc1f5c554ead807e1bb0f010470df",
-        "ooo-conflicting-overlap-first-wins/symbolic/result.json": "8596c58a075aa26f87ec9e48aff8d7a9b40f5e9ea24d7348880a49d9d07518e0",
-        "ooo-gap-fill-no-retransmission/symbolic/path.smt2": "87ba7cfebe6278202d241f762bd63fa75354d4a72ebbab54e22a8baab45d477e",
-        "ooo-gap-fill-no-retransmission/symbolic/result.json": "79396e3cd99fceb23bbbb07b287d71cee0b3bc4073da872da20b23ce6913d229",
-        "ooo-gap-retained/symbolic/path.smt2": "67ea3e7ec4d831f630012acfa1293f0c5d0625ea3f439076e63ebc256063bb9f",
-        "ooo-gap-retained/symbolic/result.json": "d2ffabce474830dea508f06e6a05b916a17ec94caa48c8bb609c642e5d9ef82c",
-        "ooo-multiple-holes/symbolic/path.smt2": "2f24d755eb65fdc320fc3cc99f90370f9fc5dc733498108e28f9a53beb61ec50",
-        "ooo-multiple-holes/symbolic/result.json": "91eb3ce1d22fe5abc6846a7ca44def009d376649a48a352c806310330d49a31b",
-        "ooo-read-with-gap-and-shift/symbolic/path.smt2": "c85af6a01f64805e78517e9da516b3343f4be4fdaac67508cb73eede6d40dba2",
-        "ooo-read-with-gap-and-shift/symbolic/result.json": "53e341cec1f3ecdacd814067ff5d2e59dec446fa13f16bf9e9e3ee7935c7217d",
-        "ooo-right-edge-trim/symbolic/path.smt2": "9e0c4e6c82ba4fa5f6b3f7bf808f3609b58b6d380dbba53833bc0d1d318afb14",
-        "ooo-right-edge-trim/symbolic/result.json": "c14a84a43004c5ef7cae3ec4dd6def80c580ef0f2ebe562bac1f8ba27a3d5675",
-        "ooo-sequence-wrap/symbolic/path.smt2": "6f03b658bcfb238d5ec4c681f097fc66a7be86c827939e0ee63478aa23053443",
-        "ooo-sequence-wrap/symbolic/result.json": "c83138c708a1d2fa784786a8f2e10297bd9ece92917534a5531c47bdf49ef1d8",
-        "ooo-window-zero-and-reopen/symbolic/path.smt2": "3fdecf1f651979213993a64c427d61c5948f2db883cecdab933c9724fcea7ee3",
-        "ooo-window-zero-and-reopen/symbolic/result.json": "e4455e6dce03ac2a28336537f0042b2aa4ba4714606ea56ed41e5a5f9acc0f63",
-        "seg-ack-only-inside-window-no-loop/symbolic/path.smt2": "2c596c99bfad173e7d5017bf0a95a0f9eefa9a784497ea399dab2a2d832e6a06",
-        "seg-ack-only-inside-window-no-loop/symbolic/result.json": "c02f62fc7c6b70840297a8083c551cc5601342e1d7780a108b2dc91b14ac4a20",
-        "seg-ahead-ack-sequence-and-stale-window/symbolic/path.smt2": "de2348e8e5083be09616655d506e8c9b332f739d7e2ff05e93672bde364d06aa",
-        "seg-ahead-ack-sequence-and-stale-window/symbolic/result.json": "081befeca9ee162daa9adc7527757f994237adc1e3bb1b93a27d221b06e2c7bb",
-        "seg-ahead-payload-acks-before-gap-fill/symbolic/path.smt2": "56a5b26ea2119c028da1e8dc3657ceaa56f910864052aa7a553cfbc74ec5e744",
-        "seg-ahead-payload-acks-before-gap-fill/symbolic/result.json": "6d3fab3eafad2d1f2c58b72733d5834d6bba3b02ca2466b1a1b546991f06f0dd",
-        "seg-duplicate-ack-shrinks-window/symbolic/path.smt2": "c63da9724bdefabb5f061740dd1f1c7d9681ee0f1807f9a923e3572da783e1a6",
-        "seg-duplicate-ack-shrinks-window/symbolic/result.json": "e8c05b247230dfc1f1c5faafe90a334a0ace8d6f74164cd79589fadad7b82e2d",
-        "seg-full-ack-and-payload/symbolic/path.smt2": "6c1b1cb2504afa715ce2620fd500489f64f802d5088039f530b868750fd58ca2",
-        "seg-full-ack-and-payload/symbolic/result.json": "f8d6db6964f0e330616ac1510b4cd31b035e9e5e0bdfeb65b44546bb85baa091",
-        "seg-future-ack-does-not-fill-gap/symbolic/path.smt2": "45e839de986f3fcced07780c123a1af98ab57db87b8621f28b520788f9e231ca",
-        "seg-future-ack-does-not-fill-gap/symbolic/result.json": "fe58f59621bfeb12fb7fafdfd6da1b28128a03af06540a2b4218a5015b9c42e7",
-        "seg-invalid-ack-sequence/symbolic/path.smt2": "e01a2ba487336c2d3e966fab5e369d74f6df9c662a85febd8032ccb01071e1d8",
-        "seg-invalid-ack-sequence/symbolic/result.json": "12675276b7fc5a430be4a0fc294286d9b2b887528e70761c8f903d33c9eb4c9f",
-        "seg-invalid-sequence-before-ambiguous-ack/symbolic/path.smt2": "d54646b6bf1880968eb04ce2f178d91e235a6b77ee840d835e334d751bb06482",
-        "seg-invalid-sequence-before-ambiguous-ack/symbolic/result.json": "67ebd9e3672b9190bf96f8af402fe356489b5f43cf58586acf421276cda37404",
-        "seg-invalid-sequence-ignores-valid-ack/symbolic/path.smt2": "13ce1223ef80e92163d5548930575ea51a4a92d8935180c1fffcc84b0ee50f07",
-        "seg-invalid-sequence-ignores-valid-ack/symbolic/result.json": "67fef70cc4c98eaeaee02bfb1dbecc06daf726b8c731ab997c9801393a0f0956",
-        "seg-old-ack-keeps-text-not-window/symbolic/path.smt2": "9d691a32caaef8593ea50196f9d61f96035cfcc598b2ba7b0e052ecb6aaa7216",
-        "seg-old-ack-keeps-text-not-window/symbolic/result.json": "e5ee8fb23122318ff2224cbf46b445abb48693bcd0f6cb717951219431f69722",
-        "seg-partial-ack-shrink-and-payload/symbolic/path.smt2": "259d7ffeed2e2521202c1b7adf2024976e74f941e5bcd86be98e3207a27e25ad",
-        "seg-partial-ack-shrink-and-payload/symbolic/result.json": "ac0ee7efcae2e7b02509b67d5076a0dfe785e401f363c9ed1e9cbe5bbb874288",
-        "seg-receive-zero-window-ignores-data-ack/symbolic/path.smt2": "190f9b0597c9ff4ade01d33f60e04171938e508b711c076ac459c332e0b3edec",
-        "seg-receive-zero-window-ignores-data-ack/symbolic/result.json": "ed6d284cc8c99f5ea11e086fa7716435b82c714477b15e7f721f407af4313300",
-        "seg-sequence-wrap-duplex/symbolic/path.smt2": "5afc326584b63c8568b59400fe3945ed48922bf10a628c0cf4499b68fd7f6c70",
-        "seg-sequence-wrap-duplex/symbolic/result.json": "d9491cededc4dfe8bf9b4a5ec9fe19ba2a2620c2376d0c312dc466bba7be8daf",
-        "seg-zero-window-outstanding-probe/symbolic/path.smt2": "be546d71f66f9e14d98e0aaf7410ace697f18d9851a96a6fdc391d1da53ca1f8",
-        "seg-zero-window-outstanding-probe/symbolic/result.json": "91ab4016495a820184c971b8d4f4b6a3a0273df6ac54924fbdbf1035ad955b85",
-        "close-active-with-reassembly-gap/symbolic/path.smt2": "9ce4d8a177cf836c6b7ddc6a627170ba8473a1f362ab27cdf624bfad99deb1e4",
-        "close-active-with-reassembly-gap/symbolic/result.json": "fdb6f1d69d62808aa9325007dfc0b7b647641eaded3ca278506093e71973c11b",
-        "close-clear-on-abort/symbolic/path.smt2": "0d6cca926be3c664afd4b4a3505a7496724a0b31c64f60c4181cb6854667ed57",
-        "close-clear-on-abort/symbolic/result.json": "cc8d526b75504e764ae87edead29b808f27cbd77157a48ecf528f1ed67b9079f",
-        "close-clear-on-rst/symbolic/path.smt2": "a82e7976bd7717b91a6c9271e218152d8335eda4df99dff626eb731ad03a4ad7",
-        "close-clear-on-rst/symbolic/result.json": "0addf7fb0dadeee60277bfd09feba492b54f6b4f679ca59bfede10faaf4a5c4f",
-        "close-data-fin-sequence-wrap/symbolic/path.smt2": "9fdf4e23e201c11c42bb5a5efb76aa3ba5c845becaa4b8745e50331f6ca814ff",
-        "close-data-fin-sequence-wrap/symbolic/result.json": "1f654c66b503806526eba497b31aff0a23ee9c0a683aed23980d9dadb121c75f",
-        "close-fin-zero-receive-window/symbolic/path.smt2": "247ac2d46a4213bed03b86f6d173dfc1a05c4775e2268156507d3a5890f5603a",
-        "close-fin-zero-receive-window/symbolic/result.json": "d1497cbfef34df95071c0c519aa36653d8b08db32be668e452990f22642f88ee",
-        "close-flight-partial-data-then-fin-retransmit/symbolic/path.smt2": "db2586986e53095b840d1297aad46fd9f2be4894f202a1647a29111fb9381e40",
-        "close-flight-partial-data-then-fin-retransmit/symbolic/result.json": "11e75ad57fc3472d16a72a4c898d953075d2376e737d231c509089f584b3c04b",
-        "close-future-fin-ack-drops-peer-fin/symbolic/path.smt2": "85516aa36bef335dc9d325d7e8839f42c84bbabbccd7d08a97cd0704b5ddc9ec",
-        "close-future-fin-ack-drops-peer-fin/symbolic/result.json": "04a15ddd01248d81a6b7b956985672b3e4f4c23a141a91874b4548ad5283857b",
-        "close-ignore-text-after-peer-fin/symbolic/path.smt2": "f7cab32344b1e988e566a13ad67b7dcf370f9a5799f650661202859654a76801",
-        "close-ignore-text-after-peer-fin/symbolic/result.json": "e99c50f7e7c9169ee58fa9eca9a613ceee7cd64aa3bd180d351917a3b852343c",
-        "close-invalid-ack-sequence-keeps-fin/symbolic/path.smt2": "85a9005bbedd4f4619a6b598f9baaaf5fb1e1ba10e516a3eb01f9a8eaec182b5",
-        "close-invalid-ack-sequence-keeps-fin/symbolic/result.json": "b62589d11c70f7473794534814870d00f1f1bad7c5dabe097582204adf575855",
-        "close-invalid-data-sequence-keeps-fin/symbolic/path.smt2": "0099ec35c6e997444bdbbae46cfe4b3ea7a9b304efa6e43a757a49de0991e6a9",
-        "close-invalid-data-sequence-keeps-fin/symbolic/result.json": "6fab24b5a4e19a41a077093a3bd59c5eb53c689a87c2e377e704cca465e336db",
-        "close-last-ack-payload-fin-ack/symbolic/path.smt2": "5cecdd6394abe0b618724889a15b98bb549acfea9d0171c4b991456eef97e012",
-        "close-last-ack-payload-fin-ack/symbolic/result.json": "a4224bd0b1f19d3ec7112810ba93e2274695e4a915578461f3327e0c54aa48da",
-        "close-passive-duplex-unread-and-unsent/symbolic/path.smt2": "1c08a884812c36d37eac6b981573bee9c6ac3176e31f6f43c3160c2549b6d1ab",
-        "close-passive-duplex-unread-and-unsent/symbolic/result.json": "e91c5ab4c72a6916bbaea23893dea126e404044815d87aeb07d401d2759197f1",
-        "close-payload-acks-fin-before-text/symbolic/path.smt2": "2acc28eb2543fb5d278d6165aa396a044b8e71fc91346792622546f7c0212f26",
-        "close-payload-acks-fin-before-text/symbolic/result.json": "5bc40cae2e363a88e9bc4ecd0571ed8425540ba30b4bb46e5974774351fd8e0f",
-        "close-peer-fin-before-local-segmentation/symbolic/path.smt2": "f7719ffedd4a9feb1af9459f501352f596ece6ec25e5f875e1818980713ebb13",
-        "close-peer-fin-before-local-segmentation/symbolic/result.json": "23116a282b90e95d350fa3d086aaea4770ca757103d664edb258f4de55dd425a",
-        "close-peer-fin-old-ack-keeps-flight/symbolic/path.smt2": "4fd8ae7dcf69820225c36d3de4e9834b208ad4513bfdab065b18b8c36b97644e",
-        "close-peer-fin-old-ack-keeps-flight/symbolic/result.json": "fd7204c3f6b0f8f206fe0c92d87333faaf3d3536472bdc84df76a0a68349e3df",
-        "close-queued-send-before-fin/symbolic/path.smt2": "ff1c27b1920b173f7292880dddc1801f4b9c6622108e03bc28c2018b1e6d67d3",
-        "close-queued-send-before-fin/symbolic/result.json": "8dc1cb3d7f3dd2def1dce3b4d9ef22f93ad6c1812909f4c55b5d80225cf955b3",
-        "close-repeat-no-second-fin/symbolic/path.smt2": "0250a0cafe9fe83645ac0f2b5024b72c5779652354a43e82a2ae22643cf6b5a9",
-        "close-repeat-no-second-fin/symbolic/result.json": "30825cb2a1331fe914539b8e21d97fadbad0f065d4bb7aed6cfb531956c36e3b",
-        "close-retransmit-fin-with-current-ack/symbolic/path.smt2": "171d7c0d29d1b1dbb28a05c61c77d5dd978fb753b901d27efa82bcaecaaa21b5",
-        "close-retransmit-fin-with-current-ack/symbolic/result.json": "d31cc72ab62e15633b9ae14bfad8123a5cf20e0e8aff0af0953749636f30b448",
-        "close-simultaneous-with-unsent/symbolic/path.smt2": "b65dcacb2e58ba0911b25dbc4a00bf27c3aeb75f85eba07afd25ef2d8860695f",
-        "close-simultaneous-with-unsent/symbolic/result.json": "0f702d2a39736c023b092004c83dab1c0a3b5f844f04996640308b120c3070b5",
-        "close-user-timeout-pending-zero-window/symbolic/path.smt2": "a134c71d0c4a765a6a2b6ad04204304448dd1e18ceb02857fd1f1d5831b80bd1",
-        "close-user-timeout-pending-zero-window/symbolic/result.json": "7905ddbd1c12ffa7fca205d0c48b635285bf309d2be92cf00bd7e1df4fd84125",
-        "close-zero-window-pending-fin/symbolic/path.smt2": "11f22cb65011250c9595d974504784aacbd225bb99ae281c99a869db9a3179f2",
-        "close-zero-window-pending-fin/symbolic/result.json": "d7f78fcd78ce1db7031755ff611851f23f4a31fa01ab30b0348d3ffdb3786a8e"
+        "discard-data-on-app-abort/symbolic/path.smt2": "0ea843e14752034a12febedc9383bb68cc713dfef9078a6c7b82b51a4854303f",
+        "discard-data-on-app-abort/symbolic/result.json": "e8d4d6c50770bad7dd0b42d46b42049f5c4177c5ff5a1ef307a30c235e793641",
+        "discard-data-on-net-rst/symbolic/path.smt2": "5572c486a55a3299c026240f5c77d72d58ce6ede4debe6184e5cf9a8d6c21084",
+        "discard-data-on-net-rst/symbolic/result.json": "fa95ce6934d2826fb14305e2cf6f4365312b0a5e7cae8d8a83e1e22e93a63768",
+        "discard-data-on-net-rstack/symbolic/path.smt2": "bdf3a63af4419823b07397887ddc55ec93f19cf763b269b2db48b7398df3261d",
+        "discard-data-on-net-rstack/symbolic/result.json": "2b6325d9e717e9684b185606a0f7561ebf843b0fe279df5f8e27abff2556f175",
+        "drain-before-active-close/symbolic/path.smt2": "c1198beb4139b11d0d8c8f3380881e9ba8098644beb88ce0ad163c8a0333c1cf",
+        "drain-before-active-close/symbolic/result.json": "01ca41eee1e8d2c546191b6741e364d3693b07285fcd07365a9bc01e5de559fe",
+        "duplicate-old-future-ack/symbolic/path.smt2": "09a5c34f5d8c07cf246a8d5ad5d1bc1db277d4ce6dac8e06d6a802a869d46c2d",
+        "duplicate-old-future-ack/symbolic/result.json": "9c899eac86b4350947f94530b2262a053d72d9180c0685b689c3ff6b4706a243",
+        "partial-ack-retransmission/symbolic/path.smt2": "d64549570015d0f05dbba61cfcbc0993ce44a51dfb68dcda0d3c51edac9776f6",
+        "partial-ack-retransmission/symbolic/result.json": "ec5c6da04fab6d7ad0aa7fe919e458feaccb48deefbb6e04bbcb3782493baeb3",
+        "receive-ahead-then-retransmit/symbolic/path.smt2": "0a040f67a5423cd44ffffdbe1966c24aa22499e133e59a0b60dc7e5d802a59e3",
+        "receive-ahead-then-retransmit/symbolic/result.json": "fbe1b126e62d0a426282abdb937185c1c3039a9de0613d34492675798c781440",
+        "receive-overlap/symbolic/path.smt2": "672e2f1179c587baa3141b5282f45a7f632f5d492b1335749f757728bf1445f0",
+        "receive-overlap/symbolic/result.json": "fc902548143f51fc80405bdde3e2dfcbb4ef9e0db3f6953dc51168db23f60fed",
+        "receive-read-duplicate/symbolic/path.smt2": "0498b4975c1f4f49bcbdf41b7cd88bc8714e8e9fba868f450b67c70cf834b51e",
+        "receive-read-duplicate/symbolic/result.json": "5e87a65847744f2a8a846eae2831673f4f7bcafbfead85b06a9d28e325ab073d",
+        "receive-right-edge-zero-window/symbolic/path.smt2": "ab116eaccf12c9c6873a41814632073e347063208195b36f8ac53927605fd35d",
+        "receive-right-edge-zero-window/symbolic/result.json": "4ae863601a649df2785d79c37d9b40b5c1d62ce1423630ca1229777550cf5b2d",
+        "segmentation-cumulative-ack/symbolic/path.smt2": "5eb6929425b4dd5338f7d26c7d4bc80ce164880dab500c63faafa43495c94167",
+        "segmentation-cumulative-ack/symbolic/result.json": "51c84c1d98403f6704a8e543818887a6a7fb44535acb786b34bb588e2dec7fa6",
+        "send-buffer-full/symbolic/path.smt2": "45bd3f5dfa3e85f6b59f8bdfdfaa6fe0f4c5e3bc082cc9bf3fdc18be231e5e53",
+        "send-buffer-full/symbolic/result.json": "9ca10c088708d01464c0a3663f32c96ce7308799220a2987b78ce1ecba7c3a06",
+        "sequence-wrap-data/symbolic/path.smt2": "641e1fb931deea49074d2d480823615057f7312b71c3ac7b941059febfe0b3d2",
+        "sequence-wrap-data/symbolic/result.json": "60a7794b281158ca1310348aa1930edcd8ec67098367bef8443f6e2113967494",
+        "two-data-losses/symbolic/path.smt2": "1af052e680f4c00b7a73de27a9538fac270baf829f0676c2e3ddd51063ca4ac1",
+        "two-data-losses/symbolic/result.json": "6e9e184d9d18ae742284334cde9e481ebcf8b4514c59321e01d55e5c5b86f4b3",
+        "zero-window-reopen/symbolic/path.smt2": "80e0756d69c0970e0ebb98fa3b47b43f34f76a389bccff61714c232e1db8fc6b",
+        "zero-window-reopen/symbolic/result.json": "1dcaf5822354a4593776875e1e6d938fb40c127403a74d48cb83b37dcee78932",
+        "ooo-clear-on-app-abort/symbolic/path.smt2": "b51a83625451008741e89b9a4c1c95ed9e3831068faec44e0f1b24c3471bbe20",
+        "ooo-clear-on-app-abort/symbolic/result.json": "cf768be3d843b71ed6897c9dcedc5e08db46862b472c1db2e0f933bdbc4432d4",
+        "ooo-clear-on-net-rst/symbolic/path.smt2": "2fb395651972b409e1a75aa7b7fbf91dcb3292b3ce8a87829d6ce1c2ba253d15",
+        "ooo-clear-on-net-rst/symbolic/result.json": "bffd0941adbde8b2df74db28e59224c9b634de8236c4ec0b19f5ef320c580bf4",
+        "ooo-clear-on-net-rstack/symbolic/path.smt2": "49fc31137624a3751c9ef0eb94e04c8eb3499951acd7e9fa0da7d79b31d72196",
+        "ooo-clear-on-net-rstack/symbolic/result.json": "641815d8b969089a9501645f78073ba35c7ce814b9a2bf1f3e09b32522129df6",
+        "ooo-conflicting-overlap-first-wins/symbolic/path.smt2": "a3b70f5693554906607df85c5f5f5b67be4174438401973bcf34450b07bacd75",
+        "ooo-conflicting-overlap-first-wins/symbolic/result.json": "e1a743ac433f50279c6d395f551db1875c1868163d14451980f3d8f2deddccc9",
+        "ooo-gap-fill-no-retransmission/symbolic/path.smt2": "5ef85e3b400e71b838fcd4dd388c30958a25c27970c1fc249baac7b38ef7db2d",
+        "ooo-gap-fill-no-retransmission/symbolic/result.json": "5ed6a04f6b81f24efae2b31fa9dc3e9295ba31d35326c00f4e3c5c5c9892d893",
+        "ooo-gap-retained/symbolic/path.smt2": "4f36d3dea1b431efcb9b71f2fe9d28734f4a76f252c43b222c581b7f40e6a450",
+        "ooo-gap-retained/symbolic/result.json": "3bfd8fe4c9ec7c7cd3ea2b465b67098f9d47cab41a38aec6488ffc0259e83eb5",
+        "ooo-multiple-holes/symbolic/path.smt2": "f53881daf7420e1f95f59988d72476b22dd21fe42042ea4efdc564566804a258",
+        "ooo-multiple-holes/symbolic/result.json": "c3ebc445e927512de11b76b396dd422818324c87e3d9b06a447626d2d9f34a0b",
+        "ooo-read-with-gap-and-shift/symbolic/path.smt2": "74e6d1c29e47d740ad8948b6fd63a9ad38b8137c61b73f9222124372562d5023",
+        "ooo-read-with-gap-and-shift/symbolic/result.json": "10104a58186b36928f7737f3a1b63f3e8e812fc49a3dd08b0c4bde47b5cf4175",
+        "ooo-right-edge-trim/symbolic/path.smt2": "4d8167362f81c229725d87a145d7cfc6865cae33dec8c972902587ae15fb2b8f",
+        "ooo-right-edge-trim/symbolic/result.json": "22f62dbe30533ec4ab0544e76777962678ca7a051f9c4de5de6e0b217e0c8ca5",
+        "ooo-sequence-wrap/symbolic/path.smt2": "8a2d7f4dff4cf37dd2448948426438b85fad997dbc607b4bf0bd9e5dfab4b91b",
+        "ooo-sequence-wrap/symbolic/result.json": "cea7cedda7c967b8570d23a98b4846e55c3aa626775d25a240567d571b54fe4b",
+        "ooo-window-zero-and-reopen/symbolic/path.smt2": "275c256d056620e60b10a7c0bc01579c839dda4c3915134b494ea1117b64eae7",
+        "ooo-window-zero-and-reopen/symbolic/result.json": "6a73bf5eb59cbc04809d1812806691e3ccd52afcc14905c6a44097ca485221e1",
+        "seg-ack-only-inside-window-no-loop/symbolic/path.smt2": "fcc7aec6e654dca05b21668c6257c8e78cf8057aa2fcc0fa077c5d868e0b6751",
+        "seg-ack-only-inside-window-no-loop/symbolic/result.json": "2f6c3da8e62b593a99556bc7668e566bf4e4080c022802bea78533e7fec5e2b4",
+        "seg-ahead-ack-sequence-and-stale-window/symbolic/path.smt2": "2f7f9d2210c1bc6805444980dc260b3f89797739d86f18fce1f088c48f8bea18",
+        "seg-ahead-ack-sequence-and-stale-window/symbolic/result.json": "acb90fd0ce53b0de731c2412e5572a0ee5fb92f157993f906cf1a3034c95cf8d",
+        "seg-ahead-payload-acks-before-gap-fill/symbolic/path.smt2": "71614f72d684aa904f2e03701a64da2aeda237d057f92ec0d3283aefba84d6a8",
+        "seg-ahead-payload-acks-before-gap-fill/symbolic/result.json": "3332f1bbcfe60fd8e9ef5499cd1fb9d8e2cfd0b87b95369e246cc871d5903dfe",
+        "seg-duplicate-ack-shrinks-window/symbolic/path.smt2": "c872f14781a8460ab94a8e45e131e2ec5ef0be605c4ebbf73bd469920733a68c",
+        "seg-duplicate-ack-shrinks-window/symbolic/result.json": "f7d3bb303e3dcbc0069c012ca81a882fdd4233093b61bb7253ad6b89ee1d3110",
+        "seg-full-ack-and-payload/symbolic/path.smt2": "6dcfb5c1d75de9826e039fe805637a9cd20f1bf81e8cbc2caceceae400fa3036",
+        "seg-full-ack-and-payload/symbolic/result.json": "bfda7d2faf811b563f055735daa7975d38d24bf5e7bc2e3c09397be28803d9f8",
+        "seg-future-ack-does-not-fill-gap/symbolic/path.smt2": "07b352a876d85105c194f402747c570165c61aefef4a824fd451343c47312a1a",
+        "seg-future-ack-does-not-fill-gap/symbolic/result.json": "6106eeff850af6fc6b1ca18dcd481b588b01ac8056d8ceed0c06bb70235d48d0",
+        "seg-invalid-ack-sequence/symbolic/path.smt2": "45caa8325b81454a8f4f7332b896751ff40810b436913f723ffec700e52c9f1a",
+        "seg-invalid-ack-sequence/symbolic/result.json": "fde9278ff6de3727e1270e46d4c04ce19fb4a36bb8cee35182d35332647665b4",
+        "seg-invalid-sequence-before-ambiguous-ack/symbolic/path.smt2": "63e1c53811cc2f80fb022fa2d8378db3e4c40f79c1237a44962da00ff382e423",
+        "seg-invalid-sequence-before-ambiguous-ack/symbolic/result.json": "23506b01b2a812a8b5e664536e693c68098e20b5c9e293a78bbe6f8a8d71a020",
+        "seg-invalid-sequence-ignores-valid-ack/symbolic/path.smt2": "75d59303bd6ff1d174e6bf14b7a81e726ed546b3d2a389ad4766618529135d81",
+        "seg-invalid-sequence-ignores-valid-ack/symbolic/result.json": "a12270a5c641884d8ab469ff1609e7a6b3642a7d8920317d3b41450db99a7c41",
+        "seg-old-ack-keeps-text-not-window/symbolic/path.smt2": "50429849f91b5b0147c57c668b9b385b4e068f6b04f29def149c3da6632dc395",
+        "seg-old-ack-keeps-text-not-window/symbolic/result.json": "36548b3f9908131fdd0b9e23d7b5114e57fcad75696a0fe952084f4d971e374a",
+        "seg-partial-ack-shrink-and-payload/symbolic/path.smt2": "89c9f4405f5b458a503abb548a810f473f79d0f7cb7ec790d6d2f1fee6c76460",
+        "seg-partial-ack-shrink-and-payload/symbolic/result.json": "4f5ae3aa95864f20dc4e3f2c8ddaf04e92d961de53e96bfeb9a47d9382c8ffdb",
+        "seg-receive-zero-window-ignores-data-ack/symbolic/path.smt2": "14fb9a3abfa5c8ff54f923b044fd08a163eb97d5da2f285e6092d3e9b69e071c",
+        "seg-receive-zero-window-ignores-data-ack/symbolic/result.json": "9b1aba7ca0c8208f2a045eb7591975c2101409c0a00b35966c31555809f3c75c",
+        "seg-sequence-wrap-duplex/symbolic/path.smt2": "6ea1a832f0b133a18b74353d2c73bccbd9cdc2c96490e5bb7d56aa5a7a353cac",
+        "seg-sequence-wrap-duplex/symbolic/result.json": "6155768e55f28e3b5d9698e9950e48e2bcd0cfd55d9323bfb6b73d82a6b50365",
+        "seg-zero-window-outstanding-probe/symbolic/path.smt2": "4d6f015fb4239cffe5167de58fec55d401c1dcd66d6a32640edd4e5a1be0cf3f",
+        "seg-zero-window-outstanding-probe/symbolic/result.json": "2bd9fb941ea3772b41c5f19781cd38d977b7950dcb5e9baa13f86115423b6c4b",
+        "close-active-with-reassembly-gap/symbolic/path.smt2": "c61ae56a8933f648ce7e657f1edc1bbef759b0ea7fb4bac29c14bf8e92f5a32e",
+        "close-active-with-reassembly-gap/symbolic/result.json": "a2328d0d1058208424abc20d41560edd1c548f768738551cd45767a11b616004",
+        "close-clear-on-abort/symbolic/path.smt2": "3ca02d9df336881d7b5c3b37fa1069745f35cbc278fed0ce5437131ca9946540",
+        "close-clear-on-abort/symbolic/result.json": "1555cecac392d770471b91a262c9367467e21d1a95d62b926d454db7f11a2fa1",
+        "close-clear-on-rst/symbolic/path.smt2": "3b82a840c950d125de4e13cdea9d3d1e224caa54ef036e4567757b696b0057c0",
+        "close-clear-on-rst/symbolic/result.json": "2bae30710cfdbbe3f0e7ed02fa83635932a54fbc2a3ee883a84543c650046a43",
+        "close-data-fin-sequence-wrap/symbolic/path.smt2": "275bdd2d02de1e4d5da936396e9502cd6c74aadc6ed02d72a6a1792facd32a68",
+        "close-data-fin-sequence-wrap/symbolic/result.json": "cab3947eea50959b4f7181fcd73c91f7da782117254adf1da359480b92cca10b",
+        "close-fin-zero-receive-window/symbolic/path.smt2": "8efdc66a8da1769080e8cc52f5ddf07dd49d4f2a046e589d41b52772e0b87634",
+        "close-fin-zero-receive-window/symbolic/result.json": "7ff2f71a2dffe01cf48d4c670b33771781de8e434c217cb86037bcfad303893f",
+        "close-flight-partial-data-then-fin-retransmit/symbolic/path.smt2": "bc28e64d56fdca87c4d3a5fd57fb5bbe6c7521783347929615277db027ece07a",
+        "close-flight-partial-data-then-fin-retransmit/symbolic/result.json": "622a1e5822f41cb2fa0113db9c30a3776fcefee8391f11f7e7364c435fda5f2a",
+        "close-future-fin-ack-drops-peer-fin/symbolic/path.smt2": "4bc3a36729f7867a9ec3f0c2e3c06636d09bff4f5a44e5078a39a29644a1bd23",
+        "close-future-fin-ack-drops-peer-fin/symbolic/result.json": "e92a0ba39a669c9a12dbf73297e11836e65c650b6e465e5e30d053223621ca99",
+        "close-ignore-text-after-peer-fin/symbolic/path.smt2": "fa1715363f605f6aba3e8501bed5797dc096340c391dc65d6afc91fabb947816",
+        "close-ignore-text-after-peer-fin/symbolic/result.json": "34aa36596d60dd59cccbcafd467291aa80f85d6e99362e76f1c7b91ae2d34496",
+        "close-invalid-ack-sequence-keeps-fin/symbolic/path.smt2": "149134209fbbad3304d4ca3a4646882d0d5e92ed2082b56098e5d96eb7997f40",
+        "close-invalid-ack-sequence-keeps-fin/symbolic/result.json": "8af2a0462879214798daaa60953d3150cefe4ba13e49f541cf983f1b4adbdf8b",
+        "close-invalid-data-sequence-keeps-fin/symbolic/path.smt2": "0c3ee72a5e8626d3e1e717aac7348c771feccc40ea08071359591c0776f1c86d",
+        "close-invalid-data-sequence-keeps-fin/symbolic/result.json": "af140fa83462ceae3fbaa1d8002657ce906664231d2342fcb30f14b72579e52a",
+        "close-last-ack-payload-fin-ack/symbolic/path.smt2": "e8dde570735fe89e6b7b62da3335522d0343b778951e5823bfdb8be07e7006fe",
+        "close-last-ack-payload-fin-ack/symbolic/result.json": "774a9104ba24708ec04757e34044a77dc6c55d18a2190dee91515388464947b5",
+        "close-passive-duplex-unread-and-unsent/symbolic/path.smt2": "73f91e102bf5e0ad51aaf3523f9fef1999f6b957447a188022727cccee985adb",
+        "close-passive-duplex-unread-and-unsent/symbolic/result.json": "3fbc7e2d534fa1498f954dffec8d6ed5d1e6cf2e477878624d2030122dd954c1",
+        "close-payload-acks-fin-before-text/symbolic/path.smt2": "5614d495157e9544541c7b3b3e2297a4ee5e86b261b6e9f4b239582b2885b7cd",
+        "close-payload-acks-fin-before-text/symbolic/result.json": "1638ec9a0468d1d715f3fb2a92a8b7ffaf3c8105bd3959e99a129c48497012cd",
+        "close-peer-fin-before-local-segmentation/symbolic/path.smt2": "e10904f4313363d8e9907d1cb4f4cb7bf05fa605abda949578338d9c81a15833",
+        "close-peer-fin-before-local-segmentation/symbolic/result.json": "f0da0bae3781a7d142104489fae311f3f106ec84e914d3e43bfb1e043f3935af",
+        "close-peer-fin-old-ack-keeps-flight/symbolic/path.smt2": "36a3c04a62689d3585e31885419fc25cfa03c75a896207eb61072415bcbf886f",
+        "close-peer-fin-old-ack-keeps-flight/symbolic/result.json": "0e7e7b20888af7adf09768d25500ab0a2813e1e493b2ed27ee8cf81e9843df07",
+        "close-queued-send-before-fin/symbolic/path.smt2": "5fd716f2e2650239a12e4706318fbfebf5186050e3e2da96d79915ecad365f9c",
+        "close-queued-send-before-fin/symbolic/result.json": "dd9280f6b8798b313890ba0ff99914df481fe2b6be86bf83b791e9df49c2f5f0",
+        "close-repeat-no-second-fin/symbolic/path.smt2": "54c0ad41024f52c57f7376a4ec3c5f1f965350873570d7ad49bb93cbd72861c1",
+        "close-repeat-no-second-fin/symbolic/result.json": "65fc87e34dfae1e9ee89595afeb0237a252a7a022734e7963dd99afe4536c605",
+        "close-retransmit-fin-with-current-ack/symbolic/path.smt2": "9035bf8b548243c72811dbdfd3dc70abf4ffdfb5f603ef23b8d258d2ecd4255c",
+        "close-retransmit-fin-with-current-ack/symbolic/result.json": "cffb38e74713bef3d661656eeee4c13fc4ecb3bed7ea683523ed8e8bbb638d67",
+        "close-simultaneous-with-unsent/symbolic/path.smt2": "e503131564ec68fdc6a1d8f29445876571537e3cca81d32b61edcab665be05b9",
+        "close-simultaneous-with-unsent/symbolic/result.json": "e4be8f176b70908830942e9edd5c9be28e390e30374f252937f0098f05f33252",
+        "close-user-timeout-pending-zero-window/symbolic/path.smt2": "a030eec558bbece397b2eb802386f9f6725e02172241ecad253225067f0d964f",
+        "close-user-timeout-pending-zero-window/symbolic/result.json": "09fc226a65d62d649fd74d170032855ffe9d135c6e010098ac2b11c2c047c5ba",
+        "close-zero-window-pending-fin/symbolic/path.smt2": "d9a121a459d3d8f3fb2c0eb87cc9ab0f55be7e79e85384f00f5bafdd07593112",
+        "close-zero-window-pending-fin/symbolic/result.json": "4bdf6e9d47b5f55251dd07f59c2410c763f5e3c068fb7d50ee018a5d7c03023b"
       },
       "kernel_checked_proof": false,
       "trusted_components": [
@@ -7696,6 +7708,4202 @@
         "IR-to-solver translation",
         "Z3 solver",
         "Python checker/evidence integration"
+      ]
+    },
+    {
+      "id": "refined-inductive-state",
+      "statement": {
+        "kind": "same_state_induction_with_exact_boolean_query_refinements",
+        "invariants": [
+          {
+            "id": "C-INV-TIMER-CLOSED-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-ESTABLISHED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-ESTABLISHED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-rto_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                1000
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-retries",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                0
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-msl_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "msl_ms"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-user_timeout_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "user_timeout_ms"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "C-INV-SYN-SENT-ISS",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "var": "iss"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-SEND-CAPACITY",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                16
+              ]
+            }
+          },
+          {
+            "id": "D-INV-RECEIVE-CAPACITY",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rcv_buf"
+                    }
+                  ]
+                },
+                16
+              ]
+            }
+          },
+          {
+            "id": "D-INV-WINDOW",
+            "assert": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "var": "snd_wnd"
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "var": "snd_wnd"
+                    },
+                    65535
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-ADVERTISED-WINDOW",
+            "assert": {
+              "op": "eq",
+              "args": [
+                {
+                  "var": "local_window"
+                },
+                {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-00",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_00"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-00",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_00"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-01",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_01"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-01",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    1
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_01"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-02",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_02"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-02",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    2
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_02"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-03",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_03"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-03",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    3
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_03"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-04",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_04"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-04",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    4
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_04"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-05",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_05"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-05",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    5
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_05"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-06",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_06"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-06",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    6
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_06"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-07",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_07"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-07",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    7
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_07"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-08",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_08"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-08",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    8
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_08"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-09",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_09"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-09",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    9
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_09"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-10",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_10"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-10",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    10
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_10"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-11",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_11"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-11",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    11
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_11"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-12",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_12"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-12",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    12
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_12"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-13",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_13"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-13",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    13
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_13"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-14",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_14"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-14",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    14
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_14"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-CELL-15",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_15"
+                    }
+                  ]
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "R-INV-RIGHT-EDGE-15",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    15
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rx_slot_15"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-NO-CONTIGUOUS-QUEUED-HEAD",
+            "assert": {
+              "op": "eq",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_slot_00"
+                    }
+                  ]
+                },
+                0
+              ]
+            }
+          },
+          {
+            "id": "R-INV-TOTAL-RECEIVE-CAPACITY",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "op": "add",
+                              "args": [
+                                {
+                                  "op": "add",
+                                  "args": [
+                                    {
+                                      "op": "add",
+                                      "args": [
+                                        {
+                                          "op": "add",
+                                          "args": [
+                                            {
+                                              "op": "add",
+                                              "args": [
+                                                {
+                                                  "op": "add",
+                                                  "args": [
+                                                    {
+                                                      "op": "add",
+                                                      "args": [
+                                                        {
+                                                          "op": "add",
+                                                          "args": [
+                                                            {
+                                                              "op": "add",
+                                                              "args": [
+                                                                {
+                                                                  "op": "add",
+                                                                  "args": [
+                                                                    {
+                                                                      "op": "add",
+                                                                      "args": [
+                                                                        {
+                                                                          "op": "add",
+                                                                          "args": [
+                                                                            {
+                                                                              "op": "add",
+                                                                              "args": [
+                                                                                {
+                                                                                  "op": "add",
+                                                                                  "args": [
+                                                                                    0,
+                                                                                    {
+                                                                                      "op": "bytes_len",
+                                                                                      "args": [
+                                                                                        {
+                                                                                          "var": "rx_slot_00"
+                                                                                        }
+                                                                                      ]
+                                                                                    }
+                                                                                  ]
+                                                                                },
+                                                                                {
+                                                                                  "op": "bytes_len",
+                                                                                  "args": [
+                                                                                    {
+                                                                                      "var": "rx_slot_01"
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "op": "bytes_len",
+                                                                              "args": [
+                                                                                {
+                                                                                  "var": "rx_slot_02"
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "op": "bytes_len",
+                                                                          "args": [
+                                                                            {
+                                                                              "var": "rx_slot_03"
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "op": "bytes_len",
+                                                                      "args": [
+                                                                        {
+                                                                          "var": "rx_slot_04"
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "op": "bytes_len",
+                                                                  "args": [
+                                                                    {
+                                                                      "var": "rx_slot_05"
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "op": "bytes_len",
+                                                              "args": [
+                                                                {
+                                                                  "var": "rx_slot_06"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "op": "bytes_len",
+                                                          "args": [
+                                                            {
+                                                              "var": "rx_slot_07"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "op": "bytes_len",
+                                                      "args": [
+                                                        {
+                                                          "var": "rx_slot_08"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "op": "bytes_len",
+                                                  "args": [
+                                                    {
+                                                      "var": "rx_slot_09"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "op": "bytes_len",
+                                              "args": [
+                                                {
+                                                  "var": "rx_slot_10"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "op": "bytes_len",
+                                          "args": [
+                                            {
+                                              "var": "rx_slot_11"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "op": "bytes_len",
+                                      "args": [
+                                        {
+                                          "var": "rx_slot_12"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "op": "bytes_len",
+                                  "args": [
+                                    {
+                                      "var": "rx_slot_13"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rx_slot_14"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rx_slot_15"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                16
+              ]
+            }
+          },
+          {
+            "id": "R-INV-ADVANCE-BOUND",
+            "assert": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "var": "rx_advance"
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "var": "rx_advance"
+                    },
+                    16
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "R-INV-ADVANCE-CHUNK",
+            "assert": {
+              "op": "eq",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_chunk"
+                    }
+                  ]
+                },
+                {
+                  "var": "rx_advance"
+                }
+              ]
+            }
+          },
+          {
+            "id": "S-INV-ACK-DISTANCE-DOMAIN",
+            "assert": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "var": "ack_delta"
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "var": "ack_delta"
+                    },
+                    4294967295
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-SYN-CONTROL",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        false,
+                        {
+                          "state": "SYN-SENT"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "SYN-RECEIVED"
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_nxt"
+                        },
+                        {
+                          "op": "seq_add",
+                          "args": [
+                            {
+                              "var": "tx_seq"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "var": "tx_seq"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-FLIGHT",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            {
+                              "op": "or",
+                              "args": [
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    {
+                                      "op": "or",
+                                      "args": [
+                                        {
+                                          "op": "or",
+                                          "args": [
+                                            false,
+                                            {
+                                              "state": "ESTABLISHED"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "state": "CLOSE-WAIT"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "state": "FIN-WAIT-1"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "state": "CLOSING"
+                                }
+                              ]
+                            },
+                            {
+                              "state": "LAST-ACK"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "FIN-WAIT-2"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "TIME-WAIT"
+                    }
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_nxt"
+                    },
+                    {
+                      "op": "seq_add",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rtx_buf"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "ite",
+                              "args": [
+                                {
+                                  "var": "fin_sent"
+                                },
+                                1,
+                                0
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-TIMER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            {
+                              "op": "or",
+                              "args": [
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    {
+                                      "op": "or",
+                                      "args": [
+                                        {
+                                          "op": "or",
+                                          "args": [
+                                            false,
+                                            {
+                                              "state": "ESTABLISHED"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "state": "CLOSE-WAIT"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "state": "FIN-WAIT-1"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "state": "CLOSING"
+                                }
+                              ]
+                            },
+                            {
+                              "state": "LAST-ACK"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "FIN-WAIT-2"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "TIME-WAIT"
+                    }
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rtx_buf"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "ite",
+                              "args": [
+                                {
+                                  "var": "fin_sent"
+                                },
+                                1,
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-FIN-POSITION",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "var": "fin_sent"
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "and",
+                              "args": [
+                                true,
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    {
+                                      "op": "or",
+                                      "args": [
+                                        {
+                                          "op": "or",
+                                          "args": [
+                                            false,
+                                            {
+                                              "state": "FIN-WAIT-1"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "state": "CLOSING"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "state": "LAST-ACK"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "var": "fin_requested"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "var": "fin_seq"
+                            },
+                            {
+                              "op": "seq_add",
+                              "args": [
+                                {
+                                  "var": "snd_una"
+                                },
+                                {
+                                  "op": "bytes_len",
+                                  "args": [
+                                    {
+                                      "var": "rtx_buf"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "snd_buf"
+                            }
+                          ]
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-REQUEST-STATE",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "var": "fin_requested"
+                },
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            {
+                              "op": "or",
+                              "args": [
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    {
+                                      "op": "or",
+                                      "args": [
+                                        false,
+                                        {
+                                          "state": "FIN-WAIT-1"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "state": "CLOSING"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "state": "LAST-ACK"
+                                }
+                              ]
+                            },
+                            {
+                              "state": "CLOSE-WAIT"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "FIN-WAIT-2"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "TIME-WAIT"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-PENDING-CLOSE",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            false,
+                            {
+                              "state": "FIN-WAIT-1"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "CLOSING"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "LAST-ACK"
+                    }
+                  ]
+                },
+                {
+                  "var": "fin_requested"
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-SEND-DRAINED",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        false,
+                        {
+                          "state": "FIN-WAIT-2"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "TIME-WAIT"
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "bytes_len",
+                                  "args": [
+                                    {
+                                      "var": "snd_buf"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rtx_buf"
+                                }
+                              ]
+                            },
+                            0
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "not",
+                      "args": [
+                        {
+                          "var": "fin_sent"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-NO-SEND-IN-CONTROL",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            {
+                              "op": "or",
+                              "args": [
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    {
+                                      "op": "or",
+                                      "args": [
+                                        {
+                                          "op": "or",
+                                          "args": [
+                                            {
+                                              "op": "or",
+                                              "args": [
+                                                false,
+                                                {
+                                                  "state": "ESTABLISHED"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "state": "CLOSE-WAIT"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "state": "FIN-WAIT-1"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "state": "CLOSING"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "state": "LAST-ACK"
+                                }
+                              ]
+                            },
+                            {
+                              "state": "FIN-WAIT-2"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "TIME-WAIT"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "bytes_len",
+                                  "args": [
+                                    {
+                                      "var": "snd_buf"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rtx_buf"
+                                }
+                              ]
+                            },
+                            0
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "not",
+                      "args": [
+                        {
+                          "var": "fin_sent"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-RECEIVE-STATES",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            {
+                              "op": "or",
+                              "args": [
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    {
+                                      "op": "or",
+                                      "args": [
+                                        {
+                                          "op": "or",
+                                          "args": [
+                                            {
+                                              "op": "or",
+                                              "args": [
+                                                false,
+                                                {
+                                                  "state": "ESTABLISHED"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "state": "FIN-WAIT-1"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "state": "FIN-WAIT-2"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "state": "CLOSE-WAIT"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "state": "CLOSING"
+                                }
+                              ]
+                            },
+                            {
+                              "state": "LAST-ACK"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "TIME-WAIT"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    },
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "CL-INV-QUEUE-STATES",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            {
+                              "op": "or",
+                              "args": [
+                                false,
+                                {
+                                  "state": "ESTABLISHED"
+                                }
+                              ]
+                            },
+                            {
+                              "state": "FIN-WAIT-1"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "FIN-WAIT-2"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "and",
+                                  "args": [
+                                    {
+                                      "op": "and",
+                                      "args": [
+                                        {
+                                          "op": "and",
+                                          "args": [
+                                            {
+                                              "op": "and",
+                                              "args": [
+                                                {
+                                                  "op": "and",
+                                                  "args": [
+                                                    {
+                                                      "op": "and",
+                                                      "args": [
+                                                        {
+                                                          "op": "and",
+                                                          "args": [
+                                                            {
+                                                              "op": "and",
+                                                              "args": [
+                                                                {
+                                                                  "op": "and",
+                                                                  "args": [
+                                                                    {
+                                                                      "op": "and",
+                                                                      "args": [
+                                                                        {
+                                                                          "op": "and",
+                                                                          "args": [
+                                                                            {
+                                                                              "op": "and",
+                                                                              "args": [
+                                                                                true,
+                                                                                {
+                                                                                  "op": "eq",
+                                                                                  "args": [
+                                                                                    {
+                                                                                      "op": "bytes_len",
+                                                                                      "args": [
+                                                                                        {
+                                                                                          "var": "rx_slot_00"
+                                                                                        }
+                                                                                      ]
+                                                                                    },
+                                                                                    0
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "op": "eq",
+                                                                              "args": [
+                                                                                {
+                                                                                  "op": "bytes_len",
+                                                                                  "args": [
+                                                                                    {
+                                                                                      "var": "rx_slot_01"
+                                                                                    }
+                                                                                  ]
+                                                                                },
+                                                                                0
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "op": "eq",
+                                                                          "args": [
+                                                                            {
+                                                                              "op": "bytes_len",
+                                                                              "args": [
+                                                                                {
+                                                                                  "var": "rx_slot_02"
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            0
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "op": "eq",
+                                                                      "args": [
+                                                                        {
+                                                                          "op": "bytes_len",
+                                                                          "args": [
+                                                                            {
+                                                                              "var": "rx_slot_03"
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        0
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "op": "eq",
+                                                                  "args": [
+                                                                    {
+                                                                      "op": "bytes_len",
+                                                                      "args": [
+                                                                        {
+                                                                          "var": "rx_slot_04"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    0
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "op": "eq",
+                                                              "args": [
+                                                                {
+                                                                  "op": "bytes_len",
+                                                                  "args": [
+                                                                    {
+                                                                      "var": "rx_slot_05"
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                0
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "op": "eq",
+                                                          "args": [
+                                                            {
+                                                              "op": "bytes_len",
+                                                              "args": [
+                                                                {
+                                                                  "var": "rx_slot_06"
+                                                                }
+                                                              ]
+                                                            },
+                                                            0
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "op": "eq",
+                                                      "args": [
+                                                        {
+                                                          "op": "bytes_len",
+                                                          "args": [
+                                                            {
+                                                              "var": "rx_slot_07"
+                                                            }
+                                                          ]
+                                                        },
+                                                        0
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "op": "eq",
+                                                  "args": [
+                                                    {
+                                                      "op": "bytes_len",
+                                                      "args": [
+                                                        {
+                                                          "var": "rx_slot_08"
+                                                        }
+                                                      ]
+                                                    },
+                                                    0
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "op": "eq",
+                                              "args": [
+                                                {
+                                                  "op": "bytes_len",
+                                                  "args": [
+                                                    {
+                                                      "var": "rx_slot_09"
+                                                    }
+                                                  ]
+                                                },
+                                                0
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "op": "eq",
+                                          "args": [
+                                            {
+                                              "op": "bytes_len",
+                                              "args": [
+                                                {
+                                                  "var": "rx_slot_10"
+                                                }
+                                              ]
+                                            },
+                                            0
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "op": "eq",
+                                      "args": [
+                                        {
+                                          "op": "bytes_len",
+                                          "args": [
+                                            {
+                                              "var": "rx_slot_11"
+                                            }
+                                          ]
+                                        },
+                                        0
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "op": "bytes_len",
+                                      "args": [
+                                        {
+                                          "var": "rx_slot_12"
+                                        }
+                                      ]
+                                    },
+                                    0
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "bytes_len",
+                                  "args": [
+                                    {
+                                      "var": "rx_slot_13"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rx_slot_14"
+                                }
+                              ]
+                            },
+                            0
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rx_slot_15"
+                            }
+                          ]
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "rules": [
+          "C-ACTIVE-OPEN",
+          "C-PASSIVE-OPEN",
+          "C-LISTEN-SYN",
+          "C-SIMULTANEOUS-SYN",
+          "C-ACCEPT-SYNACK",
+          "C-ACCEPT-ACK",
+          "C-SIMULTANEOUS-SYNACK",
+          "C-ACCEPT-SYNACK-AFTER-RETRY",
+          "C-ACCEPT-ACK-AFTER-RETRY",
+          "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+          "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+          "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+          "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+          "C-SYN-SENT-BAD-ACK",
+          "C-SYN-SENT-BAD-SYNACK",
+          "C-SYN-SENT-BARE-ACK",
+          "C-SYN-RECEIVED-BAD-ACK",
+          "C-CLOSE-LISTEN",
+          "C-CLOSE-SYN-SENT",
+          "C-REPEATED-CLOSE-FIN-WAIT-1",
+          "C-REPEATED-CLOSE-FIN-WAIT-2",
+          "C-REPEATED-CLOSE-CLOSING",
+          "C-REPEATED-CLOSE-LAST-ACK",
+          "C-REPEATED-CLOSE-TIME-WAIT",
+          "C-DUPLICATE-FIN-CLOSE-WAIT",
+          "C-DUPLICATE-FIN-CLOSING",
+          "C-DUPLICATE-FIN-LAST-ACK",
+          "C-DUPLICATE-FIN-TIME-WAIT",
+          "C-RETRANSMIT-SYN-SENT",
+          "C-RETRANSMIT-SYN-RECEIVED",
+          "C-USER-TIMEOUT-SYN-SENT",
+          "C-USER-TIMEOUT-SYN-RECEIVED",
+          "C-USER-TIMEOUT-FIN-WAIT-1",
+          "C-USER-TIMEOUT-FIN-WAIT-2",
+          "C-USER-TIMEOUT-CLOSING",
+          "C-USER-TIMEOUT-LAST-ACK",
+          "C-TIME-WAIT-EXPIRED",
+          "C-ABORT-CLOSED",
+          "C-ABORT-LISTEN",
+          "C-ABORT-SYN-SENT",
+          "C-ABORT-SYN-RECEIVED",
+          "C-ABORT-ESTABLISHED",
+          "C-ABORT-FIN-WAIT-1",
+          "C-ABORT-FIN-WAIT-2",
+          "C-ABORT-CLOSE-WAIT",
+          "C-ABORT-CLOSING",
+          "C-ABORT-LAST-ACK",
+          "C-ABORT-TIME-WAIT",
+          "C-IGNORE-NET-RST-CLOSED",
+          "C-IGNORE-NET-RST-LISTEN",
+          "C-SYN-SENT-NET-RST",
+          "C-SYN-RECEIVED-NET-RST-PASSIVE",
+          "C-SYN-RECEIVED-NET-RST-ACTIVE",
+          "C-RESET-ESTABLISHED-rst",
+          "C-RESET-FIN-WAIT-1-rst",
+          "C-RESET-FIN-WAIT-2-rst",
+          "C-RESET-CLOSE-WAIT-rst",
+          "C-RESET-CLOSING-rst",
+          "C-RESET-LAST-ACK-rst",
+          "C-RESET-TIME-WAIT-rst",
+          "C-IGNORE-NET-RSTACK-CLOSED",
+          "C-IGNORE-NET-RSTACK-LISTEN",
+          "C-SYN-SENT-NET-RSTACK",
+          "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+          "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+          "C-RESET-ESTABLISHED-rstack",
+          "C-RESET-FIN-WAIT-1-rstack",
+          "C-RESET-FIN-WAIT-2-rstack",
+          "C-RESET-CLOSE-WAIT-rstack",
+          "C-RESET-CLOSING-rstack",
+          "C-RESET-LAST-ACK-rstack",
+          "C-RESET-TIME-WAIT-rstack",
+          "C-REJECT-ACK-CLOSED",
+          "C-REJECT-ACK-LISTEN",
+          "C-REJECT-SYNACK-CLOSED",
+          "C-REJECT-SYNACK-LISTEN",
+          "C-REJECT-FIN-CLOSED",
+          "C-REJECT-FIN-LISTEN",
+          "C-CLOSED-SYN",
+          "D-QUEUE",
+          "D-SEND-EMPTY",
+          "D-SEND-FULL",
+          "D-FLUSH-FIRST",
+          "D-FLUSH-MORE",
+          "D-FLUSH-BLOCKED",
+          "D-APPLICATION-READ",
+          "R-RECEIVE",
+          "S-ACK-VALID",
+          "S-ACK-FUTURE",
+          "S-ACK-UNACCEPTABLE-SEQUENCE",
+          "S-RETRANSMIT-WINDOW",
+          "S-RETRANSMIT-ZERO-WINDOW",
+          "CL-CLOSE-ESTABLISHED-FIN",
+          "CL-CLOSE-ESTABLISHED-QUEUE",
+          "CL-CLOSE-CLOSE-WAIT-FIN",
+          "CL-CLOSE-CLOSE-WAIT-QUEUE",
+          "CL-REPEATED-CLOSE-WAIT",
+          "CL-D-FLUSH-FIRST-CLOSE-WAIT",
+          "CL-D-FLUSH-MORE-CLOSE-WAIT",
+          "CL-D-FLUSH-BLOCKED-CLOSE-WAIT",
+          "CL-FLUSH-FIN-CLOSE-WAIT",
+          "CL-D-FLUSH-FIRST-FIN-WAIT-1",
+          "CL-D-FLUSH-MORE-FIN-WAIT-1",
+          "CL-D-FLUSH-BLOCKED-FIN-WAIT-1",
+          "CL-FLUSH-FIN-FIN-WAIT-1",
+          "CL-D-FLUSH-FIRST-CLOSING",
+          "CL-D-FLUSH-MORE-CLOSING",
+          "CL-D-FLUSH-BLOCKED-CLOSING",
+          "CL-FLUSH-FIN-CLOSING",
+          "CL-D-QUEUE-CLOSE-WAIT",
+          "CL-D-SEND-EMPTY-CLOSE-WAIT",
+          "CL-D-SEND-FULL-CLOSE-WAIT",
+          "CL-SEND-CLOSING-CLOSE-WAIT",
+          "CL-SEND-CLOSING-FIN-WAIT-1",
+          "CL-SEND-CLOSING-FIN-WAIT-2",
+          "CL-SEND-CLOSING-CLOSING",
+          "CL-SEND-CLOSING-LAST-ACK",
+          "CL-D-APPLICATION-READ-FIN-WAIT-1",
+          "CL-D-APPLICATION-READ-FIN-WAIT-2",
+          "CL-D-APPLICATION-READ-CLOSE-WAIT",
+          "CL-D-APPLICATION-READ-CLOSING",
+          "CL-D-APPLICATION-READ-LAST-ACK",
+          "CL-D-APPLICATION-READ-TIME-WAIT",
+          "CL-S-ACK-VALID-CLOSE-WAIT-CLOSE-WAIT",
+          "CL-S-ACK-FUTURE-CLOSE-WAIT-CLOSE-WAIT",
+          "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSE-WAIT-CLOSE-WAIT",
+          "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-1",
+          "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-2",
+          "CL-S-ACK-FUTURE-FIN-WAIT-1-FIN-WAIT-1",
+          "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-1-FIN-WAIT-1",
+          "CL-S-ACK-VALID-FIN-WAIT-2-FIN-WAIT-2",
+          "CL-S-ACK-FUTURE-FIN-WAIT-2-FIN-WAIT-2",
+          "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-2-FIN-WAIT-2",
+          "CL-S-ACK-VALID-CLOSING-CLOSING",
+          "CL-S-ACK-VALID-CLOSING-TIME-WAIT",
+          "CL-S-ACK-FUTURE-CLOSING-CLOSING",
+          "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSING-CLOSING",
+          "CL-S-ACK-VALID-LAST-ACK-LAST-ACK",
+          "CL-S-ACK-VALID-LAST-ACK-CLOSED",
+          "CL-S-ACK-FUTURE-LAST-ACK-LAST-ACK",
+          "CL-S-ACK-UNACCEPTABLE-SEQUENCE-LAST-ACK-LAST-ACK",
+          "CL-R-RECEIVE-FIN-WAIT-1-FIN-WAIT-1-PENDING",
+          "CL-R-RECEIVE-FIN-WAIT-1-FIN-WAIT-1-REJECT",
+          "CL-R-RECEIVE-FIN-WAIT-1-FIN-WAIT-1-NONFINACK",
+          "CL-R-RECEIVE-FIN-WAIT-1-FIN-WAIT-2-FINACK",
+          "CL-R-RECEIVE-FIN-WAIT-2-FIN-WAIT-2",
+          "CL-PEER-FIN-ESTABLISHED-CLOSE-WAIT",
+          "CL-DROP-FIN-ESTABLISHED",
+          "CL-PEER-FIN-FIN-WAIT-1-TIME-WAIT",
+          "CL-PEER-FIN-FIN-WAIT-1-CLOSING",
+          "CL-DROP-FIN-FIN-WAIT-1",
+          "CL-PEER-FIN-FIN-WAIT-2-TIME-WAIT",
+          "CL-DROP-FIN-FIN-WAIT-2",
+          "CL-IGNORE-TEXT-CLOSE-WAIT-CLOSE-WAIT",
+          "CL-IGNORE-TEXT-CLOSING-CLOSING",
+          "CL-IGNORE-TEXT-CLOSING-TIME-WAIT",
+          "CL-IGNORE-TEXT-LAST-ACK-LAST-ACK",
+          "CL-IGNORE-TEXT-LAST-ACK-CLOSED",
+          "CL-S-RETRANSMIT-WINDOW-CLOSE-WAIT",
+          "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSE-WAIT",
+          "CL-RETRANSMIT-FIN-CLOSE-WAIT",
+          "CL-S-RETRANSMIT-WINDOW-FIN-WAIT-1",
+          "CL-S-RETRANSMIT-ZERO-WINDOW-FIN-WAIT-1",
+          "CL-RETRANSMIT-FIN-FIN-WAIT-1",
+          "CL-S-RETRANSMIT-WINDOW-CLOSING",
+          "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSING",
+          "CL-RETRANSMIT-FIN-CLOSING",
+          "CL-S-RETRANSMIT-WINDOW-LAST-ACK",
+          "CL-S-RETRANSMIT-ZERO-WINDOW-LAST-ACK",
+          "CL-RETRANSMIT-FIN-LAST-ACK",
+          "CL-TRANSMIT-AFTER-FIN-FIN-WAIT-1",
+          "CL-TRANSMIT-AFTER-FIN-CLOSING",
+          "CL-TRANSMIT-AFTER-FIN-LAST-ACK"
+        ],
+        "prestate_assumption": "typed_state_and_all_listed_invariants",
+        "poststate_invariants_assumed": false,
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain",
+        "target_coverage": "all_declared_destinations",
+        "symbolic_initials": [
+          "iss"
+        ],
+        "other_initial_values": "declared_IR_initial_values",
+        "transition_targets": [
+          {
+            "id": "C-ACTIVE-OPEN",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-PASSIVE-OPEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-LISTEN-SYN",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYN",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-SYNACK",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-ACK",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYNACK",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-SYNACK-AFTER-RETRY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-ACK-AFTER-RETRY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-BAD-ACK",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-BAD-SYNACK",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-BARE-ACK",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-BAD-ACK",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-LISTEN",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-SYN-SENT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-SYN-SENT",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-SYN-RECEIVED",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-SYN-SENT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-SYN-RECEIVED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-FIN-WAIT-1",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-FIN-WAIT-2",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-CLOSING",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-LAST-ACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-TIME-WAIT-EXPIRED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-LISTEN",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-SYN-SENT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-SYN-RECEIVED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-ESTABLISHED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-FIN-WAIT-1",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-FIN-WAIT-2",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-CLOSE-WAIT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-CLOSING",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-LAST-ACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-TIME-WAIT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RST-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RST-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-NET-RST",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RST-PASSIVE",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RST-ACTIVE",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-ESTABLISHED-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-1-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-2-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSE-WAIT-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSING-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-LAST-ACK-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-TIME-WAIT-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RSTACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RSTACK-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-NET-RSTACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-ESTABLISHED-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-1-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-2-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSE-WAIT-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSING-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-LAST-ACK-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-TIME-WAIT-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-ACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-ACK-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-SYNACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-SYNACK-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-FIN-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-FIN-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSED-SYN",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "D-QUEUE",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-SEND-EMPTY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-SEND-FULL",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-FLUSH-FIRST",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-FLUSH-MORE",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-FLUSH-BLOCKED",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-APPLICATION-READ",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "R-RECEIVE",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "S-ACK-VALID",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "S-ACK-FUTURE",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "S-ACK-UNACCEPTABLE-SEQUENCE",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "S-RETRANSMIT-WINDOW",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "S-RETRANSMIT-ZERO-WINDOW",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "CL-CLOSE-ESTABLISHED-FIN",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-CLOSE-ESTABLISHED-QUEUE",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-CLOSE-CLOSE-WAIT-FIN",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-CLOSE-CLOSE-WAIT-QUEUE",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-REPEATED-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-D-FLUSH-FIRST-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-D-FLUSH-MORE-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-D-FLUSH-BLOCKED-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-FLUSH-FIN-CLOSE-WAIT",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-D-FLUSH-FIRST-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-D-FLUSH-MORE-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-D-FLUSH-BLOCKED-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-FLUSH-FIN-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-D-FLUSH-FIRST-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-D-FLUSH-MORE-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-D-FLUSH-BLOCKED-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-FLUSH-FIN-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-D-QUEUE-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-D-SEND-EMPTY-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-D-SEND-FULL-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-SEND-CLOSING-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-SEND-CLOSING-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-SEND-CLOSING-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "CL-SEND-CLOSING-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-SEND-CLOSING-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-D-APPLICATION-READ-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-D-APPLICATION-READ-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "CL-D-APPLICATION-READ-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-D-APPLICATION-READ-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-D-APPLICATION-READ-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-D-APPLICATION-READ-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-VALID-CLOSE-WAIT-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-FUTURE-CLOSE-WAIT-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSE-WAIT-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-FUTURE-FIN-WAIT-1-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-1-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-VALID-FIN-WAIT-2-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-FUTURE-FIN-WAIT-2-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-2-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-VALID-CLOSING-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-VALID-CLOSING-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-FUTURE-CLOSING-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSING-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-VALID-LAST-ACK-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-VALID-LAST-ACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-FUTURE-LAST-ACK-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-LAST-ACK-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-R-RECEIVE-FIN-WAIT-1-FIN-WAIT-1-PENDING",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-R-RECEIVE-FIN-WAIT-1-FIN-WAIT-1-REJECT",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-R-RECEIVE-FIN-WAIT-1-FIN-WAIT-1-NONFINACK",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-R-RECEIVE-FIN-WAIT-1-FIN-WAIT-2-FINACK",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "CL-R-RECEIVE-FIN-WAIT-2-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "CL-PEER-FIN-ESTABLISHED-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-DROP-FIN-ESTABLISHED",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "CL-PEER-FIN-FIN-WAIT-1-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-PEER-FIN-FIN-WAIT-1-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-DROP-FIN-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-PEER-FIN-FIN-WAIT-2-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-DROP-FIN-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "CL-IGNORE-TEXT-CLOSE-WAIT-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-IGNORE-TEXT-CLOSING-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-IGNORE-TEXT-CLOSING-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-IGNORE-TEXT-LAST-ACK-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-IGNORE-TEXT-LAST-ACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "CL-S-RETRANSMIT-WINDOW-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-RETRANSMIT-FIN-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "CL-S-RETRANSMIT-WINDOW-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-S-RETRANSMIT-ZERO-WINDOW-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-RETRANSMIT-FIN-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-S-RETRANSMIT-WINDOW-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-RETRANSMIT-FIN-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-S-RETRANSMIT-WINDOW-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-S-RETRANSMIT-ZERO-WINDOW-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-RETRANSMIT-FIN-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "CL-TRANSMIT-AFTER-FIN-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "CL-TRANSMIT-AFTER-FIN-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "CL-TRANSMIT-AFTER-FIN-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          }
+        ],
+        "content_properties": "not_supported_by_length_projection",
+        "protocol_completeness": false,
+        "primary_status": "inductive_invariants_pass",
+        "original_unknown_targets": [],
+        "refinement_method": "all_original_assertions_retained_and_exhaustive_disjunct_partition",
+        "per_query_timeout_ms": 10000
+      },
+      "proposition_sha256": "66f072d47b6bd2dcaf2500375dcb51bc5105026a2dfd822c2af946ed9bc558d2",
+      "status": "not_needed_primary_pass",
+      "checker": "z3-exact-query-refinement",
+      "checker_version": "4.15.4",
+      "checker_code_hashes": {
+        "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+        "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
+        "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
+        "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
+        "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+        "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+        "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
+        "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
+        "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
+        "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+        "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
+        "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+        "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+        "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
+      },
+      "evidence_hashes": {
+        "inductive/length-lemmas.smt2": "c6b1c5926fe6191d12c4b0e52787b927e6c2a3941c70adb4f79c1b93c6e76b07",
+        "inductive/initial.smt2": "0fd60face93720c8ef5f178a7be1da3a3d03d8830f05cf61afbb9c999052c6e9",
+        "inductive/preservation.smt2": "75e2cc87fcc469c15e01b0f741d659b839a96c649b241bd11537abc261d552c4",
+        "inductive/overlap.smt2": "a38a12d71f59566475a57ef46a97743e1ec44389795c2c6bfdc76c04a0ef7950",
+        "inductive/sample.smt2": "6ed49f59c4b62c1741a68409277c777e7b3e594779d64bad6dc5930fa6ab564c",
+        "inductive/result.json": "2e7927838d90010b2c511e92a2afba090125e9decab2da2a5b88251003461605",
+        "inductive-refinement/result.json": "f78702e9b98b6c340e08ea83ea46edab8d41355e92fbbe667c79179c806c3970"
+      },
+      "kernel_checked_proof": false,
+      "trusted_components": [
+        "IR parsing and validation",
+        "IR-to-solver translation",
+        "Z3 solver",
+        "Python checker/evidence integration",
+        "exact Boolean partition generation and independent coverage checker"
       ]
     }
   ],

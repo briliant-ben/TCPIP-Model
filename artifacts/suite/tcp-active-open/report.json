@@ -20,9 +20,9 @@
   "input_hashes": {
     "model/tcp.json": "119322775578a6ed366379b3434c1656e6812cb21d980016340ef22ecfaffd8b",
     "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-    "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+    "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
     "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-    "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+    "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
     "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
     "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
     "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -30,19 +30,20 @@
     "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
     "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
     "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-    "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
+    "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+    "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
     "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
     "scenarios/handshake.json": "638341941b59c740ec8ec2927e9e6cf252bdaebf538218fb38bac5d6a848f3d2",
     "scenarios/sequence-wrap.json": "fd66c07cb206670ecb6f4cd8378d6a8c06dd901cbb5b78595d7695b42eee8177",
     "scenarios/syn-loss.json": "0e6602d76c241dcf23dfd55e9465c9dfe2c0e5e7f47ab9cf5deeda368772f6ff",
     "scenarios/two-syn-losses.json": "b74d2d486c4adb506aec8c09b1424380eb71e64b36119cb2b780f8f34e2d2bb5",
     "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
-    "profiles.json": "3b3418aae24b0b6bad3e5f33b50c76c2446214759e91d3c8c123abb54e5e301a",
+    "profiles.json": "dc21515e0f523204699f34930293e34bd87289e9bbd667f092d7cd86868d8e6c",
     "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
     "docs/semantics.md": "c497967ed8ab03c769f41124741c926c2fce05f2cdd72e3e40057aecdd46d442",
-    "docs/inductive.md": "223654e626bbd554e79d8baf915fd63aeac23ac0050e4d733eb1494e8dad377a",
-    "docs/claims.md": "b957201e62bd805edcd016dabb4da1acbb23befb26e64b8b76741db6a55f4972",
-    "formal/README.md": "b8d662da7bd1182283cce8a1269b29132debcd1ecbff50f4edf9fe523f3808de"
+    "docs/inductive.md": "1d179bba924c87134c53d478be94a1f2aabde79f02c79d91958669cf91c11b2a",
+    "docs/claims.md": "ee1c1f77b50d6f4de79fd71cbd1ebd13ce8c7774ab5dc02a4c183c393a405f23",
+    "formal/README.md": "1ea5485a9bd8a0f07d9f95332111587ebf6a6609e9186c9f546b986ccf8d0291"
   },
   "scenarios": [
     {
@@ -110,6 +111,9 @@
   "inductive": {
     "status": "not_run"
   },
+  "inductive_refinement": {
+    "status": "not_run"
+  },
   "real_stack": "not_run",
   "protocol_complete": false,
   "artifact_hashes": {
@@ -142,6 +146,6 @@
     "formal/result.json": "92d755bc74b275756f886f6c40ebe1f3b92eb8036f52f1242b3d6bca744ee914",
     "formal/model.smt2": "752ad33b28920b996b91c9c022e3a03a31ed67903bf803d58fa9e97218439856",
     "formal/overlap.smt2": "40d89c517bca1ff4e15fd2cc94010abbc85656317fe86ca45872a99fcd8ee69b",
-    "claims.json": "ba7be5390c495c61ea4f2ec16f6f82c066546acda93865fe0a80d52140178e30"
+    "claims.json": "4ca2ba89624ea394a115ddf6273ce78c3cfe81a739c006fbbb2d2408e876d51b"
   }
 }

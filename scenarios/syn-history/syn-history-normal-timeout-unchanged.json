@@ -1,0 +1,44 @@
+{
+  "scenario_version": "0.2",
+  "id": "syn-history-normal-timeout-unchanged",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 1000,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 1000,
+          "emitted": [
+            {
+              "message": "tcp",
+              "fields": {
+                "flags": "S",
+                "seq": 1000,
+                "ack": 0,
+                "window": 16
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "SYN-SENT",
+    "variables": {
+      "tx_syn_time": 1000,
+      "tx_elapsed": 1000,
+      "rto_ms": 2000,
+      "retries": 1
+    },
+    "timers": {
+      "user": 30000,
+      "rtx": 3000
+    }
+  }
+}

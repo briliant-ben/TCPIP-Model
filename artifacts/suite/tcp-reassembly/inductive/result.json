@@ -1374,7 +1374,7 @@
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 4160749567,
+      "iss": 3221225471,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -1418,14 +1418,16 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "app.abort",
-        "origin": "application",
-        "transition": "C-ABORT-CLOSED",
-        "fields": {},
+        "event": "net.rst",
+        "origin": "network",
+        "transition": "C-IGNORE-NET-RST-CLOSED",
+        "fields": {
+          "seq": 0
+        },
         "after": {
           "state": "CLOSED",
           "variables": {
-            "iss": 4160749567,
+            "iss": 3221225471,
             "irs": 0,
             "snd_una": 1000,
             "snd_nxt": 1000,
@@ -1468,14 +1470,7 @@
           },
           "timers": {}
         },
-        "emitted": [
-          {
-            "message": "application",
-            "fields": {
-              "code": "aborted"
-            }
-          }
-        ]
+        "emitted": []
       }
     ]
   },
@@ -1484,10 +1479,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "a0046a3481b2ed5f7c10fb7da9f1b8dd8eb3d040d952fc653be700f5d2e180e8",
-    "initial.smt2": "50aad759a2375ac410805e747a9c7a6be23470d7193c349384d6514c4da66386",
-    "preservation.smt2": "5efde52503c060bbc99afc150c9ef85897761b813171af62749b18b3f9ba66e5",
-    "overlap.smt2": "ecabcaa1b4a08424a1cab79251e850a0d97de9b9fa7383b5bce8f8cb7e86c3ba",
-    "sample.smt2": "e4dee1fd9abfced139a3c6d6f7a2052ee7fb5ae102e369e274aa7d6362bfa650"
+    "length-lemmas.smt2": "9f24f5bbedbe1e25a6238a64160699480d77acc7f25bc02164408e8be1a12404",
+    "initial.smt2": "73151953a2db5f1c8292c245b59c41842d2c0fcb8d9d53860fc0aaaa053409b5",
+    "preservation.smt2": "710b443595b6e4e9010dfa888511a257bac8b3b516a779f924acd665f6f22ffb",
+    "overlap.smt2": "bb36b90bf9f30453db640dcacc22683924c446733a194fd1270c83ede7fbe864",
+    "sample.smt2": "1cc77298341eb37ce0bcd14d12c952b0cdf93780441cf569c5a78703b489da53"
   }
 }

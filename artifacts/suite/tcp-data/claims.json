@@ -39,9 +39,9 @@
     "model/tcp-data.json": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
     "model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
     "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-    "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+    "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
     "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-    "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+    "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
     "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
     "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
     "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -49,7 +49,8 @@
     "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
     "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
     "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-    "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
+    "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+    "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
     "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
     "scenarios/data/discard-data-on-app-abort.json": "8cbb307923060ff8915bde20ed28fcb99b53b6c30ae1461ec5d3370a8c71d464",
     "scenarios/data/discard-data-on-net-rst.json": "310adaaf3875122417de1204c6dfd583b7c720515f02642913a390f94da4bc51",
@@ -67,12 +68,13 @@
     "scenarios/data/two-data-losses.json": "dd05b90e1800d7b5a5807dc40906c089edbfc08135cff2ab45de58d27fe5c9db",
     "scenarios/data/zero-window-reopen.json": "2119bbdc6243a0800768ea7851b26b177037f5f5c2bb275aae38f679605f1b47",
     "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
-    "profiles.json": "3b3418aae24b0b6bad3e5f33b50c76c2446214759e91d3c8c123abb54e5e301a",
+    "profiles.json": "dc21515e0f523204699f34930293e34bd87289e9bbd667f092d7cd86868d8e6c",
     "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
     "docs/semantics.md": "c497967ed8ab03c769f41124741c926c2fce05f2cdd72e3e40057aecdd46d442",
-    "docs/inductive.md": "223654e626bbd554e79d8baf915fd63aeac23ac0050e4d733eb1494e8dad377a",
-    "docs/claims.md": "b957201e62bd805edcd016dabb4da1acbb23befb26e64b8b76741db6a55f4972",
-    "formal/README.md": "b8d662da7bd1182283cce8a1269b29132debcd1ecbff50f4edf9fe523f3808de",
+    "docs/inductive.md": "1d179bba924c87134c53d478be94a1f2aabde79f02c79d91958669cf91c11b2a",
+    "docs/claims.md": "ee1c1f77b50d6f4de79fd71cbd1ebd13ce8c7774ab5dc02a4c183c393a405f23",
+    "formal/README.md": "1ea5485a9bd8a0f07d9f95332111587ebf6a6609e9186c9f546b986ccf8d0291",
+    "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b",
     "packet-profile.json": "8585bfeb9e967e0329ca5b011db4ed71a50e537df4b6c56b3cb328585d112fd9",
     "docs/tcp-data.md": "f3e800456870da2c22283c065e858d442d181aed377b3e8b04e39d101f27b393"
   },
@@ -1198,15 +1200,15 @@
         "time": "unbounded_integer_ms",
         "unbounded": false
       },
-      "proposition_sha256": "de73196b766a4e2b65b584ab03ce136f35887b3f047210bfba9e2ec8f2aac78a",
+      "proposition_sha256": "d355ddfb8ee46d6a809e0a00e5bae64f23872215c6405806f6991ea6679cc4e9",
       "status": "unknown",
       "checker": "z3-bmc",
       "checker_version": "4.15.4",
       "checker_code_hashes": {
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+        "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
         "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-        "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+        "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -1214,8 +1216,10 @@
         "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
         "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-        "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770"
+        "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+        "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+        "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
       },
       "evidence_hashes": {
         "formal/result.json": "5bbc173dded203d99e40e1520ea438d75679213fdb71ac473532c559fa6aadbe",
@@ -2467,6 +2471,10 @@
         "byte_encoding": "exact_length_projection_content_insensitive_subset",
         "sequence_encoding": "modular_integer_full_32bit_domain",
         "target_coverage": "all_declared_destinations",
+        "symbolic_initials": [
+          "iss"
+        ],
+        "other_initial_values": "declared_IR_initial_values",
         "transition_targets": [
           {
             "id": "C-ACTIVE-OPEN",
@@ -3057,15 +3065,15 @@
         "content_properties": "not_supported_by_length_projection",
         "protocol_completeness": false
       },
-      "proposition_sha256": "7ac56313c571e3ece4b3fba5c4525d777d381a0fd87f24dab836d3ed655acb2f",
+      "proposition_sha256": "7a0d7d05c05c10f12c7f2663f628be3a88249075c983ffc67d0f043505b9edd1",
       "status": "verified_inductive_state_properties",
       "checker": "z3-invariant-induction",
       "checker_version": "4.15.4",
       "checker_code_hashes": {
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+        "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
         "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-        "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+        "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -3073,8 +3081,10 @@
         "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
         "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-        "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770"
+        "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+        "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+        "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
       },
       "evidence_hashes": {
         "inductive/length-lemmas.smt2": "50478ebf7d8b8dd470621ab97866087c1b30d27bb49fb02278f32971e34294cf",
@@ -3121,15 +3131,15 @@
           "emitted_fields"
         ]
       },
-      "proposition_sha256": "4fc8579af9d5d5ef35fd85c5312424c88dc19edd68fa152da7484aa14adc8034",
+      "proposition_sha256": "cd8098f2e190dbb526c4d4cdf7dfb2e02f82d447afd17c86b01df3e8e5d097d8",
       "status": "matched_fixed_inputs",
       "checker": "z3-constrained-trace-and-reference-replay",
       "checker_version": "4.15.4",
       "checker_code_hashes": {
         "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-        "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+        "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
         "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-        "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+        "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
         "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
         "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
         "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -3137,8 +3147,10 @@
         "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
         "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
         "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-        "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
-        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770"
+        "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+        "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+        "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
       },
       "evidence_hashes": {
         "discard-data-on-app-abort/symbolic/path.smt2": "a26597ef8e03d561e64b2b683b1b86c847adb5ebc730692c5c8a54c3c333088e",
@@ -3178,6 +3190,1874 @@
         "IR-to-solver translation",
         "Z3 solver",
         "Python checker/evidence integration"
+      ]
+    },
+    {
+      "id": "refined-inductive-state",
+      "statement": {
+        "kind": "same_state_induction_with_exact_boolean_query_refinements",
+        "invariants": [
+          {
+            "id": "C-INV-TIMER-CLOSED-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LISTEN-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LISTEN"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-SENT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-SYN-RECEIVED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-RECEIVED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-ESTABLISHED-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-ESTABLISHED-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-1-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-1"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-FIN-WAIT-2-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "FIN-WAIT-2"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSE-WAIT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSE-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-CLOSING-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "CLOSING"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-LAST-ACK-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "LAST-ACK"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-rtx",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-user",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "user"
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-TIMER-TIME-WAIT-time_wait",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "TIME-WAIT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "time_wait"
+                    },
+                    true
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-OUTSTANDING-CONTROL",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            {
+                              "op": "or",
+                              "args": [
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    false,
+                                    {
+                                      "state": "SYN-SENT"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "state": "SYN-RECEIVED"
+                                }
+                              ]
+                            },
+                            {
+                              "state": "FIN-WAIT-1"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "CLOSING"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "LAST-ACK"
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_nxt"
+                        },
+                        {
+                          "op": "seq_add",
+                          "args": [
+                            {
+                              "var": "tx_seq"
+                            },
+                            1
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "var": "tx_seq"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-rto_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                1000
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-retries",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                0
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-msl_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "msl_ms"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "C-INV-BOUND-user_timeout_ms",
+            "assert": {
+              "op": "ge",
+              "args": [
+                {
+                  "var": "user_timeout_ms"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "id": "C-INV-SYN-SENT-ISS",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "SYN-SENT"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "var": "iss"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-TIMER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "timer_active": "rtx"
+                    },
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        },
+                        1
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-SEQUENCE-BUFFER",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "state": "ESTABLISHED"
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_nxt"
+                    },
+                    {
+                      "op": "seq_add",
+                      "args": [
+                        {
+                          "var": "snd_una"
+                        },
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-SEND-CAPACITY",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                16
+              ]
+            }
+          },
+          {
+            "id": "D-INV-RECEIVE-CAPACITY",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rcv_buf"
+                    }
+                  ]
+                },
+                16
+              ]
+            }
+          },
+          {
+            "id": "D-INV-WINDOW",
+            "assert": {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    true,
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "var": "snd_wnd"
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "le",
+                  "args": [
+                    {
+                      "var": "snd_wnd"
+                    },
+                    65535
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-NO-DATA-OUTSIDE-ESTABLISHED",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "not",
+                  "args": [
+                    {
+                      "state": "ESTABLISHED"
+                    }
+                  ]
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "bytes_len",
+                                  "args": [
+                                    {
+                                      "var": "snd_buf"
+                                    }
+                                  ]
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "op": "bytes_len",
+                              "args": [
+                                {
+                                  "var": "rtx_buf"
+                                }
+                              ]
+                            },
+                            0
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-ADVERTISED-WINDOW",
+            "assert": {
+              "op": "eq",
+              "args": [
+                {
+                  "var": "local_window"
+                },
+                {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-CONTROL-DRAINED",
+            "assert": {
+              "op": "implies",
+              "args": [
+                {
+                  "op": "or",
+                  "args": [
+                    {
+                      "op": "or",
+                      "args": [
+                        {
+                          "op": "or",
+                          "args": [
+                            false,
+                            {
+                              "state": "CLOSE-WAIT"
+                            }
+                          ]
+                        },
+                        {
+                          "state": "FIN-WAIT-2"
+                        }
+                      ]
+                    },
+                    {
+                      "state": "TIME-WAIT"
+                    }
+                  ]
+                },
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "var": "snd_nxt"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "D-INV-FLIGHT-WINDOW",
+            "assert": {
+              "op": "le",
+              "args": [
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    }
+                  ]
+                },
+                {
+                  "var": "snd_wnd"
+                }
+              ]
+            }
+          }
+        ],
+        "rules": [
+          "C-ACTIVE-OPEN",
+          "C-PASSIVE-OPEN",
+          "C-LISTEN-SYN",
+          "C-SIMULTANEOUS-SYN",
+          "C-ACCEPT-SYNACK",
+          "C-ACCEPT-ACK",
+          "C-SIMULTANEOUS-SYNACK",
+          "C-ACCEPT-SYNACK-AFTER-RETRY",
+          "C-ACCEPT-ACK-AFTER-RETRY",
+          "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+          "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+          "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+          "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+          "C-SYN-SENT-BAD-ACK",
+          "C-SYN-SENT-BAD-SYNACK",
+          "C-SYN-SENT-BARE-ACK",
+          "C-SYN-RECEIVED-BAD-ACK",
+          "C-CLOSE-ESTABLISHED",
+          "C-CLOSE-CLOSE-WAIT",
+          "C-CLOSE-LISTEN",
+          "C-CLOSE-SYN-SENT",
+          "C-REPEATED-CLOSE-FIN-WAIT-1",
+          "C-REPEATED-CLOSE-FIN-WAIT-2",
+          "C-REPEATED-CLOSE-CLOSING",
+          "C-REPEATED-CLOSE-LAST-ACK",
+          "C-REPEATED-CLOSE-TIME-WAIT",
+          "C-DUPLICATE-ACK-CLOSE-WAIT",
+          "C-DUPLICATE-ACK-FIN-WAIT-2",
+          "C-FIN-ACK-FIN-WAIT-1",
+          "C-OLD-ACK-FIN-WAIT-1",
+          "C-FIN-ACK-CLOSING",
+          "C-OLD-ACK-CLOSING",
+          "C-FIN-ACK-LAST-ACK",
+          "C-OLD-ACK-LAST-ACK",
+          "C-PEER-FIN",
+          "C-PEER-FIN-FW2",
+          "C-PEER-FIN-FW1-ACKED",
+          "C-SIMULTANEOUS-FIN",
+          "C-DUPLICATE-FIN-CLOSE-WAIT",
+          "C-DUPLICATE-FIN-CLOSING",
+          "C-DUPLICATE-FIN-LAST-ACK",
+          "C-DUPLICATE-FIN-TIME-WAIT",
+          "C-RETRANSMIT-SYN-SENT",
+          "C-RETRANSMIT-SYN-RECEIVED",
+          "C-RETRANSMIT-FIN-WAIT-1",
+          "C-RETRANSMIT-CLOSING",
+          "C-RETRANSMIT-LAST-ACK",
+          "C-USER-TIMEOUT-SYN-SENT",
+          "C-USER-TIMEOUT-SYN-RECEIVED",
+          "C-USER-TIMEOUT-FIN-WAIT-1",
+          "C-USER-TIMEOUT-FIN-WAIT-2",
+          "C-USER-TIMEOUT-CLOSING",
+          "C-USER-TIMEOUT-LAST-ACK",
+          "C-TIME-WAIT-EXPIRED",
+          "C-ABORT-CLOSED",
+          "C-ABORT-LISTEN",
+          "C-ABORT-SYN-SENT",
+          "C-ABORT-SYN-RECEIVED",
+          "C-ABORT-ESTABLISHED",
+          "C-ABORT-FIN-WAIT-1",
+          "C-ABORT-FIN-WAIT-2",
+          "C-ABORT-CLOSE-WAIT",
+          "C-ABORT-CLOSING",
+          "C-ABORT-LAST-ACK",
+          "C-ABORT-TIME-WAIT",
+          "C-IGNORE-NET-RST-CLOSED",
+          "C-IGNORE-NET-RST-LISTEN",
+          "C-SYN-SENT-NET-RST",
+          "C-SYN-RECEIVED-NET-RST-PASSIVE",
+          "C-SYN-RECEIVED-NET-RST-ACTIVE",
+          "C-RESET-ESTABLISHED-rst",
+          "C-RESET-FIN-WAIT-1-rst",
+          "C-RESET-FIN-WAIT-2-rst",
+          "C-RESET-CLOSE-WAIT-rst",
+          "C-RESET-CLOSING-rst",
+          "C-RESET-LAST-ACK-rst",
+          "C-RESET-TIME-WAIT-rst",
+          "C-IGNORE-NET-RSTACK-CLOSED",
+          "C-IGNORE-NET-RSTACK-LISTEN",
+          "C-SYN-SENT-NET-RSTACK",
+          "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+          "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+          "C-RESET-ESTABLISHED-rstack",
+          "C-RESET-FIN-WAIT-1-rstack",
+          "C-RESET-FIN-WAIT-2-rstack",
+          "C-RESET-CLOSE-WAIT-rstack",
+          "C-RESET-CLOSING-rstack",
+          "C-RESET-LAST-ACK-rstack",
+          "C-RESET-TIME-WAIT-rstack",
+          "C-REJECT-ACK-CLOSED",
+          "C-REJECT-ACK-LISTEN",
+          "C-REJECT-SYNACK-CLOSED",
+          "C-REJECT-SYNACK-LISTEN",
+          "C-REJECT-FIN-CLOSED",
+          "C-REJECT-FIN-LISTEN",
+          "C-CLOSED-SYN",
+          "D-QUEUE",
+          "D-SEND-EMPTY",
+          "D-SEND-FULL",
+          "D-FLUSH-FIRST",
+          "D-FLUSH-MORE",
+          "D-FLUSH-BLOCKED",
+          "D-ACK-FULL-WINDOW",
+          "D-ACK-FULL-STALE-WINDOW",
+          "D-ACK-PARTIAL-WINDOW",
+          "D-ACK-PARTIAL-STALE-WINDOW",
+          "D-ACK-DUP-WINDOW",
+          "D-ACK-DUP-STALE-WINDOW",
+          "D-ACK-OLD",
+          "D-ACK-FUTURE",
+          "D-RETRANSMIT",
+          "D-RECEIVE-IN-ORDER",
+          "D-RECEIVE-OVERLAP",
+          "D-RECEIVE-DUPLICATE",
+          "D-RECEIVE-AHEAD",
+          "D-RECEIVE-ZERO-WINDOW",
+          "D-APPLICATION-READ"
+        ],
+        "prestate_assumption": "typed_state_and_all_listed_invariants",
+        "poststate_invariants_assumed": false,
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain",
+        "target_coverage": "all_declared_destinations",
+        "symbolic_initials": [
+          "iss"
+        ],
+        "other_initial_values": "declared_IR_initial_values",
+        "transition_targets": [
+          {
+            "id": "C-ACTIVE-OPEN",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-PASSIVE-OPEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-LISTEN-SYN",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYN",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-SYNACK",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-ACK",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYNACK",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-SYNACK-AFTER-RETRY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-ACK-AFTER-RETRY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-BAD-ACK",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-BAD-SYNACK",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-BARE-ACK",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-BAD-ACK",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-ESTABLISHED",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-CLOSE-WAIT",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-LISTEN",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSE-SYN-SENT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-REPEATED-CLOSE-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-ACK-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-ACK-FIN-WAIT-2",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "C-FIN-ACK-FIN-WAIT-1",
+            "default": "FIN-WAIT-2",
+            "cases": []
+          },
+          {
+            "id": "C-OLD-ACK-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "C-FIN-ACK-CLOSING",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-OLD-ACK-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-FIN-ACK-LAST-ACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-OLD-ACK-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-PEER-FIN",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-PEER-FIN-FW2",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-PEER-FIN-FW1-ACKED",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-SIMULTANEOUS-FIN",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-CLOSE-WAIT",
+            "default": "CLOSE-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-DUPLICATE-FIN-TIME-WAIT",
+            "default": "TIME-WAIT",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-SYN-SENT",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-SYN-RECEIVED",
+            "default": "SYN-RECEIVED",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-FIN-WAIT-1",
+            "default": "FIN-WAIT-1",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-CLOSING",
+            "default": "CLOSING",
+            "cases": []
+          },
+          {
+            "id": "C-RETRANSMIT-LAST-ACK",
+            "default": "LAST-ACK",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-SYN-SENT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-SYN-RECEIVED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-FIN-WAIT-1",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-FIN-WAIT-2",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-CLOSING",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-USER-TIMEOUT-LAST-ACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-TIME-WAIT-EXPIRED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-LISTEN",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-SYN-SENT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-SYN-RECEIVED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-ESTABLISHED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-FIN-WAIT-1",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-FIN-WAIT-2",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-CLOSE-WAIT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-CLOSING",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-LAST-ACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-ABORT-TIME-WAIT",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RST-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RST-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-NET-RST",
+            "default": "SYN-SENT",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RST-PASSIVE",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RST-ACTIVE",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-ESTABLISHED-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-1-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-2-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSE-WAIT-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSING-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-LAST-ACK-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-TIME-WAIT-rst",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RSTACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-IGNORE-NET-RSTACK-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-SENT-NET-RSTACK",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-ESTABLISHED-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-1-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-FIN-WAIT-2-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSE-WAIT-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-CLOSING-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-LAST-ACK-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-RESET-TIME-WAIT-rstack",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-ACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-ACK-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-SYNACK-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-SYNACK-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-FIN-CLOSED",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "C-REJECT-FIN-LISTEN",
+            "default": "LISTEN",
+            "cases": []
+          },
+          {
+            "id": "C-CLOSED-SYN",
+            "default": "CLOSED",
+            "cases": []
+          },
+          {
+            "id": "D-QUEUE",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-SEND-EMPTY",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-SEND-FULL",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-FLUSH-FIRST",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-FLUSH-MORE",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-FLUSH-BLOCKED",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-ACK-FULL-WINDOW",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-ACK-FULL-STALE-WINDOW",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-ACK-PARTIAL-WINDOW",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-ACK-PARTIAL-STALE-WINDOW",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-ACK-DUP-WINDOW",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-ACK-DUP-STALE-WINDOW",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-ACK-OLD",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-ACK-FUTURE",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-RETRANSMIT",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-RECEIVE-IN-ORDER",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-RECEIVE-OVERLAP",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-RECEIVE-DUPLICATE",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-RECEIVE-AHEAD",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-RECEIVE-ZERO-WINDOW",
+            "default": "ESTABLISHED",
+            "cases": []
+          },
+          {
+            "id": "D-APPLICATION-READ",
+            "default": "ESTABLISHED",
+            "cases": []
+          }
+        ],
+        "content_properties": "not_supported_by_length_projection",
+        "protocol_completeness": false,
+        "primary_status": "inductive_invariants_pass",
+        "original_unknown_targets": [],
+        "refinement_method": "all_original_assertions_retained_and_exhaustive_disjunct_partition",
+        "per_query_timeout_ms": 10000
+      },
+      "proposition_sha256": "7453bdb5b930bc7c0b494bf135aa06daad810579a1403d6a49b5578ffc6c22aa",
+      "status": "not_needed_primary_pass",
+      "checker": "z3-exact-query-refinement",
+      "checker_version": "4.15.4",
+      "checker_code_hashes": {
+        "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+        "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
+        "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
+        "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
+        "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+        "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+        "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
+        "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
+        "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
+        "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+        "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
+        "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+        "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
+        "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+        "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
+      },
+      "evidence_hashes": {
+        "inductive/length-lemmas.smt2": "50478ebf7d8b8dd470621ab97866087c1b30d27bb49fb02278f32971e34294cf",
+        "inductive/initial.smt2": "4805887bebefcf0122f2bf47f44d61528d701b10c1307146b28e3874288f1bd9",
+        "inductive/preservation.smt2": "a9592d222b8c7b7cac151428144f42eabf5889e5c305dd4e761ad835d315f887",
+        "inductive/overlap.smt2": "7b5e3a0bcbeb8e4d71b5052f4e1975814cc28f36b0d12230d872d75816eb1aab",
+        "inductive/sample.smt2": "d3d545cda9f4a8b834361b390baf0d7bf8dc9632f5838333293b378bd9653723",
+        "inductive/result.json": "38d4509740cafd86ec7e483cd25e79a82db3429c63fb66faa7ba507b1fda4ae7",
+        "inductive-refinement/result.json": "f0f39c0a214298811f7db082c6532199b0dec88f9412bffa5b6c1595b0f379eb"
+      },
+      "kernel_checked_proof": false,
+      "trusted_components": [
+        "IR parsing and validation",
+        "IR-to-solver translation",
+        "Z3 solver",
+        "Python checker/evidence integration",
+        "exact Boolean partition generation and independent coverage checker"
       ]
     }
   ],

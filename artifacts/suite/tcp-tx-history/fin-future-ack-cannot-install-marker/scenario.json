@@ -1,0 +1,55 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-future-ack-cannot-install-marker",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9003,
+        "ack": 1002,
+        "window": 8,
+        "data": []
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          1,
+          2
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "rcv_nxt": 9003,
+      "rcv_buf": [
+        1,
+        2
+      ],
+      "rx_fin_pending": false,
+      "rx_fin_done": false
+    },
+    "timers": {}
+  }
+}

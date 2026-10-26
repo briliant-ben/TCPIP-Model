@@ -1,0 +1,246 @@
+{
+  "status": "scoped_integration_evidence_valid_stack_incomplete",
+  "registered_profiles": 9,
+  "suite_status": "formal_pending_stack_incomplete",
+  "suite_report_sha256": "4f88a421da438fd42da525b0171b955e24133ddc1a1d49457d762123524e9ced",
+  "suite_verification_sha256": "9ce1ae066a34a0c83f4548f43f122b80d5fb1c8405dfc96ac05347c4d9959f0c",
+  "full_regression_method_count": 242,
+  "additional_syn_method_count": 11,
+  "unique_current_methods_covered_across_runs": 253,
+  "log_hashes": {
+    "artifacts/refinement-integration-validation/regression-242.log": "ca778848faed3502cb4adb8cb9d15db33c9b2db9f0cc8038b6293a6641a91e33",
+    "artifacts/tcp-syn-history/validation/tests-11.log": "f25b12a8afda8ed7bc5a3ad60768b1017ef693b00baaa41bcbd2cc99dddb0ec9"
+  },
+  "checker_source_hashes": {
+    "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+    "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
+    "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
+    "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
+    "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+    "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+    "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
+    "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
+    "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
+    "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+    "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
+    "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+    "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
+    "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+    "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
+  },
+  "profiles_input_sha256": "dc21515e0f523204699f34930293e34bd87289e9bbd667f092d7cd86868d8e6c",
+  "scoped_results": [
+    {
+      "profile": "tcp-active-open",
+      "formal": {
+        "status": "bounded_pass",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "safety_query": "unsat",
+        "overlap_query": "unsat"
+      },
+      "inductive": {
+        "status": "not_run"
+      },
+      "inductive_refinement": {
+        "status": "not_run"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "profile": "tcp-connection",
+      "formal": {
+        "status": "bounded_pass",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "safety_query": "unsat",
+        "overlap_query": "unsat"
+      },
+      "inductive": {
+        "status": "not_run"
+      },
+      "inductive_refinement": {
+        "status": "not_run"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "profile": "tcp-data",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "inductive_invariants_pass",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "inductive_refinement": {
+        "status": "not_needed_primary_pass",
+        "backend": "z3-exact-query-refinement",
+        "primary_status": "inductive_invariants_pass"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "profile": "tcp-reassembly",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "inductive_invariants_pass",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "inductive_refinement": {
+        "status": "not_needed_primary_pass",
+        "backend": "z3-exact-query-refinement",
+        "primary_status": "inductive_invariants_pass"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "profile": "tcp-segments",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "inductive_invariants_pass",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "inductive_refinement": {
+        "status": "not_needed_primary_pass",
+        "backend": "z3-exact-query-refinement",
+        "primary_status": "inductive_invariants_pass"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "profile": "tcp-close",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "inductive_invariants_pass",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "inductive_refinement": {
+        "status": "not_needed_primary_pass",
+        "backend": "z3-exact-query-refinement",
+        "primary_status": "inductive_invariants_pass"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "profile": "tcp-fin",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "inductive_invariants_pass",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "inductive_refinement": {
+        "status": "not_needed_primary_pass",
+        "backend": "z3-exact-query-refinement",
+        "primary_status": "inductive_invariants_pass"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "profile": "tcp-rto",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "unknown",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "inductive_refinement": {
+        "status": "refined_inductive_queries_pass",
+        "backend": "z3-exact-query-refinement",
+        "primary_status": "unknown"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "profile": "tcp-tx-history",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "unknown",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "inductive_refinement": {
+        "status": "refinement_unknown",
+        "backend": "z3-exact-query-refinement",
+        "primary_status": "unknown"
+      },
+      "real_stack": "not_run"
+    }
+  ],
+  "retained_lwip_difference_ms": 2750,
+  "model_configuration_rto_ms": 1000,
+  "linux_execution": "not_run",
+  "rocq_scope": "six generic primitive lemmas; original input hashes still match; no new model/refinement proof",
+  "known_clock_only_gap": {
+    "path": "artifacts/diagnostics/clock-only-invariant-gap/report.json",
+    "sha256": "4236c49c024f71128c8d5a70066ed50a8c92676fadffc5c0a6743b95ae0813e3",
+    "covered_by_these_claims": false
+  },
+  "does_not_establish": [
+    "clock-only advancement invariant preservation",
+    "IR runtime/translator refinement",
+    "universal payload/output correctness",
+    "complete TCP recovery",
+    "independent Linux data execution",
+    "later protocols or complete platform"
+  ]
+}

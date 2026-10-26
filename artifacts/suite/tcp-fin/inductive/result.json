@@ -2261,7 +2261,7 @@
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 4294967293,
+      "iss": 4294963197,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -2320,14 +2320,14 @@
     "steps": [
       {
         "at_ms": 0,
-        "event": "app.abort",
+        "event": "app.listen",
         "origin": "application",
-        "transition": "C-ABORT-CLOSED",
+        "transition": "C-PASSIVE-OPEN",
         "fields": {},
         "after": {
-          "state": "CLOSED",
+          "state": "LISTEN",
           "variables": {
-            "iss": 4294967293,
+            "iss": 4294963197,
             "irs": 0,
             "snd_una": 1000,
             "snd_nxt": 1000,
@@ -2337,7 +2337,7 @@
             "tx_flags": "S",
             "rto_ms": 1000,
             "retries": 0,
-            "active_open": true,
+            "active_open": false,
             "user_timeout_ms": 30000,
             "msl_ms": 60000,
             "local_window": 16,
@@ -2385,14 +2385,7 @@
           },
           "timers": {}
         },
-        "emitted": [
-          {
-            "message": "application",
-            "fields": {
-              "code": "aborted"
-            }
-          }
-        ]
+        "emitted": []
       }
     ]
   },
@@ -2401,10 +2394,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "8ed29feaf9a8c7d6c142e2c68e3d815993ea1fc9fdb42269a884f824ab09db6e",
-    "initial.smt2": "f35a9792460e23e4ca02e5d5f9984cd92c8b627f5dcfb19a98b0307ad1add406",
-    "preservation.smt2": "a7b3f125bd8caafabfafef504f1211759c9859a4287ab047e67cf5e3bff5af2c",
-    "overlap.smt2": "867cd449db9391f91a0f00807072c35b4cbcbe1c12d02cb7d0958a6d4dbf0997",
-    "sample.smt2": "7cafdcd072c99e4580aae501a29dfabc1412b3b108d91e9719356dbc8893d541"
+    "length-lemmas.smt2": "b428fb9aa4e0c4090c5affc615e69260ef87570cf0c8765fa4ba4422a659ca34",
+    "initial.smt2": "89e55f31e41bc264d734fc39634c1550506c956c1b6334ceabdaa48e36daab72",
+    "preservation.smt2": "fcda03701ecdf17c540be2a703e141bbd5c0c942ab1f89ad48109cb1da7b8ceb",
+    "overlap.smt2": "5a6f00a7d276d35d924860494e20aecf086198dd11d21aba8ed903cfd250a99c",
+    "sample.smt2": "f938cee22de69127d383e8660dfc7e3ccba098aa0218b9d5314e44bdd583a557"
   }
 }

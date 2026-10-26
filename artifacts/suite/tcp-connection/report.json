@@ -20,9 +20,9 @@
   "input_hashes": {
     "model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
     "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
-    "protocol_lab/__main__.py": "1d93ef1666f0094fa13e5d1a877554a194ad7ef08f4b75c574a3f9ac6894eeb9",
+    "protocol_lab/__main__.py": "a06b64613dbb413c3c67e75c6351c4bcb96198dc16b14b0ced9f69b264d50d33",
     "protocol_lab/capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
-    "protocol_lab/claims.py": "f498edafe122b60e97aecb2f455d770565ff5aefba835fa3c097b1bdd4abc764",
+    "protocol_lab/claims.py": "2412df3cf30721e3a9d0fceeace225c39af0311f171f91027af974348b523bbb",
     "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
     "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
     "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
@@ -30,7 +30,8 @@
     "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
     "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
     "protocol_lab/packets.py": "0c4496907de98c38ed98df8341a980f74c6c3f86eeba0a4b6d2f5f8f99340334",
-    "protocol_lab/profiles.py": "b6e10dcd8e61d7f7ae93c7b17c3bc2a8bf82930e6c17c330b33d54ee90edcaa3",
+    "protocol_lab/profiles.py": "dbda8ea2bad21dae1b266e470ae6c2783c1c1b5507637adf65de650ebc0eb10b",
+    "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
     "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
     "scenarios/connection/abort-established.json": "9c06d5c93398e8fa66c50a11c3f977ace67ab01e8a3253e02c341b7697b92d1e",
     "scenarios/connection/abort-from-close-wait.json": "2f1a93fdf771a1db41241bdf2cc8883f0b73a312a532d3fde56b09f327c7514e",
@@ -134,12 +135,12 @@
     "scenarios/connection/two-syn-retransmissions.json": "5fb47850fdf66f1ef60d66940df814fb90a418ab49220e02d9b2c18c78afd592",
     "scenarios/connection/user-timeout.json": "48ac6e8053ec9e3d4c99cb78c85bf16c1a7c4bedcccf9973470b6ab84af06bc2",
     "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
-    "profiles.json": "3b3418aae24b0b6bad3e5f33b50c76c2446214759e91d3c8c123abb54e5e301a",
+    "profiles.json": "dc21515e0f523204699f34930293e34bd87289e9bbd667f092d7cd86868d8e6c",
     "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
     "docs/semantics.md": "c497967ed8ab03c769f41124741c926c2fce05f2cdd72e3e40057aecdd46d442",
-    "docs/inductive.md": "223654e626bbd554e79d8baf915fd63aeac23ac0050e4d733eb1494e8dad377a",
-    "docs/claims.md": "b957201e62bd805edcd016dabb4da1acbb23befb26e64b8b76741db6a55f4972",
-    "formal/README.md": "b8d662da7bd1182283cce8a1269b29132debcd1ecbff50f4edf9fe523f3808de",
+    "docs/inductive.md": "1d179bba924c87134c53d478be94a1f2aabde79f02c79d91958669cf91c11b2a",
+    "docs/claims.md": "ee1c1f77b50d6f4de79fd71cbd1ebd13ce8c7774ab5dc02a4c183c393a405f23",
+    "formal/README.md": "1ea5485a9bd8a0f07d9f95332111587ebf6a6609e9186c9f546b986ccf8d0291",
     "docs/tcp-connection.md": "ed79a7ea60688efd79f44acf44c65f22c62f013b212cdf7ffa4805255968b458"
   },
   "scenarios": [
@@ -1280,6 +1281,9 @@
   "inductive": {
     "status": "not_run"
   },
+  "inductive_refinement": {
+    "status": "not_run"
+  },
   "real_stack": "not_run",
   "protocol_complete": false,
   "artifact_hashes": {
@@ -1793,6 +1797,6 @@
     "formal/result.json": "a23015ef7f7289b10842ef4511c183026d0e96517a65d51719074cf57566013d",
     "formal/model.smt2": "9ec4750755a84503ca86e5197af8265a3fce0f961d302968a43bb5b8c6f2ac56",
     "formal/overlap.smt2": "bfa068e396c164ba97c3b921666e3658eea26d3fee32a8e52d1a4bf220b4e88e",
-    "claims.json": "3eab9e6d368e5812c47f7446aebec04b96fbb0c8865495ef4660b0e2918ed33d"
+    "claims.json": "c6af5fe2698738b67b136bd748895150fe24c12ee33c537c680acec90b497860"
   }
 }

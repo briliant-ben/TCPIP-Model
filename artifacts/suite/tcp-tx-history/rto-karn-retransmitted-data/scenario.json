@@ -1,0 +1,67 @@
+{
+  "scenario_version": "0.2",
+  "id": "rto-karn-retransmitted-data",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 1021,
+      "tick": true
+    },
+    {
+      "at_ms": 1100,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "srtt_ms": {
+        "n": 10,
+        "d": 1
+      },
+      "rttvar_ms": {
+        "n": 5,
+        "d": 1
+      },
+      "rtt_samples": 1,
+      "rto_ms": 2000,
+      "rtt_active": false
+    },
+    "timers": {}
+  }
+}

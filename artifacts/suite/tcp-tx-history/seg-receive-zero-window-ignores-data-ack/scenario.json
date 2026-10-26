@@ -1,0 +1,122 @@
+{
+  "scenario_version": "0.1",
+  "id": "seg-receive-zero-window-ignores-data-ack",
+  "description": "seg receive zero window ignores data ack",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite ACK+payload/window profile; validated ACK flag and payload shape, first accepted receive byte wins; raw accepted SEG.SEQ drives WL1."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "net.data",
+      "fields": {
+        "seq": 9017,
+        "ack": 1005,
+        "window": 0,
+        "data": [
+          16
+        ]
+      }
+    },
+    {
+      "at_ms": 50,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9017,
+        "ack": 1005,
+        "window": 0
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1005,
+      "rtx_buf": [],
+      "snd_wnd": 0,
+      "rcv_nxt": 9017,
+      "rcv_buf": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "local_window": 0
+    },
+    "timers": {}
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-payload-acks-local-fin",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.close"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002,
+        "window": 4,
+        "data": [
+          0,
+          128
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 30,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1002,
+                "ack": 9004,
+                "window": 14,
+                "payload": []
+              }
+            },
+            {
+              "message": "application",
+              "fields": {
+                "code": "peer_eof"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "TIME-WAIT",
+    "variables": {
+      "snd_una": 1002,
+      "rcv_nxt": 9004,
+      "rcv_buf": [
+        0,
+        128
+      ],
+      "rx_fin_done": true
+    },
+    "timers": {
+      "time_wait": 120030
+    }
+  }
+}
