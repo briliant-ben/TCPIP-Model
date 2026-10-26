@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 
 from formal import partition_queries as partitioner
-from .ir import ModelError, require
+from .ir import CLOCK_SEMANTICS, ModelError, require
 from .symbolic import Encoding, model_hash, replay
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,6 +50,9 @@ def validate_structure(model, primary):
     require(primary['runtime_properties'] == ['positive_timer_duration', 'active_timer_not_in_past']
             and primary['scope'] == 'defined_nonterminal_transitions_and_listed_state_invariants',
             'Unsupported primary obligation scope')
+    expected_clock = 'monotonic_integer_before_next_due' if model['semantics'] == CLOCK_SEMANTICS else 'not_applicable'
+    require(primary.get('clock_progress') == expected_clock, 'Missing primary clock coverage')
+    require(primary.get('clock_advance_query') in (('sat','unsat','unknown') if expected_clock != 'not_applicable' else ('not_applicable',)), 'Invalid primary clock obligation')
     require(primary['target_coverage'] == 'all_declared_destinations', 'Missing primary target coverage')
     require([r['transition'] for r in primary['preservation']] == [r['id'] for r in model['transitions']],
             'Missing primary rule obligation')
@@ -84,6 +87,7 @@ def validate_summary(model, primary, result):
     if result['status'] == PASS:
         require(primary['status'] == 'unknown' and bool(expected), 'No unknown primary preservation to refine')
         require(primary['initial_query'] == 'unsat' and primary['length_lemmas'] == 'unsat'
+                and primary['clock_advance_query'] in ('unsat','not_applicable')
                 and all(r['query'] == 'unsat' for r in primary['overlap']),
                 'Cannot omit unresolved initial/guard obligations')
         require(all(t['query'] in ('unsat', 'unknown') for r in primary['preservation'] for t in r['targets']),
@@ -118,6 +122,7 @@ def _primary(model, directory):
     primary = read(directory/'result.json')
     validate_structure(model, primary)
     files = {'length-lemmas.smt2', 'initial.smt2', 'preservation.smt2', 'overlap.smt2'}
+    if primary['clock_progress'] != 'not_applicable':files.add('clock-preservation.smt2')
     if 'sample_query' in primary:
         files.add('sample.smt2')
     require(set(primary['query_hashes']) == files, 'Missing primary query evidence')
@@ -152,6 +157,7 @@ def refine(model, primary_dir, out, group_size=8):
         result['status'] = NOT_NEEDED
     elif (primary['status'] == 'unknown' and result['original_unknown_targets']
           and primary['initial_query'] == 'unsat' and primary['length_lemmas'] == 'unsat'
+                and primary['clock_advance_query'] in ('unsat','not_applicable')
           and all(r['query'] == 'unsat' for r in primary['overlap'])
           and all(t['query'] in ('unsat', 'unknown') for r in primary['preservation'] for t in r['targets'])):
         outcomes = []
@@ -176,7 +182,7 @@ def refine(model, primary_dir, out, group_size=8):
                             'refinement_unknown' if 'unknown' in outcomes else PASS)
         if result['status'] == PASS:
             sample = Encoding(model, 1, tuple(primary['symbolic_initials']))
-            sample.solver.add(sample.z.Int('choice_0') != -1)
+            sample.solver.add(sample.z.Int('choice_0') >= 0)
             (out/'sample.smt2').write_text(sample.solver.to_smt2())
             generated.append('sample.smt2')
             answer = sample.solve()

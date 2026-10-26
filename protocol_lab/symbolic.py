@@ -1,4 +1,4 @@
-"""Independent bounded symbolic semantics for IR 0.1/0.2 (Z3 optional).
+"""Independent bounded symbolic semantics for IR 0.1/0.2/0.3 (Z3 optional).
 
 No call to runtime evaluate/dispatch is used to construct the transition system.
 The runtime is invoked only afterwards to cross-check solver witnesses.
@@ -21,6 +21,17 @@ def replay(model, witness):
         return {"status": "runtime_rejected", "step": "initial", "error": str(exc)}
     compared = 0
     for step in witness["steps"]:
+        if step.get("origin") == "clock":
+            trace_size = len(machine.trace)
+            try:
+                machine.tick(step["at_ms"])
+            except ModelError as exc:
+                return {"status": "runtime_rejected", "step": compared, "error": str(exc)}
+            if (len(machine.trace) != trace_size or machine.now_ms != step["at_ms"]
+                    or machine.snapshot() != step["after"] or step["emitted"] != []):
+                return {"status": "semantic_mismatch", "step": compared, "runtime": machine.snapshot(), "symbolic": step["after"]}
+            compared += 1
+            continue
         try:
             if step["origin"] == "timer":
                 machine.tick(step["at_ms"])
@@ -42,7 +53,12 @@ def encode_trace(model, trace, **encoding_options):
     # Initial overrides are concrete inputs, not assumed safety properties.
     initial = trace[0]["before"]["variables"]
     overrides = [n for n, v in model["variables"].items() if initial[n] != v["initial"]]
-    enc = Encoding(model, len(trace), overrides, **encoding_options)
+    choices = []
+    for row in trace:
+        indices = [j for j, r in enumerate(model["transitions"]) if r["id"] == row["transition"]]
+        require(len(indices) == 1, "Trace references unknown transition")
+        choices.append(indices[0])
+    enc = Encoding(model, len(trace), overrides, fixed_choices=choices, **encoding_options)
     z = enc.z
     fixed = []
     for name, value in initial.items():
@@ -76,7 +92,7 @@ def crosscheck_trace(model, trace, out=None):
     query = enc.solver.to_smt2()
     answer = enc.solve()
     result = {"backend": "z3-constrained-trace", "scope": "fixed_inputs_and_rule_choices",
-              "all_input_safety": "not_claimed", "query_strategy": "exact_fixed_input_and_rule_substitution", "steps": len(trace), "query": str(answer),
+              "all_input_safety": "not_claimed", "query_strategy": "exact_fixed_choice_encoding_and_fixed_input_substitution", "steps": len(trace), "query": str(answer),
               "model_semantic_sha256": model_hash(model), "solver_version": enc.z.get_version_string(),
               "smt2_sha256": hashlib.sha256(query.encode()).hexdigest()}
     if answer == enc.z.sat:
@@ -116,7 +132,7 @@ class Encoding:
     def reason_unknown(self):
         return self.solver_error or self.solver.reason_unknown()
 
-    def __init__(self, model, depth, symbolic_initials, byte_encoding="sequence", sequence_encoding="bitvector", arbitrary_state=False):
+    def __init__(self, model, depth, symbolic_initials, byte_encoding="sequence", sequence_encoding="bitvector", arbitrary_state=False, fixed_choices=None):
         try:
             import z3
         except ImportError as exc:
@@ -129,6 +145,11 @@ class Encoding:
         self.sequence_encoding = sequence_encoding
         if byte_encoding == "length":
             self.validate_length_projection()
+        require(fixed_choices is None or (type(fixed_choices) is list and len(fixed_choices) == depth
+                and all(type(j) is int and 0 <= j < len(model["transitions"]) for j in fixed_choices)),
+                "Invalid fixed rule choices")
+        self.fixed_choices = fixed_choices
+        self.clock_progress = model["semantics"] == CLOCK_SEMANTICS
         self.depth = depth
         self.initials = symbolic_initials
         require(type(depth) is int and 1 <= depth <= 30, "Symbolic depth must be 1..30")
@@ -291,6 +312,8 @@ class Encoding:
                     if kind == "seq32":
                         self.solver.add(fields[name][n] >= 0, fields[name][n] < MOD)
         choice = z.Int(f"choice_{index}")
+        if self.fixed_choices is not None:
+            self.solver.add(choice == self.fixed_choices[index])
         branches, enabled = [], []
         not_terminal = z.And(*[old["state"] != m["states"].index(s) for s in m["scope"]["terminal_states"]])
         for j, rule in enumerate(m["transitions"]):
@@ -312,6 +335,8 @@ class Encoding:
             else:
                 conditions += [z.Implies(old["active"][n], new["now"] < old["due"][n]) for n in m["timers"]]
             enabled.append((name, z.And(*conditions)))
+            if self.fixed_choices is not None and self.fixed_choices[index] != j:
+                continue  # exact under the asserted choice; every guard remains encoded
             work = {"state": old["state"], "now": new["now"], "values": dict(old["values"]),
                     "active": dict(old["active"]), "due": dict(old["due"])}
             if expiring:
@@ -350,6 +375,12 @@ class Encoding:
         for group in ("values", "active", "due"):
             unchanged += [new[group][n] == old[group][n] for n in old[group]]
         branches.append(z.And(choice == -1, *unchanged))
+        if self.clock_progress and self.fixed_choices is None:
+            time_only = [choice == -2, new["state"] == old["state"], new["now"] > old["now"]]
+            for group in ("values", "active", "due"):
+                time_only += [new[group][n] == old[group][n] for n in old[group]]
+            time_only += [z.Implies(old["active"][n], new["now"] < old["due"][n]) for n in m["timers"]]
+            branches.append(z.And(*time_only))
         self.solver.add(z.Or(*branches))
         if index:
             self.solver.add(z.Implies(z.Int(f"choice_{index-1}") == -1, choice == -1))
@@ -383,8 +414,16 @@ class Encoding:
             choice = self.concrete(solution, self.z.Int(f"choice_{i}"))
             if choice == -1:
                 break
-            rule = m["transitions"][choice]
             frame = self.frames[i+1]
+            if choice == -2:
+                steps.append({"at_ms": self.concrete(solution, frame["now"]), "event": None,
+                    "origin": "clock", "transition": "@clock_advance", "fields": {},
+                    "after": {"state": m["states"][self.concrete(solution, frame["state"])],
+                        "variables": {n: typed(v, m["variables"][n]["type"]) for n, v in frame["values"].items()},
+                        "timers": {n: self.concrete(solution, frame["due"][n]) for n, active in frame["active"].items() if self.concrete(solution, active)}},
+                    "emitted": []})
+                continue
+            rule = m["transitions"][choice]
             emitted = next(e for index, j, e in self.branches if index == i and j == choice)
             steps.append({"at_ms": self.concrete(solution, frame["now"]), "event": rule["event"],
                           "origin": m["events"][rule["event"]]["origin"], "transition": rule["id"],
@@ -408,10 +447,11 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     report = {"backend": "z3-bmc", "solver_version": z.get_version_string(), "depth": depth,
               "model_semantic_sha256": model_hash(model), "symbolic_initials": list(symbolic_initials),
               "sequence_width": 32, "event_fields": "all_typed_values", "time": "unbounded_integer_ms",
-              "scope": "defined_transitions_only", "liveness": "not_checked", "unbounded_proof": False,
+              "scope": "defined_transitions_and_clock_progress" if enc.clock_progress else "defined_transitions_only",
+              "clock_progress": "monotonic_integer_before_next_due" if enc.clock_progress else "not_applicable", "liveness": "not_checked", "unbounded_proof": False,
               "invariants": [i["id"] for i in model["invariants"]], "safety_query": str(answer)}
     report["runtime_properties"] = ["positive_timer_duration"]
-    if model["ir_version"] == "0.2":
+    if model["ir_version"] in ("0.2", "0.3"):
         report["byte_semantics"] = "finite_sequence_bv8_truncating_slice"
         report["sequence_order"] = "strict_half_space_partial_order"
     if answer == z.sat:
@@ -435,7 +475,7 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     enc.solver.pop()
     # A satisfying path is cross-checked against independent runtime semantics.
     if report["status"] == "bounded_pass":
-        enc.solver.add(z.Int("choice_0") != -1)
+        enc.solver.add(z.Int("choice_0") >= 0)
         answer = enc.solve()
         if answer == z.sat:
             report["sample_witness"] = enc.witness(enc.solver.model())

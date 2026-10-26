@@ -65,6 +65,10 @@
       "type": "bool",
       "initial": false
     },
+    "rtt_sample_at_ms": {
+      "type": "int",
+      "initial": 0
+    },
     "rtt_start_ms": {
       "type": "int",
       "initial": 0
@@ -209,6 +213,12 @@
           "set": {
             "var": "rtt_ambiguous",
             "value": false
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": 0
           }
         },
         {
@@ -605,6 +615,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -934,6 +959,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -1157,6 +1197,12 @@
           "set": {
             "var": "rtt_ambiguous",
             "value": false
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": 0
           }
         },
         {
@@ -1546,6 +1592,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -1990,6 +2051,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -2312,6 +2388,25 @@
                     },
                     {
                       "var": "rtt_previous_measured"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
                     }
                   ]
                 }
@@ -3166,6 +3261,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -3502,6 +3612,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -4349,6 +4478,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -4685,6 +4829,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -5532,6 +5695,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -5868,6 +6046,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -6715,6 +6912,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -7051,6 +7263,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -7898,6 +8129,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -8234,6 +8480,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -9081,6 +9346,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -9417,6 +9697,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -10264,6 +10563,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -10600,6 +10914,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -11447,6 +11780,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -11783,6 +12131,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -12637,6 +13004,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -12959,6 +13341,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -13295,6 +13692,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -13617,6 +14029,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -13953,6 +14380,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -14275,6 +14717,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -14611,6 +15068,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -14933,6 +15405,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -15269,6 +15756,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -15591,6 +16093,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -15927,6 +16444,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -16249,6 +16781,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -16585,6 +17132,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -16914,6 +17476,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -17236,6 +17813,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -17719,6 +18311,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -18195,6 +18802,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -18517,6 +19139,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -18853,6 +19490,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -19175,6 +19827,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -19511,6 +20178,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -19833,6 +20515,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -20169,6 +20866,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -20491,6 +21203,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -20827,6 +21554,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -21149,6 +21891,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -21485,6 +22242,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -21807,6 +22579,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -22143,6 +22930,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -22465,6 +23267,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -22801,6 +23618,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -23123,6 +23955,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -23459,6 +24306,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -23781,6 +24643,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -24117,6 +24994,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -24439,6 +25331,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -24775,6 +25682,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -25097,6 +26019,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -25433,6 +26370,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -25755,6 +26707,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -26091,6 +27058,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -26413,6 +27395,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -26749,6 +27746,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -27071,6 +28083,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -27407,6 +28434,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -27729,6 +28771,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -28065,6 +29122,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -28387,6 +29459,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -28723,6 +29810,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -29045,6 +30147,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -29381,6 +30498,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -29703,6 +30835,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -30039,6 +31186,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -30361,6 +31523,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -30697,6 +31874,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -31019,6 +32211,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -31355,6 +32562,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -31677,6 +32899,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -32013,6 +33250,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -32335,6 +33587,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -32671,6 +33938,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -32993,6 +34275,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -33329,6 +34626,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -33651,6 +34963,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -33987,6 +35314,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -34309,6 +35651,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -34645,6 +36002,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -34974,6 +36346,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -35296,6 +36683,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -35861,6 +37263,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -36419,6 +37836,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -36748,6 +38180,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -37070,6 +38517,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -37420,6 +38882,25 @@
                     },
                     {
                       "var": "rtt_previous_measured"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
                     }
                   ]
                 }
@@ -38284,6 +39765,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -38613,6 +40109,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -38935,6 +40446,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -39533,6 +41059,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -40061,6 +41602,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -40541,6 +42097,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -40863,6 +42434,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -41350,6 +42936,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -41679,6 +43280,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -42001,6 +43617,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -42566,6 +44197,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -43124,6 +44770,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -43446,6 +45107,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -43926,6 +45602,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -44491,6 +46182,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -45049,6 +46755,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -45371,6 +47092,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -45851,6 +47587,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -46416,6 +48167,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -46974,6 +48740,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -47296,6 +49077,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -47783,6 +49579,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -48105,6 +49916,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -48441,6 +50267,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -48763,6 +50604,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -49099,6 +50955,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -49421,6 +51292,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -49757,6 +51643,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -50079,6 +51980,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -50415,6 +52331,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -50737,6 +52668,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -51073,6 +53019,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -51395,6 +53356,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -51731,6 +53707,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -52060,6 +54051,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -52382,6 +54388,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -52739,6 +54760,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -53596,6 +55636,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -53925,6 +55980,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -54247,6 +56317,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -54604,6 +56689,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -55454,6 +57558,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -55811,6 +57930,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -56668,6 +58806,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -56997,6 +59150,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -57319,6 +59487,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -57676,6 +59859,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -58533,6 +60735,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -58862,6 +61079,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -59184,6 +61416,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -59541,6 +61788,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -60391,6 +62657,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -60748,6 +63029,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -61605,6 +63905,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -61934,6 +64249,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -62256,6 +64586,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -62613,6 +64958,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -63463,6 +65827,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -63820,6 +66199,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -64677,6 +67075,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -65006,6 +67419,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -65328,6 +67756,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -65926,6 +68369,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -66454,6 +68912,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -66919,6 +69392,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -67517,6 +70005,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -68045,6 +70548,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -68510,6 +71028,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -69108,6 +71641,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -69636,6 +72184,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -70101,6 +72664,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -70699,6 +73277,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -71227,6 +73820,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -71699,6 +74307,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -72021,6 +74644,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -72357,6 +74995,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -72679,6 +75332,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -73029,6 +75697,25 @@
                     },
                     {
                       "var": "rtt_previous_measured"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
                     }
                   ]
                 }
@@ -73967,6 +76654,30 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rx_fin_consumed"
+                    },
+                    false,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -74405,6 +77116,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -75336,6 +78066,30 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rx_fin_consumed"
+                    },
+                    false,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -75774,6 +78528,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -76705,6 +79478,30 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rx_fin_consumed"
+                    },
+                    false,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -77143,6 +79940,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -78362,6 +81178,62 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "var": "rx_fin_consumed"
+                            }
+                          ]
+                        },
+                        {
+                          "var": "fin_acknowledged"
+                        }
+                      ]
+                    },
+                    false,
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "rx_fin_consumed"
+                        },
+                        false,
+                        {
+                          "op": "ite",
+                          "args": [
+                            {
+                              "var": "fin_acknowledged"
+                            },
+                            false,
+                            false
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -79088,6 +81960,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -80307,6 +83198,62 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "var": "rx_fin_consumed"
+                            }
+                          ]
+                        },
+                        {
+                          "var": "fin_acknowledged"
+                        }
+                      ]
+                    },
+                    false,
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "rx_fin_consumed"
+                        },
+                        false,
+                        {
+                          "op": "ite",
+                          "args": [
+                            {
+                              "var": "fin_acknowledged"
+                            },
+                            false,
+                            false
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -81033,6 +83980,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -82252,6 +85218,62 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "var": "rx_fin_consumed"
+                            }
+                          ]
+                        },
+                        {
+                          "var": "fin_acknowledged"
+                        }
+                      ]
+                    },
+                    false,
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "rx_fin_consumed"
+                        },
+                        false,
+                        {
+                          "op": "ite",
+                          "args": [
+                            {
+                              "var": "fin_acknowledged"
+                            },
+                            false,
+                            false
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -82978,6 +86000,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -84197,6 +87238,62 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "var": "rx_fin_consumed"
+                            }
+                          ]
+                        },
+                        {
+                          "var": "fin_acknowledged"
+                        }
+                      ]
+                    },
+                    false,
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "rx_fin_consumed"
+                        },
+                        false,
+                        {
+                          "op": "ite",
+                          "args": [
+                            {
+                              "var": "fin_acknowledged"
+                            },
+                            false,
+                            false
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -84923,6 +88020,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -86142,6 +89258,62 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "var": "rx_fin_consumed"
+                            }
+                          ]
+                        },
+                        {
+                          "var": "fin_acknowledged"
+                        }
+                      ]
+                    },
+                    false,
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "rx_fin_consumed"
+                        },
+                        false,
+                        {
+                          "op": "ite",
+                          "args": [
+                            {
+                              "var": "fin_acknowledged"
+                            },
+                            false,
+                            false
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -86868,6 +90040,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -87799,6 +90990,30 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rx_fin_consumed"
+                    },
+                    false,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -88237,6 +91452,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -89168,6 +92402,30 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rx_fin_consumed"
+                    },
+                    false,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -89606,6 +92864,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -90537,6 +93814,30 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rx_fin_consumed"
+                    },
+                    false,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -90975,6 +94276,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -91825,6 +95145,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -92182,6 +95517,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -93032,6 +96386,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -93389,6 +96758,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -94320,6 +97708,30 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "fin_acknowledged"
+                    },
+                    false,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -94758,6 +98170,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -95689,6 +99120,30 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "fin_acknowledged"
+                    },
+                    false,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -96127,6 +99582,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -97058,6 +100532,30 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "fin_acknowledged"
+                    },
+                    true,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -97496,6 +100994,25 @@
             },
             {
               "set": {
+                "var": "rtt_sample_at_ms",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "rtt_sample_used"
+                    },
+                    {
+                      "clock_ms": true
+                    },
+                    {
+                      "var": "rtt_sample_at_ms"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
                 "var": "rtt_last_ms",
                 "value": {
                   "op": "ite",
@@ -98434,6 +101951,30 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "fin_acknowledged"
+                    },
+                    true,
+                    false
+                  ]
+                },
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -98844,6 +102385,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -99166,6 +102722,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -99502,6 +103073,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -99831,6 +103417,21 @@
         },
         {
           "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                true,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
             "var": "rtt_start_ms",
             "value": {
               "op": "ite",
@@ -100153,6 +103754,21 @@
                 false,
                 {
                   "var": "rtt_ambiguous"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtt_sample_at_ms",
+            "value": {
+              "op": "ite",
+              "args": [
+                false,
+                0,
+                {
+                  "var": "rtt_sample_at_ms"
                 }
               ]
             }
@@ -101097,7 +104713,7 @@
                     "op": "sub",
                     "args": [
                       {
-                        "clock_ms": true
+                        "var": "rtt_sample_at_ms"
                       },
                       {
                         "var": "rtt_start_ms"
@@ -101105,6 +104721,46 @@
                     ]
                   }
                 ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "RTT-ALG",
+        "RTT-KARN",
+        "RTT-TIMER",
+        "RTT-SCOPE"
+      ]
+    },
+    {
+      "id": "T-INV-SAMPLE-EPOCH",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "rtt_sample_at_ms"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "rtt_sample_at_ms"
+              },
+              {
+                "clock_ms": true
               }
             ]
           }

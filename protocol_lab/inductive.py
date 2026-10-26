@@ -8,7 +8,7 @@ import itertools
 import json
 from pathlib import Path
 
-from .ir import require
+from .ir import CLOCK_SEMANTICS, require
 from .symbolic import Encoding, model_hash, replay
 
 
@@ -36,7 +36,8 @@ def prove(model, symbolic_initials=("iss",), out=None):
               "reachability_of_failed_prestates": "not_claimed", "unbounded_protocol_proof": False,
               "runtime_properties": ["positive_timer_duration", "active_timer_not_in_past"],
               "preservation_query_strategy": "exact_selected_rule_substitution_fresh_solver",
-              "preservation": [], "overlap": []}
+              "preservation": [], "overlap": [],
+              "clock_progress": "monotonic_integer_before_next_due" if model["semantics"] == CLOCK_SEMANTICS else "not_applicable"}
 
     # These solver obligations validate the length formulas against full Seq(BV8).
     sort = z.SeqSort(z.BitVecSort(8))
@@ -140,13 +141,30 @@ def prove(model, symbolic_initials=("iss",), out=None):
         overlap.solver.pop()
     files["overlap.smt2"] = "".join(overlap_script)
 
+    result["clock_advance_query"] = "not_applicable"
+    if model["semantics"] == CLOCK_SEMANTICS:
+        clock = arbitrary()
+        clock_post = [clock.expr(i["assert"], clock.frames[1]) for i in model["invariants"]]
+        clock_post += [z.Implies(clock.frames[1]["active"][n], clock.frames[1]["due"][n] >= clock.frames[1]["now"]) for n in model["timers"]]
+        constraints = list(clock.solver.assertions()) + [z.Not(z.And(*clock_post))]
+        clock.solver = z.Solver();clock.solver.set(timeout=10000)
+        clock.solver.add(*[z.simplify(z.substitute(c, (z.Int("choice_0"), z.IntVal(-2)))) for c in constraints])
+        clock.solver.add(z.Int("choice_0") == -2)
+        files["clock-preservation.smt2"] = clock.solver.to_smt2()
+        answer = clock.solve();result["clock_advance_query"] = str(answer)
+        if answer == z.unknown:result["clock_advance_reason"] = clock.reason_unknown()
+        elif answer == z.sat:
+            result["clock_failure"] = {"classification": "clock_obligation_failure_not_reachability_proof",
+                "pre_state": model["states"][clock.concrete(clock.solver.model(), clock.frames[0]["state"])],
+                "projection": clock.witness(clock.solver.model())}
     answers = [result["length_lemmas"], result["initial_query"]]
+    if result["clock_advance_query"] != "not_applicable":answers.append(result["clock_advance_query"])
     answers += [r["query"] for r in result["preservation"] + result["overlap"]]
     result["status"] = "inductive_obligations_failed" if "sat" in answers else "unknown" if any(a != "unsat" for a in answers) else "inductive_invariants_pass"
     if result["status"] == "inductive_invariants_pass":
         # A concrete full-byte/BV32 path prevents a vacuous replay claim.
         sample = Encoding(model, 1, symbolic_initials)
-        sample.solver.add(z.Int("choice_0") != -1)
+        sample.solver.add(z.Int("choice_0") >= 0)
         files["sample.smt2"] = sample.solver.to_smt2()
         answer = sample.solve()
         result["sample_query"] = str(answer)
@@ -175,6 +193,9 @@ def verify(model, out):
     require(result["byte_encoding"] == "exact_length_projection_content_insensitive_subset"
             and result["sequence_encoding"] == "modular_integer_full_32bit_domain"
             and result["sequence_width"] == 32, "Inductive encoding mismatch")
+    expected_clock = "monotonic_integer_before_next_due" if model["semantics"] == CLOCK_SEMANTICS else "not_applicable"
+    require(result.get("clock_progress") == expected_clock, "Missing clock preservation coverage")
+    require(result.get("clock_advance_query") == ("unsat" if expected_clock != "not_applicable" else "not_applicable"), "Clock preservation did not pass")
     require(result["status"] == "inductive_invariants_pass", "Inductive obligations did not pass")
     require(result["initial_query"] == "unsat" and result["length_lemmas"] == "unsat", "Induction initial/length queries did not pass")
     require([r["transition"] for r in result["preservation"]] == [r["id"] for r in model["transitions"]], "Missing preservation obligation")
@@ -192,7 +213,10 @@ def verify(model, out):
     require(actual_groups == expected_groups and len(result["overlap"]) == len(expected_groups), "Missing overlap obligation")
     require(result.get("replay", {}).get("status") == "match", "No concrete induction sample replay")
     require(replay(model, result["sample_witness"])["status"] == "match", "Inductive sample witness no longer replays")
-    require(set(result["query_hashes"]) == {"length-lemmas.smt2", "initial.smt2", "preservation.smt2", "overlap.smt2", "sample.smt2"}, "Missing induction query")
+    expected_queries = {"length-lemmas.smt2", "initial.smt2", "preservation.smt2", "overlap.smt2", "sample.smt2"}
+    if expected_clock != "not_applicable":expected_queries.add("clock-preservation.smt2")
+    require(set(result["query_hashes"]) == expected_queries, "Missing induction query")
+    require(bool(result["sample_witness"]["steps"]) and result["sample_witness"]["steps"][0]["origin"] != "clock", "No ordinary transition sample")
     for name, expected in result["query_hashes"].items():
         path = (out / name).resolve()
         require(path.is_relative_to(out) and digest_text(path.read_text()) == expected, "Inductive query changed")

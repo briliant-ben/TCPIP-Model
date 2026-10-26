@@ -1,5 +1,6 @@
 """Independent output-age checks; protocol decisions remain in the JSON IR."""
 import copy
+import json
 import importlib.util
 import unittest
 import shutil
@@ -159,10 +160,20 @@ class TransmissionHistoryTests(unittest.TestCase):
     @unittest.skipUnless(importlib.util.find_spec('z3'),'Z3 required')
     def test_guard_partition_is_exhaustive_disjoint_and_keeps_all_actions(self):
         current=ROOT/'model/tcp-tx-history.json';model=load(current)
+        # Reconstruct the unpartitioned current overlay from its canonical
+        # shared amendment, rather than combining an archived overlay with a
+        # changed parent. All three branches must preserve that operation.
+        raw=read(current);unpartitioned=copy.deepcopy(raw)
+        unpartitioned['transitions']=[];unpartitioned['remove_transitions']=[]
+        for suffix in ('PENDING','OTHER'):
+            rid='F-RECEIVE-FIN-WAIT-1-net-fin_segment-'+suffix
+            variants=[a for a in unpartitioned['amend_transitions']if a['id'].startswith(rid+'-ACK-')]
+            canonical=copy.deepcopy(variants[0]);canonical['id']=rid
+            unpartitioned['amend_transitions']=[a for a in unpartitioned['amend_transitions']if not a['id'].startswith(rid+'-ACK-')]+[canonical]
         with tempfile.TemporaryDirectory()as tmp:
             folder=Path(tmp)
             for source in model_files(current)[1:]:shutil.copyfile(source,folder/source.name)
-            shutil.copyfile(ROOT/'artifacts/diagnostics/tcp-tx-history-v1/model-overlay.json',folder/current.name)
+            (folder/current.name).write_text(json.dumps(unpartitioned))
             original=load(folder/current.name)
         self.assertEqual(model['invariants'],original['invariants'])
         oldrules={r['id']:r for r in original['transitions']}

@@ -407,7 +407,7 @@ class Machine:
         self.trace.append(record)
         self.check_invariants()
 
-    def advance(self, time_ms):
+    def _advance(self, time_ms):
         require(type(time_ms) is int and time_ms >= self.now_ms, "Time must be monotonic integer milliseconds")
         while self.timers and min(self.timers.values()) <= time_ms:
             timer = min(self.timers, key=lambda x: (self.timers[x], x))
@@ -421,11 +421,12 @@ class Machine:
         candidate = copy.deepcopy(self)
         require(name in self.model["events"], f"Unknown event {name}")
         require(self.model["events"][name]["origin"] != "timer", "Timer events cannot be injected")
-        candidate.advance(self.now_ms if time_ms is None else time_ms)
+        candidate._advance(self.now_ms if time_ms is None else time_ms)
         candidate._fire(name, copy.deepcopy(fields or {}))
         self.__dict__.update(candidate.__dict__)
 
     def tick(self, time_ms):
         candidate = copy.deepcopy(self)
-        candidate.advance(time_ms)
+        candidate._advance(time_ms)
+        candidate.check_invariants()
         self.__dict__.update(candidate.__dict__)

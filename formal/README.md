@@ -60,3 +60,6 @@ Ivy 接入的验收条件：
 IR 0.3 支持精确有理值和显式 clock-v3 事件时钟，参考／独立 SMT 数值契约见 docs/semantics.md。tcp-rto 增加 RFC 6298 估计器和 Karn 状态义务；这些不是 Rocq 检查过的估计器或翻译证明。任何绑定源变化后，Rocq 证据须实际重跑，不能只更新旧产物哈希。
 
 精确查询分组已可选接入统一流程：protocol_lab.refinement 保持原归纳文件只读，在独立目录生成和复查所有 unknown 保持义务的完整分组，另生成非空完整字节见证。SOURCES 与模型／原查询／检查器版本均绑定；suite-verify 实际重解补充查询，claims 将补充命题与原 unknown 分开。命令及范围见 docs/inductive.md。本路径仍信任 IR→SMT 翻译、Z3 和布尔分组检查器，不能记作 Rocq 证明。
+
+
+时钟 v3 模型的 BMC 另包含纯时钟步（choice=-2）：严格增时、早于下一活动定时器截止点、其余存储不变，包括声明终态。深度计声明事件或纯时钟步，后缀填充不增时。归纳的独立 clock-preservation.smt2 检查该保持义务；失败、unknown 或缺失不能由逐规则补充精化代替。固定 choice 重放只构造所选规则动作，仍保留全部 guard 和独立参考重放，不约束后态或输出；全输入查询不使用此裁剪。完整语义见 docs/semantics.md。

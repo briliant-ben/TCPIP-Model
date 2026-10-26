@@ -6,7 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from .ir import require
+from .ir import CLOCK_SEMANTICS, require
 from .symbolic import model_hash
 
 
@@ -40,7 +40,7 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts, refin
                         "runtime_properties": formal.get("runtime_properties", []), "depth": formal.get("depth"),
                         "symbolic_initials": formal.get("symbolic_initials", []),
                         "other_initial_values": "declared_IR_initial_values", "event_domain": "all_typed_values",
-                        "sequence_width": 32, "time": "unbounded_integer_ms", "unbounded": False}
+                        "sequence_width": 32, "bounded_step_unit": "declared_event_or_clock_advance" if model["semantics"] == CLOCK_SEMANTICS else "declared_event", "time": "unbounded_integer_ms", "clock_progress": formal.get("clock_progress"), "unbounded": False}
     fstatus = formal["status"]
     fs = "verified_bounded" if fstatus == "bounded_pass" else "not_run" if fstatus == "not_run" else "unknown" if fstatus in ("unknown", "vacuous") else "rejected"
     if fstatus != "not_run":
@@ -48,6 +48,9 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts, refin
         require(type(formal.get("depth")) is int and formal["depth"] >= 1, "Missing bounded claim depth")
         require({"formal/result.json", "formal/model.smt2", "formal/overlap.smt2"} <= artifacts.keys(), "Missing bounded claim evidence")
     if fstatus == "bounded_pass":
+        if model["semantics"] == CLOCK_SEMANTICS:
+            require(formal.get("clock_progress") == "monotonic_integer_before_next_due"
+                    and formal.get("scope") == "defined_transitions_and_clock_progress", "Missing bounded clock progress coverage")
         require(formal.get("safety_query") == "unsat" and formal.get("overlap_query") == "unsat"
                 and formal.get("replay", {}).get("status") == "match", "Cannot promote inconclusive solver evidence")
     safety = claim("bounded-state", safety_statement, fs, "z3-bmc", formal.get("solver_version"),
@@ -60,6 +63,8 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts, refin
         "poststate_invariants_assumed": False, "byte_encoding": induction.get("byte_encoding"),
         "sequence_encoding": induction.get("sequence_encoding"),
         "target_coverage": induction.get("target_coverage"),
+        "clock_progress": induction.get("clock_progress"),
+        "clock_advance_query": induction.get("clock_advance_query"),
         "symbolic_initials": induction.get("symbolic_initials", []),
         "other_initial_values": "declared_IR_initial_values",
         "transition_targets": [{"id": r["id"], "default": r["to"], "cases": r.get("target_cases", [])}
@@ -71,6 +76,11 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts, refin
         require(induction.get("backend") == "z3-invariant-induction", "Unsupported claim checker")
         require({"inductive/result.json", *["inductive/"+p for p in induction["query_hashes"]]} <= artifacts.keys(), "Missing induction claim evidence")
     if istatus == "inductive_invariants_pass":
+        expected_clock = "monotonic_integer_before_next_due" if model["semantics"] == CLOCK_SEMANTICS else "not_applicable"
+        require(induction.get("clock_progress") == expected_clock
+                and induction.get("clock_advance_query") == ("unsat" if expected_clock != "not_applicable" else "not_applicable"),
+                "Missing/inconclusive induction clock obligation")
+        require(expected_clock == "not_applicable" or "clock-preservation.smt2" in induction["query_hashes"], "Missing clock query evidence")
         require(induction.get("target_coverage") == "all_declared_destinations", "Missing target coverage for induction claim")
         require([r["transition"] for r in induction["preservation"]] == [r["id"] for r in model["transitions"]], "Missing claim rule obligation")
         for rule, row in zip(model["transitions"], induction["preservation"]):

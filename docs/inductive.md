@@ -53,6 +53,10 @@ Post-target semantics introduces a finite declared destination set per rule (def
 
 IR 0.3 的 rational 采用独立 RealSort 过近似及精确常系数运算；unsat 保持适用于有理状态，sat 见证必须是可序列化的精确有理数。事件时钟 guard 采用推进后的事件时刻，保持性仍从任意满足全部前态不变量的状态检查全部声明目标。RTT/RTO 的状态归纳不会证明通用输出时间契约或原始分段发送历史；具体范围见 tcp-rto.md。
 
+## 纯时钟保持
+
+时钟 v3 模型还必须通过独立的纯时钟保持义务：在任意满足全部前态不变量的状态（包括声明终态），严格推进到下一活动定时器截止点之前，保持其余存储不变，检查全部后态不变量和活动定时器不在过去。查询原文为 `clock-preservation.smt2`，结果为 `clock_advance_query`。没有该查询、结果 unknown 或 sat 时，主归纳不能通过，补充层也不能绕过。非时钟模型明确记录 not_applicable。非空样本必须实际执行声明规则，不能用纯时钟推进充数。
+
 ## 精确查询精化的独立验收层
 
 Profile 可显式声明 `inductive_refinement: true`。原 `inductive/result.json` 及其 SAT/UNSAT/unknown 查询保持只读；补充结果写入 `inductive-refinement/`。只有初值、长度公式和全部 guard 组已为 unsat、没有 sat 保持义务、所有规则及声明目标完整覆盖时，才可精化其中的 unknown 保持查询。不支持的主编码／范围、缺失标签或查询文件明确拒绝。

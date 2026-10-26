@@ -1,6 +1,6 @@
 # TCP 精确 RTT/RTO 与 Karn 组合范围
 
-模型 `model/tcp-rto.json` 通过 IR 0.3 overlay 组合 tcp-fin，沿用同一 UNA/NXT、发送／接收缓冲、FIN 序号及 rtx 定时器。176 条展开规则、121 个状态不变量；仍是单连接、16 字节容量、MSS=4 的有限 profile，不代表完整 TCP 或完整恢复算法。
+模型 `model/tcp-rto.json` 通过 IR 0.3 overlay 组合 tcp-fin，沿用同一 UNA/NXT、发送／接收缓冲、FIN 序号及 rtx 定时器。176 条展开规则、122 个状态不变量；仍是单连接、16 字节容量、MSS=4 的有限 profile，不代表完整 TCP 或完整恢复算法。
 
 ## 规范及数值选择
 
@@ -17,3 +17,6 @@
 独立完整字节重放、原 Seq/BV32 BMC、长度／模整数状态归纳分别报告。RTO 取值、样本区间、Karn 和更新顺序不变量不等于一般输出／时间正确性。继承的队列保存字节而不保存每个原始分段的全部发送时间：窗口变化导致的重新分段是否满足 RFC 6298 §5 的所有“不得过早重传”要求，仍需发送历史和通用时序契约验证；不能用当前手算截止点场景宣称该要求已完整证明。字节内容／输出对应、解释器与 SMT 翻译精化、独立实现数据证据也尚未完成。
 
 归纳首次暴露新连接未清理估计器的任意合法前状态反例，保存在 artifacts/diagnostics/tcp-rto-initial；修复是显式初始化，不是限制前状态或删除不变量。Rocq 旧源绑定随 IR/后端变化失效，必须实际重跑检查；六个已有原语即使通过，也不证明本估计器或 EFSM 翻译。
+
+
+实际取得样本时显式保存 `rtt_sample_at_ms`；Karn 不变量使用保存的采样时刻减发送时刻，而非后来推进的全局时钟。新增采样时刻非负且不晚于当前时刻的不变量。该修复继承到 tx-history／syn-history，避免 ACK 后无事件 tick 改变已保存样本的数学含义；原缺口诊断保留于 artifacts/diagnostics/clock-only-invariant-gap。
