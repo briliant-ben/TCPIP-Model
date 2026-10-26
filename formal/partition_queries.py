@@ -121,7 +121,12 @@ def partition(path, label, out, assertion_index=-4, group_size=16, timeout_ms=10
     return result
 
 
-def verify(out):
+class PartitionInconclusive(ValueError):
+    """An independent resource-limited recheck did not conclude."""
+
+
+
+def verify(out, source_path=None):
     out=Path(out);r=json.loads((out/'result.json').read_text())
     if r['checker_source_sha256']!=digest(Path(__file__).read_bytes()):raise ValueError('Partition checker changed')
     if r['status']!='query_partition_unsat' or r['equivalence']['query']!='unsat' or any(g['query']!='unsat'for g in r['groups']):
@@ -130,7 +135,8 @@ def verify(out):
     if r.get('solver_context')!='fresh_per_query':raise ValueError('Partition solver context mismatch')
     if type(r['group_size'])is not int or r['group_size']<1 or type(r['timeout_ms'])is not int or r['timeout_ms']<1:
         raise ValueError('Invalid partition execution parameters')
-    source=Path(r['source_file']).read_bytes()
+    source_file=Path(source_path)if source_path is not None else Path(r['source_file'])
+    source=source_file.read_bytes()
     if digest(source)!=r['source_sha256']:raise ValueError('Partition source changed')
     assertions=extract(source.decode(),r['label']);index=r['assertion_index']
     if not 0<=index<len(assertions):raise ValueError('Bad selected assertion index')
@@ -153,8 +159,9 @@ def verify(out):
         solver=isolated_solver(actual,r['timeout_ms']);answer=solver.check()
         if answer!=z3.unsat:
             reason=solver.reason_unknown()if answer==z3.unknown else ''
-            raise ValueError(f'Partition query {name} not independently unsat: {answer} {reason}')
-    if digest(Path(__file__).read_bytes())!=r['checker_source_sha256'] or digest(Path(r['source_file']).read_bytes())!=r['source_sha256'] or any(digest((out/name).read_bytes())!=h for name,h in r['query_hashes'].items()):
+            error=PartitionInconclusive if answer==z3.unknown else ValueError
+            raise error(f'Partition query {name} not independently unsat: {answer} {reason}')
+    if digest(Path(__file__).read_bytes())!=r['checker_source_sha256'] or digest(source_file.read_bytes())!=r['source_sha256'] or any(digest((out/name).read_bytes())!=h for name,h in r['query_hashes'].items()):
         raise ValueError('Source or query changed during verification')
     return {'status':'valid_exact_partition_queries','checks':len(checks),'disjuncts':len(terms)}
 

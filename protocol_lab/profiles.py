@@ -29,6 +29,8 @@ def profile_inputs(profile, model):
     paths += scenario_paths(profile)
     paths += [ROOT / "spec/sources/manifest.json", ROOT / "profiles.json", ROOT / "requirements-formal.txt", ROOT / "docs/semantics.md",
               ROOT / "docs/inductive.md", ROOT / "docs/claims.md", ROOT / "formal/README.md"]
+    if profile.get("inductive_refinement"):
+        paths.append(ROOT / "formal/partition_queries.py")
     if profile.get("wire_projection"):
         paths.append(ROOT / "packet-profile.json")
     inputs.update({str(p.relative_to(ROOT)): digest(p) for p in paths})
@@ -162,6 +164,12 @@ def run_profile(profile, out, formal=False, depth=6):
         from .inductive import prove
         induction = prove(model, out=out / "inductive")
         generated += [out / "inductive" / n for n in (*induction["query_hashes"], "result.json")]
+    refinement = {"status": "not_run"}
+    if formal and profile.get("inductive_refinement"):
+        require(profile.get("inductive"), "Refinement requires primary induction")
+        from .refinement import refine
+        refinement = refine(model, out / "inductive", out / "inductive-refinement")
+        generated += [out / "inductive-refinement" / n for n in (*refinement["artifact_hashes"], "result.json")]
     result = {"profile": profile["id"], "protocol": model["protocol"], "status": "reference_pass",
               "model_sha256": digest(model_path), "sources": sources, "input_hashes": inputs,
               "scenarios": scenarios, "state_count": len(model["states"]), "transition_count": len(model["transitions"]),
@@ -169,6 +177,7 @@ def run_profile(profile, out, formal=False, depth=6):
               "covered_transitions": sorted(covered), "uncovered_transitions": sorted({r["id"] for r in model["transitions"]} - covered),
               "formal": {k: formal_result[k] for k in ("status", "backend", "depth", "reason", "safety_query", "overlap_query") if k in formal_result},
               "inductive": {k: induction[k] for k in ("status", "backend", "byte_encoding", "sequence_encoding") if k in induction},
+              "inductive_refinement": {k: refinement[k] for k in ("status", "backend", "primary_status") if k in refinement},
               "real_stack": "not_run", "protocol_complete": False,
               "artifact_hashes": {str(p.relative_to(out)): digest(p) for p in generated}}
     if formal and formal_result["status"] != "bounded_pass":
@@ -179,8 +188,10 @@ def run_profile(profile, out, formal=False, depth=6):
         result["status"] = "fail"
     if induction["status"] not in ("not_run", "inductive_invariants_pass"):
         result["status"] = "formal_pending" if induction["status"] in ("unknown", "vacuous") and result["status"] != "fail" else "fail"
+    if refinement["status"] == "refinement_counterexample":
+        result["status"] = "fail"
     from .claims import build as build_claims
-    write(out / "claims.json", build_claims(model, profile, inputs, scenarios, formal_result, induction, result["artifact_hashes"]))
+    write(out / "claims.json", build_claims(model, profile, inputs, scenarios, formal_result, induction, result["artifact_hashes"], refinement=refinement))
     result["artifact_hashes"]["claims.json"] = digest(out / "claims.json")
     write(out / "report.json", result)
     return result
@@ -234,9 +245,13 @@ def verify_suite(out):
         if report.get("inductive", {}).get("status") == "inductive_invariants_pass":
             from .inductive import verify
             verify(model, target / "inductive")
+        if report.get("inductive_refinement", {}).get("status", "not_run") != "not_run":
+            from .refinement import verify as verify_refinement
+            verify_refinement(model, target / "inductive", target / "inductive-refinement")
         from .claims import verify as verify_claims
         verify_claims(model, profile, report, target)
         result["profiles"].append({"id": profile["id"], "local_integrity": "pass", "formal": report["formal"],
-                                   "inductive": report.get("inductive", {"status": "not_run"}), "real_stack": "not_run"})
+                                   "inductive": report.get("inductive", {"status": "not_run"}),
+                                   "inductive_refinement": report.get("inductive_refinement", {"status": "not_run"}), "real_stack": "not_run"})
     write(out / "verification.json", result)
     return result

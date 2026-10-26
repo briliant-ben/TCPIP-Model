@@ -35,6 +35,11 @@ def main():
     p = sub.add_parser("inductive", help="Check separate content-insensitive invariant induction obligations")
     p.add_argument("model", type=Path)
     p.add_argument("--out", type=Path, required=True)
+    for name in ("inductive-refine", "inductive-refine-verify"):
+        p = sub.add_parser(name, help="Generate/verify supplementary exact refinements without changing primary results")
+        p.add_argument("model", type=Path)
+        p.add_argument("--inductive", type=Path, required=True)
+        p.add_argument("--out", type=Path, required=True)
     p = sub.add_parser("observe", help="Decode, normalize and bind a PCAP to a built scenario")
     p.add_argument("pcap", type=Path)
     p.add_argument("--profile", type=Path, required=True)
@@ -95,6 +100,12 @@ def main():
             result = prove(load(args.model), out=args.out)
             print(f"{result['status']}; {args.out / 'result.json'}")
             return 0 if result["status"] == "inductive_invariants_pass" else 2
+        elif args.command in ("inductive-refine", "inductive-refine-verify"):
+            from .refinement import PASS, NOT_NEEDED, refine, verify
+            model = load(args.model)
+            result = refine(model, args.inductive, args.out) if args.command == "inductive-refine" else verify(model, args.inductive, args.out)
+            print(f"{result['status']}; {args.out / 'result.json'}")
+            return 0 if result["status"] in (PASS, NOT_NEEDED, "valid_refined_induction_evidence") else 2
         elif args.command == "formal":
             from .evidence import ensure_snapshot
             from .symbolic import check

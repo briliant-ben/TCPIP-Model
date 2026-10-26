@@ -14,7 +14,8 @@ def sha(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
-def build(model, profile, inputs, scenarios, formal, induction, artifacts):
+def build(model, profile, inputs, scenarios, formal, induction, artifacts, refinement=None):
+    refinement = refinement or {"status": "not_run"}
     model_sha = model_hash(model)
     for record in (formal, induction):
         if record["status"] != "not_run":
@@ -22,7 +23,7 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts):
     scope = {"model_scope": model["scope"], "semantics": model["semantics"], "ir_version": model["ir_version"],
              "environment_requirements": {rid: req for rid, req in model["requirements"].items()
                 if req.get("kind", req.get("category")) == "environment_assumption"}}
-    checker_code = {name: digest for name, digest in inputs.items() if name.startswith("protocol_lab/")}
+    checker_code = {name: digest for name, digest in inputs.items() if name.startswith("protocol_lab/") or name == "formal/partition_queries.py"}
     context = {"model_semantic_sha256": model_sha, "assumptions": scope, "input_hashes": inputs}
 
     def claim(cid, statement, status, checker, version, evidence):
@@ -59,6 +60,8 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts):
         "poststate_invariants_assumed": False, "byte_encoding": induction.get("byte_encoding"),
         "sequence_encoding": induction.get("sequence_encoding"),
         "target_coverage": induction.get("target_coverage"),
+        "symbolic_initials": induction.get("symbolic_initials", []),
+        "other_initial_values": "declared_IR_initial_values",
         "transition_targets": [{"id": r["id"], "default": r["to"], "cases": r.get("target_cases", [])}
                                for r in model["transitions"]],
         "content_properties": "not_supported_by_length_projection", "protocol_completeness": False}
@@ -85,8 +88,35 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts):
     trace = claim("fixed-traces", trace_statement, "matched_fixed_inputs" if matched else "not_run",
                   "z3-constrained-trace-and-reference-replay", formal.get("solver_version"),
                   {p: h for p, h in artifacts.items() if "/symbolic/" in p})
+    claims = [safety, inductive, trace]
+    if profile.get("inductive_refinement"):
+        status = refinement["status"]
+        refined_status = "not_run"
+        if status != "not_run":
+            from .refinement import PASS, NOT_NEEDED, validate_summary
+            validate_summary(model, induction, refinement)
+            require(refinement["primary_result_sha256"] == artifacts.get("inductive/result.json"),
+                    "Refinement primary result hash mismatch")
+            require(all(inputs.get(name) == value for name, value in refinement["checker_source_hashes"].items()),
+                    "Missing refinement checker code bindings")
+            required = {"inductive-refinement/result.json", *["inductive-refinement/"+n for n in refinement["artifact_hashes"]]}
+            require(required <= artifacts.keys(), "Missing refinement claim evidence")
+            refined_status = ("verified_refined_inductive_state_properties" if status == PASS else
+                              "not_needed_primary_pass" if status == NOT_NEEDED else
+                              "rejected" if status == "refinement_counterexample" else "unknown")
+        statement = {**induction_statement,
+            "kind": "same_state_induction_with_exact_boolean_query_refinements",
+            "primary_status": induction["status"],
+            "original_unknown_targets": refinement.get("original_unknown_targets", []),
+            "refinement_method": "all_original_assertions_retained_and_exhaustive_disjunct_partition",
+            "per_query_timeout_ms": refinement.get("timeout_ms")}
+        refined = claim("refined-inductive-state", statement, refined_status,
+                        "z3-exact-query-refinement", refinement.get("solver_version"),
+                        {p: h for p, h in artifacts.items() if p.startswith(("inductive/", "inductive-refinement/"))})
+        refined["trusted_components"].append("exact Boolean partition generation and independent coverage checker")
+        claims.append(refined)
     return {"claims_version": "0.1", "profile": profile["id"], **context,
-            "claims": [safety, inductive, trace], "protocol_complete": False,
+            "claims": claims, "protocol_complete": False,
             "this_manifest_does_not_establish": ["RFC coverage completeness", "IR translator correctness",
                 "universal byte-content correctness", "implementation refinement", "liveness/fairness",
                 "Linux implementation execution", "Rocq kernel-checked proofs"],
@@ -103,8 +133,9 @@ def verify(model, profile, report, out):
         return value
     formal = record("formal", report["formal"])
     induction = record("inductive", report.get("inductive", {"status": "not_run"}))
+    refinement = record("inductive-refinement", report.get("inductive_refinement", {"status": "not_run"}))
     expected = build(model, profile, report["input_hashes"], report["scenarios"], formal, induction,
-                     {p: h for p, h in report["artifact_hashes"].items() if p != "claims.json"})
+                     {p: h for p, h in report["artifact_hashes"].items() if p != "claims.json"}, refinement=refinement)
     for claim in expected["claims"]:
         for name, digest in claim["evidence_hashes"].items():
             path = (out / name).resolve()

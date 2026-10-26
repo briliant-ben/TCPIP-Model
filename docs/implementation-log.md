@@ -165,3 +165,11 @@ IR 数值测试补充独立 ceil 编码性质和代数无理见证拒绝，共 7
 独立 context 的 16 项分组仍有 pending 的 group-003 在 10s 内 unknown，结果及日志保存在 artifacts/diagnostics/query-partition-isolated-16。保持所有项和原断言，将该目标的每组大小从 16 精确细分到 8（160 项／20 组）；other 仍为 161 项／11 组。当前两者全部 31 组及等价义务实际 unsat，分别在新进程 verify 通过；不是更换随机种子或扩大限时。原标准归纳两个 unknown 保持，尚未接入 suite／claims。
 
 当前新 context／细分证据最终聚合复查也通过：两个 unknown 的 31 组及两个等价义务重新求解 unsat。验证摘要逐项检查两条原 unknown 都被精确覆盖、原 SMT 文件／当前模型哈希一致，校验旧 208 方法源未变、当前新增 20 方法日志通过，并核对当前 unittest discovery 的 228 个方法 ID 无缺漏。摘要及输入哈希保存在 artifacts/tcp-tx-history/validation/result.json。标准归纳报告仍 unknown，开发模型仍未注册 suite，后续统一验收集成和其余恢复／协议范围继续。
+
+## 2026-10-26：精确查询精化接入统一平台
+
+从 1cd5a3b 的干净工作区继续。新增独立 refinement 结果和验收器：严格校验主归纳的完整规则／目标／guard 组、编码／初始域／查询标签／哈希，保持主结果只读；对每个 unknown 保持目标保留全部上下文，生成完整分组、独立复查并保留辅助超时。补充通过后还要求完整字节／BV32 的非空初始执行见证、原非符号初值一致和参考重放。证据目录迁移只允许源 SHA 不变。主归纳通过则标为 not_needed_primary_pass；初值或 guard 未解决不能跳过。
+
+新增 CLI inductive-refine / inductive-refine-verify、profile 可选配置及第四个独立 claims 命题。原 inductive-state unknown 和 BMC unknown 不改名；只有原始义务全部覆盖、补充查询与非空见证实际通过，才标 verified_refined_inductive_state_properties。formal/partition_queries.py 及全部相关运行时代码进入输入／检查器哈希。tcp-tx-history 已注册为第九个 profile，有限数据 profile 启用同一可选机制。尚未声称 TCP 或内核证明完成。
+
+14 项新集成测试通过：漏目标／错标签、主查询丢失后重新哈希、删约束后层层重绑、辅助复查超时、未解决初值、可满足主义务、缺文件／源码绑定、不支持的编码、迁移目录及空／不同初值见证都不会误验收。已有 claims 六项和辅助检查器六项针对性回归通过。真实发送历史主查询的实际补充生成与独立验收已通过；接下来固定源码／文档／profile 输入，运行全部回归和九 profile 统一重建，再记录实际结论，不使用旧证据改绑哈希。

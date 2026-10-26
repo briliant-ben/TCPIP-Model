@@ -52,3 +52,18 @@ Preservation queries now substitute the fixed rule choice before solving and use
 Post-target semantics introduces a finite declared destination set per rule (default plus all target cases). Preservation now exhaustively partitions over every distinct destination. Each subquery fixes the selected rule, its implied source state, and that destination, then exactly reduces constants in the original constraints. No poststate invariant is assumed. Rule status is unsat only when every destination subquery is unsat. The verifier rejects missing targets/subqueries; exported scripts retain every destination check, so their check count is the sum of target counts, not necessarily the number of rules. The statement/claim manifest binds the default and ordered case ASTs. This refinement does not prove conditional output correctness: those observations still require full-byte replay and independent contracts.
 
 IR 0.3 的 rational 采用独立 RealSort 过近似及精确常系数运算；unsat 保持适用于有理状态，sat 见证必须是可序列化的精确有理数。事件时钟 guard 采用推进后的事件时刻，保持性仍从任意满足全部前态不变量的状态检查全部声明目标。RTT/RTO 的状态归纳不会证明通用输出时间契约或原始分段发送历史；具体范围见 tcp-rto.md。
+
+## 精确查询精化的独立验收层
+
+Profile 可显式声明 `inductive_refinement: true`。原 `inductive/result.json` 及其 SAT/UNSAT/unknown 查询保持只读；补充结果写入 `inductive-refinement/`。只有初值、长度公式和全部 guard 组已为 unsat、没有 sat 保持义务、所有规则及声明目标完整覆盖时，才可精化其中的 unknown 保持查询。不支持的主编码／范围、缺失标签或查询文件明确拒绝。
+
+精化保留原查询的每条其他断言，完整分组所选断言的析取项，检查等价并独立重解每一组；默认每组 8 项、每查询 10000ms，fresh Z3 context。每个 unknown 目标均须有精确来源、标签、完整组覆盖及验证结果。独立复查超时仍为 refinement_unknown，不得仅因首次生成 unsat 而通过；任何未解决初值／guard 不得被跳过。主归纳已经通过则写 not_needed_primary_pass，不把它改称新证明。
+
+全部 unknown 被覆盖后仍需生成一个完整字节／BV32 的非空初始执行见证，记录其原 SMT 查询和独立参考重放；非符号初值必须等于 IR 声明，空轨迹或不同初值不能完成该验收。绑定完整模型、主结果及查询哈希、检查器源码、Z3 版本、所有分组和样本。验证时从当前绑定主目录读取原查询，允许证据目录整体迁移，但不允许换成不同哈希的源。
+
+```
+.venv/bin/python -m protocol_lab inductive-refine model/tcp-tx-history.json --inductive artifacts/suite/tcp-tx-history/inductive --out artifacts/suite/tcp-tx-history/inductive-refinement
+.venv/bin/python -m protocol_lab inductive-refine-verify model/tcp-tx-history.json --inductive artifacts/suite/tcp-tx-history/inductive --out artifacts/suite/tcp-tx-history/inductive-refinement
+```
+
+通过时补充状态为 refined_inductive_queries_pass。claims 保留原 inductive-state 的 unknown，另发 refined-inductive-state（verified_refined_inductive_state_properties）；同样不是完整协议、内容／输出精化、活性或 Rocq 内核证明。BMC unknown 不因此提升。工具设计与历史试点见 query-partition.md。

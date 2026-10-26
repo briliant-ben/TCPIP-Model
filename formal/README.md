@@ -58,3 +58,5 @@ Ivy 接入的验收条件：
 新 post-target-v2 模型的条件输出和优先目标表由独立 Z3 后端显式编码；不认识 semantics 版本必须拒绝。固定输入查询只对已固定输入/choice 做等价常量化。状态归纳逐规则穷尽默认及所有声明目标，结果与输出/时序契约分开记录。新场景 0.2 的 expect_trace 是独立固定输入 oracle，涵盖该 step 自动触发的定时器和全部消息，不作为求解后态假设。协议或实现完整性仍未证明。
 
 IR 0.3 支持精确有理值和显式 clock-v3 事件时钟，参考／独立 SMT 数值契约见 docs/semantics.md。tcp-rto 增加 RFC 6298 估计器和 Karn 状态义务；这些不是 Rocq 检查过的估计器或翻译证明。任何绑定源变化后，Rocq 证据须实际重跑，不能只更新旧产物哈希。
+
+精确查询分组已可选接入统一流程：protocol_lab.refinement 保持原归纳文件只读，在独立目录生成和复查所有 unknown 保持义务的完整分组，另生成非空完整字节见证。SOURCES 与模型／原查询／检查器版本均绑定；suite-verify 实际重解补充查询，claims 将补充命题与原 unknown 分开。命令及范围见 docs/inductive.md。本路径仍信任 IR→SMT 翻译、Z3 和布尔分组检查器，不能记作 Rocq 证明。
