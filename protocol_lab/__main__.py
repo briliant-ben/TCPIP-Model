@@ -56,7 +56,7 @@ def main():
     p.add_argument("expected", type=Path)
     p.add_argument("observed", type=Path)
     p.add_argument("--tolerance-ms", type=int, default=50)
-    p.add_argument("--projection", choices=("active-open-v1", "tcp-data-v1", "tcp-fin-v1"), default="active-open-v1")
+    p.add_argument("--projection", choices=("active-open-v1", "tcp-data-v1", "tcp-fin-v1", "tcp-connection-v1"), default="active-open-v1")
     p.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     try:

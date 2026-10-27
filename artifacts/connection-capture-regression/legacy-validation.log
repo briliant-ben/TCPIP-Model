@@ -1,0 +1,33 @@
+test_checksum_policy_is_explicit_and_recorded (test_validation.CaptureTests.test_checksum_policy_is_explicit_and_recorded) ... ok
+test_nonmonotonic_timestamps_are_rejected (test_validation.CaptureTests.test_nonmonotonic_timestamps_are_rejected) ... ok
+test_payload_and_unknown_flags_are_rejected (test_validation.CaptureTests.test_payload_and_unknown_flags_are_rejected) ... ok
+test_truncation_and_unknown_format_are_rejected (test_validation.CaptureTests.test_truncation_and_unknown_format_are_rejected) ... ok
+test_unrelated_connection_is_filtered (test_validation.CaptureTests.test_unrelated_connection_is_filtered) ... ok
+test_wire_iss_epoch_options_and_endian_normalization (test_validation.CaptureTests.test_wire_iss_epoch_options_and_endian_normalization) ... ok
+test_capture_matching_requires_explicit_external_assertion (test_validation.EvidenceTests.test_capture_matching_requires_explicit_external_assertion) ... ok
+test_changed_execution_log_is_rejected (test_validation.EvidenceTests.test_changed_execution_log_is_rejected) ... ok
+test_explicit_offload_warning_requires_review (test_validation.EvidenceTests.test_explicit_offload_warning_requires_review) ... ok
+test_failed_replacement_cannot_reuse_old_observation (test_validation.EvidenceTests.test_failed_replacement_cannot_reuse_old_observation) ... ok
+test_missing_results_cannot_pass (test_validation.EvidenceTests.test_missing_results_cannot_pass) ... ok
+test_observation_cannot_be_reused_for_different_execution (test_validation.EvidenceTests.test_observation_cannot_be_reused_for_different_execution) ... ok
+test_rebuilding_does_not_hash_external_evidence_as_local_input (test_validation.EvidenceTests.test_rebuilding_does_not_hash_external_evidence_as_local_input) ... ok
+test_runner_preflight_does_not_invoke_missing_tool (test_validation.EvidenceTests.test_runner_preflight_does_not_invoke_missing_tool) ... ok
+test_runner_success_and_timeout_replace_old_result (test_validation.EvidenceTests.test_runner_success_and_timeout_replace_old_result) ... ok
+test_script_change_invalidates_local_snapshot (test_validation.EvidenceTests.test_script_change_invalidates_local_snapshot) ... ok
+test_simulated_external_gate_and_stale_formal_query (test_validation.EvidenceTests.test_simulated_external_gate_and_stale_formal_query) ... ok
+test_stale_observation_binding_is_rejected (test_validation.EvidenceTests.test_stale_observation_binding_is_rejected) ... ok
+test_synthetic_capture_cannot_be_promoted_by_relabeling (test_validation.EvidenceTests.test_synthetic_capture_cannot_be_promoted_by_relabeling) ... ok
+test_tampered_normalized_trace_is_rejected (test_validation.EvidenceTests.test_tampered_normalized_trace_is_rejected) ... ok
+test_unverified_origin_is_not_real_evidence (test_validation.EvidenceTests.test_unverified_origin_is_not_real_evidence) ... ok
+test_all_reference_scenarios_crosscheck_symbolic_semantics (test_validation.SymbolicTests.test_all_reference_scenarios_crosscheck_symbolic_semantics) ... ok
+test_dead_end_prefix_is_still_checked (test_validation.SymbolicTests.test_dead_end_prefix_is_still_checked) ... ok
+test_exported_queries_run_in_a_fresh_solver (test_validation.SymbolicTests.test_exported_queries_run_in_a_fresh_solver) ... ok
+test_missing_cancel_counterexample_replays (test_validation.SymbolicTests.test_missing_cancel_counterexample_replays) ... ok
+test_negative_timer_is_not_silently_pruned (test_validation.SymbolicTests.test_negative_timer_is_not_silently_pruned) ... ok
+test_overlapping_rules_are_detected (test_validation.SymbolicTests.test_overlapping_rules_are_detected) ... ok
+test_symbolic_all_32bit_iss_and_event_fields (test_validation.SymbolicTests.test_symbolic_all_32bit_iss_and_event_fields) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 1.941s
+
+OK

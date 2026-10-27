@@ -66,3 +66,5 @@ IR 0.3 支持精确有理值和显式 clock-v3 事件时钟，参考／独立 SM
 
 
 统一注册表增加 SYN 历史和 delayed ACK，合计 11 个有限 profile。RTO／发送历史／SYN／delayed ACK 显式设置 inductive_refinement_group_size=1；CLI 生成支持 --group-size，claims 校验配置与实际结果一致。不能把旧开发证据只改源哈希接入。SYN 100 个输入，delayed ACK 23 个输入（7 新策略、16 未修改恢复／SYN 输入），具体未覆盖项见对应范围文档。
+
+统一 SYN／delayed ACK 的捕获阶段显式使用 tcp-connection-v1。它保留窗口／完整字节／顺序检查，并从实际各方向 SYN 独立建原点；旧投影限制不变。该 codec 扩展不影响 Z3 证明范围，亦不把 synthetic 观测升级为实现证据。

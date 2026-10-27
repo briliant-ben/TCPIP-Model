@@ -1,0 +1,12 @@
+test_checksums_and_unknown_flags_are_still_rejected (test_connection_capture.ConnectionCaptureTests.test_checksums_and_unknown_flags_are_still_rejected) ... ok
+test_fin_payload_window_ack_and_order_remain_strict (test_connection_capture.ConnectionCaptureTests.test_fin_payload_window_ack_and_order_remain_strict) ... ok
+test_missing_anchor_is_rejected_when_sequence_or_ack_requires_it (test_connection_capture.ConnectionCaptureTests.test_missing_anchor_is_rejected_when_sequence_or_ack_requires_it) ... ok
+test_partial_syn_only_capture_has_no_fabricated_peer_iss_or_retransmission_alignment (test_connection_capture.ConnectionCaptureTests.test_partial_syn_only_capture_has_no_fabricated_peer_iss_or_retransmission_alignment) ... ok
+test_passive_raw_capture_anchors_both_endpoint_syns_and_original_time_offset (test_connection_capture.ConnectionCaptureTests.test_passive_raw_capture_anchors_both_endpoint_syns_and_original_time_offset) ... ok
+test_simultaneous_open_uses_incoming_syn_without_requiring_synack (test_connection_capture.ConnectionCaptureTests.test_simultaneous_open_uses_incoming_syn_without_requiring_synack) ... ok
+test_three_new_syn_scenarios_have_synthetic_only_codec_roundtrips (test_connection_capture.ConnectionCaptureTests.test_three_new_syn_scenarios_have_synthetic_only_codec_roundtrips) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 4.276s
+
+OK

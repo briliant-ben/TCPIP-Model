@@ -13,3 +13,5 @@
 未包含 ACK decimation、GRO、接收端 SWS 优化、timestamp、无在途 persist、拥塞／fast recovery 或独立实现数据证据。旧 profile 仍保持其立即 ACK 策略，含受影响接收事件的旧场景不能直接沿用输出 oracle 宣称新策略兼容；新场景必须给出新策略下的明确预期。
 
 统一 profile 包含 7 个独立新策略场景，以及不包含普通接收数据的 9 个 RTO、4 个发送历史和 3 个 SYN 场景，共 23 个固定输入。后 16 个原场景和 oracle 原样复用；受 delayed ACK 策略影响的数据／重组场景仍需逐项补充新预期，不能把这 23 个输入当作整个连接模型的覆盖。
+
+复用的三个 SYN 打开场景采用 tcp-connection-v1 投影，仍严格比较完整 payload／窗口／SEQ／ACK／顺序。该扩展解决原主动打开归一化器未覆盖被动／同时／部分打开的问题，见 connection-capture.md。

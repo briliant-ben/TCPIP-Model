@@ -113,9 +113,9 @@ def compare(expected, observed, tolerance_ms=50, projection="active-open-v1"):
     """
     require(type(tolerance_ms) is int and tolerance_ms >= 0, "Invalid tolerance")
     require(type(observed) is list, "Observed packets must be a list")
-    require(projection in ("active-open-v1", "tcp-data-v1", "tcp-fin-v1"), "Unsupported TCP projection")
+    require(projection in ("active-open-v1", "tcp-data-v1", "tcp-fin-v1", "tcp-connection-v1"), "Unsupported TCP projection")
     fields = ["direction", "flags", "seq", "ack", "time_ms"]
-    if projection in ("tcp-data-v1", "tcp-fin-v1"):
+    if projection in ("tcp-data-v1", "tcp-fin-v1", "tcp-connection-v1"):
         fields += ["window", "payload"]
     differences = []
     if len(expected) != len(observed):
@@ -128,7 +128,7 @@ def compare(expected, observed, tolerance_ms=50, projection="active-open-v1"):
         require(type(packet["flags"]) is str, "Invalid observed flags")
         require(all(type(packet[k]) is int and 0 <= packet[k] < MOD for k in ("seq", "ack")), "Invalid observed sequence")
         require(type(packet["time_ms"]) in (int, float) and packet["time_ms"] >= 0, "Invalid observed time")
-        if projection in ("tcp-data-v1", "tcp-fin-v1"):
+        if projection in ("tcp-data-v1", "tcp-fin-v1", "tcp-connection-v1"):
             require(value_ok(packet["payload"], "bytes"), "Invalid observed payload")
             require(type(packet["window"]) is int and 0 <= packet["window"] <= 65535, "Invalid observed window")
     for index, (want, got) in enumerate(zip(expected, observed)):
@@ -138,6 +138,6 @@ def compare(expected, observed, tolerance_ms=50, projection="active-open-v1"):
                 differences.append({"kind": "field", "index": index, "packet_id": want["packet_id"],
                                     "event_id": want["event_id"], "requirements": want["requirements"],
                                     "field": key, "expected": want[key], "observed": got[key]})
-    return {"status": "mismatch" if differences else "match", "oracle": "ordered-fin-data-projection-v1" if projection == "tcp-fin-v1" else "ordered-data-projection-v1" if projection == "tcp-data-v1" else "ordered-projection-v1",
+    return {"status": "mismatch" if differences else "match", "oracle": "ordered-connection-data-projection-v1" if projection == "tcp-connection-v1" else "ordered-fin-data-projection-v1" if projection == "tcp-fin-v1" else "ordered-data-projection-v1" if projection == "tcp-data-v1" else "ordered-projection-v1",
             "tolerance_ms": tolerance_ms, "compared_fields": fields,
             "differences": differences}

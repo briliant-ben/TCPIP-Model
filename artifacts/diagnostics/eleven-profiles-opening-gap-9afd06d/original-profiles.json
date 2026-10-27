@@ -1,0 +1,211 @@
+{
+  "suite_version": "0.1",
+  "deliverable": "Executable protocol reference models and verification flow",
+  "profiles": [
+    {
+      "id": "tcp-active-open",
+      "model": "model/tcp.json",
+      "scenarios": "scenarios",
+      "packetdrill": "active-open-v1"
+    },
+    {
+      "id": "tcp-connection",
+      "model": "model/tcp-connection.json",
+      "scenarios": "scenarios/connection",
+      "packetdrill": null
+    },
+    {
+      "id": "tcp-data",
+      "model": "model/tcp-data.json",
+      "scenarios": "scenarios/data",
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-data-v1",
+      "inductive": true,
+      "inductive_refinement": true
+    },
+    {
+      "id": "tcp-reassembly",
+      "model": "model/tcp-reassembly.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-data-v1",
+      "inductive": true,
+      "inductive_refinement": true
+    },
+    {
+      "id": "tcp-segments",
+      "model": "model/tcp-segments.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-data-v1",
+      "inductive": true,
+      "inductive_refinement": true
+    },
+    {
+      "id": "tcp-close",
+      "model": "model/tcp-close.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments",
+        "scenarios/close"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-data-v1",
+      "inductive": true,
+      "inductive_refinement": true
+    },
+    {
+      "id": "tcp-fin",
+      "model": "model/tcp-fin.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments",
+        "scenarios/close",
+        "scenarios/fin"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-fin-v1",
+      "inductive": true,
+      "inductive_refinement": true
+    },
+    {
+      "id": "tcp-rto",
+      "model": "model/tcp-rto.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments",
+        "scenarios/close",
+        "scenarios/fin",
+        "scenarios/rto"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-fin-v1",
+      "inductive": true,
+      "inductive_refinement": true,
+      "inductive_refinement_group_size": 1
+    },
+    {
+      "id": "tcp-tx-history",
+      "model": "model/tcp-tx-history.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments",
+        "scenarios/close",
+        "scenarios/fin",
+        "scenarios/rto",
+        "scenarios/tx-history"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-fin-v1",
+      "inductive": true,
+      "inductive_refinement": true,
+      "inductive_refinement_group_size": 1
+    },
+    {
+      "id": "tcp-syn-history",
+      "model": "model/tcp-syn-history.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments",
+        "scenarios/close",
+        "scenarios/fin",
+        "scenarios/rto",
+        "scenarios/tx-history",
+        "scenarios/syn-history"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-fin-v1",
+      "inductive": true,
+      "inductive_refinement": true,
+      "inductive_refinement_group_size": 1
+    },
+    {
+      "id": "tcp-delayed-ack",
+      "model": "model/tcp-delayed-ack.json",
+      "scenarios": [
+        "scenarios/rto",
+        "scenarios/tx-history",
+        "scenarios/syn-history",
+        "scenarios/delayed-ack"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-fin-v1",
+      "inductive": true,
+      "inductive_refinement": true,
+      "inductive_refinement_group_size": 1
+    }
+  ],
+  "pending_modules": [
+    {
+      "id": "tcp-data",
+      "status": "partial_finite_data_profile",
+      "scope": "finite data/ACK/window/reassembly and close including explicit FIN payload/window and queued receive EOF; opening traffic, options/reset hardening and full recovery pending"
+    },
+    {
+      "id": "tcp-recovery",
+      "status": "partial_rto_history_delayed_ack_profiles",
+      "scope": "finite RTT/RTO/Karn, data/FIN/SYN transmission age and delayed ACK profiles; universal output/timing and implementation refinement, no-flight persist, congestion and fast recovery remain incomplete"
+    },
+    {
+      "id": "udp",
+      "status": "not_implemented",
+      "scope": "datagram service, checksums, endpoints and demultiplexing"
+    },
+    {
+      "id": "ipv4",
+      "status": "not_implemented",
+      "scope": "host send/receive, routing, fragmentation/reassembly, TTL, options policy"
+    },
+    {
+      "id": "ipv6",
+      "status": "not_implemented",
+      "scope": "host send/receive, extension headers, fragmentation/reassembly, hop limit, PMTU"
+    },
+    {
+      "id": "icmp",
+      "status": "not_implemented",
+      "scope": "ICMPv4/v6 errors, echo, transport notification, PMTU feedback"
+    },
+    {
+      "id": "arp-ndp",
+      "status": "not_implemented",
+      "scope": "neighbor resolution/cache, ARP, IPv6 NDP and configuration assumptions"
+    },
+    {
+      "id": "socket-service",
+      "status": "not_implemented",
+      "scope": "multi-connection endpoints, buffer ownership, async errors, blocking/nonblocking operations"
+    },
+    {
+      "id": "stack-composition",
+      "status": "not_implemented",
+      "scope": "layer contracts, dispatcher, network environment and end-to-end properties"
+    },
+    {
+      "id": "real-stack-validation",
+      "status": "partial_lwip_memory_netif",
+      "scope": "lwIP active handshake and loss execution adapter exists; Linux packetdrill/TUN remains blocked; stack-wide and lifecycle execution coverage is incomplete"
+    }
+  ]
+}
