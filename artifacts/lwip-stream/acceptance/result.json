@@ -1,7 +1,7 @@
 {
-  "status": "six_finite_implementation_observations_verified",
-  "standalone_tests": 12,
-  "test_seconds": 49.249,
+  "status": "thirteen_finite_implementation_observations_verified",
+  "standalone_tests": 17,
+  "test_seconds": 63.056,
   "test_returncode": 0,
   "test_command": [
     ".venv/bin/python",
@@ -9,14 +9,93 @@
   ],
   "cases": [
     {
+      "case": "active-close-after-data",
+      "generation_returncode": 1,
+      "status": "executed_with_differences",
+      "verification_returncode": 0,
+      "report_sha256": "16260bd0bc8147cf43ce00693936eb2a2084e426f8bfa35305e5c2f64cead04d",
+      "difference_sha256": "9681204837e1ba7186c73aa18a88a39788891457538a4cf037d4ce0e277be93f",
+      "receiver_difference_sha256": "d1fd07e8d818764ed544e55732ca91c988b5829efbef85ce362f22827ef032e5",
+      "generation_log_sha256": "e0682073e56b5e0fbb8529c60c548a9608c82c56ebd52a2356e3c1e1a1fa6d81",
+      "verification_log_sha256": "03d0960fb87c17500cf4f0c1f9a216b0b9508093fb077ed6f6f6f8a7e5c5e7b4",
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 4,
+        "written_bytes": 4,
+        "commands": 8,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": [
+          {
+            "time_ms": 60,
+            "eof": true,
+            "data": []
+          }
+        ]
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 159,
+        "left_unique": 0,
+        "right_unique": 0
+      },
+      "analysis_sha256": "e61280bb5c1d394fba1e543a92f0f8947ed17613be092264da7194d5dddc5a09"
+    },
+    {
+      "case": "active-close-empty",
+      "generation_returncode": 1,
+      "status": "executed_with_differences",
+      "verification_returncode": 0,
+      "report_sha256": "b11fd818fc6e67e6c2809e4652d3ca9510e8ec3097cafe7d6f9fbdb59ebd5328",
+      "difference_sha256": "8ecb92e3837c163b71bb70b9be639bd9a4affae175a51792e61d5bfa791200fe",
+      "receiver_difference_sha256": "cad25b6b63174fb6d57c29b238e53d2cd064fdb9e0a80c7cabbc5dce4e620ff4",
+      "generation_log_sha256": "3797f34c798553669678ed4ca4c7817efed6ef254cbe62920c92a532b1d95ee0",
+      "verification_log_sha256": "30d3c3ea5ebf875632b18a28ab202e4c3b8dc804fbf29cb6551cc3633331a866",
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 0,
+        "written_bytes": 0,
+        "commands": 5,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": [
+          {
+            "time_ms": 40,
+            "eof": true,
+            "data": []
+          }
+        ]
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 146,
+        "left_unique": 0,
+        "right_unique": 0
+      },
+      "analysis_sha256": "825a6570adae10245a13669d8e84de11c064b9c4ca87a41c4be027fa8e840d70"
+    },
+    {
       "case": "four-byte-peer-window",
       "generation_returncode": 1,
       "status": "executed_with_differences",
       "verification_returncode": 0,
-      "report_sha256": "30015b38372095e2398901053769cb38b3daaf32f00b99fd96a04d66e823bb5c",
+      "report_sha256": "52ffa779c67d648ac122665a3107a383c91ef8612a0eb88d4aa1664c2eb293f5",
       "difference_sha256": "6b4c178363e3b38d704f63bcae75e95b837cacae644ddef2ebb110219dc3561a",
-      "generation_log_sha256": "b151bc34df6d3c10716b81f3d9eec67187d83fc1f2c10b3d873133dc23f8b345",
-      "verification_log_sha256": "b185b973edbb508876fe3f3e116bf8eb6df3f76845a4b658b2ce489342d2c695",
+      "receiver_difference_sha256": "a770fd40d6f284c5c3c30e6f0f87774285f29f5aefe17392e5182d113d655864",
+      "generation_log_sha256": "f790190e0e2c20247191ef1803a693ab8c1a1bdb4583311bdb7bcb533e81d77e",
+      "verification_log_sha256": "9cdb3bedb47339fbf6d7f154586cd3edac3b902e3675c5f080385be30f3a43fd",
       "summary": {
         "implementation": "lwIP-2.2.1",
         "clock": "virtual_ms",
@@ -25,18 +104,31 @@
         "written_bytes": 8,
         "commands": 7,
         "mss": 4,
-        "receive_window": 16
-      }
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": []
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 152,
+        "left_unique": 0,
+        "right_unique": 0
+      },
+      "analysis_sha256": "6006221904c1cf96c5e84dd61a9db54be121a091424231247905d13691ba4408"
     },
     {
       "case": "future-ack-keeps-flight",
       "generation_returncode": 0,
       "status": "execution_and_projection_pass",
       "verification_returncode": 0,
-      "report_sha256": "013bc5810b3af448781ccba674523bdb430bcd3bd6f787c56aef72c9cea7175e",
+      "report_sha256": "99865fa0b8b21e9e4f76097562149fee06d971d087072fc7e81479023ad0591d",
       "difference_sha256": "bedcf706f68a52570557d1ed6b17db540fd11e33d90b6aca6356d283ac7413d1",
-      "generation_log_sha256": "df9cd016c93557091b91d3a7cbd04f4e9da7aa1205ef60b8b924715fb0c335d1",
-      "verification_log_sha256": "70655a4909daca78d08d3f7122e5ec3e0553b34304a550624b75bd28df54440c",
+      "receiver_difference_sha256": "a770fd40d6f284c5c3c30e6f0f87774285f29f5aefe17392e5182d113d655864",
+      "generation_log_sha256": "2a6a998d60239667619bb05a626c30d5039d7faef0e1b06c8b69cca96e20ef72",
+      "verification_log_sha256": "4906499481406207a7a206ef81489bee3eb722ce9e52f702fe0c11de701140e1",
       "summary": {
         "implementation": "lwIP-2.2.1",
         "clock": "virtual_ms",
@@ -45,7 +137,265 @@
         "written_bytes": 8,
         "commands": 7,
         "mss": 4,
-        "receive_window": 16
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": []
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 152,
+        "left_unique": 0,
+        "right_unique": 0
+      }
+    },
+    {
+      "case": "receive-duplicate-out-of-order",
+      "generation_returncode": 1,
+      "status": "executed_with_differences",
+      "verification_returncode": 0,
+      "report_sha256": "d940e4740014dd79ac968b445b926123b80ab04988b30c501f319b8b9ed2162c",
+      "difference_sha256": "cc0794521d18a9e1d3202bba8e2e00721eaee953bcaaf948a672ba6c21e9b6fb",
+      "receiver_difference_sha256": "3520d61d4cad29d5ce3d477e6a114f2da6375466709b5b3a3a5a8bee1763cd48",
+      "generation_log_sha256": "5d06af9c7298ae2f5f23cd2a475d9b6676946f79a3e76597344cd5245564dee2",
+      "verification_log_sha256": "803522c76937b40f00bb9a11d728086fbd5164669d1f0aa7c80fbaa6f58c4324",
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 0,
+        "written_bytes": 0,
+        "commands": 5,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 8,
+        "receiver_events": [
+          {
+            "time_ms": 30,
+            "eof": false,
+            "data": [
+              0,
+              128,
+              255,
+              7,
+              17,
+              33,
+              65,
+              129
+            ]
+          }
+        ]
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 151,
+        "left_unique": 0,
+        "right_unique": 0
+      },
+      "analysis_sha256": "f0e0ba3f3b5d6b791078fe552578599c7972271c83837b66c36ef141c5cd360b"
+    },
+    {
+      "case": "receive-fin-ahead-gap",
+      "generation_returncode": 1,
+      "status": "executed_with_differences",
+      "verification_returncode": 0,
+      "report_sha256": "5b55fa256404f5edc01e842d1a82aeac1922a6c8a025f211af024a6c0970453e",
+      "difference_sha256": "12832a1f08d7360a1b46361cae0c09d89c6272715e3d311295f5a3e35afb507b",
+      "receiver_difference_sha256": "494b7e15cf2768b6c3e83ea87d6ac8398e3e450fc82ecf9ec88e0d3c272a0cbd",
+      "generation_log_sha256": "ec37e1594c8e433c64a4f3202450fbee4123b86b6ca59a54c8793589b1265622",
+      "verification_log_sha256": "9c33f7d93f14a70d81354f17d1278be28c7f23e7ac6dc3094a83ab9136327a27",
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 0,
+        "written_bytes": 0,
+        "commands": 4,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 4,
+        "receiver_events": [
+          {
+            "time_ms": 30,
+            "eof": false,
+            "data": [
+              0,
+              128,
+              255,
+              7
+            ]
+          },
+          {
+            "time_ms": 30,
+            "eof": true,
+            "data": []
+          }
+        ]
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 144,
+        "left_unique": 0,
+        "right_unique": 0
+      },
+      "analysis_sha256": "1cde741252b05d337f12e4de7573d52c80e938ddf09a12ff32b26ad79456440b"
+    },
+    {
+      "case": "receive-fin-with-payload",
+      "generation_returncode": 1,
+      "status": "executed_with_differences",
+      "verification_returncode": 0,
+      "report_sha256": "71ec92e5e30cf37c52ac1d5665f6156932aabafc8e6d1c49edc8e29f6832b634",
+      "difference_sha256": "532e7f671a4b5a461b712dda81f413fbabf2e081aeef24f3ec4afbaf38bdb244",
+      "receiver_difference_sha256": "65f71d8378be7a808b1dc47e6d463928cdd03e15357a67ab4e40ba5e1da925f8",
+      "generation_log_sha256": "4119df910b862f312fdf688628a7dd4e4a007473056812fc2d8ec43685761757",
+      "verification_log_sha256": "77b8894a000ae4dae0565f0eb0aefe91c6434001d3946a0a49cde7dee178913a",
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 0,
+        "written_bytes": 0,
+        "commands": 3,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 4,
+        "receiver_events": [
+          {
+            "time_ms": 20,
+            "eof": false,
+            "data": [
+              0,
+              128,
+              255,
+              7
+            ]
+          },
+          {
+            "time_ms": 20,
+            "eof": true,
+            "data": []
+          }
+        ]
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 137,
+        "left_unique": 0,
+        "right_unique": 0
+      },
+      "analysis_sha256": "9f79ee8e44900c8e816986f2fbe89124bc1989dd96e5a0693353346fe3ba4ea8"
+    },
+    {
+      "case": "receive-out-of-order-gap",
+      "generation_returncode": 1,
+      "status": "executed_with_differences",
+      "verification_returncode": 0,
+      "report_sha256": "98560914098199e55995243411d3cb52820f3a7fc6758103dfa4e23d97c477a4",
+      "difference_sha256": "662227d59c3d7a47ed3e8a0eff7427e844bf6364cd9555dc8800edd6a5dbb765",
+      "receiver_difference_sha256": "3520d61d4cad29d5ce3d477e6a114f2da6375466709b5b3a3a5a8bee1763cd48",
+      "generation_log_sha256": "e1b6eb703ed9eda1f4b52a7634f1e5c18a196874ab9cb4a9fb99deb49049ab91",
+      "verification_log_sha256": "9c33f7d93f14a70d81354f17d1278be28c7f23e7ac6dc3094a83ab9136327a27",
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 0,
+        "written_bytes": 0,
+        "commands": 4,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 8,
+        "receiver_events": [
+          {
+            "time_ms": 30,
+            "eof": false,
+            "data": [
+              0,
+              128,
+              255,
+              7,
+              17,
+              33,
+              65,
+              129
+            ]
+          }
+        ]
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 144,
+        "left_unique": 0,
+        "right_unique": 0
+      },
+      "analysis_sha256": "cfcf4d29f7454475732fa174dbd6a48f3f7c3078e4fa386b37ef0eb3c6418ecc"
+    },
+    {
+      "case": "receive-two-full-segments",
+      "generation_returncode": 0,
+      "status": "execution_and_projection_pass",
+      "verification_returncode": 0,
+      "report_sha256": "30b9bcbe98df83c96eb5e19c298750eb23d0667c1f03c12b4f89433291e1d922",
+      "difference_sha256": "bedcf706f68a52570557d1ed6b17db540fd11e33d90b6aca6356d283ac7413d1",
+      "receiver_difference_sha256": "9d2c8d284aef8544eafa8f10e982276b2588430f764676dc3c2ae0104287d014",
+      "generation_log_sha256": "932eb033a18d99b7483f9a2c4667363091430e9b1779142acdb2415cec4cbfa7",
+      "verification_log_sha256": "e7ea2cd3a693958609849bd5713c365a69a5b52e133bbd936e598e773ebc13ad",
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 0,
+        "written_bytes": 0,
+        "commands": 4,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 8,
+        "receiver_events": [
+          {
+            "time_ms": 20,
+            "eof": false,
+            "data": [
+              0,
+              128,
+              255,
+              7
+            ]
+          },
+          {
+            "time_ms": 30,
+            "eof": false,
+            "data": [
+              17,
+              33,
+              65,
+              129
+            ]
+          }
+        ]
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 144,
+        "left_unique": 0,
+        "right_unique": 0
       }
     },
     {
@@ -53,10 +403,11 @@
       "generation_returncode": 0,
       "status": "execution_and_projection_pass",
       "verification_returncode": 0,
-      "report_sha256": "95e906bac153db158f2d38d3a355da08521638f6572b947fdf16cb2512aae5d3",
+      "report_sha256": "1e2d578e2a2cadb141066831e925371f956a7e64b845b6e7f38a10fa807da4fa",
       "difference_sha256": "bedcf706f68a52570557d1ed6b17db540fd11e33d90b6aca6356d283ac7413d1",
-      "generation_log_sha256": "6356919d228e6db479d3a4db3bdca9f09f6fd31acba824d3c5e716802d2e503f",
-      "verification_log_sha256": "70655a4909daca78d08d3f7122e5ec3e0553b34304a550624b75bd28df54440c",
+      "receiver_difference_sha256": "a770fd40d6f284c5c3c30e6f0f87774285f29f5aefe17392e5182d113d655864",
+      "generation_log_sha256": "41e4ce6898bddfb7c0cc44de0f54a1f544df57f4bc61d38c41ce97e74754f3d9",
+      "verification_log_sha256": "030f7e1c4ebec0feb286353e29993c9a60618d7d574052fe58da47769ced761d",
       "summary": {
         "implementation": "lwIP-2.2.1",
         "clock": "virtual_ms",
@@ -65,7 +416,18 @@
         "written_bytes": 12,
         "commands": 11,
         "mss": 4,
-        "receive_window": 16
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": []
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 170,
+        "left_unique": 0,
+        "right_unique": 0
       }
     },
     {
@@ -73,10 +435,11 @@
       "generation_returncode": 0,
       "status": "execution_and_projection_pass",
       "verification_returncode": 0,
-      "report_sha256": "3057a87d348a4efecf612aa39f0cd5d5efd3b13a215343cc0ea63d45f3b9d142",
+      "report_sha256": "1e70b101cda0afbad7c859189e690f0249e2cd726465af43425fa0685fd54c13",
       "difference_sha256": "bedcf706f68a52570557d1ed6b17db540fd11e33d90b6aca6356d283ac7413d1",
-      "generation_log_sha256": "568997fdc8aac3caf5b9585f9397716056de6528487b5148c237b30a45cb5ae8",
-      "verification_log_sha256": "70655a4909daca78d08d3f7122e5ec3e0553b34304a550624b75bd28df54440c",
+      "receiver_difference_sha256": "a770fd40d6f284c5c3c30e6f0f87774285f29f5aefe17392e5182d113d655864",
+      "generation_log_sha256": "4a96637c8d27c525bb72d3fbd72aa6c76d5fe3d811c61506b2dee9bc906ee9f9",
+      "verification_log_sha256": "eb3ee867b94ed20e6a953c8724f28288fce490398ab91f4d8913d3d9afd6ac6e",
       "summary": {
         "implementation": "lwIP-2.2.1",
         "clock": "virtual_ms",
@@ -85,7 +448,18 @@
         "written_bytes": 8,
         "commands": 8,
         "mss": 4,
-        "receive_window": 16
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": []
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 158,
+        "left_unique": 0,
+        "right_unique": 0
       }
     },
     {
@@ -93,10 +467,11 @@
       "generation_returncode": 0,
       "status": "execution_and_projection_pass",
       "verification_returncode": 0,
-      "report_sha256": "744d286b6928c7d7fcd14b8013f866dd2483ffb8545fe5a8d8c899c2211ab9af",
+      "report_sha256": "6a0b7e69a4fb2ea52ac1a853b427902d97c31e35e009900a929e57126920ad86",
       "difference_sha256": "bedcf706f68a52570557d1ed6b17db540fd11e33d90b6aca6356d283ac7413d1",
-      "generation_log_sha256": "df9cd016c93557091b91d3a7cbd04f4e9da7aa1205ef60b8b924715fb0c335d1",
-      "verification_log_sha256": "70655a4909daca78d08d3f7122e5ec3e0553b34304a550624b75bd28df54440c",
+      "receiver_difference_sha256": "a770fd40d6f284c5c3c30e6f0f87774285f29f5aefe17392e5182d113d655864",
+      "generation_log_sha256": "2a6a998d60239667619bb05a626c30d5039d7faef0e1b06c8b69cca96e20ef72",
+      "verification_log_sha256": "4906499481406207a7a206ef81489bee3eb722ce9e52f702fe0c11de701140e1",
       "summary": {
         "implementation": "lwIP-2.2.1",
         "clock": "virtual_ms",
@@ -105,7 +480,18 @@
         "written_bytes": 8,
         "commands": 7,
         "mss": 4,
-        "receive_window": 16
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": []
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 152,
+        "left_unique": 0,
+        "right_unique": 0
       }
     },
     {
@@ -113,10 +499,11 @@
       "generation_returncode": 0,
       "status": "execution_and_projection_pass",
       "verification_returncode": 0,
-      "report_sha256": "ee9e665a9b655f5e63fa40fa359246d28c7e25b0dba7bc78ed82964cc3493f1b",
+      "report_sha256": "21de47532d0b820a028a4183511791ff263e3cb0c33e374b5ddede7944d6297f",
       "difference_sha256": "bedcf706f68a52570557d1ed6b17db540fd11e33d90b6aca6356d283ac7413d1",
-      "generation_log_sha256": "74ca039e01b52d772947c67c321597bb4712f8a1fa7df31a89f72bb1eea07dc5",
-      "verification_log_sha256": "70655a4909daca78d08d3f7122e5ec3e0553b34304a550624b75bd28df54440c",
+      "receiver_difference_sha256": "a770fd40d6f284c5c3c30e6f0f87774285f29f5aefe17392e5182d113d655864",
+      "generation_log_sha256": "1f21be545832cc91cc68aff18a152d2caecffdbe7c4beeca88e821d2731ff7f1",
+      "verification_log_sha256": "4dfe5c32e8f9adac684ebd178af964149df669295b14c098d9f5c26a4f66dcee",
       "summary": {
         "implementation": "lwIP-2.2.1",
         "clock": "virtual_ms",
@@ -125,12 +512,34 @@
         "written_bytes": 12,
         "commands": 10,
         "mss": 4,
-        "receive_window": 16
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": []
+      },
+      "query_equivalence": {
+        "status": "unsat",
+        "reason": null,
+        "encoding": "exact_shared_conjunct_factoring",
+        "checker_version": "4.15.4",
+        "common_assertions": 164,
+        "left_unique": 0,
+        "right_unique": 0
       }
     }
   ],
-  "matching_projections": 5,
-  "preserved_differences": 1,
+  "matching_projections": 6,
+  "preserved_differences": 7,
+  "matching_receiver_observations": 13,
+  "nonvacuous_receiver_observation_cases": [
+    "active-close-after-data",
+    "active-close-empty",
+    "receive-duplicate-out-of-order",
+    "receive-fin-ahead-gap",
+    "receive-fin-with-payload",
+    "receive-out-of-order-gap",
+    "receive-two-full-segments"
+  ],
+  "nonvacuity_note": "Original six send-only cases have empty receiver observations; seven new receive/EOF cases are nonempty. Five include actual nonzero byte delivery, four include EOF. No all-input claim.",
   "input_hashes": {
     "model/tcp-delayed-ack.json": "ddbd2279cde9674d7806273b47e5a96f84b2a539bc1c92343c7686ad4b52f085",
     "model/tcp-syn-history.json": "3fc8379d47cac85c67d9b9bb9154c155265ad46e7c9ec4a115a6ab0940d0a1a1",
@@ -142,18 +551,25 @@
     "model/tcp-reassembly.json": "6bbbfb08ab747cbc0ecdcfb82ab3a2cebd13245403d8d79d3289818dccafdda9",
     "model/tcp-data.json": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
     "model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
-    "ports/lwip-stream/run.py": "d0e340f631f55ba42b164f8f596b152880fe61dc5fcbb00503ae983687b3df2f",
-    "ports/lwip-stream/tests.py": "b7faec7904c996e2dc1259bdae2b910f3e1a50b881ea1059ea49a72fd1fd13e8",
+    "ports/lwip-stream/run.py": "ebb0157462095bd1cdc350f68209d414429be443673613e99b4ffe234dda1d44",
+    "ports/lwip-stream/tests.py": "a888cd74f63c71d0ed5ac62645c51c532648a9605829a2b1e7a4a8af3d580181",
     "ports/lwip-stream/lwipopts.h": "8c8c5c5f078a3c41e59872a088c358c21d2641ab7aa43eff3b5a17ed5d3061c0",
     "ports/lwip-stream/arch/cc.h": "ba89ee86782582b76ba94427e2494c15ea3501815645a40c544c513d8d05eca0",
-    "ports/lwip-stream/harness.c": "5f8a8c4f8eea1aca919184c3a6fab3a64c2e58b453025798a184afe322ecd188",
+    "ports/lwip-stream/harness.c": "c769cf740e01a602c13749bfeb4d580bd4831364de55e2eab66e59750ce8461d",
     "ports/lwip-stream/scenarios/stale-ack-keeps-zero-window.json": "ca91b9985b7de5a7147e70148589293d580067d5f754c749dc819d3f853bdda2",
+    "ports/lwip-stream/scenarios/receive-two-full-segments.json": "bbecd1ab6a2bdea87365e20387d2b0e46e0b8f5df27301a7ac2216d62adebb2a",
     "ports/lwip-stream/scenarios/four-byte-peer-window.json": "98883598f8a64d8d412a7b174a6316dff86f71cf1a3400941b0092720d9c9240",
+    "ports/lwip-stream/scenarios/receive-out-of-order-gap.json": "4f0403d6390c98d7545bc5eaebe7dd7ba695272421c6c6cf9d2637802c064952",
     "ports/lwip-stream/scenarios/two-segments-partial-ack.json": "376c46c78184bef16834bb027496227705d6dfec66d410428504f2d9465e9ff6",
+    "ports/lwip-stream/scenarios/receive-fin-ahead-gap.json": "96a0d62751afb12cc258a78b3ca18113afc30f25255338ce798da77e732a4133",
     "ports/lwip-stream/scenarios/window-reopens-after-zero.json": "a7c23546a3b4d6b262f05300b2a355d02a838af0d9da94cf6711b92624a37ca8",
+    "ports/lwip-stream/scenarios/receive-fin-with-payload.json": "2a007d98eaf12d753af67a0faa2682d4c88dd6d1adcbf8f42bf218ad65d4bd08",
     "ports/lwip-stream/scenarios/unacceptable-seq-keeps-flight.json": "e685aa3e3c70fcfce94de4231b211143078219fa5aac34d409a7410916580f62",
+    "ports/lwip-stream/scenarios/receive-duplicate-out-of-order.json": "a75ec951d845216f00546d37039a29ccc246a1973f0372d8980f43c5bd599832",
+    "ports/lwip-stream/scenarios/active-close-empty.json": "f9a6d458790b5cf68bf4474afbdcbe849aecf3c31a685ad5d6454a1b7fac8225",
+    "ports/lwip-stream/scenarios/active-close-after-data.json": "ea0804bdb475ff7df7e4760f7775ccd93fcdfa5185d9e650753fa018dd0f192a",
     "ports/lwip-stream/scenarios/future-ack-keeps-flight.json": "09f1fbc3a85aa390f346a6f330f6002043aeb9cf3d40984daa8231e1ca20810a",
-    "ports/lwip-stream/README.md": "04cbe6a9e4c43e14155b7662db54d4a351bdb2aa228540f5c81a9a9d0ac448ac",
+    "ports/lwip-stream/README.md": "2a1ac3f9acb4492806b096b2fe3f43359a94f5aeef3f6481bd5678f2845867e2",
     "ports/lwip-data/lwipopts.h": "7a67f1bef8c082dca423b4148b518663bec4fd0c3352895ef05a0b9d5cf8eb25",
     "ports/lwip/harness.c": "a30bf5870d9113f339f2166bf79e9400b9f09a1c58b218e677f78ff79ed0acac",
     "ports/lwip/lwipopts.h": "84dbbd91cb406abeaf6aa97e92f0eb74b7107ba00ed77911397c67de3085cc0c",
@@ -192,12 +608,12 @@
   "linux_execution": false,
   "full_stack_validated": false,
   "old_311_regression_inputs": "unchanged; separately recomputed 258 profile / 293 full input set and hashes match",
-  "old_single_segment_evidence": "independently reverified after stream changes",
+  "old_single_segment_evidence": "independently reverified after receiver changes",
   "files": {
-    "corpus-driver.py": "233de0353add4c119740e45362aa9b1c4e92e9f17f1c7507171ee586049bcba7",
+    "corpus-driver.py": "0f2f0d88a5661599140929e83fb478bd42a8cb97b7c3f646db57251cc2143954",
     "old-data-verification.log": "9be70d39b5f1ab2ada6848f64980d5b0c00ea2c653d023dc2dfbe23b74e79dc2",
-    "tests.log": "486d26e879387c0fc9eb4cd83ebf56d1578729ac1c6664fdfcb2ccfeacb7a47d",
-    "corpus.log": "b324278c665bccca74e58e75ead7dbe2362507ab168ea1400911268a1fa01b92"
+    "tests.log": "495815d5245350d7df67d4e0b08d7a33e4d4911fe4ef1405fa163b80592a3beb",
+    "corpus.log": "5442ab70422f1626280bd9e4b591ff67cbad520386ece5a5f0b38d5ba6b1fcea"
   },
-  "difference_analysis_sha256": "d3ae930bfac422eac46aeeac01d0f4443ed28d017bf726361cde484f1763231b"
+  "query_equivalence_note": "Original direct-XOR timeout preserved in diagnostics/receive-multiprocess-recheck-v1. Exact shared-conjunct factoring is independently checked; primary TCP BMC/induction statuses unchanged."
 }

@@ -19,8 +19,8 @@ from protocol_lab.symbolic import crosscheck_trace,model_hash
 
 PORT=ROOT/'ports/lwip-stream'
 MODEL=ROOT/'model/tcp-delayed-ack.json'
-SCOPE='one active connection; <=16 written octets, <=64 events, <=200ms; send/ACK/window; no receive text, close, loss or recovery claim'
-FILES=('stimulus.txt','build.json','build.log','reference-trace.json','expected.json','symbolic/path.smt2','symbolic/result.json','capture.pcap','execution.log','observed.json','metadata.json','difference.json')
+SCOPE='one active connection; <=16 written octets, <=64 peer text octets, <=64 events, <=200ms; send/receive/reassembly/FIN/close; unread receive window; no loss or recovery claim'
+FILES=('stimulus.txt','build.json','build.log','reference-trace.json','expected.json','symbolic/path.smt2','symbolic/result.json','capture.pcap','execution.log','observed.json','metadata.json','difference.json','receiver-difference.json')
 
 
 
@@ -35,7 +35,7 @@ def validate_plan(s):
     require(s['initial']=={} and s['environment']['drop_outgoing']==[],'Unsupported stream initial/loss plan')
     steps=s['steps'];require(type(steps)is list and 3<=len(steps)<=64,'Unsupported stream event count')
     require(steps[0]=={'at_ms':0,'event':'app.connect','fields':{}},'Active connect at zero required')
-    previous=-1;written=0;commands=[]
+    previous=-1;written=0;peer_text=0;closed=False;commands=[]
     for i,step in enumerate(steps):
         require(set(step)=={'at_ms','event','fields'},'Unsupported stream step field')
         t=step['at_ms'];event=step['event'];f=step['fields']
@@ -46,12 +46,22 @@ def validate_plan(s):
             require(t==10 and event=='net.synack' and set(f)=={'seq','ack','window'} and f['seq']==9000 and f['ack']==1001,'Canonical handshake input required')
             require(all(type(v)is int for v in f.values()) and 0<=f['window']<=65535,'Invalid SYN window')
             command=f"SYNACK 9000 1001 {f['window']}"
+        elif event=='app.close':
+            require(f=={} and not closed,'Invalid repeated close');closed=True;command='CLOSE'
         elif event=='app.send':
+            require(not closed,'Application write after close unsupported')
             require(set(f)=={'data'} and type(f['data'])is list and 1<=len(f['data'])<=16 and all(type(b)is int and 0<=b<=255 for b in f['data']),'Invalid stream application bytes')
             written+=len(f['data']);require(written<=16,'Stream written-byte scope exceeded')
             command='SEND '+bytes(f['data']).hex()
         elif event=='app.transmit':
-            require(f=={},'Unsupported transmit fields');command='TRANSMIT'
+            require(f=={} and not closed,'Unsupported transmit after close or fields');command='TRANSMIT'
+        elif event in ('net.data','net.fin_segment'):
+            require(set(f)=={'seq','ack','window','data'},'Invalid peer text fields')
+            require(all(type(f[k])is int for k in ('seq','ack','window')) and 0<=f['seq']<2**32 and 0<=f['ack']<2**32 and 0<=f['window']<=65535,'Invalid peer text header')
+            data=f['data'];require(type(data)is list and len(data)<=16 and all(type(b)is int and 0<=b<=255 for b in data),'Invalid peer octets')
+            require(bool(data) or event=='net.fin_segment','Empty DATA unsupported')
+            peer_text+=len(data);require(peer_text<=64,'Peer text scope exceeded')
+            command=('FIN' if event=='net.fin_segment' else 'DATA')+f" {f['seq']} {f['ack']} {f['window']} "+(bytes(data).hex() or '-')
         elif event=='net.ack':
             require(set(f)=={'seq','ack','window'} and all(type(v)is int for v in f.values()),'Invalid ACK fields')
             require(0<=f['seq']<2**32 and 0<=f['ack']<2**32 and 0<=f['window']<=65535,'ACK field outside wire range')
@@ -59,16 +69,65 @@ def validate_plan(s):
         else:
             require(False,'Unsupported stream event: '+event)
         commands.append(f'{t} {command}\n')
-    require(written>0,'At least one application byte required')
+    require(written>0 or peer_text>0 or closed,'At least one application byte, peer byte or close required')
     return ''.join(commands)
 
 
 def validate_summary(summary, scenario):
     expected={'implementation':'lwIP-2.2.1','clock':'virtual_ms','connected':1,'mss':4,'receive_window':16,
               'written_bytes':sum(len(s['fields']['data'])for s in scenario['steps']if s['event']=='app.send'),'commands':len(scenario['steps'])}
-    require(set(summary)==set(expected)|{'acknowledged_bytes'},'Unexpected execution summary fields')
+    require(set(summary)==set(expected)|{'acknowledged_bytes','received_bytes','receiver_events'},'Unexpected execution summary fields')
     require(all(summary[k]==v and type(summary[k])is type(v) for k,v in expected.items()),'Execution summary changed')
     require(type(summary['acknowledged_bytes'])is int and 0<=summary['acknowledged_bytes']<=expected['written_bytes'],'Invalid acknowledged-byte callback')
+    require(type(summary['received_bytes'])is int and 0<=summary['received_bytes']<=16 and type(summary['receiver_events'])is list and len(summary['receiver_events'])<=64,'Invalid receiver observation schema')
+    previous=-1;count=0
+    for event in summary['receiver_events']:
+        require(set(event)=={'time_ms','eof','data'} and type(event['time_ms'])is int and previous<=event['time_ms']<=200 and type(event['eof'])is bool,'Invalid receiver event schema')
+        data=event['data'];require(type(data)is list and len(data)<=16 and all(type(b)is int and 0<=b<=255 for b in data),'Invalid receiver byte observation')
+        require(not event['eof'] or not data,'EOF observation has data')
+        previous=event['time_ms'];count+=len(data)
+    require(count==summary['received_bytes'],'Receiver event count changed')
+
+
+def receiver_difference(trace, summary):
+    # Observation relation: newly contiguous IR unread bytes correspond to raw
+    # recv callbacks. Neither side returns receive credit (no app.read/recved).
+    expected=[]
+    for row in trace:
+        before=row['before']['variables'];after=row['after']['variables']
+        old=before['rcv_buf'];new=after['rcv_buf']
+        if len(new)>len(old):
+            require(new[:len(old)]==old,'Unsupported receiver prefix replacement')
+            expected.extend({'time_ms':row['time_ms'],'byte':b} for b in new[len(old):])
+        if after.get('rx_fin_done',False) and not before.get('rx_fin_done',False):
+            expected.append({'time_ms':row['time_ms'],'eof':True})
+    actual=[]
+    for event in summary['receiver_events']:
+        actual.extend({'time_ms':event['time_ms'],'byte':b} for b in event['data'])
+        if event['eof']:actual.append({'time_ms':event['time_ms'],'eof':True})
+    return {'status':'match' if expected==actual else 'mismatch','scope':'new contiguous unread IR bytes versus raw recv callback bytes and EOF; callback chunk boundaries ignored, byte order and time preserved','expected':expected,'observed':actual}
+
+
+def combined_status(wire, receiver):
+    return 'match' if wire['status']==receiver['status']=='match' else 'mismatch'
+
+
+
+def query_equivalence(original_path, regenerated_path):
+    import z3
+    left=list(z3.parse_smt2_file(str(original_path)))
+    right=list(z3.parse_smt2_file(str(regenerated_path)))
+    # Exact propositional factoring: XOR(C & A, C & B) = C & XOR(A, B).
+    # Shared AST identity suffices; unmatched expressions are never omitted.
+    a={e.get_id():e for e in left};b={e.get_id():e for e in right}
+    common=a.keys()&b.keys();solver=z3.Solver();solver.set(timeout=10000)
+    solver.add(*[a[k] for k in sorted(common)])
+    solver.add(z3.Xor(z3.And(*[e for e in left if e.get_id()not in common]),
+                      z3.And(*[e for e in right if e.get_id()not in common])))
+    answer=solver.check()
+    return {'status':str(answer),'reason':solver.reason_unknown() if answer==z3.unknown else None,
+            'encoding':'exact_shared_conjunct_factoring','checker_version':z3.get_version_string(),
+            'common_assertions':len(common),'left_unique':len(a.keys()-common),'right_unique':len(b.keys()-common)}
 
 
 def inputs():
@@ -93,6 +152,7 @@ def run(out, scenario_path):
     except (ValueError,OSError,subprocess.SubprocessError) as error:
         stage=read(out/'report.json').get('phase','input_validation') if (out/'report.json').exists() else 'input_validation'
         status={'input_validation':'unsupported_stimulus','source_integrity':'source_integrity_failure','compiler':'environment_failure','reference':'model_failure','symbolic':'formal_replay_failure','execution':'execution_failure','observation':'observation_invalid','input_integrity':'stale_inputs'}[stage]
+        if stage=='reference' and str(error).startswith('Invariant failed:'):status='model_invariant_failure'
         if isinstance(error,Uncovered):status='model_uncovered'
         if isinstance(error,Conflict):status='model_rule_conflict'
         write(out/'report.json',{'status':status,'phase':stage,'error_type':type(error).__name__,'error':str(error),'scenario':str(scenario_path),'linux_execution':False,'full_stack_validated':False})
@@ -124,10 +184,12 @@ def _run(out, scenario_path):
     phase(out,'observation');observed,metadata=normalize(out/'capture.pcap',read(ROOT/'packet-profile.json'),expected,origin='external_capture',checksum_policy='strict',projection='tcp-connection-v1')
     metadata.update(producer='lwip_memory_netif_stream',clock='virtual_ms',binary_sha256=digest(binary),host_tcp_stack=False,linux_execution=False)
     difference=compare(expected,observed,tolerance_ms=0,projection='tcp-connection-v1')
+    delivery=receiver_difference(machine.trace,summary);write(out/'receiver-difference.json',delivery)
+    comparison=combined_status(difference,delivery)
     write(out/'observed.json',observed);write(out/'metadata.json',metadata);write(out/'difference.json',difference)
     phase(out,'input_integrity');require(before==inputs(),'Data channel inputs changed during execution')
     files=FILES
-    result={'status':'execution_and_projection_pass'if difference['status']=='match'else'executed_with_differences','scenario':str(scenario_path.relative_to(ROOT)),'scope':SCOPE,'implementation':'lwIP-2.2.1','network_interface':'in_memory_ipv4','host_tcp_stack':False,'linux_execution':False,'full_stack_validated':False,'upstream_commit':manifest['commit'],'model_semantic_sha256':model_hash(model),'input_hashes':before,'binary_sha256':digest(binary),'command':execution_command,'returncode':executed.returncode,'summary':summary,'comparison':difference['status'],'file_hashes':{p:digest(out/p)for p in files},'trusted_components':['pinned upstream source and C compiler','C application/peer driver and netif capture','IR reference and fixed-input Z3 translator','independent PCAP parser/normalizer/oracle'],'integrity_is_not_authenticity':True}
+    result={'status':'execution_and_projection_pass'if comparison=='match'else'executed_with_differences','scenario':str(scenario_path.relative_to(ROOT)),'scope':SCOPE,'implementation':'lwIP-2.2.1','network_interface':'in_memory_ipv4','host_tcp_stack':False,'linux_execution':False,'full_stack_validated':False,'upstream_commit':manifest['commit'],'model_semantic_sha256':model_hash(model),'input_hashes':before,'binary_sha256':digest(binary),'command':execution_command,'returncode':executed.returncode,'summary':summary,'comparison':comparison,'file_hashes':{p:digest(out/p)for p in files},'trusted_components':['pinned upstream source and C compiler','C application/peer driver and netif capture','IR reference and fixed-input Z3 translator','independent PCAP parser/normalizer/oracle'],'integrity_is_not_authenticity':True}
     write(out/'report.json',result);return result
 
 
@@ -150,14 +212,8 @@ def verify(out, scenario_path):
     with tempfile.TemporaryDirectory(prefix='lwip-data-recheck-') as tmp:
         recheck=crosscheck_trace(m,reference.trace,Path(tmp))
         require(recheck['status']=='match','Independent fixed-byte recheck failed')
-        # Z3's serialization aliases depend on earlier AST allocations. Bind the
-        # original bytes, then check logical equivalence rather than new text.
-        import z3
-        original=z3.And(*z3.parse_smt2_file(str(out/'symbolic/path.smt2')))
-        regenerated=z3.And(*z3.parse_smt2_file(str(Path(tmp)/'path.smt2')))
-        equivalence=z3.Solver();equivalence.set(timeout=10000)
-        equivalence.add(z3.Xor(original,regenerated))
-        require(equivalence.check()==z3.unsat,'Exported fixed-byte query differs from regenerated semantics')
+        equivalence=query_equivalence(out/'symbolic/path.smt2',Path(tmp)/'path.smt2')
+        require(equivalence['status']=='unsat','Exported fixed-byte query differs from regenerated semantics or recheck inconclusive: '+str(equivalence))
     require(r['command']==[str(out/'lwip-harness'),str(out/'capture.pcap'),str(out/'stimulus.txt')]and r['returncode']==0,'Application command/stimulus changed')
     require(json.loads((out/'execution.log').read_text())==r['summary'],'Execution summary changed')
     validate_summary(r['summary'],s)
@@ -165,9 +221,12 @@ def verify(out, scenario_path):
     meta.update(producer='lwip_memory_netif_stream',clock='virtual_ms',binary_sha256=r['binary_sha256'],host_tcp_stack=False,linux_execution=False)
     require(read(out/'observed.json')==actual and read(out/'metadata.json')==meta,'Independent observation changed')
     diff=compare(expected,actual,tolerance_ms=0,projection='tcp-connection-v1')
-    require(read(out/'difference.json')==diff and r['comparison']==diff['status'],'Difference changed')
-    require(r['status']==('execution_and_projection_pass'if diff['status']=='match'else'executed_with_differences'),'Difference status relabelled')
-    return {'status':'valid_independent_lwip_stream_evidence','comparison':diff['status'],'linux_execution':False,'full_stack_validated':False}
+    delivery=receiver_difference(reference.trace,r['summary'])
+    require(read(out/'receiver-difference.json')==delivery,'Receiver Difference changed')
+    comparison=combined_status(diff,delivery)
+    require(read(out/'difference.json')==diff and r['comparison']==comparison,'Difference changed')
+    require(r['status']==('execution_and_projection_pass'if comparison=='match'else'executed_with_differences'),'Difference status relabelled')
+    return {'status':'valid_independent_lwip_stream_evidence','comparison':comparison,'query_equivalence':equivalence,'linux_execution':False,'full_stack_validated':False}
 
 
 if __name__=='__main__':

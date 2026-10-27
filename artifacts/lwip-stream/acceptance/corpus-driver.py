@@ -12,5 +12,5 @@ for scenario in sorted((port/'scenarios').glob('*.json')):
         row['verification_returncode']=v.returncode
     rows.append(row);print(json.dumps(row),flush=True)
 (base/'batch-result.json').write_text(json.dumps(rows,indent=2)+'\n')
-if len(rows)!=6 or any(r.get('verification_returncode')!=0 for r in rows):sys.exit(2)
-if sum(r['status']=='execution_and_projection_pass' for r in rows)!=5 or sum(r['status']=='executed_with_differences' for r in rows)!=1:sys.exit(3)
+if len(rows)!=13 or any(r.get('verification_returncode')!=0 for r in rows):sys.exit(2)
+if sum(r['status']=='execution_and_projection_pass' for r in rows)!=6 or sum(r['status']=='executed_with_differences' for r in rows)!=7:sys.exit(3)

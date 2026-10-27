@@ -1,0 +1,139 @@
+{
+  "classification": "gap_fill_immediate_ack_not_observed_within_finite_capture",
+  "explanation": "Contiguous bytes arrive at the correct 30ms timestamp; model emits immediate gap-fill ACK, actual capture ends without that packet. Horizon ends at the last input and is <=200ms, before the next lwIP fast-timer tick. No claim of never acknowledging or violating the 500ms bound. RFC9293 3.8.6.3 references RFC5681 immediate gap ACK recommendations.",
+  "not_claimed": [
+    "RFC violation",
+    "data loss",
+    "Linux TCP evidence",
+    "complete implementation refinement"
+  ],
+  "specification": {
+    "rfc": 9293,
+    "version": "August 2022",
+    "sections": [
+      "3.6",
+      "3.7",
+      "3.8.6.3",
+      "3.10.7.4"
+    ],
+    "source_sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9"
+  },
+  "source_interpretation": [
+    {
+      "path": "third_party/lwip/src/core/tcp_in.c",
+      "lines": [
+        1631
+      ],
+      "sha256": "f79b20e6b123af2ed2cfc2b470fe982d0c88d1357fc5a11537bab9cd20d4b639"
+    }
+  ],
+  "summary": {
+    "implementation": "lwIP-2.2.1",
+    "clock": "virtual_ms",
+    "connected": 1,
+    "acknowledged_bytes": 0,
+    "written_bytes": 0,
+    "commands": 4,
+    "mss": 4,
+    "receive_window": 16,
+    "received_bytes": 8,
+    "receiver_events": [
+      {
+        "time_ms": 30,
+        "eof": false,
+        "data": [
+          0,
+          128,
+          255,
+          7,
+          17,
+          33,
+          65,
+          129
+        ]
+      }
+    ]
+  },
+  "wire_differences": [
+    {
+      "kind": "packet_count",
+      "expected": 7,
+      "observed": 6
+    }
+  ],
+  "receiver_difference": {
+    "status": "match",
+    "scope": "new contiguous unread IR bytes versus raw recv callback bytes and EOF; callback chunk boundaries ignored, byte order and time preserved",
+    "expected": [
+      {
+        "time_ms": 30,
+        "byte": 0
+      },
+      {
+        "time_ms": 30,
+        "byte": 128
+      },
+      {
+        "time_ms": 30,
+        "byte": 255
+      },
+      {
+        "time_ms": 30,
+        "byte": 7
+      },
+      {
+        "time_ms": 30,
+        "byte": 17
+      },
+      {
+        "time_ms": 30,
+        "byte": 33
+      },
+      {
+        "time_ms": 30,
+        "byte": 65
+      },
+      {
+        "time_ms": 30,
+        "byte": 129
+      }
+    ],
+    "observed": [
+      {
+        "time_ms": 30,
+        "byte": 0
+      },
+      {
+        "time_ms": 30,
+        "byte": 128
+      },
+      {
+        "time_ms": 30,
+        "byte": 255
+      },
+      {
+        "time_ms": 30,
+        "byte": 7
+      },
+      {
+        "time_ms": 30,
+        "byte": 17
+      },
+      {
+        "time_ms": 30,
+        "byte": 33
+      },
+      {
+        "time_ms": 30,
+        "byte": 65
+      },
+      {
+        "time_ms": 30,
+        "byte": 129
+      }
+    ]
+  },
+  "report_sha256": "98560914098199e55995243411d3cb52820f3a7fc6758103dfa4e23d97c477a4",
+  "wire_difference_sha256": "662227d59c3d7a47ed3e8a0eff7427e844bf6364cd9555dc8800edd6a5dbb765",
+  "receiver_difference_sha256": "3520d61d4cad29d5ce3d477e6a114f2da6375466709b5b3a3a5a8bee1763cd48"
+}

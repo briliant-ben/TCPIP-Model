@@ -1,3 +1,4 @@
+test_factoring_preserves_added_removed_and_negated_constraints (__main__.EquivalenceTests.test_factoring_preserves_added_removed_and_negated_constraints) ... ok
 test_actual_lwip_data_matches (__main__.IndependentDataTests.test_actual_lwip_data_matches) ... ok
 test_c_driver_rejects_malformed_commands (__main__.IndependentDataTests.test_c_driver_rejects_malformed_commands) ... ok
 test_linux_relabelling_is_rejected (__main__.IndependentDataTests.test_linux_relabelling_is_rejected) ... ok
@@ -10,8 +11,12 @@ test_rehashed_query_is_rejected (__main__.IndependentDataTests.test_rehashed_que
 test_rehashed_stimulus_is_rejected (__main__.IndependentDataTests.test_rehashed_stimulus_is_rejected) ... ok
 test_compiler_environment_failure_is_distinct (__main__.PlanTests.test_compiler_environment_failure_is_distinct) ... ok
 test_reject_unsupported_inputs (__main__.PlanTests.test_reject_unsupported_inputs) ... ok
+test_new_commands_reject_malformed_payload_and_post_close_write (__main__.ReceiverTests.test_new_commands_reject_malformed_payload_and_post_close_write) ... ok
+test_real_bytes_and_eof_verified_even_with_wire_difference (__main__.ReceiverTests.test_real_bytes_and_eof_verified_even_with_wire_difference) ... ok
+test_receiver_chunk_boundaries_do_not_erase_order_or_time (__main__.ReceiverTests.test_receiver_chunk_boundaries_do_not_erase_order_or_time) ... ok
+test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected (__main__.ReceiverTests.test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected) ... ok
 
 ----------------------------------------------------------------------
-Ran 12 tests in 49.249s
+Ran 17 tests in 63.056s
 
 OK

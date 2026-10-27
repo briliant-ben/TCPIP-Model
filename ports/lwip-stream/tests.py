@@ -38,6 +38,27 @@ class PlanTests(unittest.TestCase):
 
 
 
+class EquivalenceTests(unittest.TestCase):
+    def test_factoring_preserves_added_removed_and_negated_constraints(self):
+        # Independent truth-table oracle over all assignments of p,q,r.
+        import itertools
+        cases=[(['p','q'],['q','p']),(['p','q'],['p']),
+               (['p','q'],['p','(not q)']),(['p','q','r'],['p','q']),
+               (['p','p','q'],['q','p']),(['false','p'],['false','q'])]
+        def literal(text,env):
+            if text=='false':return False
+            return not env['q'] if text=='(not q)' else env[text]
+        with tempfile.TemporaryDirectory() as tmp:
+            a=Path(tmp)/'a.smt2';b=Path(tmp)/'b.smt2'
+            declarations='(declare-const p Bool)\n(declare-const q Bool)\n(declare-const r Bool)\n'
+            for left,right in cases:
+                with self.subTest(left=left,right=right):
+                    a.write_text(declarations+''.join('(assert '+e+')\n'for e in left))
+                    b.write_text(declarations+''.join('(assert '+e+')\n'for e in right))
+                    same=all(all(literal(e,dict(zip('pqr',values)))for e in left)==all(literal(e,dict(zip('pqr',values)))for e in right) for values in itertools.product((False,True),repeat=3))
+                    self.assertEqual(driver.query_equivalence(a,b)['status'],'unsat' if same else 'sat')
+
+
 class IndependentDataTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -139,6 +160,62 @@ class IndependentDataTests(unittest.TestCase):
             r=json.loads(old);r['linux_execution']=True;driver.write(target,r)
             with self.assertRaisesRegex(ValueError,'scope relabelled'):driver.verify(self.out,SCENARIO)
         finally:target.write_bytes(old)
+
+
+class ReceiverTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.temp=tempfile.TemporaryDirectory(prefix='lwip-receive-test-');cls.out=Path(cls.temp.name)
+        cls.scenario=driver.PORT/'scenarios/receive-fin-with-payload.json'
+        cls.result=driver.run(cls.out,cls.scenario)
+
+    @classmethod
+    def tearDownClass(cls):cls.temp.cleanup()
+
+    def test_real_bytes_and_eof_verified_even_with_wire_difference(self):
+        self.assertEqual(self.result['comparison'],'mismatch')
+        self.assertEqual(driver.read(self.out/'receiver-difference.json')['status'],'match')
+        self.assertEqual(self.result['summary']['receiver_events'],[
+            {'time_ms':20,'eof':False,'data':[0,128,255,7]},
+            {'time_ms':20,'eof':True,'data':[]}])
+        self.assertEqual(driver.verify(self.out,self.scenario)['comparison'],'mismatch')
+
+    def test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected(self):
+        report=self.out/'report.json';log=self.out/'execution.log';original={p:p.read_bytes() for p in (report,log)}
+        for kind in ('byte','time','eof_order'):
+            with self.subTest(corruption=kind):
+                try:
+                    r=json.loads(original[report]);summary=r['summary']
+                    if kind=='byte':summary['receiver_events'][0]['data'][1]=129
+                    elif kind=='time':
+                        for event in summary['receiver_events']:event['time_ms']=21
+                    else:summary['receiver_events'].reverse()
+                    driver.write(log,summary);r['file_hashes']['execution.log']=driver.digest(log);driver.write(report,r)
+                    with self.assertRaisesRegex(ValueError,'Receiver Difference changed'):driver.verify(self.out,self.scenario)
+                finally:
+                    for path,data in original.items():path.write_bytes(data)
+
+    def test_receiver_chunk_boundaries_do_not_erase_order_or_time(self):
+        trace=driver.read(self.out/'reference-trace.json');summary=copy.deepcopy(self.result['summary'])
+        data=summary['receiver_events'][0]['data'];eof=summary['receiver_events'][1]
+        summary['receiver_events']=[{'time_ms':20,'eof':False,'data':data[:2]},{'time_ms':20,'eof':False,'data':data[2:]},eof]
+        self.assertEqual(driver.receiver_difference(trace,summary)['status'],'match')
+        summary['receiver_events'][0]['time_ms']=19
+        self.assertEqual(driver.receiver_difference(trace,summary)['status'],'mismatch')
+        summary['receiver_events'][0]['time_ms']=20
+        summary['receiver_events'][0]['data'].reverse()
+        self.assertEqual(driver.receiver_difference(trace,summary)['status'],'mismatch')
+
+    def test_new_commands_reject_malformed_payload_and_post_close_write(self):
+        import subprocess
+        prefix='0 CONNECT\n10 SYNACK 9000 1001 8\n'
+        for body in ('20 DATA 9001 1001 8 -\n','20 FIN 9001 1001 8 gg\n',
+                     '20 DATA 9001 1001 8 '+('01'*17)+'\n',
+                     '20 CLOSE\n21 SEND 00\n','20 CLOSE\n21 TRANSMIT\n'):
+            with self.subTest(body=body):
+                plan=self.out/'bad-receiver.txt';plan.write_text(prefix+body)
+                r=subprocess.run([str(self.out/'lwip-harness'),str(self.out/'bad-receiver.pcap'),str(plan)],capture_output=True,timeout=5)
+                self.assertEqual(r.returncode,2)
 
 
 if __name__=='__main__':unittest.main(verbosity=2)

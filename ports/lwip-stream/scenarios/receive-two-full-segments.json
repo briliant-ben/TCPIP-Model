@@ -1,0 +1,75 @@
+{
+  "scenario_version": "0.1",
+  "id": "receive-two-full-segments",
+  "description": "receive-two-full-segments",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "MSS=4, unread receive window=16; no tcp_recved/app.read; virtual clock <=200ms; MORE no PSH."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9005,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          17,
+          33,
+          65,
+          129
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "rcv_nxt": 9009,
+      "rcv_buf": [
+        0,
+        128,
+        255,
+        7,
+        17,
+        33,
+        65,
+        129
+      ]
+    },
+    "timers": {}
+  }
+}

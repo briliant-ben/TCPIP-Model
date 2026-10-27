@@ -1,0 +1,76 @@
+test_actual_lwip_data_matches (__main__.IndependentDataTests.test_actual_lwip_data_matches) ... ok
+test_c_driver_rejects_malformed_commands (__main__.IndependentDataTests.test_c_driver_rejects_malformed_commands) ... ok
+test_linux_relabelling_is_rejected (__main__.IndependentDataTests.test_linux_relabelling_is_rejected) ... ok
+test_missing_required_artifact_is_rejected (__main__.IndependentDataTests.test_missing_required_artifact_is_rejected) ... ok
+test_rehashed_build_command_is_rejected (__main__.IndependentDataTests.test_rehashed_build_command_is_rejected) ... ok
+test_rehashed_capture_is_rejected (__main__.IndependentDataTests.test_rehashed_capture_is_rejected) ... ok
+test_rehashed_execution_summary_is_rejected (__main__.IndependentDataTests.test_rehashed_execution_summary_is_rejected) ... ok
+test_rehashed_oracle_is_rejected (__main__.IndependentDataTests.test_rehashed_oracle_is_rejected) ... ok
+test_rehashed_query_is_rejected (__main__.IndependentDataTests.test_rehashed_query_is_rejected) ... ok
+test_rehashed_stimulus_is_rejected (__main__.IndependentDataTests.test_rehashed_stimulus_is_rejected) ... ok
+test_compiler_environment_failure_is_distinct (__main__.PlanTests.test_compiler_environment_failure_is_distinct) ... ok
+test_reject_unsupported_inputs (__main__.PlanTests.test_reject_unsupported_inputs) ... ok
+test_new_commands_reject_malformed_payload_and_post_close_write (__main__.ReceiverTests.test_new_commands_reject_malformed_payload_and_post_close_write) ... ok
+test_real_bytes_and_eof_verified_even_with_wire_difference (__main__.ReceiverTests.test_real_bytes_and_eof_verified_even_with_wire_difference) ... ERROR
+test_receiver_chunk_boundaries_do_not_erase_order_or_time (__main__.ReceiverTests.test_receiver_chunk_boundaries_do_not_erase_order_or_time) ... ok
+test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected (__main__.ReceiverTests.test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected) ... 
+  test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected (__main__.ReceiverTests.test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected) (corruption='byte') ... FAIL
+  test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected (__main__.ReceiverTests.test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected) (corruption='time') ... FAIL
+  test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected (__main__.ReceiverTests.test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected) (corruption='eof_order') ... FAIL
+
+======================================================================
+ERROR: test_real_bytes_and_eof_verified_even_with_wire_difference (__main__.ReceiverTests.test_real_bytes_and_eof_verified_even_with_wire_difference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/tests.py", line 160, in test_real_bytes_and_eof_verified_even_with_wire_difference
+    self.assertEqual(driver.verify(self.out,self.scenario)['comparison'],'mismatch')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/run.py", line 205, in verify
+    require(equivalence.check()==z3.unsat,'Exported fixed-byte query differs from regenerated semantics')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Exported fixed-byte query differs from regenerated semantics
+
+======================================================================
+FAIL: test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected (__main__.ReceiverTests.test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected) (corruption='byte')
+----------------------------------------------------------------------
+protocol_lab.ir.ModelError: Exported fixed-byte query differs from regenerated semantics
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/tests.py", line 173, in test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected
+    with self.assertRaisesRegex(ValueError,'Receiver Difference changed'):driver.verify(self.out,self.scenario)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "Receiver Difference changed" does not match "Exported fixed-byte query differs from regenerated semantics"
+
+======================================================================
+FAIL: test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected (__main__.ReceiverTests.test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected) (corruption='time')
+----------------------------------------------------------------------
+protocol_lab.ir.ModelError: Exported fixed-byte query differs from regenerated semantics
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/tests.py", line 173, in test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected
+    with self.assertRaisesRegex(ValueError,'Receiver Difference changed'):driver.verify(self.out,self.scenario)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "Receiver Difference changed" does not match "Exported fixed-byte query differs from regenerated semantics"
+
+======================================================================
+FAIL: test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected (__main__.ReceiverTests.test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected) (corruption='eof_order')
+----------------------------------------------------------------------
+protocol_lab.ir.ModelError: Exported fixed-byte query differs from regenerated semantics
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/tests.py", line 173, in test_rehashed_receiver_byte_and_eof_order_corruption_is_rejected
+    with self.assertRaisesRegex(ValueError,'Receiver Difference changed'):driver.verify(self.out,self.scenario)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "Receiver Difference changed" does not match "Exported fixed-byte query differs from regenerated semantics"
+
+----------------------------------------------------------------------
+Ran 16 tests in 111.346s
+
+FAILED (failures=3, errors=1)

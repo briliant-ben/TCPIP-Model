@@ -1,0 +1,44 @@
+{
+  "status": "mismatch",
+  "oracle": "ordered-connection-data-projection-v1",
+  "tolerance_ms": 0,
+  "compared_fields": [
+    "direction",
+    "flags",
+    "seq",
+    "ack",
+    "time_ms",
+    "window",
+    "payload"
+  ],
+  "differences": [
+    {
+      "kind": "field",
+      "index": 8,
+      "packet_id": "e0008:out:0",
+      "event_id": "e0008",
+      "requirements": [
+        "FIN-SPACE",
+        "FIN-QUEUE",
+        "FIN-WINDOW",
+        "FIN-CLOSE",
+        "FIN-SCOPE",
+        "RTT-ALG",
+        "RTT-KARN",
+        "RTT-TIMER",
+        "RTT-SCOPE",
+        "TX-HISTORY",
+        "TX-SCOPE",
+        "SYN-TX-AGE",
+        "SYN-IMMEDIATE-REPLY",
+        "SYN-HISTORY-SCOPE",
+        "ACK-DELAY",
+        "ACK-GAP",
+        "ACK-SCOPE"
+      ],
+      "field": "window",
+      "expected": 16,
+      "observed": 15
+    }
+  ]
+}
