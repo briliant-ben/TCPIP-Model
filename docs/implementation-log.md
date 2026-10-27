@@ -235,3 +235,12 @@ Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713
 原 9afd06d 的完整回归和隔离重现均在新 SYN profile 失败：原 tcp-fin-v1 normalizer 要求主动打开及对端 SYN+ACK，拒绝仅 SYN 超时；被动和同时打开也不符合其旧假设。完整原隔离日志保留，不把注册当作验收通过。修复为显式 tcp-connection-v1，而非放宽旧投影：逐方向独立实际 SYN 原点、按需拒绝缺失锚点，保留严格字节／窗口／顺序、checksum 和包格式校验；SYN／delayed ACK 配置选择新投影。
 
 7 项独立原始 PCAP／场景 codec 正反测试与 28 项原验证测试通过。旧运行已因真实适配器缺口失败，源码修复后其冻结输入不再适用，必须保存失败结果并启动新快照／完整重建，不能拼接旧通过结果或只更新哈希。persist 为独立未注册开发模型，不在原 290 方法／11 profile 范围内。
+
+
+## 2026-10-27：persist 开发原型与形式反例修复
+
+新增未注册 tcp-persist overlay，复用共享序列空间、发送队列、字节历史及 delayed ACK；首字节探测、重发、累计 ACK 后下一新字节、独立指数间隔、窗口恢复交回 RTO、关闭清理均为显式 IR。以互斥的普通 RTO／persist 归属关系替换父模型 all-flight-is-RTO 假设，保留普通在途必须有 RTO 的义务。双定时器与漏正常 RTO 故障均被拒绝。
+
+初次归纳发现 pending FIN 的 CLOSING 状态遗漏；另有可达参考输入复现，不将任意 SMT 前态误称可达。旧原模型／完整查询／范围和轨迹保存在 diagnostics/persist-before-closing-states-v1。修复覆盖父模型可声明的 CLOSING／LAST-ACK pending-FIN 状态；保留 fin_sent 时不进入 FIN-only persist 的边界。
+
+当前 193 规则／161 不变量；14 项方法通过（97.035s），含 7 固定输入完整字节重放、回绕、半关闭、499/60s 级别之外的 1..60s persist 指数间隔、早截止等待、ACK piggyback、RTO 交接及故障变体。原主归纳 unknown，初值／guard／纯时钟通过，未知目标完整单项分组和独立 CLI verify 通过，保存于 artifacts/persist-initial。尚非完整 persist／TCP、通用输出时序或实现／Linux 证据；不属于原 290 项／11 profile 验收。

@@ -1,0 +1,19 @@
+test_acked_probe_allows_next_new_byte_on_existing_deadline (test_persist.PersistTests.test_acked_probe_allows_next_new_byte_on_existing_deadline) ... ok
+test_declared_pending_last_ack_fixture_is_not_a_reachability_claim (test_persist.PersistTests.test_declared_pending_last_ack_fixture_is_not_a_reachability_claim) ... ok
+test_duplicate_timer_ownership_and_missing_normal_rto_are_rejected (test_persist.PersistTests.test_duplicate_timer_ownership_and_missing_normal_rto_are_rejected) ... ok
+test_duplicate_updates_new_queue_and_blocked_transmit_do_not_postpone (test_persist.PersistTests.test_duplicate_updates_new_queue_and_blocked_transmit_do_not_postpone) ... ok
+test_early_timer_fault_waits_without_output_backoff_or_count (test_persist.PersistTests.test_early_timer_fault_waits_without_output_backoff_or_count) ... ok
+test_existing_flight_keeps_parent_rto_and_ack_can_enter_no_flight_mode (test_persist.PersistTests.test_existing_flight_keeps_parent_rto_and_ack_can_enter_no_flight_mode) ... ok
+test_exponential_cap_and_responsive_zero_window_do_not_abort_connection (test_persist.PersistTests.test_exponential_cap_and_responsive_zero_window_do_not_abort_connection) ... ok
+test_first_probe_and_repeat_share_queue_and_consume_sequence_once (test_persist.PersistTests.test_first_probe_and_repeat_share_queue_and_consume_sequence_once) ... ok
+test_fixed_handwritten_scenarios_have_full_byte_replays (test_persist.PersistTests.test_fixed_handwritten_scenarios_have_full_byte_replays) ... ok
+test_half_close_reset_and_abort_preserve_or_clear_ownership (test_persist.PersistTests.test_half_close_reset_and_abort_preserve_or_clear_ownership) ... ok
+test_probe_piggybacks_pending_ack_and_same_time_window_update_follows_timer (test_persist.PersistTests.test_probe_piggybacks_pending_ack_and_same_time_window_update_follows_timer) ... ok
+test_window_opens_before_first_probe_and_no_data_never_starts_timer (test_persist.PersistTests.test_window_opens_before_first_probe_and_no_data_never_starts_timer) ... ok
+test_window_reopening_transfers_only_unacknowledged_flight_to_rto (test_persist.PersistTests.test_window_reopening_transfers_only_unacknowledged_flight_to_rto) ... ok
+test_wrap_and_faulty_sequence_or_missing_history_fail_atomically (test_persist.PersistTests.test_wrap_and_faulty_sequence_or_missing_history_fail_atomically) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 97.035s
+
+OK
