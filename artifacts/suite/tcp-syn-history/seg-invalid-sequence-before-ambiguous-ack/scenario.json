@@ -1,0 +1,76 @@
+{
+  "scenario_version": "0.1",
+  "id": "seg-invalid-sequence-before-ambiguous-ack",
+  "description": "seg invalid sequence before ambiguous ack",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite ACK+payload/window profile; validated ACK flag and payload shape, first accepted receive byte wins; raw accepted SEG.SEQ drives WL1."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9017,
+        "ack": 2147484649,
+        "window": 0,
+        "data": [
+          7
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1001,
+      "snd_nxt": 1005,
+      "rtx_buf": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "snd_wnd": 8,
+      "rcv_nxt": 9001,
+      "rcv_buf": []
+    },
+    "timers": {
+      "rtx": 1021
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "normalizer": "classic-pcap-ipv4-tcp-connection-v1",
+  "capture_origin": "synthetic",
+  "capture_sha256": "0beed38844420d545e1cb3a47d0f883808d07ffd96a81230ccbf888b5ae20d5f",
+  "profile": {
+    "local": {
+      "ip": "192.0.2.1",
+      "port": 40000
+    },
+    "peer": {
+      "ip": "192.0.2.2",
+      "port": 8080
+    }
+  },
+  "profile_sha256": "e6f79845fc10f61d9a4a4b9d51cd0b092f5a94290aa9c0410f074741ca843357",
+  "selected_packets": 10,
+  "ignored_frames": 0,
+  "time_origin_ns": 0,
+  "wire_local_iss": 1000,
+  "wire_peer_iss": 9000,
+  "checksum_policy": "strict",
+  "checksum_warning_frames": [],
+  "deduplication": "none",
+  "origin_is_user_assertion": true,
+  "projection": "tcp-connection-v1",
+  "sequence_anchor_policy": "first_observed_SYN_per_direction",
+  "missing_anchor_policy": "reject_when_required"
+}

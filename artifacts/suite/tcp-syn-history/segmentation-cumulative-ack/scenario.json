@@ -1,0 +1,89 @@
+{
+  "scenario_version": "0.1",
+  "id": "segmentation-cumulative-ack",
+  "description": "segmentation cumulative ack",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite tcp-data profile; validated connection/packet/checksum; no advancing ACK or window update in payload events."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1009,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1011,
+        "window": 8
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_nxt": 1011,
+      "snd_una": 1011,
+      "snd_buf": [],
+      "rtx_buf": []
+    },
+    "timers": {}
+  }
+}

@@ -1376,7 +1376,7 @@
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 4294967167,
+      "iss": 67108861,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -1420,19 +1420,19 @@
     "steps": [
       {
         "at_ms": 1,
-        "event": "app.connect",
+        "event": "app.abort",
         "origin": "application",
-        "transition": "C-ACTIVE-OPEN",
+        "transition": "C-ABORT-CLOSED",
         "fields": {},
         "after": {
-          "state": "SYN-SENT",
+          "state": "CLOSED",
           "variables": {
-            "iss": 4294967167,
+            "iss": 67108861,
             "irs": 0,
-            "snd_una": 4294967167,
-            "snd_nxt": 4294967168,
+            "snd_una": 1000,
+            "snd_nxt": 1000,
             "rcv_nxt": 0,
-            "tx_seq": 4294967167,
+            "tx_seq": 1000,
             "tx_ack": 0,
             "tx_flags": "S",
             "rto_ms": 1000,
@@ -1468,19 +1468,13 @@
             "rx_advance": 0,
             "rx_acceptable": false
           },
-          "timers": {
-            "rtx": 1001,
-            "user": 30001
-          }
+          "timers": {}
         },
         "emitted": [
           {
-            "message": "tcp",
+            "message": "application",
             "fields": {
-              "flags": "S",
-              "seq": 4294967167,
-              "ack": 0,
-              "window": 16
+              "code": "aborted"
             }
           }
         ]
@@ -1492,10 +1486,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "c18d3242ee43353b4b6ee4fd1b311c7232e7d50d61091892914a25dddf3d1b6e",
-    "initial.smt2": "b4780a2a3fe962511ddbb98e344e1fea5049054ec814d03b625596e04725e811",
-    "preservation.smt2": "4d40cfb65006612127c7f2f9b9da0f0ddcf8cf51c257ead873835d565f2f4692",
-    "overlap.smt2": "8211cfe378062876131bdc7890926dd57587d52257ee074a1d813207728c3897",
-    "sample.smt2": "0198a8abc722f427627b1bb2be6ba6bbec09520468b4e4cc2a672ebf09aa81a1"
+    "length-lemmas.smt2": "c29f52b9479538b4abb3691a8ad14c9049dbb0d3512ac014034113f9396ec801",
+    "initial.smt2": "d2abb28a8294aea7091a39ac011d1075a796d16b5a19eb39d79591698e7d9f90",
+    "preservation.smt2": "90f91bdcf9997dd22b0bb992e6ba8aafd0fa6c8ffcd7321fab9051a03d59233d",
+    "overlap.smt2": "edb51ecf0fc66f89d4b265ff1a8f846cd85049936cd29d0b0b6d2fdf165d1f2a",
+    "sample.smt2": "f73bbc412a00ae7bfcf688de6c87b82f85290ae084ece3808b74a8b78dd72edd"
   }
 }

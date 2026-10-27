@@ -1340,7 +1340,7 @@
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 4294967039,
+      "iss": 3221225471,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -1390,9 +1390,9 @@
     "steps": [
       {
         "at_ms": 1,
-        "event": "net.ack",
+        "event": "net.synack",
         "origin": "network",
-        "transition": "C-REJECT-ACK-CLOSED",
+        "transition": "C-REJECT-SYNACK-CLOSED",
         "fields": {
           "seq": 0,
           "ack": 0,
@@ -1401,7 +1401,7 @@
         "after": {
           "state": "CLOSED",
           "variables": {
-            "iss": 4294967039,
+            "iss": 3221225471,
             "irs": 0,
             "snd_una": 1000,
             "snd_nxt": 1000,
@@ -1469,10 +1469,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "527ca8d27677d7a4e1d7ca2c8cbac0c08cb12114a4f0caa103f264e951f0b8d4",
-    "initial.smt2": "10d60004475881f772580f23df7b88d932eee93d7c2d66984ef814c97bf22299",
-    "preservation.smt2": "b64fef7e0599a22a09ce2fc66371fd285ede7a961c2b75f043e80ae235f557d9",
-    "overlap.smt2": "fa0204df906f6f257c6331d391e69bcdd1a9ad8f98c9d6cfc2b2dbec508dd86a",
-    "sample.smt2": "15eae5846c52c9df49515bdb9f0ac4a9e0f70db9d0ef31df2144fade56179ee1"
+    "length-lemmas.smt2": "33f886ee4a62b66656bd43b582c46e45928127759303e17a69ab977f99877180",
+    "initial.smt2": "e12dfd98b55573b9d24b13a2bfee2e7ee0fc40148d06871e00b96be2845d1373",
+    "preservation.smt2": "52c35cd0208da82bf7c426db5a817d2228d6b9f91d5c249379fb58a034a65830",
+    "overlap.smt2": "fee0be4473ec1928fdd0eee2b8a34bd8b709da63b573903426652eac2d8d5061",
+    "sample.smt2": "acf16f33dc3aa005b599f158df736078f2ec9ab5cb1e5d34c50b61637f452e57"
   }
 }

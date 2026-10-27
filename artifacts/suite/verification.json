@@ -200,7 +200,55 @@
         "sequence_encoding": "modular_integer_full_32bit_domain"
       },
       "inductive_refinement": {
-        "status": "refinement_unknown",
+        "status": "refined_inductive_queries_pass",
+        "backend": "z3-exact-query-refinement",
+        "primary_status": "unknown"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "id": "tcp-syn-history",
+      "local_integrity": "pass",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "unknown",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "inductive_refinement": {
+        "status": "refined_inductive_queries_pass",
+        "backend": "z3-exact-query-refinement",
+        "primary_status": "unknown"
+      },
+      "real_stack": "not_run"
+    },
+    {
+      "id": "tcp-delayed-ack",
+      "local_integrity": "pass",
+      "formal": {
+        "status": "unknown",
+        "backend": "z3-bmc",
+        "depth": 6,
+        "reason": "canceled",
+        "safety_query": "unknown",
+        "overlap_query": "unknown"
+      },
+      "inductive": {
+        "status": "unknown",
+        "backend": "z3-invariant-induction",
+        "byte_encoding": "exact_length_projection_content_insensitive_subset",
+        "sequence_encoding": "modular_integer_full_32bit_domain"
+      },
+      "inductive_refinement": {
+        "status": "refined_inductive_queries_pass",
         "backend": "z3-exact-query-refinement",
         "primary_status": "unknown"
       },

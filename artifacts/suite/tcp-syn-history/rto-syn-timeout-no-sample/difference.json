@@ -1,0 +1,16 @@
+{
+  "status": "match",
+  "oracle": "ordered-connection-data-projection-v1",
+  "tolerance_ms": 50,
+  "compared_fields": [
+    "direction",
+    "flags",
+    "seq",
+    "ack",
+    "time_ms",
+    "window",
+    "payload"
+  ],
+  "differences": [],
+  "evidence_scope": "synthetic_codec_roundtrip_only"
+}

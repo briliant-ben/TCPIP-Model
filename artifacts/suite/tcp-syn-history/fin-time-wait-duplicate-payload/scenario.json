@@ -1,0 +1,156 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-time-wait-duplicate-payload",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.close"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002,
+        "window": 5,
+        "data": [
+          7
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 30,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1002,
+                "ack": 9003,
+                "window": 15,
+                "payload": []
+              }
+            },
+            {
+              "message": "application",
+              "fields": {
+                "code": "peer_eof"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 40,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002,
+        "window": 9,
+        "data": [
+          7
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 40,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1002,
+                "ack": 9003,
+                "window": 15,
+                "payload": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 50,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9020,
+        "ack": 1002,
+        "window": 10,
+        "data": []
+      },
+      "expect_trace": [
+        {
+          "at_ms": 50,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1002,
+                "ack": 9003,
+                "window": 15,
+                "payload": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "net.data",
+      "fields": {
+        "seq": 9003,
+        "ack": 1002,
+        "window": 10,
+        "data": [
+          99
+        ]
+      },
+      "at_ms": 60,
+      "expect_trace": [
+        {
+          "at_ms": 60,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1002,
+                "ack": 9003,
+                "window": 15,
+                "payload": []
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "TIME-WAIT",
+    "variables": {
+      "rcv_nxt": 9003,
+      "rcv_buf": [
+        7
+      ],
+      "snd_wnd": 5
+    },
+    "timers": {
+      "time_wait": 120040
+    }
+  }
+}

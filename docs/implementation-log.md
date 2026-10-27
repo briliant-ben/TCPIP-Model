@@ -248,3 +248,9 @@ Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713
 旧 290 方法运行最终结束（2191.211s，2 errors），11 profile 原生成也已终止（exit 2），错误均为 No peer SYN+ACK captured。完整日志归档至 diagnostics/eleven-profiles-opening-gap-9afd06d，原部分产物不接入新验收。修复后重新冻结源码，启动 311 方法完整回归、全部 11 profile 重建和独立 persist 开发 profile；这些新长任务尚未完成。
 
 persist 独立开发流水线实际生成并完成单独验收：30 个固定输入（7 新、23 原恢复／SYN／delayed ACK）参考执行、完整字节重放及 tcp-connection-v1 synthetic-only codec 均匹配；主 depth=6 BMC／归纳 unknown 保留，补充单项复查通过。当前输入、模型与全部 report 哈希、源完整性、claims 重建及独立 recheck 均核对，保存于 artifacts/tcp-persist-development。该未注册开发结果与正在运行的新 11-profile／311 方法验收分开，不计作外部实现或 Linux 数据证据。
+
+## 2026-10-27：修复后 311 方法与 11 profile 完整验收
+
+修复后的完整一次运行实际结束：311 tests，2400.694s，OK。11 profile 全部重新生成（exit 0），suite-verify 完成（exit 0，valid_local_artifacts_stack_incomplete）。重新计算全部 profile 输入集合和完整测试输入集合，分别为 258／293 项，与运行前冻结集合及每个哈希完全一致；没有拼接旧 290 方法通过项。原失败证据保留，当前日志、命令、冻结输入和结论保存在 artifacts/diagnostics/eleven-profiles-revalidated-de9a6ee。
+
+根 build／formal 返回 0；原 lwIP 返回 1，仍是有效执行后的已知 SYN-loss 2750ms／1000ms 配置时序差异，lwip-verify 返回 0。主 BMC／归纳 unknown 与已独立复查的补充结论分开呈现；全套本地证据验收不提升为完整 TCP、通用内容／输出／时间证明或 Linux 实机验证。下一步扩大独立实现数据闭环、完善 persist 和拥塞恢复，继续用户约定的后续协议。

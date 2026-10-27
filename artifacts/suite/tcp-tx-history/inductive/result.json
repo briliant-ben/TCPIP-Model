@@ -1724,14 +1724,15 @@
       "targets": [
         {
           "state": "ESTABLISHED",
-          "query": "unsat"
+          "query": "unknown",
+          "reason": "timeout"
         },
         {
           "state": "CLOSE-WAIT",
           "query": "unsat"
         }
       ],
-      "query": "unsat"
+      "query": "unknown"
     },
     {
       "transition": "F-RECEIVE-ESTABLISHED-net-fin",
@@ -1752,7 +1753,8 @@
       "targets": [
         {
           "state": "FIN-WAIT-1",
-          "query": "unsat"
+          "query": "unknown",
+          "reason": "timeout"
         },
         {
           "state": "FIN-WAIT-2",
@@ -1767,7 +1769,7 @@
           "query": "unsat"
         }
       ],
-      "query": "unsat"
+      "query": "unknown"
     },
     {
       "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK",
@@ -2075,7 +2077,8 @@
       "targets": [
         {
           "state": "FIN-WAIT-1",
-          "query": "unsat"
+          "query": "unknown",
+          "reason": "timeout"
         },
         {
           "state": "FIN-WAIT-2",
@@ -2090,7 +2093,7 @@
           "query": "unsat"
         }
       ],
-      "query": "unsat"
+      "query": "unknown"
     },
     {
       "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER",
@@ -2393,10 +2396,10 @@
   "target_coverage": "all_declared_destinations",
   "clock_advance_query": "unsat",
   "query_hashes": {
-    "length-lemmas.smt2": "3683330f77999a0585ae3f997ec8e8b447c3e4eb2cec82c049debb16b839a048",
-    "initial.smt2": "653c06befa0878442a3591f579555fbfb092ce445bf1d8fe14108c29e8715864",
-    "preservation.smt2": "4a3e09991041ad1ae1dccf955758116824b9184545f6ca22659e5ccf2094f53b",
-    "overlap.smt2": "79f837661eec8bc7a3a74696831f7b4e943e2e798bf4ee8439954f2a47e5e702",
-    "clock-preservation.smt2": "4daf647d63fae1c37b89e030db0cdc9b53c8a828b6e426660cb664c56fae8e6f"
+    "length-lemmas.smt2": "21a1ca618181936925e80fc40a5f049074c39f14730f35b7d2ea1295c8bd8bb7",
+    "initial.smt2": "ec4be9da959f8faa02ebe07ea932ad19d05276c48de24c8d91cd4e87a1aaedfc",
+    "preservation.smt2": "9ab263ccc3b14589618710ac0c1d7d36cc8c7ebd91737139ed507e4db48bf3d5",
+    "overlap.smt2": "a595bb9b1fd45853f85c10f1be86e351e30a95d7046e7f8c9a0a3c6b3de78722",
+    "clock-preservation.smt2": "e28fa150f35a843062732e1b001971848b11ac8ad3baea78564e15f3da85767c"
   }
 }
