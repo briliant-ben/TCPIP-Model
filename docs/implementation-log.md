@@ -207,3 +207,12 @@ Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713
 ## 2026-10-27：纯时钟修复的完整统一验收
 
 冻结输入未发生变化，完整 268 方法回归通过（1567.336s）；九 profile 的 depth=6 suite 重建和 suite-verify 通过，原始日志及冻结输入保存在 artifacts/clock-regression。主动打开／连接 bounded_pass；七个数据 profile BMC unknown 保留。data／reassembly／segments／close／fin 主归纳通过；RTO 主 unknown、补充通过；发送历史主 unknown、补充 refinement_unknown。RTO／发送历史新增纯时钟义务均 unsat。根 build/formal 与 lwIP 执行／证据验收完成，保留 SYN-loss 时序差异和 Linux not_run。新的 delayed ACK 开发 overlay 不在该 268 方法／九 profile 验收范围内，须单独验证后接入。
+
+
+## 2026-10-27：delayed ACK 声明式开发切片
+
+新增独立 overlay tcp-delayed-ack，继承 SYN／数据／FIN／RTT 历史父链；183 规则、154 不变量，另设 delack 定时器，不改变旧 profile。依据 RFC 9293 §3.8.6.3，RMSS=4、默认 40ms／允许 1..499ms，首段计时不重启，第二完整段或 2×RMSS 新字节立即累计确认；乱序、重复、补洞、裁剪、FIN 与零窗口保留立即 ACK。实际当前累计确认的 piggyback／窗口／FIN 输出取消等待，未发生的条件输出不取消；关闭／重置清理。全部决定在 JSON AST 中显式表达。
+
+15 项新增测试通过（63.441s），含 7 个独立手写输出／时刻场景的完整字节重放，错误延长截止点／丢定时 ACK／漏取消的故障变体、499ms 与回绕、FIN-WAIT 两状态、一般 ACK/window/RTT 组合、早 RTO 故障及 delack/rtx 同刻优先级。与上一完整 268 方法运行的通过 ID 合并，恰覆盖当前 283 方法（分批，非一次完整运行），记录在 artifacts/delayed-ack-regression。
+
+初次独立归纳初值、全部 guard 组与纯时钟保持 unsat，三个 FIN 处理目标 unknown；不提升为输出／时序或完整 TCP 证明。开发 profile 证据生成使用已有 tcp-fin-v1 投影；误用 tcp-data-v1 时 FIN+payload 被严格拒绝，未放宽校验。当前重新生成开发证据，尚未注册 suite。IR 尚无截止点表达式，状态归纳不能单独证明通用 ACK 延迟上限，明确见 tcp-delayed-ack.md。
