@@ -1,0 +1,53 @@
+test_actual_lwip_data_matches (__main__.IndependentDataTests.test_actual_lwip_data_matches) ... ERROR
+test_linux_relabelling_is_rejected (__main__.IndependentDataTests.test_linux_relabelling_is_rejected) ... ok
+test_missing_required_artifact_is_rejected (__main__.IndependentDataTests.test_missing_required_artifact_is_rejected) ... ok
+test_rehashed_capture_is_rejected (__main__.IndependentDataTests.test_rehashed_capture_is_rejected) ... FAIL
+test_rehashed_execution_summary_is_rejected (__main__.IndependentDataTests.test_rehashed_execution_summary_is_rejected) ... FAIL
+test_rehashed_oracle_is_rejected (__main__.IndependentDataTests.test_rehashed_oracle_is_rejected) ... ok
+test_reject_unsupported_inputs (__main__.PlanTests.test_reject_unsupported_inputs) ... ok
+
+======================================================================
+ERROR: test_actual_lwip_data_matches (__main__.IndependentDataTests.test_actual_lwip_data_matches)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-data/tests.py", line 55, in test_actual_lwip_data_matches
+    self.assertEqual(driver.verify(self.out)['status'],'valid_independent_lwip_data_evidence')
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-data/run.py", line 103, in verify
+    require(recheck['status']=='match' and recheck['smt2_sha256']==symbolic['smt2_sha256'],'Independent fixed-byte recheck failed')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Independent fixed-byte recheck failed
+
+======================================================================
+FAIL: test_rehashed_capture_is_rejected (__main__.IndependentDataTests.test_rehashed_capture_is_rejected)
+----------------------------------------------------------------------
+protocol_lab.ir.ModelError: Independent fixed-byte recheck failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-data/tests.py", line 67, in test_rehashed_capture_is_rejected
+    self.corrupt('capture.pcap',change,'checksum')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-data/tests.py", line 46, in corrupt
+    with self.assertRaisesRegex(ValueError,error):driver.verify(self.out)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "checksum" does not match "Independent fixed-byte recheck failed"
+
+======================================================================
+FAIL: test_rehashed_execution_summary_is_rejected (__main__.IndependentDataTests.test_rehashed_execution_summary_is_rejected)
+----------------------------------------------------------------------
+protocol_lab.ir.ModelError: Independent fixed-byte recheck failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-data/tests.py", line 77, in test_rehashed_execution_summary_is_rejected
+    with self.assertRaisesRegex(ValueError,'Execution summary changed'):driver.verify(self.out)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "Execution summary changed" does not match "Independent fixed-byte recheck failed"
+
+----------------------------------------------------------------------
+Ran 7 tests in 25.531s
+
+FAILED (failures=2, errors=1)

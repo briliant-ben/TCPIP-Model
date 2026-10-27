@@ -188,3 +188,5 @@ docs/                  语义、外部测试约定、里程碑
 [SYN 发送历史](docs/tcp-syn-history.md)与 [delayed ACK](docs/tcp-delayed-ack.md)已列入统一注册表，合计 11 个有限 profile；登记不等于完整 TCP 验收。单项精确分组由 profile/CLI 显式配置，claims 检查实际配置并保留主 unknown。当前重建／验收结果以 suite 报告和实施日志为准，开发快照不直接升级。
 
 [连接打开捕获投影](docs/connection-capture.md)显式覆盖被动、同时及单向 SYN 超时，保留旧投影和严格校验，不以猜测 ISS 或重新对齐重传来消除差异。
+
+[独立 lwIP 数据通道](ports/lwip-data/README.md)新增单连接四字节发送／累计 ACK 的实际内存 netif PCAP，与 IR 在0ms容差下匹配；独立验收重建 oracle、复查固定输入并检查查询等价。9项 port 集成／故障测试与既有311方法完整回归分别记录。该有限场景不代表一般数据恢复、Linux实机或完整TCP证明。

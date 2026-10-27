@@ -254,3 +254,13 @@ persist 独立开发流水线实际生成并完成单独验收：30 个固定输
 修复后的完整一次运行实际结束：311 tests，2400.694s，OK。11 profile 全部重新生成（exit 0），suite-verify 完成（exit 0，valid_local_artifacts_stack_incomplete）。重新计算全部 profile 输入集合和完整测试输入集合，分别为 258／293 项，与运行前冻结集合及每个哈希完全一致；没有拼接旧 290 方法通过项。原失败证据保留，当前日志、命令、冻结输入和结论保存在 artifacts/diagnostics/eleven-profiles-revalidated-de9a6ee。
 
 根 build／formal 返回 0；原 lwIP 返回 1，仍是有效执行后的已知 SYN-loss 2750ms／1000ms 配置时序差异，lwip-verify 返回 0。主 BMC／归纳 unknown 与已独立复查的补充结论分开呈现；全套本地证据验收不提升为完整 TCP、通用内容／输出／时间证明或 Linux 实机验证。下一步扩大独立实现数据闭环、完善 persist 和拥塞恢复，继续用户约定的后续协议。
+
+## 2026-10-27：独立 lwIP 四字节数据闭环
+
+新增 ports/lwip-data 独立有限通道，使用锁定、未修改的 lwIP 2.2.1 源码和单独编译配置，复用原 netif 原始抓包工具。公共 raw API 完成主动打开、tcp_write 四字节 [0,128,255,7]、显式发送及完整累计 ACK；C 端仅接收应用字节，actual ISS 来自实际 SYN，不读取模型预期或修改 PCB。MSS=4／本地窗口16／对端窗口8，MORE hint 排除尚未建模 PSH，支持的输入／时刻严格校验。
+
+IR 参考、完整字节固定输入重放、真实 lwIP netif PCAP、独立 checksum／连接原点归一化、0ms 容差 Difference 与证据验收全部通过。实际 sent 回调确认4字节；5个实际收发包投影匹配。绑定输入、编译命令／编译器、上游锁、二进制、日志和产物哈希；验收重新生成 oracle／参考轨迹、求解固定输入并独立检查导出查询与新查询逻辑等价。原查询哈希保留，不以不稳定的 Z3 文本别名作语义标识。
+
+9 项独立 port 集成／故障测试通过（31.415s），覆盖真实 C 执行及完整 payload、篡改 oracle／PCAP／查询／编译命令／回调后重算哈希、必要文件遗漏、伪称 Linux、未支持输入。最初新增验收误把两次 Z3 导出文本哈希当作语义相等，导致正例失败；该测试失败日志保留，已修正并新增查询篡改负控制。测试在 ports 下独立运行，不冒称上轮311方法包含这些新测试。证据见 artifacts/lwip-data，说明见 ports/lwip-data/README.md。
+
+这是单连接、单 MSS、完整 ACK 的内存 netif／虚拟时钟真实实现观测，不是 Linux、完整数据／丢包／重组／关闭／恢复符合性或实现精化证明。原握手／SYN-loss 通道和2750ms差异保持。下一步扩大数据分段、部分 ACK／window、接收重组、关闭和恢复的独立输入映射与实测差异，同时推进 persist 边界、拥塞／恢复及后续协议；完整目标保持未完成。
