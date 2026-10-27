@@ -244,3 +244,5 @@ Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713
 初次归纳发现 pending FIN 的 CLOSING 状态遗漏；另有可达参考输入复现，不将任意 SMT 前态误称可达。旧原模型／完整查询／范围和轨迹保存在 diagnostics/persist-before-closing-states-v1。修复覆盖父模型可声明的 CLOSING／LAST-ACK pending-FIN 状态；保留 fin_sent 时不进入 FIN-only persist 的边界。
 
 当前 193 规则／161 不变量；14 项方法通过（97.035s），含 7 固定输入完整字节重放、回绕、半关闭、1..60s persist 指数间隔、早截止等待、ACK piggyback、RTO 交接及故障变体。原主归纳 unknown，初值／guard／纯时钟通过，未知目标完整单项分组和独立 CLI verify 通过，保存于 artifacts/persist-initial。尚非完整 persist／TCP、通用输出时序或实现／Linux 证据；不属于原 290 项／11 profile 验收。
+
+旧 290 方法运行最终结束（2191.211s，2 errors），11 profile 原生成也已终止（exit 2），错误均为 No peer SYN+ACK captured。完整日志归档至 diagnostics/eleven-profiles-opening-gap-9afd06d，原部分产物不接入新验收。修复后重新冻结源码，启动 311 方法完整回归、全部 11 profile 重建和独立 persist 开发 profile；这些新长任务尚未完成。

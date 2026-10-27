@@ -3,9 +3,16 @@
   "status": "original_suite_failed_adapter_opening_coverage",
   "suite_exit_code": 2,
   "isolated_unittest_exit_code": 1,
-  "full_original_unittest": "still running; known ERROR retained, do not claim passing",
+  "full_original_unittest": {
+    "methods": 290,
+    "elapsed_seconds": 2191.211,
+    "exit_code": 1,
+    "errors": 2,
+    "status": "failed; not accepted as current-source evidence"
+  },
   "current_source_changed": "Explicit connection projection correction; old partial generation is not reused as current evidence",
   "artifact_hashes": {
+    "full-regression-failure.log": "154b90879834543c71e7a9a6bac290ca11d1c1b55ddc978cf4904a2858176d67",
     "original-profiles.json": "25c7538b2689c7d810a0d50d2298be0288faf3bba5feedfa1b4123107950c442",
     "original-capture.py": "fb752e2bc110df3dc2e470feb1049a1eaf6816750805c1e526951bf23cf6bb4e",
     "original-inputs.json": "6608f513a205dd607f0fbd3b9d149076d5b60fbd4857435a1ac7f63f1b6e07be",
