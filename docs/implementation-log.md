@@ -216,3 +216,8 @@ Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713
 15 项新增测试通过（63.441s），含 7 个独立手写输出／时刻场景的完整字节重放，错误延长截止点／丢定时 ACK／漏取消的故障变体、499ms 与回绕、FIN-WAIT 两状态、一般 ACK/window/RTT 组合、早 RTO 故障及 delack/rtx 同刻优先级。与上一完整 268 方法运行的通过 ID 合并，恰覆盖当前 283 方法（分批，非一次完整运行），记录在 artifacts/delayed-ack-regression。
 
 初次独立归纳初值、全部 guard 组与纯时钟保持 unsat，三个 FIN 处理目标 unknown；不提升为输出／时序或完整 TCP 证明。开发 profile 证据生成使用已有 tcp-fin-v1 投影；误用 tcp-data-v1 时 FIN+payload 被严格拒绝，未放宽校验。当前重新生成开发证据，尚未注册 suite。IR 尚无截止点表达式，状态归纳不能单独证明通用 ACK 延迟上限，明确见 tcp-delayed-ack.md。
+
+
+开发 profile 的 7 个手写场景、完整字节重放及 tcp-fin-v1 合成 codec 均通过；BMC depth=6 unknown、主归纳 unknown、纯时钟保持 unsat。默认 8 项分组生成／首次复查通过，但随后独立完整复查 group-007 在 10000ms 超时；失败日志和 pending 元数据原样保留，原 report/claims 未覆盖。另用 group_size=1 对全部原未知目标完整分组，全部等价／组复查、非空样本和完整 verify 通过。artifacts/tcp-delayed-ack-development/development-verification.json 分别绑定默认超时及单项补充证据；仍不是已注册 suite 验收或完整 TCP／通用时间证明。
+
+当前发送历史的原归纳仅剩一个 unknown 目标；其 163 个单项分组、等价、非空完整字节样本及完整独立 verify 也通过，原主／默认补充 unknown 不改写，完整冻结主查询与新证据保存在 diagnostics/tx-history-singleton-refinement-e6880f3。后续应把分组配置显式接入 profiles／CLI，并统一注册 SYN／delayed ACK、重建和验收；再推进 persist、拥塞恢复及独立数据实现。
