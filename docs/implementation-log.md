@@ -202,3 +202,8 @@ Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713
 ## 2026-10-27：SYN 未知目标的完整单项分组验收
 
 保持当前代码／模型输入冻结。针对 SYN 开发模型剩余的困难查询，原每组 8 项在一组超时；改用已有 API 的 group_size=1，不改检查器、不删约束、不延长 10000ms 时限。三个原 unknown 目标的 166／166／167 项全部保留，499 个分组及各等价义务均 unsat，生成阶段独立复查通过；完整字节非空声明规则样本 match，随后完整 verify 进程也通过。原主归纳 unknown 与原 8 项分组 unknown 记录保持。新补充原始产物和验证日志在 artifacts/diagnostics/syn-singleton-refinement-e6880f3，绑定同一 e6880f3 原模型／主查询／检查器。仅为已列状态性质的补充归纳证据；SYN 仍未注册 suite，不代表 BMC、安全全覆盖、输出／时间精化、Rocq 或 Linux 实机。
+
+
+## 2026-10-27：纯时钟修复的完整统一验收
+
+冻结输入未发生变化，完整 268 方法回归通过（1567.336s）；九 profile 的 depth=6 suite 重建和 suite-verify 通过，原始日志及冻结输入保存在 artifacts/clock-regression。主动打开／连接 bounded_pass；七个数据 profile BMC unknown 保留。data／reassembly／segments／close／fin 主归纳通过；RTO 主 unknown、补充通过；发送历史主 unknown、补充 refinement_unknown。RTO／发送历史新增纯时钟义务均 unsat。根 build/formal 与 lwIP 执行／证据验收完成，保留 SYN-loss 时序差异和 Linux not_run。新的 delayed ACK 开发 overlay 不在该 268 方法／九 profile 验收范围内，须单独验证后接入。

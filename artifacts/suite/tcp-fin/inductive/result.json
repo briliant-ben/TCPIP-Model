@@ -2255,13 +2255,15 @@
       ]
     }
   ],
+  "clock_progress": "not_applicable",
   "length_lemmas": "unsat",
   "initial_query": "unsat",
   "target_coverage": "all_declared_destinations",
+  "clock_advance_query": "not_applicable",
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 4294963197,
+      "iss": 4294967293,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -2319,15 +2321,17 @@
     },
     "steps": [
       {
-        "at_ms": 0,
-        "event": "app.listen",
-        "origin": "application",
-        "transition": "C-PASSIVE-OPEN",
-        "fields": {},
+        "at_ms": 1,
+        "event": "net.syn",
+        "origin": "network",
+        "transition": "C-CLOSED-SYN",
+        "fields": {
+          "seq": 0
+        },
         "after": {
-          "state": "LISTEN",
+          "state": "CLOSED",
           "variables": {
-            "iss": 4294963197,
+            "iss": 4294967293,
             "irs": 0,
             "snd_una": 1000,
             "snd_nxt": 1000,
@@ -2337,7 +2341,7 @@
             "tx_flags": "S",
             "rto_ms": 1000,
             "retries": 0,
-            "active_open": false,
+            "active_open": true,
             "user_timeout_ms": 30000,
             "msl_ms": 60000,
             "local_window": 16,
@@ -2385,7 +2389,17 @@
           },
           "timers": {}
         },
-        "emitted": []
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "RA",
+              "seq": 0,
+              "ack": 1,
+              "window": 16
+            }
+          }
+        ]
       }
     ]
   },
@@ -2394,10 +2408,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "b428fb9aa4e0c4090c5affc615e69260ef87570cf0c8765fa4ba4422a659ca34",
-    "initial.smt2": "89e55f31e41bc264d734fc39634c1550506c956c1b6334ceabdaa48e36daab72",
-    "preservation.smt2": "fcda03701ecdf17c540be2a703e141bbd5c0c942ab1f89ad48109cb1da7b8ceb",
-    "overlap.smt2": "5a6f00a7d276d35d924860494e20aecf086198dd11d21aba8ed903cfd250a99c",
-    "sample.smt2": "f938cee22de69127d383e8660dfc7e3ccba098aa0218b9d5314e44bdd583a557"
+    "length-lemmas.smt2": "1e38c615787b3e48faddaa5defe108d0e3fbc11e103237c4a91329587847a483",
+    "initial.smt2": "7bd5434e76b5c085e5a631ba37729438dc4003e6a9e5e0f56159992ec3c321bc",
+    "preservation.smt2": "69965f886e1126bf52cfd07e6ee3c5a1e9cdb0639b8bc63e6834ce2c4eb4cb36",
+    "overlap.smt2": "96839ed7e3aba849539f79b70600a87cb42b1c5847c52af16a8b47bd41c0622a",
+    "sample.smt2": "97304f88d066eecbfa2992be564f392dfe2eecf59901ec529b955f4e72afd25d"
   }
 }

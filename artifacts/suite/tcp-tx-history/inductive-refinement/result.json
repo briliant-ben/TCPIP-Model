@@ -1,20 +1,21 @@
 {
   "backend": "z3-exact-query-refinement",
   "status": "refinement_unknown",
-  "model_semantic_sha256": "af3b362e2345acf8db0768e1d0209d7382b2b3e83d117b36abc8f5429bd7552f",
+  "model_semantic_sha256": "d7cfd0051bd47fc15e5f3eb3247255f20d0c919b6e33164248eaa24053b469a8",
   "primary_status": "unknown",
-  "primary_result_sha256": "200af2fc4c6cc1fc36f8ad401fbf8292c3e026e8db7a92188919dca0f00fac8f",
+  "primary_result_sha256": "4aff79dcc6f5ef1a3c33ececf51c5efe9c830f5c1839383f1c815c7ba8c9f9ee",
   "primary_query_hashes": {
-    "length-lemmas.smt2": "2c064014d7e71b6b97b616605bd1e3eb88e24dc9b0a9f6ff17d13dbd25f11468",
-    "initial.smt2": "c7614775cb4f9e3452842919de77013bc989c80b5975af99d3663616a0f92bf9",
-    "preservation.smt2": "8c091e39401aacdccf3f326bcf18436897e3353865977c174520b3cc8df08a8d",
-    "overlap.smt2": "6c3d4d56a03a682816d7b8e6205e87dfc17411f3a62355ff9a9313961b98dd68"
+    "length-lemmas.smt2": "3683330f77999a0585ae3f997ec8e8b447c3e4eb2cec82c049debb16b839a048",
+    "initial.smt2": "653c06befa0878442a3591f579555fbfb092ce445bf1d8fe14108c29e8715864",
+    "preservation.smt2": "4a3e09991041ad1ae1dccf955758116824b9184545f6ca22659e5ccf2094f53b",
+    "overlap.smt2": "79f837661eec8bc7a3a74696831f7b4e943e2e798bf4ee8439954f2a47e5e702",
+    "clock-preservation.smt2": "4daf647d63fae1c37b89e030db0cdc9b53c8a828b6e426660cb664c56fae8e6f"
   },
   "checker_source_hashes": {
-    "protocol_lab/refinement.py": "0b66271d056004641eacc399371db335c6d329fe76c8eb92df447067abc8acab",
-    "protocol_lab/inductive.py": "894d0687c695952d83b792d5dbeef15388ad71ed72f55b6a1e255f9f9bd883a9",
-    "protocol_lab/ir.py": "5b4e91449e62761b62c8dd22809a1cd2b71e4a863c76b6c089febfe72dd52828",
-    "protocol_lab/symbolic.py": "4d28330f7299b9e11d5cb902e4e38516b02cd40d09e9096409f637971aa82770",
+    "protocol_lab/refinement.py": "971da52d2579887a2e2439f51d62725e2b702635e5226ec806852e3d9cd415c8",
+    "protocol_lab/inductive.py": "757199dc6261b2bac59f6de1fbbb6e8ac5b129c1bb0fc3bac23c39257e488bb1",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974",
     "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
   },
   "solver_version": "4.15.4",
@@ -22,75 +23,21 @@
   "timeout_ms": 10000,
   "original_unknown_targets": [
     {
-      "transition": "F-RECEIVE-ESTABLISHED-net-fin_segment",
-      "state": "ESTABLISHED"
-    },
-    {
-      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW",
-      "state": "FIN-WAIT-1"
-    },
-    {
       "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE",
-      "state": "FIN-WAIT-1"
-    },
-    {
-      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW",
       "state": "FIN-WAIT-1"
     }
   ],
   "partitions": [
     {
       "target": {
-        "transition": "F-RECEIVE-ESTABLISHED-net-fin_segment",
-        "state": "ESTABLISHED"
-      },
-      "directory": "partitions/target-000",
-      "label": "F-RECEIVE-ESTABLISHED-net-fin_segment -> ESTABLISHED",
-      "status": "query_partition_unsat",
-      "verification": {
-        "status": "valid_exact_partition_queries",
-        "checks": 21,
-        "disjuncts": 160
-      }
-    },
-    {
-      "target": {
-        "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW",
-        "state": "FIN-WAIT-1"
-      },
-      "directory": "partitions/target-001",
-      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW -> FIN-WAIT-1",
-      "status": "query_partition_unsat",
-      "verification": {
-        "status": "valid_exact_partition_queries",
-        "checks": 21,
-        "disjuncts": 160
-      }
-    },
-    {
-      "target": {
         "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE",
         "state": "FIN-WAIT-1"
       },
-      "directory": "partitions/target-002",
+      "directory": "partitions/target-000",
       "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> FIN-WAIT-1",
       "status": "unknown",
       "verification": {
         "status": "not_run_inconclusive_partition"
-      }
-    },
-    {
-      "target": {
-        "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW",
-        "state": "FIN-WAIT-1"
-      },
-      "directory": "partitions/target-003",
-      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> FIN-WAIT-1",
-      "status": "query_partition_unsat",
-      "verification": {
-        "status": "valid_exact_partition_queries",
-        "checks": 22,
-        "disjuncts": 161
       }
     }
   ],
@@ -98,99 +45,29 @@
   "unbounded_protocol_proof": false,
   "kernel_checked_proof": false,
   "artifact_hashes": {
-    "partitions/target-000/equivalence.smt2": "6f52e7a5a73a8ea85cf9dff3b934e5ee559439d822780c07de2f47a709ec07af",
-    "partitions/target-000/group-000.smt2": "953966d2a756c44448fd4a15b8c1351988efb07998064eb89539888e9c7c6859",
-    "partitions/target-000/group-001.smt2": "07bcf5056b506836b68631620d7a0c2776147ef4a62a771137493a59bab4f83e",
-    "partitions/target-000/group-002.smt2": "1b13849d1a221b2207ded153a60178f74cde7176e4ff97af2104a20331dc7b86",
-    "partitions/target-000/group-003.smt2": "e69c3ad7888150287b9365389cac8ead71d136e93e137cfa7620577d9ba8ab10",
-    "partitions/target-000/group-004.smt2": "c9207bdb3f768c250279f48bd919498c079f333a64f84017135ce2feab977b50",
-    "partitions/target-000/group-005.smt2": "3465ccd6dc48e27f0004f5410b2a2df09d49459c3faad63cc126254d263f8bc9",
-    "partitions/target-000/group-006.smt2": "040345b796c2b0eb99f1e87f063186b3a82c92ec294a89308eddbd0a546fdc99",
-    "partitions/target-000/group-007.smt2": "d5f40584779bfdce5031dd8dc428cfd20cbcf13eb5057054e8116291c6c38d84",
-    "partitions/target-000/group-008.smt2": "08a49e74e66474113777b3f30ef98a66a0f765650f1484ca7196f3a9a218d977",
-    "partitions/target-000/group-009.smt2": "4546c479cd71d5847137a3df884fd9c7e6557c2590bdf199f26d4cff97a5602a",
-    "partitions/target-000/group-010.smt2": "43b863159da61e724f598a18186cdb967a3375eda1a97ae256576bdedf0e6825",
-    "partitions/target-000/group-011.smt2": "06f491e41e4d916ea722d510a0bc7c68b6e83754ead7a0ad88ad29f61f8033a9",
-    "partitions/target-000/group-012.smt2": "d7122d4574950e7e1f8a0d3e02ba5978255db6387f07bb3d02bf07503cf51bab",
-    "partitions/target-000/group-013.smt2": "d86d097014ec10c6cd19687ab31b8bbad04829ff2fefa562b23cbc5d1d441d40",
-    "partitions/target-000/group-014.smt2": "ef98c24f8b2d18c23e16eb8449fd7fe136256c71a5f44a185b133171a27dca08",
-    "partitions/target-000/group-015.smt2": "c2f4187bcc432c3c11947885ca976724b316cdccf6d8cf5637743af3f0433020",
-    "partitions/target-000/group-016.smt2": "6e72259feb4b2a22e4d5f6b9bbe90ad3903a31b302ce887d776b784801d2af8b",
-    "partitions/target-000/group-017.smt2": "9778c2f6bdc2a7777532ed28378f2b181487d8c54e18d0032a4a6a2700ea98d1",
-    "partitions/target-000/group-018.smt2": "a5bd9449c133904c447f74cd1039b6dc880bcf7722af3e8afaca0b71dcd1859c",
-    "partitions/target-000/group-019.smt2": "466890ecf09a30d0c8db99910878496a8209c2d0feb0acf7645743f548c98ad2",
-    "partitions/target-000/result.json": "e0dd4c4bc81224c01e6a4a676a3a9a8c7dd035b41078f2e041801ed15907e1e5",
-    "partitions/target-000/verification.json": "5c087d8dffaa8854db3afa5c094d4208faa20e45137795b280109d3fedd3a5c9",
-    "partitions/target-001/equivalence.smt2": "d17cb9051220f56899fd5cd4e638124a8320283506d6d932b8a2d4fdc2c1738f",
-    "partitions/target-001/group-000.smt2": "54ffec3052f65dbd29da3ae37085db7fd89ac7d55447a2384a8a18cdb1af295d",
-    "partitions/target-001/group-001.smt2": "74ca811837f461cbd6377e08f2ddedb630a7685f41e66a4209f0ea4b763aa8f7",
-    "partitions/target-001/group-002.smt2": "3c8c554921611292b2109f0832047d23dc6a67d4451f7c3f64680aa489b55e18",
-    "partitions/target-001/group-003.smt2": "71ff9fbf0bb478680f5e9929287c68ce0b96452af3c71bd84a1997fcbb29ba0a",
-    "partitions/target-001/group-004.smt2": "26a6864d5603ae0194c56cb1a9e343e6e46dc2d00c3b2c50697c361323120b45",
-    "partitions/target-001/group-005.smt2": "3eeec4017a35ee2d8d25b25889b7693958d6de5dd9589a0e7a1a384cea372420",
-    "partitions/target-001/group-006.smt2": "5ccfc375f329f97d177edc2efe46dde5fe881687b817c5ff07d3ff6919d5b317",
-    "partitions/target-001/group-007.smt2": "62ba5a8d533927179c2cd4f0a246e50fa9cd99d5894b24c6db71914d24493620",
-    "partitions/target-001/group-008.smt2": "6dbaac0e495dc1a9242097cd08f9196f2dcb8de90d794cba3c25da729ae99d91",
-    "partitions/target-001/group-009.smt2": "887762767d23fe4c1a929f28b35d8b49cc05f5d4b2b57303e495e3453ae6a894",
-    "partitions/target-001/group-010.smt2": "c1b4f2164582626b1156f3e3191a4c71d9a86bef5d47ca7b720b12312ecece99",
-    "partitions/target-001/group-011.smt2": "74a0cde7281de04618ed5e32926612404511269e3de2d9755cc9864a8a87f5d0",
-    "partitions/target-001/group-012.smt2": "298c4d5bf3ad32fc573a701949aef3ad4a8d0d5099440f3112306a5aafb1e546",
-    "partitions/target-001/group-013.smt2": "0a83594b471d6ad870016a5d71a3d0df7f47630c711951254dded5a35b0ece35",
-    "partitions/target-001/group-014.smt2": "7efb20e241a9af878c236e3d78faf702370f0667e310be14afe6491194e63d13",
-    "partitions/target-001/group-015.smt2": "bcec84fa284da09547361eeea32fbc784f39ad37422981ee6fb9e2ad9eb51441",
-    "partitions/target-001/group-016.smt2": "7edb320899a01ab59416bfd80e2d096404241850a222c337d127e12f80f330b9",
-    "partitions/target-001/group-017.smt2": "a469352e19afc4cfef9c6358bb4065c6b09bb66206d1cd1cf6a23c3ba56c79d7",
-    "partitions/target-001/group-018.smt2": "47007e1112138e79d4ec0ed38b492b4332edc3ecd2648928963c4c39527ad1f2",
-    "partitions/target-001/group-019.smt2": "114464a4e1e186d0a4c83681a0b8f68aab78dc1ca564f5543e00fef9c52ad17f",
-    "partitions/target-001/result.json": "828c890f7612c40358edc7ae8c3dc2f87bd6a0a8df5fe5beeaade159969db798",
-    "partitions/target-001/verification.json": "5c087d8dffaa8854db3afa5c094d4208faa20e45137795b280109d3fedd3a5c9",
-    "partitions/target-002/equivalence.smt2": "262efbbb1d2b2e75001c854600e795a2abff5c4a614b29dc90746cd006953eb8",
-    "partitions/target-002/group-000.smt2": "7832f2582ae3da907f4157116718c25fed2444e66b5595f64c84f9b69630dd22",
-    "partitions/target-002/group-001.smt2": "84a9288eea21ec8ee94ea084bd478da0fd31e670a3f0573fd04fe0b45f8a5c89",
-    "partitions/target-002/group-002.smt2": "8fc11f3cf2a0351420ae51d2385e26c7cbb92a878b5b4ff33ca6b0915e054c95",
-    "partitions/target-002/group-003.smt2": "f1b9ebd51ff5b83d7669111be58102c0909bca02520d3862202a2c495d6c8b5c",
-    "partitions/target-002/group-004.smt2": "aa2652dee97b22a379e0b9cb0e3ffdb28b449cb0666e882fb1d33fcebed6d4fd",
-    "partitions/target-002/group-005.smt2": "b7564dfb319428cb18141fc960438f1d76a7394ef3cfb70a7747a018be9bb00c",
-    "partitions/target-002/group-006.smt2": "35dcee0ca4bb7957d7c7c815d91036ac8bb1584e612101189c01849053d7d32c",
-    "partitions/target-002/group-007.smt2": "ce9df5291df59d3e6f9adb9440fa768d930ed4cb64204670c2fe9c1429c66e84",
-    "partitions/target-002/group-008.smt2": "e1b427dd422884bb468feca179a544007678192f357049be71c3547f63450f0c",
-    "partitions/target-002/group-009.smt2": "8c9866cbe54cad1cabd07e1eed60f4a8af432941458f6815d21e416f268e2b0c",
-    "partitions/target-002/group-010.smt2": "73716b0e537da1a6d34abb258a894ff2e6a1a96210779f39be3785f7d169baa9",
-    "partitions/target-002/group-011.smt2": "20a30edf132549a3e3e4d689c4f514a5d4b36cf35fcc0d1bd13358b82997acb2",
-    "partitions/target-002/group-012.smt2": "a27254c50a20a3a1631f47536e20ae12651e5af326386f24184a37b56e4fe43f",
-    "partitions/target-002/group-013.smt2": "08913d1cc48a5f93ea94ad7dc90ea76787e84631a348f297b2a607b521554089",
-    "partitions/target-002/group-014.smt2": "cb1b5418cd28d8ab5b7f4744f3364548eba70750b4e539b70e1c4bcba2905872",
-    "partitions/target-002/group-015.smt2": "6f48caab07325ee22e39163e004b5f2afe263e98668efba9abafee214215e720",
-    "partitions/target-002/group-016.smt2": "bc094a2e950c218e59c8a83030c0193607776e9512138a4d8d9c85edc68df7ef",
-    "partitions/target-002/group-017.smt2": "5690bef06a91c917dd68da591295ac11b24ff699181e14770ac098367c5ebf94",
-    "partitions/target-002/group-018.smt2": "6ab8f74ffe0e9545502e4d9c5b0a3f53a5e1271346e61180479dbd8d596673b1",
-    "partitions/target-002/group-019.smt2": "fcbd14fdff835b720890542dddb9599c2d6a0aa193d775e69c5b99c8c1dfb02d",
-    "partitions/target-002/group-020.smt2": "7d3abc0b5d8674f65850f97c6bc061f8f64f5531490a65c5641823cac86959b8",
-    "partitions/target-002/result.json": "96ce778ed3fa7d4f96e27ddb23b8463f6aa629b6e010e6d1c0dd4d1913900cef",
-    "partitions/target-002/verification.json": "b916d6572d34f06bb4a092a4af0d5f97a355f0ed7d518f100edba070f552b4ce",
-    "partitions/target-003/equivalence.smt2": "4b24d4b0ce1a8ad8fbef3a4cc52ae48379e64383f088cf892629c52d6eb79bcb",
-    "partitions/target-003/group-000.smt2": "3b22291dce938954d7fb5964776605c86ec5d0bdfcaf7dc94c97b7ac0513a911",
-    "partitions/target-003/group-001.smt2": "d404e648b0fbdc58a2f8b06ae3a70f466569019907bb8f4859079224069f6f88",
-    "partitions/target-003/group-002.smt2": "68d1fbfdc918242ac8f0947927df6346d9a263d96ba7afe7968015a5a85322cc",
-    "partitions/target-003/group-003.smt2": "b2ef4184201d0c61ce93214e0fed2c0456e6525f9f8e1a4ff6bae78c311aa250",
-    "partitions/target-003/group-004.smt2": "7e8f7114623089d4633bf7968ec06642dd26bc8b12588f946aa2260e5db777b1",
-    "partitions/target-003/group-005.smt2": "9621f47bbbc0dc72d698e426a48b02c13f88ab4327824bfec3cba064e2b50522",
-    "partitions/target-003/group-006.smt2": "e3465db2e04617fb21b3cd7fbe55a47ae00d0b0bf0e3055b5716d70e1fa48c55",
-    "partitions/target-003/group-007.smt2": "70c1d562a5a41675ac3e9aadc4e77182991379d17b76404e9d5f92499be33779",
-    "partitions/target-003/group-008.smt2": "189a4d1f95a4eb2f3c100b112ee7c7e36610c168fbea549f75fd53a622a7069a",
-    "partitions/target-003/group-009.smt2": "40926c6ac4a710ae19df604ce75b65f9db00a8e684a866683728ebcf806653c6",
-    "partitions/target-003/group-010.smt2": "589f9f1087b719d65990422a444275029f0ee07b14ac976dcdf70692a13984cf",
-    "partitions/target-003/group-011.smt2": "8bb07650daef9269bf4381e17f12b4b7b4d2c96faba7751a239626e925de4b4d",
-    "partitions/target-003/group-012.smt2": "5845c49f710fe63fe3f34b3b56cb6262681054d73e57bd5081ba7ddd12d514e3",
-    "partitions/target-003/group-013.smt2": "32fe535c9125fd8b3f6df30f61103a4c4cc589a5765b7fd6cbd82bf3523cb1aa",
-    "partitions/target-003/group-014.smt2": "adf6b4787f0cc2cf53b3041f3749635e4480bbc1d5715a816758561b005d2b39",
-    "partitions/target-003/group-015.smt2": "bb69a11878fbcc6f15eb8cb6e2d370b7895bf7d2842b687f162ce4cb2ce36d9a",
-    "partitions/target-003/group-016.smt2": "d6bf7cdea2fb3143e036af3750a66b17e39e48750ba3c2c45ecb4535996a14bb",
-    "partitions/target-003/group-017.smt2": "b70b9e10b179a752fb6e478dfb6904caf997da7d64615589d129d785762da3b3",
-    "partitions/target-003/group-018.smt2": "ca16c6238f12295bfe66ca6e0502df1cf33452675d5b5b6404b937da5b40e569",
-    "partitions/target-003/group-019.smt2": "b0b98ea224b6e8200cb44a3e95e8859adf43231f7bca21f2df5e9230426e2da5",
-    "partitions/target-003/group-020.smt2": "b8b4203e41241946b34be18f16aa0abb64a052de4a04742eddfb323a3f99ddb1",
-    "partitions/target-003/result.json": "da6cfd5bc9d74780e0a3931f43d3787bee1e7d03c324c19b4530ce89c5d37c22",
-    "partitions/target-003/verification.json": "61bd128d1fb04d9ac3d785e6337aeba07f94c1b03974991361a39b03c6ad660c"
+    "partitions/target-000/equivalence.smt2": "d49da3ff2136542810febc113777b1109b20a3a19f5140fec437d1f221916248",
+    "partitions/target-000/group-000.smt2": "9bce6e7055f522ee3a736858dcccc6ab3239097e425281001b420f98862fd958",
+    "partitions/target-000/group-001.smt2": "e964fd933452e2831b921583baa0c739f08a466dcec3ecb41e87ef9d8d8fffc2",
+    "partitions/target-000/group-002.smt2": "9156b22ee57fd0a52e0e0bb968cced70fb421ce22c607c636f0b6dbcb569b185",
+    "partitions/target-000/group-003.smt2": "310fe76685c2e9f952f394e983a00e1e2627b0b880aea650020d91af2247c223",
+    "partitions/target-000/group-004.smt2": "ac97a4aee75d2e982de8b80dd8ec7c4697172e01380d377d5274346abee1293d",
+    "partitions/target-000/group-005.smt2": "9a83974d659a645e1f1f7af62790ce00b2b4b352fd30c032056abef39f2dfb1d",
+    "partitions/target-000/group-006.smt2": "308d6ec2f37766d86c8ddae8d094f629309e4cd507b6a9a723b85b9592603bbb",
+    "partitions/target-000/group-007.smt2": "b60560816798247f7b11932cf1c5eb59dd00628db6f8d3101e8190a2f9098170",
+    "partitions/target-000/group-008.smt2": "ad57c9b155aea85e84c4defdc56c2bc12297d5160e4154ec6eed589399dedd50",
+    "partitions/target-000/group-009.smt2": "86f241438d31ef5b88bec358eed0d47c31704f4cb8d3c55a40d878014801d415",
+    "partitions/target-000/group-010.smt2": "8885f11d1dba573e361e8c74bb4382c1b1b910dd529b2ea70f963b8432949b5d",
+    "partitions/target-000/group-011.smt2": "d51d99072390c16dc09847fef2936c594f587fbdb1cfd30e0bdbfc0b48d780e8",
+    "partitions/target-000/group-012.smt2": "bed6f37c895f153d522e3b41197a9558606ca8196fb09c66921a25e459418025",
+    "partitions/target-000/group-013.smt2": "95d9e8909eee231ceea759b551de28bb3f7bc4a27d3e64b016e6169931be8dc8",
+    "partitions/target-000/group-014.smt2": "96381021bf24714a45f8f9ea6ac3d7f1b073070dd3d47f62b053c8dd8e145755",
+    "partitions/target-000/group-015.smt2": "76acd81a2e121d5736151b14bfce3322724f642f32ca52feaf81180000036b5f",
+    "partitions/target-000/group-016.smt2": "610551f9acee54580315b273105e9b1ae4a953ab976b8130955ee75c150525a8",
+    "partitions/target-000/group-017.smt2": "d931954e0315670b5776b3c057417fc27b5cf855ceb2cf883953b1d04005e3e6",
+    "partitions/target-000/group-018.smt2": "dea6f4fd3e661716fd7e7e70a57686b30fd0ebaf1b9ba8bf48bde53718bb0891",
+    "partitions/target-000/group-019.smt2": "022bc4b576c048a22932f30195811cdaa3ccc9a8f259ed1fc799e8ef442a4223",
+    "partitions/target-000/group-020.smt2": "620f17bf090a424d86054002884bd1790c475ed56c32aecebef80415e9638ca6",
+    "partitions/target-000/result.json": "2ce6f7c9c9f947d4bf2cdc25f289658f392a63b5da3e4a16f63e1106c40d7bb7",
+    "partitions/target-000/verification.json": "b916d6572d34f06bb4a092a4af0d5f97a355f0ed7d518f100edba070f552b4ce"
   }
 }

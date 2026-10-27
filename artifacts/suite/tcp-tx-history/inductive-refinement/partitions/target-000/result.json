@@ -1,13 +1,13 @@
 {
-  "status": "query_partition_unsat",
+  "status": "unknown",
   "scope": "exact Boolean partition of one exported query; no protocol-completeness or kernel-checked claim",
   "source_file": "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/suite/tcp-tx-history/inductive/preservation.smt2",
-  "source_sha256": "8c091e39401aacdccf3f326bcf18436897e3353865977c174520b3cc8df08a8d",
-  "label": "F-RECEIVE-ESTABLISHED-net-fin_segment -> ESTABLISHED",
-  "assertion_index": 269,
-  "assertion_count": 273,
-  "selected_assertion_sha256": "e7c289673ac02ff918f1386cd546dd6c44ea51bf4dd838be6c7fd106c53b8ff4",
-  "disjunct_count": 160,
+  "source_sha256": "4a3e09991041ad1ae1dccf955758116824b9184545f6ca22659e5ccf2094f53b",
+  "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> FIN-WAIT-1",
+  "assertion_index": 270,
+  "assertion_count": 274,
+  "selected_assertion_sha256": "96bc010cbff6b51da86b6956318aff2bfc8c7ef952daffc9110ebffa9eaf317f",
+  "disjunct_count": 163,
   "group_size": 8,
   "timeout_ms": 10000,
   "solver_version": "4.15.4",
@@ -126,7 +126,8 @@
         62,
         63
       ],
-      "query": "unsat"
+      "query": "unknown",
+      "reason": "timeout"
     },
     {
       "file": "group-008.smt2",
@@ -295,30 +296,40 @@
         159
       ],
       "query": "unsat"
+    },
+    {
+      "file": "group-020.smt2",
+      "disjunct_indices": [
+        160,
+        161,
+        162
+      ],
+      "query": "unsat"
     }
   ],
   "query_hashes": {
-    "equivalence.smt2": "6f52e7a5a73a8ea85cf9dff3b934e5ee559439d822780c07de2f47a709ec07af",
-    "group-000.smt2": "953966d2a756c44448fd4a15b8c1351988efb07998064eb89539888e9c7c6859",
-    "group-001.smt2": "07bcf5056b506836b68631620d7a0c2776147ef4a62a771137493a59bab4f83e",
-    "group-002.smt2": "1b13849d1a221b2207ded153a60178f74cde7176e4ff97af2104a20331dc7b86",
-    "group-003.smt2": "e69c3ad7888150287b9365389cac8ead71d136e93e137cfa7620577d9ba8ab10",
-    "group-004.smt2": "c9207bdb3f768c250279f48bd919498c079f333a64f84017135ce2feab977b50",
-    "group-005.smt2": "3465ccd6dc48e27f0004f5410b2a2df09d49459c3faad63cc126254d263f8bc9",
-    "group-006.smt2": "040345b796c2b0eb99f1e87f063186b3a82c92ec294a89308eddbd0a546fdc99",
-    "group-007.smt2": "d5f40584779bfdce5031dd8dc428cfd20cbcf13eb5057054e8116291c6c38d84",
-    "group-008.smt2": "08a49e74e66474113777b3f30ef98a66a0f765650f1484ca7196f3a9a218d977",
-    "group-009.smt2": "4546c479cd71d5847137a3df884fd9c7e6557c2590bdf199f26d4cff97a5602a",
-    "group-010.smt2": "43b863159da61e724f598a18186cdb967a3375eda1a97ae256576bdedf0e6825",
-    "group-011.smt2": "06f491e41e4d916ea722d510a0bc7c68b6e83754ead7a0ad88ad29f61f8033a9",
-    "group-012.smt2": "d7122d4574950e7e1f8a0d3e02ba5978255db6387f07bb3d02bf07503cf51bab",
-    "group-013.smt2": "d86d097014ec10c6cd19687ab31b8bbad04829ff2fefa562b23cbc5d1d441d40",
-    "group-014.smt2": "ef98c24f8b2d18c23e16eb8449fd7fe136256c71a5f44a185b133171a27dca08",
-    "group-015.smt2": "c2f4187bcc432c3c11947885ca976724b316cdccf6d8cf5637743af3f0433020",
-    "group-016.smt2": "6e72259feb4b2a22e4d5f6b9bbe90ad3903a31b302ce887d776b784801d2af8b",
-    "group-017.smt2": "9778c2f6bdc2a7777532ed28378f2b181487d8c54e18d0032a4a6a2700ea98d1",
-    "group-018.smt2": "a5bd9449c133904c447f74cd1039b6dc880bcf7722af3e8afaca0b71dcd1859c",
-    "group-019.smt2": "466890ecf09a30d0c8db99910878496a8209c2d0feb0acf7645743f548c98ad2"
+    "equivalence.smt2": "d49da3ff2136542810febc113777b1109b20a3a19f5140fec437d1f221916248",
+    "group-000.smt2": "9bce6e7055f522ee3a736858dcccc6ab3239097e425281001b420f98862fd958",
+    "group-001.smt2": "e964fd933452e2831b921583baa0c739f08a466dcec3ecb41e87ef9d8d8fffc2",
+    "group-002.smt2": "9156b22ee57fd0a52e0e0bb968cced70fb421ce22c607c636f0b6dbcb569b185",
+    "group-003.smt2": "310fe76685c2e9f952f394e983a00e1e2627b0b880aea650020d91af2247c223",
+    "group-004.smt2": "ac97a4aee75d2e982de8b80dd8ec7c4697172e01380d377d5274346abee1293d",
+    "group-005.smt2": "9a83974d659a645e1f1f7af62790ce00b2b4b352fd30c032056abef39f2dfb1d",
+    "group-006.smt2": "308d6ec2f37766d86c8ddae8d094f629309e4cd507b6a9a723b85b9592603bbb",
+    "group-007.smt2": "b60560816798247f7b11932cf1c5eb59dd00628db6f8d3101e8190a2f9098170",
+    "group-008.smt2": "ad57c9b155aea85e84c4defdc56c2bc12297d5160e4154ec6eed589399dedd50",
+    "group-009.smt2": "86f241438d31ef5b88bec358eed0d47c31704f4cb8d3c55a40d878014801d415",
+    "group-010.smt2": "8885f11d1dba573e361e8c74bb4382c1b1b910dd529b2ea70f963b8432949b5d",
+    "group-011.smt2": "d51d99072390c16dc09847fef2936c594f587fbdb1cfd30e0bdbfc0b48d780e8",
+    "group-012.smt2": "bed6f37c895f153d522e3b41197a9558606ca8196fb09c66921a25e459418025",
+    "group-013.smt2": "95d9e8909eee231ceea759b551de28bb3f7bc4a27d3e64b016e6169931be8dc8",
+    "group-014.smt2": "96381021bf24714a45f8f9ea6ac3d7f1b073070dd3d47f62b053c8dd8e145755",
+    "group-015.smt2": "76acd81a2e121d5736151b14bfce3322724f642f32ca52feaf81180000036b5f",
+    "group-016.smt2": "610551f9acee54580315b273105e9b1ae4a953ab976b8130955ee75c150525a8",
+    "group-017.smt2": "d931954e0315670b5776b3c057417fc27b5cf855ceb2cf883953b1d04005e3e6",
+    "group-018.smt2": "dea6f4fd3e661716fd7e7e70a57686b30fd0ebaf1b9ba8bf48bde53718bb0891",
+    "group-019.smt2": "022bc4b576c048a22932f30195811cdaa3ccc9a8f259ed1fc799e8ef442a4223",
+    "group-020.smt2": "620f17bf090a424d86054002884bd1790c475ed56c32aecebef80415e9638ca6"
   },
   "checker_source_sha256": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b",
   "all_other_assertions_retained": true

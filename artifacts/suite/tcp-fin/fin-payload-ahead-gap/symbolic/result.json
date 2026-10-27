@@ -2,12 +2,12 @@
   "backend": "z3-constrained-trace",
   "scope": "fixed_inputs_and_rule_choices",
   "all_input_safety": "not_claimed",
-  "query_strategy": "exact_fixed_input_and_rule_substitution",
+  "query_strategy": "exact_fixed_choice_encoding_and_fixed_input_substitution",
   "steps": 5,
   "query": "sat",
   "model_semantic_sha256": "b9493825a352913d63a8d40fb2beb7f30d075b650bb31d120a34e93b2ad1ea57",
   "solver_version": "4.15.4",
-  "smt2_sha256": "abe900eaa0a8e1c796e97eb920adeee6eb4959989dc85752bd9fef875e19a2ad",
+  "smt2_sha256": "3c60349894572aa88ff91e6b62e4c7ce528dd906aa58a75343dec8a75ccbbf80",
   "witness": {
     "initial": {
       "iss": 1000,

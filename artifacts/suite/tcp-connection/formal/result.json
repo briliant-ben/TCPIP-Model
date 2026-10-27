@@ -10,6 +10,7 @@
   "event_fields": "all_typed_values",
   "time": "unbounded_integer_ms",
   "scope": "defined_transitions_only",
+  "clock_progress": "not_applicable",
   "liveness": "not_checked",
   "unbounded_proof": false,
   "invariants": [
@@ -62,7 +63,7 @@
   "overlap_query": "unsat",
   "sample_witness": {
     "initial": {
-      "iss": 134382824,
+      "iss": 1460798724,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -87,7 +88,7 @@
         "after": {
           "state": "LISTEN",
           "variables": {
-            "iss": 134382824,
+            "iss": 1460798724,
             "irs": 0,
             "snd_una": 1000,
             "snd_nxt": 1000,
@@ -108,17 +109,130 @@
       },
       {
         "at_ms": 2,
-        "event": "net.rstack",
-        "origin": "network",
-        "transition": "C-IGNORE-NET-RSTACK-LISTEN",
-        "fields": {
-          "seq": 2048,
-          "ack": 0
+        "event": "app.abort",
+        "origin": "application",
+        "transition": "C-ABORT-LISTEN",
+        "fields": {},
+        "after": {
+          "state": "CLOSED",
+          "variables": {
+            "iss": 1460798724,
+            "irs": 0,
+            "snd_una": 1000,
+            "snd_nxt": 1000,
+            "rcv_nxt": 0,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {}
         },
+        "emitted": [
+          {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 3,
+        "event": "net.synack",
+        "origin": "network",
+        "transition": "C-REJECT-SYNACK-CLOSED",
+        "fields": {
+          "seq": 752219728,
+          "ack": 1000
+        },
+        "after": {
+          "state": "CLOSED",
+          "variables": {
+            "iss": 1460798724,
+            "irs": 0,
+            "snd_una": 1000,
+            "snd_nxt": 1000,
+            "rcv_nxt": 0,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": 1000,
+              "ack": 0,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 4,
+        "event": "net.syn",
+        "origin": "network",
+        "transition": "C-CLOSED-SYN",
+        "fields": {
+          "seq": 562133479
+        },
+        "after": {
+          "state": "CLOSED",
+          "variables": {
+            "iss": 1460798724,
+            "irs": 0,
+            "snd_una": 1000,
+            "snd_nxt": 1000,
+            "rcv_nxt": 0,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 65535
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "RA",
+              "seq": 0,
+              "ack": 562133480,
+              "window": 65535
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 5,
+        "event": "app.listen",
+        "origin": "application",
+        "transition": "C-PASSIVE-OPEN",
+        "fields": {},
         "after": {
           "state": "LISTEN",
           "variables": {
-            "iss": 134382824,
+            "iss": 1460798724,
             "irs": 0,
             "snd_una": 1000,
             "snd_nxt": 1000,
@@ -138,64 +252,23 @@
         "emitted": []
       },
       {
-        "at_ms": 3,
-        "event": "net.synack",
-        "origin": "network",
-        "transition": "C-REJECT-SYNACK-LISTEN",
-        "fields": {
-          "seq": 536872896,
-          "ack": 61184
-        },
-        "after": {
-          "state": "LISTEN",
-          "variables": {
-            "iss": 134382824,
-            "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
-            "rcv_nxt": 0,
-            "tx_seq": 1000,
-            "tx_ack": 0,
-            "tx_flags": "S",
-            "rto_ms": 1000,
-            "retries": 0,
-            "active_open": false,
-            "user_timeout_ms": 30000,
-            "msl_ms": 60000,
-            "local_window": 65535
-          },
-          "timers": {}
-        },
-        "emitted": [
-          {
-            "message": "tcp",
-            "fields": {
-              "flags": "R",
-              "seq": 61184,
-              "ack": 0,
-              "window": 65535
-            }
-          }
-        ]
-      },
-      {
-        "at_ms": 4,
+        "at_ms": 5,
         "event": "net.syn",
         "origin": "network",
         "transition": "C-LISTEN-SYN",
         "fields": {
-          "seq": 38132
+          "seq": 1191759871
         },
         "after": {
           "state": "SYN-RECEIVED",
           "variables": {
-            "iss": 134382824,
-            "irs": 38132,
-            "snd_una": 134382824,
-            "snd_nxt": 134382825,
-            "rcv_nxt": 38133,
-            "tx_seq": 134382824,
-            "tx_ack": 38133,
+            "iss": 1460798724,
+            "irs": 1191759871,
+            "snd_una": 1460798724,
+            "snd_nxt": 1460798725,
+            "rcv_nxt": 1191759872,
+            "tx_seq": 1460798724,
+            "tx_ack": 1191759872,
             "tx_flags": "SA",
             "rto_ms": 1000,
             "retries": 0,
@@ -205,8 +278,8 @@
             "local_window": 65535
           },
           "timers": {
-            "rtx": 1004,
-            "user": 30004
+            "rtx": 1005,
+            "user": 30005
           }
         },
         "emitted": [
@@ -214,93 +287,8 @@
             "message": "tcp",
             "fields": {
               "flags": "SA",
-              "seq": 134382824,
-              "ack": 38133,
-              "window": 65535
-            }
-          }
-        ]
-      },
-      {
-        "at_ms": 5,
-        "event": "app.abort",
-        "origin": "application",
-        "transition": "C-ABORT-SYN-RECEIVED",
-        "fields": {},
-        "after": {
-          "state": "CLOSED",
-          "variables": {
-            "iss": 134382824,
-            "irs": 38132,
-            "snd_una": 134382824,
-            "snd_nxt": 134382825,
-            "rcv_nxt": 38133,
-            "tx_seq": 134382824,
-            "tx_ack": 38133,
-            "tx_flags": "SA",
-            "rto_ms": 1000,
-            "retries": 0,
-            "active_open": false,
-            "user_timeout_ms": 30000,
-            "msl_ms": 60000,
-            "local_window": 65535
-          },
-          "timers": {}
-        },
-        "emitted": [
-          {
-            "message": "tcp",
-            "fields": {
-              "flags": "R",
-              "seq": 134382825,
-              "ack": 0,
-              "window": 65535
-            }
-          },
-          {
-            "message": "application",
-            "fields": {
-              "code": "aborted"
-            }
-          }
-        ]
-      },
-      {
-        "at_ms": 1003,
-        "event": "net.ack",
-        "origin": "network",
-        "transition": "C-REJECT-ACK-CLOSED",
-        "fields": {
-          "seq": 0,
-          "ack": 4096
-        },
-        "after": {
-          "state": "CLOSED",
-          "variables": {
-            "iss": 134382824,
-            "irs": 38132,
-            "snd_una": 134382824,
-            "snd_nxt": 134382825,
-            "rcv_nxt": 38133,
-            "tx_seq": 134382824,
-            "tx_ack": 38133,
-            "tx_flags": "SA",
-            "rto_ms": 1000,
-            "retries": 0,
-            "active_open": false,
-            "user_timeout_ms": 30000,
-            "msl_ms": 60000,
-            "local_window": 65535
-          },
-          "timers": {}
-        },
-        "emitted": [
-          {
-            "message": "tcp",
-            "fields": {
-              "flags": "R",
-              "seq": 4096,
-              "ack": 0,
+              "seq": 1460798724,
+              "ack": 1191759872,
               "window": 65535
             }
           }
@@ -312,6 +300,6 @@
     "status": "match",
     "compared_steps": 6
   },
-  "smt2_sha256": "9ec4750755a84503ca86e5197af8265a3fce0f961d302968a43bb5b8c6f2ac56",
-  "overlap_smt2_sha256": "bfa068e396c164ba97c3b921666e3658eea26d3fee32a8e52d1a4bf220b4e88e"
+  "smt2_sha256": "38a5b9f806be9f5bb8dc6904d0a3cf5c8a1c1a28c26edbe0a32c2c033f1b6706",
+  "overlap_smt2_sha256": "9d42e353de42cea467660b2d307b5380ae16013554f2544c751ec8b4c5aee474"
 }

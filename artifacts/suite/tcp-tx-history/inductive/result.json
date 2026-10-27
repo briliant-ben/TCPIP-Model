@@ -1,6 +1,6 @@
 {
   "backend": "z3-invariant-induction",
-  "model_semantic_sha256": "af3b362e2345acf8db0768e1d0209d7382b2b3e83d117b36abc8f5429bd7552f",
+  "model_semantic_sha256": "d7cfd0051bd47fc15e5f3eb3247255f20d0c919b6e33164248eaa24053b469a8",
   "solver_version": "4.15.4",
   "status": "unknown",
   "byte_encoding": "exact_length_projection_content_insensitive_subset",
@@ -130,6 +130,7 @@
     "T-INV-INACTIVE",
     "T-INV-SYN-SAMPLE",
     "T-INV-KARN",
+    "T-INV-SAMPLE-EPOCH",
     "T-INV-UPDATE-ORDER",
     "TX-INV-TIME-00",
     "TX-INV-TIME-01",
@@ -1723,15 +1724,14 @@
       "targets": [
         {
           "state": "ESTABLISHED",
-          "query": "unknown",
-          "reason": "timeout"
+          "query": "unsat"
         },
         {
           "state": "CLOSE-WAIT",
           "query": "unsat"
         }
       ],
-      "query": "unknown"
+      "query": "unsat"
     },
     {
       "transition": "F-RECEIVE-ESTABLISHED-net-fin",
@@ -2008,8 +2008,7 @@
       "targets": [
         {
           "state": "FIN-WAIT-1",
-          "query": "unknown",
-          "reason": "timeout"
+          "query": "unsat"
         },
         {
           "state": "FIN-WAIT-2",
@@ -2024,7 +2023,7 @@
           "query": "unsat"
         }
       ],
-      "query": "unknown"
+      "query": "unsat"
     },
     {
       "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER",
@@ -2076,8 +2075,7 @@
       "targets": [
         {
           "state": "FIN-WAIT-1",
-          "query": "unknown",
-          "reason": "timeout"
+          "query": "unsat"
         },
         {
           "state": "FIN-WAIT-2",
@@ -2092,7 +2090,7 @@
           "query": "unsat"
         }
       ],
-      "query": "unknown"
+      "query": "unsat"
     },
     {
       "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER",
@@ -2389,13 +2387,16 @@
       ]
     }
   ],
+  "clock_progress": "monotonic_integer_before_next_due",
   "length_lemmas": "unsat",
   "initial_query": "unsat",
   "target_coverage": "all_declared_destinations",
+  "clock_advance_query": "unsat",
   "query_hashes": {
-    "length-lemmas.smt2": "2c064014d7e71b6b97b616605bd1e3eb88e24dc9b0a9f6ff17d13dbd25f11468",
-    "initial.smt2": "c7614775cb4f9e3452842919de77013bc989c80b5975af99d3663616a0f92bf9",
-    "preservation.smt2": "8c091e39401aacdccf3f326bcf18436897e3353865977c174520b3cc8df08a8d",
-    "overlap.smt2": "6c3d4d56a03a682816d7b8e6205e87dfc17411f3a62355ff9a9313961b98dd68"
+    "length-lemmas.smt2": "3683330f77999a0585ae3f997ec8e8b447c3e4eb2cec82c049debb16b839a048",
+    "initial.smt2": "653c06befa0878442a3591f579555fbfb092ce445bf1d8fe14108c29e8715864",
+    "preservation.smt2": "4a3e09991041ad1ae1dccf955758116824b9184545f6ca22659e5ccf2094f53b",
+    "overlap.smt2": "79f837661eec8bc7a3a74696831f7b4e943e2e798bf4ee8439954f2a47e5e702",
+    "clock-preservation.smt2": "4daf647d63fae1c37b89e030db0cdc9b53c8a828b6e426660cb664c56fae8e6f"
   }
 }

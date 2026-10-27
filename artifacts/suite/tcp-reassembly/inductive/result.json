@@ -1368,13 +1368,15 @@
       ]
     }
   ],
+  "clock_progress": "not_applicable",
   "length_lemmas": "unsat",
   "initial_query": "unsat",
   "target_coverage": "all_declared_destinations",
+  "clock_advance_query": "not_applicable",
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
-      "iss": 3221225471,
+      "iss": 4294967167,
       "irs": 0,
       "snd_una": 1000,
       "snd_nxt": 1000,
@@ -1417,22 +1419,20 @@
     },
     "steps": [
       {
-        "at_ms": 0,
-        "event": "net.rst",
-        "origin": "network",
-        "transition": "C-IGNORE-NET-RST-CLOSED",
-        "fields": {
-          "seq": 0
-        },
+        "at_ms": 1,
+        "event": "app.connect",
+        "origin": "application",
+        "transition": "C-ACTIVE-OPEN",
+        "fields": {},
         "after": {
-          "state": "CLOSED",
+          "state": "SYN-SENT",
           "variables": {
-            "iss": 3221225471,
+            "iss": 4294967167,
             "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
+            "snd_una": 4294967167,
+            "snd_nxt": 4294967168,
             "rcv_nxt": 0,
-            "tx_seq": 1000,
+            "tx_seq": 4294967167,
             "tx_ack": 0,
             "tx_flags": "S",
             "rto_ms": 1000,
@@ -1468,9 +1468,22 @@
             "rx_advance": 0,
             "rx_acceptable": false
           },
-          "timers": {}
+          "timers": {
+            "rtx": 1001,
+            "user": 30001
+          }
         },
-        "emitted": []
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 4294967167,
+              "ack": 0,
+              "window": 16
+            }
+          }
+        ]
       }
     ]
   },
@@ -1479,10 +1492,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "9f24f5bbedbe1e25a6238a64160699480d77acc7f25bc02164408e8be1a12404",
-    "initial.smt2": "73151953a2db5f1c8292c245b59c41842d2c0fcb8d9d53860fc0aaaa053409b5",
-    "preservation.smt2": "710b443595b6e4e9010dfa888511a257bac8b3b516a779f924acd665f6f22ffb",
-    "overlap.smt2": "bb36b90bf9f30453db640dcacc22683924c446733a194fd1270c83ede7fbe864",
-    "sample.smt2": "1cc77298341eb37ce0bcd14d12c952b0cdf93780441cf569c5a78703b489da53"
+    "length-lemmas.smt2": "c18d3242ee43353b4b6ee4fd1b311c7232e7d50d61091892914a25dddf3d1b6e",
+    "initial.smt2": "b4780a2a3fe962511ddbb98e344e1fea5049054ec814d03b625596e04725e811",
+    "preservation.smt2": "4d40cfb65006612127c7f2f9b9da0f0ddcf8cf51c257ead873835d565f2f4692",
+    "overlap.smt2": "8211cfe378062876131bdc7890926dd57587d52257ee074a1d813207728c3897",
+    "sample.smt2": "0198a8abc722f427627b1bb2be6ba6bbec09520468b4e4cc2a672ebf09aa81a1"
   }
 }

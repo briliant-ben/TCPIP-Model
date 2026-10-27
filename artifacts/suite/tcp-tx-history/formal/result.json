@@ -2,14 +2,15 @@
   "backend": "z3-bmc",
   "solver_version": "4.15.4",
   "depth": 6,
-  "model_semantic_sha256": "af3b362e2345acf8db0768e1d0209d7382b2b3e83d117b36abc8f5429bd7552f",
+  "model_semantic_sha256": "d7cfd0051bd47fc15e5f3eb3247255f20d0c919b6e33164248eaa24053b469a8",
   "symbolic_initials": [
     "iss"
   ],
   "sequence_width": 32,
   "event_fields": "all_typed_values",
   "time": "unbounded_integer_ms",
-  "scope": "defined_transitions_only",
+  "scope": "defined_transitions_and_clock_progress",
+  "clock_progress": "monotonic_integer_before_next_due",
   "liveness": "not_checked",
   "unbounded_proof": false,
   "invariants": [
@@ -133,6 +134,7 @@
     "T-INV-INACTIVE",
     "T-INV-SYN-SAMPLE",
     "T-INV-KARN",
+    "T-INV-SAMPLE-EPOCH",
     "T-INV-UPDATE-ORDER",
     "TX-INV-TIME-00",
     "TX-INV-TIME-01",
@@ -161,9 +163,11 @@
   "runtime_properties": [
     "positive_timer_duration"
   ],
+  "byte_semantics": "finite_sequence_bv8_truncating_slice",
+  "sequence_order": "strict_half_space_partial_order",
   "status": "unknown",
   "reason": "canceled",
   "overlap_query": "unknown",
-  "smt2_sha256": "d27b7840e743d3cc85e480b5635bf86ee9d2052fa6b026af3972c2152dd528d0",
-  "overlap_smt2_sha256": "6ee9cbe6e800d63169a67949cceda29c809ebbee7aa649d8a547118155ff8ea0"
+  "smt2_sha256": "13dd40a2a6041c03460d5a65a706a53635b8fc68f143242f8d3a8faf4b4eaa7d",
+  "overlap_smt2_sha256": "71fc4d713cd0f40cdc74410deea899bd36a6801b5b896b274f4414ebcf6a99d3"
 }

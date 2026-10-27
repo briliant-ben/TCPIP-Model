@@ -1383,9 +1383,11 @@
       ]
     }
   ],
+  "clock_progress": "not_applicable",
   "length_lemmas": "unsat",
   "initial_query": "unsat",
   "target_coverage": "all_declared_destinations",
+  "clock_advance_query": "not_applicable",
   "sample_query": "sat",
   "sample_witness": {
     "initial": {
@@ -1414,14 +1416,12 @@
     },
     "steps": [
       {
-        "at_ms": 0,
-        "event": "net.ack",
+        "at_ms": 1,
+        "event": "net.syn",
         "origin": "network",
-        "transition": "C-REJECT-ACK-CLOSED",
+        "transition": "C-CLOSED-SYN",
         "fields": {
-          "seq": 0,
-          "ack": 0,
-          "window": 0
+          "seq": 0
         },
         "after": {
           "state": "CLOSED",
@@ -1455,9 +1455,9 @@
           {
             "message": "tcp",
             "fields": {
-              "flags": "R",
+              "flags": "RA",
               "seq": 0,
-              "ack": 0,
+              "ack": 1,
               "window": 16
             }
           }
@@ -1470,10 +1470,10 @@
     "compared_steps": 1
   },
   "query_hashes": {
-    "length-lemmas.smt2": "50478ebf7d8b8dd470621ab97866087c1b30d27bb49fb02278f32971e34294cf",
-    "initial.smt2": "4805887bebefcf0122f2bf47f44d61528d701b10c1307146b28e3874288f1bd9",
-    "preservation.smt2": "a9592d222b8c7b7cac151428144f42eabf5889e5c305dd4e761ad835d315f887",
-    "overlap.smt2": "7b5e3a0bcbeb8e4d71b5052f4e1975814cc28f36b0d12230d872d75816eb1aab",
-    "sample.smt2": "d3d545cda9f4a8b834361b390baf0d7bf8dc9632f5838333293b378bd9653723"
+    "length-lemmas.smt2": "913e08c758f2e27387756a1477ecb9c1aabdb90b08b679788e80c684c60bdd40",
+    "initial.smt2": "f200c84f1af9da0c89adc84344a7efc8f24b14ea5c9c707fa7354e5023e10b6f",
+    "preservation.smt2": "3b0f67d31d5cba28ecb505fbe53da9587c895a2fa0f3ac5dea74e81163d284a0",
+    "overlap.smt2": "ac161269d66855369f64ecd3d471a8cb169cd8d720250cb5b5bac796ed2ac034",
+    "sample.smt2": "7196464a525fe49fb4da7607a86b8b5f8363c6aaa99ccd06524567ccaebcb192"
   }
 }

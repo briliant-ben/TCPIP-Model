@@ -2,14 +2,15 @@
   "backend": "z3-bmc",
   "solver_version": "4.15.4",
   "depth": 6,
-  "model_semantic_sha256": "697682c7041608e5e897a60193ca9719f0a27fa297ba28d344c2169565c06579",
+  "model_semantic_sha256": "74d3f916c36cb61e72dc7e5d915415b2621160440389f0c5d0e7ec571b60dbff",
   "symbolic_initials": [
     "iss"
   ],
   "sequence_width": 32,
   "event_fields": "all_typed_values",
   "time": "unbounded_integer_ms",
-  "scope": "defined_transitions_only",
+  "scope": "defined_transitions_and_clock_progress",
+  "clock_progress": "monotonic_integer_before_next_due",
   "liveness": "not_checked",
   "unbounded_proof": false,
   "invariants": [
@@ -133,15 +134,18 @@
     "T-INV-INACTIVE",
     "T-INV-SYN-SAMPLE",
     "T-INV-KARN",
+    "T-INV-SAMPLE-EPOCH",
     "T-INV-UPDATE-ORDER"
   ],
   "safety_query": "unknown",
   "runtime_properties": [
     "positive_timer_duration"
   ],
+  "byte_semantics": "finite_sequence_bv8_truncating_slice",
+  "sequence_order": "strict_half_space_partial_order",
   "status": "unknown",
   "reason": "canceled",
   "overlap_query": "unknown",
-  "smt2_sha256": "48765c4159274668ab6aae090ebc4e97905c906da2ca3d5f6af144848a1f084a",
-  "overlap_smt2_sha256": "cc82c87e37c8b1059cfd0a47e18b746a8faa0735e2cd924b89edb8c7f7e1a404"
+  "smt2_sha256": "79036efc10f12dc257ed3c7ff296f59267d9ae92c47dcf3c4d3907475f53d18f",
+  "overlap_smt2_sha256": "06bce895794c19ac51cd974925d463a9fdd1c530b2cf811baf6941299c12b773"
 }

@@ -85,3 +85,6 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 
 
 2026-10-27：当前 SYN 开发模型的三个 unknown 目标已用完整单项分组逐个独立验收（166／166／167 项，共 499 组），完整字节非空样本及搬迁后的 CLI verify 通过，原主归纳 unknown 保留。新证据见 diagnostics/syn-singleton-refinement-e6880f3；尚需统一 profile/配置接入及场景验收，不提前提升为完整 TCP 或输出／时序证明。当前九 profile 重建与全量回归仍沿冻结输入执行。
+
+
+2026-10-27：纯时钟修复已完成 268 方法完整回归及九 profile 的重新生成／完整性验收，所有旧 unknown 如实保留。继续开发继承 SYN 历史的 delayed ACK overlay，保持父模型和已验收输入冻结；新开发模型须独立固定输入／故障验证及形式检查，再接入统一 profiles，不冒充当前九 profile 的覆盖。

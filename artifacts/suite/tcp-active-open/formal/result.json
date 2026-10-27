@@ -10,6 +10,7 @@
   "event_fields": "all_typed_values",
   "time": "unbounded_integer_ms",
   "scope": "defined_transitions_only",
+  "clock_progress": "not_applicable",
   "liveness": "not_checked",
   "unbounded_proof": false,
   "invariants": [
@@ -70,7 +71,7 @@
         ]
       },
       {
-        "at_ms": 2,
+        "at_ms": 1000,
         "event": "net.synack",
         "origin": "network",
         "transition": "T-ACCEPT-SYNACK",

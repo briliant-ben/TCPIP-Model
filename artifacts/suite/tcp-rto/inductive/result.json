@@ -1,6 +1,6 @@
 {
   "backend": "z3-invariant-induction",
-  "model_semantic_sha256": "697682c7041608e5e897a60193ca9719f0a27fa297ba28d344c2169565c06579",
+  "model_semantic_sha256": "74d3f916c36cb61e72dc7e5d915415b2621160440389f0c5d0e7ec571b60dbff",
   "solver_version": "4.15.4",
   "status": "unknown",
   "byte_encoding": "exact_length_projection_content_insensitive_subset",
@@ -130,6 +130,7 @@
     "T-INV-INACTIVE",
     "T-INV-SYN-SAMPLE",
     "T-INV-KARN",
+    "T-INV-SAMPLE-EPOCH",
     "T-INV-UPDATE-ORDER"
   ],
   "scope": "defined_nonterminal_transitions_and_listed_state_invariants",
@@ -2272,13 +2273,16 @@
       ]
     }
   ],
+  "clock_progress": "monotonic_integer_before_next_due",
   "length_lemmas": "unsat",
   "initial_query": "unsat",
   "target_coverage": "all_declared_destinations",
+  "clock_advance_query": "unsat",
   "query_hashes": {
-    "length-lemmas.smt2": "6ef6a765f70426c1d2ba54a7261a16b5215b7631b053b468b1690513356fec3f",
-    "initial.smt2": "1f1a1d00722a0bfb102f9e4584c5a6864b173694e0bc8c3ad640a78b2509643a",
-    "preservation.smt2": "702016153839d28ca706f6fb102c0a9ccedb1eec158e70c0996c29331ddc1416",
-    "overlap.smt2": "eff9a3fc5e4d7b1e1eb14530084cba405b92b80c8a80503df2573bcbd44f553a"
+    "length-lemmas.smt2": "e28e18fa0f9ad66f19501cafae38ed7a5aa60f662306a6d14bd127711f010c77",
+    "initial.smt2": "5de21eafb94d5c35a6b5e6667c9e09c81c4632eccf94b4b47a12f44980865445",
+    "preservation.smt2": "f248a6febad9f82715b252271137b0a4be5c44dc08721e7e3769c8089071eaa6",
+    "overlap.smt2": "5e1fbb440c293ead6f7ac7df18ae07ce861b56fe5eb709ed3d4f01804a230b5f",
+    "clock-preservation.smt2": "3b141b17d7931eca409b0653498fb88927f1d198adaeeea2316189c06bbc1e82"
   }
 }
