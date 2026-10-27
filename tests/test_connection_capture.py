@@ -8,7 +8,7 @@ from protocol_lab.capture import normalize
 from protocol_lab.flow import ROOT,read,run_scenario
 from protocol_lab.ir import ModelError,load
 from protocol_lab.packets import compare,write_pcap
-from protocol_lab.profiles import control_packets
+from protocol_lab.profiles import control_packets,profile_inputs
 from test_validation import PROFILE,wire_fixture
 
 
@@ -77,6 +77,8 @@ class ConnectionCaptureTests(unittest.TestCase):
 
     def test_three_new_syn_scenarios_have_synthetic_only_codec_roundtrips(self):
         model=load(ROOT/'model/tcp-syn-history.json')
+        profile=next(p for p in read(ROOT/'profiles.json')['profiles']if p['id']=='tcp-syn-history')
+        self.assertIn('docs/connection-capture.md',profile_inputs(profile,model))
         for p in sorted((ROOT/'scenarios/syn-history').glob('*.json')):
             with self.subTest(scenario=p.stem):
                 scenario=read(p);runtime=run_scenario(model,scenario);expected=control_packets(runtime,scenario)

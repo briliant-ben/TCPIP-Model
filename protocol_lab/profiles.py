@@ -33,6 +33,8 @@ def profile_inputs(profile, model):
         paths.append(ROOT / "formal/partition_queries.py")
     if profile.get("wire_projection"):
         paths.append(ROOT / "packet-profile.json")
+    if profile.get("wire_projection") == "tcp-connection-v1":
+        paths.append(ROOT / "docs/connection-capture.md")
     inputs.update({str(p.relative_to(ROOT)): digest(p) for p in paths})
     for requirement in model["requirements"].values():
         source = requirement["source"]
