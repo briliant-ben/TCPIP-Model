@@ -15,6 +15,8 @@ def sha(value):
 
 
 def build(model, profile, inputs, scenarios, formal, induction, artifacts, refinement=None):
+    from .profile_config import profile_group_size
+    configured_group_size = profile_group_size(profile)
     refinement = refinement or {"status": "not_run"}
     model_sha = model_hash(model)
     for record in (formal, induction):
@@ -104,6 +106,8 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts, refin
         refined_status = "not_run"
         if status != "not_run":
             from .refinement import PASS, NOT_NEEDED, validate_summary
+            require(refinement.get("group_size") == configured_group_size,
+                    "Refinement group size differs from profile configuration")
             validate_summary(model, induction, refinement)
             require(refinement["primary_result_sha256"] == artifacts.get("inductive/result.json"),
                     "Refinement primary result hash mismatch")
@@ -119,7 +123,9 @@ def build(model, profile, inputs, scenarios, formal, induction, artifacts, refin
             "primary_status": induction["status"],
             "original_unknown_targets": refinement.get("original_unknown_targets", []),
             "refinement_method": "all_original_assertions_retained_and_exhaustive_disjunct_partition",
-            "per_query_timeout_ms": refinement.get("timeout_ms")}
+            "per_query_timeout_ms": refinement.get("timeout_ms"),
+            "configured_group_size": configured_group_size,
+            "actual_group_size": refinement.get("group_size")}
         refined = claim("refined-inductive-state", statement, refined_status,
                         "z3-exact-query-refinement", refinement.get("solver_version"),
                         {p: h for p, h in artifacts.items() if p.startswith(("inductive/", "inductive-refinement/"))})

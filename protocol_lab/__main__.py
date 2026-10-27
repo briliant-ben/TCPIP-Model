@@ -40,6 +40,8 @@ def main():
         p.add_argument("model", type=Path)
         p.add_argument("--inductive", type=Path, required=True)
         p.add_argument("--out", type=Path, required=True)
+        if name == "inductive-refine":
+            p.add_argument("--group-size", type=int, default=8, help="Maximum disjuncts per complete partition; default 8")
     p = sub.add_parser("observe", help="Decode, normalize and bind a PCAP to a built scenario")
     p.add_argument("pcap", type=Path)
     p.add_argument("--profile", type=Path, required=True)
@@ -103,7 +105,7 @@ def main():
         elif args.command in ("inductive-refine", "inductive-refine-verify"):
             from .refinement import PASS, NOT_NEEDED, refine, verify
             model = load(args.model)
-            result = refine(model, args.inductive, args.out) if args.command == "inductive-refine" else verify(model, args.inductive, args.out)
+            result = refine(model, args.inductive, args.out, group_size=args.group_size) if args.command == "inductive-refine" else verify(model, args.inductive, args.out)
             print(f"{result['status']}; {args.out / 'result.json'}")
             return 0 if result["status"] in (PASS, NOT_NEEDED, "valid_refined_induction_evidence") else 2
         elif args.command == "formal":

@@ -63,3 +63,6 @@ IR 0.3 支持精确有理值和显式 clock-v3 事件时钟，参考／独立 SM
 
 
 时钟 v3 模型的 BMC 另包含纯时钟步（choice=-2）：严格增时、早于下一活动定时器截止点、其余存储不变，包括声明终态。深度计声明事件或纯时钟步，后缀填充不增时。归纳的独立 clock-preservation.smt2 检查该保持义务；失败、unknown 或缺失不能由逐规则补充精化代替。固定 choice 重放只构造所选规则动作，仍保留全部 guard 和独立参考重放，不约束后态或输出；全输入查询不使用此裁剪。完整语义见 docs/semantics.md。
+
+
+统一注册表增加 SYN 历史和 delayed ACK，合计 11 个有限 profile。RTO／发送历史／SYN／delayed ACK 显式设置 inductive_refinement_group_size=1；CLI 生成支持 --group-size，claims 校验配置与实际结果一致。不能把旧开发证据只改源哈希接入。SYN 100 个输入，delayed ACK 23 个输入（7 新策略、16 未修改恢复／SYN 输入），具体未覆盖项见对应范围文档。

@@ -20,3 +20,6 @@
 Linux 实机通道仍受 packetdrill/TUN/网络 capabilities 缺失限制。lwIP 内存接口已提供无需权限的真实实现执行通道，但当前两个场景不能代替数据、其他协议或完整 TCP conformance 测试。
 
 后续应先把 TCP 数据模型与连接模型组合，固定有限缓冲和窗口语义；随后以 UDP/IPv4 验证跨协议分层 IR，再加入 ICMP、ARP、IPv6/NDP 与 socket 服务。每阶段保持反例重放、独立编解码、来源追溯及实现差异报告。
+
+
+注册表现包含有限 SYN 发送历史与 delayed ACK，共 11 profile；delayed ACK 只声明 23 个固定输入的验收范围，尚未迁移所有受接收策略影响的场景。无在途 persist、拥塞／fast recovery、通用输出／时间与实现精化及独立数据实现闭环仍未完成。注册本身不提升任何 unknown 或完整性状态。

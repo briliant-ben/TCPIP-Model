@@ -146,6 +146,12 @@ class DelayedAckTests(unittest.TestCase):
         with self.assertRaisesRegex(ModelError,'ACK-INV-TIMER'):m.dispatch('app.transmit',time_ms=31)
         self.assertEqual((m.now_ms,m.snapshot(),m.trace),before)
 
+    def test_unchanged_rto_tx_and_syn_contracts_are_reused_without_rewriting_oracles(self):
+        for directory in ('rto','tx-history','syn-history'):
+            paths=sorted((ROOT/'scenarios'/directory).glob('*.json'));self.assertTrue(paths)
+            for path in paths:
+                with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+
     def test_explicit_fixed_input_scenarios_and_full_byte_backend(self):
         paths=sorted((ROOT/'scenarios/delayed-ack').glob('*.json'));self.assertGreaterEqual(len(paths),7)
         for path in paths:

@@ -1,6 +1,6 @@
 # 有限 delayed ACK 组合开发模型
 
-`model/tcp-delayed-ack.json` 声明式继承 tcp-syn-history，共用序列号、发送／接收与重组缓冲、累计 ACK/window、FIN、RTT/RTO 和发送历史。另设 delack 定时器，延迟状态、累计新字节、完整段计数及首段到达时刻均在 IR 中显式表达；没有协议回调。尚未注册 suite，不属于已有九 profile 的验收范围。
+`model/tcp-delayed-ack.json` 声明式继承 tcp-syn-history，共用序列号、发送／接收与重组缓冲、累计 ACK/window、FIN、RTT/RTO 和发送历史。另设 delack 定时器，延迟状态、累计新字节、完整段计数及首段到达时刻均在 IR 中显式表达；没有协议回调。已列入统一注册表，使用显式单项分组配置；本轮验收须实际重建，旧七场景开发证据不直接升级为统一结果。
 
 规范固定为仓库 RFC 9293（August 2022）§3.8.6.3，MUST-40 为延迟严格小于 500ms，SHLD-18/19 为 delayed ACK 及每第二个完整段或 2×RMSS 新字节至少确认一次。选择 RMSS=4、默认 40ms，配置允许 1..499ms；不是 RFC 要求固定 40ms。第一段启动定时器，后续可延迟段不重置首段截止点。
 
@@ -10,4 +10,6 @@
 
 状态不变量约束配置、pending／活动定时器一致、计数、首段时刻及合法连接状态。当前 IR 没有定时器截止点表达式，故这些不变量不单独证明通用延迟上限或定时器与首段时刻的关系；另以独立手写输出／时间预期、计数和故障变体验证固定输入契约。独立全字节符号重放、BMC、状态归纳分别记录；不把固定轨迹或长度投影当作字节内容、输出时序、解释／翻译精化或完整 TCP 的证明。
 
-未包含 ACK decimation、GRO、接收端 SWS 优化、timestamp、无在途 persist、拥塞／fast recovery 或独立实现数据证据。旧 profile 仍保持其立即 ACK 策略，不能直接沿用旧场景的输出 oracle 宣称新策略兼容；新场景必须给出新策略下的明确预期。
+未包含 ACK decimation、GRO、接收端 SWS 优化、timestamp、无在途 persist、拥塞／fast recovery 或独立实现数据证据。旧 profile 仍保持其立即 ACK 策略，含受影响接收事件的旧场景不能直接沿用输出 oracle 宣称新策略兼容；新场景必须给出新策略下的明确预期。
+
+统一 profile 包含 7 个独立新策略场景，以及不包含普通接收数据的 9 个 RTO、4 个发送历史和 3 个 SYN 场景，共 23 个固定输入。后 16 个原场景和 oracle 原样复用；受 delayed ACK 策略影响的数据／重组场景仍需逐项补充新预期，不能把这 23 个输入当作整个连接模型的覆盖。

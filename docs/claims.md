@@ -18,3 +18,6 @@ For post-action targets, the induction proposition also binds each rule's defaul
 
 
 Clock-v3 claims explicitly bind monotonic clock progress before the next active timer deadline. A bounded step is a declared event or a pure clock advance. Induction additionally requires an UNSAT clock-preservation query covering all invariant-satisfying states, including terminal states; supplementary per-rule refinement cannot omit that obligation. Clock-only steps do not satisfy the ordinary-transition nonvacuity sample. Older evidence without these bindings cannot be reused as passing clock-v3 evidence.
+
+
+Supplementary statements bind both configured and actual disjunct group sizes. A profile cannot reuse evidence generated under a different declared configuration, including a not-needed result. The setting is validated before a profile build starts; configuration/reference execution does not import optional Z3 dependencies. Completeness, original constraints, original unknown results, independent checks and the fixed per-query time budget remain mandatory.

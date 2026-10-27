@@ -97,7 +97,8 @@
       "symbolic_replay": true,
       "wire_projection": "tcp-fin-v1",
       "inductive": true,
-      "inductive_refinement": true
+      "inductive_refinement": true,
+      "inductive_refinement_group_size": 1
     },
     {
       "id": "tcp-tx-history",
@@ -115,7 +116,44 @@
       "symbolic_replay": true,
       "wire_projection": "tcp-fin-v1",
       "inductive": true,
-      "inductive_refinement": true
+      "inductive_refinement": true,
+      "inductive_refinement_group_size": 1
+    },
+    {
+      "id": "tcp-syn-history",
+      "model": "model/tcp-syn-history.json",
+      "scenarios": [
+        "scenarios/data",
+        "scenarios/reassembly",
+        "scenarios/segments",
+        "scenarios/close",
+        "scenarios/fin",
+        "scenarios/rto",
+        "scenarios/tx-history",
+        "scenarios/syn-history"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-fin-v1",
+      "inductive": true,
+      "inductive_refinement": true,
+      "inductive_refinement_group_size": 1
+    },
+    {
+      "id": "tcp-delayed-ack",
+      "model": "model/tcp-delayed-ack.json",
+      "scenarios": [
+        "scenarios/rto",
+        "scenarios/tx-history",
+        "scenarios/syn-history",
+        "scenarios/delayed-ack"
+      ],
+      "packetdrill": null,
+      "symbolic_replay": true,
+      "wire_projection": "tcp-fin-v1",
+      "inductive": true,
+      "inductive_refinement": true,
+      "inductive_refinement_group_size": 1
     }
   ],
   "pending_modules": [
@@ -126,8 +164,8 @@
     },
     {
       "id": "tcp-recovery",
-      "status": "partial_rtt_rto_karn_profile",
-      "scope": "exact RTT/RTO/Karn and finite data/FIN transmission-age profiles; SYN timeout history, general output/refinement proof, delayed ACK, no-flight persist, fast retransmit and congestion/recovery remain incomplete"
+      "status": "partial_rto_history_delayed_ack_profiles",
+      "scope": "finite RTT/RTO/Karn, data/FIN/SYN transmission age and delayed ACK profiles; universal output/timing and implementation refinement, no-flight persist, congestion and fast recovery remain incomplete"
     },
     {
       "id": "udp",

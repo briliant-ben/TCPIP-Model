@@ -221,3 +221,10 @@ Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713
 开发 profile 的 7 个手写场景、完整字节重放及 tcp-fin-v1 合成 codec 均通过；BMC depth=6 unknown、主归纳 unknown、纯时钟保持 unsat。默认 8 项分组生成／首次复查通过，但随后独立完整复查 group-007 在 10000ms 超时；失败日志和 pending 元数据原样保留，原 report/claims 未覆盖。另用 group_size=1 对全部原未知目标完整分组，全部等价／组复查、非空样本和完整 verify 通过。artifacts/tcp-delayed-ack-development/development-verification.json 分别绑定默认超时及单项补充证据；仍不是已注册 suite 验收或完整 TCP／通用时间证明。
 
 当前发送历史的原归纳仅剩一个 unknown 目标；其 163 个单项分组、等价、非空完整字节样本及完整独立 verify 也通过，原主／默认补充 unknown 不改写，完整冻结主查询与新证据保存在 diagnostics/tx-history-singleton-refinement-e6880f3。后续应把分组配置显式接入 profiles／CLI，并统一注册 SYN／delayed ACK、重建和验收；再推进 persist、拥塞恢复及独立数据实现。
+
+
+## 2026-10-27：统一注册与显式分组配置（验收进行中）
+
+新增不依赖可选 Z3 的 profile_config 校验；配置必须是正整数、refinement 明确启用。run_profile 传递实际配置，claims 绑定配置／实际大小并拒绝错配，CLI 增加 --group-size。保持检查器原查询、约束、独立复查和 10000ms 时限不变。新增配置／CLI／错配／无 Z3 参考路径测试；修正原单项测试夹具显式声明其配置。
+
+注册 SYN 和 delayed ACK，RTO／发送历史／SYN／delayed ACK 显式单项分组。SYN 100 个固定输入；delayed ACK 新 7 个加原样复用的 16 个恢复／SYN 输入，共 23 个，新增继承场景回归。原立即 ACK 数据场景的受影响 oracle 不自动迁移。旧开发超时与单项补充证据保留不重绑。统一 11 profile、本轮完整回归和证据验收尚须实际完成。

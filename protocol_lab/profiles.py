@@ -91,6 +91,8 @@ def graph(model):
 
 
 def run_profile(profile, out, formal=False, depth=6):
+    from .profile_config import profile_group_size
+    group_size = profile_group_size(profile)
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     write(out / "report.json", {"status": "incomplete"})
@@ -168,7 +170,7 @@ def run_profile(profile, out, formal=False, depth=6):
     if formal and profile.get("inductive_refinement"):
         require(profile.get("inductive"), "Refinement requires primary induction")
         from .refinement import refine
-        refinement = refine(model, out / "inductive", out / "inductive-refinement")
+        refinement = refine(model, out / "inductive", out / "inductive-refinement", group_size=group_size)
         generated += [out / "inductive-refinement" / n for n in (*refinement["artifact_hashes"], "result.json")]
     result = {"profile": profile["id"], "protocol": model["protocol"], "status": "reference_pass",
               "model_sha256": digest(model_path), "sources": sources, "input_hashes": inputs,

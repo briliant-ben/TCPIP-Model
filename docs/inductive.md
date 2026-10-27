@@ -71,3 +71,17 @@ Profile 可显式声明 `inductive_refinement: true`。原 `inductive/result.jso
 ```
 
 通过时补充状态为 refined_inductive_queries_pass。claims 保留原 inductive-state 的 unknown，另发 refined-inductive-state（verified_refined_inductive_state_properties）；同样不是完整协议、内容／输出精化、活性或 Rocq 内核证明。BMC unknown 不因此提升。工具设计与历史试点见 query-partition.md。
+
+
+## 显式分组配置
+
+Profile 可声明 `inductive_refinement_group_size: 1`；缺省为 8，必须是正整数且 refinement 明确启用，bool／零／负数／字符串均拒绝。运行时把该值传给真实检查器，claims 同时绑定配置值与实际值，验收拒绝不一致；不是根据是否通过而静默改变策略。原查询的全部项和上下文必须覆盖，每次求解仍为 10000ms。
+
+独立 CLI 生成时可显式选择；验证读取已绑定参数：
+
+```sh
+.venv/bin/python -m protocol_lab inductive-refine model/tcp-syn-history.json --inductive artifacts/suite/tcp-syn-history/inductive --out artifacts/suite/tcp-syn-history/inductive-refinement --group-size 1
+.venv/bin/python -m protocol_lab inductive-refine-verify model/tcp-syn-history.json --inductive artifacts/suite/tcp-syn-history/inductive --out artifacts/suite/tcp-syn-history/inductive-refinement
+```
+
+RTO、发送历史、SYN 与 delayed ACK 统一配置为单项分组；其余已通过主归纳的 profile 保持默认。原开发超时证据保留，新的统一结果必须实际生成及复查，不只更新哈希。所有模型均不因此获得完整 TCP 或输出／时序证明。

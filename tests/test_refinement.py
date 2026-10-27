@@ -59,7 +59,7 @@ class RefinementTests(unittest.TestCase):
         self.assertEqual(r['replay']['status'],'match')
         self.assertEqual((self.primary/'result.json').read_bytes(),before)
         self.assertEqual(verify(self.model,self.primary,self.out)['status'],'valid_refined_induction_evidence')
-        claims=build(self.model,{'id':'test','inductive_refinement':True},checker_sources(),[],{'status':'not_run'},primary,self.artifacts(r),refinement=r)
+        claims=build(self.model,{'id':'test','inductive_refinement':True,'inductive_refinement_group_size':1},checker_sources(),[],{'status':'not_run'},primary,self.artifacts(r),refinement=r)
         self.assertEqual(claims['claims'][1]['status'],'unknown')
         self.assertEqual(claims['claims'][3]['status'],'verified_refined_inductive_state_properties')
         self.assertFalse(claims['claims'][3]['kernel_checked_proof'])

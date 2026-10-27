@@ -183,3 +183,6 @@ docs/                  语义、外部测试约定、里程碑
 [数据与关闭组合](docs/tcp-close.md)保留此前 40 个输入并新增 21 个关闭场景；FIN 与字节队列分别计数，共享一个重传定时器。未宣称完整 TCP 关闭、恢复或数据实机闭环。
 
 [FIN 组合 profile](docs/tcp-fin.md)新增 23 个输入，连同既有 61 个输入分别保存参考执行、完整字节符号重放和合成 codec 证据。场景 0.2 可显式约束消息内容、顺序与时间；新 post-target-v2 语义由参考与独立后端实现。所有声明目标均须纳入状态归纳义务，Rocq 原语证明不代表该翻译器或 TCP 已获内核证明。
+
+
+[SYN 发送历史](docs/tcp-syn-history.md)与 [delayed ACK](docs/tcp-delayed-ack.md)已列入统一注册表，合计 11 个有限 profile；登记不等于完整 TCP 验收。单项精确分组由 profile/CLI 显式配置，claims 检查实际配置并保留主 unknown。当前重建／验收结果以 suite 报告和实施日志为准，开发快照不直接升级。
