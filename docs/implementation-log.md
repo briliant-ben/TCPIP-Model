@@ -246,3 +246,5 @@ Rocq 当前源实际检查完成：e6880f3 的 push run 40363008238 / job 121713
 当前 193 规则／161 不变量；14 项方法通过（97.035s），含 7 固定输入完整字节重放、回绕、半关闭、1..60s persist 指数间隔、早截止等待、ACK piggyback、RTO 交接及故障变体。原主归纳 unknown，初值／guard／纯时钟通过，未知目标完整单项分组和独立 CLI verify 通过，保存于 artifacts/persist-initial。尚非完整 persist／TCP、通用输出时序或实现／Linux 证据；不属于原 290 项／11 profile 验收。
 
 旧 290 方法运行最终结束（2191.211s，2 errors），11 profile 原生成也已终止（exit 2），错误均为 No peer SYN+ACK captured。完整日志归档至 diagnostics/eleven-profiles-opening-gap-9afd06d，原部分产物不接入新验收。修复后重新冻结源码，启动 311 方法完整回归、全部 11 profile 重建和独立 persist 开发 profile；这些新长任务尚未完成。
+
+persist 独立开发流水线实际生成并完成单独验收：30 个固定输入（7 新、23 原恢复／SYN／delayed ACK）参考执行、完整字节重放及 tcp-connection-v1 synthetic-only codec 均匹配；主 depth=6 BMC／归纳 unknown 保留，补充单项复查通过。当前输入、模型与全部 report 哈希、源完整性、claims 重建及独立 recheck 均核对，保存于 artifacts/tcp-persist-development。该未注册开发结果与正在运行的新 11-profile／311 方法验收分开，不计作外部实现或 Linux 数据证据。

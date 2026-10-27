@@ -1,0 +1,113 @@
+{
+  "capture_origin": "synthetic_model",
+  "frames": [
+    {
+      "frame": 1,
+      "packet_id": "e0001:out:0",
+      "event_id": "e0001",
+      "requirements": [
+        "CONN-OPEN",
+        "RTO-PROFILE",
+        "RTT-ALG",
+        "RTT-KARN",
+        "RTT-TIMER",
+        "RTT-SCOPE",
+        "TX-HISTORY",
+        "TX-SCOPE",
+        "SYN-TX-AGE",
+        "SYN-IMMEDIATE-REPLY",
+        "SYN-HISTORY-SCOPE",
+        "ACK-DELAY",
+        "ACK-GAP",
+        "ACK-SCOPE",
+        "PERSIST-ZWP",
+        "PERSIST-OWNERSHIP",
+        "PERSIST-SCOPE"
+      ]
+    },
+    {
+      "frame": 2,
+      "packet_id": "e0002:in",
+      "event_id": "e0002",
+      "requirements": [
+        "CONN-SYN-SENT",
+        "RTO-PROFILE",
+        "RTT-ALG",
+        "RTT-KARN",
+        "RTT-TIMER",
+        "RTT-SCOPE",
+        "TX-HISTORY",
+        "TX-SCOPE",
+        "SYN-TX-AGE",
+        "SYN-IMMEDIATE-REPLY",
+        "SYN-HISTORY-SCOPE",
+        "ACK-DELAY",
+        "ACK-GAP",
+        "ACK-SCOPE",
+        "PERSIST-ZWP",
+        "PERSIST-OWNERSHIP",
+        "PERSIST-SCOPE"
+      ]
+    },
+    {
+      "frame": 3,
+      "packet_id": "e0002:out:1",
+      "event_id": "e0002",
+      "requirements": [
+        "CONN-SYN-SENT",
+        "RTO-PROFILE",
+        "RTT-ALG",
+        "RTT-KARN",
+        "RTT-TIMER",
+        "RTT-SCOPE",
+        "TX-HISTORY",
+        "TX-SCOPE",
+        "SYN-TX-AGE",
+        "SYN-IMMEDIATE-REPLY",
+        "SYN-HISTORY-SCOPE",
+        "ACK-DELAY",
+        "ACK-GAP",
+        "ACK-SCOPE",
+        "PERSIST-ZWP",
+        "PERSIST-OWNERSHIP",
+        "PERSIST-SCOPE"
+      ]
+    },
+    {
+      "frame": 4,
+      "packet_id": "e0004:out:0",
+      "event_id": "e0004",
+      "requirements": [
+        "PERSIST-ZWP",
+        "PERSIST-OWNERSHIP",
+        "PERSIST-SCOPE"
+      ]
+    },
+    {
+      "frame": 5,
+      "packet_id": "e0005:in",
+      "event_id": "e0005",
+      "requirements": [
+        "SEG-ORDER",
+        "SEG-ACK",
+        "SEG-WINDOW",
+        "SEG-SHRINK",
+        "RTT-ALG",
+        "RTT-KARN",
+        "RTT-TIMER",
+        "RTT-SCOPE",
+        "TX-HISTORY",
+        "TX-SCOPE",
+        "SYN-TX-AGE",
+        "SYN-IMMEDIATE-REPLY",
+        "SYN-HISTORY-SCOPE",
+        "ACK-DELAY",
+        "ACK-GAP",
+        "ACK-SCOPE",
+        "PERSIST-ZWP",
+        "PERSIST-OWNERSHIP",
+        "PERSIST-SCOPE"
+      ]
+    }
+  ]
+}

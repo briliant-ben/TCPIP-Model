@@ -1,0 +1,131 @@
+{
+  "scenario_version": "0.2",
+  "id": "persist-sequence-wrap",
+  "description": "Independent hand-calculated one-octet persist/sequence/timing contract. Synthetic evidence only.",
+  "initial": {
+    "iss": 4294967294
+  },
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite no-flight zero-window demand; valid abstract ACK/window events. No resource/user abort policy."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 4294967295,
+        "window": 0
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 20,
+          "emitted": [
+            {
+              "message": "application",
+              "fields": {
+                "code": "queued"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 1020,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 1020,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 4294967295,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 1100,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 0,
+        "window": 0
+      },
+      "expect_trace": [
+        {
+          "at_ms": 1100,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 3020,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 3020,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 0,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  128
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_buf": [],
+      "rtx_buf": [
+        128
+      ],
+      "snd_una": 0,
+      "snd_nxt": 1,
+      "rto_ms": 1000,
+      "retries": 0,
+      "persist_active": true
+    },
+    "timers": {
+      "persist": 7020
+    }
+  }
+}

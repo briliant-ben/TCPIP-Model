@@ -1,0 +1,17 @@
+{
+  "id": "tcp-persist-development",
+  "model": "model/tcp-persist.json",
+  "scenarios": [
+    "scenarios/rto",
+    "scenarios/tx-history",
+    "scenarios/syn-history",
+    "scenarios/delayed-ack",
+    "scenarios/persist"
+  ],
+  "packetdrill": null,
+  "symbolic_replay": true,
+  "wire_projection": "tcp-connection-v1",
+  "inductive": true,
+  "inductive_refinement": true,
+  "inductive_refinement_group_size": 1
+}

@@ -1,0 +1,117 @@
+{
+  "scenario_version": "0.2",
+  "id": "delayed-piggyback-cancels",
+  "description": "Independent hand-calculated delayed ACK output/time contract; synthetic evidence only.",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "One finite connection, RMSS=4; valid abstract data/ACK/window events. Delayed ACK does not imply congestion recovery."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16,
+        "data": [
+          0,
+          1
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 20,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 30,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          9,
+          8
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 30,
+          "emitted": [
+            {
+              "message": "application",
+              "fields": {
+                "code": "queued"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 31,
+      "event": "app.transmit",
+      "fields": {},
+      "expect_trace": [
+        {
+          "at_ms": 31,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9003,
+                "window": 14,
+                "payload": [
+                  9,
+                  8
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 60,
+      "tick": true,
+      "expect_trace": []
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "rcv_nxt": 9003,
+      "rcv_buf": [
+        0,
+        1
+      ],
+      "ack_pending": false,
+      "ack_bytes": 0,
+      "ack_since_ms": 0,
+      "snd_nxt": 1003
+    },
+    "timers": {
+      "rtx": 1031
+    }
+  }
+}

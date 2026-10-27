@@ -1,0 +1,38 @@
+{
+  "status": "valid_development_bindings_not_registered_suite",
+  "registered_suite_member": false,
+  "protocol_complete": false,
+  "source_commit": "9641d86144f386fad62c51777cbe6f8f4c7db803",
+  "profile_sha256": "09f63172bd0b45b79c3fc7682842d26d673cce57666b86c94763d278146e3ec4",
+  "report_sha256": "36eed638933ece65e086e4d06ec2ceb771ded5f28ca90b003dc62bed64d3b03e",
+  "checks": [
+    "frozen/current inputs",
+    "all report hashes",
+    "official source integrity",
+    "30 full-byte fixed input replays",
+    "30 synthetic-only codec roundtrips",
+    "independent supplementary recheck",
+    "exact claim regeneration"
+  ],
+  "formal": {
+    "status": "unknown",
+    "backend": "z3-bmc",
+    "depth": 6,
+    "reason": "canceled",
+    "safety_query": "unknown",
+    "overlap_query": "unknown"
+  },
+  "primary_induction": {
+    "status": "unknown",
+    "backend": "z3-invariant-induction",
+    "byte_encoding": "exact_length_projection_content_insensitive_subset",
+    "sequence_encoding": "modular_integer_full_32bit_domain"
+  },
+  "refinement_verification": {
+    "status": "valid_refined_induction_evidence",
+    "protocol_complete": false,
+    "primary_status": "unknown",
+    "refinement_status": "refined_inductive_queries_pass"
+  },
+  "real_stack": "not_run"
+}
