@@ -190,3 +190,5 @@ docs/                  语义、外部测试约定、里程碑
 [连接打开捕获投影](docs/connection-capture.md)显式覆盖被动、同时及单向 SYN 超时，保留旧投影和严格校验，不以猜测 ISS 或重新对齐重传来消除差异。
 
 [独立 lwIP 数据通道](ports/lwip-data/README.md)新增单连接四字节发送／累计 ACK 的实际内存 netif PCAP，与 IR 在0ms容差下匹配；独立验收重建 oracle、复查固定输入并检查查询等价。9项 port 集成／故障测试与既有311方法完整回归分别记录。该有限场景不代表一般数据恢复、Linux实机或完整TCP证明。
+
+[事件驱动 lwIP ACK/window 实验](docs/lwip-stream-testing.md)进一步支持多段、部分／重复ACK与窗口关闭／恢复。12项独立port方法和6场景执行／验收完成，5个严格匹配，保留初始窗口4时的实际2字节分段策略差异。该差异未直接判定RFC违规，也未修改上游或oracle；接收文本、关闭、恢复、Linux和一般实现精化仍须继续。

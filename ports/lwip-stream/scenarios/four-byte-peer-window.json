@@ -1,0 +1,82 @@
+{
+  "scenario_version": "0.1",
+  "id": "four-byte-peer-window",
+  "description": "four-byte-peer-window",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "MSS4/window16; MORE no PSH; <=200ms; explicit app.transmit scheduling"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 4
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7,
+          17,
+          33,
+          65,
+          129
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 4
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1009,
+        "window": 4
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1009,
+      "snd_nxt": 1009,
+      "snd_buf": [],
+      "rtx_buf": []
+    },
+    "timers": {}
+  }
+}

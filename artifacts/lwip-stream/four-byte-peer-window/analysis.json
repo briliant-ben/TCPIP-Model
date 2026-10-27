@@ -1,0 +1,74 @@
+{
+  "classification": "finite_segmentation_policy_and_downstream_input_divergence",
+  "not_claimed": "RFC violation or data loss",
+  "scope": "unchanged scripted peer inputs; strict packet projection; real memory-netif lwIP, not Linux",
+  "specification": {
+    "rfc": 9293,
+    "version": "August 2022",
+    "sections": [
+      "3.7",
+      "3.7.4",
+      "3.8.6",
+      "3.10.7.4"
+    ],
+    "source_sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9"
+  },
+  "upstream_source": {
+    "path": "third_party/lwip/src/core/tcp_out.c",
+    "line": 420,
+    "sha256": "d8d8d5a54097114904f89f8c5602c937ef3b086933f2132a557698fc65d7e4af",
+    "expression": "mss_local = LWIP_MIN(pcb->mss, TCPWND_MIN16(pcb->snd_wnd_max / 2))"
+  },
+  "explanation": "Initial peer window 4 makes effective tcp_write chunk limit 2 despite configured maximum MSS 4. IR chooses a first four-byte segment. Later identical scripted ACKs operate on diverging sent frontiers; the final ACK can exceed the actual sent frontier, so the observed callback does not acknowledge all written bytes. Preserve all packets and comparison differences without adapting subsequent peer inputs or changing oracle.",
+  "first_expected_data": {
+    "time_ms": 21,
+    "event_id": "e0004",
+    "transition": "D-FLUSH-FIRST",
+    "requirements": [
+      "DATA-SEND",
+      "DATA-WINDOW",
+      "DATA-SEQ",
+      "DATA-RTO",
+      "RTT-ALG",
+      "RTT-KARN",
+      "RTT-TIMER",
+      "RTT-SCOPE",
+      "TX-HISTORY",
+      "TX-SCOPE",
+      "SYN-TX-AGE",
+      "SYN-IMMEDIATE-REPLY",
+      "SYN-HISTORY-SCOPE",
+      "ACK-DELAY",
+      "ACK-GAP",
+      "ACK-SCOPE"
+    ],
+    "packet_id": "e0004:out:0",
+    "direction": "out",
+    "flags": "A",
+    "seq": 1001,
+    "ack": 9001,
+    "window": 16,
+    "payload": [
+      0,
+      128,
+      255,
+      7
+    ],
+    "dropped_after_egress": false
+  },
+  "first_observed_data": {
+    "direction": "out",
+    "flags": "A",
+    "seq": 1001,
+    "ack": 9001,
+    "time_ms": 21.0,
+    "capture_frame": 4,
+    "window": 16,
+    "payload": [
+      0,
+      128
+    ]
+  },
+  "difference_sha256": "6b4c178363e3b38d704f63bcae75e95b837cacae644ddef2ebb110219dc3561a",
+  "report_sha256": "30015b38372095e2398901053769cb38b3daaf32f00b99fd96a04d66e823bb5c"
+}

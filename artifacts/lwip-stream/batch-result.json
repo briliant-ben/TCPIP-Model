@@ -1,0 +1,38 @@
+[
+  {
+    "case": "four-byte-peer-window",
+    "generation_returncode": 1,
+    "status": "executed_with_differences",
+    "verification_returncode": 0
+  },
+  {
+    "case": "future-ack-keeps-flight",
+    "generation_returncode": 0,
+    "status": "execution_and_projection_pass",
+    "verification_returncode": 0
+  },
+  {
+    "case": "stale-ack-keeps-zero-window",
+    "generation_returncode": 0,
+    "status": "execution_and_projection_pass",
+    "verification_returncode": 0
+  },
+  {
+    "case": "two-segments-partial-ack",
+    "generation_returncode": 0,
+    "status": "execution_and_projection_pass",
+    "verification_returncode": 0
+  },
+  {
+    "case": "unacceptable-seq-keeps-flight",
+    "generation_returncode": 0,
+    "status": "execution_and_projection_pass",
+    "verification_returncode": 0
+  },
+  {
+    "case": "window-reopens-after-zero",
+    "generation_returncode": 0,
+    "status": "execution_and_projection_pass",
+    "verification_returncode": 0
+  }
+]

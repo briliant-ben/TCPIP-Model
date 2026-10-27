@@ -264,3 +264,15 @@ IR 参考、完整字节固定输入重放、真实 lwIP netif PCAP、独立 che
 9 项独立 port 集成／故障测试通过（31.415s），覆盖真实 C 执行及完整 payload、篡改 oracle／PCAP／查询／编译命令／回调后重算哈希、必要文件遗漏、伪称 Linux、未支持输入。最初新增验收误把两次 Z3 导出文本哈希当作语义相等，导致正例失败；该测试失败日志保留，已修正并新增查询篡改负控制。测试在 ports 下独立运行，不冒称上轮311方法包含这些新测试。证据见 artifacts/lwip-data，说明见 ports/lwip-data/README.md。
 
 这是单连接、单 MSS、完整 ACK 的内存 netif／虚拟时钟真实实现观测，不是 Linux、完整数据／丢包／重组／关闭／恢复符合性或实现精化证明。原握手／SYN-loss 通道和2750ms差异保持。下一步扩大数据分段、部分 ACK／window、接收重组、关闭和恢复的独立输入映射与实测差异，同时推进 persist 边界、拥塞／恢复及后续协议；完整目标保持未完成。
+
+## 2026-10-27：独立 lwIP 事件驱动分段／ACK／窗口闭环
+
+新增 ports/lwip-stream，原 lwip-data 和握手／SYN-loss 通道及其输入不变。受控事件文件映射公共 raw API 与脚本对端的 SYN+ACK／ACK：主动打开、总写入1..16字节、最多64事件、0..200ms、MSS=4／本地窗口16，支持多段、部分／重复 ACK、窗口关闭／恢复、旧 ACK、future ACK 和不接受 SEQ。所有输入／字段／类型／范围显式校验，C端额外拒绝未知命令、尾随字段、溢出和逆向时钟；出站PCAP仍来自实际pbuf，不读取IR输出或修改PCB。canonical ISS输入坐标映射使用实际观察的SYN。
+
+12项独立port集成／故障测试通过（49.249s），含实际C双段非零字节、输入映射篡改、oracle／PCAP／查询／编译命令／回调重算哈希、必要文件遗漏、伪称Linux、C命令解析负例及编译环境失败分类。新增分阶段失败报告，未支持输入／源完整性／环境／模型未覆盖与冲突／形式／执行／观测失败不被计作实现Difference。
+
+六场景分别实际执行、完整字节固定输入重放、严格0ms归一化比较，并独立验收：two-segments-partial-ack、window-reopens-after-zero、stale-ack-keeps-zero-window、future-ack-keeps-flight、unacceptable-seq-keeps-flight共5个匹配；four-byte-peer-window执行返回1、verify返回0，为保留的有效差异证据。各场景当前输入集合与每个哈希完全一致，结果保存于 artifacts/lwip-stream/acceptance，所有源码／查询／刺激／编译与日志／PCAP绑定。
+
+新差异对应未修改上游 tcp_out.c:420 的 min(mss,snd_wnd_max/2) 分段选择：初始窗口4时实际先发两个2字节段，当前IR选择4字节段，后续相同脚本ACK在不同发送前沿上继续分叉。原始包、回调、严格Difference和规范／规则追溯保留于 four-byte-peer-window/analysis.json；不将最大MSS当作必须填满的段长，不直接认定RFC bug或数据丢失，也不更改后续输入来追随实现输出。规范范围RFC9293 §§3.7、3.7.4、3.8.6、3.10.7.4，详见 docs/lwip-stream-testing.md。
+
+旧四字节数据证据独立复查仍通过；原311方法／11profile冻结输入258／293项集合及哈希重新计算完全一致，本轮12方法单独记录，不冒称扩大了旧311方法运行。该里程碑不覆盖接收文本／重组、关闭、丢包／定时器恢复、拥塞或Linux；下一步继续独立数据接收／关闭及恢复证据、persist边界和拥塞／恢复IR，再按用户顺序推进后续协议。主unknown和2750ms差异保留，完整目标未完成。
