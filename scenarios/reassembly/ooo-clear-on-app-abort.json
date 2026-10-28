@@ -1,0 +1,56 @@
+{
+  "scenario_version": "0.1",
+  "id": "ooo-clear-on-app-abort",
+  "description": "ooo clear on app abort",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite reassembly profile; payload ACK non-advancing, send window unchanged; first accepted octet wins conflicting overlap."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.data",
+      "fields": {
+        "seq": 9003,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          128,
+          255
+        ]
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "app.abort",
+      "fields": {}
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {
+      "rcv_buf": [],
+      "rx_slot_02": [],
+      "rx_slot_03": [],
+      "local_window": 16
+    },
+    "timers": {}
+  }
+}

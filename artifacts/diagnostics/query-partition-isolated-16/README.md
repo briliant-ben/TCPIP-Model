@@ -1,0 +1,1 @@
+Historical fresh-per-query-context partition with group size 16. The pending target has a timeout/unknown for group-003; other groups passed. All original disjuncts and the 10000ms per-query timeout were retained when the current pending partition was refined to group size 8. This snapshot remains unknown and is not current acceptance evidence.

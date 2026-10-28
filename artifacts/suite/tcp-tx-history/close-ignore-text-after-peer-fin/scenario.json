@@ -1,0 +1,72 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-ignore-text-after-peer-fin",
+  "description": "Finite close/data/FIN composition; independent final-state and timer expectations",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          128,
+          255,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "net.data",
+      "fields": {
+        "seq": 9002,
+        "ack": 1007,
+        "window": 8,
+        "data": [
+          99
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSE-WAIT",
+    "timers": {},
+    "variables": {
+      "rcv_nxt": 9002,
+      "rcv_buf": [],
+      "snd_una": 1007,
+      "rtx_buf": []
+    }
+  }
+}

@@ -1,0 +1,451 @@
+{
+  "backend": "z3-constrained-trace",
+  "scope": "fixed_inputs_and_rule_choices",
+  "all_input_safety": "not_claimed",
+  "query_strategy": "exact_fixed_choice_encoding_and_fixed_input_substitution",
+  "steps": 5,
+  "query": "sat",
+  "model_semantic_sha256": "8e52a835e6341026bcd6dd2294d2ab1e635e781fc690eeed7e2e2546f997db59",
+  "solver_version": "4.15.4",
+  "smt2_sha256": "a9f9db2464fc2a9aba11992389b39485678141b1bb16bffcd8d38424f17f1fc0",
+  "witness": {
+    "initial": {
+      "iss": 1000,
+      "irs": 0,
+      "snd_una": 1000,
+      "snd_nxt": 1000,
+      "rcv_nxt": 0,
+      "tx_seq": 1000,
+      "tx_ack": 0,
+      "tx_flags": "S",
+      "rto_ms": 1000,
+      "retries": 0,
+      "active_open": true,
+      "user_timeout_ms": 30000,
+      "msl_ms": 60000,
+      "local_window": 16,
+      "snd_buf": [],
+      "rtx_buf": [],
+      "rcv_buf": [],
+      "snd_wnd": 8,
+      "snd_wl1": 0,
+      "snd_wl2": 0,
+      "take": 0,
+      "rx_chunk": [],
+      "rx_slot_00": [],
+      "rx_slot_01": [],
+      "rx_slot_02": [],
+      "rx_slot_03": [],
+      "rx_slot_04": [],
+      "rx_slot_05": [],
+      "rx_slot_06": [],
+      "rx_slot_07": [],
+      "rx_slot_08": [],
+      "rx_slot_09": [],
+      "rx_slot_10": [],
+      "rx_slot_11": [],
+      "rx_slot_12": [],
+      "rx_slot_13": [],
+      "rx_slot_14": [],
+      "rx_slot_15": [],
+      "rx_advance": 0,
+      "rx_acceptable": false,
+      "seg_acceptable": false,
+      "ack_delta": 0,
+      "ack_is_new": false,
+      "ack_is_future": false,
+      "ack_advance": false,
+      "ack_window_update": false
+    },
+    "steps": [
+      {
+        "at_ms": 0,
+        "event": "app.connect",
+        "origin": "application",
+        "transition": "C-ACTIVE-OPEN",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 1000,
+            "irs": 0,
+            "snd_una": 1000,
+            "snd_nxt": 1001,
+            "rcv_nxt": 0,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 0,
+            "snd_wl2": 0,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false
+          },
+          "timers": {
+            "rtx": 1000,
+            "user": 30000
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 1000,
+              "ack": 0,
+              "window": 16
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 10,
+        "event": "net.synack",
+        "origin": "network",
+        "transition": "C-ACCEPT-SYNACK",
+        "fields": {
+          "seq": 9000,
+          "ack": 1001,
+          "window": 8
+        },
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1001,
+            "rcv_nxt": 9001,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 9000,
+            "snd_wl2": 1001,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          },
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": 1001,
+              "ack": 9001,
+              "window": 16
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 20,
+        "event": "app.send",
+        "origin": "application",
+        "transition": "D-QUEUE",
+        "fields": {
+          "data": [
+            1,
+            2
+          ]
+        },
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1001,
+            "rcv_nxt": 9001,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [
+              1,
+              2
+            ],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 9000,
+            "snd_wl2": 1001,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "application",
+            "fields": {
+              "code": "queued"
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 21,
+        "event": "app.transmit",
+        "origin": "application",
+        "transition": "D-FLUSH-FIRST",
+        "fields": {},
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1003,
+            "rcv_nxt": 9001,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [
+              1,
+              2
+            ],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 9000,
+            "snd_wl2": 1001,
+            "take": 2,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false
+          },
+          "timers": {
+            "rtx": 1021
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": 1001,
+              "ack": 9001,
+              "window": 16,
+              "payload": [
+                1,
+                2
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 30,
+        "event": "app.abort",
+        "origin": "application",
+        "transition": "C-ABORT-ESTABLISHED",
+        "fields": {},
+        "after": {
+          "state": "CLOSED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1003,
+            "rcv_nxt": 9001,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 9000,
+            "snd_wl2": 1001,
+            "take": 2,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "R",
+              "seq": 1003,
+              "ack": 0,
+              "window": 16
+            }
+          },
+          {
+            "message": "application",
+            "fields": {
+              "code": "aborted"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "replay": {
+    "status": "match",
+    "compared_steps": 5
+  },
+  "status": "match"
+}

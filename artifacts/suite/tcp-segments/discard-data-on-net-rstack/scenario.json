@@ -1,0 +1,61 @@
+{
+  "scenario_version": "0.1",
+  "id": "discard-data-on-net-rstack",
+  "description": "discard data on net rstack",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite tcp-data profile; validated connection/packet/checksum; no advancing ACK or window update in payload events."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.rstack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSED",
+    "variables": {
+      "snd_buf": [],
+      "rtx_buf": [],
+      "rcv_buf": [],
+      "local_window": 16
+    },
+    "timers": {}
+  }
+}

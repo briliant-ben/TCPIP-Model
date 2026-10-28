@@ -1,0 +1,60 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-left-overlap-text-before-control",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9002,
+        "ack": 1001,
+        "window": 9,
+        "data": [
+          1,
+          128,
+          255
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSE-WAIT",
+    "variables": {
+      "rcv_nxt": 9006,
+      "rcv_buf": [
+        0,
+        1,
+        128,
+        255
+      ],
+      "snd_wnd": 9
+    },
+    "timers": {}
+  }
+}

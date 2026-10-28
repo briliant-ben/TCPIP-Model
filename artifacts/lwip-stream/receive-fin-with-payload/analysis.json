@@ -1,0 +1,141 @@
+{
+  "classification": "fin_advertised_window_choice_difference",
+  "explanation": "Byte order/delivery time/EOF match; actual advertised receive window on FIN acknowledgement is one less than the model. Source deducts TCP sequence length including FIN before updating advertised window, with a separate FIN credit correction. This is source-based interpretation, not PCB telemetry. No claim of data loss or RFC violation.",
+  "not_claimed": [
+    "RFC violation",
+    "data loss",
+    "Linux TCP evidence",
+    "complete implementation refinement"
+  ],
+  "specification": {
+    "rfc": 9293,
+    "version": "August 2022",
+    "sections": [
+      "3.6",
+      "3.7",
+      "3.8.6.3",
+      "3.10.7.4"
+    ],
+    "source_sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9"
+  },
+  "source_interpretation": [
+    {
+      "path": "third_party/lwip/src/core/tcp_in.c",
+      "lines": [
+        538,
+        1550,
+        1587
+      ],
+      "sha256": "f79b20e6b123af2ed2cfc2b470fe982d0c88d1357fc5a11537bab9cd20d4b639"
+    }
+  ],
+  "summary": {
+    "implementation": "lwIP-2.2.1",
+    "clock": "virtual_ms",
+    "connected": 1,
+    "acknowledged_bytes": 0,
+    "written_bytes": 0,
+    "commands": 3,
+    "mss": 4,
+    "receive_window": 16,
+    "received_bytes": 4,
+    "receiver_events": [
+      {
+        "time_ms": 20,
+        "eof": false,
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      },
+      {
+        "time_ms": 20,
+        "eof": true,
+        "data": []
+      }
+    ]
+  },
+  "wire_differences": [
+    {
+      "kind": "field",
+      "index": 4,
+      "packet_id": "e0003:out:0",
+      "event_id": "e0003",
+      "requirements": [
+        "FIN-SPACE",
+        "FIN-QUEUE",
+        "FIN-WINDOW",
+        "FIN-CLOSE",
+        "FIN-SCOPE",
+        "RTT-ALG",
+        "RTT-KARN",
+        "RTT-TIMER",
+        "RTT-SCOPE",
+        "TX-HISTORY",
+        "TX-SCOPE",
+        "SYN-TX-AGE",
+        "SYN-IMMEDIATE-REPLY",
+        "SYN-HISTORY-SCOPE",
+        "ACK-DELAY",
+        "ACK-GAP",
+        "ACK-SCOPE"
+      ],
+      "field": "window",
+      "expected": 12,
+      "observed": 11
+    }
+  ],
+  "receiver_difference": {
+    "status": "match",
+    "scope": "new contiguous unread IR bytes versus raw recv callback bytes and EOF; callback chunk boundaries ignored, byte order and time preserved",
+    "expected": [
+      {
+        "time_ms": 20,
+        "byte": 0
+      },
+      {
+        "time_ms": 20,
+        "byte": 128
+      },
+      {
+        "time_ms": 20,
+        "byte": 255
+      },
+      {
+        "time_ms": 20,
+        "byte": 7
+      },
+      {
+        "time_ms": 20,
+        "eof": true
+      }
+    ],
+    "observed": [
+      {
+        "time_ms": 20,
+        "byte": 0
+      },
+      {
+        "time_ms": 20,
+        "byte": 128
+      },
+      {
+        "time_ms": 20,
+        "byte": 255
+      },
+      {
+        "time_ms": 20,
+        "byte": 7
+      },
+      {
+        "time_ms": 20,
+        "eof": true
+      }
+    ]
+  },
+  "report_sha256": "71ec92e5e30cf37c52ac1d5665f6156932aabafc8e6d1c49edc8e29f6832b634",
+  "wire_difference_sha256": "532e7f671a4b5a461b712dda81f413fbabf2e081aeef24f3ec4afbaf38bdb244",
+  "receiver_difference_sha256": "65f71d8378be7a808b1dc47e6d463928cdd03e15357a67ab4e40ba5e1da925f8"
+}

@@ -1,0 +1,62 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-repeat-no-second-fin",
+  "description": "Finite close/data/FIN composition; independent final-state and timer expectations",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          128,
+          255,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 30,
+      "event": "app.close"
+    },
+    {
+      "at_ms": 40,
+      "event": "app.close"
+    }
+  ],
+  "expect": {
+    "state": "FIN-WAIT-1",
+    "timers": {
+      "rtx": 1021,
+      "user": 30030
+    },
+    "variables": {
+      "snd_nxt": 1008,
+      "fin_seq": 1007,
+      "fin_sent": true
+    }
+  }
+}

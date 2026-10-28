@@ -1,0 +1,81 @@
+{
+  "scenario_version": "0.1",
+  "id": "receive-ahead-then-retransmit",
+  "description": "receive ahead then retransmit",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite tcp-data profile; validated connection/packet/checksum; no advancing ACK or window update in payload events."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9003,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "at_ms": 32,
+      "event": "net.data",
+      "fields": {
+        "seq": 9003,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          3,
+          4
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "rcv_nxt": 9005,
+      "rcv_buf": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "local_window": 12
+    },
+    "timers": {}
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "status": "15_delayed_ack_methods_passed",
+  "elapsed_seconds": 63.441,
+  "input_hashes": {
+    "model/tcp-delayed-ack.json": "ddbd2279cde9674d7806273b47e5a96f84b2a539bc1c92343c7686ad4b52f085",
+    "model/tcp-syn-history.json": "3fc8379d47cac85c67d9b9bb9154c155265ad46e7c9ec4a115a6ab0940d0a1a1",
+    "model/tcp-tx-history.json": "45e04d33fa6e7fbebbe5f10266573aab5bfef60a9c1797bb814260e135e74466",
+    "model/tcp-rto.json": "2c623aeb013cee4565f6f5179342e9bd8dd119b91a48308ed1b454c6c31137ae",
+    "model/tcp-fin.json": "f2e9367a86e5d88643a29dc1c05150b5123fe4e5b37c470d83b833e92f4c7499",
+    "model/tcp-close.json": "b112909d1b63ac2096c5a88dea2b22e006b62adbc002d79d213f4c4b97d3498f",
+    "model/tcp-segments.json": "53eb104e2e411c6d627308b165dd9b5ea883aada0deeaa2f2a8e386c2f63f04d",
+    "model/tcp-reassembly.json": "6bbbfb08ab747cbc0ecdcfb82ab3a2cebd13245403d8d79d3289818dccafdda9",
+    "model/tcp-data.json": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
+    "model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
+    "tests/test_delayed_ack.py": "57d58cccd14fb9d6bd41e51809471503503821d9db799626ba628615c0184e37",
+    "docs/tcp-delayed-ack.md": "ae6812214e19fcfcb318ad5dc4885196c98335021052d330f64dec4258896d9f",
+    "scenarios/delayed-ack/delayed-wrap-499ms.json": "b874f6424b8c02712c49c0a03424bee9ab9531b39e76abe1c9261ae0a65f4188",
+    "scenarios/delayed-ack/delayed-second-full-immediate.json": "7d2cd7086870ba78025a102e4a4a9a9d3b6a2249a168195bd228637d2661adb5",
+    "scenarios/delayed-ack/delayed-short-two-rmss.json": "1a1b0c57e61fd597a4641f952489fa72526e43f37e1093e63e4b163cbf55434f",
+    "scenarios/delayed-ack/delayed-fin-payload-immediate.json": "a3f13f957d85d760f7a365dab88b1b80242754d024101ab9ca62ee7aa5f12299",
+    "scenarios/delayed-ack/delayed-short-first-deadline.json": "aac6e0a99a296da0b78d985f773f98e0a5e281e9d783aab871a9b27c6f6fe5b6",
+    "scenarios/delayed-ack/delayed-piggyback-cancels.json": "a8bb9d23071a7be7f5cdcca274dffcd4c0cd193b708219b566a992d8da094c73",
+    "scenarios/delayed-ack/delayed-single-full-deadline.json": "92ebc86bae21ba1af05e2e92fd52a214b80f5340fee9f40371859b06f41f4c08"
+  },
+  "methods": [
+    "test_delayed_ack.DelayedAckTests.test_ack_deadline_precedes_same_time_retransmission_without_moving_rto",
+    "test_delayed_ack.DelayedAckTests.test_ack_timer_does_not_backoff_or_change_sender_history",
+    "test_delayed_ack.DelayedAckTests.test_deadline_timer_precedes_same_time_new_segment_and_starts_new_epoch",
+    "test_delayed_ack.DelayedAckTests.test_delay_timer_covers_both_local_half_close_states",
+    "test_delayed_ack.DelayedAckTests.test_delayed_receive_keeps_general_ack_window_and_rtt_update",
+    "test_delayed_ack.DelayedAckTests.test_dropped_timer_ack_is_caught_even_when_final_state_matches",
+    "test_delayed_ack.DelayedAckTests.test_explicit_fixed_input_scenarios_and_full_byte_backend",
+    "test_delayed_ack.DelayedAckTests.test_fault_restarting_deadline_cannot_pass_independent_timing_oracle",
+    "test_delayed_ack.DelayedAckTests.test_first_full_segment_waits_until_exact_deadline_with_current_ack",
+    "test_delayed_ack.DelayedAckTests.test_gap_fill_duplicate_and_zero_window_keep_immediate_ack_policy",
+    "test_delayed_ack.DelayedAckTests.test_missing_conditional_timer_cancel_fails_invariant_atomically",
+    "test_delayed_ack.DelayedAckTests.test_piggyback_read_window_update_and_fin_discharge_pending_ack",
+    "test_delayed_ack.DelayedAckTests.test_second_full_segment_acknowledges_both_and_cancels_timer",
+    "test_delayed_ack.DelayedAckTests.test_short_segments_accumulate_two_rmss_without_restarting_first_deadline",
+    "test_delayed_ack.DelayedAckTests.test_wrap_and_configured_499ms_limit_are_exact_and_500_rejected"
+  ],
+  "combined_current_discovery": {
+    "methods": 283,
+    "scope": "268 previous methods plus 15 new methods, separate runs; original source inputs unchanged",
+    "baseline_result": "artifacts/clock-regression/result.json"
+  },
+  "log_sha256": "f792d7142408ab7988814a77021fc2c77e51858e636c5210ebecc7545e373d02",
+  "protocol_complete": false
+}

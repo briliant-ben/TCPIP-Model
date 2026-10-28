@@ -1,0 +1,35 @@
+{
+  "status": "valid_development_bindings_with_separate_singleton_refinement",
+  "registered_suite_member": false,
+  "protocol_complete": false,
+  "source_commit": "8ce4e32b290309eea13f6f9d2d46f061d82c7cb2",
+  "report_sha256": "fbe7663f09a524e1eec1821b815d22e24ff8367b8065190e8fc3667042c964c8",
+  "profile_definition_sha256": "2663795c98361a52b46b2cda0f48ebc74fe938818491fb3375b867697fe88e66",
+  "formal": {
+    "status": "unknown",
+    "backend": "z3-bmc",
+    "depth": 6,
+    "reason": "canceled",
+    "safety_query": "unknown",
+    "overlap_query": "unknown"
+  },
+  "primary_induction": {
+    "status": "unknown",
+    "backend": "z3-invariant-induction",
+    "byte_encoding": "exact_length_projection_content_insensitive_subset",
+    "sequence_encoding": "modular_integer_full_32bit_domain"
+  },
+  "default_group8_independent_verification": "unknown at 10000ms; original report/claims and error retained",
+  "separate_singleton_verification": "valid_refined_induction_evidence",
+  "singleton_result_sha256": "d69e3f668082a4cb4d3807a9a5a9aac76ead5baeb6cfc01d7db3dfc3518d5cb6",
+  "singleton_log_sha256": "ff77195363859376031243d501e76dcb9e429b10bf8ee621aa5d71d7472d908c",
+  "group_counts": [
+    180,
+    180,
+    195
+  ],
+  "fixed_complete_byte_scenarios": 7,
+  "synthetic_codec_only": 7,
+  "real_stack": "not_run",
+  "claims": "Original default manifest kept. Separate singleton evidence is not retroactively substituted into it."
+}

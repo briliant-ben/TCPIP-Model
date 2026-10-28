@@ -1,0 +1,63 @@
+{
+  "scenario_version": "0.1",
+  "id": "active-close-empty",
+  "description": "active-close-empty",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "MSS=4, unread receive window=16; no tcp_recved/app.read; virtual clock <=200ms; MORE no PSH."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.close",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002,
+        "window": 8,
+        "data": []
+      }
+    }
+  ],
+  "expect": {
+    "state": "TIME-WAIT",
+    "variables": {
+      "rcv_nxt": 9002,
+      "snd_una": 1002,
+      "snd_nxt": 1002
+    },
+    "timers": {
+      "time_wait": 120040
+    }
+  }
+}

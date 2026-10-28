@@ -1,0 +1,81 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-data-fin-sequence-wrap",
+  "description": "Finite close/data/FIN composition; independent final-state and timer expectations",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 4294967294,
+        "ack": 4294967294,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 30,
+      "event": "app.close"
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 4294967295,
+        "ack": 1,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 50,
+      "event": "net.ack",
+      "fields": {
+        "seq": 4294967295,
+        "ack": 3,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 60,
+      "event": "net.fin",
+      "fields": {
+        "seq": 4294967295,
+        "ack": 3
+      }
+    }
+  ],
+  "expect": {
+    "state": "TIME-WAIT",
+    "timers": {
+      "time_wait": 120060
+    },
+    "variables": {
+      "snd_una": 3,
+      "snd_nxt": 3,
+      "fin_seq": 2,
+      "rcv_nxt": 0
+    }
+  },
+  "initial": {
+    "iss": 4294967293
+  }
+}

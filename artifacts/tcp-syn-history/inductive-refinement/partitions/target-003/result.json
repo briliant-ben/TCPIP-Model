@@ -1,0 +1,337 @@
+{
+  "status": "query_partition_unsat",
+  "scope": "exact Boolean partition of one exported query; no protocol-completeness or kernel-checked claim",
+  "source_file": "artifacts/tcp-syn-history/inductive/preservation.smt2",
+  "source_sha256": "f8a4237c8843ede28a8642099ee632a5e6d1575f0500325007c6dc863852439e",
+  "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> FIN-WAIT-1",
+  "assertion_index": 273,
+  "assertion_count": 277,
+  "selected_assertion_sha256": "3aecf8b140793b899203839c94e602c2f2c5d37943e8c3d777f812a352876332",
+  "disjunct_count": 165,
+  "group_size": 8,
+  "timeout_ms": 10000,
+  "solver_version": "4.15.4",
+  "solver_context": "fresh_per_query",
+  "equivalence": {
+    "query": "unsat"
+  },
+  "groups": [
+    {
+      "file": "group-000.smt2",
+      "disjunct_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-001.smt2",
+      "disjunct_indices": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-002.smt2",
+      "disjunct_indices": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-003.smt2",
+      "disjunct_indices": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-004.smt2",
+      "disjunct_indices": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-005.smt2",
+      "disjunct_indices": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-006.smt2",
+      "disjunct_indices": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-007.smt2",
+      "disjunct_indices": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-008.smt2",
+      "disjunct_indices": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-009.smt2",
+      "disjunct_indices": [
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-010.smt2",
+      "disjunct_indices": [
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-011.smt2",
+      "disjunct_indices": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-012.smt2",
+      "disjunct_indices": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-013.smt2",
+      "disjunct_indices": [
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-014.smt2",
+      "disjunct_indices": [
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-015.smt2",
+      "disjunct_indices": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-016.smt2",
+      "disjunct_indices": [
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-017.smt2",
+      "disjunct_indices": [
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-018.smt2",
+      "disjunct_indices": [
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-019.smt2",
+      "disjunct_indices": [
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159
+      ],
+      "query": "unsat"
+    },
+    {
+      "file": "group-020.smt2",
+      "disjunct_indices": [
+        160,
+        161,
+        162,
+        163,
+        164
+      ],
+      "query": "unsat"
+    }
+  ],
+  "query_hashes": {
+    "equivalence.smt2": "dda50a0f0f3aeb1196b7c048881df2b8b960343351b2b4929fb41eeb7ed92de5",
+    "group-000.smt2": "7a86e474b15ce0d8a497ffe08f0715c99cafccfdf27021509e793cb1a71a64bd",
+    "group-001.smt2": "dea049ea015ab31fa75647753d05a1844d1bd952dafe0d42ddeb88b6422e65a1",
+    "group-002.smt2": "6dc2c2414f10c4cad48662a443761a3c680389d5c349fd640e844da7e6e52cd9",
+    "group-003.smt2": "d77e6063dc1e068a7b7a91f76712bfe461393444639f0d50f52f32d5ffe8a440",
+    "group-004.smt2": "4b329f588d00342c17a3dfa783a6ecd658eac8ca86de383a360a8bc1c84f83b7",
+    "group-005.smt2": "8cdf852a752d66d39c7b9b1e721d851bc266df7637f3b83fe225ba222ddd8185",
+    "group-006.smt2": "7b60af79948663b3bdde6b22ae82b18d6588642af69b77017de7300b554ae407",
+    "group-007.smt2": "c7fb46c0d681ab01ec0b107a82761f750717d54ca1076f9c788210e51a579349",
+    "group-008.smt2": "7d8137fcfa792cf2584d2b174a93c078ad730bcdccf557dd196ce0d280f663cb",
+    "group-009.smt2": "82a64a2051532510a283ef4fa379a8077681d5430dce4ff2b59845c55d06989b",
+    "group-010.smt2": "bc3b2774067472659e528a296adb764f9f3adc5a51263ab0a53584b59eb488aa",
+    "group-011.smt2": "64fc32e148f783251b3e03fc8555fd067b03a3ff913c2d503af8b815ace41f18",
+    "group-012.smt2": "02fb00676b186f741dd52fcd2c4878801ecc0275bc3fe862cb36c376598ded14",
+    "group-013.smt2": "33b24fd9a49fd9caa27cc8dff14f58b68db7eb6d3724da06dafcc6fc587e74d2",
+    "group-014.smt2": "edaf9d350c6a23fb5d525e135336e7acde719be7bb0aa502356135405764da5d",
+    "group-015.smt2": "793297f3a875b7a90c7da4ca38e7dba1762a3ee4a24a176bfe318b98c869d32c",
+    "group-016.smt2": "fcf0e59d1eeebfddec38d9a322eaa620190f7b24f7454d0d9444dab0e0cd2e7a",
+    "group-017.smt2": "398094d5c7193d5d54d41909036879aedbc65d95da1059f5e5a33dcc7f5bbee8",
+    "group-018.smt2": "7a469b2fb53b54dd19d4ec173204d9a96a26584488dd0a0b08d6964d3ea7d264",
+    "group-019.smt2": "69c8d6163438f852caf05390d9d291202f4c2ecd708b8ab4160485fb543831d5",
+    "group-020.smt2": "59a3bd9ce1e16c5fa87bf71e33fb0b6704435e196816d553b57ddef021251d08"
+  },
+  "checker_source_sha256": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b",
+  "all_other_assertions_retained": true
+}

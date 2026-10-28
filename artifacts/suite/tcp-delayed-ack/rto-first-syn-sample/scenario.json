@@ -1,0 +1,37 @@
+{
+  "scenario_version": "0.2",
+  "id": "rto-first-syn-sample",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 900,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "srtt_ms": {
+        "n": 900,
+        "d": 1
+      },
+      "rttvar_ms": {
+        "n": 450,
+        "d": 1
+      },
+      "rto_ms": 2700,
+      "rtt_samples": 1,
+      "rtt_active": false
+    },
+    "timers": {}
+  }
+}

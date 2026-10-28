@@ -1,0 +1,132 @@
+{
+  "scenario_version": "0.2",
+  "id": "history-old-prefix-ack-releases-aged-tail",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 999,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "at_ms": 1000,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 1021,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 1021,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  0,
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 1200,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 3200,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 3200,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1003,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "tx_emit_count": 4,
+      "tx_elapsed": 2200,
+      "tx_previous_rto": 2000,
+      "tx_time_00": 3200,
+      "tx_time_03": 3200,
+      "tx_time_04": 0,
+      "rto_ms": 4000,
+      "rtx_buf": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "timers": {
+      "rtx": 7200
+    }
+  }
+}

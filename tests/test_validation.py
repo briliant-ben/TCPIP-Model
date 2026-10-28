@@ -24,7 +24,7 @@ HAS_Z3 = importlib.util.find_spec("z3") is not None
 PROFILE = {"local": {"ip": "192.0.2.1", "port": 40000}, "peer": {"ip": "192.0.2.2", "port": 8080}}
 
 
-def wire_fixture(path, link=1, big=False, nano=False, corrupt=False, payload=b"", flags_override=None, vlan=False):
+def wire_fixture(path, link=1, big=False, nano=False, corrupt=False, payload=b"", flags_override=None, vlan=False, rows=None):
     """Hand-built capture: shifted epoch/ISS, SYN options, no production encoder."""
     def ck(raw):
         raw += b"\0" if len(raw) % 2 else b""
@@ -35,15 +35,19 @@ def wire_fixture(path, link=1, big=False, nano=False, corrupt=False, payload=b""
     endian = ">" if big else "<"
     magic = 0xa1b23c4d if nano else 0xa1b2c3d4
     result = struct.pack(endian+"IHHIIII", magic, 2, 4, 0, 0, 65535, link)
-    for i, (ms, outbound, flags, seq, ack) in enumerate([
+    defaults = [
         (0, True, 2, 0xffffffff, 0), (1000, True, 2, 0xffffffff, 0),
-        (1010, False, 18, 55, 0), (1010, True, 16, 0, 56)]):
+        (1010, False, 18, 55, 0), (1010, True, 16, 0, 56)]
+    for i, row in enumerate(defaults if rows is None else rows):
+        ms, outbound, flags, seq, ack = row[:5]
+        window = row[5] if len(row) > 5 else 12345
+        packet_payload = row[6] if len(row) > 6 else payload
         source, dest = ("192.0.2.1", "192.0.2.2") if outbound else ("192.0.2.2", "192.0.2.1")
         sport, dport = (40000, 8080) if outbound else (8080, 40000)
         src, dst = socket.inet_aton(source), socket.inet_aton(dest)
         options = b"\x02\x04\x05\xb4" if flags == 2 else b""
         body = struct.pack("!HHIIBBHHH", sport, dport, seq, ack, ((20+len(options))//4)<<4,
-                           flags_override if flags_override is not None else flags, 12345, 0, 0) + options + payload
+                           flags_override if flags_override is not None else flags, window, 0, 0) + options + packet_payload
         pseudo = src+dst+b"\0\x06"+len(body).to_bytes(2,"big")
         body = body[:16]+ck(pseudo+body)+body[18:]
         if corrupt and i == 0:

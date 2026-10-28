@@ -1,0 +1,102 @@
+{
+  "scenario_version": "0.1",
+  "id": "send-buffer-full",
+  "description": "send buffer full",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite tcp-data profile; validated connection/packet/checksum; no advancing ACK or window update in payload events."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          255
+        ]
+      }
+    },
+    {
+      "at_ms": 22,
+      "event": "app.send",
+      "fields": {
+        "data": []
+      }
+    },
+    {
+      "at_ms": 23,
+      "event": "app.transmit",
+      "fields": {}
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_buf": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rtx_buf": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "snd_nxt": 1005
+    },
+    "timers": {
+      "rtx": 1023
+    }
+  }
+}

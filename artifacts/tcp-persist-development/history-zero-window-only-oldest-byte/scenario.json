@@ -1,0 +1,97 @@
+{
+  "scenario_version": "0.2",
+  "id": "history-zero-window-only-oldest-byte",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 999,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "at_ms": 1000,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 1001,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 0
+      }
+    },
+    {
+      "at_ms": 1021,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 1021,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "tx_emit_count": 1,
+      "tx_time_00": 1021,
+      "tx_time_01": 21,
+      "tx_time_02": 1000,
+      "rto_ms": 2000
+    },
+    "timers": {
+      "rtx": 3021
+    }
+  }
+}

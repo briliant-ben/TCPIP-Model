@@ -1,0 +1,10 @@
+{
+  "id": "tcp-delayed-ack-development",
+  "model": "model/tcp-delayed-ack.json",
+  "scenarios": "scenarios/delayed-ack",
+  "packetdrill": null,
+  "symbolic_replay": true,
+  "wire_projection": "tcp-fin-v1",
+  "inductive": true,
+  "inductive_refinement": true
+}

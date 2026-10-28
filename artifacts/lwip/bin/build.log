@@ -1,0 +1,717 @@
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip/harness.c:10:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip/harness.c:10:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip/harness.c:10:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip/harness.c:10:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/def.c:62:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/def.c:62:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/def.c:62:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/def.c:62:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/inet_chksum.c:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/inet_chksum.h:43:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/inet_chksum.c:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/inet_chksum.h:43:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/inet_chksum.c:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/inet_chksum.h:43:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/inet_chksum.c:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/inet_chksum.h:43:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/init.c:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/init.c:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/init.c:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/init.c:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ip.c:60:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ip.c:60:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ip.c:60:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ip.c:60:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/etharp.c:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/etharp.h:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip4_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/etharp.c:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/etharp.h:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip4_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/etharp.c:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/etharp.h:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip4_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/etharp.c:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/etharp.h:50:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip4_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/icmp.c:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/icmp.h:42:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/icmp.c:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/icmp.h:42:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/icmp.c:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/icmp.h:42:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/icmp.c:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/icmp.h:42:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4_addr.c:43:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4_addr.c:43:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4_addr.c:43:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4_addr.c:43:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4_frag.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip4_frag.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4_frag.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip4_frag.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4_frag.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip4_frag.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/ipv4/ip4_frag.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip4_frag.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/mem.c:58:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/mem.c:58:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/mem.c:58:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/mem.c:58:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/memp.c:57:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/udp.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/memp.c:57:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/udp.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/memp.c:57:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/udp.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/memp.c:57:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/udp.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/netif.c:56:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/netif.c:56:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/netif.c:56:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/netif.c:56:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/pbuf.c:75:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/pbuf.c:75:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/pbuf.c:75:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/pbuf.c:75:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp.c:104:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp.c:104:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp.c:104:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp.c:104:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp_in.c:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp_in.c:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp_in.c:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp_in.c:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp_out.c:67:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp_out.c:67:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp_out.c:67:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/tcp_out.c:67:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/timeouts.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/timeouts.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/timeouts.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/timeouts.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/priv/tcp_priv.h:44:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/tcp.h:48:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip.h:42:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/udp.c:52:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/udp.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/udp.c:52:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/udp.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/udp.c:52:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/udp.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/core/udp.c:52:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/udp.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/netif/ethernet.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/netif/ethernet.h:47:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:119:9: warning: 'htons' macro redefined [-Wmacro-redefined]
+  119 | #define htons(x) lwip_htons(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:134:9: note: previous definition is here
+  134 | #define htons(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/netif/ethernet.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/netif/ethernet.h:47:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:120:9: warning: 'ntohs' macro redefined [-Wmacro-redefined]
+  120 | #define ntohs(x) lwip_ntohs(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:133:9: note: previous definition is here
+  133 | #define ntohs(x)        __DARWIN_OSSwapInt16(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/netif/ethernet.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/netif/ethernet.h:47:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:121:9: warning: 'htonl' macro redefined [-Wmacro-redefined]
+  121 | #define htonl(x) lwip_htonl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:137:9: note: previous definition is here
+  137 | #define htonl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/netif/ethernet.c:45:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/netif/ethernet.h:47:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/netif.h:46:
+In file included from /Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/ip_addr.h:41:
+/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/third_party/lwip/src/include/lwip/def.h:122:9: warning: 'ntohl' macro redefined [-Wmacro-redefined]
+  122 | #define ntohl(x) lwip_ntohl(x)
+      |         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:136:9: note: previous definition is here
+  136 | #define ntohl(x)        __DARWIN_OSSwapInt32(x)
+      |         ^
+4 warnings generated.
+ld: warning: reducing alignment of section __DATA,__common from 0x8000 to 0x4000 because it exceeds segment maximum alignment

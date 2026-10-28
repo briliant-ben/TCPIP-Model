@@ -1,0 +1,31 @@
+{
+  "status": "development_tests_pass_formal_pending",
+  "model_semantic_sha256": "668ee13392743616004c8c2fd972732790bfc9ce66b8929760a6f3e2d1015b2f",
+  "rules": 180,
+  "invariants": 147,
+  "primary_status": "unknown",
+  "refinement_status": "refinement_unknown",
+  "new_tests_passed": 11,
+  "all_current_test_methods_covered_across_runs": 253,
+  "note": "242-method full regression plus 11 current SYN tests; not one 253-method run. Primary and refinement unknowns retained; SYN model not yet a registered profile. Clock-only invariant gap remains separately recorded.",
+  "input_hashes": {
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-syn-history.json": "18414061df6108c4d53fcbff535aadf5ed75a40ae9ab17293a7330176dbe6e5e",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-tx-history.json": "e2d0b6d24a150cd16bb750f1bcd9ae9b7552fe0d2544da99bbabd1415ad8b9ec",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-rto.json": "cdce8eb9a20851130a74f1755f09eca954b0d21013938987e214bd5d802ab3ec",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-fin.json": "f2e9367a86e5d88643a29dc1c05150b5123fe4e5b37c470d83b833e92f4c7499",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-close.json": "b112909d1b63ac2096c5a88dea2b22e006b62adbc002d79d213f4c4b97d3498f",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-segments.json": "53eb104e2e411c6d627308b165dd9b5ea883aada0deeaa2f2a8e386c2f63f04d",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-reassembly.json": "6bbbfb08ab747cbc0ecdcfb82ab3a2cebd13245403d8d79d3289818dccafdda9",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-data.json": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
+    "docs/tcp-syn-history.md": "4e20dc70bcd57ce0f39be1ee7b232ea51558608b9a72cf18cf5afbce956ef11c",
+    "tests/test_syn_history.py": "5e944fcae485c55b4e5c845e1a9131f0ffd73e9001c2158c289e4f468c221297",
+    "scenarios/syn-history/syn-history-normal-timeout-unchanged.json": "b8d8435022f323f031e1d48f58019fadcfbe3e7cd63f42a17682db733f27abad",
+    "scenarios/syn-history/syn-history-passive-first-send-time.json": "ef610f0edec6e283060c047535bc3acd7124393272b341385747adecbbacf425",
+    "scenarios/syn-history/syn-history-simultaneous-wait-before-retransmit.json": "f2eb0b8639bc6fcfa38ae8878cc047b147458c41177f882f5fea64c83e17b5f3"
+  },
+  "logs": {
+    "artifacts/refinement-integration-validation/regression-242.log": "ca778848faed3502cb4adb8cb9d15db33c9b2db9f0cc8038b6293a6641a91e33",
+    "artifacts/tcp-syn-history/validation/tests-11.log": "f25b12a8afda8ed7bc5a3ad60768b1017ef693b00baaa41bcbd2cc99dddb0ec9"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "scenario_version": "0.2",
+  "id": "delayed-fin-payload-immediate",
+  "description": "Independent hand-calculated delayed ACK output/time contract; synthetic evidence only.",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "One finite connection, RMSS=4; valid abstract data/ACK/window events. Delayed ACK does not imply congestion recovery."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16,
+        "data": [
+          0,
+          1
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 20,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9003,
+        "ack": 1001,
+        "window": 16,
+        "data": [
+          4,
+          5
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 30,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9006,
+                "window": 12,
+                "payload": []
+              }
+            },
+            {
+              "message": "application",
+              "fields": {
+                "code": "peer_eof"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 60,
+      "tick": true,
+      "expect_trace": []
+    }
+  ],
+  "expect": {
+    "state": "CLOSE-WAIT",
+    "variables": {
+      "rcv_nxt": 9006,
+      "rcv_buf": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "ack_pending": false,
+      "ack_bytes": 0,
+      "ack_since_ms": 0,
+      "rx_fin_done": true
+    },
+    "timers": {}
+  }
+}

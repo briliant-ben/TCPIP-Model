@@ -1,0 +1,70 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-conflicting-position-first-accepted",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9005,
+        "ack": 1001,
+        "window": 8,
+        "data": []
+      }
+    },
+    {
+      "at_ms": 25,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9003,
+        "ack": 1001,
+        "window": 8,
+        "data": []
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          99
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSE-WAIT",
+    "variables": {
+      "rcv_nxt": 9006,
+      "rcv_buf": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "rx_fin_seq": 9005,
+      "rx_fin_done": true
+    },
+    "timers": {}
+  }
+}

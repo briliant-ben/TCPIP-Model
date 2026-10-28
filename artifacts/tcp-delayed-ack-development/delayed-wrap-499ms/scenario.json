@@ -1,0 +1,93 @@
+{
+  "scenario_version": "0.2",
+  "id": "delayed-wrap-499ms",
+  "description": "Independent hand-calculated delayed ACK output/time contract; synthetic evidence only.",
+  "initial": {
+    "ack_delay_ms": 499
+  },
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "One finite connection, RMSS=4; valid abstract data/ACK/window events. Delayed ACK does not imply congestion recovery."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 4294967293,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.data",
+      "fields": {
+        "seq": 4294967294,
+        "ack": 1001,
+        "window": 16,
+        "data": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 20,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 518,
+      "tick": true,
+      "expect_trace": []
+    },
+    {
+      "at_ms": 519,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 519,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 2,
+                "window": 12,
+                "payload": []
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "rcv_nxt": 2,
+      "rcv_buf": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ack_pending": false,
+      "ack_bytes": 0,
+      "ack_since_ms": 0
+    },
+    "timers": {}
+  }
+}

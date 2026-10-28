@@ -1,0 +1,64 @@
+{
+  "scenario_version": "0.1",
+  "id": "close-invalid-data-sequence-keeps-fin",
+  "description": "Finite close/data/FIN composition; independent final-state and timer expectations",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit"
+    },
+    {
+      "at_ms": 25,
+      "event": "app.close"
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9017,
+        "ack": 1006,
+        "window": 8,
+        "data": [
+          9
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "FIN-WAIT-1",
+    "timers": {
+      "rtx": 1021,
+      "user": 30025
+    },
+    "variables": {
+      "snd_una": 1001,
+      "fin_sent": true,
+      "rcv_buf": []
+    }
+  }
+}

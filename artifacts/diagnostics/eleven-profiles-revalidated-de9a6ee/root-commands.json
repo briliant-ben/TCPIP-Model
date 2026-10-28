@@ -1,0 +1,42 @@
+[
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "protocol_lab",
+      "build"
+    ],
+    "returncode": 0,
+    "log": "/tmp/opening-root-build.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "protocol_lab",
+      "formal"
+    ],
+    "returncode": 0,
+    "log": "/tmp/opening-root-formal.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "protocol_lab",
+      "lwip"
+    ],
+    "returncode": 1,
+    "log": "/tmp/opening-root-lwip.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "protocol_lab",
+      "lwip-verify"
+    ],
+    "returncode": 0,
+    "log": "/tmp/opening-root-lwip-verify.log"
+  }
+]

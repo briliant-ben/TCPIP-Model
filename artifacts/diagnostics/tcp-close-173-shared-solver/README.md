@@ -1,0 +1,1 @@
+Original shared/incremental solver diagnostic: the same 173-rule model has two unknown preservation queries. Exact per-rule substitution with fresh solvers is checked separately; no invariant or input domain is removed. This snapshot is not a passing certificate.

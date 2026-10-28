@@ -1,0 +1,642 @@
+[
+  {
+    "event_id": "e0001",
+    "time_ms": 0,
+    "event": {
+      "name": "app.connect",
+      "fields": {}
+    },
+    "transition": "C-ACTIVE-OPEN",
+    "requirements": [
+      "CONN-OPEN",
+      "RTO-PROFILE"
+    ],
+    "before": {
+      "state": "CLOSED",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1000,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 0,
+        "snd_wl2": 0,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 0,
+        "snd_wl2": 0,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {
+        "rtx": 1000,
+        "user": 30000
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "S",
+          "seq": 1000,
+          "ack": 0,
+          "window": 16
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0002",
+    "time_ms": 10,
+    "event": {
+      "name": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    "transition": "C-ACCEPT-SYNACK",
+    "requirements": [
+      "CONN-SYN-SENT",
+      "RTO-PROFILE"
+    ],
+    "before": {
+      "state": "SYN-SENT",
+      "variables": {
+        "iss": 1000,
+        "irs": 0,
+        "snd_una": 1000,
+        "snd_nxt": 1001,
+        "rcv_nxt": 0,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 0,
+        "snd_wl2": 0,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {
+        "rtx": 1000,
+        "user": 30000
+      }
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "connected"
+        }
+      },
+      {
+        "message": "tcp",
+        "fields": {
+          "flags": "A",
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0003",
+    "time_ms": 20,
+    "event": {
+      "name": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    "transition": "D-QUEUE",
+    "requirements": [
+      "DATA-SEND",
+      "DATA-SCOPE"
+    ],
+    "before": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "queued"
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0004",
+    "time_ms": 21,
+    "event": {
+      "name": "app.send",
+      "fields": {
+        "data": [
+          255
+        ]
+      }
+    },
+    "transition": "D-SEND-FULL",
+    "requirements": [
+      "DATA-SCOPE"
+    ],
+    "before": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "send_buffer_full"
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0005",
+    "time_ms": 22,
+    "event": {
+      "name": "app.send",
+      "fields": {
+        "data": []
+      }
+    },
+    "transition": "D-SEND-EMPTY",
+    "requirements": [
+      "DATA-SCOPE"
+    ],
+    "before": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {}
+    },
+    "emitted": [
+      {
+        "message": "application",
+        "fields": {
+          "code": "empty_send"
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "e0006",
+    "time_ms": 23,
+    "event": {
+      "name": "app.transmit",
+      "fields": {}
+    },
+    "transition": "D-FLUSH-FIRST",
+    "requirements": [
+      "DATA-SEND",
+      "DATA-WINDOW",
+      "DATA-SEQ",
+      "DATA-RTO"
+    ],
+    "before": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1001,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "rtx_buf": [],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 0,
+        "rx_chunk": []
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "ESTABLISHED",
+      "variables": {
+        "iss": 1000,
+        "irs": 9000,
+        "snd_una": 1001,
+        "snd_nxt": 1005,
+        "rcv_nxt": 9001,
+        "tx_seq": 1000,
+        "tx_ack": 0,
+        "tx_flags": "S",
+        "rto_ms": 1000,
+        "retries": 0,
+        "active_open": true,
+        "user_timeout_ms": 30000,
+        "msl_ms": 60000,
+        "local_window": 16,
+        "snd_buf": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "rtx_buf": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "rcv_buf": [],
+        "snd_wnd": 8,
+        "snd_wl1": 9000,
+        "snd_wl2": 1001,
+        "take": 4,
+        "rx_chunk": []
+      },
+      "timers": {
+        "rtx": 1023
+      }
+    },
+    "emitted": [
+      {
+        "message": "tcp_data",
+        "fields": {
+          "flags": "A",
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      }
+    ]
+  }
+]

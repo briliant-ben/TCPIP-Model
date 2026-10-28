@@ -12,6 +12,19 @@ GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP
 |---|---|
 | `model/tcp.json` | 原有主动握手回归基线，3 状态 |
 | `model/tcp-connection.json` | 11 状态连接控制模型，97 条声明规则，101 个控制场景；仍排除 payload/窗口/拥塞等行为 |
+| `model/tcp-data.json` | IR 0.2 声明式组合连接模型；有限缓冲、分段、累计/部分 ACK、窗口、字节前缀重传和接收裁剪；数据恢复与完整 TCP 仍未完成 |
+| `model/tcp-reassembly.json` | 继承数据/连接模型，加入 16 位置显式乱序队列、多缺口重组、重复/重叠裁剪与回绕；一般 piggyback、FIN 数据和完整恢复仍未完成 |
+| `model/tcp-segments.json` | 继承重组/数据/连接模型，组合 ACK/window 与 payload，支持窗口收缩及有在途数据的零窗口探测；完整 persist、带数据关闭及恢复仍未完成 |
+| `model/tcp-close.json` | 组合待发送／在途数据、独立 FIN 序列标记、半关闭读取和 FIN-WAIT 重组；FIN+payload、乱序 FIN 缓存及完整恢复仍待实现 |
+| `model/tcp-fin.json` | 显式 FIN 窗口／payload、乱序 EOF 标记与字节重组、单次 FIN 消费及条件关闭目标；完整恢复与独立实现闭环仍未完成 |
+| `model/tcp-rto.json` | IR 0.3 精确有理 RTT/RTO、Karn 歧义采样、部分 ACK 与 SYN/FIN 组合；一般发送历史时序、delayed ACK、persist、拥塞／恢复仍未完成 |
+| `model/tcp-tx-history.json` | 逐字节／FIN 发送历史、ACK 时间槽移动与时龄裁剪，修正数据超时过早重传；原归纳 unknown 保留，独立精确查询分组、非空重放与单独命题已接入 suite 统一验收；完整恢复仍待推进 |
+
+2026-10-24：已恢复本地基线并推进 [IR 数据语义](docs/semantics.md) 和 [有限 TCP 数据切片](docs/tcp-data.md)。数据切片的 15 个场景具有参考轨迹和独立 Z3 固定输入重放；全输入混合查询可能为 `unknown`，suite 明确保留 `formal_pending`。这不影响旧模型的独立有界检查，也不将合成 PCAP 计为 Linux/lwIP 数据验证。持续实施记录见 [实施日志](docs/implementation-log.md)。
+
+新增的[状态不变量归纳义务](docs/inductive.md)独立保存初值、117 条规则保持性和 14 个 guard 组检查；当前数据模型通过这些长度/标量性质义务。它拒绝字节内容比较，不替换原 BMC 结果，也不构成完整 TCP 或 payload 内容正确性证明。
+
+[乱序重组 profile](docs/tcp-reassembly.md)复用原 15 个数据场景并增加 11 个重组场景；其独立归纳检查覆盖 113 条规则、13 个 guard 组及 84 个状态不变量。字节内容由非零字节场景、分段排列、故障变体及完整字节符号重放分别检查，仍无数据实机闭环。
 
 运行新增流程：
 
@@ -162,3 +175,22 @@ docs/                  语义、外部测试约定、里程碑
 ```
 
 下一步在真实测试主机执行并采集独立观测，再扩展 TCP 行为；Ivy 是后续可替换后端之一。见 [后续里程碑](docs/roadmap.md)。
+
+[ACK/window 与 payload 组合](docs/tcp-segments.md)复用 26 个数据/重组场景并增加 14 个输入；109 条规则、84 个状态不变量及 14 个 guard 组分别检查。每个 profile 的 [claims.json 声明](docs/claims.md)绑定实际命题、假设、检查器版本和证据哈希；哈希验收不构成翻译器正确性或 Rocq 内核证明。
+
+[Rocq 原语试点](formal/rocq/README.md)已在锁定 9.2.0 容器中完成六个通用值运算命题的编译、公理审计与 proof object 内核复查，错误证明和公理注入负控制通过；证据见 artifacts/rocq。它不证明 TCP 行为、Python/SMT 翻译或实际协议栈，不能替换上述 Z3 unknown。
+
+[数据与关闭组合](docs/tcp-close.md)保留此前 40 个输入并新增 21 个关闭场景；FIN 与字节队列分别计数，共享一个重传定时器。未宣称完整 TCP 关闭、恢复或数据实机闭环。
+
+[FIN 组合 profile](docs/tcp-fin.md)新增 23 个输入，连同既有 61 个输入分别保存参考执行、完整字节符号重放和合成 codec 证据。场景 0.2 可显式约束消息内容、顺序与时间；新 post-target-v2 语义由参考与独立后端实现。所有声明目标均须纳入状态归纳义务，Rocq 原语证明不代表该翻译器或 TCP 已获内核证明。
+
+
+[SYN 发送历史](docs/tcp-syn-history.md)与 [delayed ACK](docs/tcp-delayed-ack.md)已列入统一注册表，合计 11 个有限 profile；登记不等于完整 TCP 验收。单项精确分组由 profile/CLI 显式配置，claims 检查实际配置并保留主 unknown。当前重建／验收结果以 suite 报告和实施日志为准，开发快照不直接升级。
+
+[连接打开捕获投影](docs/connection-capture.md)显式覆盖被动、同时及单向 SYN 超时，保留旧投影和严格校验，不以猜测 ISS 或重新对齐重传来消除差异。
+
+[独立 lwIP 数据通道](ports/lwip-data/README.md)新增单连接四字节发送／累计 ACK 的实际内存 netif PCAP，与 IR 在0ms容差下匹配；独立验收重建 oracle、复查固定输入并检查查询等价。9项 port 集成／故障测试与既有311方法完整回归分别记录。该有限场景不代表一般数据恢复、Linux实机或完整TCP证明。
+
+[事件驱动 lwIP ACK/window 实验](docs/lwip-stream-testing.md)进一步支持多段、部分／重复ACK与窗口关闭／恢复。12项独立port方法和6场景执行／验收完成，5个严格匹配，保留初始窗口4时的实际2字节分段策略差异。该差异未直接判定RFC违规，也未修改上游或oracle；接收文本、关闭、恢复、Linux和一般实现精化仍须继续。
+
+同一[独立实现通道](docs/lwip-stream-testing.md)已扩展接收重组、FIN／EOF和主动关闭：17项独立port方法通过，13场景重建／独立验收完成，6个总体匹配、7个网络差异保留。7个新场景的非空字节／EOF观测均匹配；即时补洞ACK与FIN通告窗口差异未被放宽或误报成字节损坏。查询等价保留原超时，并以精确共享前提提取重新检查。Linux、丢包／拥塞恢复和一般实现精化仍未完成。

@@ -1,0 +1,95 @@
+{
+  "scenario_version": "0.2",
+  "id": "rto-partial-ack-round-up-before-deadline",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 333,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 390,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 400,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 401,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 800,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 1399,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 2980,
+      "tick": true,
+      "expect_trace": []
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "srtt_ms": {
+        "n": 1665,
+        "d": 4
+      },
+      "rttvar_ms": {
+        "n": 2331,
+        "d": 8
+      },
+      "rto_ms": 1582,
+      "rtt_samples": 2,
+      "rtt_last_ms": 999,
+      "rtt_active": false,
+      "rtx_buf": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "timers": {
+      "rtx": 2981
+    }
+  }
+}

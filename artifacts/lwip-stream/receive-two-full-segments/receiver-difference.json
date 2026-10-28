@@ -1,0 +1,72 @@
+{
+  "status": "match",
+  "scope": "new contiguous unread IR bytes versus raw recv callback bytes and EOF; callback chunk boundaries ignored, byte order and time preserved",
+  "expected": [
+    {
+      "time_ms": 20,
+      "byte": 0
+    },
+    {
+      "time_ms": 20,
+      "byte": 128
+    },
+    {
+      "time_ms": 20,
+      "byte": 255
+    },
+    {
+      "time_ms": 20,
+      "byte": 7
+    },
+    {
+      "time_ms": 30,
+      "byte": 17
+    },
+    {
+      "time_ms": 30,
+      "byte": 33
+    },
+    {
+      "time_ms": 30,
+      "byte": 65
+    },
+    {
+      "time_ms": 30,
+      "byte": 129
+    }
+  ],
+  "observed": [
+    {
+      "time_ms": 20,
+      "byte": 0
+    },
+    {
+      "time_ms": 20,
+      "byte": 128
+    },
+    {
+      "time_ms": 20,
+      "byte": 255
+    },
+    {
+      "time_ms": 20,
+      "byte": 7
+    },
+    {
+      "time_ms": 30,
+      "byte": 17
+    },
+    {
+      "time_ms": 30,
+      "byte": 33
+    },
+    {
+      "time_ms": 30,
+      "byte": 65
+    },
+    {
+      "time_ms": 30,
+      "byte": 129
+    }
+  ]
+}

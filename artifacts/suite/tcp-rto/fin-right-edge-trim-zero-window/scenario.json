@@ -1,0 +1,130 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-right-edge-trim-zero-window",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 20,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9017,
+                "window": 0,
+                "payload": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 30,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9017,
+        "ack": 1001,
+        "window": 8,
+        "data": []
+      },
+      "expect_trace": [
+        {
+          "at_ms": 30,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9017,
+                "window": 0,
+                "payload": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 40,
+      "event": "app.receive",
+      "fields": {
+        "count": 4
+      }
+    },
+    {
+      "at_ms": 50,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 9017,
+        "ack": 1001,
+        "window": 9,
+        "data": []
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSE-WAIT",
+    "variables": {
+      "rcv_nxt": 9018,
+      "rcv_buf": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "snd_wnd": 9,
+      "rx_fin_pending": false
+    },
+    "timers": {}
+  }
+}

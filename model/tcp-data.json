@@ -1,0 +1,5439 @@
+{
+  "ir_version": "0.2",
+  "extends": "tcp-connection.json",
+  "protocol": "tcp-data",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "full TCP conformance",
+      "data outside ESTABLISHED",
+      "close with undrained buffers",
+      "ACK advancement or window update piggybacked on payload",
+      "out-of-order reassembly queue (future segments are discarded with duplicate ACK)",
+      "window shrinking below remaining flight",
+      "congestion control and fast recovery",
+      "RTT estimator and Karn algorithm",
+      "delayed ACK and persist",
+      "SACK/options/multiple connections"
+    ]
+  },
+  "requirements": {
+    "DATA-SEQ": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.4",
+      "interpretation": "Each new data octet consumes one sequence number; cumulative ACK removes an acknowledged prefix. Retransmission does not advance SND.NXT.",
+      "category": "protocol_behavior",
+      "strength": "modeled_subset"
+    },
+    "DATA-ACK": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "interpretation": "New ACKs satisfy SND.UNA < SEG.ACK <= SND.NXT; duplicate and old ACKs do not remove data; future ACK triggers an ACK.",
+      "category": "protocol_behavior",
+      "strength": "modeled_subset"
+    },
+    "DATA-WINDOW": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "interpretation": "Update SND.WND only for acceptable ACK and newer WL1/WL2. Segmentation respects the available advertised send window.",
+      "category": "protocol_behavior",
+      "strength": "modeled_subset"
+    },
+    "DATA-RECEIVE": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "interpretation": "Accept and trim text overlapping the receive window; advance RCV.NXT only over contiguous newly accepted bytes, ACK the next expected octet.",
+      "category": "protocol_behavior",
+      "strength": "modeled_subset"
+    },
+    "DATA-SEND": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.9.1.2",
+      "interpretation": "Model buffers application octets and segments them within the configured capacity, MSS and send window.",
+      "category": "protocol_behavior",
+      "strength": "modeled_subset"
+    },
+    "DATA-RTX": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.8.1",
+      "interpretation": "The retransmission timer sends the oldest outstanding data again. This profile uses fixed initial RTO and exponential backoff only.",
+      "category": "protocol_behavior",
+      "strength": "modeled_subset"
+    },
+    "DATA-RTO": {
+      "source": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5",
+      "interpretation": "Start on first outstanding transmission, restart on new partial ACK, cancel on all acknowledged, retransmit oldest on expiry and double RTO (5.1-5.6). No RTT sampling or maximum retry policy.",
+      "category": "algorithm_subset",
+      "strength": "modeled_subset"
+    },
+    "DATA-SCOPE": {
+      "source": "docs/tcp-data.md",
+      "interpretation": "Finite single-connection profile, 16-byte send and receive capacity, MSS=4, handshake-advertised peer window, immediate ACK and explicit flush scheduler. Future/out-of-order data discarded without reassembly. Close requires buffers drained. No implementation conformance claim.",
+      "category": "environment_assumption",
+      "strength": "profile_choice"
+    },
+    "CONNECTION-PROFILE": {
+      "source": "docs/tcp-data.md",
+      "interpretation": "Inherited single-connection control paths retain validated control shapes, exact sequence checks and configurable user/MSL deadlines. The data extension supersedes the base zero-payload assumption only in ESTABLISHED, within the explicit DATA-SCOPE boundary; data in other lifecycle states remains excluded.",
+      "kind": "environment_assumption",
+      "strength": "assumption"
+    }
+  },
+  "variables": {
+    "local_window": {
+      "type": "int",
+      "initial": 16
+    },
+    "snd_buf": {
+      "type": "bytes",
+      "initial": []
+    },
+    "rtx_buf": {
+      "type": "bytes",
+      "initial": []
+    },
+    "rcv_buf": {
+      "type": "bytes",
+      "initial": []
+    },
+    "snd_wnd": {
+      "type": "int",
+      "initial": 8
+    },
+    "snd_wl1": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "snd_wl2": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "take": {
+      "type": "int",
+      "initial": 0
+    },
+    "rx_chunk": {
+      "type": "bytes",
+      "initial": []
+    }
+  },
+  "events": {
+    "app.send": {
+      "origin": "application",
+      "fields": {
+        "data": "bytes"
+      }
+    },
+    "app.transmit": {
+      "origin": "application",
+      "fields": {}
+    },
+    "app.receive": {
+      "origin": "application",
+      "fields": {
+        "count": "int"
+      }
+    },
+    "net.ack": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32",
+        "ack": "seq32",
+        "window": "int"
+      }
+    },
+    "net.synack": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32",
+        "ack": "seq32",
+        "window": "int"
+      }
+    },
+    "net.data": {
+      "origin": "network",
+      "fields": {
+        "seq": "seq32",
+        "ack": "seq32",
+        "window": "int",
+        "data": "bytes"
+      }
+    }
+  },
+  "messages": {
+    "tcp_data": {
+      "fields": {
+        "flags": "string",
+        "seq": "seq32",
+        "ack": "seq32",
+        "window": "int",
+        "payload": "bytes"
+      }
+    },
+    "application_data": {
+      "fields": {
+        "data": "bytes"
+      }
+    }
+  },
+  "remove_transitions": [
+    "C-DUPLICATE-ACK-ESTABLISHED"
+  ],
+  "remove_invariants": [
+    "C-INV-TIMER-ESTABLISHED-rtx",
+    "C-INV-NOTHING-OUTSTANDING"
+  ],
+  "amend_transitions": [
+    {
+      "id": "C-ACCEPT-SYNACK",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "window"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-ACK",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "window"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYNACK",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "window"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-SYNACK-AFTER-RETRY",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "window"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-ACK-AFTER-RETRY",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "window"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "window"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "window"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "window"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "window"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-CLOSE-ESTABLISHED",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  true,
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "snd_buf"
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "rcv_buf"
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C-PEER-FIN",
+      "and_guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  true,
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "snd_buf"
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "rcv_buf"
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C-ABORT-ESTABLISHED",
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_buf",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_buf",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "local_window",
+            "value": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-ESTABLISHED-rst",
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_buf",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_buf",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "local_window",
+            "value": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-ESTABLISHED-rstack",
+      "append_actions": [
+        {
+          "set": {
+            "var": "snd_buf",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_buf",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "local_window",
+            "value": 16
+          }
+        }
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "D-QUEUE",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "app.send",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "data"
+                      }
+                    ]
+                  },
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "snd_buf"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "data"
+                      }
+                    ]
+                  }
+                ]
+              },
+              16
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_buf",
+            "value": {
+              "op": "bytes_concat",
+              "args": [
+                {
+                  "var": "snd_buf"
+                },
+                {
+                  "event": "data"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "queued"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-SEND",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-SEND-EMPTY",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "app.send",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "event": "data"
+              }
+            ]
+          },
+          0
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "empty_send"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-SEND-FULL",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "app.send",
+      "guard": {
+        "op": "ge",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "event": "data"
+                  }
+                ]
+              }
+            ]
+          },
+          17
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "application",
+            "fields": {
+              "code": "send_buffer_full"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-FLUSH-FIRST",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "app.transmit",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "snd_buf"
+                              }
+                            ]
+                          },
+                          1
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "var": "snd_wnd"
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "rtx_buf"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "rtx_buf"
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "take",
+            "value": {
+              "op": "min",
+              "args": [
+                4,
+                {
+                  "op": "min",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "sub",
+                      "args": [
+                        {
+                          "var": "snd_wnd"
+                        },
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "var": "snd_buf"
+                  },
+                  0,
+                  {
+                    "var": "take"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "op": "bytes_concat",
+              "args": [
+                {
+                  "var": "rtx_buf"
+                },
+                {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_buf",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "var": "snd_buf"
+                },
+                {
+                  "var": "take"
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "snd_nxt"
+                },
+                {
+                  "var": "take"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-SEND",
+        "DATA-WINDOW",
+        "DATA-SEQ",
+        "DATA-RTO"
+      ]
+    },
+    {
+      "id": "D-FLUSH-MORE",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "app.transmit",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "snd_buf"
+                              }
+                            ]
+                          },
+                          1
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "var": "snd_wnd"
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "rtx_buf"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "rtx_buf"
+                  }
+                ]
+              },
+              1
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "take",
+            "value": {
+              "op": "min",
+              "args": [
+                4,
+                {
+                  "op": "min",
+                  "args": [
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "sub",
+                      "args": [
+                        {
+                          "var": "snd_wnd"
+                        },
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "var": "snd_buf"
+                  },
+                  0,
+                  {
+                    "var": "take"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "op": "bytes_concat",
+              "args": [
+                {
+                  "var": "rtx_buf"
+                },
+                {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_buf",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "var": "snd_buf"
+                },
+                {
+                  "var": "take"
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "snd_nxt"
+                },
+                {
+                  "var": "take"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-SEND",
+        "DATA-WINDOW",
+        "DATA-SEQ",
+        "DATA-RTO"
+      ]
+    },
+    {
+      "id": "D-FLUSH-BLOCKED",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "app.transmit",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  true,
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "snd_buf"
+                          }
+                        ]
+                      },
+                      1
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "op": "sub",
+                    "args": [
+                      {
+                        "var": "snd_wnd"
+                      },
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-ACK-FULL-WINDOW",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "and",
+                                            "args": [
+                                              true,
+                                              {
+                                                "op": "eq",
+                                                "args": [
+                                                  {
+                                                    "event": "seq"
+                                                  },
+                                                  {
+                                                    "var": "rcv_nxt"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "event": "window"
+                                              },
+                                              0
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "event": "window"
+                                          },
+                                          65535
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "seq_comparable",
+                                    "args": [
+                                      {
+                                        "var": "snd_una"
+                                      },
+                                      {
+                                        "event": "ack"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "seq_comparable",
+                                "args": [
+                                  {
+                                    "var": "snd_nxt"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "seq_distance",
+                                    "args": [
+                                      {
+                                        "var": "snd_una"
+                                      },
+                                      {
+                                        "event": "ack"
+                                      }
+                                    ]
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "seq_distance",
+                                "args": [
+                                  {
+                                    "var": "snd_una"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "var": "rtx_buf"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "seq_distance",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  {
+                    "op": "sub",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "seq_distance",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  false,
+                  {
+                    "op": "seq_lt",
+                    "args": [
+                      {
+                        "var": "snd_wl1"
+                      },
+                      {
+                        "event": "seq"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "var": "snd_wl1"
+                          },
+                          {
+                            "event": "seq"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_le",
+                    "args": [
+                      {
+                        "var": "snd_wl2"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "var": "rtx_buf"
+                },
+                {
+                  "op": "seq_distance",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "event": "ack"
+                    }
+                  ]
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        }
+      ],
+      "requirements": [
+        "DATA-ACK",
+        "DATA-WINDOW",
+        "DATA-SEQ",
+        "DATA-RTO"
+      ]
+    },
+    {
+      "id": "D-ACK-FULL-STALE-WINDOW",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "and",
+                                            "args": [
+                                              true,
+                                              {
+                                                "op": "eq",
+                                                "args": [
+                                                  {
+                                                    "event": "seq"
+                                                  },
+                                                  {
+                                                    "var": "rcv_nxt"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "event": "window"
+                                              },
+                                              0
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "event": "window"
+                                          },
+                                          65535
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "seq_comparable",
+                                    "args": [
+                                      {
+                                        "var": "snd_una"
+                                      },
+                                      {
+                                        "event": "ack"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "seq_comparable",
+                                "args": [
+                                  {
+                                    "var": "snd_nxt"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "seq_distance",
+                                    "args": [
+                                      {
+                                        "var": "snd_una"
+                                      },
+                                      {
+                                        "event": "ack"
+                                      }
+                                    ]
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "seq_distance",
+                                "args": [
+                                  {
+                                    "var": "snd_una"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "var": "rtx_buf"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "seq_distance",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  {
+                    "op": "sub",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "seq_distance",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "or",
+                    "args": [
+                      false,
+                      {
+                        "op": "seq_lt",
+                        "args": [
+                          {
+                            "var": "snd_wl1"
+                          },
+                          {
+                            "event": "seq"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "var": "snd_wl1"
+                              },
+                              {
+                                "event": "seq"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "seq_le",
+                        "args": [
+                          {
+                            "var": "snd_wl2"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "var": "rtx_buf"
+                },
+                {
+                  "op": "seq_distance",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "event": "ack"
+                    }
+                  ]
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "cancel": "rtx"
+        }
+      ],
+      "requirements": [
+        "DATA-ACK",
+        "DATA-WINDOW",
+        "DATA-SEQ",
+        "DATA-RTO"
+      ]
+    },
+    {
+      "id": "D-ACK-PARTIAL-WINDOW",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "and",
+                                            "args": [
+                                              true,
+                                              {
+                                                "op": "eq",
+                                                "args": [
+                                                  {
+                                                    "event": "seq"
+                                                  },
+                                                  {
+                                                    "var": "rcv_nxt"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "event": "window"
+                                              },
+                                              0
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "event": "window"
+                                          },
+                                          65535
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "seq_comparable",
+                                    "args": [
+                                      {
+                                        "var": "snd_una"
+                                      },
+                                      {
+                                        "event": "ack"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "seq_comparable",
+                                "args": [
+                                  {
+                                    "var": "snd_nxt"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "seq_distance",
+                                    "args": [
+                                      {
+                                        "var": "snd_una"
+                                      },
+                                      {
+                                        "event": "ack"
+                                      }
+                                    ]
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "seq_distance",
+                                "args": [
+                                  {
+                                    "var": "snd_una"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "var": "rtx_buf"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "seq_distance",
+                            "args": [
+                              {
+                                "var": "snd_una"
+                              },
+                              {
+                                "event": "ack"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "rtx_buf"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  {
+                    "op": "sub",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "seq_distance",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  false,
+                  {
+                    "op": "seq_lt",
+                    "args": [
+                      {
+                        "var": "snd_wl1"
+                      },
+                      {
+                        "event": "seq"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "var": "snd_wl1"
+                          },
+                          {
+                            "event": "seq"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_le",
+                    "args": [
+                      {
+                        "var": "snd_wl2"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "var": "rtx_buf"
+                },
+                {
+                  "op": "seq_distance",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "event": "ack"
+                    }
+                  ]
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-ACK",
+        "DATA-WINDOW",
+        "DATA-SEQ",
+        "DATA-RTO"
+      ]
+    },
+    {
+      "id": "D-ACK-PARTIAL-STALE-WINDOW",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "and",
+                                            "args": [
+                                              true,
+                                              {
+                                                "op": "eq",
+                                                "args": [
+                                                  {
+                                                    "event": "seq"
+                                                  },
+                                                  {
+                                                    "var": "rcv_nxt"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "event": "window"
+                                              },
+                                              0
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "event": "window"
+                                          },
+                                          65535
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "seq_comparable",
+                                    "args": [
+                                      {
+                                        "var": "snd_una"
+                                      },
+                                      {
+                                        "event": "ack"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "seq_comparable",
+                                "args": [
+                                  {
+                                    "var": "snd_nxt"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "seq_distance",
+                                    "args": [
+                                      {
+                                        "var": "snd_una"
+                                      },
+                                      {
+                                        "event": "ack"
+                                      }
+                                    ]
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "seq_distance",
+                                "args": [
+                                  {
+                                    "var": "snd_una"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "var": "rtx_buf"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "seq_distance",
+                            "args": [
+                              {
+                                "var": "snd_una"
+                              },
+                              {
+                                "event": "ack"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "rtx_buf"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  {
+                    "op": "sub",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "seq_distance",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "or",
+                    "args": [
+                      false,
+                      {
+                        "op": "seq_lt",
+                        "args": [
+                          {
+                            "var": "snd_wl1"
+                          },
+                          {
+                            "event": "seq"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "var": "snd_wl1"
+                              },
+                              {
+                                "event": "seq"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "seq_le",
+                        "args": [
+                          {
+                            "var": "snd_wl2"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rtx_buf",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "var": "rtx_buf"
+                },
+                {
+                  "op": "seq_distance",
+                  "args": [
+                    {
+                      "var": "snd_una"
+                    },
+                    {
+                      "event": "ack"
+                    }
+                  ]
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_una",
+            "value": {
+              "event": "ack"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-ACK",
+        "DATA-WINDOW",
+        "DATA-SEQ",
+        "DATA-RTO"
+      ]
+    },
+    {
+      "id": "D-ACK-DUP-WINDOW",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          true,
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "event": "seq"
+                                              },
+                                              {
+                                                "var": "rcv_nxt"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          {
+                                            "event": "window"
+                                          },
+                                          0
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "le",
+                                    "args": [
+                                      {
+                                        "event": "window"
+                                      },
+                                      65535
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "seq_comparable",
+                                "args": [
+                                  {
+                                    "var": "snd_una"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "seq_comparable",
+                            "args": [
+                              {
+                                "var": "snd_nxt"
+                              },
+                              {
+                                "event": "ack"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "event": "ack"
+                      },
+                      {
+                        "var": "snd_una"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  false,
+                  {
+                    "op": "seq_lt",
+                    "args": [
+                      {
+                        "var": "snd_wl1"
+                      },
+                      {
+                        "event": "seq"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "var": "snd_wl1"
+                          },
+                          {
+                            "event": "seq"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_le",
+                    "args": [
+                      {
+                        "var": "snd_wl2"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "snd_wnd",
+            "value": {
+              "event": "window"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl1",
+            "value": {
+              "event": "seq"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "snd_wl2",
+            "value": {
+              "event": "ack"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-ACK",
+        "DATA-WINDOW"
+      ]
+    },
+    {
+      "id": "D-ACK-DUP-STALE-WINDOW",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          true,
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "event": "seq"
+                                              },
+                                              {
+                                                "var": "rcv_nxt"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          {
+                                            "event": "window"
+                                          },
+                                          0
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "le",
+                                    "args": [
+                                      {
+                                        "event": "window"
+                                      },
+                                      65535
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "seq_comparable",
+                                "args": [
+                                  {
+                                    "var": "snd_una"
+                                  },
+                                  {
+                                    "event": "ack"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "seq_comparable",
+                            "args": [
+                              {
+                                "var": "snd_nxt"
+                              },
+                              {
+                                "event": "ack"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "event": "ack"
+                      },
+                      {
+                        "var": "snd_una"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "window"
+                  },
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "or",
+                    "args": [
+                      false,
+                      {
+                        "op": "seq_lt",
+                        "args": [
+                          {
+                            "var": "snd_wl1"
+                          },
+                          {
+                            "event": "seq"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "var": "snd_wl1"
+                              },
+                              {
+                                "event": "seq"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "seq_le",
+                        "args": [
+                          {
+                            "var": "snd_wl2"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "DATA-ACK",
+        "DATA-WINDOW"
+      ]
+    },
+    {
+      "id": "D-ACK-OLD",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  true,
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "event": "seq"
+                                      },
+                                      {
+                                        "var": "rcv_nxt"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "window"
+                                  },
+                                  0
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "event": "window"
+                              },
+                              65535
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "seq_comparable",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_comparable",
+                    "args": [
+                      {
+                        "var": "snd_nxt"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "seq_lt",
+            "args": [
+              {
+                "event": "ack"
+              },
+              {
+                "var": "snd_una"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "DATA-ACK"
+      ]
+    },
+    {
+      "id": "D-ACK-FUTURE",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  true,
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "event": "seq"
+                                      },
+                                      {
+                                        "var": "rcv_nxt"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "window"
+                                  },
+                                  0
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "event": "window"
+                              },
+                              65535
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "seq_comparable",
+                        "args": [
+                          {
+                            "var": "snd_una"
+                          },
+                          {
+                            "event": "ack"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_comparable",
+                    "args": [
+                      {
+                        "var": "snd_nxt"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "op": "seq_distance",
+                    "args": [
+                      {
+                        "var": "snd_una"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      },
+                      1
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "le",
+                "args": [
+                  {
+                    "op": "seq_distance",
+                    "args": [
+                      {
+                        "var": "snd_una"
+                      },
+                      {
+                        "event": "ack"
+                      }
+                    ]
+                  },
+                  2147483647
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "bytes": []
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-ACK"
+      ]
+    },
+    {
+      "id": "D-RETRANSMIT",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "timer.rtx",
+      "guard": {
+        "op": "ge",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "var": "rtx_buf"
+              }
+            ]
+          },
+          1
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_una"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "var": "rtx_buf"
+                  },
+                  0,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rto_ms",
+            "value": {
+              "op": "mul",
+              "args": [
+                {
+                  "var": "rto_ms"
+                },
+                2
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "rtx",
+            "delay_ms": {
+              "var": "rto_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-RTX",
+        "DATA-RTO",
+        "DATA-SEQ"
+      ]
+    },
+    {
+      "id": "D-RECEIVE-IN-ORDER",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.data",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      true,
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "event": "ack"
+                                          },
+                                          {
+                                            "var": "snd_una"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "event": "window"
+                                      },
+                                      {
+                                        "var": "snd_wnd"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "bytes_len",
+                                    "args": [
+                                      {
+                                        "event": "data"
+                                      }
+                                    ]
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "event": "data"
+                                  }
+                                ]
+                              },
+                              16
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "event": "seq"
+                      },
+                      {
+                        "var": "rcv_nxt"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "le",
+                "args": [
+                  0,
+                  {
+                    "op": "sub",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "data"
+                          }
+                        ]
+                      },
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              1
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rx_chunk",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "data"
+                },
+                0,
+                {
+                  "op": "min",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "sub",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "event": "data"
+                            }
+                          ]
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_buf",
+            "value": {
+              "op": "bytes_concat",
+              "args": [
+                {
+                  "var": "rcv_buf"
+                },
+                {
+                  "var": "rx_chunk"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "rcv_nxt"
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_chunk"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "local_window",
+            "value": {
+              "op": "sub",
+              "args": [
+                16,
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rcv_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "bytes": []
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SEQ",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-RECEIVE-OVERLAP",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.data",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      true,
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "event": "ack"
+                                          },
+                                          {
+                                            "var": "snd_una"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "event": "window"
+                                      },
+                                      {
+                                        "var": "snd_wnd"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "bytes_len",
+                                    "args": [
+                                      {
+                                        "event": "data"
+                                      }
+                                    ]
+                                  },
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "event": "data"
+                                  }
+                                ]
+                              },
+                              16
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_lt",
+                    "args": [
+                      {
+                        "event": "seq"
+                      },
+                      {
+                        "var": "rcv_nxt"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "le",
+                "args": [
+                  {
+                    "op": "seq_distance",
+                    "args": [
+                      {
+                        "event": "seq"
+                      },
+                      {
+                        "var": "rcv_nxt"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "sub",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "data"
+                          }
+                        ]
+                      },
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              1
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rx_chunk",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "data"
+                },
+                {
+                  "op": "seq_distance",
+                  "args": [
+                    {
+                      "event": "seq"
+                    },
+                    {
+                      "var": "rcv_nxt"
+                    }
+                  ]
+                },
+                {
+                  "op": "min",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        16,
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rcv_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "sub",
+                      "args": [
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "event": "data"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "seq_distance",
+                          "args": [
+                            {
+                              "event": "seq"
+                            },
+                            {
+                              "var": "rcv_nxt"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_buf",
+            "value": {
+              "op": "bytes_concat",
+              "args": [
+                {
+                  "var": "rcv_buf"
+                },
+                {
+                  "var": "rx_chunk"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_nxt",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "rcv_nxt"
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rx_chunk"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "local_window",
+            "value": {
+              "op": "sub",
+              "args": [
+                16,
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rcv_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "bytes": []
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SEQ",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-RECEIVE-DUPLICATE",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.data",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "event": "ack"
+                                  },
+                                  {
+                                    "var": "snd_una"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "event": "window"
+                              },
+                              {
+                                "var": "snd_wnd"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "event": "data"
+                              }
+                            ]
+                          },
+                          1
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "data"
+                          }
+                        ]
+                      },
+                      16
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  true,
+                  {
+                    "op": "seq_lt",
+                    "args": [
+                      {
+                        "event": "seq"
+                      },
+                      {
+                        "var": "rcv_nxt"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "op": "seq_distance",
+                    "args": [
+                      {
+                        "event": "seq"
+                      },
+                      {
+                        "var": "rcv_nxt"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "data"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "bytes": []
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-RECEIVE"
+      ]
+    },
+    {
+      "id": "D-RECEIVE-AHEAD",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.data",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "event": "ack"
+                                  },
+                                  {
+                                    "var": "snd_una"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "event": "window"
+                              },
+                              {
+                                "var": "snd_wnd"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "event": "data"
+                              }
+                            ]
+                          },
+                          1
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "data"
+                          }
+                        ]
+                      },
+                      16
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "seq_lt",
+            "args": [
+              {
+                "var": "rcv_nxt"
+              },
+              {
+                "event": "seq"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "bytes": []
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-RECEIVE-ZERO-WINDOW",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "net.data",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          true,
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "event": "ack"
+                                              },
+                                              {
+                                                "var": "snd_una"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "event": "window"
+                                          },
+                                          {
+                                            "var": "snd_wnd"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      {
+                                        "op": "bytes_len",
+                                        "args": [
+                                          {
+                                            "event": "data"
+                                          }
+                                        ]
+                                      },
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "op": "bytes_len",
+                                    "args": [
+                                      {
+                                        "event": "data"
+                                      }
+                                    ]
+                                  },
+                                  16
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "sub",
+                            "args": [
+                              16,
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "var": "rcv_buf"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "seq_comparable",
+                    "args": [
+                      {
+                        "event": "seq"
+                      },
+                      {
+                        "var": "rcv_nxt"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "seq_lt",
+                            "args": [
+                              {
+                                "event": "seq"
+                              },
+                              {
+                                "var": "rcv_nxt"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "op": "seq_distance",
+                            "args": [
+                              {
+                                "event": "seq"
+                              },
+                              {
+                                "var": "rcv_nxt"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "event": "data"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "seq_lt",
+                "args": [
+                  {
+                    "var": "rcv_nxt"
+                  },
+                  {
+                    "event": "seq"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "bytes": []
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-APPLICATION-READ",
+      "from": "ESTABLISHED",
+      "to": "ESTABLISHED",
+      "event": "app.receive",
+      "guard": {
+        "op": "ge",
+        "args": [
+          {
+            "event": "count"
+          },
+          1
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "application_data",
+            "fields": {
+              "data": {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "var": "rcv_buf"
+                  },
+                  0,
+                  {
+                    "event": "count"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "rcv_buf",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "var": "rcv_buf"
+                },
+                {
+                  "event": "count"
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rcv_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "local_window",
+            "value": {
+              "op": "sub",
+              "args": [
+                16,
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "rcv_buf"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": {
+                "var": "snd_nxt"
+              },
+              "ack": {
+                "var": "rcv_nxt"
+              },
+              "window": {
+                "op": "sub",
+                "args": [
+                  16,
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "payload": {
+                "bytes": []
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "DATA-RECEIVE",
+        "DATA-SCOPE"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "D-INV-TIMER",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "ESTABLISHED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "timer_active": "rtx"
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      }
+                    ]
+                  },
+                  1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "DATA-RTO"
+      ]
+    },
+    {
+      "id": "D-INV-SEQUENCE-BUFFER",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "ESTABLISHED"
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "snd_nxt"
+              },
+              {
+                "op": "seq_add",
+                "args": [
+                  {
+                    "var": "snd_una"
+                  },
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "DATA-SEQ"
+      ]
+    },
+    {
+      "id": "D-INV-SEND-CAPACITY",
+      "assert": {
+        "op": "le",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "snd_buf"
+                  }
+                ]
+              },
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "rtx_buf"
+                  }
+                ]
+              }
+            ]
+          },
+          16
+        ]
+      },
+      "requirements": [
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-INV-RECEIVE-CAPACITY",
+      "assert": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "var": "rcv_buf"
+              }
+            ]
+          },
+          16
+        ]
+      },
+      "requirements": [
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-INV-WINDOW",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              true,
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "snd_wnd"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "snd_wnd"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-INV-NO-DATA-OUTSIDE-ESTABLISHED",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "op": "not",
+            "args": [
+              {
+                "state": "ESTABLISHED"
+              }
+            ]
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "snd_buf"
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "rcv_buf"
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-INV-ADVERTISED-WINDOW",
+      "assert": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "local_window"
+          },
+          {
+            "op": "sub",
+            "args": [
+              16,
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "rcv_buf"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "DATA-SCOPE"
+      ]
+    },
+    {
+      "id": "D-INV-CONTROL-DRAINED",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "or",
+                    "args": [
+                      false,
+                      {
+                        "state": "CLOSE-WAIT"
+                      }
+                    ]
+                  },
+                  {
+                    "state": "FIN-WAIT-2"
+                  }
+                ]
+              },
+              {
+                "state": "TIME-WAIT"
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "snd_una"
+              },
+              {
+                "var": "snd_nxt"
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CONN-ACK"
+      ]
+    },
+    {
+      "id": "D-INV-FLIGHT-WINDOW",
+      "assert": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "var": "rtx_buf"
+              }
+            ]
+          },
+          {
+            "var": "snd_wnd"
+          }
+        ]
+      },
+      "requirements": [
+        "DATA-WINDOW",
+        "DATA-SCOPE"
+      ]
+    }
+  ]
+}

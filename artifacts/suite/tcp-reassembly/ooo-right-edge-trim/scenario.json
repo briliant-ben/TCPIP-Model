@@ -1,0 +1,100 @@
+{
+  "scenario_version": "0.1",
+  "id": "ooo-right-edge-trim",
+  "description": "ooo right edge trim",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite reassembly profile; payload ACK non-advancing, send window unchanged; first accepted octet wins conflicting overlap."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.data",
+      "fields": {
+        "seq": 9015,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          14,
+          15,
+          16,
+          17
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "app.receive",
+      "fields": {
+        "count": 16
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "net.data",
+      "fields": {
+        "seq": 9017,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          16,
+          17
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "rcv_nxt": 9019,
+      "rcv_buf": [
+        16,
+        17
+      ],
+      "local_window": 14
+    },
+    "timers": {}
+  }
+}

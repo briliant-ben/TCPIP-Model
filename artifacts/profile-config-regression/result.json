@@ -1,0 +1,28 @@
+{
+  "status": "targeted_configuration_checks_passed",
+  "test_methods": {
+    "configuration": 6,
+    "refinement": 14,
+    "claims": 6,
+    "delayed_ack": 16
+  },
+  "full_current_regression": "290 methods running separately; no full pass claimed yet",
+  "registered_profiles": 11,
+  "input_hashes": {
+    "protocol_lab/profile_config.py": "9c8ae67c874dfd4ec66875d31f9d565191127e31397dba388601f4433fd7d16f",
+    "protocol_lab/profiles.py": "414a50db413a8b06ac65245de8a250344e3020faed6ee0c9114b7f4d9d06ea74",
+    "protocol_lab/claims.py": "e8460d0895941e91fcb47b0099da499e118919029ed6c220abfdea6bc60d2bf7",
+    "protocol_lab/__main__.py": "351cb042ffb612cce4559e48e5671c84488111b29622315ddcc51db301a874e6",
+    "profiles.json": "25c7538b2689c7d810a0d50d2298be0288faf3bba5feedfa1b4123107950c442",
+    "tests/test_profile_config.py": "e9cd2facbc80f5203ea10fd7b05a0b0e98227a0dd55b2bfdf97a4e22d96b003f",
+    "tests/test_refinement.py": "0087e233e288ab4e2143509988bcdffdb8d122748e013f0dfffadf953a0b6a0f",
+    "tests/test_delayed_ack.py": "536c6a16928ca2a7410c3482550cb780dd30817304c90c9d28a2b874f3aec7b9"
+  },
+  "log_hashes": {
+    "refinement.log": "5e3ff7fbb0679f532fb0cdd989316ee97ce1b06d90285b26bfbc4035fabfc2cd",
+    "delayed-ack.log": "226f6d2854360f54365bcaa39e30f1e13f8e1c157d3d2f0a14ce2662fa6c5332",
+    "claims.log": "012277f95e65be154437209f8ef453a41014ebf7a8555a42d82db74c04a333c2",
+    "configuration.log": "74e250191149dafe23c4da463cc8f1af98e36e062ee886f8f108665725a50000"
+  },
+  "protocol_complete": false
+}

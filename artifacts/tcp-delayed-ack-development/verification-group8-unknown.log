@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<stdin>", line 20, in <module>
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/refinement.py", line 234, in verify
+    checked = partitioner.verify(directory, source_path=primary_dir/'preservation.smt2')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/partition_queries.py", line 163, in verify
+    raise error(f'Partition query {name} not independently unsat: {answer} {reason}')
+formal.partition_queries.PartitionInconclusive: Partition query group-007.smt2 not independently unsat: unknown timeout

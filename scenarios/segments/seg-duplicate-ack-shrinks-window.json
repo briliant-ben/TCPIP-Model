@@ -1,0 +1,102 @@
+{
+  "scenario_version": "0.1",
+  "id": "seg-duplicate-ack-shrinks-window",
+  "description": "seg duplicate ack shrinks window",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite ACK+payload/window profile; validated ACK flag and payload shape, first accepted receive byte wins; raw accepted SEG.SEQ drives WL1."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 25,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 2
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 1021,
+      "tick": true
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1001,
+      "snd_nxt": 1007,
+      "rtx_buf": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "snd_buf": [
+        7
+      ],
+      "snd_wnd": 2,
+      "rto_ms": 2000
+    },
+    "timers": {
+      "rtx": 3021
+    }
+  }
+}

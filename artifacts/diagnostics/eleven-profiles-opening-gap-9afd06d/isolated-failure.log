@@ -1,0 +1,24 @@
+test_suite_integrity_detects_tampered_trace (test_connection.ConnectionTests.test_suite_integrity_detects_tampered_trace) ... ERROR
+
+======================================================================
+ERROR: test_suite_integrity_detects_tampered_trace (test_connection.ConnectionTests.test_suite_integrity_detects_tampered_trace)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_connection.py", line 184, in test_suite_integrity_detects_tampered_trace
+    run_suite(tmp)
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/profiles.py", line 209, in run_suite
+    result["implemented_profiles"].append(run_profile(profile, out / profile["id"], formal, depth))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/profiles.py", line 129, in run_profile
+    observed, metadata = normalize(target / "model.synthetic.pcap", read(ROOT / "packet-profile.json"), packets,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/capture.py", line 128, in normalize
+    require(synack is not None, "No peer SYN+ACK captured")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: No peer SYN+ACK captured
+
+----------------------------------------------------------------------
+Ran 1 test in 589.570s
+
+FAILED (errors=1)

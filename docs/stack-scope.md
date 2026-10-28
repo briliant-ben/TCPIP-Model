@@ -8,7 +8,7 @@
 |---|---|
 | TCP 主动打开 | 3 状态 IR、参考场景、独立有界检查、packetdrill 生成、PCAP 和证据验收；lwIP 握手执行已接入 |
 | TCP 连接控制 | 11 状态、97 条声明规则、101 个场景、定时器、应用通知、图形导出；仍是无数据、有范围假设的控制模型 |
-| TCP 数据与恢复 | 待实现发送/接收缓冲、窗口、完整序列验证、乱序重组、RTT/RTO、persist、拥塞与丢包恢复 |
+| TCP 数据与恢复 | 已有组合连接模型的有限数据切片，并新增显式多缺口重组 profile：16 字节缓冲、MSS 分段、累计/部分 ACK、非收缩窗口、重传前缀、重复/重叠裁剪和序列回绕；新增 segments profile 组合 ACK/window 与 payload、窗口收缩及有在途数据的零窗口探测；新增 close profile 支持待发送／在途数据关闭、FIN 独立计数和半关闭读取；新增 fin profile 显式处理 FIN+payload/窗口、乱序 EOF 标记和消费；新增 rto profile 精确 RTT/RTO/Karn 估计及退避；一般发送历史时序、delayed ACK、完整 persist、拥塞恢复、独立数据/关闭实现闭环仍待实现。BMC 可为 unknown，状态归纳证书单独验收，尚无数据实机闭环 |
 | UDP | 待建立独立 IR、服务语义和验证场景 |
 | IPv4/IPv6 | 待建立主机处理、路由、分片/重组、扩展头和 PMTU 模型 |
 | ICMPv4/v6 | 待建立 echo、错误上报、传输层反馈及 PMTU 关联 |
@@ -20,3 +20,6 @@
 Linux 实机通道仍受 packetdrill/TUN/网络 capabilities 缺失限制。lwIP 内存接口已提供无需权限的真实实现执行通道，但当前两个场景不能代替数据、其他协议或完整 TCP conformance 测试。
 
 后续应先把 TCP 数据模型与连接模型组合，固定有限缓冲和窗口语义；随后以 UDP/IPv4 验证跨协议分层 IR，再加入 ICMP、ARP、IPv6/NDP 与 socket 服务。每阶段保持反例重放、独立编解码、来源追溯及实现差异报告。
+
+
+注册表现包含有限 SYN 发送历史与 delayed ACK，共 11 profile；delayed ACK 只声明 23 个固定输入的验收范围，尚未迁移所有受接收策略影响的场景。无在途 persist、拥塞／fast recovery、通用输出／时间与实现精化及独立数据实现闭环仍未完成。注册本身不提升任何 unknown 或完整性状态。

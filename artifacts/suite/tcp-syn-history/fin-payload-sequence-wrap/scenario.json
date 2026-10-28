@@ -1,0 +1,60 @@
+{
+  "scenario_version": "0.2",
+  "id": "fin-payload-sequence-wrap",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect"
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 4294967294,
+        "ack": 4294967294,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "net.fin_segment",
+      "fields": {
+        "seq": 1,
+        "ack": 4294967294,
+        "window": 8,
+        "data": [
+          128
+        ]
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 4294967295,
+        "ack": 4294967294,
+        "window": 8,
+        "data": [
+          0,
+          255
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "CLOSE-WAIT",
+    "variables": {
+      "rcv_nxt": 3,
+      "rcv_buf": [
+        0,
+        255,
+        128
+      ],
+      "rx_fin_seq": 2
+    },
+    "timers": {}
+  },
+  "initial": {
+    "iss": 4294967293
+  }
+}

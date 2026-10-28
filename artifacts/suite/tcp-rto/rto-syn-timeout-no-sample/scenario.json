@@ -1,0 +1,34 @@
+{
+  "scenario_version": "0.2",
+  "id": "rto-syn-timeout-no-sample",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 1000,
+      "tick": true
+    },
+    {
+      "at_ms": 1010,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "rtt_samples": 0,
+      "rtt_measured": false,
+      "rto_ms": 3000,
+      "rtt_active": false
+    },
+    "timers": {}
+  }
+}

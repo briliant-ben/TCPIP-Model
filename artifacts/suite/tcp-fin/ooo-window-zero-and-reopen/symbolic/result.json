@@ -1,0 +1,800 @@
+{
+  "backend": "z3-constrained-trace",
+  "scope": "fixed_inputs_and_rule_choices",
+  "all_input_safety": "not_claimed",
+  "query_strategy": "exact_fixed_choice_encoding_and_fixed_input_substitution",
+  "steps": 7,
+  "query": "sat",
+  "model_semantic_sha256": "b9493825a352913d63a8d40fb2beb7f30d075b650bb31d120a34e93b2ad1ea57",
+  "solver_version": "4.15.4",
+  "smt2_sha256": "6b06cd7f2c6e19b6f50d15b40f03203ec25925f75d51866702a3f0f2a3a07e07",
+  "witness": {
+    "initial": {
+      "iss": 1000,
+      "irs": 0,
+      "snd_una": 1000,
+      "snd_nxt": 1000,
+      "rcv_nxt": 0,
+      "tx_seq": 1000,
+      "tx_ack": 0,
+      "tx_flags": "S",
+      "rto_ms": 1000,
+      "retries": 0,
+      "active_open": true,
+      "user_timeout_ms": 30000,
+      "msl_ms": 60000,
+      "local_window": 16,
+      "snd_buf": [],
+      "rtx_buf": [],
+      "rcv_buf": [],
+      "snd_wnd": 8,
+      "snd_wl1": 0,
+      "snd_wl2": 0,
+      "take": 0,
+      "rx_chunk": [],
+      "rx_slot_00": [],
+      "rx_slot_01": [],
+      "rx_slot_02": [],
+      "rx_slot_03": [],
+      "rx_slot_04": [],
+      "rx_slot_05": [],
+      "rx_slot_06": [],
+      "rx_slot_07": [],
+      "rx_slot_08": [],
+      "rx_slot_09": [],
+      "rx_slot_10": [],
+      "rx_slot_11": [],
+      "rx_slot_12": [],
+      "rx_slot_13": [],
+      "rx_slot_14": [],
+      "rx_slot_15": [],
+      "rx_advance": 0,
+      "rx_acceptable": false,
+      "seg_acceptable": false,
+      "ack_delta": 0,
+      "ack_is_new": false,
+      "ack_is_future": false,
+      "ack_advance": false,
+      "ack_window_update": false,
+      "fin_requested": false,
+      "fin_sent": false,
+      "fin_seq": 0,
+      "fin_acknowledged": false,
+      "rx_fin_pending": false,
+      "rx_fin_seq": 0,
+      "rx_fin_offset": 0,
+      "rx_fin_done": false,
+      "rx_fin_consumed": false
+    },
+    "steps": [
+      {
+        "at_ms": 0,
+        "event": "app.connect",
+        "origin": "application",
+        "transition": "C-ACTIVE-OPEN",
+        "fields": {},
+        "after": {
+          "state": "SYN-SENT",
+          "variables": {
+            "iss": 1000,
+            "irs": 0,
+            "snd_una": 1000,
+            "snd_nxt": 1001,
+            "rcv_nxt": 0,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 0,
+            "snd_wl2": 0,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false,
+            "fin_requested": false,
+            "fin_sent": false,
+            "fin_seq": 0,
+            "fin_acknowledged": false,
+            "rx_fin_pending": false,
+            "rx_fin_seq": 0,
+            "rx_fin_offset": 0,
+            "rx_fin_done": false,
+            "rx_fin_consumed": false
+          },
+          "timers": {
+            "rtx": 1000,
+            "user": 30000
+          }
+        },
+        "emitted": [
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "S",
+              "seq": 1000,
+              "ack": 0,
+              "window": 16
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 10,
+        "event": "net.synack",
+        "origin": "network",
+        "transition": "C-ACCEPT-SYNACK",
+        "fields": {
+          "seq": 9000,
+          "ack": 1001,
+          "window": 8
+        },
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1001,
+            "rcv_nxt": 9001,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 9000,
+            "snd_wl2": 1001,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false,
+            "fin_requested": false,
+            "fin_sent": false,
+            "fin_seq": 0,
+            "fin_acknowledged": false,
+            "rx_fin_pending": false,
+            "rx_fin_seq": 0,
+            "rx_fin_offset": 0,
+            "rx_fin_done": false,
+            "rx_fin_consumed": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "application",
+            "fields": {
+              "code": "connected"
+            }
+          },
+          {
+            "message": "tcp",
+            "fields": {
+              "flags": "A",
+              "seq": 1001,
+              "ack": 9001,
+              "window": 16
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 20,
+        "event": "net.data",
+        "origin": "network",
+        "transition": "F-RECEIVE-ESTABLISHED-net-data",
+        "fields": {
+          "seq": 9002,
+          "ack": 1001,
+          "window": 8,
+          "data": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1001,
+            "rcv_nxt": 9001,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 9002,
+            "snd_wl2": 1001,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [
+              1
+            ],
+            "rx_slot_02": [
+              2
+            ],
+            "rx_slot_03": [
+              3
+            ],
+            "rx_slot_04": [
+              4
+            ],
+            "rx_slot_05": [
+              5
+            ],
+            "rx_slot_06": [
+              6
+            ],
+            "rx_slot_07": [
+              7
+            ],
+            "rx_slot_08": [
+              8
+            ],
+            "rx_slot_09": [
+              9
+            ],
+            "rx_slot_10": [
+              10
+            ],
+            "rx_slot_11": [
+              11
+            ],
+            "rx_slot_12": [
+              12
+            ],
+            "rx_slot_13": [
+              13
+            ],
+            "rx_slot_14": [
+              14
+            ],
+            "rx_slot_15": [
+              15
+            ],
+            "rx_advance": 0,
+            "rx_acceptable": true,
+            "seg_acceptable": true,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": true,
+            "fin_requested": false,
+            "fin_sent": false,
+            "fin_seq": 0,
+            "fin_acknowledged": false,
+            "rx_fin_pending": false,
+            "rx_fin_seq": 0,
+            "rx_fin_offset": 0,
+            "rx_fin_done": false,
+            "rx_fin_consumed": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": 1001,
+              "ack": 9001,
+              "window": 16,
+              "payload": []
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 21,
+        "event": "net.data",
+        "origin": "network",
+        "transition": "F-RECEIVE-ESTABLISHED-net-data",
+        "fields": {
+          "seq": 9001,
+          "ack": 1001,
+          "window": 8,
+          "data": [
+            0
+          ]
+        },
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1001,
+            "rcv_nxt": 9017,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 0,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "snd_wnd": 8,
+            "snd_wl1": 9002,
+            "snd_wl2": 1001,
+            "take": 0,
+            "rx_chunk": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 16,
+            "rx_acceptable": true,
+            "seg_acceptable": true,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false,
+            "fin_requested": false,
+            "fin_sent": false,
+            "fin_seq": 0,
+            "fin_acknowledged": false,
+            "rx_fin_pending": false,
+            "rx_fin_seq": 0,
+            "rx_fin_offset": 0,
+            "rx_fin_done": false,
+            "rx_fin_consumed": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": 1001,
+              "ack": 9017,
+              "window": 0,
+              "payload": []
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 22,
+        "event": "net.data",
+        "origin": "network",
+        "transition": "F-RECEIVE-ESTABLISHED-net-data",
+        "fields": {
+          "seq": 9017,
+          "ack": 1001,
+          "window": 8,
+          "data": [
+            16
+          ]
+        },
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1001,
+            "rcv_nxt": 9017,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 0,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "snd_wnd": 8,
+            "snd_wl1": 9002,
+            "snd_wl2": 1001,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false,
+            "fin_requested": false,
+            "fin_sent": false,
+            "fin_seq": 0,
+            "fin_acknowledged": false,
+            "rx_fin_pending": false,
+            "rx_fin_seq": 0,
+            "rx_fin_offset": 0,
+            "rx_fin_done": false,
+            "rx_fin_consumed": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": 1001,
+              "ack": 9017,
+              "window": 0,
+              "payload": []
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 30,
+        "event": "app.receive",
+        "origin": "application",
+        "transition": "D-APPLICATION-READ",
+        "fields": {
+          "count": 16
+        },
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1001,
+            "rcv_nxt": 9017,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 9002,
+            "snd_wl2": 1001,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false,
+            "fin_requested": false,
+            "fin_sent": false,
+            "fin_seq": 0,
+            "fin_acknowledged": false,
+            "rx_fin_pending": false,
+            "rx_fin_seq": 0,
+            "rx_fin_offset": 0,
+            "rx_fin_done": false,
+            "rx_fin_consumed": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "application_data",
+            "fields": {
+              "data": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            }
+          },
+          {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": 1001,
+              "ack": 9017,
+              "window": 16,
+              "payload": []
+            }
+          }
+        ]
+      },
+      {
+        "at_ms": 40,
+        "event": "net.data",
+        "origin": "network",
+        "transition": "F-RECEIVE-ESTABLISHED-net-data",
+        "fields": {
+          "seq": 9017,
+          "ack": 1001,
+          "window": 8,
+          "data": [
+            16
+          ]
+        },
+        "after": {
+          "state": "ESTABLISHED",
+          "variables": {
+            "iss": 1000,
+            "irs": 9000,
+            "snd_una": 1001,
+            "snd_nxt": 1001,
+            "rcv_nxt": 9018,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": true,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 15,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [
+              16
+            ],
+            "snd_wnd": 8,
+            "snd_wl1": 9017,
+            "snd_wl2": 1001,
+            "take": 0,
+            "rx_chunk": [
+              16
+            ],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 1,
+            "rx_acceptable": true,
+            "seg_acceptable": true,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": true,
+            "fin_requested": false,
+            "fin_sent": false,
+            "fin_seq": 0,
+            "fin_acknowledged": false,
+            "rx_fin_pending": false,
+            "rx_fin_seq": 0,
+            "rx_fin_offset": 0,
+            "rx_fin_done": false,
+            "rx_fin_consumed": false
+          },
+          "timers": {}
+        },
+        "emitted": [
+          {
+            "message": "tcp_data",
+            "fields": {
+              "flags": "A",
+              "seq": 1001,
+              "ack": 9018,
+              "window": 15,
+              "payload": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "replay": {
+    "status": "match",
+    "compared_steps": 7
+  },
+  "status": "match"
+}

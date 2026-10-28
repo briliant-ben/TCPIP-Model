@@ -2,7 +2,7 @@
 import socket
 import struct
 
-from .ir import MOD, ModelError, require
+from .ir import MOD, ModelError, require, value_ok
 
 
 def normalize_trace(machine, scenario):
@@ -43,10 +43,13 @@ def ipv4_tcp(packet, identification):
     local, remote = socket.inet_aton("192.0.2.1"), socket.inet_aton("192.0.2.2")
     src, dst, sport, dport = (local, remote, 40000, 8080) if packet["direction"] == "out" else (remote, local, 8080, 40000)
     flags = flag_values[packet["flags"]]
+    payload = packet.get("payload", [])
+    require(value_ok(payload, "bytes") and len(payload) <= 65535-40, "Invalid TCP payload")
     tcp = struct.pack("!HHIIBBHHH", sport, dport, packet["seq"], packet["ack"], 5 << 4, flags, packet["window"], 0, 0)
+    tcp += bytes(payload)
     pseudo = src + dst + struct.pack("!BBH", 0, 6, len(tcp))
     tcp = tcp[:16] + struct.pack("!H", checksum(pseudo + tcp)) + tcp[18:]
-    ip = struct.pack("!BBHHHBBH4s4s", 0x45, 0, 40, identification & 0xffff, 0, 64, 6, 0, src, dst)
+    ip = struct.pack("!BBHHHBBH4s4s", 0x45, 0, 20+len(tcp), identification & 0xffff, 0, 64, 6, 0, src, dst)
     ip = ip[:10] + struct.pack("!H", checksum(ip)) + ip[12:]
     return ip + tcp
 
@@ -101,7 +104,7 @@ def packetdrill(packets):
     return "\n".join(lines) + "\n", mapping
 
 
-def compare(expected, observed, tolerance_ms=50):
+def compare(expected, observed, tolerance_ms=50, projection="active-open-v1"):
     """Strict ordered projection oracle for this deterministic profile only.
 
     Input sequence values must already be normalized to the model's ISS values.
@@ -110,24 +113,31 @@ def compare(expected, observed, tolerance_ms=50):
     """
     require(type(tolerance_ms) is int and tolerance_ms >= 0, "Invalid tolerance")
     require(type(observed) is list, "Observed packets must be a list")
+    require(projection in ("active-open-v1", "tcp-data-v1", "tcp-fin-v1", "tcp-connection-v1"), "Unsupported TCP projection")
+    fields = ["direction", "flags", "seq", "ack", "time_ms"]
+    if projection in ("tcp-data-v1", "tcp-fin-v1", "tcp-connection-v1"):
+        fields += ["window", "payload"]
     differences = []
     if len(expected) != len(observed):
         differences.append({"kind": "packet_count", "expected": len(expected), "observed": len(observed)})
     for index, packet in enumerate(observed):
         require(type(packet) is dict, f"Invalid observed packet {index}")
-        for key in ("direction", "flags", "seq", "ack", "time_ms"):
+        for key in fields:
             require(key in packet, f"Missing observed packet field {key}")
         require(packet["direction"] in ("in", "out"), "Invalid observed direction")
         require(type(packet["flags"]) is str, "Invalid observed flags")
         require(all(type(packet[k]) is int and 0 <= packet[k] < MOD for k in ("seq", "ack")), "Invalid observed sequence")
         require(type(packet["time_ms"]) in (int, float) and packet["time_ms"] >= 0, "Invalid observed time")
+        if projection in ("tcp-data-v1", "tcp-fin-v1", "tcp-connection-v1"):
+            require(value_ok(packet["payload"], "bytes"), "Invalid observed payload")
+            require(type(packet["window"]) is int and 0 <= packet["window"] <= 65535, "Invalid observed window")
     for index, (want, got) in enumerate(zip(expected, observed)):
-        for key in ("direction", "flags", "seq", "ack", "time_ms"):
+        for key in fields:
             mismatch = abs(want[key] - got[key]) > tolerance_ms if key == "time_ms" else want[key] != got[key]
             if mismatch:
                 differences.append({"kind": "field", "index": index, "packet_id": want["packet_id"],
                                     "event_id": want["event_id"], "requirements": want["requirements"],
                                     "field": key, "expected": want[key], "observed": got[key]})
-    return {"status": "mismatch" if differences else "match", "oracle": "ordered-projection-v1",
-            "tolerance_ms": tolerance_ms, "compared_fields": ["direction", "flags", "seq", "ack", "time_ms"],
+    return {"status": "mismatch" if differences else "match", "oracle": "ordered-connection-data-projection-v1" if projection == "tcp-connection-v1" else "ordered-fin-data-projection-v1" if projection == "tcp-fin-v1" else "ordered-data-projection-v1" if projection == "tcp-data-v1" else "ordered-projection-v1",
+            "tolerance_ms": tolerance_ms, "compared_fields": fields,
             "differences": differences}

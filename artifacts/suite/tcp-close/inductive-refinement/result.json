@@ -1,0 +1,30 @@
+{
+  "backend": "z3-exact-query-refinement",
+  "status": "not_needed_primary_pass",
+  "model_semantic_sha256": "7233d1d7e443ccf03b82a6a938255fa844a78a18ae5d2bf698687bd2677a06fd",
+  "primary_status": "inductive_invariants_pass",
+  "primary_result_sha256": "0bd363e27e6f7f8b72e1d132b68f73c04a4868c84aa29fcc77692a58e6065e7a",
+  "primary_query_hashes": {
+    "length-lemmas.smt2": "6633dbc58fecbc08fe763ff4522d22379bb288a4682139fcf2c790ba58216888",
+    "initial.smt2": "3a09d60a0c9a6d56270893f0c055ceac9bc0cc02738949d62a371b517476c63f",
+    "preservation.smt2": "9c4a61db08bcaefd75ce046465df88c773147afb323c40c8e64bfcf5aa18e01b",
+    "overlap.smt2": "8d2deb676de530f67fcc9070b4448b2db1b658d9ade62f3f1c3e7ee9d8edd278",
+    "sample.smt2": "5b9f6bb839b6a99b052c40571ba98872ca298352d47a9c24b563730ebcd32974"
+  },
+  "checker_source_hashes": {
+    "protocol_lab/refinement.py": "971da52d2579887a2e2439f51d62725e2b702635e5226ec806852e3d9cd415c8",
+    "protocol_lab/inductive.py": "757199dc6261b2bac59f6de1fbbb6e8ac5b129c1bb0fc3bac23c39257e488bb1",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974",
+    "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
+  },
+  "solver_version": "4.15.4",
+  "group_size": 8,
+  "timeout_ms": 10000,
+  "original_unknown_targets": [],
+  "partitions": [],
+  "scope": "same declared state-induction obligations; original unknown results retained",
+  "unbounded_protocol_proof": false,
+  "kernel_checked_proof": false,
+  "artifact_hashes": {}
+}

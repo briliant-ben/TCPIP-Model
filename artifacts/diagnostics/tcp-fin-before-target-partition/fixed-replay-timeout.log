@@ -1,0 +1,32 @@
+test_canonical_fin_has_closed_and_listen_reset_paths (test_fin.FinTests.test_canonical_fin_has_closed_and_listen_reset_paths) ... ok
+test_duplicate_eof_and_time_wait_deadline_are_independent_contracts (test_fin.FinTests.test_duplicate_eof_and_time_wait_deadline_are_independent_contracts) ... ok
+test_duplicate_eof_fault_fails_contract_even_when_state_would_match (test_fin.FinTests.test_duplicate_eof_fault_fails_contract_even_when_state_would_match) ... ok
+test_fin_payload_codec_is_opt_in_and_oracle_remains_strict (test_fin.FinTests.test_fin_payload_codec_is_opt_in_and_oracle_remains_strict) ... ok
+test_marker_tracks_gap_and_fin_is_consumed_before_single_ack (test_fin.FinTests.test_marker_tracks_gap_and_fin_is_consumed_before_single_ack) ... ok
+test_missing_clip_cannot_deliver_bytes_past_queued_fin (test_fin.FinTests.test_missing_clip_cannot_deliver_bytes_past_queued_fin) ... ok
+test_new_and_inherited_reference_corpus (test_fin.FinTests.test_new_and_inherited_reference_corpus) ... ok
+test_new_profile_binds_model_chain_and_explicit_scope (test_fin.FinTests.test_new_profile_binds_model_chain_and_explicit_scope) ... ok
+test_receive_sequence_and_future_ack_block_marker_and_window_updates (test_fin.FinTests.test_receive_sequence_and_future_ack_block_marker_and_window_updates) ... ok
+test_wrong_control_increment_rolls_back_with_position_invariant (test_fin.FinTests.test_wrong_control_increment_rolls_back_with_position_invariant) ... ok
+test_zero_window_trims_fin_until_explicit_retransmission (test_fin.FinTests.test_zero_window_trims_fin_until_explicit_retransmission) ... ok
+test_full_byte_replay_for_every_new_fin_input (test_fin.SymbolicFinTests.test_full_byte_replay_for_every_new_fin_input) ... 
+  test_full_byte_replay_for_every_new_fin_input (test_fin.SymbolicFinTests.test_full_byte_replay_for_every_new_fin_input) (scenario='fin-ahead-acks-local-fin-then-gap') ... FAIL
+test_missing_post_target_has_independent_counterexample (test_fin.SymbolicFinTests.test_missing_post_target_has_independent_counterexample) ... ok
+test_contract_includes_automatic_timer_rows_before_requested_event (test_fin.TraceContractTests.test_contract_includes_automatic_timer_rows_before_requested_event) ... ok
+test_contract_versions_and_types_are_checked_before_comparison (test_fin.TraceContractTests.test_contract_versions_and_types_are_checked_before_comparison) ... ok
+
+======================================================================
+FAIL: test_full_byte_replay_for_every_new_fin_input (test_fin.SymbolicFinTests.test_full_byte_replay_for_every_new_fin_input) (scenario='fin-ahead-acks-local-fin-then-gap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_fin.py", line 177, in test_full_byte_replay_for_every_new_fin_input
+    self.assertEqual(result['status'],'match',result.get('reason'))
+AssertionError: 'unknown' != 'match'
+- unknown
++ match
+ : timeout
+
+----------------------------------------------------------------------
+Ran 15 tests in 151.085s
+
+FAILED (failures=1)

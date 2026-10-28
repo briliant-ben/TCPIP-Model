@@ -1,0 +1,68 @@
+{
+  "scenario_version": "0.2",
+  "id": "syn-history-simultaneous-wait-before-retransmit",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 900,
+      "event": "net.syn",
+      "fields": {
+        "seq": 9000
+      }
+    },
+    {
+      "at_ms": 1000,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 1000,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 1899,
+      "tick": true,
+      "expect_trace": []
+    },
+    {
+      "at_ms": 1900,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 1900,
+          "emitted": [
+            {
+              "message": "tcp",
+              "fields": {
+                "flags": "SA",
+                "seq": 1000,
+                "ack": 9001,
+                "window": 16
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "SYN-RECEIVED",
+    "variables": {
+      "tx_syn_time": 1900,
+      "tx_syn_pending": true,
+      "tx_elapsed": 1000,
+      "tx_retransmitted": true,
+      "retries": 1,
+      "rto_ms": 2000
+    },
+    "timers": {
+      "user": 30000,
+      "rtx": 3900
+    }
+  }
+}

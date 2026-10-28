@@ -1,0 +1,52 @@
+{
+  "source_commit": "e6880f327ee870e8d9ac2236226148df0e28d446",
+  "primary_directory": "artifacts/diagnostics/syn-clock-progress-e6880f3/inductive",
+  "primary_status": "unknown",
+  "supplementary_status": "refined_inductive_queries_pass",
+  "scope": "same declared state-induction obligations; original unknown results retained",
+  "group_size": 1,
+  "timeout_ms": 10000,
+  "all_original_constraints_retained": true,
+  "original_unknown_targets": [
+    {
+      "transition": "F-RECEIVE-ESTABLISHED-net-fin_segment",
+      "state": "ESTABLISHED"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE",
+      "state": "FIN-WAIT-1"
+    }
+  ],
+  "partition_group_counts": [
+    166,
+    166,
+    167
+  ],
+  "sample_replay": {
+    "status": "match",
+    "compared_steps": 1
+  },
+  "independent_verification": {
+    "status": "valid_refined_induction_evidence",
+    "protocol_complete": false,
+    "primary_status": "unknown",
+    "refinement_status": "refined_inductive_queries_pass"
+  },
+  "execution_log_sha256": "ff77195363859376031243d501e76dcb9e429b10bf8ee621aa5d71d7472d908c",
+  "relocation": "Original bytes retained. Explicit primary source path may relocate only with identical source SHA256.",
+  "result_sha256": "727255a7b4ec7ac248df23b1b4c244d4fce7ad92956c43f20182c5986d06784f",
+  "does_not_prove": [
+    "complete TCP",
+    "all-input bounded safety",
+    "byte-content or output correctness",
+    "IR interpreter/translator equivalence",
+    "kernel-checked proof",
+    "Linux execution"
+  ],
+  "relocated_verification_log_sha256": "7819660820a92397086727faccc6c85127a44b835f83758671a2b059823520a6",
+  "relocated_cli_verification": "valid_refined_induction_evidence"
+}

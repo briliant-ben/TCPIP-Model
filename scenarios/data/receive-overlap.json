@@ -1,0 +1,72 @@
+{
+  "scenario_version": "0.1",
+  "id": "receive-overlap",
+  "description": "receive overlap",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite tcp-data profile; validated connection/packet/checksum; no advancing ACK or window update in payload events."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.data",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "net.data",
+      "fields": {
+        "seq": 9002,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "rcv_nxt": 9006,
+      "rcv_buf": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "local_window": 11
+    },
+    "timers": {}
+  }
+}

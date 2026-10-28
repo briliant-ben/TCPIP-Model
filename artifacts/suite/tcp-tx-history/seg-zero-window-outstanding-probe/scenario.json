@@ -1,0 +1,84 @@
+{
+  "scenario_version": "0.1",
+  "id": "seg-zero-window-outstanding-probe",
+  "description": "seg zero window outstanding probe",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Finite ACK+payload/window profile; validated ACK flag and payload shape, first accepted receive byte wins; raw accepted SEG.SEQ drives WL1."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 8
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          3
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 0
+      }
+    },
+    {
+      "at_ms": 1021,
+      "tick": true
+    },
+    {
+      "at_ms": 1100,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002,
+        "window": 4
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1002,
+      "snd_nxt": 1005,
+      "rtx_buf": [
+        128,
+        255,
+        3
+      ],
+      "snd_wnd": 4,
+      "rto_ms": 2000
+    },
+    "timers": {
+      "rtx": 3100
+    }
+  }
+}
