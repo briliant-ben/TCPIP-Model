@@ -31,7 +31,7 @@ def write(path, value):
     Path(path).write_text(json.dumps(value, indent=2, ensure_ascii=False) + '\n')
 
 
-def inputs():
+def inputs(extra_profiles=()):
     prefixes = ['protocol_lab', 'model', 'scenarios', 'tests', 'tools', 'ports',
                 'formal', 'spec', 'third_party', 'profiles.json',
                 'packet-profile.json', 'requirements-formal.txt']
@@ -44,6 +44,12 @@ def inputs():
         if path.exists():
             profiles.append(read(path))
             result[str(path.relative_to(ROOT))] = digest(path)
+    for filename in extra_profiles:
+        path = Path(filename).resolve()
+        if not path.is_relative_to(ROOT):
+            raise ValueError('Extra profile must be inside this repository')
+        profiles.append(read(path))
+        result[str(path.relative_to(ROOT))] = digest(path)
     for profile in profiles:
         result.update(profile_inputs(profile, load(ROOT / profile['model'])))
     return result
@@ -73,6 +79,8 @@ def environment():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', required=True, type=Path)
+    parser.add_argument('--profile', action='append', default=[], type=Path,
+                        help='Also freeze an unregistered development profile and its normative inputs')
     args = parser.parse_args()
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -80,7 +88,7 @@ def main():
         parser.error('Use a fresh output directory; existing run evidence is preserved')
     os.chdir(ROOT)
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
-    before = inputs()
+    before = inputs(args.profile)
     tool_environment = environment()
     write(out / 'inputs.json', before)
     suite = unittest.defaultTestLoader.discover(str(ROOT / 'tests'), pattern='test*.py')

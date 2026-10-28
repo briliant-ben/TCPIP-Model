@@ -324,3 +324,11 @@ fast原因与timeout原因分开，不删除父TX-INV-NO-EARLY-TIMEOUT；更新�
 独立port两个方法一次171.510s通过，含四输入真实编译／执行、严格投影及字节／EOF校验、拒绝初值覆写／丢包／越界输入、拒绝外来场景，以及模型语义哈希篡改负例。该方法集合不在在途344测试发现内，结果分开报告。四输入正式产物独立verify及导出查询新进程SAT全部通过，两个match、两个有效mismatch；见artifacts/lwip-recovery/verification.json。完整恢复状态、RTO、内部拥塞变量与实现精化仍待验证；脚本dup不等于真实接收端丢包或Linux证据。每个报告保留原始包、Difference、模型轨迹、查询与编译来源。
 
 2026-10-28：91e36724冻结提交的344项完整发现回归已完成，一次3108.338s全部通过，无错误／失败／跳过，1091项依赖与工具环境未变；原始开始／结果、测试ID、依赖SHA与日志归档artifacts/full-regression-91e36724。此前running条目为历史记录。本结果不包含后续独立lwIP端的两个方法，不提升主形式unknown或完整协议声明。
+
+## 2026-10-28：当前RTO约束的有限空闲重启
+
+新增tcp-idle-restart显式overlay及生成工具，组合恢复链且保持193规则／190不变量。RFC5681 September2009 §4.1固定模块来源锁；last-data只在非空tcp_data发出点设置，包含新发、快速／超时重传与零窗口探测，SYN／ACK／FIN-only／排队／阻塞不算。严格大于共享当前RTO才在待发app.transmit机会先置RW=min(IW,cwnd)，清CA累计信用、保留ssthresh；guard选择与action预算采用同一有效cwnd，已在途数据仍允许高于缩窗值，不强加flight<=cwnd假不变量。无新执行器／形式算子、无Python协议回调。
+
+10个主方法一次217.727s通过（含15父拥塞／恢复固定输入），另3个epoch方法一次25.969s通过；分别覆盖999/1000/1001ms、真实RTT学习后1463/1464ms边界、请求与延迟ACK不掩盖空闲、零窗阻塞／probe、fast/RTO时间刷新、清理重连、RW不扩大低于IW的窗口、保留threshold和拒绝一致删除缩窗的故障变体。三个独立手写输出顺序／内容／时刻契约的固定输入完成参考／全字节SMT、导出查询新进程SAT、合成codec／claims和输入产物SHA验收。两次专项测试不冒称一次357项全量通过。
+
+主depth6 safety/overlap仍unknown（reason canceled）；主初值、时钟与guard重叠unsat，7个接收／FIN目标超时。完整1749单项分组及7等价共1756检查与独立CLI复查通过，原主unknown报告保留。仅对声明状态／长度性质；通用内容、输出、时间及解释／翻译／实现对应未获证明，非Linux或独立空闲实现。验收绑定见artifacts/tcp-idle-restart-development/acceptance/result.json；原344回归规范／模型／执行／形式输入均未改，运行工具新增--profile以显式冻结未注册模型规范文档和来源。后续将在新提交启动357项标准发现回归，结果待终态另记。继续limited transmit、实际丢包／定时器恢复和一般允许输出关系及后续协议，完整目标未完成。

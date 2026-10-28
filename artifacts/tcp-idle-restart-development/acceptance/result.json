@@ -1,0 +1,98 @@
+{
+  "status": "finite_idle_restart_milestone_verified_primary_unknown_preserved",
+  "registered": false,
+  "model_semantic_sha256": "d303fa082c302c0a4741fe736818735ef413e78d9bf909bf3a32fbdd904555d4",
+  "rules": 193,
+  "invariants": 190,
+  "test_runs": [
+    {
+      "methods": 10,
+      "seconds": 217.727
+    },
+    {
+      "methods": 3,
+      "seconds": 25.969
+    }
+  ],
+  "fixed_input_full_byte_and_synthetic_codec": 3,
+  "primary_bmc": {
+    "status": "unknown",
+    "backend": "z3-bmc",
+    "depth": 6,
+    "reason": "canceled",
+    "safety_query": "unknown",
+    "overlap_query": "unknown"
+  },
+  "primary_induction": "unknown",
+  "primary_unknown_targets": [
+    {
+      "transition": "F-RECEIVE-ESTABLISHED-net-data",
+      "state": "ESTABLISHED"
+    },
+    {
+      "transition": "F-RECEIVE-ESTABLISHED-net-fin_segment",
+      "state": "ESTABLISHED"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-data",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER",
+      "state": "FIN-WAIT-1"
+    }
+  ],
+  "initial_query": "unsat",
+  "clock_query": "unsat",
+  "supplementary_groups": 1749,
+  "supplementary_checks_including_equivalence": 1756,
+  "independent_refinement_verification": "passed",
+  "registered_input_set_unchanged": 258,
+  "previous_344_regression_commit": "91e367245be76d8c6cb8cb46cfb7cee898a57482",
+  "previous_344_changed_dependencies": [
+    "tools/run_frozen_regression.py"
+  ],
+  "change_reason": "runner now accepts explicit unregistered profile normative input freezing; old protocol/interpreter/backend inputs unchanged",
+  "new_combined_357_regression": "not_started_at_milestone_archive",
+  "external_idle_implementation_evidence": false,
+  "linux_execution": false,
+  "full_stack_complete": false,
+  "scope_exclusions": [
+    "limited transmit, RFC7661, NewReno/SACK/ECN and complete TCP",
+    "universal byte/output/timing, IR translation or implementation refinement proof"
+  ],
+  "bindings": {
+    "model/tcp-idle-restart.json": "ef8fef8358b06265847d16f3b292fbca7f4dad0de6024a5f937908f865190ccb",
+    "tools/build_idle_restart_model.py": "d080e7d4bef0f1da7742929b4494ea0653086e678dcec06c662e213b1452e67f",
+    "tests/test_idle_restart.py": "a86d16c763f916362c25e2a0b085af0669287755111b795b2fa5bd34cc99b139",
+    "tests/test_idle_restart_epochs.py": "6d06390a87060d1e4a4c63030f6b038697647a36891fca267c2260327dec9794",
+    "artifacts/tcp-idle-restart-development/report.json": "0482f9e88524619aac6406500b1762580fb8f5e02f23f8aec3e20d6ba3f36dc2",
+    "artifacts/tcp-idle-restart-development/development-verification.json": "fadce499706ff97471a4e0560259b1a46a3d8e4c91e5a73cef64a0bf40cda8d4",
+    "artifacts/idle-restart-initial-induction/result.json": "b54bee91b4d259fdedaf4dcaa35fc899640d66bdcd2036e0867b0a663779e7f2",
+    "artifacts/idle-restart-initial-refinement/result.json": "6db8322fd63c345e00f93a7bbe78c2b96e9865a517471f95d9749070b7f82f8d"
+  },
+  "acceptance_files": {
+    "development-verifier.py": "fc0a8720f9033b1f4ca6fb1ac38ba33d18f9da2c5eae9fb2b8642534ed7c8dc3",
+    "development-verification.log": "88adc455376854031c1b4fc2f67f08a6baa5b29b6d6ee1c2ab4d23a84f05b1a6",
+    "development-generation.log": "1bed4ded87ee2fdda5b363021caefa6ed9bf0ecc4c0ef0e34017ee060c059ff8",
+    "refinement.log": "40b73df58de7bcb60c241d425bbe9cc0289c56c62794bbdc0404858c67979396",
+    "README.md": "00079e17819c79de3cfa37a74a01889b484cc8532dfd45936ad5f1438972788b",
+    "primary-induction.log": "6248c9d734e25ab57961cf9ab5dba8883537dbfe8e942291df7cc29d09b6b805",
+    "tests-main.log": "8c704835211acc1ffd9f28b9ac563930af76f4bcfdfbe23d129086e9200dade1",
+    "development-driver.py": "55437ef9bd5a619128025e0ab86cc1eaa9051420bede358a2c12810684db5af7",
+    "refinement-verification.log": "35fcab0515e91ab06daf7dfe699a726ccce73b39ddd2206aa96bcf11b23e5c73",
+    "tests-epochs.log": "a9c2bef3de2c9b037c393cd97e7090d31f1f0ea30c4249ff6a3e47bd15a7022b"
+  }
+}
