@@ -332,3 +332,15 @@ fast原因与timeout原因分开，不删除父TX-INV-NO-EARLY-TIMEOUT；更新�
 10个主方法一次217.727s通过（含15父拥塞／恢复固定输入），另3个epoch方法一次25.969s通过；分别覆盖999/1000/1001ms、真实RTT学习后1463/1464ms边界、请求与延迟ACK不掩盖空闲、零窗阻塞／probe、fast/RTO时间刷新、清理重连、RW不扩大低于IW的窗口、保留threshold和拒绝一致删除缩窗的故障变体。三个独立手写输出顺序／内容／时刻契约的固定输入完成参考／全字节SMT、导出查询新进程SAT、合成codec／claims和输入产物SHA验收。两次专项测试不冒称一次357项全量通过。
 
 主depth6 safety/overlap仍unknown（reason canceled）；主初值、时钟与guard重叠unsat，7个接收／FIN目标超时。完整1749单项分组及7等价共1756检查与独立CLI复查通过，原主unknown报告保留。仅对声明状态／长度性质；通用内容、输出、时间及解释／翻译／实现对应未获证明，非Linux或独立空闲实现。验收绑定见artifacts/tcp-idle-restart-development/acceptance/result.json；原344回归规范／模型／执行／形式输入均未改，运行工具新增--profile以显式冻结未注册模型规范文档和来源。后续将在新提交启动357项标准发现回归，结果待终态另记。继续limited transmit、实际丢包／定时器恢复和一般允许输出关系及后续协议，完整目标未完成。
+
+## 2026-10-28：有限Limited Transmit与独立输出观测
+
+新增tcp-limited-transmit，继承空闲重启／Reno及共享序列、窗口、缓冲和字节时间链，193规则／193不变量。RFC3042 January2001 §2原文从官方获取并固定SHA，RFC5681 September2009 §3.2 steps1/2为组合来源。前两个被接受的纯dup各自动发至多4新字节，保持cwnd，受rwnd及cwnd+8预算；普通app.transmit的旧预算不扩大。生成器仅复制父IR中既有在途new-data动作的锚定片段并条件化成JSON，包含RTT/Karn、时间历史、ACK piggyback与共享队列；没有运行时回调或新后端算子。已有RTO截止点不重启，FIN已发时拒绝LT，长于当前RTO的idle机会保守留待显式缩窗发送。
+
+第三dup显式以FlightSize减当前周期实际LT字节为阈值基数，UNA推进／恢复入口／实际RTO／persist／清理结束周期。容量16/SMSS4会使不同计算都夹至8，故记录并检验非空基数扣除（如12减8=4），不把相同数值阈值宣称为数值区分证明。13方法一次169.173s通过，覆盖自动字节与顺序、timer不重启、普通发送不借LT信用、1字节窗口、首次无数据、partialACK新周期、RTO、FIN／待关闭、wrap、piggyback及错误基数／错误cwnd增长负例；4手写内容／时刻／顺序契约完成新进程固定字节SAT、合成codec、claims及SHA验收。
+
+初次12普通方法通过后，独立归纳对5个ACK规则产生SAT：任意不变量前态允许fr_dupacks=1、lt_epoch_packets=2，再发便超出2。未证可达，不能称执行协议bug。保留原型源码／所有查询／见证与初次检查，新增packets<=dupacks和packets<=bytes<=4*packets关系；协议动作未因此修改。旧模型已从170成员SHA逐文件验证档中隔离重建，并用旧源码重新生成SAT；导出查询另由独立进程确认。诊断见limited-transmit-induction-epoch-v1。当前主初值、时钟与guard均unsat，无SAT；depth6 BMC及8主归纳目标unknown保留。完整2085单项分组、含等价2093检查及独立CLI验收通过，仅支持声明状态／长度性质，不提升为通用内容、输出时间、翻译或完整TCP证明。
+
+另建ports/lwip-limited-transmit复用未修改的C驱动，先各发送4字节，随后可排队1或3段，再注入前两个dup。3实际PCAP输入、固定查询新进程及独立验收完成，2匹配、1有效差异；2独立port方法175.862s通过并拒绝重哈希伪造oracle。首次测试错误假定lwIP不会发排队数据，两个失败预期及实际包归档。实际一个排队段30ms与模型相同；12排队字节在lwIP按自身普通cwnd预算30ms一次发三段，而模型30/31ms各一段。来源解释是ACK处理末端tcp_output在上游IW16内发送，不是测得内部LT变量或RFC bug，也不能由单段匹配推断LT支持。脚本在31ms结束，全部数据尚未确认；不等于永不发／真实peer丢包或Linux证据。
+
+旧注册258项输入及在途357回归1108依赖未变；后者仍绑定cb163fe7，不将13新方法追加为该次通过。模型验收绑定于artifacts/tcp-limited-transmit-development/acceptance/result.json，独立实现另见artifacts/lwip-limited-transmit/acceptance.json。原2750ms差异与上游源码／oracle／哈希验收保持。继续独立数据计时／丢包恢复、一般允许输出及用户完整后续协议范围，目标未完成。

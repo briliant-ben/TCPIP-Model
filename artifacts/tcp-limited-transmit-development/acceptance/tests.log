@@ -1,0 +1,18 @@
+test_empty_first_duplicate_and_late_queue_only_send_on_second (test_limited_transmit.LimitedTransmitTests.test_empty_first_duplicate_and_late_queue_only_send_on_second) ... ok
+test_epoch_invariant_rejects_more_sends_than_duplicate_opportunities (test_limited_transmit.LimitedTransmitTests.test_epoch_invariant_rejects_more_sends_than_duplicate_opportunities) ... ok
+test_excluded_basis_fault_detected_even_when_threshold_clamps_same (test_limited_transmit.LimitedTransmitTests.test_excluded_basis_fault_detected_even_when_threshold_clamps_same) ... ok
+test_fin_sent_blocks_lt_but_pending_close_can_drain_new_data (test_limited_transmit.LimitedTransmitTests.test_fin_sent_blocks_lt_but_pending_close_can_drain_new_data) ... ok
+test_inflating_cwnd_for_lt_is_rejected (test_limited_transmit.LimitedTransmitTests.test_inflating_cwnd_for_lt_is_rejected) ... ok
+test_partial_ack_resets_epoch_then_new_duplicate_cycle (test_limited_transmit.LimitedTransmitTests.test_partial_ack_resets_epoch_then_new_duplicate_cycle) ... ok
+test_receiver_window_allows_only_one_byte_and_no_second_send (test_limited_transmit.LimitedTransmitTests.test_receiver_window_allows_only_one_byte_and_no_second_send) ... ok
+test_sequence_wrap_and_data_order (test_limited_transmit.LimitedTransmitTests.test_sequence_wrap_and_data_order) ... ok
+test_source_lock_idempotent_generator_and_fixed_byte_contracts (test_limited_transmit.LimitedTransmitTests.test_source_lock_idempotent_generator_and_fixed_byte_contracts) ... ok
+test_third_duplicate_excludes_actual_lt_bytes_before_fast_send (test_limited_transmit.LimitedTransmitTests.test_third_duplicate_excludes_actual_lt_bytes_before_fast_send) ... ok
+test_timeout_uses_shared_byte_age_and_clears_lt_epoch (test_limited_transmit.LimitedTransmitTests.test_timeout_uses_shared_byte_age_and_clears_lt_epoch) ... ok
+test_two_automatic_new_segments_preserve_cwnd_rto_and_exact_bytes (test_limited_transmit.LimitedTransmitTests.test_two_automatic_new_segments_preserve_cwnd_rto_and_exact_bytes) ... ok
+test_window_update_future_invalid_seq_and_payload_are_not_lt (test_limited_transmit.LimitedTransmitTests.test_window_update_future_invalid_seq_and_payload_are_not_lt) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 169.173s
+
+OK

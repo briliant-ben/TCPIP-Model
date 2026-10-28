@@ -202,3 +202,5 @@ docs/                  语义、外部测试约定、里程碑
 [独立lwIP快速重传对照](ports/lwip-recovery/README.md)复用未修改的C驱动，单独绑定恢复IR。四输入重建及独立验收完成：两个严格匹配、两个保留第三／第四重复ACK的时刻差异；两个专项方法一次通过。未预处理与预先无在途ACK场景并存，不以修改oracle消除差异。该通道未观测内部cwnd／阈值，未验证RTO或Linux。
 
 [空闲重启开发切片](docs/tcp-idle-restart.md)增加实际数据输出时钟与严格当前RTO判断，发送前恢复RW并清CA信用。10+3方法分开通过，3个固定字节／合成codec输入验收，主unknown保留，1749组／1756含等价补充及独立复查通过；未计为独立实现或完整TCP证明。此前344项完整回归已在91e36724通过，新增后的组合回归另按新提交冻结。
+
+[Limited Transmit开发切片](docs/tcp-limited-transmit.md)显式组合前两个重复ACK自动新发、cwnd不增长及第三dup排除LT字节的损失基数。13方法、4固定字节／输出时序场景及2085组补充／独立验收通过，主unknown保留。[独立lwIP观测](ports/lwip-limited-transmit/README.md)3输入验收完成，2匹配、1保留初始拥塞策略导致的突发时刻差异；不证明内部LT状态一致。原归纳前提缺口SAT和端口测试错误预期均保留。

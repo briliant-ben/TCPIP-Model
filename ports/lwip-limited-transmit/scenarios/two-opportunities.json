@@ -1,0 +1,104 @@
+{
+  "scenario_version": "0.1",
+  "id": "two-opportunities",
+  "description": "Two scripted duplicate ACKs with fixed initial one-SMSS write; no peer loss causality or full confirmation claim",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS4/window16; both implementations initially have only four bytes available; <=31ms; no third duplicate"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 11,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 25,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_nxt": 1013,
+      "snd_una": 1001,
+      "cc_cwnd": 4,
+      "lt_epoch_bytes": 8
+    },
+    "timers": {
+      "rtx": 1021
+    }
+  }
+}
