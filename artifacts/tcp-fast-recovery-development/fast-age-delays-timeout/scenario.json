@@ -1,0 +1,123 @@
+{
+  "scenario_version": "0.2",
+  "id": "fast-age-delays-timeout",
+  "description": "fast-age-delays-timeout",
+  "initial": {
+    "cc_initial_window": 16
+  },
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Classic Reno, SMSS4/queue16; scripted pure ACKs stand for duplicate receiver reports; no SACK/NewReno or independent implementation claim."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 32,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 1021,
+      "tick": true
+    },
+    {
+      "at_ms": 1032,
+      "tick": true
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "fr_active": false,
+      "fr_dupacks": 0,
+      "cc_cwnd": 4,
+      "cc_loss": true,
+      "fr_entries": 1,
+      "retries": 1
+    },
+    "timers": {
+      "rtx": 3032
+    }
+  }
+}

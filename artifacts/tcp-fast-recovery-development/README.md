@@ -1,0 +1,1 @@
+未注册的有限classic Reno恢复overlay：193规则／187不变量；19方法一次通过，15固定输入（6继承拥塞／9恢复）完整字节重放和synthetic-only codec独立验收。第三dupack输出、更多dupack膨胀、部分／全ACK退出、Karn、字节历史／早RTO等待、delack取消、关闭及wrap组合。三个可达原型缺陷与两组SAT／独立复查均保留。主BMC／归纳unknown不改写；1460单项分组／1466含等价检查和独立CLI复查通过。状态标量／长度性质与固定输入不是完整TCP、通用内容／时间或翻译／实现证明。无新的lwIP或Linux证据；完整支持范围见docs/tcp-fast-recovery.md，验收绑定见acceptance/result.json。

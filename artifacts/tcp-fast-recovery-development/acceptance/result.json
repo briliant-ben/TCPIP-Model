@@ -1,0 +1,217 @@
+{
+  "status": "finite_fast_recovery_milestone_verified_primary_unknown_preserved",
+  "registered": false,
+  "model_semantic_sha256": "071bc1701f6cc305a0018ce4f05f3bfac829b8d1f49d2c1999fffdf67d7de3a7",
+  "states": 11,
+  "rules": 193,
+  "invariants": 187,
+  "test_methods": 19,
+  "test_seconds": 312.176,
+  "fixed_input_scenarios": 15,
+  "new_recovery_scenarios": 9,
+  "inherited_congestion_scenarios": 6,
+  "full_byte_symbolic_replays": 15,
+  "synthetic_codec_scenarios": 15,
+  "nonvacuous_fast_output_scenarios": [
+    "fast-age-delays-timeout",
+    "fast-budget-new-data",
+    "fast-extra-dup-full-ack",
+    "fast-last-wire-window",
+    "fast-partial-ack-exits-reno",
+    "fast-piggyback-cancels-delack",
+    "fast-rejected-data-window",
+    "fast-third-ack-exact-prefix"
+  ],
+  "ignored_window_property_scenarios": [
+    "fast-rejected-data-window"
+  ],
+  "profile_input_hashes": {
+    "model/tcp-fast-recovery.json": "6dd24a15ee05d761c7e120081850f779f2083cca56de36ca370b650f62c62a4c",
+    "model/tcp-congestion.json": "636be5784210b8bd903705239062288de9c0eafa3f64f149efc6734d8f7604a5",
+    "model/tcp-persist.json": "37fe381944733b210f46c4042998be5c6a3900879001d043c4efeac0eb63e664",
+    "model/tcp-delayed-ack.json": "ddbd2279cde9674d7806273b47e5a96f84b2a539bc1c92343c7686ad4b52f085",
+    "model/tcp-syn-history.json": "3fc8379d47cac85c67d9b9bb9154c155265ad46e7c9ec4a115a6ab0940d0a1a1",
+    "model/tcp-tx-history.json": "45e04d33fa6e7fbebbe5f10266573aab5bfef60a9c1797bb814260e135e74466",
+    "model/tcp-rto.json": "2c623aeb013cee4565f6f5179342e9bd8dd119b91a48308ed1b454c6c31137ae",
+    "model/tcp-fin.json": "f2e9367a86e5d88643a29dc1c05150b5123fe4e5b37c470d83b833e92f4c7499",
+    "model/tcp-close.json": "b112909d1b63ac2096c5a88dea2b22e006b62adbc002d79d213f4c4b97d3498f",
+    "model/tcp-segments.json": "53eb104e2e411c6d627308b165dd9b5ea883aada0deeaa2f2a8e386c2f63f04d",
+    "model/tcp-reassembly.json": "6bbbfb08ab747cbc0ecdcfb82ab3a2cebd13245403d8d79d3289818dccafdda9",
+    "model/tcp-data.json": "59b9f71df335c3312d4d351910f5717f65f5e20d94da0e19496fd4b4db57da46",
+    "model/tcp-connection.json": "a5696e3f59125c493973f624c88fc7b76244f43c51613222cdf074d8693e244e",
+    "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+    "protocol_lab/__main__.py": "e572c7cf0c49984fbe93f968539a109c1a22da9e438428023ff7e4d1e6904bd8",
+    "protocol_lab/capture.py": "46d65363d813f605e0ba177a6cb4a22d6df0dc59711d75b658129d8194f2cc92",
+    "protocol_lab/claims.py": "e8460d0895941e91fcb47b0099da499e118919029ed6c220abfdea6bc60d2bf7",
+    "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+    "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+    "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
+    "protocol_lab/inductive.py": "757199dc6261b2bac59f6de1fbbb6e8ac5b129c1bb0fc3bac23c39257e488bb1",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+    "protocol_lab/packets.py": "06d8334e2911affc115dbb177aab66b66865ce2846ed18cac575ca8a4139d174",
+    "protocol_lab/profile_config.py": "9c8ae67c874dfd4ec66875d31f9d565191127e31397dba388601f4433fd7d16f",
+    "protocol_lab/profiles.py": "db261ed33648fd8da346537236afb207d4ed99c395a9bcd9a0b9d633f65a6186",
+    "protocol_lab/refinement.py": "971da52d2579887a2e2439f51d62725e2b702635e5226ec806852e3d9cd415c8",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974",
+    "scenarios/congestion/cc-ack-shifts-timeout-marks.json": "f6031e63bc108cb116ede2a029ff65937f7d57f5ea1b6c0dc9d99a1e2c1382a4",
+    "scenarios/congestion/cc-ca-byte-counting.json": "e6d8d641143223cdf4e2c0c5a28083c12602f301a56e86da2f9fb7b91bac5d3c",
+    "scenarios/congestion/cc-close-data-fin-credit.json": "804c6d153f81491b28f4972e4518a7d3d85ee78c33da834f0c2bd2d905bbb6c7",
+    "scenarios/congestion/cc-partial-ack-window-gate.json": "20799df12400ee7ccc28c74a72c17eeefc561fc9ffff73d9a166977723941edc",
+    "scenarios/congestion/cc-persist-excludes-probe-growth.json": "163b41ed6b88daaf0e7be2ae87f6d0f93f5c4628be695e02817557a36c1d4d95",
+    "scenarios/congestion/cc-repeat-timeout-preserves-threshold.json": "9525f72fe65898de969882e441f173a27e567259f9b2c501714bc33a0ed0a709",
+    "scenarios/fast-recovery/fast-age-delays-timeout.json": "944669ec53bc8f02b424f7430cf01716224718b3e67541aea3dc34053cc424c8",
+    "scenarios/fast-recovery/fast-budget-new-data.json": "d64248243ad9cbe848ef749d5581874ae9e6746841ac621963717057d1e68161",
+    "scenarios/fast-recovery/fast-cached-zero-window.json": "c2c8b3215526c2d83e7be5fc38e17f7422679a5b5cc4ac6c5250018583f0f23f",
+    "scenarios/fast-recovery/fast-extra-dup-full-ack.json": "db5603189794b108be74ad5870eeacf77f5a006d36d0f107bcce2e58afc2a3b3",
+    "scenarios/fast-recovery/fast-last-wire-window.json": "8a4c3a42671f0d7e39cf1f2433ebeb4c9bc6717e76caefc1a40c941ec3788d38",
+    "scenarios/fast-recovery/fast-partial-ack-exits-reno.json": "984336b94a3dd1a51f5aca2a3f45258d9c228f717f262026414d754415072229",
+    "scenarios/fast-recovery/fast-piggyback-cancels-delack.json": "52e343116858a950fc2b9854576c6dc1d6af3a129d3f5a5a647ad8e0cb539302",
+    "scenarios/fast-recovery/fast-rejected-data-window.json": "5b756fae69cfefef1f13832525479408bfe5f913af06e4dfdb8eea8a2c9720b0",
+    "scenarios/fast-recovery/fast-third-ack-exact-prefix.json": "f28ce05e93b95a416449dc065ee3f10f8bc9b6df95dc81904b9f310e35d0dbe3",
+    "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
+    "profiles.json": "748c4ce600cf8dec200c0641f9a5c69c1df478a21f015e10b09a52386d3aec3c",
+    "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
+    "docs/semantics.md": "3d66f69a0c97f72290362ad75d2872e52c02b58a2ec31a082c04d42ac557d57b",
+    "docs/inductive.md": "d5036750df01408d4fe342bbbedc0448b4b276b32031dfa022e42bfab10e128d",
+    "docs/claims.md": "252e2f9a3a1ad288eccb3f62b8bc8c4cbd1b45a08821d6554748d7c45ef88793",
+    "formal/README.md": "a090629e78b071c1112ea4b520da06d0b7c74a86c81f01775976534f684821ed",
+    "packet-profile.json": "8585bfeb9e967e0329ca5b011db4ed71a50e537df4b6c56b3cb328585d112fd9",
+    "docs/connection-capture.md": "4bad847187539076def0fb6567a00ac5aef0ce6742a77205c20a98d2419cf9a3",
+    "docs/tcp-data.md": "f3e800456870da2c22283c065e858d442d181aed377b3e8b04e39d101f27b393",
+    "docs/tcp-segments.md": "6b0267ecdfa43f5523e54905ca68832b02e2cf8af265f796aaa8faa746525afb",
+    "docs/tcp-close.md": "dbcce956bd1b2843368e0e4fad946eb28059ee3c2fa11056ccf961c61ed7cee8",
+    "docs/tcp-fin.md": "df89f4e454fe98584887d3da11d4322abc90209820e66ae2aa6d643e3e29a38e",
+    "docs/tcp-rto.md": "e2299bf23258f7ab92f84755beb85db565a80622dace81cfe5796a165e1c79f8",
+    "docs/tcp-tx-history.md": "f9c341660ee2b225d9a3f2d3eb0fa3f3c19af3556f12b775c40ab4b4be56f0cd",
+    "docs/tcp-syn-history.md": "c28e90a115fcd85cf8062586a45932d5939289b9b50a0f9d60034b913c5859dc",
+    "docs/tcp-delayed-ack.md": "2fafef5e626fd3d440409389eec7ea2da6498d512de95e6c49b2b5504c82ce52",
+    "docs/tcp-persist.md": "9f90bdba1c75a4beb855e66e8dda6a5f010adaeaae3c6a5f756f9ae08c6ab360",
+    "spec/sources/rfc5681.txt": "a2d99a2421d5c57b248394f26ba44fc364aa546680fbf10ff0aa7034dad8b87d",
+    "spec/sources/tcp-congestion.json": "afefdd385d468744f235d47fae47d0de61ede8369821fef5e63932e5de355901",
+    "docs/tcp-fast-recovery.md": "f7986d9ef5213c88c9ed04585fc229c05476db5fc706547c4895665d5f4965a9",
+    "spec/sources/rfc9293.txt": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+    "spec/sources/tcp-fast-recovery.json": "88e2eee77301534d1d623fecdee38a0cbf1e012ee7cbf2f34f0256b6989dd1e9",
+    "spec/sources/rfc6298.txt": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6"
+  },
+  "module_source_lock": [
+    {
+      "rfc": 5681,
+      "url": "https://www.rfc-editor.org/rfc/rfc5681.txt",
+      "sha256": "a2d99a2421d5c57b248394f26ba44fc364aa546680fbf10ff0aa7034dad8b87d",
+      "version": "September 2009",
+      "sections": [
+        "2",
+        "3.2"
+      ],
+      "checked": "2026-10-28"
+    },
+    {
+      "rfc": 6298,
+      "url": "https://www.rfc-editor.org/rfc/rfc6298.txt",
+      "sha256": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+      "version": "June 2011",
+      "sections": [
+        "3",
+        "5"
+      ],
+      "checked": "2026-10-28"
+    },
+    {
+      "rfc": 9293,
+      "url": "https://www.rfc-editor.org/rfc/rfc9293.txt",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "version": "August 2022",
+      "sections": [
+        "3.10.7.4"
+      ],
+      "checked": "2026-10-28"
+    }
+  ],
+  "primary_bmc": {
+    "status": "unknown",
+    "backend": "z3-bmc",
+    "depth": 6,
+    "reason": "canceled",
+    "safety_query": "unknown",
+    "overlap_query": "unknown"
+  },
+  "primary_induction_status": "unknown",
+  "primary_unknown_targets": [
+    {
+      "transition": "F-RECEIVE-ESTABLISHED-net-data",
+      "state": "ESTABLISHED"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-data",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK",
+      "state": "FIN-WAIT-2"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW",
+      "state": "FIN-WAIT-1"
+    }
+  ],
+  "auxiliary_status": "refined_inductive_queries_pass",
+  "auxiliary_groups": 1460,
+  "auxiliary_checks_including_equivalence": 1466,
+  "source_hashes": {
+    "model/tcp-fast-recovery.json": "6dd24a15ee05d761c7e120081850f779f2083cca56de36ca370b650f62c62a4c",
+    "tests/test_fast_recovery.py": "81f3aa0b356ded7d3bd1f89f96cb521e8a695abafc9fadbea319f50b48544012",
+    "tools/build_fast_recovery_model.py": "f6c0fb444dbc68ea9d7050abd21362f708c6f7e7294d60c948382fac1c20c1b7",
+    "tools/build_congestion_model.py": "45a16e899e4c73dfbf0607e800c6e99b86dc24eccf0ef237a3c6985510395847"
+  },
+  "artifact_bindings": {
+    "development_report": "88b29c553b170d1ec577138f3a9c1375bbc7eadfd50b1910e31f0f0165753903",
+    "development_verification": "4b0eb52a59987f513e0942ee9cfb2021bfa247e025428dcbb3c9862e0ea3975e",
+    "primary_result": "44df685fc7db21ce61136cbc07fd41195cbad2344d19f4f4aac820276d8510e8",
+    "primary_query_hashes": {
+      "length-lemmas.smt2": "7c27d3be639ff251a5eacc7abe493deeff07fb366ed348c046900c56841a84dd",
+      "initial.smt2": "57dbf4acc12b633fe450079c54f28319a3b1afdfad7bcff7a94fc57964a873ff",
+      "preservation.smt2": "cd5470c58023b303eeb7c69e8b2de4838582ebc6a49a2314784c3fd0f2486136",
+      "overlap.smt2": "9904fa6998886c8380b86ed78f6167733120488c5f8a729ff456bffea5f31884",
+      "clock-preservation.smt2": "b4724f53b7f8aad2c2f9a95af368065fd87393a428b054591e0b5d7c3a254ecd"
+    },
+    "refinement_result": "2c85e9494f0e8ea058c37e38c396353c702903cd6b6ddb2dfe1c5bc31526ea54"
+  },
+  "diagnostic_manifests": {
+    "fast-recovery-handshake-window-v1": "a53a4fd8b43b47c0e5ca7600086fbf4c9f374e73a382a3311ee0415229c0d284",
+    "fast-recovery-cached-zero-window-v1": "72334f8e2b20a7d6b8be9e6103391171c3b1a36e23e1813a7d984084b7b84cf0",
+    "fast-recovery-rejected-segment-window-v1": "fc20172795a2229ba691dae9aa647c63c2678e4c7a02f836474712726805515f"
+  },
+  "old_profiles_input_set_unchanged": 258,
+  "old_311_input_files_unchanged": 293,
+  "parent_congestion_profile_inputs_unchanged": true,
+  "regression_note": "19 new methods passed as one run; prior 14 congestion methods and original 311 full run remain separate evidence with unchanged source/model inputs, not a new single full discovery run. Six parent congestion scenarios rerun through the recovery overlay.",
+  "external_implementation_evidence": false,
+  "linux_execution": false,
+  "full_stack_complete": false,
+  "scope_exclusions": [
+    "complete TCP and generic Reno conformance",
+    "limited transmit and automatic new-data emission on duplicate ACK",
+    "idle restart, ECN/SACK/NewReno and multiple-loss recovery guarantees",
+    "FIN-only fast retransmit and legacy FIN wire-window knowledge",
+    "universal byte/output/timing and interpreter/translator/implementation refinement proof"
+  ],
+  "logs_and_commands": {
+    "tests.log": "b69f1f820b34a40ef0be5b82fc496696f0347155312fc872501149561b904e57",
+    "development-generation.log": "8306379a898c4c3921d1e5a510a937cb42379014707bc6d302b023cab8a3a035",
+    "development-verification.log": "0d669523cedd059ee0323256114023a59fe2317bf834b13c261147e956ea0ade",
+    "primary-induction.log": "a00af1a171498da9b7204727275514c442f03d21f937f03f03fef2f911393c73",
+    "refinement.log": "fb3bb2520bc133b062d110a9ac608ae633b48d3ec0ea1736922f59c5132391b8",
+    "refinement-verification.log": "2351256336c3a5b91396b8f9c2303a7330e2b90d20c475ae5a18b91c3145068d",
+    "development-driver.py": "7ed7ccc33494680fee0dc2cdb805a57c3c8445f3442c995b08ae877fa7e83eb7",
+    "development-verifier.py": "f3e57c588e280bc4388fdc0c214dae150ca285cb777c083eedf4192a57da4ed6"
+  }
+}

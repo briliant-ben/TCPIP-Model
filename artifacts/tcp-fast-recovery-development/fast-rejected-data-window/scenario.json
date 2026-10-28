@@ -1,0 +1,166 @@
+{
+  "scenario_version": "0.2",
+  "id": "fast-rejected-data-window",
+  "description": "Rejected receive sequence must not replace last accepted wire window or delay the third valid duplicate ACK.",
+  "initial": {
+    "cc_initial_window": 16
+  },
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Classic Reno, SMSS4/queue16; scripted pure ACKs stand for duplicate receiver reports; no SACK/NewReno or independent implementation claim."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 25,
+      "event": "net.data",
+      "fields": {
+        "seq": 9030,
+        "ack": 1001,
+        "window": 8,
+        "data": [
+          128
+        ]
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 32,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      },
+      "expect_trace": [
+        {
+          "at_ms": 32,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "fr_active": true,
+      "fr_dupacks": 3,
+      "cc_cwnd": 20,
+      "cc_ssthresh": 8,
+      "snd_nxt": 1017,
+      "rtx_buf": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "timers": {
+      "rtx": 1021
+    }
+  }
+}

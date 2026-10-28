@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/tmp/verify_fast_historical_snapshot.py", line 15, in <module>
+    assert result.returncode==0,result.stderr
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/diagnostics/fast-recovery-cached-zero-window-v1/reproduce.py", line 11, in <module>
+    write(out/'result.json',result);write(out/'reference-trace.json',x.trace);print(result['actual'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/folders/8z/yn99y21n7xzcw_z2z_k8m4bc0000gn/T/fr-historical-replay-teu4p0i7/protocol_lab/flow.py", line 24, in write
+    Path(path).write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n")
+  File "/Users/xubenling/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/8z/yn99y21n7xzcw_z2z_k8m4bc0000gn/T/fr-historical-replay-teu4p0i7/artifacts/diagnostics/fast-recovery-cached-zero-window-v1/result.json'
+

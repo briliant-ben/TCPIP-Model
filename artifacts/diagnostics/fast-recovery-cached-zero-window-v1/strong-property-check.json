@@ -1,0 +1,33 @@
+{
+  "classification": "fixed_input_violation_of_stronger_entry_output_property",
+  "query": "sat",
+  "scope": "fixed inputs and rule choices, not unrestricted reachability or protocol completeness",
+  "base_model_semantic_sha256": "c2e7a7a76e3c43639869b8b4a87b8698c21a00a232eed432d080e033f657cc85",
+  "added_invariant": {
+    "id": "FR-INV-ENTRY-SEND",
+    "assert": {
+      "op": "implies",
+      "args": [
+        {
+          "var": "fr_entered"
+        },
+        {
+          "var": "fr_retransmitted"
+        }
+      ]
+    },
+    "requirements": [
+      "FR-RETRANSMIT"
+    ]
+  },
+  "strengthened_model_semantic_sha256": "9e293bfe0448804a1c28a82e861fd09f9d34449090918fef2b68189717ed705f",
+  "query_sha256": "5cad11f021ab9e18f1ebea5d576db108a15e1f1a996c60010551b607b307c257",
+  "solver_version": "4.15.4",
+  "strong_reference_replay": {
+    "status": "runtime_rejected",
+    "step": 11,
+    "error": "Invariant failed: FR-INV-ENTRY-SEND"
+  },
+  "independent_recheck": "sat",
+  "independent_returncode": 0
+}

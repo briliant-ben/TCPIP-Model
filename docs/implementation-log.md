@@ -302,3 +302,15 @@ acceptance/result绑定13报告、两个Difference、执行／复查日志和当
 最终来源文档下六场景独立重建／claims／输入及产物哈希／新参考／合成codec／新进程SMT重放全部验收。主depth6 safety/overlap unknown（Z3 reason canceled）保留，非执行失败或证明。主状态归纳初值、纯时钟和全部guard重叠unsat，三个继承FIN目标unknown；完整单项692组及695含等价检查、非空见证与独立CLI verify通过。原主报告不提升；独立归纳仅针对声明的标量／长度状态性质，不证明通用字节、顺序、时序、每RTT增长限度或解释／翻译／实现精化。证据在artifacts/tcp-congestion-development、congestion-initial和congestion-initial-refinement，acceptance/result.json绑定各链。
 
 旧11profile的258项输入集合及每个哈希完全未变，旧311回归关联的293个文件均未修改；新14方法另计，没有宣称已跑一次325方法全量。现有lwIP13场景、Rocq六引理及2750ms差异仍是原范围，未冒充本模块实现证据。下一步加入严格duplicate-ACK识别、快速重传／快速恢复、idle restart及独立丢包／RTO／persist组合，再按用户顺序推进后续协议。完整目标未完成。
+
+## 2026-10-28：有限 classic Reno 快速重传／恢复与接收阶段对应
+
+新增tcp-fast-recovery声明式overlay，继承拥塞／persist／连接、ACK/window、FIN、RTT/Karn及逐字节历史，仍为193规则、当前187不变量。纯ACK须有数据在途、ACK=UNA、窗口等于最近被接受的线端ACK窗口，且缓存与线端窗口均正、非persist；窗口更新／payload／FIN／无效SEQ／future ACK不冒充重复ACK。第三次触发UNA处最多一个SMSS前缀重传、以FlightSize减阈值并膨胀cwnd，额外dup膨胀不再重传；首次新UNA（含partial ACK）退出classic Reno并清CA信用，不额外增长。新发数据仍使用显式app.transmit机会，未实现limited transmit或每dup自动发新数据。
+
+fast原因与timeout原因分开，不删除父TX-INV-NO-EARLY-TIMEOUT；更新实际重传前缀时刻和Karn重叠，保留原RTO截止点，由父年龄检查等待过早到期，不虚增重试／退避。实际输出携带当前累计ACK，正确取消delayed ACK。主动／被动握手、CLOSE-WAIT、FIN在途、partial/full ACK、wrap及RTO退出组合均有验证。规范来源固定RFC5681 §§2/3.2、RFC6298 §§3/5及RFC9293 §3.10.7.4，模块级来源锁和原文SHA纳入输入；核心执行器与形式后端无新算子或TCP回调。
+
+三个可达模型缺陷在开发中发现并修复：握手动作把源状态当作目标而丢失窗口知识；只检查线端窗口而漏掉缓存窗口0时，进入恢复却无输出；聚合接收规则错误更新被拒收DATA／FIN的窗口元数据。后二者分别产生固定输入SAT、参考验证／重放与独立进程SAT复查；已加入ENTRY-SEND和忽略段元数据不变不变量，并直接使用父IR的seg_acceptable/ack_is_future，不能凭规则ID推定所有内部分支都接受了段。反例、旧模型／查询／见证、当时较弱性质与unknown结果完整归档于diagnostics/fast-recovery-*；两阶段历史压缩档逐文件SHA验证并从隔离解压源重现，旧成功检查不回填为新性质证明，也不回滚当前模型。
+
+最终19方法一次通过（312.176s），15固定输入（6继承拥塞、9恢复）参考执行、完整字节重放、新进程查询、严格synthetic-only codec、claims及所有冻结输入／产物哈希验收完成。8个固定输入实际触发非空快速输出，被拒收窗口性质亦有非空见证；不是仅初始状态的空证明。主depth6 safety/overlap unknown（Z3 reason canceled）保留；该深度也不能覆盖所有准备后第三dup轨迹。状态归纳初值／纯时钟／guard均unsat，6个接收／FIN目标unknown；完整1460单项分组、1466含等价检查与独立CLI复查通过，主报告不提升。只针对声明的标量／长度状态性质，不等于通用内容、输出顺序／时序、每RTT上限、翻译／实现精化或完整TCP证明。
+
+验收链见artifacts/tcp-fast-recovery-development/acceptance/result.json及fast-recovery-current-*。旧11profile的258项输入集合、旧311回归关联的293文件及父拥塞开发证据输入均未变；原14拥塞方法证据保持独立。本阶段尚未注册suite、无新独立实现恢复或Linux证据，2750ms差异保持。新增tools/run_frozen_regression.py，用标准unittest发现、记录提交和测试ID／依赖SHA，依赖改变即使测试成功也拒绝计为该提交通过；将启动包含新增测试的完整回归，结果另记，未完成前不计通过。后续继续独立快速恢复／丢包实测、limited transmit、空闲重启及一般允许输出对应，再推进用户约定的后续协议，完整目标未完成。

@@ -1,0 +1,12 @@
+{
+  "id": "tcp-fast-recovery-development",
+  "model": "model/tcp-fast-recovery.json",
+  "scenarios": [
+    "scenarios/congestion",
+    "scenarios/fast-recovery"
+  ],
+  "packetdrill": null,
+  "symbolic_replay": true,
+  "wire_projection": "tcp-connection-v1",
+  "inductive": false
+}
