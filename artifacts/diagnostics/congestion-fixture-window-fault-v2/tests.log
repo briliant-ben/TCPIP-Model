@@ -1,0 +1,1346 @@
+test_ack_shift_exposes_a_fresh_oldest_timeout_epoch (test_congestion.CongestionTests.test_ack_shift_exposes_a_fresh_oldest_timeout_epoch) ... ok
+test_actual_first_repeat_and_early_rto (test_congestion.CongestionTests.test_actual_first_repeat_and_early_rto) ... ok
+test_bad_config_and_growth_fault_are_rejected (test_congestion.CongestionTests.test_bad_config_and_growth_fault_are_rejected) ... ok
+test_ca_counts_bytes_not_ack_packets_and_drops_excess_credit (test_congestion.CongestionTests.test_ca_counts_bytes_not_ack_packets_and_drops_excess_credit) ... ok
+test_close_wait_data_gate_uses_same_window (test_congestion.CongestionTests.test_close_wait_data_gate_uses_same_window) ... ok
+test_cwnd_gate_composes_with_pending_close_and_fin_ack (test_congestion.CongestionTests.test_cwnd_gate_composes_with_pending_close_and_fin_ack) ... ok
+test_handwritten_scenarios_full_byte_symbolic_replay (test_congestion.CongestionTests.test_handwritten_scenarios_full_byte_symbolic_replay) ... ok
+test_invalid_old_future_and_unacceptable_seq_do_not_grow (test_congestion.CongestionTests.test_invalid_old_future_and_unacceptable_seq_do_not_grow) ... ok
+test_oversend_fault_is_rejected_without_invalid_flight_le_cwnd_assumption (test_congestion.CongestionTests.test_oversend_fault_is_rejected_without_invalid_flight_le_cwnd_assumption) ... FAIL
+test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) ... 
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-established') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-close-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-closing') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-established') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-fin-wait-1') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-fin-wait-2') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-last-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-time-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='active-close') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='active-syn-retransmission') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='bad-bare-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='bad-passive-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='bad-synack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='bare-acceptable-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='closed-input') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='combined-fin-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-ack-in-close-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-ack-in-established') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-ack-in-fin-wait-2') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-fin-close-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-fin-time-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='fin-retransmission') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='fin-wait-two-timeout') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='old-ack-from-closing') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='old-ack-from-fin-wait-1') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='old-ack-from-last-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='passive-ack-after-1-retries') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='passive-ack-after-2-retries') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='passive-close') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reject-ack-in-closed') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reject-ack-in-listen') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reject-synack-in-closed') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reject-synack-in-listen') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-close-closing') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-close-last-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-close-time-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-fin-in-close-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-fin-in-closing') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-fin-in-last-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-fin-in-time-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeated-close') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reset-established') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='retransmit-from-closing') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='retransmit-from-fin-wait-1') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='retransmit-from-last-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-close-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-closing') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-established') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-fin-wait-1') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-fin-wait-2') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-last-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-time-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-close-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-closing') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-established') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-fin-wait-1') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-fin-wait-2') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-last-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-time-wait') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='sequence-wrap-close') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-ack-after-1-retries') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-ack-after-2-retries') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-close') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-open-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-open-retry') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-open') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-synack-after-1-retries') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-synack-after-2-retries') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='synack-retransmission') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='timeout-from-closing') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='timeout-from-fin-wait-1') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='timeout-from-last-ack') ... ERROR
+  test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='two-syn-retransmissions') ... ERROR
+test_persist_probe_and_reopen_ack_do_not_inflate_or_collapse (test_congestion.CongestionTests.test_persist_probe_and_reopen_ack_do_not_inflate_or_collapse) ... ok
+test_slow_start_ack_division_and_sequence_wrap (test_congestion.CongestionTests.test_slow_start_ack_division_and_sequence_wrap) ... ok
+test_source_lock_and_generator_output (test_congestion.CongestionTests.test_source_lock_and_generator_output) ... ok
+test_window_gate_partial_ack_and_no_zero_length_send (test_congestion.CongestionTests.test_window_gate_partial_ack_and_no_zero_length_send) ... ok
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-established')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-close-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-closing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-established')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-fin-wait-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-fin-wait-2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-last-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='abort-from-time-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='active-close')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='active-syn-retransmission')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='bad-bare-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='bad-passive-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='bad-synack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='bare-acceptable-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='closed-input')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='combined-fin-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-ack-in-close-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-ack-in-established')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-ack-in-fin-wait-2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-fin-close-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='duplicate-fin-time-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='fin-retransmission')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='fin-wait-two-timeout')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='old-ack-from-closing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='old-ack-from-fin-wait-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='old-ack-from-last-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='passive-ack-after-1-retries')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='passive-ack-after-2-retries')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='passive-close')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reject-ack-in-closed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reject-ack-in-listen')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reject-synack-in-closed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reject-synack-in-listen')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-close-closing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-close-last-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-close-time-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-fin-in-close-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-fin-in-closing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-fin-in-last-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeat-fin-in-time-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='repeated-close')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='reset-established')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='retransmit-from-closing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='retransmit-from-fin-wait-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='retransmit-from-last-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-close-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-closing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-established')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-fin-wait-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-fin-wait-2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-last-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rst-from-time-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-close-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-closing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-established')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-fin-wait-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-fin-wait-2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-last-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='rstack-from-time-wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='sequence-wrap-close')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-ack-after-1-retries')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-ack-after-2-retries')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-close')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-open-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-open-retry')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-open')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-synack-after-1-retries')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='simultaneous-synack-after-2-retries')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='synack-retransmission')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.ack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='timeout-from-closing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='timeout-from-fin-wait-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='timeout-from-last-ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+ERROR: test_parent_connection_reference_regression (test_congestion.CongestionTests.test_parent_connection_reference_regression) (scenario='two-syn-retransmissions')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 109, in test_parent_connection_reference_regression
+    with self.subTest(scenario=path.stem):run_scenario(self.model,read(path))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 366, in _fire
+    require(set(fields) == set(schema["fields"]), f"Event field mismatch: {name}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Event field mismatch: net.synack
+
+======================================================================
+FAIL: test_oversend_fault_is_rejected_without_invalid_flight_le_cwnd_assumption (test_congestion.CongestionTests.test_oversend_fault_is_rejected_without_invalid_flight_le_cwnd_assumption)
+----------------------------------------------------------------------
+protocol_lab.ir.Conflict: Overlapping rules: ['D-FLUSH-MORE', 'D-FLUSH-BLOCKED']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_congestion.py", line 104, in test_oversend_fault_is_rejected_without_invalid_flight_le_cwnd_assumption
+    with self.assertRaisesRegex(ModelError,'CC-INV-DATA-BUDGET'):flush(m,22)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "CC-INV-DATA-BUDGET" does not match "Overlapping rules: ['D-FLUSH-MORE', 'D-FLUSH-BLOCKED']"
+
+----------------------------------------------------------------------
+Ran 14 tests in 256.882s
+
+FAILED (failures=1, errors=73)

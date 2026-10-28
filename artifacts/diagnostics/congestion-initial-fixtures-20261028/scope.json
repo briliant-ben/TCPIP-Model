@@ -1,0 +1,19 @@
+{
+  "classification": "test_fixture_errors_not_protocol_counterexamples",
+  "model_sha256": "83239b8319b9dc6d8cde166df719eaba89e0b03320a520a139894a9acf6743e2",
+  "failures": [
+    "Three handwritten expectations omitted mandatory timers key",
+    "Fault changed reset of cc_growth, then legitimate append action overwrote it; mutate the actual growth assignment instead"
+  ],
+  "source_files": {
+    "test_congestion.py": "0e75d80bf5f4db657768abf4fb28689568baf6e27265a4398f7de6a9ae3d03cf",
+    "build_congestion_model.py": "609ab4236e6597665c9998d996e339685cbb6274cfae11944bd0e026b5666514",
+    "tests.log": "e9c8083f53dd2698a7e6acb5a47fb17550d31a95a9c9c5697e8b43ff9bb6f6fb",
+    "scenarios/cc-repeat-timeout-preserves-threshold.json": "0268b1c817ba87dbdf75020e43fe3cfbd9b3d660253febdae8ae2e2d2a403d32",
+    "scenarios/cc-partial-ack-window-gate.json": "20799df12400ee7ccc28c74a72c17eeefc561fc9ffff73d9a166977723941edc",
+    "scenarios/cc-ca-byte-counting.json": "e6d8d641143223cdf4e2c0c5a28083c12602f301a56e86da2f9fb7b91bac5d3c",
+    "scenarios/cc-close-data-fin-credit.json": "069b85dd3f3955fc3d6cf2ca1adfcf070bcfb51b209504c5653c5696811ea7e2",
+    "scenarios/cc-persist-excludes-probe-growth.json": "163b41ed6b88daaf0e7be2ae87f6d0f93f5c4628be695e02817557a36c1d4d95",
+    "scenarios/cc-ack-shifts-timeout-marks.json": "4817b06191a3ef69fc5ddb594f658e0bab03f29be1c69f262930580599f1195c"
+  }
+}

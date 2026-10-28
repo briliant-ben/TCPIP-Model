@@ -288,3 +288,17 @@ IR 参考、完整字节固定输入重放、真实 lwIP netif PCAP、独立 che
 当前冻结输入的13场景执行／固定字节重放／独立验收全部完成：6个严格总体匹配、7个有效网络差异；13个接收Difference均match，其中原6发送场景为无接收的空观测，新增7场景为非空字节或EOF（5个有实际字节，4个有EOF），明确区分非空覆盖。新增场景只有连续两个完整段同时网络匹配；补洞两个场景未在捕获末端看到模型同刻ACK，另外4个FIN／关闭场景实际通告窗口比模型小1。未观测到的同刻ACK不意味着从不ACK或超过500ms；源码tcp_ack和FIN窗口／通告信用路径仅为解释线索，不是内部PCB遥测。所有原包、规则／规范来源、回调和严格Difference保留，不归一化掉差异。原窗口4的2字节分段差异也保留。
 
 acceptance/result绑定13报告、两个Difference、执行／复查日志和当前全部输入集合／哈希；完整文档见 docs/lwip-stream-testing.md。旧四字节通道再次独立验收通过；原311方法／11profile的258／293项冻结输入集合及哈希重新计算完全一致。17方法不是新一次全局311运行。此通道仍不是Linux、丢包／RTO／persist／拥塞或完整协议／通用内容时序／实现精化证明；下一步继续恢复机制和拥塞／恢复IR，并扩大独立恢复与组合验证，后续协议顺序不变。
+
+## 2026-10-28：拥塞窗口、慢启动、字节计数拥塞避免与数据 RTO 开发切片
+
+确认PR#1已合入main（3be30033，树内容与本地d252be84相同），保留所有未提交改动并切换新分支codex/tcp-congestion。本阶段不再向已关闭PR#1追加提交。
+
+新增tcp-congestion声明式overlay，继承persist／连接／数据／FIN／RTT与发送历史；193规则、180不变量。保守SMSS=4／IW=4，可配置IW4..16，实验初始阈值16是路径参数而非最大TCP窗口。普通新数据受rwnd与cwnd共同预算约束；耗尽时由互斥blocked规则处理，发送预算不变量专门检测越界，而不错误要求降窗后旧flight<=cwnd。SS按min(N,SMSS)增长，cwnd>=ssthresh进入累计字节CA，达到旧cwnd后加一SMSS并保守清零信用。无效、旧、重复、控制ACK及persist／零窗口探测不赚取信用。数据RTO实际重传才降至一个SMSS，首次最老字节超时按FlightSize调整阈值，逐字节标记随累计ACK移动，重复RTO保持阈值。
+
+全部决策在JSON AST；tools/build_congestion_model.py只生成显式overlay，运行时不调用生成器。复用既有整数／字节／BV32及精确有理／ceil语义，没有添加后端算子。RFC5681 September2009 §§2、3.1官方原文和模块级来源锁已保存、校验并绑定输入哈希；原全局9293／6298清单及旧profile不改。模块尚未注册suite，说明见docs/tcp-congestion.md。
+
+14方法一次运行通过（304.063s），包含101个旧连接输入（沿用既有data/RTO测试的显式ACK/SYNACK window=8桥接，不改预期状态或时钟）、六个手写固定输入完整字节符号重放、部分ACK／CA分割攻击、wrap、过早／重复RTO、标记前移、persist、CLOSE-WAIT及待关闭FIN组合。故障变体检测实际增长越界及一致移除guard／blocked保护后的发送越界。早期两轮失败来自夹具缺失必需timers、缺少schema窗口及故障注入先命中重置或规则冲突；原日志／测试和场景保留于diagnostics/congestion-*，不是协议反例。
+
+最终来源文档下六场景独立重建／claims／输入及产物哈希／新参考／合成codec／新进程SMT重放全部验收。主depth6 safety/overlap unknown（Z3 reason canceled）保留，非执行失败或证明。主状态归纳初值、纯时钟和全部guard重叠unsat，三个继承FIN目标unknown；完整单项692组及695含等价检查、非空见证与独立CLI verify通过。原主报告不提升；独立归纳仅针对声明的标量／长度状态性质，不证明通用字节、顺序、时序、每RTT增长限度或解释／翻译／实现精化。证据在artifacts/tcp-congestion-development、congestion-initial和congestion-initial-refinement，acceptance/result.json绑定各链。
+
+旧11profile的258项输入集合及每个哈希完全未变，旧311回归关联的293个文件均未修改；新14方法另计，没有宣称已跑一次325方法全量。现有lwIP13场景、Rocq六引理及2750ms差异仍是原范围，未冒充本模块实现证据。下一步加入严格duplicate-ACK识别、快速重传／快速恢复、idle restart及独立丢包／RTO／persist组合，再按用户顺序推进后续协议。完整目标未完成。

@@ -1,0 +1,87 @@
+{
+  "scenario_version": "0.1",
+  "id": "cc-partial-ack-window-gate",
+  "description": "cc-partial-ack-window-gate",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS=4, queue16; finite CC growth/timeout subset, no fast recovery claim."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7,
+          2,
+          4,
+          8,
+          16
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 22,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1009,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "cc_cwnd": 10,
+      "snd_nxt": 1009,
+      "snd_una": 1009,
+      "rtx_buf": []
+    },
+    "timers": {}
+  }
+}
