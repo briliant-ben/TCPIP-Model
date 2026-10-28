@@ -1,0 +1,99 @@
+{
+  "scenario_version": "0.1",
+  "id": "extra-duplicate",
+  "description": "Scripted duplicate ACK count with one SMSS outstanding; no packet-loss causal claim",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS4; model default IW4; upstream initial window preserved; virtual_ms<=200"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 32,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 33,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1005,
+      "snd_nxt": 1005,
+      "rtx_buf": []
+    },
+    "timers": {}
+  }
+}

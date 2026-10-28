@@ -198,3 +198,5 @@ docs/                  语义、外部测试约定、里程碑
 [拥塞控制开发切片](docs/tcp-congestion.md)新增显式cwnd预算、慢启动、累计字节拥塞避免和数据RTO首次／重复响应，继承persist与关闭／字节历史。14项方法（含101个控制输入）及6固定字节场景通过；主BMC／归纳unknown保留，完整分组补充独立复查通过。尚未注册suite，也未覆盖快速重传／恢复、空闲重启、独立拥塞实现或完整TCP证明。
 
 [有限快速重传／恢复](docs/tcp-fast-recovery.md)显式组合第三dup输出、classic Reno膨胀／退出、Karn、字节历史／早RTO等待和关闭。19方法与15固定字节／合成codec场景验收通过；三个可达原型缺陷及两个SAT见证保留并加强不变量。主unknown不改写，分组补充独立复查通过。仍无完整恢复、通用输出／时间或实现精化证明；完整回归可用tools/run_frozen_regression.py按提交和依赖哈希记录。
+
+[独立lwIP快速重传对照](ports/lwip-recovery/README.md)复用未修改的C驱动，单独绑定恢复IR。四输入重建及独立验收完成：两个严格匹配、两个保留第三／第四重复ACK的时刻差异；两个专项方法一次通过。未预处理与预先无在途ACK场景并存，不以修改oracle消除差异。该通道未观测内部cwnd／阈值，未验证RTO或Linux。

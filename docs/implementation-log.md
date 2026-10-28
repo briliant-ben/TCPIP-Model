@@ -314,3 +314,11 @@ fast原因与timeout原因分开，不删除父TX-INV-NO-EARLY-TIMEOUT；更新�
 最终19方法一次通过（312.176s），15固定输入（6继承拥塞、9恢复）参考执行、完整字节重放、新进程查询、严格synthetic-only codec、claims及所有冻结输入／产物哈希验收完成。8个固定输入实际触发非空快速输出，被拒收窗口性质亦有非空见证；不是仅初始状态的空证明。主depth6 safety/overlap unknown（Z3 reason canceled）保留；该深度也不能覆盖所有准备后第三dup轨迹。状态归纳初值／纯时钟／guard均unsat，6个接收／FIN目标unknown；完整1460单项分组、1466含等价检查与独立CLI复查通过，主报告不提升。只针对声明的标量／长度状态性质，不等于通用内容、输出顺序／时序、每RTT上限、翻译／实现精化或完整TCP证明。
 
 验收链见artifacts/tcp-fast-recovery-development/acceptance/result.json及fast-recovery-current-*。旧11profile的258项输入集合、旧311回归关联的293文件及父拥塞开发证据输入均未变；原14拥塞方法证据保持独立。本阶段尚未注册suite、无新独立实现恢复或Linux证据，2750ms差异保持。新增tools/run_frozen_regression.py，用标准unittest发现、记录提交和测试ID／依赖SHA，依赖改变即使测试成功也拒绝计为该提交通过；将启动包含新增测试的完整回归，结果另记，未完成前不计通过。后续继续独立快速恢复／丢包实测、limited transmit、空闲重启及一般允许输出对应，再推进用户约定的后续协议，完整目标未完成。
+
+## 2026-10-28：独立快速重传观测与组合回归
+
+91e36724已推送，PR#2保持draft；344项标准unittest发现回归已在该提交启动，冻结输入清单／测试ID／工具环境保存在/tmp/tcpip-full-regression-91e36724，未结束前不计通过。新增ports/lwip-recovery采用私有加载的既有stream传输／证据模块，模型另指tcp-fast-recovery，独立场景及适配器源码也纳入哈希。旧C驱动、上游lwIP、归一化、比较器及在途344测试依赖均未改。默认模型IW4与上游SMSS4时初始窗口16保留；本实验只发送一个SMSS，不声称两侧内部cwnd相等。
+
+四输入为两个dup、三个dup、四个dup，以及数据发送前11ms先注入无在途纯ACK后再给三个dup。实际netif包表明，未预处理的第三dup在32ms只有模型重传，上游在第四dup33ms才重传；有预先ACK时两侧均32ms重传，两个dup均不重传。均在40ms确认四字节，回调与实际字节[0,128,255,7]保留。不能用预先ACK场景替换或抹掉原差异。源码tcp_in.c SYN_SENT不在该路径设置snd_wl2；tcp_receive先保存旧右窗口沿、再更新窗口并比较旧值，是差异的解释线索，未读取PCB内部变量，不凭此直接认定RFC违规。RFC5681 September2009 §2/3.2原文和模块来源锁与恢复IR共同绑定；没有改动此前2750ms差异。
+
+独立port两个方法一次171.510s通过，含四输入真实编译／执行、严格投影及字节／EOF校验、拒绝初值覆写／丢包／越界输入、拒绝外来场景，以及模型语义哈希篡改负例。该方法集合不在在途344测试发现内，结果分开报告。四输入正式产物独立verify及导出查询新进程SAT全部通过，两个match、两个有效mismatch；见artifacts/lwip-recovery/verification.json。完整恢复状态、RTO、内部拥塞变量与实现精化仍待验证；脚本dup不等于真实接收端丢包或Linux证据。每个报告保留原始包、Difference、模型轨迹、查询与编译来源。
