@@ -1,0 +1,94 @@
+{
+  "status": "valid_finite_lwip_limited_transmit_observations",
+  "scenarios": [
+    {
+      "scenario": "no-queued-new-data",
+      "verification": {
+        "status": "valid_independent_lwip_stream_evidence",
+        "comparison": "match",
+        "query_equivalence": {
+          "status": "unsat",
+          "reason": null,
+          "encoding": "exact_shared_conjunct_factoring",
+          "checker_version": "4.15.4",
+          "common_assertions": 245,
+          "left_unique": 0,
+          "right_unique": 0
+        },
+        "linux_execution": false,
+        "full_stack_validated": false
+      },
+      "independent_query": {
+        "status": "sat",
+        "version": "4.15.4"
+      },
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "-c",
+        "import z3,sys,json;s=z3.Solver();s.set(timeout=60000);s.add(z3.parse_smt2_file(sys.argv[1]));a=s.check();print(json.dumps(dict(status=str(a),version=z3.get_version_string())))",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-limited-transmit/no-queued-new-data/symbolic/path.smt2"
+      ],
+      "report_sha256": "6660b6db404f89deac2f165bd662c402654a50cb3dc0a8a18562372155c9b043"
+    },
+    {
+      "scenario": "one-queued-segment",
+      "verification": {
+        "status": "valid_independent_lwip_stream_evidence",
+        "comparison": "match",
+        "query_equivalence": {
+          "status": "unsat",
+          "reason": null,
+          "encoding": "exact_shared_conjunct_factoring",
+          "checker_version": "4.15.4",
+          "common_assertions": 242,
+          "left_unique": 7,
+          "right_unique": 7
+        },
+        "linux_execution": false,
+        "full_stack_validated": false
+      },
+      "independent_query": {
+        "status": "sat",
+        "version": "4.15.4"
+      },
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "-c",
+        "import z3,sys,json;s=z3.Solver();s.set(timeout=60000);s.add(z3.parse_smt2_file(sys.argv[1]));a=s.check();print(json.dumps(dict(status=str(a),version=z3.get_version_string())))",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-limited-transmit/one-queued-segment/symbolic/path.smt2"
+      ],
+      "report_sha256": "7c7ba3e5da54dfaa7db67497610b86d60b3541a470ad918bdafde188c161de0d"
+    },
+    {
+      "scenario": "two-opportunities",
+      "verification": {
+        "status": "valid_independent_lwip_stream_evidence",
+        "comparison": "mismatch",
+        "query_equivalence": {
+          "status": "unsat",
+          "reason": null,
+          "encoding": "exact_shared_conjunct_factoring",
+          "checker_version": "4.15.4",
+          "common_assertions": 242,
+          "left_unique": 7,
+          "right_unique": 7
+        },
+        "linux_execution": false,
+        "full_stack_validated": false
+      },
+      "independent_query": {
+        "status": "sat",
+        "version": "4.15.4"
+      },
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "-c",
+        "import z3,sys,json;s=z3.Solver();s.set(timeout=60000);s.add(z3.parse_smt2_file(sys.argv[1]));a=s.check();print(json.dumps(dict(status=str(a),version=z3.get_version_string())))",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-limited-transmit/two-opportunities/symbolic/path.smt2"
+      ],
+      "report_sha256": "52ea83b9bc00eb19ad65692794f085db211e2e3fb31adb0cb25c4736f84b8574"
+    }
+  ],
+  "linux_execution": false,
+  "full_stack_complete": false
+}

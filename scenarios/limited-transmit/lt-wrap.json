@@ -1,0 +1,173 @@
+{
+  "scenario_version": "0.2",
+  "id": "lt-wrap",
+  "description": "lt-wrap",
+  "initial": {
+    "iss": 4294967293
+  },
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS4/queue16; pure scripted non-SACK duplicates; default IW4; no independent loss claim"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 4294967294,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 4294967294,
+        "window": 16
+      },
+      "expect_trace": [
+        {
+          "at_ms": 30,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 2,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 31,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 4294967294,
+        "window": 16
+      },
+      "expect_trace": [
+        {
+          "at_ms": 31,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 6,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  8,
+                  9,
+                  10,
+                  11
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 32,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 4294967294,
+        "window": 16
+      },
+      "expect_trace": [
+        {
+          "at_ms": 32,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 4294967294,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 10,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 10,
+      "snd_nxt": 10,
+      "rtx_buf": [],
+      "cc_cwnd": 8,
+      "lt_epoch_bytes": 0,
+      "lt_epoch_packets": 0
+    },
+    "timers": {}
+  }
+}

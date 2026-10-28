@@ -1,0 +1,123 @@
+{
+  "scenario_version": "0.2",
+  "id": "idle-restart-budget",
+  "description": "idle-restart-budget",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS4/queue16; default IW4; strict current RTO boundary; scripted transmit opportunities"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 1021,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    {
+      "at_ms": 1022,
+      "event": "app.transmit",
+      "fields": {},
+      "expect_trace": [
+        {
+          "at_ms": 1022,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1005,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  0,
+                  1,
+                  2,
+                  3
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 1022,
+      "event": "app.transmit",
+      "fields": {},
+      "expect_trace": [
+        {
+          "at_ms": 1022,
+          "emitted": []
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "cc_cwnd": 4,
+      "snd_nxt": 1009,
+      "idle_last_data_ms": 1022
+    },
+    "timers": {
+      "rtx": 2022
+    }
+  }
+}

@@ -1,0 +1,46 @@
+test_foreign_scenario_and_loss_initial_overrides_rejected (__main__.LimitedTransmitPortTests.test_foreign_scenario_and_loss_initial_overrides_rejected) ... ok
+test_real_capture_and_reference_remain_separate_with_strict_verification (__main__.LimitedTransmitPortTests.test_real_capture_and_reference_remain_separate_with_strict_verification) ... 
+  test_real_capture_and_reference_remain_separate_with_strict_verification (__main__.LimitedTransmitPortTests.test_real_capture_and_reference_remain_separate_with_strict_verification) (name='one-queued-segment') ... FAIL
+  test_real_capture_and_reference_remain_separate_with_strict_verification (__main__.LimitedTransmitPortTests.test_real_capture_and_reference_remain_separate_with_strict_verification) (name='two-opportunities') ... FAIL
+
+======================================================================
+FAIL: test_real_capture_and_reference_remain_separate_with_strict_verification (__main__.LimitedTransmitPortTests.test_real_capture_and_reference_remain_separate_with_strict_verification) (name='one-queued-segment')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-limited-transmit/tests.py", line 17, in test_real_capture_and_reference_remain_separate_with_strict_verification
+    self.assertEqual([(p['time_ms'], p['payload']) for p in packets], [(21.0, [0, 128, 255, 7])])
+AssertionError: Lists differ: [(21.0, [0, 128, 255, 7]), (30.0, [17, 33, 65, 129])] != [(21.0, [0, 128, 255, 7])]
+
+First list contains 1 additional elements.
+First extra element 1:
+(30.0, [17, 33, 65, 129])
+
+- [(21.0, [0, 128, 255, 7]), (30.0, [17, 33, 65, 129])]
++ [(21.0, [0, 128, 255, 7])]
+
+======================================================================
+FAIL: test_real_capture_and_reference_remain_separate_with_strict_verification (__main__.LimitedTransmitPortTests.test_real_capture_and_reference_remain_separate_with_strict_verification) (name='two-opportunities')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-limited-transmit/tests.py", line 17, in test_real_capture_and_reference_remain_separate_with_strict_verification
+    self.assertEqual([(p['time_ms'], p['payload']) for p in packets], [(21.0, [0, 128, 255, 7])])
+AssertionError: Lists differ: [(21.[15 chars], 7]), (30.0, [4, 5, 6, 7]), (30.0, [8, 9, 10,[27 chars]15])] != [(21.[15 chars], 7])]
+
+First list contains 3 additional elements.
+First extra element 1:
+(30.0, [4, 5, 6, 7])
+
+- [(21.0, [0, 128, 255, 7]),
+?                          ^
+
++ [(21.0, [0, 128, 255, 7])]
+?                          ^
+
+-  (30.0, [4, 5, 6, 7]),
+-  (30.0, [8, 9, 10, 11]),
+-  (30.0, [12, 13, 14, 15])]
+
+----------------------------------------------------------------------
+Ran 2 tests in 91.969s
+
+FAILED (failures=2)

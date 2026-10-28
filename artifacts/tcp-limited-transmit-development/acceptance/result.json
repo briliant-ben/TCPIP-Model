@@ -1,0 +1,102 @@
+{
+  "status": "finite_limited_transmit_milestone_verified_primary_unknown_preserved",
+  "registered": false,
+  "model_semantic_sha256": "afbf900bf449dc58f4c7ff34fc6b75cb66392b34027bfa6eec207349d5ce87de",
+  "rules": 193,
+  "invariants": 193,
+  "test_methods": 13,
+  "test_seconds": 169.173,
+  "fixed_input_full_byte_and_synthetic_codec_scenarios": 4,
+  "primary_bmc": {
+    "status": "unknown",
+    "backend": "z3-bmc",
+    "depth": 6,
+    "reason": "canceled",
+    "safety_query": "unknown",
+    "overlap_query": "unknown"
+  },
+  "primary_induction": "unknown",
+  "primary_unknown_targets": [
+    {
+      "transition": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-1",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-ESTABLISHED-net-data",
+      "state": "ESTABLISHED"
+    },
+    {
+      "transition": "F-RECEIVE-ESTABLISHED-net-fin_segment",
+      "state": "ESTABLISHED"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-data",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW",
+      "state": "FIN-WAIT-1"
+    }
+  ],
+  "supplementary_groups": 2085,
+  "supplementary_checks_including_equivalence": 2093,
+  "independent_refinement_verification": "passed",
+  "induction_prototype_diagnostic": "artifacts/diagnostics/limited-transmit-induction-epoch-v1",
+  "prototype_sat_classification": "arbitrary invariant-state failure; reachability not established",
+  "threshold_numeric_distinction_beyond_queue16": false,
+  "threshold_basis_nonempty_exclusion_witness": true,
+  "independent_lwip_observations": {
+    "scenarios": 3,
+    "strict_matches": 2,
+    "preserved_differences": 1,
+    "port_test_methods": 2,
+    "port_test_seconds": 175.862,
+    "internal_cwnd_or_lt_support_not_claimed": true
+  },
+  "registered_exact_inputs_unchanged": 258,
+  "previous357_regression_commit": "cb163fe79b373f009201059a04c626afd7d2e5d2",
+  "previous357_status": "running_at_archive_not_passed",
+  "previous357_frozen_dependencies_unchanged": 1108,
+  "new_combined370_regression": "not_started",
+  "linux_execution": false,
+  "full_stack_complete": false,
+  "scope_exclusions": [
+    "SACK/NewReno/ECN and automatic post-third-duplicate new-data sending",
+    "universal byte/output/timing, interpreter/translation or implementation refinement proof",
+    "independent internally observed LT/cwnd/threshold conformance"
+  ],
+  "bindings": {
+    "model/tcp-limited-transmit.json": "f7ce788f142e2c4b8e7439aa6365d1d43a555b569f30b9c793c1d34ef6fefe7c",
+    "tools/build_limited_transmit_model.py": "1b7db385309be27bf93e0ecf97bd5a23423eb867971637173a10210e29f531df",
+    "tests/test_limited_transmit.py": "52980a648c546feeacdef8235db3cc982ac5dfdddd7eddff5f408796e988cddf",
+    "artifacts/tcp-limited-transmit-development/report.json": "5695d7f506f5a19fecd4db10c9ae91ffae68fb10084cb3a6795c3e043e795a2e",
+    "artifacts/tcp-limited-transmit-development/development-verification.json": "0704c9fc78d12164999c9cac2e3c19303b4e14ea129f60e16afda13c84d53b41",
+    "artifacts/limited-transmit-current-induction/result.json": "35bc02a0f06ee5e302a30908420ddf8b6c2ed2b4c25ddc11ee4521ae23bf25e0",
+    "artifacts/limited-transmit-current-refinement/result.json": "94f4465801325d5da5c78cafd4bda22022c187c554c8f6db77f717a5397e2d55",
+    "artifacts/lwip-limited-transmit/acceptance.json": "ba5c642ff8c9ebc78cade4663712654589778fda46c07cf689241112913f36da",
+    "artifacts/diagnostics/limited-transmit-induction-epoch-v1/manifest.json": "83dc4fef1a05ff73b0aca7cc4fa33884afdcedb63b0e30ff96d8dde762d6f85a"
+  },
+  "acceptance_files": {
+    "development-verifier.py": "1b7062a597bdf4b8f45fa164bb22ce3c29d48224e5639ab7f039b3fc7456f763",
+    "development-verification.log": "ee8a737d426b9febe41e32d3986c9b16b69e20fbb7f75c7b53158241c40d0559",
+    "development-generation.log": "8459ef32f629acb6b7a79fe52669dbf61598ead8f875571af58e818fcc11ab4e",
+    "refinement.log": "040a161f03ef61c874ed3a20881571ca869f8c2f061c0edc13291386775d0083",
+    "README.md": "f35a6a48ce9218c3eb65763d00f928cdf473956c1c1227aa89e6aa57b9bcbe33",
+    "primary-induction.log": "6f0a967a2968f0347f01844aa2a149bf8bb896881d8c65ed33314d0424b5af49",
+    "tests.log": "897964235a9c6f27305a51238b1ac777ff0cfcce3d1710782aa1f2a4d8e33c8f",
+    "development-driver.py": "adfe8a78e44582138d9a7fa4a792d9e2e4a43ad438e88b4446389adfb7afa572",
+    "refinement-verification.log": "e98a9e950d300e81f6999946cf9ee89366a88c9ca581008157d05ef68ee1b1cf"
+  }
+}

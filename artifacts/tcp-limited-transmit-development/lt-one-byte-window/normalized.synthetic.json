@@ -1,0 +1,114 @@
+[
+  {
+    "direction": "out",
+    "flags": "S",
+    "seq": 1000,
+    "ack": 0,
+    "time_ms": 0.0,
+    "capture_frame": 1,
+    "window": 16,
+    "payload": []
+  },
+  {
+    "direction": "in",
+    "flags": "SA",
+    "seq": 9000,
+    "ack": 1001,
+    "time_ms": 10.0,
+    "capture_frame": 2,
+    "window": 5,
+    "payload": []
+  },
+  {
+    "direction": "out",
+    "flags": "A",
+    "seq": 1001,
+    "ack": 9001,
+    "time_ms": 10.0,
+    "capture_frame": 3,
+    "window": 16,
+    "payload": []
+  },
+  {
+    "direction": "out",
+    "flags": "A",
+    "seq": 1001,
+    "ack": 9001,
+    "time_ms": 21.0,
+    "capture_frame": 4,
+    "window": 16,
+    "payload": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "direction": "in",
+    "flags": "A",
+    "seq": 9001,
+    "ack": 1001,
+    "time_ms": 30.0,
+    "capture_frame": 5,
+    "window": 5,
+    "payload": []
+  },
+  {
+    "direction": "out",
+    "flags": "A",
+    "seq": 1005,
+    "ack": 9001,
+    "time_ms": 30.0,
+    "capture_frame": 6,
+    "window": 16,
+    "payload": [
+      4
+    ]
+  },
+  {
+    "direction": "in",
+    "flags": "A",
+    "seq": 9001,
+    "ack": 1001,
+    "time_ms": 31.0,
+    "capture_frame": 7,
+    "window": 5,
+    "payload": []
+  },
+  {
+    "direction": "in",
+    "flags": "A",
+    "seq": 9001,
+    "ack": 1001,
+    "time_ms": 32.0,
+    "capture_frame": 8,
+    "window": 5,
+    "payload": []
+  },
+  {
+    "direction": "out",
+    "flags": "A",
+    "seq": 1001,
+    "ack": 9001,
+    "time_ms": 32.0,
+    "capture_frame": 9,
+    "window": 16,
+    "payload": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "direction": "in",
+    "flags": "A",
+    "seq": 9001,
+    "ack": 1006,
+    "time_ms": 40.0,
+    "capture_frame": 10,
+    "window": 5,
+    "payload": []
+  }
+]

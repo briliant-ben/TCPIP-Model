@@ -1,0 +1,11 @@
+{
+  "id": "tcp-idle-restart-development",
+  "model": "model/tcp-idle-restart.json",
+  "scenarios": [
+    "scenarios/idle-restart"
+  ],
+  "packetdrill": null,
+  "symbolic_replay": true,
+  "wire_projection": "tcp-connection-v1",
+  "inductive": false
+}

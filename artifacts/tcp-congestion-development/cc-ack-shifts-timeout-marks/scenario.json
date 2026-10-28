@@ -1,0 +1,90 @@
+{
+  "scenario_version": "0.1",
+  "id": "cc-ack-shifts-timeout-marks",
+  "description": "cc-ack-shifts-timeout-marks",
+  "initial": {
+    "cc_initial_window": 16,
+    "cc_initial_threshold": 32
+  },
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS=4, queue16; finite CC growth/timeout subset, no fast recovery claim."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 1021,
+      "tick": true
+    },
+    {
+      "at_ms": 1100,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 3100,
+      "tick": true
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "cc_cwnd": 4,
+      "cc_threshold_updates": 2,
+      "rtx_buf": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "timers": {
+      "rtx": 7100
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "scenario_version": "0.1",
+  "id": "cc-close-data-fin-credit",
+  "description": "cc-close-data-fin-credit",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS=4, queue16; finite CC growth/timeout subset, no fast recovery claim."
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 22,
+      "event": "app.close",
+      "fields": {}
+    },
+    {
+      "at_ms": 23,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 32,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1010,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "FIN-WAIT-2",
+    "variables": {
+      "cc_cwnd": 12,
+      "cc_acked": 4,
+      "rtx_buf": []
+    },
+    "timers": {
+      "user": 30022
+    }
+  }
+}

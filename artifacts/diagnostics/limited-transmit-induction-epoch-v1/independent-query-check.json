@@ -1,0 +1,10 @@
+{
+  "status": "sat",
+  "command": [
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+    "-c",
+    "import z3,sys;s=z3.Solver();s.set(timeout=10000);s.add(z3.parse_smt2_file(sys.argv[1]));print(s.check())",
+    "artifacts/diagnostics/limited-transmit-induction-epoch-v1/epoch-obligation.smt2"
+  ],
+  "classification": "arbitrary invariant prestate; reachability not established"
+}
