@@ -344,3 +344,5 @@ fast原因与timeout原因分开，不删除父TX-INV-NO-EARLY-TIMEOUT；更新�
 另建ports/lwip-limited-transmit复用未修改的C驱动，先各发送4字节，随后可排队1或3段，再注入前两个dup。3实际PCAP输入、固定查询新进程及独立验收完成，2匹配、1有效差异；2独立port方法175.862s通过并拒绝重哈希伪造oracle。首次测试错误假定lwIP不会发排队数据，两个失败预期及实际包归档。实际一个排队段30ms与模型相同；12排队字节在lwIP按自身普通cwnd预算30ms一次发三段，而模型30/31ms各一段。来源解释是ACK处理末端tcp_output在上游IW16内发送，不是测得内部LT变量或RFC bug，也不能由单段匹配推断LT支持。脚本在31ms结束，全部数据尚未确认；不等于永不发／真实peer丢包或Linux证据。
 
 旧注册258项输入及在途357回归1108依赖未变；后者仍绑定cb163fe7，不将13新方法追加为该次通过。模型验收绑定于artifacts/tcp-limited-transmit-development/acceptance/result.json，独立实现另见artifacts/lwip-limited-transmit/acceptance.json。原2750ms差异与上游源码／oracle／哈希验收保持。继续独立数据计时／丢包恢复、一般允许输出及用户完整后续协议范围，目标未完成。
+
+2026-10-29：cb163fe7冻结提交的357项完整发现回归一次3470.718s全部通过，无错误／失败／跳过，1108冻结依赖和工具环境未变；原始结果／输入／测试ID／日志归档artifacts/full-regression-cb163fe7。先前running条目为历史，不将后续13项LT或独立port测试冒计入本次，主unknown与协议／Linux缺口保持。
