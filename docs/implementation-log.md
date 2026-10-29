@@ -404,3 +404,13 @@ ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件
 新增Rocq5个抽象整数命题与独立编译／假设审计／kernel重查及故障门槛，使用固定9.2.0镜像。macOS本地无Docker，当前not_run，等待提交后CI；模型哈希只作上下文绑定，未建立IR精化桥。阶段验收位于artifacts/tcp-sent-ledger-development/acceptance.json。已完成390项回归不包含本轮新增19方法；409项完整发现回归应在本轮冻结提交另跑。一般Nagle／短段与LT组合、完整发送／服务／时间关系、Linux实机及全部后续协议仍待推进，完整目标未完成。
 
 2026-10-30：eaeb02ff的[Rocq CI](https://github.com/briliant-ben/TCPIP-Model/actions/runs/40926132635)完成成功。新增5个发送信用抽象整数命题已编译、空公理审计及独立kernel重查，错误证明／公理注入拒绝；ZIP、证明对象、来源与日志SHA绑定在artifacts/rocq-ledger-ci-eaeb02ff，独立本地绑定验收及损坏对象负例通过。此前local not_run和CI pending记录保留为历史；本地未重跑kernel，也未证明IR动作／解释器／翻译器／TCP／lwIP对应。409项冻结回归仍在运行，完整目标未完成。
+
+## 2026-10-30：基本Nagle与自动LT组合的显式策略
+
+新增tcp-nagle继承sent-ledger，共203规则／222不变量；RFC9293 August2022 §3.7.4的基本合并策略以IR guards／actions表达，固定Eff.snd.MSS4。有在途数据时短choice被拒绝，自动LT只在允许发送完整4字节时生效；ACK处理、dup计数与旧timer保持，不能用LT绕过基本Nagle。app.nodelay(enabled)在ESTABLISHED／CLOSE-WAIT显式切换，当前有限API不直接授予发送机会，新open恢复默认。重传与persist保留父语义；lwIP unsent多节点／FIN／内存压力／fast-recovery例外、动态MSS及完整sender SWS/override未覆盖，不称完整TCP。
+
+8专项方法一次149.494s全部通过，覆盖短段／部分ACK等待、完整ACK放行、fullMSS LT、rwnd／cwnd约束、选项无隐式输出／信用、短段重传、CLOSE-WAIT加wrap／FIN ACK及去除LT门槛故障。初版使用gt被类型检查明确拒绝，随后复用空send规则的option误带empty_send通知由负预期发现并去除精确锚定通知；旧原型源码／失败／其242条件查询单性质通过记录保留，展示局部性质不能证明全部API输出。补充FIN夹具曾漏必需ACK字段，原schema拒绝保留，修正夹具而不改协议语义。
+
+基本新数据门槛单性质242查询与2420断言对应检查独立复查通过，前态假设为220个父不变量加该性质；不证明父basis在child闭包或其余新旧性质，当前overlay全模型BMC／归纳未跑，父整体unknown保持。原duplicate-future真实捕获现在有同原始10输入、2个显式choice的完整严格见证：21ms首2字节，重复ACK不LT发短段，40ms完整ACK后发剩余2字节。全部报文／checksum／顺序／0ms时间及2@40、2@50公共callback匹配；原canonical匹配，但旧模型Difference和服务Difference SHA原样保留。此为复用已有独立C捕获的一场景关系，不计新C执行／Linux或一般lwIP符合。逐字节查询、独立重新执行／生成、查询等价UNSAT、新进程SAT及payload／SEQ／1ms负例全部验收。
+
+验收入口artifacts/tcp-nagle-development/acceptance.json；来源锁spec/sources/tcp-nagle.json，保留RFC3042与lwIP固定版本对变体的解释。生成器确定性及旧258注册输入SHA确认未变。新8方法不属于eaeb02ff正在运行的409项冻结回归，完整发现现为417项，尚不宣称组合全部通过。继续sender SWS／短段队列策略、服务／时序／恢复及IR解释／翻译对应，再按原计划推进UDP与后续协议；完整目标未完成。

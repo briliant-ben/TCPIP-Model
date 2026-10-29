@@ -215,3 +215,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：[发送确认账本](docs/tcp-sent-ledger.md)使用显式 IR 环形段记录区分 TCP 字节确认与公共 sent 回调。9 个固定输入字节场景、11 项模型专项、4 项条件组件检查测试、4 项 AC 检查测试及10项独立端口测试通过。8 个真实 lwIP 场景中原始严格比较为4个线端匹配／4个差异、5个服务匹配／3个差异；额外调度见证有2个完整线端与服务匹配，1个自动 LT 线端差异保留。240 个独立复查查询仅证明预算性质在声明父不变量假设下的保持性；整体归纳仍 unknown。Rocq 新增5个抽象算术命题待 CI 检查，非 IR／TCP 对应证明。证据入口为 `artifacts/tcp-sent-ledger-development/acceptance.json`。最近已完成的标准全量回归仍为390项；新增后的409项需另行冻结执行，不能由专项通过推算。
 
 2026-10-30：eaeb02ff的[Rocq CI](https://github.com/briliant-ben/TCPIP-Model/actions/runs/40926132635)完成成功。新增5个发送信用抽象整数命题已编译、空公理审计及独立kernel重查，错误证明／公理注入拒绝；ZIP、证明对象、来源与日志SHA绑定在artifacts/rocq-ledger-ci-eaeb02ff，独立本地绑定验收及损坏对象负例通过。此前local not_run和CI pending记录保留为历史；本地未重跑kernel，也未证明IR动作／解释器／翻译器／TCP／lwIP对应。409项冻结回归仍在运行，完整目标未完成。
+
+2026-10-30：[基本Nagle策略](docs/tcp-nagle.md)组合发送段账本与自动LT，203规则／222不变量。8专项通过；242个条件查询及独立同输入报文／定时回调见证完成验收，旧Difference保持。完整SWS与lwIP队列等变体尚未覆盖，非一般实现证明。新8项不计在途409项冻结回归；见 `artifacts/tcp-nagle-development/acceptance.json`。
