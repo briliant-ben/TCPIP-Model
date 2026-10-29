@@ -204,3 +204,5 @@ docs/                  语义、外部测试约定、里程碑
 [空闲重启开发切片](docs/tcp-idle-restart.md)增加实际数据输出时钟与严格当前RTO判断，发送前恢复RW并清CA信用。10+3方法分开通过，3个固定字节／合成codec输入验收，主unknown保留，1749组／1756含等价补充及独立复查通过；未计为独立实现或完整TCP证明。此前344项完整回归已在91e36724通过，新增后的组合回归另按新提交冻结。
 
 [Limited Transmit开发切片](docs/tcp-limited-transmit.md)显式组合前两个重复ACK自动新发、cwnd不增长及第三dup排除LT字节的损失基数。13方法、4固定字节／输出时序场景及2085组补充／独立验收通过，主unknown保留。[独立lwIP观测](ports/lwip-limited-transmit/README.md)3输入验收完成，2匹配、1保留初始拥塞策略导致的突发时刻差异；不证明内部LT状态一致。原归纳前提缺口SAT和端口测试错误预期均保留。
+
+[独立lwIP数据定时器通道](ports/lwip-timers/README.md)将公共驱动扩展为逐虚拟毫秒推进、至多12秒，实际捕获数据RTO、退避、partial/full ACK和空闲新发。10项专项方法与5场景独立验收通过，5个严格差异均保留；粗／细TICK分划的真实PCAP逐字节相同。该驱动不改上游或oracle，不读取内部RTO/cwnd，不等于Linux或完整实现证明。357项冻结组合回归已通过，新370项运行另行记录。

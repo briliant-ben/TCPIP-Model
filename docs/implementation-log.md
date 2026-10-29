@@ -346,3 +346,17 @@ fast原因与timeout原因分开，不删除父TX-INV-NO-EARLY-TIMEOUT；更新�
 旧注册258项输入及在途357回归1108依赖未变；后者仍绑定cb163fe7，不将13新方法追加为该次通过。模型验收绑定于artifacts/tcp-limited-transmit-development/acceptance/result.json，独立实现另见artifacts/lwip-limited-transmit/acceptance.json。原2750ms差异与上游源码／oracle／哈希验收保持。继续独立数据计时／丢包恢复、一般允许输出及用户完整后续协议范围，目标未完成。
 
 2026-10-29：cb163fe7冻结提交的357项完整发现回归一次3470.718s全部通过，无错误／失败／跳过，1108冻结依赖和工具环境未变；原始结果／输入／测试ID／日志归档artifacts/full-regression-cb163fe7。先前running条目为历史，不将后续13项LT或独立port测试冒计入本次，主unknown与协议／Linux缺口保持。
+
+## 2026-10-29：独立数据RTO／退避与逐毫秒公共驱动
+
+远端确认PR#2已合入main（ade065bb，包含6fa46e82）。本轮从实际main建立codex/tcp-timers，保留未提交新通道，并cherry-pick357项归档为0da112de。原370回归仍绑定原2d296f89；切换后1125项源码依赖逐项SHA确认未变，不把新分支／端口测试追加入旧发现集合。
+
+ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件；每个虚拟毫秒调用sys_check_timeouts，新增只推进时钟的TICK。不直接调用tcp_tmr／slowtmr、不读写内部PCB计时或拥塞变量。C摘要记录end_ms、clock_step_ms、clock_checks，必须等于真实输入终点、1及end_ms+commands。C/Python两端拒绝非法／非单调／超界TICK；其余16写字节／64peer字节、无PSH／选项／app.read边界保持。IR仍唯一权威，使用共享tcp-limited-transmit链，原模型／执行器／形式后端无改动；重新生成参考轨迹、全字节查询与严格0ms包／接收关系，通过现有独立解析及哈希验收，不能以重哈希伪造oracle或执行时钟。
+
+10项独立port方法一次201.402s通过，5场景全量重建与独立验收、导出查询新进程SAT全部完成。5场景均有效mismatch：无ACK数据在IR为21ms初发、1021/3021/7021重传，实际为21/2750/8750；完整ACK3600后实际与IR都停止后续重传至12000，摘要及12007时钟调用确认窗口走完。partial ACK1003在1000ms到来后，IR2000/4000重传1003处[255,7]，实际3750从1001重发原[0,128,255,7]，随后完整ACK5100后窗口内不再重传。idle6001的新8字节，IR按RW4发一段，实际发两段；不据此推断内部cwnd一致或宣称完整idle符合。
+
+源码opt.h:1375名义初始RTO3000，tcp.c:239调度250ms fast及500ms slow，1275附近按coarse计数／退避；这些是2750相位与后续6000ms间隔的解释线索，不是实际读取PCB RTO，也不直接判定RFC6298违规。tcp_in.c:1288整体释放已全部确认段，是partial ACK后原整段重发的解释线索；严格Difference不因可能的允许输出策略而被抹去。RFC6298 June2011 §§2/3/4/5原文、来源SHA与时钟配置锁均校验，错误SHA／版本／步长／上游修改标志被拒绝。原SYN-loss2750ms证据保持独立。
+
+在12秒无ACK输入中，将单个TICK12000分成48个250ms间隔TICK，仍用同一真实二进制执行，两个原始PCAP逐字节相同；fine52条命令及12052时钟调用、执行日志和原始捕获单独归档clock-partition。此为固定输入驱动分划检查，不是通用调度证明。初次夹具缺expect.timers导致参考阶段KeyError，原夹具／失败日志／incomplete报告保存在lwip-timer-fixture-v1，新增输入门槛拒绝，不计成TCP差异；来源门槛增强前9方法成功日志作为历史保留。
+
+验收与逐包观测见artifacts/lwip-timers/acceptance.json、observations.json和verification.json。编译器／命令／来源／二进制SHA、C日志、原始PCAP、模型轨迹与查询均保留，二进制不提交需迁移后重建。没有独立真实peer丢包、Linux、内部RTO/cwnd、一般合法输出关系或完整TCP／通用精化证明。主模型原unknown不变。370项组合回归仍在运行，10端口方法不在其中；继续输出策略／时序对应及完整后续协议范围。

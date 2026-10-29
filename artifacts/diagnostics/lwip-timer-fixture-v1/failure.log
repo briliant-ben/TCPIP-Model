@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-timers/run.py", line 116, in <module>
+    result = verify(args.out, args.scenario) if args.verify else run(args.out, args.scenario)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-timers/run.py", line 101, in run
+    return stream.run(out, Path(scenario).resolve())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/run.py", line 151, in run
+    return _run(out,scenario_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/run.py", line 174, in _run
+    phase(out,'reference');model=load(MODEL);machine=run_scenario(model,scenario);expected=control_packets(machine,scenario)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 95, in run_scenario
+    require(machine.timers == expected["timers"], "Scenario timer mismatch")
+                              ~~~~~~~~^^^^^^^^^^
+KeyError: 'timers'

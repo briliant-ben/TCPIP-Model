@@ -1,0 +1,441 @@
+{
+  "status": "strict_differences_preserved",
+  "source_configuration_interpretation": {
+    "upstream_rto_default_ms": 3000,
+    "tcp_fast_interval_ms": 250,
+    "tcp_slow_interval_ms": 500,
+    "driver_callback_step_ms": 1,
+    "internal_timer_values_observed": false,
+    "interpretation": "Source-config/phase explanation only, not direct PCB RTO measurement or RFC violation determination"
+  },
+  "scenarios": [
+    {
+      "scenario": "full-ack-cancels-timer",
+      "model": [
+        {
+          "time_ms": 21,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 1021,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 3021,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        }
+      ],
+      "lwip": [
+        {
+          "time_ms": 21.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 2750.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        }
+      ],
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 4,
+        "written_bytes": 4,
+        "commands": 7,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": [],
+        "end_ms": 12000,
+        "clock_checks": 12007,
+        "clock_step_ms": 1
+      },
+      "raw_capture_sha256": "1505f608c83e71d0ddb9488425889779b3cf876d6d6b586f0a4efb8cb98e9adc",
+      "report_sha256": "ae291abf6f547452683d60935d69a30aecbb114d5406b5fb83b49310b7d92d0d"
+    },
+    {
+      "scenario": "idle-new-data-budget",
+      "model": [
+        {
+          "time_ms": 21,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 6001,
+          "seq": 1005,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            17,
+            33,
+            65,
+            129
+          ]
+        }
+      ],
+      "lwip": [
+        {
+          "time_ms": 21.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 6001.0,
+          "seq": 1005,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            17,
+            33,
+            65,
+            129
+          ]
+        },
+        {
+          "time_ms": 6001.0,
+          "seq": 1009,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 4,
+        "written_bytes": 12,
+        "commands": 8,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": [],
+        "end_ms": 6200,
+        "clock_checks": 6208,
+        "clock_step_ms": 1
+      },
+      "raw_capture_sha256": "9a55957414bfae32828470cc9710385107567a473e9530f1a384f2edb387f2b4",
+      "report_sha256": "346a71af7b9b39092235bb180666e5f8ace4dc5ed5dd46e33a9cbbc90dc4f74c"
+    },
+    {
+      "scenario": "partial-ack-oldest-suffix",
+      "model": [
+        {
+          "time_ms": 21,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 2000,
+          "seq": 1003,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 4000,
+          "seq": 1003,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            255,
+            7
+          ]
+        }
+      ],
+      "lwip": [
+        {
+          "time_ms": 21.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 3750.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        }
+      ],
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 4,
+        "written_bytes": 4,
+        "commands": 8,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": [],
+        "end_ms": 12000,
+        "clock_checks": 12008,
+        "clock_step_ms": 1
+      },
+      "raw_capture_sha256": "b74e58c15d9f25d77212ed8b2d8238b2b0878415ff112d974e55b9bd4e33adc3",
+      "report_sha256": "ad7698dd7cd3dab877726a77a686944c3a92f634c08a2cc3e9653e852d0ead6c"
+    },
+    {
+      "scenario": "unacknowledged-backoff",
+      "model": [
+        {
+          "time_ms": 21,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 1021,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 3021,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 7021,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        }
+      ],
+      "lwip": [
+        {
+          "time_ms": 21.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 2750.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 8750.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        }
+      ],
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 0,
+        "written_bytes": 4,
+        "commands": 5,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": [],
+        "end_ms": 12000,
+        "clock_checks": 12005,
+        "clock_step_ms": 1
+      },
+      "raw_capture_sha256": "1b8bf7cac9ca43ba4a3fa05772a3147ba11eb7d6220255b8c04fbdf54f1af16f",
+      "report_sha256": "a79e4d1ffc1cf9f6722d6793cdd2ec87a39625491234e354fae2a03dcd161267"
+    },
+    {
+      "scenario": "unacknowledged-first-rto",
+      "model": [
+        {
+          "time_ms": 21,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 1021,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        }
+      ],
+      "lwip": [
+        {
+          "time_ms": 21.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        },
+        {
+          "time_ms": 2750.0,
+          "seq": 1001,
+          "ack": 9001,
+          "window": 16,
+          "payload": [
+            0,
+            128,
+            255,
+            7
+          ]
+        }
+      ],
+      "summary": {
+        "implementation": "lwIP-2.2.1",
+        "clock": "virtual_ms",
+        "connected": 1,
+        "acknowledged_bytes": 0,
+        "written_bytes": 4,
+        "commands": 5,
+        "mss": 4,
+        "receive_window": 16,
+        "received_bytes": 0,
+        "receiver_events": [],
+        "end_ms": 2800,
+        "clock_checks": 2805,
+        "clock_step_ms": 1
+      },
+      "raw_capture_sha256": "53a8743bb74ba1ef8371ccd0c59cab1a1dff86b63055393e67780fe7ed66b852",
+      "report_sha256": "636cd87fbfcfb54c97d754dcf5f66c77a4aec2497e06ab650c0e152fa9ec9efc"
+    }
+  ]
+}
