@@ -2,9 +2,9 @@ name: Rocq IR primitive pilot
 on:
   push:
     branches: ['codex/**', main]
-    paths: ['formal/rocq/**', 'docs/semantics.md', 'protocol_lab/ir.py', 'protocol_lab/symbolic.py', '.github/workflows/rocq.yml']
+    paths: ['formal/rocq/**', 'formal/rocq-ledger/**', 'docs/semantics.md', 'protocol_lab/ir.py', 'protocol_lab/symbolic.py', '.github/workflows/rocq.yml']
   pull_request:
-    paths: ['formal/rocq/**', 'docs/semantics.md', 'protocol_lab/ir.py', 'protocol_lab/symbolic.py', '.github/workflows/rocq.yml']
+    paths: ['formal/rocq/**', 'formal/rocq-ledger/**', 'docs/semantics.md', 'protocol_lab/ir.py', 'protocol_lab/symbolic.py', '.github/workflows/rocq.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -18,10 +18,14 @@ jobs:
         run: docker pull rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025
       - name: Compile, audit assumptions and independently recheck proof objects
         run: python3 formal/rocq/check.py --docker
+      - name: Compile and independently recheck sent-credit arithmetic
+        run: python3 formal/rocq-ledger/check.py --docker
       - name: Preserve checker logs and proof objects
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: rocq-ir-primitives-${{ github.sha }}
-          path: artifacts/rocq/
+          path: |
+            artifacts/rocq/
+            artifacts/rocq-ledger/
           if-no-files-found: error

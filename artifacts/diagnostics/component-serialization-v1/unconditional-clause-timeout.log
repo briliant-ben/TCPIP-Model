@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/component_induction.py", line 197, in <module>
+    result = verify(model, parent, args.property, args.out) if args.verify else prove(model, parent, args.property, args.out)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/component_induction.py", line 165, in verify
+    equivalences += check_vector(z3, actual, expected, out, f'{index:04}')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/component_induction.py", line 54, in check_vector
+    require(answer == z.unsat, 'Exported query differs from reconstructed component semantics or clause equivalence is inconclusive')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Exported query differs from reconstructed component semantics or clause equivalence is inconclusive

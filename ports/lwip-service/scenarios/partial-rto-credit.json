@@ -1,0 +1,84 @@
+{
+  "scenario_version": "0.1",
+  "id": "partial-rto-credit",
+  "description": "Explicit whole-segment sent-credit service observation; source calls unchanged by IR choices",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS4/queue16; <=16 total written; public callback time/count; 1ms clock; no internal state or Linux claim"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 1000,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 5000,
+      "tick": true
+    },
+    {
+      "at_ms": 5100,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 12000,
+      "tick": true
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1005,
+      "snd_nxt": 1005,
+      "rtx_buf": [],
+      "cb_acked_total": 4,
+      "svc_acked_bytes": 4,
+      "cb_count": 0,
+      "cb_partial_prefix": 0
+    },
+    "timers": {}
+  }
+}

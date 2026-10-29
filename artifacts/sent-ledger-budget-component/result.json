@@ -1,0 +1,2331 @@
+{
+  "status": "conditional_component_preservation_pass",
+  "backend": "z3-conditional-component-preservation",
+  "assumed_parent_invariants_preserved": "not_proved_by_this_component_check",
+  "byte_encoding": "exact_length_projection_content_insensitive_subset",
+  "sequence_encoding": "modular_integer_full_32bit_domain",
+  "timeout_ms": 10000,
+  "target_coverage": "all_declared_destinations",
+  "export_validation": "same_assertion_vector_and_checked_AC_congruence_or_unconditional_clause_equivalence",
+  "trusted_components": [
+    "IR typing and length-admission checker",
+    "independent IR-to-SMT encoder",
+    "Z3 parser/solver and builtin operator semantics",
+    "checked AC congruence normalizer",
+    "Python orchestration and export checker",
+    "reference interpreter for nonvacuity sample"
+  ],
+  "runtime_properties": [
+    "positive_timer_duration",
+    "active_timer_not_in_past"
+  ],
+  "does_not_prove": [
+    "other child invariants",
+    "guard disjointness",
+    "byte contents",
+    "whole-model induction",
+    "unbounded protocol correctness",
+    "interpreter/translator or implementation refinement"
+  ],
+  "model_semantic_sha256": "f44d0c74397487e17a5c5e0358105fff4ca7a27dc5cf239130ce1c54056cf0dd",
+  "parent_semantic_sha256": "ca17feb7c00b12a79c00554e4f32b8e58afa270cbfb02adc36eeb5448d66a361",
+  "checker_sources": {
+    "formal/component_induction.py": "c9d651564a30f2db9639cbb0ddb3ea5b6c51c448a25ea0061b4ad41bd22e03f9",
+    "formal/ac_normalization.py": "b58035381ec0bc55f7666917257bcfe24a2130d49d028e32c0de327c5e0c89ab",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974"
+  },
+  "property": {
+    "id": "CB-INV-UNSENT-BUDGET",
+    "assert": {
+      "op": "le",
+      "args": [
+        {
+          "op": "add",
+          "args": [
+            {
+              "var": "cb_emitted_total"
+            },
+            {
+              "op": "bytes_len",
+              "args": [
+                {
+                  "var": "snd_buf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "var": "svc_written_bytes"
+        }
+      ]
+    },
+    "requirements": [
+      "CB-LEDGER",
+      "CB-CREDIT",
+      "CB-ACK",
+      "CB-SCOPE"
+    ]
+  },
+  "assumed_pre_invariants": [
+    "C-INV-TIMER-CLOSED-rtx",
+    "C-INV-TIMER-CLOSED-user",
+    "C-INV-TIMER-CLOSED-time_wait",
+    "C-INV-TIMER-LISTEN-rtx",
+    "C-INV-TIMER-LISTEN-user",
+    "C-INV-TIMER-LISTEN-time_wait",
+    "C-INV-TIMER-SYN-SENT-rtx",
+    "C-INV-TIMER-SYN-SENT-user",
+    "C-INV-TIMER-SYN-SENT-time_wait",
+    "C-INV-TIMER-SYN-RECEIVED-rtx",
+    "C-INV-TIMER-SYN-RECEIVED-user",
+    "C-INV-TIMER-SYN-RECEIVED-time_wait",
+    "C-INV-TIMER-ESTABLISHED-user",
+    "C-INV-TIMER-ESTABLISHED-time_wait",
+    "C-INV-TIMER-FIN-WAIT-1-user",
+    "C-INV-TIMER-FIN-WAIT-1-time_wait",
+    "C-INV-TIMER-FIN-WAIT-2-rtx",
+    "C-INV-TIMER-FIN-WAIT-2-user",
+    "C-INV-TIMER-FIN-WAIT-2-time_wait",
+    "C-INV-TIMER-CLOSE-WAIT-user",
+    "C-INV-TIMER-CLOSE-WAIT-time_wait",
+    "C-INV-TIMER-CLOSING-user",
+    "C-INV-TIMER-CLOSING-time_wait",
+    "C-INV-TIMER-LAST-ACK-user",
+    "C-INV-TIMER-LAST-ACK-time_wait",
+    "C-INV-TIMER-TIME-WAIT-rtx",
+    "C-INV-TIMER-TIME-WAIT-user",
+    "C-INV-TIMER-TIME-WAIT-time_wait",
+    "C-INV-BOUND-rto_ms",
+    "C-INV-BOUND-retries",
+    "C-INV-BOUND-msl_ms",
+    "C-INV-BOUND-user_timeout_ms",
+    "C-INV-SYN-SENT-ISS",
+    "D-INV-SEND-CAPACITY",
+    "D-INV-RECEIVE-CAPACITY",
+    "D-INV-WINDOW",
+    "D-INV-ADVERTISED-WINDOW",
+    "R-INV-CELL-00",
+    "R-INV-RIGHT-EDGE-00",
+    "R-INV-CELL-01",
+    "R-INV-RIGHT-EDGE-01",
+    "R-INV-CELL-02",
+    "R-INV-RIGHT-EDGE-02",
+    "R-INV-CELL-03",
+    "R-INV-RIGHT-EDGE-03",
+    "R-INV-CELL-04",
+    "R-INV-RIGHT-EDGE-04",
+    "R-INV-CELL-05",
+    "R-INV-RIGHT-EDGE-05",
+    "R-INV-CELL-06",
+    "R-INV-RIGHT-EDGE-06",
+    "R-INV-CELL-07",
+    "R-INV-RIGHT-EDGE-07",
+    "R-INV-CELL-08",
+    "R-INV-RIGHT-EDGE-08",
+    "R-INV-CELL-09",
+    "R-INV-RIGHT-EDGE-09",
+    "R-INV-CELL-10",
+    "R-INV-RIGHT-EDGE-10",
+    "R-INV-CELL-11",
+    "R-INV-RIGHT-EDGE-11",
+    "R-INV-CELL-12",
+    "R-INV-RIGHT-EDGE-12",
+    "R-INV-CELL-13",
+    "R-INV-RIGHT-EDGE-13",
+    "R-INV-CELL-14",
+    "R-INV-RIGHT-EDGE-14",
+    "R-INV-CELL-15",
+    "R-INV-RIGHT-EDGE-15",
+    "R-INV-NO-CONTIGUOUS-QUEUED-HEAD",
+    "R-INV-TOTAL-RECEIVE-CAPACITY",
+    "R-INV-ADVANCE-BOUND",
+    "R-INV-ADVANCE-CHUNK",
+    "S-INV-ACK-DISTANCE-DOMAIN",
+    "CL-INV-SYN-CONTROL",
+    "CL-INV-FLIGHT",
+    "CL-INV-FIN-POSITION",
+    "CL-INV-REQUEST-STATE",
+    "CL-INV-PENDING-CLOSE",
+    "CL-INV-SEND-DRAINED",
+    "CL-INV-NO-SEND-IN-CONTROL",
+    "CL-INV-RECEIVE-STATES",
+    "CL-INV-QUEUE-STATES",
+    "F-INV-DONE-STATE",
+    "F-INV-PENDING",
+    "F-INV-OFFSET-DOMAIN",
+    "F-INV-PENDING-POSITION",
+    "F-INV-CONSUMED-POSITION",
+    "F-INV-CELL-BEFORE-FIN-00",
+    "F-INV-CELL-BEFORE-FIN-01",
+    "F-INV-CELL-BEFORE-FIN-02",
+    "F-INV-CELL-BEFORE-FIN-03",
+    "F-INV-CELL-BEFORE-FIN-04",
+    "F-INV-CELL-BEFORE-FIN-05",
+    "F-INV-CELL-BEFORE-FIN-06",
+    "F-INV-CELL-BEFORE-FIN-07",
+    "F-INV-CELL-BEFORE-FIN-08",
+    "F-INV-CELL-BEFORE-FIN-09",
+    "F-INV-CELL-BEFORE-FIN-10",
+    "F-INV-CELL-BEFORE-FIN-11",
+    "F-INV-CELL-BEFORE-FIN-12",
+    "F-INV-CELL-BEFORE-FIN-13",
+    "F-INV-CELL-BEFORE-FIN-14",
+    "F-INV-CELL-BEFORE-FIN-15",
+    "T-INV-NONNEG-srtt_ms",
+    "T-INV-NONNEG-rttvar_ms",
+    "T-INV-NONNEG-rtt_error_ms",
+    "T-INV-NONNEG-rtt_previous_srtt",
+    "T-INV-NONNEG-rtt_previous_var",
+    "T-INV-NONNEG-rtt_start_ms",
+    "T-INV-NONNEG-rtt_last_ms",
+    "T-INV-NONNEG-rtt_samples",
+    "T-INV-RTO",
+    "T-INV-ESTIMATOR",
+    "T-INV-MEASURED",
+    "T-INV-ACTIVE",
+    "T-INV-INACTIVE",
+    "T-INV-SYN-SAMPLE",
+    "T-INV-KARN",
+    "T-INV-SAMPLE-EPOCH",
+    "T-INV-UPDATE-ORDER",
+    "TX-INV-TIME-00",
+    "TX-INV-TIME-01",
+    "TX-INV-TIME-02",
+    "TX-INV-TIME-03",
+    "TX-INV-TIME-04",
+    "TX-INV-TIME-05",
+    "TX-INV-TIME-06",
+    "TX-INV-TIME-07",
+    "TX-INV-TIME-08",
+    "TX-INV-TIME-09",
+    "TX-INV-TIME-10",
+    "TX-INV-TIME-11",
+    "TX-INV-TIME-12",
+    "TX-INV-TIME-13",
+    "TX-INV-TIME-14",
+    "TX-INV-TIME-15",
+    "TX-INV-FIN-TIME",
+    "TX-INV-BOUND-tx_emit_count",
+    "TX-INV-BOUND-tx_eligible",
+    "TX-INV-AGE",
+    "TX-INV-NO-EARLY-TIMEOUT",
+    "TX-INV-WAIT-NO-RTX",
+    "SYN-INV-TIME",
+    "SYN-INV-PENDING",
+    "SYN-INV-CLEAR",
+    "SYN-INV-FLAGS",
+    "ACK-INV-CONFIG",
+    "ACK-INV-TIMER",
+    "ACK-INV-COUNTS",
+    "ACK-INV-EPOCH",
+    "ACK-INV-PENDING",
+    "ACK-INV-CLEAR",
+    "P-INV-TIMER-OWNERSHIP",
+    "P-INV-NO-PROBE-RTT",
+    "P-INV-INTERVAL",
+    "P-INV-TIMES",
+    "P-INV-DEADLINE",
+    "P-INV-NO-EARLY-PROBE",
+    "P-INV-PROBE-HISTORY",
+    "P-INV-INACTIVE-CLEAR",
+    "CC-INV-CONFIG",
+    "CC-INV-BOUNDS",
+    "CC-INV-DATA-BUDGET",
+    "CC-INV-MARK-00",
+    "CC-INV-MARK-01",
+    "CC-INV-MARK-02",
+    "CC-INV-MARK-03",
+    "CC-INV-MARK-04",
+    "CC-INV-MARK-05",
+    "CC-INV-MARK-06",
+    "CC-INV-MARK-07",
+    "CC-INV-MARK-08",
+    "CC-INV-MARK-09",
+    "CC-INV-MARK-10",
+    "CC-INV-MARK-11",
+    "CC-INV-MARK-12",
+    "CC-INV-MARK-13",
+    "CC-INV-MARK-14",
+    "CC-INV-MARK-15",
+    "FR-INV-BOUNDS",
+    "FR-INV-ACTIVE",
+    "FR-INV-FAST-CAUSE",
+    "FR-INV-WINDOW-IGNORED",
+    "FR-INV-ENTRY-SEND",
+    "FR-INV-ENTRY-WINDOW",
+    "FR-INV-EXIT-WINDOW",
+    "IDLE-INV-CLOCK",
+    "IDLE-INV-OUTPUT-STAMP",
+    "IDLE-INV-RESTART",
+    "LT-INV-EPOCH",
+    "LT-INV-SEND",
+    "LT-INV-THRESHOLD-BASIS",
+    "CHOICE-INV-BOUNDS",
+    "CHOICE-INV-ADMISSIBLE",
+    "SCHED-INV-CAPACITY",
+    "SCHED-INV-GRANT",
+    "SCHED-INV-CHOICE-EPOCH",
+    "SCHED-INV-SERVICE-BALANCE",
+    "SCHED-INV-ACK-CREDIT",
+    "CB-INV-UNSENT-BUDGET"
+  ],
+  "solver_version": "4.15.4",
+  "queries": [
+    {
+      "label": "initial",
+      "query": "unsat",
+      "file": "queries/0000.smt2",
+      "sha256": "0873cf56fdb757ac45bf165314741d9d238ce436456d7bc1a0ff8f571aa7bc35"
+    },
+    {
+      "label": "C-ACTIVE-OPEN -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0001.smt2",
+      "sha256": "99b451d30dc5fc1f2dea3b63840d5a9258d1b90cc1b015dc0bfae7381cd6de5f"
+    },
+    {
+      "label": "C-PASSIVE-OPEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0002.smt2",
+      "sha256": "d8f5dea6f49bccdc6d72919908f21b274ad85032c4f0e89f327e828c42e86997"
+    },
+    {
+      "label": "C-LISTEN-SYN -> SYN-RECEIVED",
+      "query": "unsat",
+      "file": "queries/0003.smt2",
+      "sha256": "c9cfe937e784e92691db517a0140c6b1041b03cd8ea379b1089e94d1e3924883"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYN -> SYN-RECEIVED",
+      "query": "unsat",
+      "file": "queries/0004.smt2",
+      "sha256": "c17a17aa9ba3bd30bdccab04229ad7efd73336239cde24dc5ac0bdc3f616ecbb"
+    },
+    {
+      "label": "C-ACCEPT-SYNACK -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0005.smt2",
+      "sha256": "6957a406a95af292d5f3a02bf592e55db6279e9de664ea7726b4391b3c983124"
+    },
+    {
+      "label": "C-ACCEPT-ACK -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0006.smt2",
+      "sha256": "341af5b756974d0199a92010f68fe947c739f22f8b41f86b6e3d712b4cdb8699"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYNACK -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0007.smt2",
+      "sha256": "08d646ed7f7c4ed6695c6ea9b4609f015b53f87b9faf8689e1de48a44bc3fbba"
+    },
+    {
+      "label": "C-ACCEPT-SYNACK-AFTER-RETRY -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0008.smt2",
+      "sha256": "bc2797df4acb61d3627e1c2d63140d80bd3b395e5e966e47906f5ee4a5987b4b"
+    },
+    {
+      "label": "C-ACCEPT-ACK-AFTER-RETRY -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0009.smt2",
+      "sha256": "a7f2c0ad21742bdb0e13061189ccd3a3554478fa86ac461da2e20a5c6f925bbe"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0010.smt2",
+      "sha256": "02363aaaa807760f026102b863da526c30b0f8c5af8feca0f942447cec56f506"
+    },
+    {
+      "label": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0011.smt2",
+      "sha256": "8b576773d3dab0c9069caaf7c4d5e046e486ee2f5fa98882948ac7442c055405"
+    },
+    {
+      "label": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0012.smt2",
+      "sha256": "4cea17e1a20ec0317713dc231804be2d1e25b1aed860c842aa4b41915d4f38aa"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0013.smt2",
+      "sha256": "43fa4f9773ebe7a5e4d94c6c3dbaff36410e5612b039f1f7264143a3d85c5cd6"
+    },
+    {
+      "label": "C-SYN-SENT-BAD-ACK -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0014.smt2",
+      "sha256": "d52f49684ba50b91d92403abf8ca6196ad9003735cf37825077a41de800b8c8a"
+    },
+    {
+      "label": "C-SYN-SENT-BAD-SYNACK -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0015.smt2",
+      "sha256": "aa7de73bbf8c064a243f48bf2373b7e3b3c9235af83447afd14bb5bef3fb4dd8"
+    },
+    {
+      "label": "C-SYN-SENT-BARE-ACK -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0016.smt2",
+      "sha256": "1c3d94014cc87f9a42506bd3c8300a4a62df3cf573b7efddafa4986692535f47"
+    },
+    {
+      "label": "C-SYN-RECEIVED-BAD-ACK -> SYN-RECEIVED",
+      "query": "unsat",
+      "file": "queries/0017.smt2",
+      "sha256": "f6c52636256c9c2fc72bb6f7edd6895d90cb5c43dac2d9b385a1fb81215ef7bf"
+    },
+    {
+      "label": "C-CLOSE-LISTEN -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0018.smt2",
+      "sha256": "e4df9f5e6a5789c4e07da0c22694a9e4a22372bf8722df3f6d772cf843e2e000"
+    },
+    {
+      "label": "C-CLOSE-SYN-SENT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0019.smt2",
+      "sha256": "dadbe0f6ba163ae97ea77e6e77b94f7c5d0fede28e11f0830525ae8a6770d9c9"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0020.smt2",
+      "sha256": "d02e870413c03011dc1a702e5c97ebbbbd259dd3326361a407e48f7a3fee20bd"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0021.smt2",
+      "sha256": "18daed2dc91ee58a71d3976257553be555959b8897890d9aad9479ea26b124a6"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0022.smt2",
+      "sha256": "fbcea7e4fad77a876ef0a0054f657fe09806da30ac272fdbe9b2b78815c19dc3"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0023.smt2",
+      "sha256": "baec2d98b0ea76269a03c0f12949a97a006f3fd6c3bdc366c8cc70970735a835"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-TIME-WAIT -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0024.smt2",
+      "sha256": "b6ea9a409ef3cb9c4eeeba45751c9e44f32af88bc7697cfedcbe455cc42cbecd"
+    },
+    {
+      "label": "C-DUPLICATE-FIN-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0025.smt2",
+      "sha256": "9af99d5e740980248c3a8b1eb2cdac1936c3c558ddb67674f6c7f5ae1de2b845"
+    },
+    {
+      "label": "C-DUPLICATE-FIN-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0026.smt2",
+      "sha256": "58bed1e15a29a1862de3ee671f17a3c44d275deb7af1ad3853e59b112a2d12d6"
+    },
+    {
+      "label": "C-DUPLICATE-FIN-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0027.smt2",
+      "sha256": "1480cc6e5e033b6652f33f3bc7032d3a425351b54df29d93c37d149dd33266c8"
+    },
+    {
+      "label": "C-RETRANSMIT-SYN-SENT -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0028.smt2",
+      "sha256": "8b275754b5bc000f3ac9902169d9dd7292ff9312f26e00106acf99602e261911"
+    },
+    {
+      "label": "C-RETRANSMIT-SYN-RECEIVED -> SYN-RECEIVED",
+      "query": "unsat",
+      "file": "queries/0029.smt2",
+      "sha256": "56373d23a9b18283ed8841c740c49ec384ae6546560439218b23b11100c43e23"
+    },
+    {
+      "label": "C-USER-TIMEOUT-SYN-SENT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0030.smt2",
+      "sha256": "808fd495ef679db677db6eb4a5d9a51e94cab46a21b5a40a7a2b5884aa16c450"
+    },
+    {
+      "label": "C-USER-TIMEOUT-SYN-RECEIVED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0031.smt2",
+      "sha256": "0e15da8eee723cae24e2ded7e054e79af022e66dd63c3649f3b01fe7f1cdeb66"
+    },
+    {
+      "label": "C-USER-TIMEOUT-FIN-WAIT-1 -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0032.smt2",
+      "sha256": "1166b2fcfcdae4e0a551d48de27a4e1d1bbae701a022f23f1557f197a48b9767"
+    },
+    {
+      "label": "C-USER-TIMEOUT-FIN-WAIT-2 -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0033.smt2",
+      "sha256": "01cb9d5045c97040b5d9cab109bd5a26c525ea55c92139c626831a1d9359e252"
+    },
+    {
+      "label": "C-USER-TIMEOUT-CLOSING -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0034.smt2",
+      "sha256": "0dced093ede3961c83a70edae52941e9e8b353618b054e8c6fc2a213309c7404"
+    },
+    {
+      "label": "C-USER-TIMEOUT-LAST-ACK -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0035.smt2",
+      "sha256": "ba14077b5b2b20dd8cf496a41fa18e6931d608bd746fbfb4b3c0f0c0bdeb1e0a"
+    },
+    {
+      "label": "C-TIME-WAIT-EXPIRED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0036.smt2",
+      "sha256": "d38ebbd84e9a7037efffebfd9f4dc462363bd4364ed3ce600b45e4290a0bd958"
+    },
+    {
+      "label": "C-ABORT-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0037.smt2",
+      "sha256": "98545afaaaa2b880308c16bd9862df7970c5e5379f6e6800888dd998772b5d2b"
+    },
+    {
+      "label": "C-ABORT-LISTEN -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0038.smt2",
+      "sha256": "4bfd59bbec431ee234f73ad8af1f4c8e4b79facba6739bdfc5f1fe6c1685fea1"
+    },
+    {
+      "label": "C-ABORT-SYN-SENT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0039.smt2",
+      "sha256": "41162d2792b1c10fb9a9f4c9d42b1195a2b217a16f62c734f8c177b10833ed8c"
+    },
+    {
+      "label": "C-ABORT-SYN-RECEIVED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0040.smt2",
+      "sha256": "7fe5d764adf83f7bb6dae75760f3ea214adee59b0b82c6bbea03f8ae30db7a97"
+    },
+    {
+      "label": "C-ABORT-ESTABLISHED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0041.smt2",
+      "sha256": "4eec0d03e652a0547609746e0a1b39ec2861274aba1f78e31ada3db17e5b89e1"
+    },
+    {
+      "label": "C-ABORT-FIN-WAIT-1 -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0042.smt2",
+      "sha256": "1460c76bb96dd4fe0792aad5918ffc0274c463dbab832b2509c7d2682c60d739"
+    },
+    {
+      "label": "C-ABORT-FIN-WAIT-2 -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0043.smt2",
+      "sha256": "61d643b76da70c389cf163fc63f376a76cb62ba6ab9493ba82b1f3c9f7506f5e"
+    },
+    {
+      "label": "C-ABORT-CLOSE-WAIT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0044.smt2",
+      "sha256": "5f70bad227206b11248cd89f1b8398de9f47d51af075a9fe003fbdd2468d1c4d"
+    },
+    {
+      "label": "C-ABORT-CLOSING -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0045.smt2",
+      "sha256": "3e1df013aad7a4d1eaa0162276eace80042036ef5c5152ee3dcb5cc668c77958"
+    },
+    {
+      "label": "C-ABORT-LAST-ACK -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0046.smt2",
+      "sha256": "b879782cb3c9f558d7fbe44856b9dfd0a938e06edb2da7387a43827102dcf383"
+    },
+    {
+      "label": "C-ABORT-TIME-WAIT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0047.smt2",
+      "sha256": "ab146986525d3f0f618e604ab9815cd1af196880bbdfe5b419d853afa7719b4f"
+    },
+    {
+      "label": "C-IGNORE-NET-RST-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0048.smt2",
+      "sha256": "95c2020e78fff68345eee0750752e857ff1acf5c651772db9aefff4c00ab8a75"
+    },
+    {
+      "label": "C-IGNORE-NET-RST-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0049.smt2",
+      "sha256": "aff6ee208f35b6c101ba7abfad08f0b5c0ded538bf80b6f668ecdd73f939d683"
+    },
+    {
+      "label": "C-SYN-SENT-NET-RST -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0050.smt2",
+      "sha256": "e72b99b07d68cb28ebd30be4073846b46f434191fdf24fbad3c21f88b5d3a87a"
+    },
+    {
+      "label": "C-SYN-RECEIVED-NET-RST-PASSIVE -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0051.smt2",
+      "sha256": "3162155a442b30cdcf2337f919a4256a211f40c60054d8faabb5513369e3db11"
+    },
+    {
+      "label": "C-SYN-RECEIVED-NET-RST-ACTIVE -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0052.smt2",
+      "sha256": "057b704760901af254e419b1f2863f0bf829099797425255911a88ab18e3595a"
+    },
+    {
+      "label": "C-RESET-ESTABLISHED-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0053.smt2",
+      "sha256": "e1ebd15385d66c57cc669e62bdbb8da3ef318347a8a040077fa2ce3b78937fbd"
+    },
+    {
+      "label": "C-RESET-FIN-WAIT-1-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0054.smt2",
+      "sha256": "35761426ced9b3f92fdd969b96b9d6c9fcd2c4e3c50b942d30b2c3023bd77534"
+    },
+    {
+      "label": "C-RESET-FIN-WAIT-2-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0055.smt2",
+      "sha256": "2600583019870cbbed0ce82c1fd2c76ab39826db91b1302ca629e3f96c58fa93"
+    },
+    {
+      "label": "C-RESET-CLOSE-WAIT-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0056.smt2",
+      "sha256": "ac4dba83c91c133a496857db6e3a4bf2d57b23547f6d4f96260c0eacb747e08d"
+    },
+    {
+      "label": "C-RESET-CLOSING-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0057.smt2",
+      "sha256": "dab15aa8fc008949fb489c8280b375a1c1f969cbf21b3698ae3f961139a6eadf"
+    },
+    {
+      "label": "C-RESET-LAST-ACK-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0058.smt2",
+      "sha256": "e7bd5053fb539bbb02c3ee237b60d31191ae8156c3d8adbbad96640fe082acbe"
+    },
+    {
+      "label": "C-RESET-TIME-WAIT-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0059.smt2",
+      "sha256": "f47eab887ce779db74989e64901ddd4b066198d662e62d4b3a8231d55a9744c8"
+    },
+    {
+      "label": "C-IGNORE-NET-RSTACK-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0060.smt2",
+      "sha256": "9383761cc78a7c36048288741fde8d515486e84b521698545df621699218137f"
+    },
+    {
+      "label": "C-IGNORE-NET-RSTACK-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0061.smt2",
+      "sha256": "611d3a2b53949ebf84d016802f4600ef67237483f72943d2f33f3eb150eec09f"
+    },
+    {
+      "label": "C-SYN-SENT-NET-RSTACK -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0062.smt2",
+      "sha256": "45ee1ba4121eb6c7cc9ec212ac2cff9f7d429f8d7d4ff8681aad2d454a3ba4d0"
+    },
+    {
+      "label": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0063.smt2",
+      "sha256": "e5399d50ce56e6ef85b3e922e6c4079f662c24567a8f9bbbc83d9c8eea96b14b"
+    },
+    {
+      "label": "C-SYN-RECEIVED-NET-RSTACK-ACTIVE -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0064.smt2",
+      "sha256": "2c400698bc2e0a492f5cfa85bb0394720c11d5729bfd81d399cbdb5cf099200c"
+    },
+    {
+      "label": "C-RESET-ESTABLISHED-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0065.smt2",
+      "sha256": "1f6ec6f1d3487b5e74ca2ed3e2f33d7f109fe4275c486278dff86ce6ac29a607"
+    },
+    {
+      "label": "C-RESET-FIN-WAIT-1-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0066.smt2",
+      "sha256": "b74c550893fb0ea29fee55af389ebb8ba41a9124ed10d7f19beae843a7e5798c"
+    },
+    {
+      "label": "C-RESET-FIN-WAIT-2-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0067.smt2",
+      "sha256": "66958b5cad6651997f17bd81ca7f798d98e55c005be25030b8cff8df9ee3fe20"
+    },
+    {
+      "label": "C-RESET-CLOSE-WAIT-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0068.smt2",
+      "sha256": "64e8b7aefc905a8005adb43ae74e568e1eeb6d657d9d8a658cd711347efc1960"
+    },
+    {
+      "label": "C-RESET-CLOSING-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0069.smt2",
+      "sha256": "6ed9a119639a8fae4f10f9251c77b2d4cbf457750ceafab925c62c81a2401507"
+    },
+    {
+      "label": "C-RESET-LAST-ACK-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0070.smt2",
+      "sha256": "d897c2b3f4bcf8cc2f94923f44038eae4247e268e26a138abb7b019099af416f"
+    },
+    {
+      "label": "C-RESET-TIME-WAIT-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0071.smt2",
+      "sha256": "f1c36cdb81877192bada75d0dcd3f30830aeed8aad6b64a8d67475cbc818832e"
+    },
+    {
+      "label": "C-REJECT-ACK-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0072.smt2",
+      "sha256": "ab11bbe0acefd1c97dd76817d3043f7b3db4e85e11e5df2f61b69c8069eb6d21"
+    },
+    {
+      "label": "C-REJECT-ACK-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0073.smt2",
+      "sha256": "c24886ba0c1d11157e6aa5dcd4ca44423fb08c5ca23d329d350ef4298d918730"
+    },
+    {
+      "label": "C-REJECT-SYNACK-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0074.smt2",
+      "sha256": "be17146ba7d68bb8e3d70031a8060fa072a8d9761c9bd40dff198a6721dc54d8"
+    },
+    {
+      "label": "C-REJECT-SYNACK-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0075.smt2",
+      "sha256": "a54f673297420322ad83e63f10d2d1363f878c47a6892ecf15ee5d1330ca376f"
+    },
+    {
+      "label": "C-REJECT-FIN-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0076.smt2",
+      "sha256": "63ae78465746f4203ef27d51681d0b6f71ec7377c4a2ee31120f25c1c9cb54f3"
+    },
+    {
+      "label": "C-REJECT-FIN-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0077.smt2",
+      "sha256": "9bd02dc9f65401c6baa67383c4d7df5eea7ffaace7a94aaa208dba21c2bf720b"
+    },
+    {
+      "label": "C-CLOSED-SYN -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0078.smt2",
+      "sha256": "b03912035d9764ec40325423f8f8115c8950953aa4d48886144558fb8090aa8b"
+    },
+    {
+      "label": "D-QUEUE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0079.smt2",
+      "sha256": "d52ce63f4d8a3d5abf531d9e4b3189bf24408b7345ddd864c8bb99d96bf0a0f3"
+    },
+    {
+      "label": "D-SEND-EMPTY -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0080.smt2",
+      "sha256": "d456f4e5e2132b54f802d2c034ee717cfe26c0e0a6c3dd26be374d57da6fd237"
+    },
+    {
+      "label": "D-SEND-FULL -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0081.smt2",
+      "sha256": "e87a55f7fb0edf3ae0a9deeb29fd5f473ac18637b5069ed4d7964bc5ee646b13"
+    },
+    {
+      "label": "D-FLUSH-FIRST -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0082.smt2",
+      "sha256": "574b02a41f117c0a6f9fc119373d2ba43083341dccb4ffcc50a00ef27e31328f"
+    },
+    {
+      "label": "D-FLUSH-MORE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0083.smt2",
+      "sha256": "f2610ae8f83cf9b81b923fb6b275d41dca12a08b87aa7e048d15e5e3a37660ab"
+    },
+    {
+      "label": "D-FLUSH-BLOCKED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0084.smt2",
+      "sha256": "9e007a1fa90d8b460c8d1b0dd463b6e3efd8d6c42fa2fd298834d8fd1025574c"
+    },
+    {
+      "label": "D-APPLICATION-READ -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0085.smt2",
+      "sha256": "0016b1fc619480c144a44dd382591a8a4df63a126ee10e4d7677a6ad2a422d86"
+    },
+    {
+      "label": "S-ACK-VALID -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0086.smt2",
+      "sha256": "9b2e2abc8c192b3781bec3e8daccb630574ae467e95276611a3be66a97b5191e"
+    },
+    {
+      "label": "S-ACK-FUTURE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0087.smt2",
+      "sha256": "1f58f5a3f83b69e4ea991bd5d64bdf73a5eece2e9dd0574352cba2122836cda0"
+    },
+    {
+      "label": "S-ACK-UNACCEPTABLE-SEQUENCE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0088.smt2",
+      "sha256": "538b4eceb37acf896b15a35b8bf150a6375292aec142aedec37fa635ead5d354"
+    },
+    {
+      "label": "S-RETRANSMIT-WINDOW -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0089.smt2",
+      "sha256": "073198ee7d8afb1b0462de0abe17a21a53b1cf84ee6ed5265dcd20bf4b24e6d3"
+    },
+    {
+      "label": "S-RETRANSMIT-ZERO-WINDOW -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0090.smt2",
+      "sha256": "7d90662c187246175c19675097a452eff03646f4806ffcf54b3e5bdb377ca058"
+    },
+    {
+      "label": "CL-CLOSE-ESTABLISHED-FIN -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0091.smt2",
+      "sha256": "8309fade670e5b6e680c7400a1bb70f3022d8867cea8cd688799ee96d4b779b7"
+    },
+    {
+      "label": "CL-CLOSE-ESTABLISHED-QUEUE -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0092.smt2",
+      "sha256": "57a3dccc9fd461112e4fc1027c8c5a09c181ea8912825e8bcbd36d6fae092659"
+    },
+    {
+      "label": "CL-CLOSE-CLOSE-WAIT-FIN -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0093.smt2",
+      "sha256": "fffaed53fb152259197c23341abb9bee3d07162b335b717e2753c9eee1240b0e"
+    },
+    {
+      "label": "CL-CLOSE-CLOSE-WAIT-QUEUE -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0094.smt2",
+      "sha256": "3bc162cebaa0cf4c973c738c8a1a5fa23cf56f95d9f958d09c472375a8d47e22"
+    },
+    {
+      "label": "CL-REPEATED-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0095.smt2",
+      "sha256": "eedda130a208447a5460adee377f94dda23b5fccf62efdde112f75e077548359"
+    },
+    {
+      "label": "CL-D-FLUSH-FIRST-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0096.smt2",
+      "sha256": "b034339e35975aca3c6442f1fe0087c2e766028bda38886598b42a840429a314"
+    },
+    {
+      "label": "CL-D-FLUSH-MORE-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0097.smt2",
+      "sha256": "92a087813f22f6c54647e9a533e52120af5dfc930b188b1c51b78a1fcb7c12c2"
+    },
+    {
+      "label": "CL-D-FLUSH-BLOCKED-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0098.smt2",
+      "sha256": "fb4e8a580ca4fe32679d0b285f1a1816116a7757cf6bfb87a9d45bc9bdd3e451"
+    },
+    {
+      "label": "CL-FLUSH-FIN-CLOSE-WAIT -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0099.smt2",
+      "sha256": "13375c55b0dfc0f152e2aebf83855fc43850fa0fe7647b9fa30f15769b6f6d84"
+    },
+    {
+      "label": "CL-D-FLUSH-FIRST-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0100.smt2",
+      "sha256": "aa01fa7ec6fc36e34de2b4e0b832c6e8afeb2cedcf6d1f1b5f303d91b7dde19f"
+    },
+    {
+      "label": "CL-D-FLUSH-MORE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0101.smt2",
+      "sha256": "fdbec296e86e2494c4408b77318296f959fb92892a9e5c83d59022743dfbcb98"
+    },
+    {
+      "label": "CL-D-FLUSH-BLOCKED-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0102.smt2",
+      "sha256": "fbfce30f2a1e32ea9129a2d1fc1164636dce428feeb23ce21c11103abd787512"
+    },
+    {
+      "label": "CL-FLUSH-FIN-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0103.smt2",
+      "sha256": "5847ac3736de2c7fef3c6e03e2f597077ecfd69e1990966ff8056d90798e1b39"
+    },
+    {
+      "label": "CL-D-FLUSH-FIRST-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0104.smt2",
+      "sha256": "1ecd2a34bb549f05afadb73c477746c5991f5e96c9af5ced1c7c0166ab3d2df1"
+    },
+    {
+      "label": "CL-D-FLUSH-MORE-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0105.smt2",
+      "sha256": "ac79d3d78bc50aa4f960ee039a0854f043f4da32dfa3e4980d19c8d6218f2ae7"
+    },
+    {
+      "label": "CL-D-FLUSH-BLOCKED-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0106.smt2",
+      "sha256": "c2d4ca725e32ae8bbf2c2c77226742812826d3aecaa59c4b5d7cd5531a702290"
+    },
+    {
+      "label": "CL-FLUSH-FIN-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0107.smt2",
+      "sha256": "e143ef9cd2fce81325b99b46c19653b3975a520eaa5d3b2427a749861f1fa337"
+    },
+    {
+      "label": "CL-D-QUEUE-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0108.smt2",
+      "sha256": "54fbcb4f9abcb8904ad6b7b28f6767d4c3000042b9ead3da1c32bf151c3f1fac"
+    },
+    {
+      "label": "CL-D-SEND-EMPTY-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0109.smt2",
+      "sha256": "1739d1bf1747072d67f61c11b85ef8347ac736e87589421779d13739850bd2bc"
+    },
+    {
+      "label": "CL-D-SEND-FULL-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0110.smt2",
+      "sha256": "032a2fdf38d13d6619592113c6ecd4334b8b7efde741c30f0f66991c5f2781d8"
+    },
+    {
+      "label": "CL-SEND-CLOSING-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0111.smt2",
+      "sha256": "1c926803bb72342903da983d3e72a3a505b7c1b6779c8be5e532dbeba8dc2365"
+    },
+    {
+      "label": "CL-SEND-CLOSING-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0112.smt2",
+      "sha256": "758d33440121c39a33df5e3814eee7840ec7727aadb4773295b7651bad5cad92"
+    },
+    {
+      "label": "CL-SEND-CLOSING-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0113.smt2",
+      "sha256": "6ae0c5410f29317c0282dad52091df7eefc497844fa6651c4b4781d6fd1e8920"
+    },
+    {
+      "label": "CL-SEND-CLOSING-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0114.smt2",
+      "sha256": "0babe4d7928c6d946b2a0b03c4af2db87908c121d1b530adf7f5ad13d2478c37"
+    },
+    {
+      "label": "CL-SEND-CLOSING-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0115.smt2",
+      "sha256": "157380089544fa680088079ef68d9a1cef43254c550ee2d62be8af12bc3a29e2"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0116.smt2",
+      "sha256": "4a5ba3d38f9d4151fd7c35954e955a4e839161d2fe5b83c127c7974a842d7e3d"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0117.smt2",
+      "sha256": "fb3f9a4209c070d42ca3bbc357abb07b78172d1a1cd589fad3fff48e18a03bd3"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0118.smt2",
+      "sha256": "111db2ea15fea35c8aeb7dd837969fa4f494fa555afc6be80f00451a5cd6ee40"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0119.smt2",
+      "sha256": "7d3b81e9853e285751a6b0050fbbba4934a1c9990d5d5a6e34124cb94aa946a2"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0120.smt2",
+      "sha256": "c743005fa84644b3caca206e7528b018357c46f8596735a9916994fc92ad193e"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-TIME-WAIT -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0121.smt2",
+      "sha256": "f1b09fee7278e44c2d5f806a198a62a1c4c90352a68bf777484a51c2054504b9"
+    },
+    {
+      "label": "CL-S-ACK-VALID-CLOSE-WAIT-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0122.smt2",
+      "sha256": "c320bd8fa75b0202083bb7cd112757fdb44b84a497f8f5bcf92ad76db5738df3"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-CLOSE-WAIT-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0123.smt2",
+      "sha256": "7666431de781118e9c1e6f56d3e52bbd6a8f1e019e717ec992fb9caed8e2d703"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSE-WAIT-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0124.smt2",
+      "sha256": "dc67845b70c929d79281234f351d3258154c54bac5b8db981afca985fcfab128"
+    },
+    {
+      "label": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0125.smt2",
+      "sha256": "316637add3ad0ea7e3a27e8b877708256c65011f6dc5649bd6b803b427b05cc5"
+    },
+    {
+      "label": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0126.smt2",
+      "sha256": "ca7cbac4e2b9e7d78494c9e93c520f6827e074c8f5c791a52e4af9be1fcb900d"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-FIN-WAIT-1-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0127.smt2",
+      "sha256": "47ff41c03eb8005d5d3cfa876f19e1e3e6763f8fb290850a8eda016b362d657b"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-1-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0128.smt2",
+      "sha256": "6141c07d51450da5fab70c868abcd15b1a4d35c987ed90de9f32e757dbdc8b42"
+    },
+    {
+      "label": "CL-S-ACK-VALID-FIN-WAIT-2-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0129.smt2",
+      "sha256": "88700f122f29289450fee43eeb34e7fac15e32499e51c99b25d3ba87c508b01c"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-FIN-WAIT-2-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0130.smt2",
+      "sha256": "cf46623232ddaee082f0dcc234f4aa98b0710a930841ec723b14f52e0a24c709"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-2-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0131.smt2",
+      "sha256": "ade9f30828552d8c99de2ee7521d23d6334d67f09c463ac2a035ba4195123bd0"
+    },
+    {
+      "label": "CL-S-ACK-VALID-CLOSING-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0132.smt2",
+      "sha256": "fd14a6120c106add5390bef064c28db64a76962e7b7b2b3b396ff9d6f5671784"
+    },
+    {
+      "label": "CL-S-ACK-VALID-CLOSING-TIME-WAIT -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0133.smt2",
+      "sha256": "5688a41c7ceb652d4aee8edb389914c0eaa4d7aac80dba4e86adbf9191b6fcf9"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-CLOSING-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0134.smt2",
+      "sha256": "fc75eebfea2f2c79b31df113718a3cd23894d4cf0611b65b5824555f12752145"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSING-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0135.smt2",
+      "sha256": "6787c4399cde3d4922c888b6abec0cc1c88333873e06f1066b196a625e31b333"
+    },
+    {
+      "label": "CL-S-ACK-VALID-LAST-ACK-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0136.smt2",
+      "sha256": "c471473e2e4b6231a1496730fd9b25538bc7c0059acfcab0a0ffaf88beb211fa"
+    },
+    {
+      "label": "CL-S-ACK-VALID-LAST-ACK-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0137.smt2",
+      "sha256": "01f1e55fac172d334f46378348f3af788409ba1bb5acb90194c693a66755a88d"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-LAST-ACK-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0138.smt2",
+      "sha256": "3a1669439da97d9052239590945908ef5c0c7347b7ee8554f55ebd8515c141c7"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-LAST-ACK-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0139.smt2",
+      "sha256": "19cbb08c4d8fe096c1617bd94f62b5c138e9d7f6b3d9857e95a522c335045545"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-WINDOW-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0140.smt2",
+      "sha256": "29acb07881d9c5149205b8f7acc403d0e3e0f43418bb4af897810c9c54b6637e"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0141.smt2",
+      "sha256": "654267cbd21a9dde9fa981c9b9ad2d74b9e1b42c4de031ec1c886b8069d65d3e"
+    },
+    {
+      "label": "CL-RETRANSMIT-FIN-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0142.smt2",
+      "sha256": "41d3637232bff1eb5e4f4ac93ba5852358ec3e0099b6c51e96d1e2a38f28ab1a"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-WINDOW-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0143.smt2",
+      "sha256": "1d4db1d9a042f13367ca305877fd212da891765a66fbf6e6b402565f01370e40"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-ZERO-WINDOW-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0144.smt2",
+      "sha256": "3648349c975303d01284730b67e2f2cfa05b81819981a308e9e426f2abee6223"
+    },
+    {
+      "label": "CL-RETRANSMIT-FIN-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0145.smt2",
+      "sha256": "1a0f4d52d0f7a26f2f2abaf83f5069298d5d10d2f666719237e9ab1d8b3cdc4e"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-WINDOW-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0146.smt2",
+      "sha256": "77c4457af777ab54404444aa5e167bf32dd3c4c00a4cbe5b2c052a2d2493e895"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0147.smt2",
+      "sha256": "6a53167a771e2642901fc102f523ce9af9c1b2da8980eff261e1fe4f4543a5ba"
+    },
+    {
+      "label": "CL-RETRANSMIT-FIN-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0148.smt2",
+      "sha256": "3703caab1f135fc28de7e03830723bee1ba82bec72b2255ae45f5ad1014fb69a"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-WINDOW-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0149.smt2",
+      "sha256": "22a61802245edb13620491195a38ac9f9cf9a872c749f9672cef60e517abb023"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-ZERO-WINDOW-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0150.smt2",
+      "sha256": "eedd27ee66ed257ec6f36f0e1a716081b2a10549929401f243029758d686fd6f"
+    },
+    {
+      "label": "CL-RETRANSMIT-FIN-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0151.smt2",
+      "sha256": "eb9bc3186ec19251e6aba3737099fb87945c27cd2c8ca0f60f8a2e1d03e8e453"
+    },
+    {
+      "label": "CL-TRANSMIT-AFTER-FIN-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0152.smt2",
+      "sha256": "45e9867a2e93731653ae974d7c7ab3c307a8146c06c914d7038f5262b75acd7f"
+    },
+    {
+      "label": "CL-TRANSMIT-AFTER-FIN-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0153.smt2",
+      "sha256": "d4a7a78cb68017c335f35d1619d6b504e6446ed6288e58156a1c56a5511408d5"
+    },
+    {
+      "label": "CL-TRANSMIT-AFTER-FIN-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0154.smt2",
+      "sha256": "ee005cfc8de250088685938fce8b35efbadfb7bde09fbc568058052af8e108ad"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-data -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0155.smt2",
+      "sha256": "62b097e5ec829f721d549b6098a76c1e8406d43bc7b63467db2a57c691a2478e"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-data -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0156.smt2",
+      "sha256": "0fe42d91ca2a9a1b07b6656b9ea374f462f0f829e00d20025621ae93fbec6736"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin_segment -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0157.smt2",
+      "sha256": "0e51ed32cb2e883a4acbd1a0ac75871990f339032af5c275b90bc389320e6722"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin_segment -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0158.smt2",
+      "sha256": "cdc258ead44e9888d08b7ab1c7eed7290773aed4738a71f87f949a16afe18495"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0159.smt2",
+      "sha256": "0e9cb5b6dc6724dfa3f278ebed002cddc170fdb0d4db8a989ef65f879a8e4c13"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0160.smt2",
+      "sha256": "2c3b550579fc30a6e7dba7baea4539bcc457effbc7edb8b2969faff85abc478a"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-data -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0161.smt2",
+      "sha256": "56b52d0b94ec5e90ea3701ceb02ab0f1f7618a1f41d1dd31f8e64bfea53150b2"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-data -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0162.smt2",
+      "sha256": "354d32291518aa9e5a67972159b2b8ba3179375be55ce9057c780734b03aa0b1"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-data -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0163.smt2",
+      "sha256": "283445bea74a6e97513afdab28bd1681be8311e562f227c19f2532d37f2df184"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-data -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0164.smt2",
+      "sha256": "85af712e7feb50ab9537cbb8348267f1cce172d569a4e893157843de8d5c86e2"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0165.smt2",
+      "sha256": "8e9862fde35440156942667cebfd5c3803d4a944f3033b9ae36ae5be609a68f7"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0166.smt2",
+      "sha256": "3bb7f9d913e73cc7d6a94b1ac29d105afe30b34356d4e5e8c16715fd15c368ca"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0167.smt2",
+      "sha256": "731831b0d705dabae96a8f559043d2e80cb30ab5de1b7e856f4b2cd57f1230bc"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0168.smt2",
+      "sha256": "599a7413ed7867c85b268ccf473e57dc0e20378fcad044e706e98ed95216d20d"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0169.smt2",
+      "sha256": "2b7e2895e37fa3fa964e3e470648b6717dd4b15dc8e9297e307ae7651721d50a"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0170.smt2",
+      "sha256": "e6ea0872f7714868e06be4c9e2c2ccf13735faad7c92f4a7030f23bf36496b58"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0171.smt2",
+      "sha256": "9d3ae86e527dc485acc59c7cf8fb282f60d1f08952d6bec9ae8ebe107b54129e"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0172.smt2",
+      "sha256": "d747af9dfcc8c207887a185b46a880f4a781a91f0a55613c87a10cc179b5f428"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-data -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0173.smt2",
+      "sha256": "f824c1b7eae0800baec62e7e56c36ff36ac397b1b15d346865f3d0bc2aeb5ea6"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-data -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0174.smt2",
+      "sha256": "6163eb3dd10d1c261c4051e7950db9e77d29db6750d2cf32b9c27f9414e043d5"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-fin_segment -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0175.smt2",
+      "sha256": "859908067b55776a26aa22c1d4be9c3fa1b247e7ea3c1c4f746ea19ac4bab2cd"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-fin_segment -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0176.smt2",
+      "sha256": "601389e1cfe0797b9362496ebb755d9d707773dfddde26453aedf218d4cad9e7"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-fin -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0177.smt2",
+      "sha256": "79ae89144b07b13188756621c6f4969a7c267595d2bc613c606930b11bbe2d27"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-fin -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0178.smt2",
+      "sha256": "23b20b2a021ad697c73cf6d87395e4f40be6c8cbbe8cc15f238523ea619c85a0"
+    },
+    {
+      "label": "F-RECEIVE-CLOSE-WAIT-net-data -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0179.smt2",
+      "sha256": "0f96a8d0a7694a6486e1aae903b356f5402df15ec80b648177a55e4d134b9be6"
+    },
+    {
+      "label": "F-RECEIVE-CLOSE-WAIT-net-fin_segment -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0180.smt2",
+      "sha256": "2f4b88233c20877a97c01b9dc594e3b13f7ab2690f6e3e20edf3dfa7c65743ab"
+    },
+    {
+      "label": "F-RECEIVE-CLOSING-net-data -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0181.smt2",
+      "sha256": "8ce036923088b6ba36b7e8f4bdb071f01e22bec74d233012fe541351324ddbcc"
+    },
+    {
+      "label": "F-RECEIVE-CLOSING-net-data -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0182.smt2",
+      "sha256": "cddf337b8cb359e586b0cfe4301a3ad560fe192d2520e029ff68aee112fe2eca"
+    },
+    {
+      "label": "F-RECEIVE-CLOSING-net-fin_segment -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0183.smt2",
+      "sha256": "1d8356f6ce2f3a5a8fa8cb290f1b97dc77b754c02c4a79da951e8cf32261a915"
+    },
+    {
+      "label": "F-RECEIVE-CLOSING-net-fin_segment -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0184.smt2",
+      "sha256": "49bcb981aa24c3d252f7c23874496a80ab8e181103f164cf568063b625128344"
+    },
+    {
+      "label": "F-RECEIVE-LAST-ACK-net-data -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0185.smt2",
+      "sha256": "5554d29e8065ba13b54aa0ab984c8ce1693e7459f538e4c2aef7a9924f7ad305"
+    },
+    {
+      "label": "F-RECEIVE-LAST-ACK-net-data -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0186.smt2",
+      "sha256": "2da0dc42612ecd006dbc5d2913d8bd2ef96901f4165e375020b5806e64aef0e3"
+    },
+    {
+      "label": "F-RECEIVE-LAST-ACK-net-fin_segment -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0187.smt2",
+      "sha256": "16d61cb3c9f38e1b6b2fd19470cb1ea9ca5d4b88cab095435c82ad82a05ad0e9"
+    },
+    {
+      "label": "F-RECEIVE-LAST-ACK-net-fin_segment -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0188.smt2",
+      "sha256": "148203c2a931e792b6552d733b23cee864f8edf11cecdb99a0667fae3922e577"
+    },
+    {
+      "label": "F-TIME-WAIT-net-fin_segment -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0189.smt2",
+      "sha256": "2bd3f8a4d529ab2d254c4800adee114d9fb9ab3a020430525bfa3659a581f076"
+    },
+    {
+      "label": "F-TIME-WAIT-net-fin -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0190.smt2",
+      "sha256": "80d80db1a9845e31dc14641e62bae1126fcd6e7a9e28bdacb38798179451b34f"
+    },
+    {
+      "label": "F-CANONICAL-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0191.smt2",
+      "sha256": "8820c4a4afedeb4cb8fed776d781ab30a1ad886d4cb66b93ac446cb4ebcfa552"
+    },
+    {
+      "label": "F-CANONICAL-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0192.smt2",
+      "sha256": "1dffc6cfd7eed04ed21dc6b881e297d195de449b59b09aa825a56e00524d676a"
+    },
+    {
+      "label": "F-TIME-WAIT-DATA -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0193.smt2",
+      "sha256": "7bbb36b0b776121feb23aad77cb7ba2b088b3797d8de473f3f0185e1556ddc89"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0194.smt2",
+      "sha256": "5da6b160ef694dfe47a867f00a1628f08f65c75ef8e4efbfc439768cd7c40a22"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0195.smt2",
+      "sha256": "4e0a4a31fdbcc6ff5f95f08342e9bbe8cda954916d76106b78175b5b9e58a28f"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0196.smt2",
+      "sha256": "422a356cf0c5dc1422cd1a2451445b28d1e03552e89910873a8133477aa451c9"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0197.smt2",
+      "sha256": "2605142cba9e0c4728939dbd3ce86890ce04887689a6141a0e06070d4ca2dc0e"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0198.smt2",
+      "sha256": "a3f72e374ae76bbc349097d1f323b493a09aae0f75cf4b3b0b39366dce049192"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0199.smt2",
+      "sha256": "7e77fb0a7455853a35f8616174bd95ba2cd4de7b4aa81eff5d5ac98a909c5743"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0200.smt2",
+      "sha256": "6709d5efb74d313a34df04183bdb8ebd6e1e6fe2ec3af5c6c523eb35fdcfc28a"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0201.smt2",
+      "sha256": "384b575ba8829df3e4fd5b1012a6babc43c60f9e01cab2bcf3ddc7679863df33"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0202.smt2",
+      "sha256": "80b0e659ce9cb512aff283eecd1f30881f12f2380bf3c2af29ad6aaf61f96b69"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0203.smt2",
+      "sha256": "4f64277ef143e73a77e9268b33a8816d3c0211c8e561061a130d38e89c6eae31"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0204.smt2",
+      "sha256": "2c3d158c10ed090b08e55906ed8701d511fac5c79da79ed974a6a1252c89e2c7"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0205.smt2",
+      "sha256": "77f6d48f328135275abec8998184e01ad04cabbbf77829b8c80aaed8dadb723d"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0206.smt2",
+      "sha256": "a4f5f423a03539f3b290dad56e6d2ba4a9ae27e8e763cbfd8ab6cff64550757f"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0207.smt2",
+      "sha256": "1f65527b65782d82d3c7294824b6f8140fd23d6409f4ab93feb7db5d768c49cb"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0208.smt2",
+      "sha256": "ba71dcca3dda0548b1b07626e81208bc770d64418cbf671587cfe8d6ccd9fb57"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0209.smt2",
+      "sha256": "c235bab6c2dbb964a4e42429882c5b4ab74674eff59c9c62722dcdbf517d0eb5"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0210.smt2",
+      "sha256": "95bb2b83de307e8890b7d7da234d235a1390d70eefb16acf0c87ce072b04b196"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0211.smt2",
+      "sha256": "f6d9141d0e84b36d7ec3f7fd088febdb729158c7d923be851f71e158409f2143"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0212.smt2",
+      "sha256": "d0e9867c20ec2fdada64bb32f85169efd421e0f69553e9bf4c052ef22be4c4cb"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0213.smt2",
+      "sha256": "59619a78cfedeb789a0d4f761ea1dee43cfc8b1173be9935e8fd83e9c269e51d"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0214.smt2",
+      "sha256": "200688e430ca8fb4e7f4f4edd0d4fe2dbd5039d9c21fcac8c182ec5e62b5ca27"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0215.smt2",
+      "sha256": "85dae9d8f96d868f9ce386db9462db0f8c2f071a5fd90a118c149c041c0cf632"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0216.smt2",
+      "sha256": "5b4982999bf1511ebb20d17b390c20f50cfd5a409f23f22976066020509d51c3"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0217.smt2",
+      "sha256": "f47d5b17cd77826bbfb97af0908fc5f5be8c6f04e1be063060cfa6e504e1d46c"
+    },
+    {
+      "label": "ACK-DELAY-EXPIRE-ESTABLISHED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0218.smt2",
+      "sha256": "01a02dc0110075b58a0bdb49a22a1e977130391133afbfed3de380bcecc06fd8"
+    },
+    {
+      "label": "ACK-DELAY-EXPIRE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0219.smt2",
+      "sha256": "465a4deb0dc651613c7678204aa50563f8da51ab7e401645f2bd825ee5b2e557"
+    },
+    {
+      "label": "ACK-DELAY-EXPIRE-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0220.smt2",
+      "sha256": "097de446bc9859db40525545f3fd288f8bafb6ef207358ae1fa538c2cb00f6c8"
+    },
+    {
+      "label": "PERSIST-PROBE-ESTABLISHED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0221.smt2",
+      "sha256": "c13dc02558fe3080990b47f94d7347c69551530da415e60f0be717dc4033c806"
+    },
+    {
+      "label": "PERSIST-WAIT-ESTABLISHED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0222.smt2",
+      "sha256": "18a168c38888831a783720b3957a71753913c266f742ac996322694139990c5b"
+    },
+    {
+      "label": "PERSIST-PROBE-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0223.smt2",
+      "sha256": "74f89f5a85218a1d40485ac46be3c022eacc6722f2b79e4330d4dbb17e1c1f64"
+    },
+    {
+      "label": "PERSIST-WAIT-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0224.smt2",
+      "sha256": "a55326fe554ebb53f76bd362e721a6679580782a065328e8856db3e8710b0d1d"
+    },
+    {
+      "label": "PERSIST-PROBE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0225.smt2",
+      "sha256": "9cda1bd07bce7b748ef43f063239d5359a1521f802420f2a873f1351fe5938d7"
+    },
+    {
+      "label": "PERSIST-WAIT-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0226.smt2",
+      "sha256": "5641c940d566f6d294d8311b520ddd02e8865667f250451bb426e3731bee095e"
+    },
+    {
+      "label": "PERSIST-PROBE-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0227.smt2",
+      "sha256": "b017d1cf98b6e52d21e233ad43d886687f5654cf99773f8251245c7dfd5b6aec"
+    },
+    {
+      "label": "PERSIST-WAIT-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0228.smt2",
+      "sha256": "5b44f4c7ba9e273ddcebd4462ad1187ccb86c25de411f7bc030efa75b632ff11"
+    },
+    {
+      "label": "PERSIST-PROBE-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0229.smt2",
+      "sha256": "4118989a85fecb9e4587cc9ebb55d1ad697cd5b971c4b7a6ae7dbab3f73a740b"
+    },
+    {
+      "label": "PERSIST-WAIT-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0230.smt2",
+      "sha256": "b4130a05826f2772eaa3868c8f33061aa606e68f401364fd7504da263c48711b"
+    },
+    {
+      "label": "CHOICE-D-FLUSH-FIRST -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0231.smt2",
+      "sha256": "6f7a577f4f56d234bbaa8ffff9a1d5105e8c123a308ef2eb24cc5b3b7fec8284"
+    },
+    {
+      "label": "CHOICE-D-FLUSH-MORE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0232.smt2",
+      "sha256": "70f09f1b6fc65535c5fe14ceec0f64741cdf2dfcaa474625758fde1e13cc52a6"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-FIRST-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0233.smt2",
+      "sha256": "99ab419da350834d81f93998b35a71aee2d75871cdd6ad1f30f0b0b971c1d807"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-MORE-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0234.smt2",
+      "sha256": "cdd1fc93601b424dd034c7618d9955d54b7277989979f1c99b71066e167ced4b"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-FIRST-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0235.smt2",
+      "sha256": "31c78c46bc77eed8da4fbec909321e3b65bdd86c5b41712272ee3318a4e8b172"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-MORE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0236.smt2",
+      "sha256": "f988d3420b2187678a33fb8566a4320bfc24305ae7c718f685533f966c20f779"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-FIRST-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0237.smt2",
+      "sha256": "b0ae4baa11c969f49a5bf01e48d57d4b495add0b1ecf18b63c0f9495c8fed79b"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-MORE-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0238.smt2",
+      "sha256": "5e5b7e9efa32dc74b01333bf285bb8bdae9070b74b6544b76113ba6dc8a5e1b0"
+    },
+    {
+      "label": "clock_advance",
+      "query": "unsat",
+      "file": "queries/0239.smt2",
+      "sha256": "434ca076b340da95546219c41005c90b2b71b51bb46284e41ff4a117290e8b06"
+    }
+  ],
+  "sample_query": "sat",
+  "sample_witness": {
+    "initial": {
+      "iss": 4294967293,
+      "irs": 0,
+      "snd_una": 1000,
+      "snd_nxt": 1000,
+      "rcv_nxt": 0,
+      "tx_seq": 1000,
+      "tx_ack": 0,
+      "tx_flags": "S",
+      "rto_ms": 1000,
+      "retries": 0,
+      "active_open": true,
+      "user_timeout_ms": 30000,
+      "msl_ms": 60000,
+      "local_window": 16,
+      "snd_buf": [],
+      "rtx_buf": [],
+      "rcv_buf": [],
+      "snd_wnd": 8,
+      "snd_wl1": 0,
+      "snd_wl2": 0,
+      "take": 0,
+      "rx_chunk": [],
+      "rx_slot_00": [],
+      "rx_slot_01": [],
+      "rx_slot_02": [],
+      "rx_slot_03": [],
+      "rx_slot_04": [],
+      "rx_slot_05": [],
+      "rx_slot_06": [],
+      "rx_slot_07": [],
+      "rx_slot_08": [],
+      "rx_slot_09": [],
+      "rx_slot_10": [],
+      "rx_slot_11": [],
+      "rx_slot_12": [],
+      "rx_slot_13": [],
+      "rx_slot_14": [],
+      "rx_slot_15": [],
+      "rx_advance": 0,
+      "rx_acceptable": false,
+      "seg_acceptable": false,
+      "ack_delta": 0,
+      "ack_is_new": false,
+      "ack_is_future": false,
+      "ack_advance": false,
+      "ack_window_update": false,
+      "fin_requested": false,
+      "fin_sent": false,
+      "fin_seq": 0,
+      "fin_acknowledged": false,
+      "rx_fin_pending": false,
+      "rx_fin_seq": 0,
+      "rx_fin_offset": 0,
+      "rx_fin_done": false,
+      "rx_fin_consumed": false,
+      "srtt_ms": {
+        "n": 0,
+        "d": 1
+      },
+      "rttvar_ms": {
+        "n": 0,
+        "d": 1
+      },
+      "rtt_error_ms": {
+        "n": 0,
+        "d": 1
+      },
+      "rtt_previous_srtt": {
+        "n": 0,
+        "d": 1
+      },
+      "rtt_previous_var": {
+        "n": 0,
+        "d": 1
+      },
+      "rtt_measured": false,
+      "rtt_previous_measured": false,
+      "rtt_active": false,
+      "rtt_ambiguous": false,
+      "rtt_sample_at_ms": 0,
+      "rtt_start_ms": 0,
+      "rtt_end": 0,
+      "rtt_remaining": 0,
+      "rtt_start_new": false,
+      "rtt_sample_used": false,
+      "rtt_sample_was_ambiguous": false,
+      "rtt_last_ms": 0,
+      "rtt_samples": 0,
+      "rto_base_ms": 1000,
+      "tx_time_00": 0,
+      "tx_time_01": 0,
+      "tx_time_02": 0,
+      "tx_time_03": 0,
+      "tx_time_04": 0,
+      "tx_time_05": 0,
+      "tx_time_06": 0,
+      "tx_time_07": 0,
+      "tx_time_08": 0,
+      "tx_time_09": 0,
+      "tx_time_10": 0,
+      "tx_time_11": 0,
+      "tx_time_12": 0,
+      "tx_time_13": 0,
+      "tx_time_14": 0,
+      "tx_time_15": 0,
+      "tx_fin_time": 0,
+      "tx_emit_count": 0,
+      "tx_eligible": 0,
+      "tx_max_previous": 0,
+      "tx_retransmitted": false,
+      "tx_elapsed": 0,
+      "tx_previous_rto": 1000,
+      "tx_is_fin": false,
+      "tx_waiting": false,
+      "tx_syn_time": 0,
+      "tx_syn_pending": false,
+      "syn_timeout_eligible": false,
+      "ack_pending": false,
+      "ack_since_ms": 0,
+      "ack_bytes": 0,
+      "ack_full_segments": 0,
+      "ack_delay_ms": 40,
+      "ack_rmss": 4,
+      "ack_defer_candidate": false,
+      "ack_defer_now": false,
+      "persist_active": false,
+      "persist_eligible": false,
+      "persist_start": false,
+      "persist_was_active": false,
+      "persist_first": false,
+      "persist_probe_sent": false,
+      "persist_probe_new": false,
+      "persist_interval_ms": 1000,
+      "persist_previous_interval_ms": 1000,
+      "persist_since_ms": 0,
+      "persist_last_ms": 0,
+      "persist_deadline_ms": 0,
+      "persist_probes": 0,
+      "persist_elapsed_ms": 0,
+      "cc_initial_window": 4,
+      "cc_initial_threshold": 16,
+      "cc_cwnd": 4,
+      "cc_ssthresh": 16,
+      "cc_ca_credit": 0,
+      "cc_acked": 0,
+      "cc_before_flight": 0,
+      "cc_before_una": 1000,
+      "cc_before_persist": false,
+      "cc_before_window": 8,
+      "cc_loss": false,
+      "cc_threshold_changed": false,
+      "cc_threshold_updates": 0,
+      "cc_growth": 0,
+      "cc_before_cwnd": 4,
+      "cc_send_budget": 4,
+      "cc_new_sent": 0,
+      "cc_rto_00": false,
+      "cc_rto_01": false,
+      "cc_rto_02": false,
+      "cc_rto_03": false,
+      "cc_rto_04": false,
+      "cc_rto_05": false,
+      "cc_rto_06": false,
+      "cc_rto_07": false,
+      "cc_rto_08": false,
+      "cc_rto_09": false,
+      "cc_rto_10": false,
+      "cc_rto_11": false,
+      "cc_rto_12": false,
+      "cc_rto_13": false,
+      "cc_rto_14": false,
+      "cc_rto_15": false,
+      "fr_window_ignored": false,
+      "fr_before_wire_window": 0,
+      "fr_before_window_valid": false,
+      "fr_active": false,
+      "fr_dupacks": 0,
+      "fr_window_valid": false,
+      "fr_last_window": 0,
+      "fr_was_active": false,
+      "fr_before_una": 1000,
+      "fr_before_nxt": 1000,
+      "fr_before_flight": 0,
+      "fr_before_rto": 1000,
+      "fr_before_retries": 0,
+      "fr_duplicate": false,
+      "fr_entered": false,
+      "fr_extra": false,
+      "fr_exited": false,
+      "fr_retransmitted": false,
+      "fr_emit_count": 0,
+      "fr_entries": 0,
+      "idle_data_valid": false,
+      "idle_last_data_ms": 0,
+      "idle_event_ms": 0,
+      "idle_data_emitted": false,
+      "idle_restart": false,
+      "idle_elapsed_ms": 0,
+      "idle_before_cwnd": 4,
+      "idle_before_rto": 1000,
+      "idle_before_threshold": 16,
+      "idle_restart_count": 0,
+      "lt_eligible": false,
+      "lt_emitted": false,
+      "lt_take": 0,
+      "lt_epoch_bytes": 0,
+      "lt_epoch_packets": 0,
+      "lt_before_bytes": 0,
+      "lt_before_cwnd": 4,
+      "lt_before_nxt": 1000,
+      "lt_before_flight": 0,
+      "lt_before_window": 8,
+      "lt_loss_flight": 0,
+      "choice_used": false,
+      "choice_count": 0,
+      "choice_limit": 0,
+      "choice_before_nxt": 1000,
+      "choice_before_flight": 0,
+      "sched_open": false,
+      "sched_at_ms": 0,
+      "sched_cause": 0,
+      "sched_bytes": 0,
+      "sched_packets": 0,
+      "svc_before_total": 0,
+      "svc_accept_step": 0,
+      "svc_ack_step": 0,
+      "svc_drop_step": 0,
+      "svc_written_bytes": 0,
+      "svc_acked_bytes": 0,
+      "svc_abandoned_bytes": 0,
+      "cb_head": 0,
+      "cb_tail": 0,
+      "cb_count": 0,
+      "cb_new_count": 0,
+      "cb_append_length": 0,
+      "cb_retired_count": 0,
+      "cb_step_bytes": 0,
+      "cb_live_total": 0,
+      "cb_partial_prefix": 0,
+      "cb_emitted_total": 0,
+      "cb_acked_total": 0,
+      "cb_abandoned_total": 0,
+      "cb_drop_step": 0,
+      "cb_before_nxt": 0,
+      "cb_append_end": 0,
+      "cb_is_new": false,
+      "cb_length_00": 0,
+      "cb_end_00": 0,
+      "cb_done_00": false,
+      "cb_length_01": 0,
+      "cb_end_01": 0,
+      "cb_done_01": false,
+      "cb_length_02": 0,
+      "cb_end_02": 0,
+      "cb_done_02": false,
+      "cb_length_03": 0,
+      "cb_end_03": 0,
+      "cb_done_03": false,
+      "cb_length_04": 0,
+      "cb_end_04": 0,
+      "cb_done_04": false,
+      "cb_length_05": 0,
+      "cb_end_05": 0,
+      "cb_done_05": false,
+      "cb_length_06": 0,
+      "cb_end_06": 0,
+      "cb_done_06": false,
+      "cb_length_07": 0,
+      "cb_end_07": 0,
+      "cb_done_07": false,
+      "cb_length_08": 0,
+      "cb_end_08": 0,
+      "cb_done_08": false,
+      "cb_length_09": 0,
+      "cb_end_09": 0,
+      "cb_done_09": false,
+      "cb_length_10": 0,
+      "cb_end_10": 0,
+      "cb_done_10": false,
+      "cb_length_11": 0,
+      "cb_end_11": 0,
+      "cb_done_11": false,
+      "cb_length_12": 0,
+      "cb_end_12": 0,
+      "cb_done_12": false,
+      "cb_length_13": 0,
+      "cb_end_13": 0,
+      "cb_done_13": false,
+      "cb_length_14": 0,
+      "cb_end_14": 0,
+      "cb_done_14": false,
+      "cb_length_15": 0,
+      "cb_end_15": 0,
+      "cb_done_15": false
+    },
+    "steps": [
+      {
+        "at_ms": 1,
+        "event": "app.listen",
+        "origin": "application",
+        "transition": "C-PASSIVE-OPEN",
+        "fields": {},
+        "after": {
+          "state": "LISTEN",
+          "variables": {
+            "iss": 4294967293,
+            "irs": 0,
+            "snd_una": 1000,
+            "snd_nxt": 1000,
+            "rcv_nxt": 0,
+            "tx_seq": 1000,
+            "tx_ack": 0,
+            "tx_flags": "S",
+            "rto_ms": 1000,
+            "retries": 0,
+            "active_open": false,
+            "user_timeout_ms": 30000,
+            "msl_ms": 60000,
+            "local_window": 16,
+            "snd_buf": [],
+            "rtx_buf": [],
+            "rcv_buf": [],
+            "snd_wnd": 8,
+            "snd_wl1": 0,
+            "snd_wl2": 0,
+            "take": 0,
+            "rx_chunk": [],
+            "rx_slot_00": [],
+            "rx_slot_01": [],
+            "rx_slot_02": [],
+            "rx_slot_03": [],
+            "rx_slot_04": [],
+            "rx_slot_05": [],
+            "rx_slot_06": [],
+            "rx_slot_07": [],
+            "rx_slot_08": [],
+            "rx_slot_09": [],
+            "rx_slot_10": [],
+            "rx_slot_11": [],
+            "rx_slot_12": [],
+            "rx_slot_13": [],
+            "rx_slot_14": [],
+            "rx_slot_15": [],
+            "rx_advance": 0,
+            "rx_acceptable": false,
+            "seg_acceptable": false,
+            "ack_delta": 0,
+            "ack_is_new": false,
+            "ack_is_future": false,
+            "ack_advance": false,
+            "ack_window_update": false,
+            "fin_requested": false,
+            "fin_sent": false,
+            "fin_seq": 0,
+            "fin_acknowledged": false,
+            "rx_fin_pending": false,
+            "rx_fin_seq": 0,
+            "rx_fin_offset": 0,
+            "rx_fin_done": false,
+            "rx_fin_consumed": false,
+            "srtt_ms": {
+              "n": 0,
+              "d": 1
+            },
+            "rttvar_ms": {
+              "n": 0,
+              "d": 1
+            },
+            "rtt_error_ms": {
+              "n": 0,
+              "d": 1
+            },
+            "rtt_previous_srtt": {
+              "n": 0,
+              "d": 1
+            },
+            "rtt_previous_var": {
+              "n": 0,
+              "d": 1
+            },
+            "rtt_measured": false,
+            "rtt_previous_measured": false,
+            "rtt_active": false,
+            "rtt_ambiguous": false,
+            "rtt_sample_at_ms": 0,
+            "rtt_start_ms": 0,
+            "rtt_end": 0,
+            "rtt_remaining": 0,
+            "rtt_start_new": false,
+            "rtt_sample_used": false,
+            "rtt_sample_was_ambiguous": false,
+            "rtt_last_ms": 0,
+            "rtt_samples": 0,
+            "rto_base_ms": 1000,
+            "tx_time_00": 0,
+            "tx_time_01": 0,
+            "tx_time_02": 0,
+            "tx_time_03": 0,
+            "tx_time_04": 0,
+            "tx_time_05": 0,
+            "tx_time_06": 0,
+            "tx_time_07": 0,
+            "tx_time_08": 0,
+            "tx_time_09": 0,
+            "tx_time_10": 0,
+            "tx_time_11": 0,
+            "tx_time_12": 0,
+            "tx_time_13": 0,
+            "tx_time_14": 0,
+            "tx_time_15": 0,
+            "tx_fin_time": 0,
+            "tx_emit_count": 0,
+            "tx_eligible": 0,
+            "tx_max_previous": 0,
+            "tx_retransmitted": false,
+            "tx_elapsed": 0,
+            "tx_previous_rto": 1000,
+            "tx_is_fin": false,
+            "tx_waiting": false,
+            "tx_syn_time": 0,
+            "tx_syn_pending": false,
+            "syn_timeout_eligible": false,
+            "ack_pending": false,
+            "ack_since_ms": 0,
+            "ack_bytes": 0,
+            "ack_full_segments": 0,
+            "ack_delay_ms": 40,
+            "ack_rmss": 4,
+            "ack_defer_candidate": false,
+            "ack_defer_now": false,
+            "persist_active": false,
+            "persist_eligible": false,
+            "persist_start": false,
+            "persist_was_active": false,
+            "persist_first": false,
+            "persist_probe_sent": false,
+            "persist_probe_new": false,
+            "persist_interval_ms": 1000,
+            "persist_previous_interval_ms": 1000,
+            "persist_since_ms": 0,
+            "persist_last_ms": 0,
+            "persist_deadline_ms": 0,
+            "persist_probes": 0,
+            "persist_elapsed_ms": 0,
+            "cc_initial_window": 4,
+            "cc_initial_threshold": 16,
+            "cc_cwnd": 4,
+            "cc_ssthresh": 16,
+            "cc_ca_credit": 0,
+            "cc_acked": 0,
+            "cc_before_flight": 0,
+            "cc_before_una": 1000,
+            "cc_before_persist": false,
+            "cc_before_window": 8,
+            "cc_loss": false,
+            "cc_threshold_changed": false,
+            "cc_threshold_updates": 0,
+            "cc_growth": 0,
+            "cc_before_cwnd": 4,
+            "cc_send_budget": 4,
+            "cc_new_sent": 0,
+            "cc_rto_00": false,
+            "cc_rto_01": false,
+            "cc_rto_02": false,
+            "cc_rto_03": false,
+            "cc_rto_04": false,
+            "cc_rto_05": false,
+            "cc_rto_06": false,
+            "cc_rto_07": false,
+            "cc_rto_08": false,
+            "cc_rto_09": false,
+            "cc_rto_10": false,
+            "cc_rto_11": false,
+            "cc_rto_12": false,
+            "cc_rto_13": false,
+            "cc_rto_14": false,
+            "cc_rto_15": false,
+            "fr_window_ignored": false,
+            "fr_before_wire_window": 0,
+            "fr_before_window_valid": false,
+            "fr_active": false,
+            "fr_dupacks": 0,
+            "fr_window_valid": false,
+            "fr_last_window": 0,
+            "fr_was_active": false,
+            "fr_before_una": 1000,
+            "fr_before_nxt": 1000,
+            "fr_before_flight": 0,
+            "fr_before_rto": 1000,
+            "fr_before_retries": 0,
+            "fr_duplicate": false,
+            "fr_entered": false,
+            "fr_extra": false,
+            "fr_exited": false,
+            "fr_retransmitted": false,
+            "fr_emit_count": 0,
+            "fr_entries": 0,
+            "idle_data_valid": false,
+            "idle_last_data_ms": 0,
+            "idle_event_ms": 1,
+            "idle_data_emitted": false,
+            "idle_restart": false,
+            "idle_elapsed_ms": 0,
+            "idle_before_cwnd": 4,
+            "idle_before_rto": 1000,
+            "idle_before_threshold": 16,
+            "idle_restart_count": 0,
+            "lt_eligible": false,
+            "lt_emitted": false,
+            "lt_take": 0,
+            "lt_epoch_bytes": 0,
+            "lt_epoch_packets": 0,
+            "lt_before_bytes": 0,
+            "lt_before_cwnd": 4,
+            "lt_before_nxt": 1000,
+            "lt_before_flight": 0,
+            "lt_before_window": 8,
+            "lt_loss_flight": 0,
+            "choice_used": false,
+            "choice_count": 0,
+            "choice_limit": 0,
+            "choice_before_nxt": 1000,
+            "choice_before_flight": 0,
+            "sched_open": false,
+            "sched_at_ms": 0,
+            "sched_cause": 0,
+            "sched_bytes": 0,
+            "sched_packets": 0,
+            "svc_before_total": 0,
+            "svc_accept_step": 0,
+            "svc_ack_step": 0,
+            "svc_drop_step": 0,
+            "svc_written_bytes": 0,
+            "svc_acked_bytes": 0,
+            "svc_abandoned_bytes": 0,
+            "cb_head": 0,
+            "cb_tail": 0,
+            "cb_count": 0,
+            "cb_new_count": 0,
+            "cb_append_length": 0,
+            "cb_retired_count": 0,
+            "cb_step_bytes": 0,
+            "cb_live_total": 0,
+            "cb_partial_prefix": 0,
+            "cb_emitted_total": 0,
+            "cb_acked_total": 0,
+            "cb_abandoned_total": 0,
+            "cb_drop_step": 0,
+            "cb_before_nxt": 1000,
+            "cb_append_end": 0,
+            "cb_is_new": false,
+            "cb_length_00": 0,
+            "cb_end_00": 0,
+            "cb_done_00": false,
+            "cb_length_01": 0,
+            "cb_end_01": 0,
+            "cb_done_01": false,
+            "cb_length_02": 0,
+            "cb_end_02": 0,
+            "cb_done_02": false,
+            "cb_length_03": 0,
+            "cb_end_03": 0,
+            "cb_done_03": false,
+            "cb_length_04": 0,
+            "cb_end_04": 0,
+            "cb_done_04": false,
+            "cb_length_05": 0,
+            "cb_end_05": 0,
+            "cb_done_05": false,
+            "cb_length_06": 0,
+            "cb_end_06": 0,
+            "cb_done_06": false,
+            "cb_length_07": 0,
+            "cb_end_07": 0,
+            "cb_done_07": false,
+            "cb_length_08": 0,
+            "cb_end_08": 0,
+            "cb_done_08": false,
+            "cb_length_09": 0,
+            "cb_end_09": 0,
+            "cb_done_09": false,
+            "cb_length_10": 0,
+            "cb_end_10": 0,
+            "cb_done_10": false,
+            "cb_length_11": 0,
+            "cb_end_11": 0,
+            "cb_done_11": false,
+            "cb_length_12": 0,
+            "cb_end_12": 0,
+            "cb_done_12": false,
+            "cb_length_13": 0,
+            "cb_end_13": 0,
+            "cb_done_13": false,
+            "cb_length_14": 0,
+            "cb_end_14": 0,
+            "cb_done_14": false,
+            "cb_length_15": 0,
+            "cb_end_15": 0,
+            "cb_done_15": false
+          },
+          "timers": {}
+        },
+        "emitted": []
+      }
+    ]
+  },
+  "sample_replay": {
+    "status": "match",
+    "compared_steps": 1
+  },
+  "sample_sha256": "18f889c1b98360653246bba8dbe61a34d4eea87fdc41e8cf72ddeceb560bff4a"
+}

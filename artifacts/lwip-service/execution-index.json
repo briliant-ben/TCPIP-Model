@@ -1,0 +1,250 @@
+{
+  "status": "independent_service_executions_complete",
+  "scenarios": [
+    {
+      "id": "cumulative-mixed-segments",
+      "overall": "match",
+      "wire": "match",
+      "service": "match",
+      "expected_callbacks": [
+        {
+          "time_ms": 40,
+          "bytes": 4
+        },
+        {
+          "time_ms": 70,
+          "bytes": 4
+        },
+        {
+          "time_ms": 80,
+          "bytes": 4
+        },
+        {
+          "time_ms": 120,
+          "bytes": 4
+        }
+      ],
+      "actual_callbacks": [
+        {
+          "time_ms": 40,
+          "bytes": 4
+        },
+        {
+          "time_ms": 70,
+          "bytes": 4
+        },
+        {
+          "time_ms": 80,
+          "bytes": 4
+        },
+        {
+          "time_ms": 120,
+          "bytes": 4
+        }
+      ],
+      "report_sha256": "76b85eb83bcde768a024b66960ee00ff0a59ff9ed111e96a07acc28a98cafb3a",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/scenarios/cumulative-mixed-segments.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/cumulative-mixed-segments"
+      ],
+      "returncode": 0
+    },
+    {
+      "id": "duplicate-future-no-credit",
+      "overall": "mismatch",
+      "wire": "mismatch",
+      "service": "mismatch",
+      "expected_callbacks": [
+        {
+          "time_ms": 50,
+          "bytes": 4
+        }
+      ],
+      "actual_callbacks": [
+        {
+          "time_ms": 40,
+          "bytes": 2
+        },
+        {
+          "time_ms": 50,
+          "bytes": 2
+        }
+      ],
+      "report_sha256": "6abddaa293fe20412ac93c98c534eb93838d26d62c3f27bc15ab2896644054cd",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/scenarios/duplicate-future-no-credit.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/duplicate-future-no-credit"
+      ],
+      "returncode": 1
+    },
+    {
+      "id": "partial-only-no-callback",
+      "overall": "mismatch",
+      "wire": "mismatch",
+      "service": "mismatch",
+      "expected_callbacks": [],
+      "actual_callbacks": [
+        {
+          "time_ms": 30,
+          "bytes": 2
+        }
+      ],
+      "report_sha256": "39143d6a7b79fae7361b11a9c57c96334e0037592b8b69c96015047c0d4bf09d",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/scenarios/partial-only-no-callback.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/partial-only-no-callback"
+      ],
+      "returncode": 1
+    },
+    {
+      "id": "partial-rto-credit",
+      "overall": "mismatch",
+      "wire": "mismatch",
+      "service": "match",
+      "expected_callbacks": [
+        {
+          "time_ms": 5100,
+          "bytes": 4
+        }
+      ],
+      "actual_callbacks": [
+        {
+          "time_ms": 5100,
+          "bytes": 4
+        }
+      ],
+      "report_sha256": "e0987427b9d1dfcfaf3de535c731506da6fd51a738e966795e1c22566a460b69",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/scenarios/partial-rto-credit.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/partial-rto-credit"
+      ],
+      "returncode": 1
+    },
+    {
+      "id": "partial-then-full",
+      "overall": "mismatch",
+      "wire": "mismatch",
+      "service": "mismatch",
+      "expected_callbacks": [
+        {
+          "time_ms": 40,
+          "bytes": 4
+        }
+      ],
+      "actual_callbacks": [
+        {
+          "time_ms": 30,
+          "bytes": 2
+        },
+        {
+          "time_ms": 40,
+          "bytes": 2
+        }
+      ],
+      "report_sha256": "47aa51da088f42dbb5c0d46b6b8584078cf4630185561b1612aa307d0b089ee7",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/scenarios/partial-then-full.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/partial-then-full"
+      ],
+      "returncode": 1
+    },
+    {
+      "id": "two-by-two-pending",
+      "overall": "match",
+      "wire": "match",
+      "service": "match",
+      "expected_callbacks": [
+        {
+          "time_ms": 30,
+          "bytes": 4
+        }
+      ],
+      "actual_callbacks": [
+        {
+          "time_ms": 30,
+          "bytes": 4
+        }
+      ],
+      "report_sha256": "7e362b2111d044ee373a6191f648bf38db53ac713c1b9e07f62be951efd0fc93",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/scenarios/two-by-two-pending.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/two-by-two-pending"
+      ],
+      "returncode": 0
+    },
+    {
+      "id": "wide-window-partial-no-callback",
+      "overall": "match",
+      "wire": "match",
+      "service": "match",
+      "expected_callbacks": [],
+      "actual_callbacks": [],
+      "report_sha256": "aa21b3419297db497c6998a3d1585944b214193608c87cb7a4c58dbda2ffc198",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/scenarios/wide-window-partial-no-callback.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/wide-window-partial-no-callback"
+      ],
+      "returncode": 0
+    },
+    {
+      "id": "wide-window-partial-then-full",
+      "overall": "match",
+      "wire": "match",
+      "service": "match",
+      "expected_callbacks": [
+        {
+          "time_ms": 40,
+          "bytes": 4
+        }
+      ],
+      "actual_callbacks": [
+        {
+          "time_ms": 40,
+          "bytes": 4
+        }
+      ],
+      "report_sha256": "8dedfd09371cea38946ba777300a36b49f83eb7f198d31d04b7b8e5423b517c2",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/scenarios/wide-window-partial-then-full.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/wide-window-partial-then-full"
+      ],
+      "returncode": 0
+    }
+  ],
+  "producer": "standalone_service_tests_persistent",
+  "producer_sha256": "d3411e807d0c078dd93694e2e791a2866480a6028aa426700d2fc3449bfa26e4",
+  "linux_execution": false,
+  "universal_refinement": false
+}

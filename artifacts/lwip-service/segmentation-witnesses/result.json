@@ -1,0 +1,151 @@
+{
+  "status": "two_full_wire_service_witnesses_one_retained_LT_wire_difference",
+  "scenarios": [
+    {
+      "id": "duplicate-future-no-credit",
+      "wire": "mismatch",
+      "service": "match",
+      "canonical": {
+        "status": "match",
+        "differences": []
+      },
+      "classification": "retained_automatic_LT_vs_pending_short_segment_difference",
+      "original_comparison": "mismatch_preserved",
+      "original_difference_sha256": "0a01e276cb4dc3ab2a70040050e79b1ffa3faba8a76d148e97bc5e6e65147d91",
+      "original_service_difference_sha256": "c7eea5e86d6ad227c5a6cc17c1d5d958c4b500cdada3583bcd2853274a8d913a",
+      "original_report_sha256": "6abddaa293fe20412ac93c98c534eb93838d26d62c3f27bc15ab2896644054cd",
+      "raw_capture_sha256": "6cbfba2d154070730644f9cec9e82165f6a736a4f61e68a177b10131bd4e0517",
+      "source_sha256": "b7f480b428f959f262a3d06de66516aa02e8537b8db9cf718b364716e6d8950d",
+      "witness_sha256": "c541051c00bd5a2830fe811808af291b28b4e02413bc6b8e3cbcb46a544217f1",
+      "independent_export": "sat",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/tcp-sent-ledger-development/trace_worker.py",
+        "--model",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-sent-ledger.json",
+        "--trace",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/segmentation-witnesses/duplicate-future-no-credit/trace.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/segmentation-witnesses/duplicate-future-no-credit/symbolic",
+        "--model-hash",
+        "f44d0c74397487e17a5c5e0358105fff4ca7a27dc5cf239130ce1c54056cf0dd"
+      ]
+    },
+    {
+      "id": "partial-only-no-callback",
+      "wire": "match",
+      "service": "match",
+      "canonical": {
+        "status": "mismatch",
+        "differences": [
+          {
+            "field": "cb_acked_total",
+            "expected": 0,
+            "actual": 2
+          },
+          {
+            "field": "cb_partial_prefix",
+            "expected": 2,
+            "actual": 0
+          }
+        ]
+      },
+      "classification": "finite_full_wire_service_witness",
+      "original_comparison": "mismatch_preserved",
+      "original_difference_sha256": "da45531ab60a40cea911e010f07784939d8ab4b5ea83596197e0874750edc7d8",
+      "original_service_difference_sha256": "44e798ff526a6f6e3525c2fa83134bc708a3837468a8416cd220c26bb1d9b71d",
+      "original_report_sha256": "39143d6a7b79fae7361b11a9c57c96334e0037592b8b69c96015047c0d4bf09d",
+      "raw_capture_sha256": "7a3754838e3671d24417ebef6cc2f8a84006757ba502592147e156bb62948532",
+      "source_sha256": "1fd3fd2787ddf464a42a8b445f7d335362edd21ca7bc47ae61cda068acc8aae6",
+      "witness_sha256": "0196f8610b269adb16d4e0c6dd9e45aa477b0f2113672640f18156e5ae99094c",
+      "independent_export": "sat",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/tcp-sent-ledger-development/trace_worker.py",
+        "--model",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-sent-ledger.json",
+        "--trace",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/segmentation-witnesses/partial-only-no-callback/trace.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/segmentation-witnesses/partial-only-no-callback/symbolic",
+        "--model-hash",
+        "f44d0c74397487e17a5c5e0358105fff4ca7a27dc5cf239130ce1c54056cf0dd"
+      ]
+    },
+    {
+      "id": "partial-then-full",
+      "wire": "match",
+      "service": "match",
+      "canonical": {
+        "status": "match",
+        "differences": []
+      },
+      "classification": "finite_full_wire_service_witness",
+      "original_comparison": "mismatch_preserved",
+      "original_difference_sha256": "10d845f6371bd93b7f8797a1f9d344792d5731e1a1cdd47a9b3040298322d425",
+      "original_service_difference_sha256": "4fdd3c97dee6f9b7e8048ca533238ad526e3429df532a317d0a07fc92ea61934",
+      "original_report_sha256": "47aa51da088f42dbb5c0d46b6b8584078cf4630185561b1612aa307d0b089ee7",
+      "raw_capture_sha256": "e4d2f36a1f8a074c0565d511d79a7b4e2f681d59e126f573c888fa8bfb736036",
+      "source_sha256": "4d8a507f971a3cd53c8d0a8aba4bf259ea7e9657178bf74751b79d5859357513",
+      "witness_sha256": "e50a52d36352f7497995c0abfbe785cc5d168daa8406402f74ea76c26b8ec106",
+      "independent_export": "sat",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/tcp-sent-ledger-development/trace_worker.py",
+        "--model",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp-sent-ledger.json",
+        "--trace",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/segmentation-witnesses/partial-then-full/trace.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/segmentation-witnesses/partial-then-full/symbolic",
+        "--model-hash",
+        "f44d0c74397487e17a5c5e0358105fff4ca7a27dc5cf239130ce1c54056cf0dd"
+      ]
+    }
+  ],
+  "model_semantic_sha256": "f44d0c74397487e17a5c5e0358105fff4ca7a27dc5cf239130ce1c54056cf0dd",
+  "original_verification_sha256": "5bccd2d37ee7f3e412f78c45eb2193851f476ea72159b795dc0fa455bfcd74f3",
+  "new_implementation_execution": false,
+  "linux_execution": false,
+  "universal_refinement": false,
+  "scope": "same original source inputs, declared2+2 scheduling candidates; preserve original canonical and single4 failures",
+  "file_hashes": {
+    "check.py": "6853350e2ece15aa8be16d09d9533980732f914014102170b1f41e1001ef99d6",
+    "candidates/duplicate-future-no-credit.json": "c541051c00bd5a2830fe811808af291b28b4e02413bc6b8e3cbcb46a544217f1",
+    "duplicate-future-no-credit/trace.json": "eecc83a5229fdf0744bd113fcb2fe2ea0f513b3635a8c36cbd7cfd4544e77102",
+    "duplicate-future-no-credit/audit.json": "d06c422fec69067c89b3d31897cbf3bd4b3b5e13cda4e7b12034159e622f1096",
+    "duplicate-future-no-credit/expected.json": "54a40c230e5015e1727d94a5ed4df8f926b9fb753128bb6664563c712cbb3281",
+    "duplicate-future-no-credit/worker.log": "40d3f08df962ecc666f7df69a9b3aaab9a615a9b52807f958c0f734d2e7f33f9",
+    "duplicate-future-no-credit/metadata.json": "bff1df11bfaa2382a8e032a370f0d82cf0f47a5d989c279170d4bdda39a6ede7",
+    "duplicate-future-no-credit/difference.json": "b26866f71766ffcd2e99bdfaab508f79de676df646444acbe43e57c4040e0e7b",
+    "duplicate-future-no-credit/canonical.json": "1093ac2045ebc9f068dd0e5f4f7922f8710c1b80d401404ae995f9b6d2eb56ec",
+    "duplicate-future-no-credit/callbacks.json": "989c9c9d041e3a4f9c7522296047eb48716566f6ced91ce012dd48094e0b274b",
+    "duplicate-future-no-credit/observed.json": "5a64893746d174d6cccccde75791c9259a606f7476042b292305640eaa5cfce9",
+    "duplicate-future-no-credit/symbolic/result.json": "0a99a6981ef995ee91fe5ed4dd76123eb3276a432e3f34892d2839073629cbfb",
+    "duplicate-future-no-credit/symbolic/path.smt2": "dd1b707dd48c50ae659858a513c77b85406ca51fa7cd21166fbe1f35c8427f16",
+    "candidates/partial-only-no-callback.json": "0196f8610b269adb16d4e0c6dd9e45aa477b0f2113672640f18156e5ae99094c",
+    "partial-only-no-callback/trace.json": "47050bfa1966811c2a85557f04c208091ec64b72e026b578b8b880740629552c",
+    "partial-only-no-callback/audit.json": "8fc8e4c543a22fa9434ac8ae505291dabf3f5365b8e13a2eb5c07f2b5ae5a5e8",
+    "partial-only-no-callback/expected.json": "69671b48b30ebbf93bc784919cbec9cef10c2e26cd705d181e5de7d21459d31b",
+    "partial-only-no-callback/worker.log": "40d3f08df962ecc666f7df69a9b3aaab9a615a9b52807f958c0f734d2e7f33f9",
+    "partial-only-no-callback/metadata.json": "64ab95817f085a51da74bcb21069acf5dd2c2e2268cb783131d8a4a420c8b7ae",
+    "partial-only-no-callback/difference.json": "bedcf706f68a52570557d1ed6b17db540fd11e33d90b6aca6356d283ac7413d1",
+    "partial-only-no-callback/canonical.json": "ee77b688c07240121f8026413dfc044df869bf8b84810d22a395f7486e415618",
+    "partial-only-no-callback/callbacks.json": "b15280eb36fa24b6f08a3027bc57ede7b00ff4da510edefd598311edd6f51d2b",
+    "partial-only-no-callback/observed.json": "3cfc87523d0ae25a26f128305a8089bd6c64a0b761281efff085404781815d5e",
+    "partial-only-no-callback/symbolic/result.json": "393a4df3f2cdd8d7d354e71021dc7e93b30a7c7fd482e6c5ad7d7e57c0f826ee",
+    "partial-only-no-callback/symbolic/path.smt2": "784d6181c90e46f26158faaf518590a2f6beb98da9716ed88f6730849e7611b9",
+    "candidates/partial-then-full.json": "e50a52d36352f7497995c0abfbe785cc5d168daa8406402f74ea76c26b8ec106",
+    "partial-then-full/trace.json": "7703dbf07a4a000336fdd1554fec9be52d885d91173d7917e4eb7ce51ecca41d",
+    "partial-then-full/audit.json": "565286b24250a51a6e7a6923a6f4204dab398d341e4764013957a1e4d88197d1",
+    "partial-then-full/expected.json": "ae0f7d8679e2c12c766e4a18414020a3a35365b2ba5ac54ee9b1cd7c08ad9380",
+    "partial-then-full/worker.log": "40d3f08df962ecc666f7df69a9b3aaab9a615a9b52807f958c0f734d2e7f33f9",
+    "partial-then-full/metadata.json": "80d2568176e21fec52e66fdf2d8d7d7daefc0f7badb0eb7f5766e21b2c9fefb0",
+    "partial-then-full/difference.json": "bedcf706f68a52570557d1ed6b17db540fd11e33d90b6aca6356d283ac7413d1",
+    "partial-then-full/canonical.json": "1093ac2045ebc9f068dd0e5f4f7922f8710c1b80d401404ae995f9b6d2eb56ec",
+    "partial-then-full/callbacks.json": "348f2d68ff8e3ada64687098f54f55ad98adf370232eca8290ebcb283aafc82f",
+    "partial-then-full/observed.json": "fdceabc6affeb0c0d5b8b054ca1c940a8990e49fa5be830ca1cf5eaef13067b7",
+    "partial-then-full/symbolic/result.json": "29d03ea6aa15791d03c1cb1880d48f664d3c86969932e8428d295d19fc290676",
+    "partial-then-full/symbolic/path.smt2": "4507bdc0f9e39c06ce676bc9d0acf8de225c683330aa5c7f8c3a0cd6c2b69827"
+  }
+}

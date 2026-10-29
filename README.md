@@ -19,6 +19,7 @@ GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP
 | `model/tcp-fin.json` | 显式 FIN 窗口／payload、乱序 EOF 标记与字节重组、单次 FIN 消费及条件关闭目标；完整恢复与独立实现闭环仍未完成 |
 | `model/tcp-rto.json` | IR 0.3 精确有理 RTT/RTO、Karn 歧义采样、部分 ACK 与 SYN/FIN 组合；一般发送历史时序、delayed ACK、persist、拥塞／恢复仍未完成 |
 | `model/tcp-tx-history.json` | 逐字节／FIN 发送历史、ACK 时间槽移动与时龄裁剪，修正数据超时过早重传；原归纳 unknown 保留，独立精确查询分组、非空重放与单独命题已接入 suite 统一验收；完整恢复仍待推进 |
+| `model/tcp-sent-ledger.json` | 继承输出调度／恢复链，201 条规则、220 个不变量；显式原始发送段与部分 ACK 回调记账。有限行为及独立 lwIP 观察已验收，整体归纳仍 unknown，尚未完成 TCP |
 
 2026-10-24：已恢复本地基线并推进 [IR 数据语义](docs/semantics.md) 和 [有限 TCP 数据切片](docs/tcp-data.md)。数据切片的 15 个场景具有参考轨迹和独立 Z3 固定输入重放；全输入混合查询可能为 `unknown`，suite 明确保留 `formal_pending`。这不影响旧模型的独立有界检查，也不将合成 PCAP 计为 Linux/lwIP 数据验证。持续实施记录见 [实施日志](docs/implementation-log.md)。
 
@@ -210,3 +211,5 @@ docs/                  语义、外部测试约定、里程碑
 [显式分段选择开发切片](docs/tcp-segment-choice.md)在IR中声明正长度prefix选择与既有预算／序列／计时动作，保留原确定app.transmit。8方法（含22组父模型刺激投影比较）、3全字节契约及1342组补充／独立复查通过，主unknown保留。旧lwIP窗口4实验截至21ms的2+2字节前缀有严格见证，但旧确定前缀／完整Difference仍mismatch；不等于完整捕获或应用调用对应验收。
 
 [发送机会与服务观察开发切片](docs/tcp-output-schedule.md)将flush／有效ACK后的发送机会及字节服务记账显式放入IR，通用适配器按顺序各一次消费原输入。既有lwIP窗口4实验全部7输入／9包及写入8、确认4的公共回调有严格见证，原canonical终态和完整Difference仍明确mismatch；不存在重写输入或提升为一般实现精化。父模型的idle重启只在实际choice执行，重复前缀原型及失败日志独立归档。主BMC／归纳unknown保持，补充分组与固定轨迹验证的范围分别标明。370项旧冻结回归已完整通过，新增方法及后续390项组合回归另行记录。
+
+2026-10-30：[发送确认账本](docs/tcp-sent-ledger.md)使用显式 IR 环形段记录区分 TCP 字节确认与公共 sent 回调。9 个固定输入字节场景、11 项模型专项、4 项条件组件检查测试、4 项 AC 检查测试及10项独立端口测试通过。8 个真实 lwIP 场景中原始严格比较为4个线端匹配／4个差异、5个服务匹配／3个差异；额外调度见证有2个完整线端与服务匹配，1个自动 LT 线端差异保留。240 个独立复查查询仅证明预算性质在声明父不变量假设下的保持性；整体归纳仍 unknown。Rocq 新增5个抽象算术命题待 CI 检查，非 IR／TCP 对应证明。证据入口为 `artifacts/tcp-sent-ledger-development/acceptance.json`。最近已完成的标准全量回归仍为390项；新增后的409项需另行冻结执行，不能由专项通过推算。

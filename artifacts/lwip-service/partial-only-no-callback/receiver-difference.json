@@ -1,0 +1,21 @@
+{
+  "status": "mismatch",
+  "receiver": {
+    "status": "match",
+    "scope": "new contiguous unread IR bytes versus raw recv callback bytes and EOF; callback chunk boundaries ignored, byte order and time preserved",
+    "expected": [],
+    "observed": []
+  },
+  "sent": {
+    "status": "mismatch",
+    "expected": [],
+    "observed": [
+      {
+        "time_ms": 30,
+        "bytes": 2
+      }
+    ],
+    "scope": "exact callback boundaries, byte credit, order and time; no tolerance"
+  },
+  "scope": "separate unread receive and declared sent-credit service projections"
+}

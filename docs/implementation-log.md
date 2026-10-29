@@ -390,3 +390,15 @@ ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件
 验收见artifacts/tcp-output-schedule-development/acceptance.json和artifacts/output-schedule-alignment/result.json。RFC9293 August2022 §§3.7、3.9.1.2、3.10.7.4版本／原文SHA锁定。258项旧注册输入逐一SHA未变，上游lwIP／2750ms差异保留。已完成370项全量回归不含此12方法及此前segment-choice8方法；当前标准发现390方法，下一组合回归按本里程碑提交冻结，未完成前不计通过。继续一般内容／事件／计时对应及完整后续协议目标。
 
 2026-10-29：a7866f0b冻结提交的390项完整发现回归一次4257.189秒全部通过（runner4257.370秒），无失败／错误／跳过，1155项依赖及环境未变。证据归档artifacts/full-regression-a7866f0b，历史running条目不再代表当前状态；新sent-ledger及独立端口方法另行验收，不提升主unknown或完整TCP／Linux声明。
+
+## 2026-10-30：显式发送段账本、部分 ACK 服务观察与条件组件检查
+
+新增tcp-sent-ledger及生成器，继承当前输出调度／恢复链，201规则／220不变量。16槽环形原始发送段记录、序列末端、部分头段前缀、callback／abandoned lifetime计数均为JSON IR；重传不增加原始发送信用，ACK只释放完整原始段，异常清理明确计入放弃量。与父规则逐项比较guards／目标及去掉cb赋值后的actions，无任意Python协议回调／新语义算子。RFC9293 August2022条款及上游lwIP2.2.1源码锁固定；whole-original-segment公共回调是有限实现服务投影，不冒称RFC统一socket语义。
+
+新增11项模型方法一次356.789s通过，覆盖部分／重复／未来ACK、重传、环形槽复用、回绕、重连和负例。具体可达测试发现16在途字节并不限制一次原始段信用至16：部分头段3字节加16未确认字节可释放19。保留旧源码／失败／隔离重放。任意前态归纳又发现11个缺少emitted+pending<=written约束的SAT状态；未证明这些前态可达，不宣称TCP实现bug。只增预算不变量，保持原guards／actions，当前主归纳无SAT但42规则的62目标unknown；depth6 safety／overlap也unknown，原报告不改。
+
+9个固定输入完成参考、全字节SMT、新进程SAT、synthetic-only codec与SHA验收。独立ports/lwip-service仅增加公共tcp_sent时间／字节记录，无PCB读取／上游改动；10方法一次655.913s通过，8真实C捕获及独立CLI／导出查询验收完成。原始严格线端4匹配4差异，服务5匹配3差异。3个替代调度仍消费原刺激一次且有完整字节见证，其中2个完整包与回调匹配；duplicate-future保留自动LT在30ms发出而实际40ms才发的线端差异。所有原Difference与canonical失败保留；替代见证不是新C执行或一般实现精化。wide-window真实4字节段的部分ACK不回调，与window4实际2+2分段的回调区别得到观测。既有2750ms／partial-RTO差异原样保留，不判RFC错误。
+
+新增独立条件组件检查器，只以200个未变父不变量和预算性质自身为前态假设，对初值／201规则各目标／clock等240查询生成与独立复查全部unsat，并有非空全字节SAT重放。498次断言对应检查包含独立AC证书／无条件原语定律与无其他premise的逐clause等价；错误命题重哈希／漏覆盖／父basis变化／重复数丢失等负例被拒绝。组件4方法及AC4方法分别通过。此结论不证明父basis在子模型闭包、其余child不变量、通用字节／解释器／翻译器或实现对应；可信Python/Z3组件明确列出。历史共享上下文超时与序列化／等价失败档案保留，未放宽10s预算或哈希／oracle。
+
+新增Rocq5个抽象整数命题与独立编译／假设审计／kernel重查及故障门槛，使用固定9.2.0镜像。macOS本地无Docker，当前not_run，等待提交后CI；模型哈希只作上下文绑定，未建立IR精化桥。阶段验收位于artifacts/tcp-sent-ledger-development/acceptance.json。已完成390项回归不包含本轮新增19方法；409项完整发现回归应在本轮冻结提交另跑。一般Nagle／短段与LT组合、完整发送／服务／时间关系、Linux实机及全部后续协议仍待推进，完整目标未完成。

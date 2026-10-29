@@ -1,0 +1,39 @@
+{
+  "status": "not_run",
+  "kernel_checked_proof": false,
+  "theorems": [
+    "checked_callback_credit_bound",
+    "checked_callback_credit_sharp",
+    "checked_original_record_mass",
+    "checked_deferred_ack_credit",
+    "checked_unsent_budget_transfer"
+  ],
+  "scope": "five abstract integer sent-credit lemmas only",
+  "axiom_allowlist": [],
+  "commands": [],
+  "image": "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025",
+  "input_hashes": {
+    "formal/rocq-ledger/Ledger.v": "ea0ba536cbe76540d3b12f48c89780ca9bfe98a434efbbbbd51c5c1db8a7111c",
+    "formal/rocq-ledger/Check.v": "bfc7175f1be9d9dacd2528acbd87656d5c48474ffdd1adf97ae0a4d5f690b045",
+    "formal/rocq-ledger/check.py": "c1c0a9b10c873445901b6ddb11e204930115d198ffa2d8bb20efdef5469756d7",
+    "formal/rocq-ledger/README.md": "8f30a8182d9cd6a657b328b91b9f14ec257b79ee7f64b0266c21ae0993f91e3b",
+    "formal/rocq/check.py": "69d4724e0479c94190f8124b0dd63def0a5324d53d4b26dd23bf1b1ad11d101f",
+    "model/tcp-sent-ledger.json": "1a2e3f26de06e73c0735b7d55c44face19344c8365a11ccc51a0c281a3ca89ca",
+    "spec/sources/tcp-sent-ledger.json": "e6b59733654894a8bd71339c357367bd54131ec4f693039db28ba8040de2b64b",
+    "docs/tcp-sent-ledger.md": "6bd8807d1685221a02674ac0848dabac9c86c38b203e41426662c6f959bf9771"
+  },
+  "trusted_components": [
+    "Rocq kernel and standard library",
+    "pinned toolchain provenance",
+    "statement review",
+    "orchestration and assumption-output audit"
+  ],
+  "does_not_prove": [
+    "JSON actions satisfy the abstract equations",
+    "IR interpreter/translator correspondence",
+    "TCP or lwIP behavior",
+    "implementation refinement",
+    "Linux TCP execution"
+  ],
+  "reason": "docker executable unavailable"
+}

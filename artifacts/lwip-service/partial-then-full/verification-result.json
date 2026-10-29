@@ -1,0 +1,26 @@
+{
+  "result": {
+    "status": "valid_independent_lwip_stream_evidence",
+    "comparison": "mismatch",
+    "query_equivalence": {
+      "status": "unsat",
+      "reason": null,
+      "encoding": "exact_shared_conjunct_factoring",
+      "checker_version": "4.15.4",
+      "common_assertions": 324,
+      "left_unique": 0,
+      "right_unique": 0
+    },
+    "linux_execution": false,
+    "full_stack_validated": false
+  },
+  "command": [
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py",
+    "--verify",
+    "--scenario",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/scenarios/partial-then-full.json",
+    "--out",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-service/partial-then-full"
+  ]
+}
