@@ -206,3 +206,5 @@ docs/                  语义、外部测试约定、里程碑
 [Limited Transmit开发切片](docs/tcp-limited-transmit.md)显式组合前两个重复ACK自动新发、cwnd不增长及第三dup排除LT字节的损失基数。13方法、4固定字节／输出时序场景及2085组补充／独立验收通过，主unknown保留。[独立lwIP观测](ports/lwip-limited-transmit/README.md)3输入验收完成，2匹配、1保留初始拥塞策略导致的突发时刻差异；不证明内部LT状态一致。原归纳前提缺口SAT和端口测试错误预期均保留。
 
 [独立lwIP数据定时器通道](ports/lwip-timers/README.md)将公共驱动扩展为逐虚拟毫秒推进、至多12秒，实际捕获数据RTO、退避、partial/full ACK和空闲新发。10项专项方法与5场景独立验收通过，5个严格差异均保留；粗／细TICK分划的真实PCAP逐字节相同。该驱动不改上游或oracle，不读取内部RTO/cwnd，不等于Linux或完整实现证明。357项冻结组合回归已通过，新370项运行另行记录。
+
+[显式分段选择开发切片](docs/tcp-segment-choice.md)在IR中声明正长度prefix选择与既有预算／序列／计时动作，保留原确定app.transmit。8方法（含22组父模型刺激投影比较）、3全字节契约及1342组补充／独立复查通过，主unknown保留。旧lwIP窗口4实验截至21ms的2+2字节前缀有严格见证，但旧确定前缀／完整Difference仍mismatch；不等于完整捕获或应用调用对应验收。

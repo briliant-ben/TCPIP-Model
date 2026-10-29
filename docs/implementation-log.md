@@ -360,3 +360,15 @@ ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件
 在12秒无ACK输入中，将单个TICK12000分成48个250ms间隔TICK，仍用同一真实二进制执行，两个原始PCAP逐字节相同；fine52条命令及12052时钟调用、执行日志和原始捕获单独归档clock-partition。此为固定输入驱动分划检查，不是通用调度证明。初次夹具缺expect.timers导致参考阶段KeyError，原夹具／失败日志／incomplete报告保存在lwip-timer-fixture-v1，新增输入门槛拒绝，不计成TCP差异；来源门槛增强前9方法成功日志作为历史保留。
 
 验收与逐包观测见artifacts/lwip-timers/acceptance.json、observations.json和verification.json。编译器／命令／来源／二进制SHA、C日志、原始PCAP、模型轨迹与查询均保留，二进制不提交需迁移后重建。没有独立真实peer丢包、Linux、内部RTO/cwnd、一般合法输出关系或完整TCP／通用精化证明。主模型原unknown不变。370项组合回归仍在运行，10端口方法不在其中；继续输出策略／时序对应及完整后续协议范围。
+
+## 2026-10-29：显式分段调度选择与有限线端前缀见证
+
+新增tcp-segment-choice继承LT／idle／恢复及共享字节／窗口链，共201规则／195不变量。choice.segment(count)是声明的模型调度决策，不是socket参数或真实网络输入；只在已有新发规则可用时允许1..实际take上界，禁止越MSS／发送队列／rwnd／cwnd预算。8条clone完整保留父发送动作，将take换为受guard约束count；原app.transmit保持确定选择。guard上界由父赋值前缀精确替入原take表达式，避免idle缩窗之前的旧cwnd绕过预算。生成器只产JSON，遇非赋值prefix效果或父规则结构变化明确拒绝。无执行器／形式后端算子改动或Python协议回调。RFC9293 August2022 §3.7及其MSS子节为有限分段来源；未覆盖Nagle/SWS等全部发送约束，不能把MSS许可直接当完整TCP符合。
+
+8方法一次500.431s通过：2+2字节顺序／首timer／逐字节时刻，负长度／零／超量／耗尽的Uncovered与原子拒绝，最大选择对5种窗口的canonical共享状态相等，idle后预算，wrap／CLOSE-WAIT以及一致错误take的负例。22组旧刺激逐步比较新模型与即时父LT模型的全部共享变量／计时器／输出；初次测试误用LT之前fast-budget-new-data的原契约，失败及旧测试源码保存在segment-choice-parent-contract-v1。未修改任何旧场景／oracle，修正测试为同一父语义的差分比较，不声称旧profile契约跨层自动成立。
+
+三个独立手写字节／输出时刻契约完成参考、完整字节SMT、新进程导出查询、synthetic-only codec、claims和输入／产物SHA验收。主depth6 safety/overlap仍unknown（reason canceled），主初值／clock与guard unsat；8个新选择规则状态保持查询unsat，5个旧接收／ACK目标unknown保留。1342完整单项分组及5等价共1347检查与独立CLI复查通过，只支持声明状态／长度性质，不替代通用字节完整性或翻译证明。
+
+另以旧lwIP四字节peer-window的完整有效抓包建立截至21ms的五包前缀见证：先独立验收旧报告（仍full mismatch），再运行选择2+2的当前IR并全字节复查，原解析器／严格0ms比较得到初始数据前缀match。载荷逆序、错误SEQ、错误时刻均mismatch；原canonical前缀仍mismatch，原完整Difference字节SHA不变。无重新执行独立实现或新伪造PCAP，原raw capture／报告哈希与新见证均绑定。此处不证明完整API调用对应或后续包接受，也不引入重传／时钟／窗口策略容差。见artifacts/segment-choice-prefix/result.json及tcp-segment-choice-development/acceptance/result.json。
+
+370项旧组合回归仍绑定2d296f89，1125冻结输入未改，新8方法单列。全协议、一般允许输出／应用事件关系、内容／时间／解释翻译及实现精化、Linux和后续协议仍未完成；原2750ms差异／上游源码／oracle／SHA验收保持。继续推进可检查内容与事件对应关系，不将有限前缀见证当作完整符合性闭环。
