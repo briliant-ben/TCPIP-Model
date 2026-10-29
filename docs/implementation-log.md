@@ -402,3 +402,5 @@ ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件
 新增独立条件组件检查器，只以200个未变父不变量和预算性质自身为前态假设，对初值／201规则各目标／clock等240查询生成与独立复查全部unsat，并有非空全字节SAT重放。498次断言对应检查包含独立AC证书／无条件原语定律与无其他premise的逐clause等价；错误命题重哈希／漏覆盖／父basis变化／重复数丢失等负例被拒绝。组件4方法及AC4方法分别通过。此结论不证明父basis在子模型闭包、其余child不变量、通用字节／解释器／翻译器或实现对应；可信Python/Z3组件明确列出。历史共享上下文超时与序列化／等价失败档案保留，未放宽10s预算或哈希／oracle。
 
 新增Rocq5个抽象整数命题与独立编译／假设审计／kernel重查及故障门槛，使用固定9.2.0镜像。macOS本地无Docker，当前not_run，等待提交后CI；模型哈希只作上下文绑定，未建立IR精化桥。阶段验收位于artifacts/tcp-sent-ledger-development/acceptance.json。已完成390项回归不包含本轮新增19方法；409项完整发现回归应在本轮冻结提交另跑。一般Nagle／短段与LT组合、完整发送／服务／时间关系、Linux实机及全部后续协议仍待推进，完整目标未完成。
+
+2026-10-30：eaeb02ff的[Rocq CI](https://github.com/briliant-ben/TCPIP-Model/actions/runs/40926132635)完成成功。新增5个发送信用抽象整数命题已编译、空公理审计及独立kernel重查，错误证明／公理注入拒绝；ZIP、证明对象、来源与日志SHA绑定在artifacts/rocq-ledger-ci-eaeb02ff，独立本地绑定验收及损坏对象负例通过。此前local not_run和CI pending记录保留为历史；本地未重跑kernel，也未证明IR动作／解释器／翻译器／TCP／lwIP对应。409项冻结回归仍在运行，完整目标未完成。
