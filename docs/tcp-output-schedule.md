@@ -1,0 +1,17 @@
+# 有界同输入完整抓包调度见证
+
+本overlay将公开app.transmit解释为同毫秒发送机会：原数据发送规则保留元数据／idle前缀初始化但不立即移动队列、发数据或启动空RTO。真正的数据动作继续只由父choice.segment执行，必须有公开flush或原有效pure ACK规则授予的机会，且时刻严格等于机会时刻。其他外部／timer事件关闭机会；同一时刻可有多个受MSS／队列／窗口／cwnd预算约束的选择。不是修改原canonical模型，其原严格Difference保持。
+
+flush本身将idle_restart设为false，保留元数据但不缩cwnd／清CA信用／增加重启计数。真正choice.segment仍执行父模型完整idle前缀及其有效预算，只有实际发送路径触发重启。此前两个步骤都执行restart的可达重复记账原型与失败兼容性测试保存在output-schedule-idle-prefix-v1；不能通过排除idle_before_cwnd或restart_count的比较来隐藏。最大选择对应父发送后，除声明choice.*见证变量外的全部共享变量、状态、timer及带时刻输出应相同。
+
+参考RFC9293 August2022 §§3.7、3.9.1.2、3.10.7.4建立有限建模解释。TCP应用调用不决定segment边界，处理有效ACK后可能恢复输出；此policy不声称覆盖全部Nagle/SWS或拥塞算法。父自动LT／fast／控制输出保留。该层不改变RTO默认值／量化，不为2750ms差异增加时钟容差。所有机会、期限、guard、计数和动作在IR中，宿主验证器没有TCP协议逻辑。
+
+通用tools/replay_schedule.py按source_step依次且各一次消费实际源场景，插入的事件只能是模型声明的application-origin choice.*，其实际权限由IR guard裁决。源字段／时刻／初值不由见证覆盖；禁止重复、遗漏、重排源步骤或伪造network/application输入。暂拒绝settle_ms和inline expect_trace源契约，不静默省略。默认严格入口仍要求canonical state、variables和timers契约。独立观察入口必须完整记录该旧canonical终态的差异，并另行严格校验声明的观察投影；它自身不提供接受结论。旧expect是确定参考执行的输出oracle，不是实际输入，不能删掉其失败。trace范围审计记录每个源事件／选择引起的全部模型事件，包含自动timer处理。
+
+完整PCAP比较使用原解析器、checksum、顺序及0ms投影，逐包数据不能重排／合并／改时刻。有限成功见证只表示：在此声明policy和同一完整外部输入下存在匹配整个线端／声明服务观察窗口的模型执行；canonical终态是独立判断，失败仍明确保留。相同毫秒中实际隐藏C调用归属不能由PCAP唯一推断；这是存在性事件对齐，不是实际内部causality证明或通用实现精化。单个失败候选也不证明不存在其他见证。
+
+范围仍为SMSS4／队列16、已有connection/recovery继承链；首个独立目标是既有四字节窗口发送实验的全部输入／抓包。旧完整Difference和raw capture保持哈希绑定。未注册suite，主unknown保留；完整TCP、通用字节／时间／翻译对应、Nagle/SWS、Linux及后续协议仍待完成。
+
+服务观察量也由IR显式记账：累计接受写字节、累计确认data字节、放弃排队字节及两个发送队列满足质量守恒。计数跨连接生命周期累计；此固定单连接C实验写入8、确认4，不能由canonical expect的8确认替代。公共sent callback按完整实现segment释放，只有当前固定输入的完整segment ACK范围才做确认信用相等映射；不推广至一般partial ACK callback。原canonical终态不匹配必须和新的线端／服务投影匹配同时报告；不宣布原夹具通过。
+
+首个完整观察见证消费原7个输入，选择21ms的2+2及30ms的一段2字节，匹配原始9包和written8／acknowledged4。最后40ms的ACK1009超出实际snd_nxt1007；IR也输出纠正ACK，保留未发[65,129]、未确认[17,33]及rtx1030。若30ms再发最后2字节，则旧canonical终态通过，但与真实包和确认回调均冲突。两个候选同时记录，不能为了匹配终态而修改原输入或删除差异。载荷、SEQ、时刻故障均严格拒绝。独立固定全字节查询SAT仅支持该轨迹可执行，不是一般安全性证明。

@@ -1,0 +1,38 @@
+{
+  "status": "mismatch",
+  "differences": [
+    {
+      "field": "timers",
+      "expected": {},
+      "actual": {
+        "rtx": 1030
+      }
+    },
+    {
+      "field": "snd_una",
+      "expected": 1009,
+      "actual": 1005
+    },
+    {
+      "field": "snd_nxt",
+      "expected": 1009,
+      "actual": 1007
+    },
+    {
+      "field": "snd_buf",
+      "expected": [],
+      "actual": [
+        65,
+        129
+      ]
+    },
+    {
+      "field": "rtx_buf",
+      "expected": [],
+      "actual": [
+        17,
+        33
+      ]
+    }
+  ]
+}

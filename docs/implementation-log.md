@@ -376,3 +376,15 @@ ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件
 
 2d296f8941d41043921ba9c637d4192eb183753c的370项标准发现回归已经终止并全部通过，runner用时3618.822秒，失败／错误／跳过均为零；1125项冻结依赖及工具环境未变。原始开始记录、测试集合、输入SHA、完整日志和最终结果归档artifacts/full-regression-2d296f89，先前“仍运行”条目保留为历史。后续segment-choice八方法、output-schedule专项和独立端口测试均不计入本次完整回归。主形式unknown、完整TCP、Linux及后续协议缺口保持。
 
+
+## 2026-10-29：完整源输入下的发送机会、服务记账与线端见证
+
+新增未注册tcp-output-schedule，继承segment-choice共享连接／序列／缓冲／恢复链，201规则／200不变量。flush与原有效pure ACK只授予当毫秒的显式发送机会，choice.segment保留父预算及实际发送动作；其他源事件关闭机会，延时选择由guard拒绝。源输入由通用replay_schedule.py按索引顺序各一次消费，禁止伪造网络输入／改字段／重排／省略。默认严格入口继续要求原canonical终态；观察入口只返回该终态的明确差异，必须另做完整线端／公共服务投影判断，宿主无TCP协议回调。服务累计写入、data确认信用及放弃字节在IR中显式质量守恒；固定完整segment ACK范围下才映射C公共sent回调，不推广一般partial ACK。
+
+完整12方法一次495.456秒通过，包含22组旧刺激逐源事件对照父协议全部共享非choice变量、状态、timer与带时刻输出，及输入重排／伪造／遗漏、过期选择、未来ACK、RST放弃而非确认和一致错误确认记账负例。两条手写字节／时刻契约重新生成参考、完整字节SMT和synthetic-only codec，claims／输入SHA／导出查询新进程SAT与独立验收通过。depth6 safety/overlap仍unknown；主归纳初值／clock／长度引理unsat，3个旧FIN-WAIT-1接收目标unknown，845完整单项分组及848含等价检查和独立CLI复查通过。原主报告保持unknown，不是一般字节／时间／翻译或完整TCP证明。
+
+旧lwIP窗口4捕获先经原通道独立验收，完整Difference仍mismatch。消费全部7源输入，选择21ms的2+2、30ms的一段2字节，严格checksum／顺序／0ms比较全部9包match，公共写入8／确认4与IR服务变量相等。最后40ms的ACK1009是future ACK，IR与实际都给纠正ACK；保留snd_una1005、snd_nxt1007、待发[65,129]、待确认[17,33]及rtx1030。因此原canonical终态继续mismatch，报告完整保留这5项差异。30ms再发最后2字节的候选虽然满足原canonical终态，却与抓包／公共确认字节冲突，作为反例保留。载荷／SEQ／时刻故障均mismatch；不改原输入、旧oracle、严格比较器或Difference SHA。此为单输入存在性完整观察窗口见证，不是旧夹具通过、真实隐藏调用因果、一般Nagle/SWS或实现精化；复用旧真实捕获，不计新C执行或Linux证据。
+
+最初四段候选和错误全确认假设归档output-schedule-canonical-final-v1。新增兼容性检查另发现idle_before_cwnd8与4不同，进一步重放确认flush和choice重复执行idle前缀，连实际重启计数也多一次。修正flush为idle_restart=false，延迟缩窗／清CA／计数到实际choice；不排除任何idle字段比较。历史1774成员、失败12方法日志及隔离旧expanded IR重现见output-schedule-idle-prefix-v1；其旧形式结果未发现该可达记账缺陷，不能归给修正后的模型。当前模型与所有形式／固定输入产物均重建复查，诊断同时验证旧计数差异及新模型全部共享变量一致。
+
+验收见artifacts/tcp-output-schedule-development/acceptance.json和artifacts/output-schedule-alignment/result.json。RFC9293 August2022 §§3.7、3.9.1.2、3.10.7.4版本／原文SHA锁定。258项旧注册输入逐一SHA未变，上游lwIP／2750ms差异保留。已完成370项全量回归不含此12方法及此前segment-choice8方法；当前标准发现390方法，下一组合回归按本里程碑提交冻结，未完成前不计通过。继续一般内容／事件／计时对应及完整后续协议目标。
