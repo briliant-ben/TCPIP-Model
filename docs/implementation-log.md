@@ -388,3 +388,5 @@ ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件
 最初四段候选和错误全确认假设归档output-schedule-canonical-final-v1。新增兼容性检查另发现idle_before_cwnd8与4不同，进一步重放确认flush和choice重复执行idle前缀，连实际重启计数也多一次。修正flush为idle_restart=false，延迟缩窗／清CA／计数到实际choice；不排除任何idle字段比较。历史1774成员、失败12方法日志及隔离旧expanded IR重现见output-schedule-idle-prefix-v1；其旧形式结果未发现该可达记账缺陷，不能归给修正后的模型。当前模型与所有形式／固定输入产物均重建复查，诊断同时验证旧计数差异及新模型全部共享变量一致。
 
 验收见artifacts/tcp-output-schedule-development/acceptance.json和artifacts/output-schedule-alignment/result.json。RFC9293 August2022 §§3.7、3.9.1.2、3.10.7.4版本／原文SHA锁定。258项旧注册输入逐一SHA未变，上游lwIP／2750ms差异保留。已完成370项全量回归不含此12方法及此前segment-choice8方法；当前标准发现390方法，下一组合回归按本里程碑提交冻结，未完成前不计通过。继续一般内容／事件／计时对应及完整后续协议目标。
+
+2026-10-29：a7866f0b冻结提交的390项完整发现回归一次4257.189秒全部通过（runner4257.370秒），无失败／错误／跳过，1155项依赖及环境未变。证据归档artifacts/full-regression-a7866f0b，历史running条目不再代表当前状态；新sent-ledger及独立端口方法另行验收，不提升主unknown或完整TCP／Linux声明。
