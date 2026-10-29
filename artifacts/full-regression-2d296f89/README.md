@@ -1,0 +1,1 @@
+370 standard-discovery tests passed at2d296f8941d41043921ba9c637d4192eb183753c; runner3618.822s, no errors/failures/skips,1125 dependencies and tool environment unchanged. Later segment-choice/output-schedule and independent port tests are separate. Does not establish full TCP/Linux or universal refinement.

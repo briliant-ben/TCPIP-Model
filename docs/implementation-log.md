@@ -372,3 +372,7 @@ ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件
 另以旧lwIP四字节peer-window的完整有效抓包建立截至21ms的五包前缀见证：先独立验收旧报告（仍full mismatch），再运行选择2+2的当前IR并全字节复查，原解析器／严格0ms比较得到初始数据前缀match。载荷逆序、错误SEQ、错误时刻均mismatch；原canonical前缀仍mismatch，原完整Difference字节SHA不变。无重新执行独立实现或新伪造PCAP，原raw capture／报告哈希与新见证均绑定。此处不证明完整API调用对应或后续包接受，也不引入重传／时钟／窗口策略容差。见artifacts/segment-choice-prefix/result.json及tcp-segment-choice-development/acceptance/result.json。
 
 370项旧组合回归仍绑定2d296f89，1125冻结输入未改，新8方法单列。全协议、一般允许输出／应用事件关系、内容／时间／解释翻译及实现精化、Linux和后续协议仍未完成；原2750ms差异／上游源码／oracle／SHA验收保持。继续推进可检查内容与事件对应关系，不将有限前缀见证当作完整符合性闭环。
+## 2026-10-29：370项冻结回归完成
+
+2d296f8941d41043921ba9c637d4192eb183753c的370项标准发现回归已经终止并全部通过，runner用时3618.822秒，失败／错误／跳过均为零；1125项冻结依赖及工具环境未变。原始开始记录、测试集合、输入SHA、完整日志和最终结果归档artifacts/full-regression-2d296f89，先前“仍运行”条目保留为历史。后续segment-choice八方法、output-schedule专项和独立端口测试均不计入本次完整回归。主形式unknown、完整TCP、Linux及后续协议缺口保持。
+
