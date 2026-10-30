@@ -575,3 +575,5 @@ Protocol IR、原参考／SMT编码器、上游lwIP、全部原unknown／Differe
 新增6方法，验证重复复用与新session重查、同source重哈希false proof拒绝、checker epoch变化强制重查、metadata注入拒绝、DAG重复父节点及warm跨层canonical环拒绝。73专项实跑7.574597秒通过、0失败／错误／跳过，输入清单及环境不变；完整ID／source hash／日志存artifacts/query-cache-local-73。最初重复节点测试假定不同日志树也命中，被真实断言发现；修正夹具为相同完整输入树，未放宽缓存键。当前标准发现增加6方法，旧478冻结回归仍在独立13ff8c93检出运行，不被主目录修改影响。
 
 新helper SHA／result字段有意与旧epoch不同；原ack-query-reuse归档保持不变，应在其命名13ff8c93 epoch重放，不改旧hash使之适配新版。后续新DAG须从原始SMT和primitive证书重新bootstrap，独立新session验收。另15个头记录查询在探索中得到UNSAT候选，295／296仍UNKNOWN；候选尚未重放依赖，不新增closure，具名索引仍351/368、17未决。没有IR／旧编码器／上游lwIP／oracle／2750ms差异或kernel、完整TCP范围变化，整体目标继续。
+
+2026-10-31：缓存里程碑f3c2753c实际Ubuntu CI41086527120／job124169024837／artifact12991692309通过73/73，12.623310秒、0失败／错误／跳过。原ZIP SHA8b65d8ab、官方job／artifact来源、source head f3c2753c与checkout merge fe7cc9d8、完整decoded job gzip／unit日志已存artifacts/query-cache-ci-f3c2753c；独立离线验收逐Git blob检查1268输入，73 IDs与本地相同，全部通过。原Mac与Linux binary各自严格绑定，无旧snapshot哈希变更。仅新生成证明单元测试的Linux执行，不计Linux TCP／PCAP／kernel或新增ACK闭合；新的15头记录DAG仍在真实依赖重放中。
