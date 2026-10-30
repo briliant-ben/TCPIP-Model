@@ -247,3 +247,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：[可检查的查询证明DAG](formal/query-lemmas.md)新增关闭292／300，58个依赖逐项重放且原前提完全一致；命名IR/export锚点、故障拒绝和新解包复查通过。原ACK分区现351/368具名证据、17未知，仍非完整ACK／父基／TCP证明。67专项通过，当前478组合未全跑；新Ubuntu专项CI独立验收，不计Linux协议实机证据。
 
 2026-10-30：[新Ubuntu专项CI](artifacts/query-verification-ci-13ff8c93/README.md)实际67／67通过，官方ZIP和1268源输入已离线核对；不是Linux TCP／kernel或旧Mac证据重放。PR#4已合入，新草稿PR#5承接DAG里程碑；478标准回归在独立13ff8c93检出运行中，未宣称全量通过，整体目标未完成。
+
+2026-10-31：[ACK头记录证据链](artifacts/ack-query-head-chain/README.md)在当前epoch重建依赖后，15个原始查询的两次native UNSAT、安全解包独立重检、366个IR/export来源绑定及3项故障拒绝全部通过。具名证据现366/368，该分区295／296仍未证，完整ACK／父基及全字节时序／实现仍开放。73专项本地与Ubuntu CI通过；旧478冻结回归单独运行，当前484完整组合未宣称通过。整体项目继续。

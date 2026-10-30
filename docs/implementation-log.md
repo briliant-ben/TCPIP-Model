@@ -577,3 +577,13 @@ Protocol IR、原参考／SMT编码器、上游lwIP、全部原unknown／Differe
 新helper SHA／result字段有意与旧epoch不同；原ack-query-reuse归档保持不变，应在其命名13ff8c93 epoch重放，不改旧hash使之适配新版。后续新DAG须从原始SMT和primitive证书重新bootstrap，独立新session验收。另15个头记录查询在探索中得到UNSAT候选，295／296仍UNKNOWN；候选尚未重放依赖，不新增closure，具名索引仍351/368、17未决。没有IR／旧编码器／上游lwIP／oracle／2750ms差异或kernel、完整TCP范围变化，整体目标继续。
 
 2026-10-31：缓存里程碑f3c2753c实际Ubuntu CI41086527120／job124169024837／artifact12991692309通过73/73，12.623310秒、0失败／错误／跳过。原ZIP SHA8b65d8ab、官方job／artifact来源、source head f3c2753c与checkout merge fe7cc9d8、完整decoded job gzip／unit日志已存artifacts/query-cache-ci-f3c2753c；独立离线验收逐Git blob检查1268输入，73 IDs与本地相同，全部通过。原Mac与Linux binary各自严格绑定，无旧snapshot哈希变更。仅新生成证明单元测试的Linux执行，不计Linux TCP／PCAP／kernel或新增ACK闭合；新的15头记录DAG仍在真实依赖重放中。
+
+## 2026-10-31：原ACK其余15个头记录查询的独立证据链
+
+artifacts/ack-query-head-chain从原始SMT和primitive证书在当前helper epoch重新bootstrap292／300，再逐项核验351个依赖；全部443有序共同前提逐项相同，15个原444断言目标各仅追加351个实际已证结论，795断言完整保留。每个producer两次native UNSAT，范围4.162133–6.165996秒；每query10s不变，上下文SAT。调用内351份不同证书实际检查、174次同完整树复用，绝不从报告装载缓存。
+
+原件封存后安全解包，新的空session独立复查全部依赖／嵌套bootstrap／15目标，native范围4.248876–6.154632秒，全部UNSAT且context SAT；fresh统计390次实际证书检查、77次调用内复用；统计按完整目录树区分，不等同原查询数，不能充当证明依据。原IR语义f44d0c74／export b83da01c、1260旧输入与全部366选中分区逐式重建再次验收；3个重哈希临时副本故障（改父source、改目标source、冒领协议scope）全拒绝、原件不变。完整query／实际runtime helper source／控制器与选择／原日志／解包重检日志及SHA清单已保留，入口accept.py须使用新输出目录。该验收本身同时覆盖独立重检与归档恢复，不额外重复同一完整运行。
+
+具名索引由351/368增至366/368，仅新增304、308、…、360共15个原头几何子句。仍295（partial prefix非负）／296（≤3）未闭合，不是完整ACK／父不变量基、全368组合、字节内容／有序输出／时序／实现／TCP证明。额外探索295仍UNKNOWN、296在加入15候选结论后UNSAT，仅保存diagnostics/ack-last-two-exploration，未作为296证据；前17候选及core UNKNOWN均完整保留diagnostics/ack-head-chain-exploration。旧UNKNOWN和命名旧epoch报告未改。
+
+当前发现484方法；73专项在本地和实际Ubuntu f3c2753c CI通过，不能替代独立13ff8c93的478冻结回归。该旧进程及源检出仍单独保留，1281输入已逐Git blob核对，无新全量通过声明。Protocol IR、原参考／SMT编码器、上游lwIP、oracle及2750ms Difference不动；无新Linux TCP／PCAP或kernel证据。下一步继续295／296、完整账本基及全字节时序／实现桥，再按原协议roadmap推进，整体目标未完成。

@@ -70,3 +70,7 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 2026-10-30：PR#4已合入main eebd27e5。本轮aaee733c保留并转codex/tcp-query-dag，合并main的13ff8c93与aaee源码完全相同，已新建并挂接草稿PR#5。Ubuntu新专项CI41079885224／job124145857544实际通过：67／67、10.319269秒、0失败／错误／跳过，1268源码输入与source head13ff8c93逐Git blob一致，checkout merge748b94ab；原ZIP／官方API来源／完整job及unit日志与离线验收见artifacts/query-verification-ci-13ff8c93。新Linux checker1bfaf5bb与Mac2f4cc814分别绑定，不放宽旧hash；CI只跑新证书单元测试，不计Linux TCP／PCAP／kernel证据。
 
 478项标准发现已在独立临时检出/private/tmp/tcpip-full478-_2gsnde8、detached13ff8c93启动，冻结1281输入。原进程PID21869／统一exec session4411已确认运行，输出/tmp/tcpip-full-regression-13ff8c93.log及同名目录保存started／inputs／test IDs；未到终态，不称全量通过。不得编辑该检出或因观察超时重启；主仓库继续开发不影响此冻结集合。旧442通过仍独立有效，67本地／Linux专项均不替代478完整组合。完整目标继续，剩17原ACK项及父基／字节时序／实现与后续协议缺口不变。
+
+2026-10-31：实际分支codex/tcp-query-dag／草稿PR#5（推送前再次检查远端，若已合并需保留本地工作并新分支／PR）。缓存f3c2753c的73本地／Ubuntu专项与官方ZIP／Git blob验收均通过。新artifacts/ack-query-head-chain原15个头几何查询已通过producer双native及安全解包的新session全依赖／目标重检；`.venv/bin/python artifacts/ack-query-head-chain/accept.py --out /tmp/new-ack-head-check`重做该命名检查点，完整archive与runtime SHA绑定，勿修改旧版本字段。新索引366/368、仍295／296，探索296 UNSAT不等于验收；完整ACK／父基及字节／时间／实现仍未证。旧ack-query-reuse保留13ff8c93命名epoch，新helper不得放宽hash适配旧DAG。
+
+478旧组合回归保持独立/private/tmp/tcpip-full478-_2gsnde8，detached13ff8c93、session4411、1281输入，日志/tmp/tcpip-full-regression-13ff8c93.log，尚无新全量通过声明；当前标准发现484，6个缓存方法已包含73专项。必须先查原session实际终态和result／inputs／IDs／log，再归档验证；不因观察等待重启或编辑该检出。用户原两处untracked refinement目录保留，全部旧UNKNOWN、2750ms及严格oracle不变。完整目标继续。
