@@ -183,3 +183,7 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 2026-10-30：其余68原ACK未知的精确模展开批次已验收：48独立UNSAT＋20UNKNOWN，原context SAT，归档新目录复查通过。与298旧具名证据及052／092／有限域280按原source SHA去重，现349/368具名证据、19原分支未闭合，完整ACK目标／父基仍未证；不是规范覆盖率。入口artifacts/ack-piecewise-remaining68及coverage-index.json。下一步按19项真实清单推进精确账本／父基与字节时序对应，保持完整协议roadmap。
 
 2026-10-30：通用可检查DAG复用把同前提已证结论作为严格cut，不允许metadata／core代替父证书。58依赖／当前IR-export锚点与原292／300完整重复验收，具名查询351/368、17仍未决；完整ACK与父基未闭合。67专项通过、478组合未跑，旧442已通过。下一步继续17账本缺口／父基，并增强全字节、有序输出、时序与实现对应；DAG query证明不替代IR语义kernel桥或完整协议。
+
+2026-10-30：PR#4已合入main eebd27e5。本轮aaee733c保留并转codex/tcp-query-dag，合并main的13ff8c93与aaee源码完全相同，已新建并挂接草稿PR#5。Ubuntu新专项CI41079885224／job124145857544实际通过：67／67、10.319269秒、0失败／错误／跳过，1268源码输入与source head13ff8c93逐Git blob一致，checkout merge748b94ab；原ZIP／官方API来源／完整job及unit日志与离线验收见artifacts/query-verification-ci-13ff8c93。新Linux checker1bfaf5bb与Mac2f4cc814分别绑定，不放宽旧hash；CI只跑新证书单元测试，不计Linux TCP／PCAP／kernel证据。
+
+478项标准发现已在独立临时检出/private/tmp/tcpip-full478-_2gsnde8、detached13ff8c93启动，冻结1281输入。原进程PID21869／统一exec session4411已确认运行，输出/tmp/tcpip-full-regression-13ff8c93.log及同名目录保存started／inputs／test IDs；未到终态，不称全量通过。不得编辑该检出或因观察超时重启；主仓库继续开发不影响此冻结集合。旧442通过仍独立有效，67本地／Linux专项均不替代478完整组合。完整目标继续，剩17原ACK项及父基／字节时序／实现与后续协议缺口不变。

@@ -563,3 +563,7 @@ coverage-index.json按原query SHA拼接298既有独立分支、052／092／280�
 11新方法含多层复用／递归环拒绝／false依赖／错极性／vacuity等，与此前56合计67专项通过；新版本绑定runner实测67／67、0失败／错误／跳过、约5.735秒，完整输入清单／环境／ID／日志归档local-unit-runner。当前478标准发现未完整跑；旧442冻结回归已通过，原1260及258注册输入未变。新增固定checkout／upload action SHA的Ubuntu query-verification CI仅生成新证书跑专项，不调用旧Mac snapshot验收，不记Linux TCP／kernel证据。真实CI执行尚待推送后验收。
 
 Protocol IR、原参考／SMT编码器、上游lwIP、全部原unknown／Difference、严格oracle和2750ms差异未改；新增证明只属于命名有限账本state／length检查点，不覆盖全字节内容／时序／实现或TCP。运行时新helper source SHA是实际代码依据，parent Git commit仅记录祖先，完整新源码随本bundle提交。持续目标未完成，接续17项、父基及字节／有序输出／时序／实现桥与完整协议roadmap。
+
+2026-10-30：PR#4已合入main eebd27e5。本轮aaee733c保留并转codex/tcp-query-dag，合并main的13ff8c93与aaee源码完全相同，已新建并挂接草稿PR#5。Ubuntu新专项CI41079885224／job124145857544实际通过：67／67、10.319269秒、0失败／错误／跳过，1268源码输入与source head13ff8c93逐Git blob一致，checkout merge748b94ab；原ZIP／官方API来源／完整job及unit日志与离线验收见artifacts/query-verification-ci-13ff8c93。新Linux checker1bfaf5bb与Mac2f4cc814分别绑定，不放宽旧hash；CI只跑新证书单元测试，不计Linux TCP／PCAP／kernel证据。
+
+478项标准发现已在独立临时检出/private/tmp/tcpip-full478-_2gsnde8、detached13ff8c93启动，冻结1281输入。原进程PID21869／统一exec session4411已确认运行，输出/tmp/tcpip-full-regression-13ff8c93.log及同名目录保存started／inputs／test IDs；未到终态，不称全量通过。不得编辑该检出或因观察超时重启；主仓库继续开发不影响此冻结集合。旧442通过仍独立有效，67本地／Linux专项均不替代478完整组合。完整目标继续，剩17原ACK项及父基／字节时序／实现与后续协议缺口不变。
