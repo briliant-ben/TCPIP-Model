@@ -1,0 +1,5 @@
+# First Linux CI execution failure
+
+PR head36f85b25 / run41002313195 / job123889313332 built unmodified official packetdrill successfully and entered a distinct network namespace. Independent tcpdump started correctly but captured zero packets. The setup ethtool command completed after141385us; the next absolute-time0 socket call violated the unchanged50000us execution tolerance. This is a driver initialization timing defect, not kernel conformance or valid Linux handshake evidence. Raw logs, zero-packet PCAP, source scripts and SHA-verified workflow ZIP are retained.
+
+Pinned packetdrill run.c relative-event logic anchors a relative syscall to current elapsed time after the preceding command. The correction makes the first socket event +0 after setup completion, keeps every generated protocol packet expectation and all subsequent public calls unchanged, and retains both50000us execution tolerance and0ms independent Difference. The canonical wire time origin remains the first SYN. No upstream source, model, parser, oracle or hash check is relaxed.

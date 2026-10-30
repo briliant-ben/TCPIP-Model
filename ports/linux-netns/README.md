@@ -6,8 +6,10 @@ different before any link/sysctl/tool operation. It changes no host routes or
 production/SSH network. Missing tools/TUN/capabilities block this channel only.
 
 The existing authoritative `model/tcp.json` and handshake scenario generate the
-unchanged packetdrill expectations. The execution wrapper only adds a public
-endpoint bind and TUN offload setup. The pinned unmodified official packetdrill
+unchanged packetdrill packet expectations. The execution wrapper adds a public
+endpoint bind and TUN offload setup, and starts the first socket call relative
+to setup completion. Protocol time is normalized to the first SYN; execution
+and Difference tolerances are unchanged. The pinned unmodified official packetdrill
 coordinates syscalls and packet injection; independent tcpdump captures the first
 three selected handshake packets, ending at the model's terminal ESTABLISHED
 boundary before tool-exit socket cleanup. Capture uses classic LINUX_SLL PCAP,

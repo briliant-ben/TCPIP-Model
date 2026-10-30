@@ -24,6 +24,9 @@ def execution_script(base, out):
     """Only device setup and public endpoint bind; preserve every generated expectation."""
     lines = base.splitlines()
     socket = lines.index('0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3')
+    # Offload setup precedes the protocol clock origin (first SYN). The first
+    # syscall starts relative to setup completion; packet expectations stay exact.
+    lines[socket] = '+0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3'
     target = shlex.quote(str(out / 'offload.log'))
     setup = '0 `ethtool -K tun0 tx off tso off gso off gro off > ' + target + ' 2>&1 && ethtool -k tun0 >> ' + target + ' 2>&1`'
     lines.insert(socket, setup)

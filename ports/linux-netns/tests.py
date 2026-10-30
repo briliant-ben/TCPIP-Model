@@ -13,9 +13,11 @@ class LinuxPlanTests(unittest.TestCase):
             script=driver.execution_script(base,out)
             self.assertEqual(machine.state,'ESTABLISHED')
             self.assertEqual([p['flags']for p in packets],['S','SA','A'])
-            additions=[line for line in script.splitlines() if line not in base.splitlines()]
+            prepared_base=base.replace('0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3',
+                '+0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3',1)
+            additions=[line for line in script.splitlines() if line not in prepared_base.splitlines()]
             self.assertEqual(len(additions),2)
-            for line in base.splitlines():self.assertIn(line,script.splitlines())
+            for line in prepared_base.splitlines():self.assertIn(line,script.splitlines())
             self.assertIn('+0 bind(3, ..., ...) = 0',additions)
             self.assertTrue(any('ethtool -K tun0 tx off' in line for line in additions))
 
