@@ -54,3 +54,5 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 ## 2026-10-30 Linux CI checkpoint
 
 独立临时VM／网络命名空间已完成一个真实内核主动打开及5010ms静默期验收，仍保留0ms时间Difference；源码1551c535，CI41004399031，证据artifacts/linux-netns-ci-1551c535。重现和范围见[Linux通道](linux-netns.md)。本地macOS环境限制继续存在，后续数据／恢复验证不能由此握手或lwIP证据代替。离线验收不是Linux重跑，源码变化必须保留旧检查点哈希。
+
+2026-10-30：当前分支codex/tcp-modular、草稿PR#4（以远端实际状态为准）。条件SSA里程碑见formal/conditional-ssa.md；复查命令`.venv/bin/python artifacts/ack-conditional-ssa/accept.py --out /tmp/new-ack-ssa-recheck`，输出目录必须新建，逐成员核对后真实再跑CLI，不计新TCP或Linux证明。ACK092／280仍unknown。45专项通过；原442冻结session39524继续，原1260及258输入SHA未变，新456发现不称全量通过。

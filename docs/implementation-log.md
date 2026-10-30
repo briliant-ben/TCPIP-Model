@@ -507,3 +507,13 @@ Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通�
 原ZIP／官方API来源／完整日志／源码和.vo／输入及对象SHA绑定，独立离线源／陈述／对象／日志检查及6个临时副本故障门验收成功，入口artifacts/rocq-scalar-ci-e08d3fdb/acceptance.json。本地未重跑kernel；对象破坏门仅是哈希，不能以重哈希对象的元数据代替kernel或原ZIP来源。错误字段索引、把offset收窄成seq32、削弱命题、替换错误模型及扩大解释器证明范围在重哈希后仍被拒绝。
 
 首次CI41032321238证明展开180s超时，原失败保留；第二次41033143106初态闭合、step列表引理使用失败，源码／部分对象／日志保留。三个版本的源模型、生成AST及定理陈述完全相同，没有提高上限、加公理、改不变量或缩小输入。证明体改为局部构造和显式标准库实例后才得到上述真实成功。38专项一次0.932s通过（新7绑定＋原31），当前449完整发现未跑全量；442旧集合继续在71a3e1a8冻结运行、1260依赖未变，新7不计其中。旧258注册输入、上游lwIP／Linux证据及2750ms差异保持。整体目标未完成，继续条件SSA／环形、一般IR语义／字节时序／实现及后续协议。
+
+## 2026-10-30：条件SSA精确查询及完整分支证据
+
+新增formal/conditional_ssa.py，只从实际导出查询的正合取等式和真实条件路径构造候选展开；原444断言逐项保留，完整枚举4种Boolean组合。独立检查器不信任producer替换／simplify，而围绕实际叶目标重建“原等式＋case事实⇒原目标等价”的XOR查询，再以新CLI核对。覆盖查询无原始协议前提；上下文去掉违例另查SAT，不把矛盾前提当行为证明。量词／非正合取定义／增量／多check明确拒绝，10s预算不变，Protocol IR／解释器／原编码器未改。
+
+原ACK分支092（RTT状态）、280（callback数量≤重传长度）均取自已提交archive并核对members SHA。各4叶中，独立结果分别为[UNSAT,UNKNOWN,UNKNOWN,UNSAT]及[UNSAT,UNSAT,UNKNOWN,UNSAT]；全部8个局部等价和2个无前提覆盖均UNSAT，两个上下文producer／fresh均SAT。5叶UNSAT两次复现、3叶仍unknown，两条原目标仍unknown；原其余69未知分支数量不减少，不能宣布ACK目标或父不变量基闭合。早期to_smt2序列化试验多一叶UNSAT只保留为搜索敏感性观察，不替换当前结果。
+
+独立归档解包后再跑CLI通过，证据artifacts/ack-conditional-ssa，包含原query／全部叶／局部定理／context／coverage／日志及逐成员SHA；完整原报告与用户两个未提交目录保留。7新方法＋原38共45专项一次1.794s通过，包含真实错误赋值SAT及重哈希后的缺分支／省断言／隐藏前提／假等价拒绝。首轮错误赋值测试曾拦住Z3 to_smt2省掉末尾assert true的问题；改sexpr导出保留全部断言，原失败源码／query保留diagnostics/conditional-ssa-trailing-true。大DAG语法检查只增加访问去重避免重复遍历，不改变语义或solver预算。
+
+当前标准发现456，未跑完整456；442原冻结回归仍同一session运行，1260依赖及原258注册输入未变。Python／Z3和查询来源桥仍可信，不是kernel／IR翻译正确性／可达实现或协议证明，无新增Linux／lwIP实机实验。下一步收敛这3个叶及一般ACK／环形账本语义，再按原roadmap推进，整体目标未完成。
