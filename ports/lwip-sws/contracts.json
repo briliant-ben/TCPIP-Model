@@ -1,0 +1,38 @@
+[
+  {
+    "id": "full-mss",
+    "model_send_ms": 21,
+    "actual_send_hypothesis_ms": 21,
+    "expected_wire": "match",
+    "sent_events": [
+      {
+        "time_ms": 230,
+        "bytes": 4
+      }
+    ]
+  },
+  {
+    "id": "tiny-override",
+    "model_send_ms": 221,
+    "actual_send_hypothesis_ms": 21,
+    "expected_wire": "mismatch",
+    "sent_events": [
+      {
+        "time_ms": 230,
+        "bytes": 1
+      }
+    ]
+  },
+  {
+    "id": "shrunk-window-override",
+    "model_send_ms": 221,
+    "actual_send_hypothesis_ms": 21,
+    "expected_wire": "mismatch",
+    "sent_events": [
+      {
+        "time_ms": 230,
+        "bytes": 1
+      }
+    ]
+  }
+]

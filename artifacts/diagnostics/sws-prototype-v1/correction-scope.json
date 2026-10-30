@@ -1,0 +1,26 @@
+{
+  "status": "one_invariant_literal_change_and_fresh_C_replicates",
+  "changed_predicate": "sws_max_window<=16 -> <=65535",
+  "protocol_actions_guards_variables_events_timers_unchanged": true,
+  "observations": [
+    {
+      "id": "full-mss",
+      "identical_raw_capture": true,
+      "capture_sha256": "d5e01ffe6761aef373e491d400d6c6de875fcf04547fb0eff96ca353b430b378",
+      "same_public_summary": true
+    },
+    {
+      "id": "tiny-override",
+      "identical_raw_capture": true,
+      "capture_sha256": "9623222e9477074a2f5a0e00a6a92a5501026b575090767ab916b8312e3939a1",
+      "same_public_summary": true
+    },
+    {
+      "id": "shrunk-window-override",
+      "identical_raw_capture": true,
+      "capture_sha256": "e30fb16ebcb0d3d75e4a29278f609515252c5556c6a5af720efcc5dbf4b60ad0",
+      "same_public_summary": true
+    }
+  ],
+  "scope": "three finite replicated executions; not a universal implementation relation"
+}

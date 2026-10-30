@@ -1,0 +1,22 @@
+{
+  "module": "tcp-sws",
+  "specification": {
+    "rfc": 9293,
+    "version": "August2022",
+    "sections": [
+      "3.7.4",
+      "3.8.6.2.1"
+    ]
+  },
+  "implementation": {
+    "release": "lwIP2.2.1",
+    "commit": "77dcd25a72509eb83f72b033d219b1d40cd8eb95",
+    "scope": "independent observations; no equivalence assumed"
+  },
+  "sha256": {
+    "spec/sources/rfc9293.txt": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+    "spec/sources/rfc3042.txt": "c54bec6090d1cc755d111a6341abb964c07fe15b9fb4e4ef63d096d8cc078439",
+    "third_party/lwip/src/core/tcp_out.c": "d8d8d5a54097114904f89f8c5602c937ef3b086933f2132a557698fc65d7e4af",
+    "third_party/lwip/src/include/lwip/priv/tcp_priv.h": "07df02da365d83e5a488b4cf9e61d8319132d11b6830a7fe6b04c2912fd3d4c9"
+  }
+}

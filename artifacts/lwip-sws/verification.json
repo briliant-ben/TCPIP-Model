@@ -1,0 +1,105 @@
+{
+  "status": "valid_independent_sws_observations",
+  "scenarios": [
+    {
+      "id": "full-mss",
+      "report_sha256": "bcfdec85fb1081b278c0fe0d4e8fa40adf044111a023c351071053a4a473df10",
+      "verification": {
+        "result": {
+          "status": "valid_independent_lwip_stream_evidence",
+          "comparison": "match",
+          "query_equivalence": {
+            "status": "unsat",
+            "reason": null,
+            "encoding": "exact_shared_conjunct_factoring",
+            "checker_version": "4.15.4",
+            "common_assertions": 347,
+            "left_unique": 0,
+            "right_unique": 0
+          },
+          "linux_execution": false,
+          "full_stack_validated": false
+        },
+        "command": [
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/run.py",
+          "--verify",
+          "--scenario",
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/scenarios/full-mss.json",
+          "--out",
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-sws/full-mss"
+        ]
+      },
+      "log_sha256": "839f871cb56ea518df52648ed9b7be3f4a341a58f404b561680de4dd77be24af",
+      "export_log_sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e"
+    },
+    {
+      "id": "shrunk-window-override",
+      "report_sha256": "4dbb711e51c5114bceacea59c42f4a9e4d44352e0a021aa7735acbd028f3b933",
+      "verification": {
+        "result": {
+          "status": "valid_independent_lwip_stream_evidence",
+          "comparison": "mismatch",
+          "query_equivalence": {
+            "status": "unsat",
+            "reason": null,
+            "encoding": "exact_shared_conjunct_factoring",
+            "checker_version": "4.15.4",
+            "common_assertions": 356,
+            "left_unique": 0,
+            "right_unique": 0
+          },
+          "linux_execution": false,
+          "full_stack_validated": false
+        },
+        "command": [
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/run.py",
+          "--verify",
+          "--scenario",
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/scenarios/shrunk-window-override.json",
+          "--out",
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-sws/shrunk-window-override"
+        ]
+      },
+      "log_sha256": "b8176740782df36f395d82a2c6d5638fa08a9c0f012e8e7b2be30b0870608969",
+      "export_log_sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e"
+    },
+    {
+      "id": "tiny-override",
+      "report_sha256": "81b36bfea0e6cfa0823fb30e7e24d0a242acee94da0f38ee9c2f763053690ca2",
+      "verification": {
+        "result": {
+          "status": "valid_independent_lwip_stream_evidence",
+          "comparison": "mismatch",
+          "query_equivalence": {
+            "status": "unsat",
+            "reason": null,
+            "encoding": "exact_shared_conjunct_factoring",
+            "checker_version": "4.15.4",
+            "common_assertions": 350,
+            "left_unique": 0,
+            "right_unique": 0
+          },
+          "linux_execution": false,
+          "full_stack_validated": false
+        },
+        "command": [
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/run.py",
+          "--verify",
+          "--scenario",
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/scenarios/tiny-override.json",
+          "--out",
+          "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-sws/tiny-override"
+        ]
+      },
+      "log_sha256": "c4fbc3b560abc8d6484c2bffb416365ae5f4e4c38d0471a93e6f6f2d405b6c87",
+      "export_log_sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e"
+    }
+  ],
+  "producer_sha256": "3edbf4379c7262eaad6b4e6ca980b28eae8ab65d2c192a9355aa013fc2d52c0c",
+  "index_sha256": "cc93571a71f31240b967dfe0f86ef7c41fa4212b4df82fe7c8d0f79bf32b1266",
+  "linux_execution": false,
+  "universal_refinement": false
+}

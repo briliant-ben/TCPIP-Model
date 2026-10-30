@@ -1,0 +1,115 @@
+{
+  "scenario_version": "0.2",
+  "id": "shrunk-window-override",
+  "description": "Fixed sender SWS policy observation; public source calls unchanged by declared choices",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS4/queue16, Fs1/2, SWS override200ms; no PSH, no internal PCB state, no Linux claim"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 15,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1001,
+        "window": 1
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          128
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 221,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 221,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 221,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      },
+      "expect_trace": [
+        {
+          "at_ms": 221,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  128
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 230,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1002,
+        "window": 1
+      }
+    },
+    {
+      "at_ms": 240,
+      "tick": true,
+      "expect_trace": []
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_nxt": 1002,
+      "snd_una": 1002,
+      "snd_buf": [],
+      "rtx_buf": [],
+      "cb_acked_total": 1,
+      "sws_max_window": 16,
+      "sws_active": false,
+      "sws_override_ready": false
+    },
+    "timers": {}
+  }
+}

@@ -416,3 +416,19 @@ ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件
 验收入口artifacts/tcp-nagle-development/acceptance.json；来源锁spec/sources/tcp-nagle.json，保留RFC3042与lwIP固定版本对变体的解释。生成器确定性及旧258注册输入SHA确认未变。新8方法不属于eaeb02ff正在运行的409项冻结回归，完整发现现为417项，尚不宣称组合全部通过。继续sender SWS／短段队列策略、服务／时序／恢复及IR解释／翻译对应，再按原计划推进UDP与后续协议；完整目标未完成。
 
 2026-10-30：eaeb02ff冻结提交的409项完整发现回归一次5043.817秒全部通过（runner5044.056秒），无失败／错误／跳过，1208项依赖及环境未变。证据归档artifacts/full-regression-eaeb02ff；此前running记录是历史。后续Nagle8项和SWS开发不属于本次409集合，不能追加推算全量通过；主unknown、Linux与完整协议缺口保持，目标未完成。
+
+## 2026-10-30：发送端SWS有限策略、PUSH前缀与独立窗口观测
+
+新增tcp-sws继承Nagle及共享发送／接收／恢复链，209规则／223不变量。RFC9293 August2022 §3.8.6.2.1 MUST-38及推荐算法固定MSS4、Fs1/2，历史最大接受窗口与当前usable window分开。正常choice／自动LT必须发完整MSS、全部已push队列、至少历史最大窗口的一半，或已有超时授权；实际选取prefix满足条件，仍受父Nagle／rwnd／cwnd约束。app.push仅标记当时队列前缀，后来写入不继承，close标记自身前缀。无新运行时算子／Python协议回调，上游lwIP不改。
+
+另设sws timer，默认200ms，配置100..1000。首次pending输出请求启动，更多写入／重复请求不延后；实际新字节推进才开始剩余队列新周期。到期提供同刻choice机会及持续ready，并不直接自动发包，fairness／mandatory输出活性仍开放。清理、队列耗尽或离开发送状态取消。IR尚无actual timer deadline表达式，metadata与实际deadline的独立状态等式未证明；到期guard、精确参考／SMT时序及早／晚arm故障分别验收，不把状态检查提升为通用计时器对应。
+
+13方法一次232.550s全部通过，覆盖exact221ms、奇数半窗口上取整、窗口缩减与future ACK不污染max、push前缀、不相互关闭Nagle／SWS、重复请求不延后、新周期与旧RTO截止点、零窗口不越权、reset重连、65535窗口域及CLOSE-WAIT／wrap／FIN flush。六个独立手写字节／时刻／顺序契约（含push、两轮override、wrap关闭）完成参考、全字节新进程SAT、独立重建／查询等价和synthetic-only codec验收。新depth6 safety与overlap均unknown/canceled，报告保留。
+
+SWS-INV聚合新窗口／prefix／timer所有权／发送理由状态性质，在222父不变量及自身为前态假设下，248查询全部unsat，并独立复查1863个断言对应；此组件不证明父basis在child闭包、其他父性质、字节／解释／翻译或实现对应。八个旧choice guard只增强，其他旧guard保持；六个新event/state组是新鲜单例，表示未扩大旧冲突可能，不替换原整体overlap unknown。
+
+初版max误限16导致24个SAT目标，实际父通告窗口允许0..65535；已在隔离旧IR中用正常window17握手重现可达失败，修正后接受。完整原IR仅一个invariant literal变为65535，guards／actions不改，所有原查询／witness／源码保留；24个原SAT导出保留全部断言并绑定保存witness，在原10s预算下重新SAT。一例无约束重查timeout单独保留，未升级为成功或宣称24前态全可达。初始max算子被类型检查拒绝，改用已有ge／ite；半关闭新夹具曾错误假设数据发送或ACK即发FIN，按父CL-FLUSH-FIN显式调度修正，旧oracle未动，原失败留档。
+
+ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4方法一次269.069s通过，3个新真实C执行全部独立CLI／导出SAT验收；1线端匹配、2线端差异、3服务匹配。完整4字节在21ms一致，两个1字节写（含历史窗口16缩至1）实际21ms，模型按所选SWS策略221ms；230ms sent callback一致。保留严格0ms／checksum／顺序Difference，不据此判RFC bug、观测内部SWS或泛化lwIP符合。修正invariant前的3捕获另存历史，与修正后新执行的原始PCAP和公共摘要完全相同，不重标历史hash。PUSH／wire PSH不在此C适配器范围，只有参考／SMT证据；非Linux。
+
+验收见artifacts/tcp-sws-development/acceptance.json。258个旧注册输入SHA、旧模型／oracle及2750ms差异保持。409项完整回归已在eaeb02ff通过；新Nagle8和SWS13不在该集合，当前发现430，须在新冻结提交另跑。Nagle新增冻结profile视图复现原已验收trace，没有新增C执行。后续继续精确语义／时间与输出对应、发送活性边界、receiver SWS／wire PSH／窗口与恢复及Linux，再按原顺序推进后续协议，完整目标未完成。

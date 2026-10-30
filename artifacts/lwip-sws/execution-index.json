@@ -1,0 +1,52 @@
+{
+  "status": "independent_sws_observations_complete",
+  "scenarios": [
+    {
+      "id": "full-mss",
+      "wire": "match",
+      "service": "match",
+      "report_sha256": "bcfdec85fb1081b278c0fe0d4e8fa40adf044111a023c351071053a4a473df10",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/scenarios/full-mss.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-sws/full-mss"
+      ],
+      "returncode": 0
+    },
+    {
+      "id": "shrunk-window-override",
+      "wire": "mismatch",
+      "service": "match",
+      "report_sha256": "4dbb711e51c5114bceacea59c42f4a9e4d44352e0a021aa7735acbd028f3b933",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/scenarios/shrunk-window-override.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-sws/shrunk-window-override"
+      ],
+      "returncode": 1
+    },
+    {
+      "id": "tiny-override",
+      "wire": "mismatch",
+      "service": "match",
+      "report_sha256": "81b36bfea0e6cfa0823fb30e7e24d0a242acee94da0f38ee9c2f763053690ca2",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/run.py",
+        "--scenario",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-sws/scenarios/tiny-override.json",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/lwip-sws/tiny-override"
+      ],
+      "returncode": 1
+    }
+  ],
+  "linux_execution": false,
+  "universal_refinement": false
+}

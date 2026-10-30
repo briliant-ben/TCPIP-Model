@@ -1,0 +1,2735 @@
+{
+  "status": "component_obligation_failure",
+  "backend": "z3-conditional-component-preservation",
+  "assumed_parent_invariants_preserved": "not_proved_by_this_component_check",
+  "byte_encoding": "exact_length_projection_content_insensitive_subset",
+  "sequence_encoding": "modular_integer_full_32bit_domain",
+  "timeout_ms": 10000,
+  "target_coverage": "all_declared_destinations",
+  "export_validation": "same_assertion_vector_and_checked_AC_congruence_or_unconditional_clause_equivalence",
+  "trusted_components": [
+    "IR typing and length-admission checker",
+    "independent IR-to-SMT encoder",
+    "Z3 parser/solver and builtin operator semantics",
+    "checked AC congruence normalizer",
+    "Python orchestration and export checker",
+    "reference interpreter for nonvacuity sample"
+  ],
+  "runtime_properties": [
+    "positive_timer_duration",
+    "active_timer_not_in_past"
+  ],
+  "does_not_prove": [
+    "other child invariants",
+    "guard disjointness",
+    "byte contents",
+    "whole-model induction",
+    "unbounded protocol correctness",
+    "interpreter/translator or implementation refinement"
+  ],
+  "model_semantic_sha256": "e98e27101ea304f784f0c425f6ca131c9f0cd2593d551300160a6c01b129f64b",
+  "parent_semantic_sha256": "198078a59341fdc6437c85fa943b206dbd04acf613cef78937a1be00bd96056f",
+  "checker_sources": {
+    "formal/component_induction.py": "c9d651564a30f2db9639cbb0ddb3ea5b6c51c448a25ea0061b4ad41bd22e03f9",
+    "formal/ac_normalization.py": "b58035381ec0bc55f7666917257bcfe24a2130d49d028e32c0de327c5e0c89ab",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974"
+  },
+  "property": {
+    "id": "SWS-INV",
+    "assert": {
+      "op": "and",
+      "args": [
+        {
+          "op": "and",
+          "args": [
+            {
+              "op": "and",
+              "args": [
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "and",
+                                  "args": [
+                                    {
+                                      "op": "and",
+                                      "args": [
+                                        {
+                                          "op": "and",
+                                          "args": [
+                                            {
+                                              "op": "and",
+                                              "args": [
+                                                {
+                                                  "op": "and",
+                                                  "args": [
+                                                    {
+                                                      "op": "and",
+                                                      "args": [
+                                                        {
+                                                          "op": "and",
+                                                          "args": [
+                                                            {
+                                                              "op": "and",
+                                                              "args": [
+                                                                {
+                                                                  "op": "and",
+                                                                  "args": [
+                                                                    {
+                                                                      "op": "and",
+                                                                      "args": [
+                                                                        {
+                                                                          "op": "and",
+                                                                          "args": [
+                                                                            {
+                                                                              "op": "and",
+                                                                              "args": [
+                                                                                true,
+                                                                                {
+                                                                                  "op": "ge",
+                                                                                  "args": [
+                                                                                    {
+                                                                                      "var": "sws_override_ms"
+                                                                                    },
+                                                                                    100
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "op": "le",
+                                                                              "args": [
+                                                                                {
+                                                                                  "var": "sws_override_ms"
+                                                                                },
+                                                                                1000
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "op": "ge",
+                                                                          "args": [
+                                                                            {
+                                                                              "var": "sws_max_window"
+                                                                            },
+                                                                            0
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "op": "le",
+                                                                      "args": [
+                                                                        {
+                                                                          "var": "sws_max_window"
+                                                                        },
+                                                                        16
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "op": "implies",
+                                                                  "args": [
+                                                                    {
+                                                                      "op": "or",
+                                                                      "args": [
+                                                                        {
+                                                                          "op": "or",
+                                                                          "args": [
+                                                                            {
+                                                                              "op": "or",
+                                                                              "args": [
+                                                                                {
+                                                                                  "op": "or",
+                                                                                  "args": [
+                                                                                    false,
+                                                                                    {
+                                                                                      "state": "ESTABLISHED"
+                                                                                    }
+                                                                                  ]
+                                                                                },
+                                                                                {
+                                                                                  "state": "CLOSE-WAIT"
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "state": "FIN-WAIT-1"
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "state": "CLOSING"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "op": "and",
+                                                                      "args": [
+                                                                        {
+                                                                          "op": "and",
+                                                                          "args": [
+                                                                            true,
+                                                                            {
+                                                                              "op": "ge",
+                                                                              "args": [
+                                                                                {
+                                                                                  "var": "sws_max_window"
+                                                                                },
+                                                                                {
+                                                                                  "var": "snd_wnd"
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "op": "ge",
+                                                                          "args": [
+                                                                            {
+                                                                              "var": "sws_max_window"
+                                                                            },
+                                                                            {
+                                                                              "var": "sws_previous_max"
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "op": "implies",
+                                                              "args": [
+                                                                {
+                                                                  "op": "not",
+                                                                  "args": [
+                                                                    {
+                                                                      "op": "or",
+                                                                      "args": [
+                                                                        {
+                                                                          "op": "or",
+                                                                          "args": [
+                                                                            {
+                                                                              "op": "or",
+                                                                              "args": [
+                                                                                {
+                                                                                  "op": "or",
+                                                                                  "args": [
+                                                                                    false,
+                                                                                    {
+                                                                                      "state": "ESTABLISHED"
+                                                                                    }
+                                                                                  ]
+                                                                                },
+                                                                                {
+                                                                                  "state": "CLOSE-WAIT"
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "state": "FIN-WAIT-1"
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "state": "CLOSING"
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "op": "eq",
+                                                                  "args": [
+                                                                    {
+                                                                      "var": "sws_max_window"
+                                                                    },
+                                                                    0
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "op": "ge",
+                                                          "args": [
+                                                            {
+                                                              "var": "sws_push_bytes"
+                                                            },
+                                                            0
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "op": "le",
+                                                      "args": [
+                                                        {
+                                                          "var": "sws_push_bytes"
+                                                        },
+                                                        {
+                                                          "op": "bytes_len",
+                                                          "args": [
+                                                            {
+                                                              "var": "snd_buf"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "op": "eq",
+                                                  "args": [
+                                                    {
+                                                      "var": "sws_active"
+                                                    },
+                                                    {
+                                                      "timer_active": "sws"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "op": "not",
+                                              "args": [
+                                                {
+                                                  "op": "and",
+                                                  "args": [
+                                                    {
+                                                      "op": "and",
+                                                      "args": [
+                                                        true,
+                                                        {
+                                                          "var": "sws_active"
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "var": "sws_override_ready"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "op": "eq",
+                                          "args": [
+                                            {
+                                              "var": "sws_requested"
+                                            },
+                                            {
+                                              "op": "or",
+                                              "args": [
+                                                {
+                                                  "op": "or",
+                                                  "args": [
+                                                    false,
+                                                    {
+                                                      "var": "sws_active"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "var": "sws_override_ready"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "op": "implies",
+                                      "args": [
+                                        {
+                                          "op": "or",
+                                          "args": [
+                                            {
+                                              "op": "or",
+                                              "args": [
+                                                false,
+                                                {
+                                                  "var": "sws_active"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "var": "sws_override_ready"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "op": "and",
+                                          "args": [
+                                            {
+                                              "op": "and",
+                                              "args": [
+                                                {
+                                                  "op": "and",
+                                                  "args": [
+                                                    {
+                                                      "op": "and",
+                                                      "args": [
+                                                        {
+                                                          "op": "and",
+                                                          "args": [
+                                                            {
+                                                              "op": "and",
+                                                              "args": [
+                                                                true,
+                                                                {
+                                                                  "op": "or",
+                                                                  "args": [
+                                                                    {
+                                                                      "op": "or",
+                                                                      "args": [
+                                                                        {
+                                                                          "op": "or",
+                                                                          "args": [
+                                                                            {
+                                                                              "op": "or",
+                                                                              "args": [
+                                                                                false,
+                                                                                {
+                                                                                  "state": "ESTABLISHED"
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "state": "CLOSE-WAIT"
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "state": "FIN-WAIT-1"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "state": "CLOSING"
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "op": "not",
+                                                              "args": [
+                                                                {
+                                                                  "var": "fin_sent"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "op": "ge",
+                                                          "args": [
+                                                            {
+                                                              "op": "bytes_len",
+                                                              "args": [
+                                                                {
+                                                                  "var": "snd_buf"
+                                                                }
+                                                              ]
+                                                            },
+                                                            1
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "op": "ge",
+                                                      "args": [
+                                                        {
+                                                          "var": "sws_started_ms"
+                                                        },
+                                                        0
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "op": "le",
+                                                  "args": [
+                                                    {
+                                                      "var": "sws_started_ms"
+                                                    },
+                                                    {
+                                                      "clock_ms": true
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "op": "eq",
+                                              "args": [
+                                                {
+                                                  "var": "sws_deadline_ms"
+                                                },
+                                                {
+                                                  "op": "add",
+                                                  "args": [
+                                                    {
+                                                      "var": "sws_started_ms"
+                                                    },
+                                                    {
+                                                      "var": "sws_override_ms"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "op": "implies",
+                                  "args": [
+                                    {
+                                      "op": "not",
+                                      "args": [
+                                        {
+                                          "op": "or",
+                                          "args": [
+                                            {
+                                              "op": "or",
+                                              "args": [
+                                                false,
+                                                {
+                                                  "var": "sws_active"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "var": "sws_override_ready"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "op": "and",
+                                      "args": [
+                                        {
+                                          "op": "and",
+                                          "args": [
+                                            true,
+                                            {
+                                              "op": "eq",
+                                              "args": [
+                                                {
+                                                  "var": "sws_started_ms"
+                                                },
+                                                0
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "op": "eq",
+                                          "args": [
+                                            {
+                                              "var": "sws_deadline_ms"
+                                            },
+                                            0
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "implies",
+                              "args": [
+                                {
+                                  "var": "sws_override_ready"
+                                },
+                                {
+                                  "op": "le",
+                                  "args": [
+                                    {
+                                      "var": "sws_deadline_ms"
+                                    },
+                                    {
+                                      "clock_ms": true
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "ge",
+                          "args": [
+                            {
+                              "var": "sws_sent_count"
+                            },
+                            0
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "le",
+                      "args": [
+                        {
+                          "var": "sws_sent_count"
+                        },
+                        4
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "implies",
+                  "args": [
+                    {
+                      "op": "ge",
+                      "args": [
+                        {
+                          "var": "sws_sent_count"
+                        },
+                        1
+                      ]
+                    },
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "and",
+                              "args": [
+                                true,
+                                {
+                                  "var": "sws_allowed_at_send"
+                                }
+                              ]
+                            },
+                            {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "var": "sws_decision_count"
+                                },
+                                {
+                                  "var": "sws_sent_count"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "and",
+                              "args": [
+                                {
+                                  "op": "and",
+                                  "args": [
+                                    {
+                                      "op": "and",
+                                      "args": [
+                                        true,
+                                        {
+                                          "op": "ge",
+                                          "args": [
+                                            {
+                                              "var": "sws_decision_count"
+                                            },
+                                            1
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "op": "le",
+                                      "args": [
+                                        {
+                                          "var": "sws_decision_count"
+                                        },
+                                        {
+                                          "var": "sws_decision_queued"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "op": "le",
+                                  "args": [
+                                    {
+                                      "var": "sws_decision_count"
+                                    },
+                                    {
+                                      "var": "sws_decision_usable"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "or",
+                              "args": [
+                                {
+                                  "op": "or",
+                                  "args": [
+                                    {
+                                      "op": "or",
+                                      "args": [
+                                        {
+                                          "op": "or",
+                                          "args": [
+                                            false,
+                                            {
+                                              "op": "eq",
+                                              "args": [
+                                                {
+                                                  "var": "sws_decision_count"
+                                                },
+                                                4
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "op": "and",
+                                          "args": [
+                                            {
+                                              "op": "and",
+                                              "args": [
+                                                {
+                                                  "op": "and",
+                                                  "args": [
+                                                    true,
+                                                    {
+                                                      "op": "or",
+                                                      "args": [
+                                                        {
+                                                          "op": "or",
+                                                          "args": [
+                                                            false,
+                                                            {
+                                                              "op": "eq",
+                                                              "args": [
+                                                                {
+                                                                  "var": "sws_decision_flight"
+                                                                },
+                                                                0
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "var": "sws_decision_disabled"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "op": "eq",
+                                                  "args": [
+                                                    {
+                                                      "var": "sws_decision_pushed"
+                                                    },
+                                                    {
+                                                      "var": "sws_decision_queued"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "op": "eq",
+                                              "args": [
+                                                {
+                                                  "var": "sws_decision_count"
+                                                },
+                                                {
+                                                  "var": "sws_decision_queued"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "op": "and",
+                                      "args": [
+                                        {
+                                          "op": "and",
+                                          "args": [
+                                            true,
+                                            {
+                                              "op": "or",
+                                              "args": [
+                                                {
+                                                  "op": "or",
+                                                  "args": [
+                                                    false,
+                                                    {
+                                                      "op": "eq",
+                                                      "args": [
+                                                        {
+                                                          "var": "sws_decision_flight"
+                                                        },
+                                                        0
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "var": "sws_decision_disabled"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "op": "ge",
+                                          "args": [
+                                            {
+                                              "op": "mul",
+                                              "args": [
+                                                {
+                                                  "var": "sws_decision_count"
+                                                },
+                                                2
+                                              ]
+                                            },
+                                            {
+                                              "var": "sws_decision_maximum"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "var": "sws_decision_ready"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "implies",
+              "args": [
+                {
+                  "var": "sws_decision_ready"
+                },
+                {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            true,
+                            {
+                              "op": "ge",
+                              "args": [
+                                {
+                                  "var": "sws_decision_started_ms"
+                                },
+                                0
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "eq",
+                          "args": [
+                            {
+                              "var": "sws_decision_deadline_ms"
+                            },
+                            {
+                              "op": "add",
+                              "args": [
+                                {
+                                  "var": "sws_decision_started_ms"
+                                },
+                                {
+                                  "var": "sws_override_ms"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "le",
+                      "args": [
+                        {
+                          "var": "sws_decision_deadline_ms"
+                        },
+                        {
+                          "var": "sws_decision_at_ms"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "le",
+          "args": [
+            {
+              "var": "sws_decision_at_ms"
+            },
+            {
+              "clock_ms": true
+            }
+          ]
+        }
+      ]
+    },
+    "requirements": [
+      "SWS-SEND",
+      "SWS-TIMEOUT",
+      "SWS-PUSH",
+      "SWS-SCOPE"
+    ]
+  },
+  "assumed_pre_invariants": [
+    "C-INV-TIMER-CLOSED-rtx",
+    "C-INV-TIMER-CLOSED-user",
+    "C-INV-TIMER-CLOSED-time_wait",
+    "C-INV-TIMER-LISTEN-rtx",
+    "C-INV-TIMER-LISTEN-user",
+    "C-INV-TIMER-LISTEN-time_wait",
+    "C-INV-TIMER-SYN-SENT-rtx",
+    "C-INV-TIMER-SYN-SENT-user",
+    "C-INV-TIMER-SYN-SENT-time_wait",
+    "C-INV-TIMER-SYN-RECEIVED-rtx",
+    "C-INV-TIMER-SYN-RECEIVED-user",
+    "C-INV-TIMER-SYN-RECEIVED-time_wait",
+    "C-INV-TIMER-ESTABLISHED-user",
+    "C-INV-TIMER-ESTABLISHED-time_wait",
+    "C-INV-TIMER-FIN-WAIT-1-user",
+    "C-INV-TIMER-FIN-WAIT-1-time_wait",
+    "C-INV-TIMER-FIN-WAIT-2-rtx",
+    "C-INV-TIMER-FIN-WAIT-2-user",
+    "C-INV-TIMER-FIN-WAIT-2-time_wait",
+    "C-INV-TIMER-CLOSE-WAIT-user",
+    "C-INV-TIMER-CLOSE-WAIT-time_wait",
+    "C-INV-TIMER-CLOSING-user",
+    "C-INV-TIMER-CLOSING-time_wait",
+    "C-INV-TIMER-LAST-ACK-user",
+    "C-INV-TIMER-LAST-ACK-time_wait",
+    "C-INV-TIMER-TIME-WAIT-rtx",
+    "C-INV-TIMER-TIME-WAIT-user",
+    "C-INV-TIMER-TIME-WAIT-time_wait",
+    "C-INV-BOUND-rto_ms",
+    "C-INV-BOUND-retries",
+    "C-INV-BOUND-msl_ms",
+    "C-INV-BOUND-user_timeout_ms",
+    "C-INV-SYN-SENT-ISS",
+    "D-INV-SEND-CAPACITY",
+    "D-INV-RECEIVE-CAPACITY",
+    "D-INV-WINDOW",
+    "D-INV-ADVERTISED-WINDOW",
+    "R-INV-CELL-00",
+    "R-INV-RIGHT-EDGE-00",
+    "R-INV-CELL-01",
+    "R-INV-RIGHT-EDGE-01",
+    "R-INV-CELL-02",
+    "R-INV-RIGHT-EDGE-02",
+    "R-INV-CELL-03",
+    "R-INV-RIGHT-EDGE-03",
+    "R-INV-CELL-04",
+    "R-INV-RIGHT-EDGE-04",
+    "R-INV-CELL-05",
+    "R-INV-RIGHT-EDGE-05",
+    "R-INV-CELL-06",
+    "R-INV-RIGHT-EDGE-06",
+    "R-INV-CELL-07",
+    "R-INV-RIGHT-EDGE-07",
+    "R-INV-CELL-08",
+    "R-INV-RIGHT-EDGE-08",
+    "R-INV-CELL-09",
+    "R-INV-RIGHT-EDGE-09",
+    "R-INV-CELL-10",
+    "R-INV-RIGHT-EDGE-10",
+    "R-INV-CELL-11",
+    "R-INV-RIGHT-EDGE-11",
+    "R-INV-CELL-12",
+    "R-INV-RIGHT-EDGE-12",
+    "R-INV-CELL-13",
+    "R-INV-RIGHT-EDGE-13",
+    "R-INV-CELL-14",
+    "R-INV-RIGHT-EDGE-14",
+    "R-INV-CELL-15",
+    "R-INV-RIGHT-EDGE-15",
+    "R-INV-NO-CONTIGUOUS-QUEUED-HEAD",
+    "R-INV-TOTAL-RECEIVE-CAPACITY",
+    "R-INV-ADVANCE-BOUND",
+    "R-INV-ADVANCE-CHUNK",
+    "S-INV-ACK-DISTANCE-DOMAIN",
+    "CL-INV-SYN-CONTROL",
+    "CL-INV-FLIGHT",
+    "CL-INV-FIN-POSITION",
+    "CL-INV-REQUEST-STATE",
+    "CL-INV-PENDING-CLOSE",
+    "CL-INV-SEND-DRAINED",
+    "CL-INV-NO-SEND-IN-CONTROL",
+    "CL-INV-RECEIVE-STATES",
+    "CL-INV-QUEUE-STATES",
+    "F-INV-DONE-STATE",
+    "F-INV-PENDING",
+    "F-INV-OFFSET-DOMAIN",
+    "F-INV-PENDING-POSITION",
+    "F-INV-CONSUMED-POSITION",
+    "F-INV-CELL-BEFORE-FIN-00",
+    "F-INV-CELL-BEFORE-FIN-01",
+    "F-INV-CELL-BEFORE-FIN-02",
+    "F-INV-CELL-BEFORE-FIN-03",
+    "F-INV-CELL-BEFORE-FIN-04",
+    "F-INV-CELL-BEFORE-FIN-05",
+    "F-INV-CELL-BEFORE-FIN-06",
+    "F-INV-CELL-BEFORE-FIN-07",
+    "F-INV-CELL-BEFORE-FIN-08",
+    "F-INV-CELL-BEFORE-FIN-09",
+    "F-INV-CELL-BEFORE-FIN-10",
+    "F-INV-CELL-BEFORE-FIN-11",
+    "F-INV-CELL-BEFORE-FIN-12",
+    "F-INV-CELL-BEFORE-FIN-13",
+    "F-INV-CELL-BEFORE-FIN-14",
+    "F-INV-CELL-BEFORE-FIN-15",
+    "T-INV-NONNEG-srtt_ms",
+    "T-INV-NONNEG-rttvar_ms",
+    "T-INV-NONNEG-rtt_error_ms",
+    "T-INV-NONNEG-rtt_previous_srtt",
+    "T-INV-NONNEG-rtt_previous_var",
+    "T-INV-NONNEG-rtt_start_ms",
+    "T-INV-NONNEG-rtt_last_ms",
+    "T-INV-NONNEG-rtt_samples",
+    "T-INV-RTO",
+    "T-INV-ESTIMATOR",
+    "T-INV-MEASURED",
+    "T-INV-ACTIVE",
+    "T-INV-INACTIVE",
+    "T-INV-SYN-SAMPLE",
+    "T-INV-KARN",
+    "T-INV-SAMPLE-EPOCH",
+    "T-INV-UPDATE-ORDER",
+    "TX-INV-TIME-00",
+    "TX-INV-TIME-01",
+    "TX-INV-TIME-02",
+    "TX-INV-TIME-03",
+    "TX-INV-TIME-04",
+    "TX-INV-TIME-05",
+    "TX-INV-TIME-06",
+    "TX-INV-TIME-07",
+    "TX-INV-TIME-08",
+    "TX-INV-TIME-09",
+    "TX-INV-TIME-10",
+    "TX-INV-TIME-11",
+    "TX-INV-TIME-12",
+    "TX-INV-TIME-13",
+    "TX-INV-TIME-14",
+    "TX-INV-TIME-15",
+    "TX-INV-FIN-TIME",
+    "TX-INV-BOUND-tx_emit_count",
+    "TX-INV-BOUND-tx_eligible",
+    "TX-INV-AGE",
+    "TX-INV-NO-EARLY-TIMEOUT",
+    "TX-INV-WAIT-NO-RTX",
+    "SYN-INV-TIME",
+    "SYN-INV-PENDING",
+    "SYN-INV-CLEAR",
+    "SYN-INV-FLAGS",
+    "ACK-INV-CONFIG",
+    "ACK-INV-TIMER",
+    "ACK-INV-COUNTS",
+    "ACK-INV-EPOCH",
+    "ACK-INV-PENDING",
+    "ACK-INV-CLEAR",
+    "P-INV-TIMER-OWNERSHIP",
+    "P-INV-NO-PROBE-RTT",
+    "P-INV-INTERVAL",
+    "P-INV-TIMES",
+    "P-INV-DEADLINE",
+    "P-INV-NO-EARLY-PROBE",
+    "P-INV-PROBE-HISTORY",
+    "P-INV-INACTIVE-CLEAR",
+    "CC-INV-CONFIG",
+    "CC-INV-BOUNDS",
+    "CC-INV-DATA-BUDGET",
+    "CC-INV-MARK-00",
+    "CC-INV-MARK-01",
+    "CC-INV-MARK-02",
+    "CC-INV-MARK-03",
+    "CC-INV-MARK-04",
+    "CC-INV-MARK-05",
+    "CC-INV-MARK-06",
+    "CC-INV-MARK-07",
+    "CC-INV-MARK-08",
+    "CC-INV-MARK-09",
+    "CC-INV-MARK-10",
+    "CC-INV-MARK-11",
+    "CC-INV-MARK-12",
+    "CC-INV-MARK-13",
+    "CC-INV-MARK-14",
+    "CC-INV-MARK-15",
+    "FR-INV-BOUNDS",
+    "FR-INV-ACTIVE",
+    "FR-INV-FAST-CAUSE",
+    "FR-INV-WINDOW-IGNORED",
+    "FR-INV-ENTRY-SEND",
+    "FR-INV-ENTRY-WINDOW",
+    "FR-INV-EXIT-WINDOW",
+    "IDLE-INV-CLOCK",
+    "IDLE-INV-OUTPUT-STAMP",
+    "IDLE-INV-RESTART",
+    "LT-INV-EPOCH",
+    "LT-INV-SEND",
+    "LT-INV-THRESHOLD-BASIS",
+    "CHOICE-INV-BOUNDS",
+    "CHOICE-INV-ADMISSIBLE",
+    "SCHED-INV-CAPACITY",
+    "SCHED-INV-GRANT",
+    "SCHED-INV-CHOICE-EPOCH",
+    "SCHED-INV-SERVICE-BALANCE",
+    "SCHED-INV-ACK-CREDIT",
+    "CB-INV-CAPACITY",
+    "CB-INV-MASS",
+    "CB-INV-PARTIAL",
+    "CB-INV-UNSENT-BUDGET",
+    "CB-INV-SLOT-00",
+    "CB-INV-SLOT-01",
+    "CB-INV-SLOT-02",
+    "CB-INV-SLOT-03",
+    "CB-INV-SLOT-04",
+    "CB-INV-SLOT-05",
+    "CB-INV-SLOT-06",
+    "CB-INV-SLOT-07",
+    "CB-INV-SLOT-08",
+    "CB-INV-SLOT-09",
+    "CB-INV-SLOT-10",
+    "CB-INV-SLOT-11",
+    "CB-INV-SLOT-12",
+    "CB-INV-SLOT-13",
+    "CB-INV-SLOT-14",
+    "CB-INV-SLOT-15",
+    "NAGLE-INV-NEW-DATA",
+    "NAGLE-INV-COUNTS",
+    "SWS-INV"
+  ],
+  "solver_version": "4.15.4",
+  "queries": [
+    {
+      "label": "initial",
+      "query": "unsat",
+      "file": "queries/0000.smt2",
+      "sha256": "58a6896b5018f21262f0219b2adacf7da1420abaab9a8012015cfd2389036be2"
+    },
+    {
+      "label": "C-ACTIVE-OPEN -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0001.smt2",
+      "sha256": "1249c80c2de09e98d1f5a3dc77c01f2bb7ed06f01c4d981695367e568495e3ce"
+    },
+    {
+      "label": "C-PASSIVE-OPEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0002.smt2",
+      "sha256": "cf82e42d0100676f875df079d45547000f7a3952a5fada9aacc3b14e7a037856"
+    },
+    {
+      "label": "C-LISTEN-SYN -> SYN-RECEIVED",
+      "query": "unsat",
+      "file": "queries/0003.smt2",
+      "sha256": "0ee55650e06b41716b185581ce0817a4dcf7861c626e78bae281d192a1f85e42"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYN -> SYN-RECEIVED",
+      "query": "unsat",
+      "file": "queries/0004.smt2",
+      "sha256": "bf48e9de69bce7de8e12325d6ee41143b8ff8b70056a22bba54bb3213dee9700"
+    },
+    {
+      "label": "C-ACCEPT-SYNACK -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0005.smt2",
+      "sha256": "4d6d47782a23d565f4c3cf34a0e298bd207eb2261e7841eeb157fb2f0074716a",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0005-model.txt",
+      "witness_sha256": "e2179235c5e65b33e89f17a602147acbe61521e8fc079fca0b62ac33d846f3d2"
+    },
+    {
+      "label": "C-ACCEPT-ACK -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0006.smt2",
+      "sha256": "bf53b5274ce7dc39a03c249755c1043e12357fab50de1f3c3ed032eb31a3a4d6",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0006-model.txt",
+      "witness_sha256": "26d6c67ed07e08d477347bb4c091f46cb4dd07bc132c9447626c55cf12fd5b97"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYNACK -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0007.smt2",
+      "sha256": "8f022f8fb77b39abf0a1c5d6b8e47c52f9fa15fb78f1f70e63ed86b99a2b5740",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0007-model.txt",
+      "witness_sha256": "4b11490f86ef22d8a1200c177fae1d2c3d5fcf5da51be7dbb7f9bd28f54cf77a"
+    },
+    {
+      "label": "C-ACCEPT-SYNACK-AFTER-RETRY -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0008.smt2",
+      "sha256": "40b7e79e51dc5c2d6dc1c2366ff99ae038f38689c8e9e644c29c0e009de22926",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0008-model.txt",
+      "witness_sha256": "4591349d1e8d95b0e2a3c4b42a8f647287afd16c822f145b3e56a4b36f354e5a"
+    },
+    {
+      "label": "C-ACCEPT-ACK-AFTER-RETRY -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0009.smt2",
+      "sha256": "1f967878e67be70a7b417c1735cea018043f7ffb5e6774884b5e5d70cc870cf9",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0009-model.txt",
+      "witness_sha256": "f5d7319366266d6d937d84200b3a281b2d13262121cfac271dd1772c1ebe5edb"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0010.smt2",
+      "sha256": "6e9c87e2ab2f8aaed2e7100c1b6ba5072b84671422190043ab9254246918d24c",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0010-model.txt",
+      "witness_sha256": "421e85e98e5adb5ac39fcfeea7188847fb64c3a50a1ed9184054a4ccdddfc6cc"
+    },
+    {
+      "label": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0011.smt2",
+      "sha256": "ab0c37c9e30f77bcf4a8a227f7b551ec6103fa8922c77e189a53a6a099f3738e",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0011-model.txt",
+      "witness_sha256": "dfa6108a6a8412ba474727300ce9dda03e314df5b0b13faa9e94cbf4fbcc43bd"
+    },
+    {
+      "label": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0012.smt2",
+      "sha256": "10c659442213c986f1b02649efc81db280c4bc6413d98e38a766155ed731f2e2",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0012-model.txt",
+      "witness_sha256": "4e12cc0ed21c83a4ba589c555344ed74215463a52f9b71d8aa2614bc2e8ee991"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0013.smt2",
+      "sha256": "a44785bded1ec291c723b827bf702d566087f502eddf7e0cb4d4a9d8ef2d158a",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0013-model.txt",
+      "witness_sha256": "118af346a033a0b235a2dfcd598b8a285e7dd37a74c0f30c7855994dfdd3cd9e"
+    },
+    {
+      "label": "C-SYN-SENT-BAD-ACK -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0014.smt2",
+      "sha256": "1040728ccdfe23fbb57b12958db168ab0e32f1cef8ab7da3a4f78ddc3ece7518"
+    },
+    {
+      "label": "C-SYN-SENT-BAD-SYNACK -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0015.smt2",
+      "sha256": "150731ae196373762aab010c1a5398e31a75d031de17052548953f7636cc1083"
+    },
+    {
+      "label": "C-SYN-SENT-BARE-ACK -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0016.smt2",
+      "sha256": "b7a9dcc0f7fe85c6abbab97427d37a29545147e5c7273bbe04c4c918a1907bc0"
+    },
+    {
+      "label": "C-SYN-RECEIVED-BAD-ACK -> SYN-RECEIVED",
+      "query": "unsat",
+      "file": "queries/0017.smt2",
+      "sha256": "73e75a7fb993e40a9b4f222d43ae1d63121bd9ba0610b2ef6f5edf38773ab87a"
+    },
+    {
+      "label": "C-CLOSE-LISTEN -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0018.smt2",
+      "sha256": "171faad020c37998840b5e59a00d181ab102810c98aeaf65d49708640aac76ee"
+    },
+    {
+      "label": "C-CLOSE-SYN-SENT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0019.smt2",
+      "sha256": "173f8113af4c3fd753267c7c35f57845c949dd3bfbccd29634b6c6607772ffe2"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0020.smt2",
+      "sha256": "6e4f846d4464d567f575d17ea6acf8af6674716a46d2688120edf3fc5a1f4dcb"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0021.smt2",
+      "sha256": "265c23a69bb2a2e0489533044e88f28ec453627d49df4d825405e9ed4268378d"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0022.smt2",
+      "sha256": "29c0fb87bb89401554bae95e2b4cbfe80ba39310b5a936670c19f9d0ea7fc637"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0023.smt2",
+      "sha256": "6ecc63e5f3fcd5dfd79cdb9a29f7f1b3813c661cc28141a3b6e07f7302d124ae"
+    },
+    {
+      "label": "C-REPEATED-CLOSE-TIME-WAIT -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0024.smt2",
+      "sha256": "e9dd770d60b867f9a218faf28673a550ae507c9cb13138db796b2c0e251d04df"
+    },
+    {
+      "label": "C-DUPLICATE-FIN-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0025.smt2",
+      "sha256": "3943f8db6d223f8bbf3532bf62c59a9196f2ce13d7933667c2192cb8dcc37d4a"
+    },
+    {
+      "label": "C-DUPLICATE-FIN-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0026.smt2",
+      "sha256": "d59251d41e069a46acfdd1d92271d460457d0c599bb5d943c64cd375dd1802ce"
+    },
+    {
+      "label": "C-DUPLICATE-FIN-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0027.smt2",
+      "sha256": "3226e9e95798d90e6931ad2bc7cea0a0f0c5a19ed42316022eab30a8495a2703"
+    },
+    {
+      "label": "C-RETRANSMIT-SYN-SENT -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0028.smt2",
+      "sha256": "fc5872e94d59b4652a0ad4d7c173cbecd2b0a7f6804823e23d4c22c97fc494a2"
+    },
+    {
+      "label": "C-RETRANSMIT-SYN-RECEIVED -> SYN-RECEIVED",
+      "query": "unsat",
+      "file": "queries/0029.smt2",
+      "sha256": "1c87a0d0fbf467a90ced9de4fd54f84d1c3d3c0bd8791cdb60297f438690c060"
+    },
+    {
+      "label": "C-USER-TIMEOUT-SYN-SENT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0030.smt2",
+      "sha256": "f69590e9a1ad830a53e5b865af6949de9f18da0f003ca186d12506f2b88327d1"
+    },
+    {
+      "label": "C-USER-TIMEOUT-SYN-RECEIVED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0031.smt2",
+      "sha256": "fcdb165612f53447f6b4af48689b7c747182ec5b558abd1669a9768612218746"
+    },
+    {
+      "label": "C-USER-TIMEOUT-FIN-WAIT-1 -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0032.smt2",
+      "sha256": "8ec533ce5bfe39fbc538b1973019d9a35cf2ca2f1216e348464a3a15a031d18b"
+    },
+    {
+      "label": "C-USER-TIMEOUT-FIN-WAIT-2 -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0033.smt2",
+      "sha256": "7f8fc21e97c53ec55a70df6c0ae37bfac0db739f0acd737b152bd2fcd7991ef9"
+    },
+    {
+      "label": "C-USER-TIMEOUT-CLOSING -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0034.smt2",
+      "sha256": "0fcf643f43b91ca55c907f8a9eeda4c9834cb79ff11d8a0d2ee62f83c3ae7565"
+    },
+    {
+      "label": "C-USER-TIMEOUT-LAST-ACK -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0035.smt2",
+      "sha256": "a7e29800c5838a5e6ca498c2c762e9df6a96869532f7324e93372ab0d1af597d"
+    },
+    {
+      "label": "C-TIME-WAIT-EXPIRED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0036.smt2",
+      "sha256": "efd5789815ddeb51c01bb92860dc2e272a77bd49016a7844a8aeb3ef9443709e"
+    },
+    {
+      "label": "C-ABORT-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0037.smt2",
+      "sha256": "83812ea5d09506aeab65152c7f65211df2eff5ec837c66436a76cb33b5102dcf"
+    },
+    {
+      "label": "C-ABORT-LISTEN -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0038.smt2",
+      "sha256": "bda52223b0f8d4653d119c66aecd9624f95ab2dc9203cf6659547e411ec2d372"
+    },
+    {
+      "label": "C-ABORT-SYN-SENT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0039.smt2",
+      "sha256": "b753c6374455c801d5b9c7d54e408958eb8fdd45cd71b320fdbdcf2a1808c772"
+    },
+    {
+      "label": "C-ABORT-SYN-RECEIVED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0040.smt2",
+      "sha256": "4ac54e5ee32a344a218640a22ef1bc395afa66dec6ebad0b71f7f5d653b5e103"
+    },
+    {
+      "label": "C-ABORT-ESTABLISHED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0041.smt2",
+      "sha256": "441a34362752724bbd3dfb0c0e69ad079ec2496e74c43eaab41af044680d1d59"
+    },
+    {
+      "label": "C-ABORT-FIN-WAIT-1 -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0042.smt2",
+      "sha256": "1262be901910f25b1469139755a7965dd1bf45681ba8b4aac3fad95049f49314"
+    },
+    {
+      "label": "C-ABORT-FIN-WAIT-2 -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0043.smt2",
+      "sha256": "a9ca2f6ff73f8d39792f8eb67085efb010d390e84a41fee064d6910301623d6d"
+    },
+    {
+      "label": "C-ABORT-CLOSE-WAIT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0044.smt2",
+      "sha256": "e3b77947a78b4cc7c95c86525d4fd572a25411640c4c2cf99de2efa7f17eb460"
+    },
+    {
+      "label": "C-ABORT-CLOSING -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0045.smt2",
+      "sha256": "eee58f782b896f0cfb005262e94b07322581288ac93bb3c28d00f9aabba558c6"
+    },
+    {
+      "label": "C-ABORT-LAST-ACK -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0046.smt2",
+      "sha256": "32d92f80abdadf3b7f4a79210f11b437a9e7c30a17addf74adef1f5e92897204"
+    },
+    {
+      "label": "C-ABORT-TIME-WAIT -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0047.smt2",
+      "sha256": "65f0f50d878d7032fb17577090909cc80d425c97a5cf004ddf872bc4594896d8"
+    },
+    {
+      "label": "C-IGNORE-NET-RST-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0048.smt2",
+      "sha256": "5e6bcfdd70ca3dba48e6390de6a2f0281dd41ff3cfa435b37fd551ab1cb92265"
+    },
+    {
+      "label": "C-IGNORE-NET-RST-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0049.smt2",
+      "sha256": "d470c57c10db68b283a596333ff62aeb283a68652a9db729d6a7ce1a831e5288"
+    },
+    {
+      "label": "C-SYN-SENT-NET-RST -> SYN-SENT",
+      "query": "unsat",
+      "file": "queries/0050.smt2",
+      "sha256": "21a040fd0f3061baec51b0defa1093032c176f4dc3a4af637e1494bef978b90a"
+    },
+    {
+      "label": "C-SYN-RECEIVED-NET-RST-PASSIVE -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0051.smt2",
+      "sha256": "47e5c4faa01f3985fe475c17932a0f8a2df7cb5d8c8fca89308f3acc9adc69d3"
+    },
+    {
+      "label": "C-SYN-RECEIVED-NET-RST-ACTIVE -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0052.smt2",
+      "sha256": "7b4fd7051673ce5c1a3bbb98fe6cd84222c96a7ed14148aeb48b643a138a478c"
+    },
+    {
+      "label": "C-RESET-ESTABLISHED-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0053.smt2",
+      "sha256": "fb9f07712ecdf1853fb5b35a173e67b42bc329542d725b588f3e9e3f53fcdf8e"
+    },
+    {
+      "label": "C-RESET-FIN-WAIT-1-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0054.smt2",
+      "sha256": "4589c8a688994cab9973c62b3612e66efac307407eac1f99e745d194d380f694"
+    },
+    {
+      "label": "C-RESET-FIN-WAIT-2-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0055.smt2",
+      "sha256": "9a7db996a59d89f5808f9613333fa81ead9ab7a5293b10cd2769f8cf50d0c711"
+    },
+    {
+      "label": "C-RESET-CLOSE-WAIT-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0056.smt2",
+      "sha256": "4fc64b094e09c87519e6a194b7ece09224bb2a916da46f875d18a18ddbfdcc2d"
+    },
+    {
+      "label": "C-RESET-CLOSING-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0057.smt2",
+      "sha256": "b2aa28d315629280d3af3502cf49bbeae38c7a1034776aaf2b9185009cdd7f8d"
+    },
+    {
+      "label": "C-RESET-LAST-ACK-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0058.smt2",
+      "sha256": "c82837197084314aab0a52e4c77d308716df468595b9809d8389256d47cbfc78"
+    },
+    {
+      "label": "C-RESET-TIME-WAIT-rst -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0059.smt2",
+      "sha256": "4e55513351ecb0d9216b5ba4d0be30d1f77ed0d9dc75692f6226bdfc23cac893"
+    },
+    {
+      "label": "C-IGNORE-NET-RSTACK-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0060.smt2",
+      "sha256": "0c4d792bb0d3b6a222a93334d3b34231176aa36b4642172e45193ac391e433cd"
+    },
+    {
+      "label": "C-IGNORE-NET-RSTACK-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0061.smt2",
+      "sha256": "69dd43bcf39602c2f32746d90d23958d0d736de66fd07c4c262909b70da59347"
+    },
+    {
+      "label": "C-SYN-SENT-NET-RSTACK -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0062.smt2",
+      "sha256": "29f200e32b147b0c8c8875b0ace0c593d058dfea17ff3db9500b1188373a34d9"
+    },
+    {
+      "label": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0063.smt2",
+      "sha256": "796f00af9961421bd7a902090b51883882de798f35fbeddbf27608a83ffc8c76"
+    },
+    {
+      "label": "C-SYN-RECEIVED-NET-RSTACK-ACTIVE -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0064.smt2",
+      "sha256": "4ffd9420b82f7a7643561f6602352fc826f01479a1a67e28ef8ee15f3d22817d"
+    },
+    {
+      "label": "C-RESET-ESTABLISHED-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0065.smt2",
+      "sha256": "b443b81a50d022e9bed907f0bddca69efd0f786da4a0864b686a5ebf6ae43777"
+    },
+    {
+      "label": "C-RESET-FIN-WAIT-1-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0066.smt2",
+      "sha256": "428137fe34081e1d4dba852f160c2968d1fbaddefbd991f237c06a17000b3206"
+    },
+    {
+      "label": "C-RESET-FIN-WAIT-2-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0067.smt2",
+      "sha256": "70bd883624ed0d42b02d6222c3b6e338eb5dc8faecd8d72f0e7e619a413d71b5"
+    },
+    {
+      "label": "C-RESET-CLOSE-WAIT-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0068.smt2",
+      "sha256": "ad32738667947cb77682c62be0f7c8025e2c17e824cc865f0ed230266dc5f51d"
+    },
+    {
+      "label": "C-RESET-CLOSING-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0069.smt2",
+      "sha256": "45a8dfc1b559027fea0c07d84363799ce96c62d32fceee4dda4611fb70f3dab3"
+    },
+    {
+      "label": "C-RESET-LAST-ACK-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0070.smt2",
+      "sha256": "d0ff6c0ade76da9c6d99c2e23756b38532c90e8c041cc71b9db75d8927b86001"
+    },
+    {
+      "label": "C-RESET-TIME-WAIT-rstack -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0071.smt2",
+      "sha256": "be32f068b7f2c288fe152c411b7da78f5ad017feae8ae2bf70e9dd8b4272f431"
+    },
+    {
+      "label": "C-REJECT-ACK-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0072.smt2",
+      "sha256": "92f4fc921b3ef812bb076eee56f0c3f24ad0051859e7f8833be099e41fa5d2e3"
+    },
+    {
+      "label": "C-REJECT-ACK-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0073.smt2",
+      "sha256": "e147e93375fb66db5c7524b88d9f9a448001d3989901b64b3de927ccb0cb1699"
+    },
+    {
+      "label": "C-REJECT-SYNACK-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0074.smt2",
+      "sha256": "1a7a07887110f30e1c875bf5a969a6b41b32dc96f02b7d8f63bd5343f41c30eb"
+    },
+    {
+      "label": "C-REJECT-SYNACK-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0075.smt2",
+      "sha256": "c450d23fa0577404bbc38c7343caff34ff9f983a38a55c489eee58295e8200c9"
+    },
+    {
+      "label": "C-REJECT-FIN-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0076.smt2",
+      "sha256": "b4eba0e6ff4dbc3b5bc10008c95cafcc0b7747642f543ec5f145aa7659a3211b"
+    },
+    {
+      "label": "C-REJECT-FIN-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0077.smt2",
+      "sha256": "5bd91a34cfd66403c26c5950dcc62e6a29c6b4690baf3040029ebe1b461c7ebd"
+    },
+    {
+      "label": "C-CLOSED-SYN -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0078.smt2",
+      "sha256": "55458b811a2e525e02aa4296c9265ff7f2396a5fe2ee830499c53f8deb2dee2b"
+    },
+    {
+      "label": "D-QUEUE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0079.smt2",
+      "sha256": "f225efea1437fb5f48990997474ba759e1df42ee9af3399a4b8f874e31ef086f"
+    },
+    {
+      "label": "D-SEND-EMPTY -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0080.smt2",
+      "sha256": "9b7b613708b9621749bcb7d7e4c4bec77a3a44c156760e96b54ca657426807bc"
+    },
+    {
+      "label": "D-SEND-FULL -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0081.smt2",
+      "sha256": "a108a22f803c0e4b2ce005a0dac7aa5033daf2932c5d1cb6b30481ab62ff741b"
+    },
+    {
+      "label": "D-FLUSH-FIRST -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0082.smt2",
+      "sha256": "07f640926acd7ef1017d668699c21b9a0dbf5364811d8162866ac82ea6dfc2e9"
+    },
+    {
+      "label": "D-FLUSH-MORE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0083.smt2",
+      "sha256": "c16b89740c4415a16b51510b3a5d471d64be4a38733f76d9abce5e4c28f64e2c"
+    },
+    {
+      "label": "D-FLUSH-BLOCKED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0084.smt2",
+      "sha256": "bb08fa4fb3800cf7768d4b199d074567942a9c5300af5cea388117a52a9ede0d"
+    },
+    {
+      "label": "D-APPLICATION-READ -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0085.smt2",
+      "sha256": "064434b43c9026abc1678de32f5d2932607c4604e535f803cd0486e6af756230"
+    },
+    {
+      "label": "S-ACK-VALID -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0086.smt2",
+      "sha256": "c0da6e92e45d171e84d37a379e0208545b0889e5d66f2d8252d375e6ab9b92c0",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0086-model.txt",
+      "witness_sha256": "d192aa72b92c1f2fe4b81bbd924f41b61585b51a8c737d756e9852eec5f60f7b"
+    },
+    {
+      "label": "S-ACK-FUTURE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0087.smt2",
+      "sha256": "6ba34f305fe333837a54b20931382805b02ee94f4607c42d1acbf7b1f7d9e3a0"
+    },
+    {
+      "label": "S-ACK-UNACCEPTABLE-SEQUENCE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0088.smt2",
+      "sha256": "23216722d4791c637d9c53aee4eb14b2934dd59f72ab21af6ff23578ec84b3c0"
+    },
+    {
+      "label": "S-RETRANSMIT-WINDOW -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0089.smt2",
+      "sha256": "70290d50331484490d2de5d03a5338a35a05babc20009dec44fe3864d39317ad"
+    },
+    {
+      "label": "S-RETRANSMIT-ZERO-WINDOW -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0090.smt2",
+      "sha256": "3965290d0fbaeb508bfe8eb28159eb2c02dc15ef38f4ce3dc2c140661aeaf727"
+    },
+    {
+      "label": "CL-CLOSE-ESTABLISHED-FIN -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0091.smt2",
+      "sha256": "b4af2bd6ed2044c05644fb05f7fdf34f75212e716ad21f102db53ecbd365df2e"
+    },
+    {
+      "label": "CL-CLOSE-ESTABLISHED-QUEUE -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0092.smt2",
+      "sha256": "934aa18183a0d795ce506f3148184975e00a7ac05b431aea6ab81c2ad6020676"
+    },
+    {
+      "label": "CL-CLOSE-CLOSE-WAIT-FIN -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0093.smt2",
+      "sha256": "585bc3c678be4f52f60f72559d437c1810a49fc73917756a4c2d948b5e7bcd2a"
+    },
+    {
+      "label": "CL-CLOSE-CLOSE-WAIT-QUEUE -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0094.smt2",
+      "sha256": "a69427e960bd2f457248bdf8bff762fed8432f21b3366484916e6569847043f1"
+    },
+    {
+      "label": "CL-REPEATED-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0095.smt2",
+      "sha256": "db232ebf1495eeb70e099a4628def7c17c89e665c2f0c1169095f52f2d0bfb9d"
+    },
+    {
+      "label": "CL-D-FLUSH-FIRST-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0096.smt2",
+      "sha256": "3cdff30e89b396e5eac9f663b3bbb4d2d6f4f225af964e3fb526c8df57179be2"
+    },
+    {
+      "label": "CL-D-FLUSH-MORE-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0097.smt2",
+      "sha256": "ba4be898837db42222c966e4008f7f0a7fa78f5841d29b57cc2ff0dde5eea4f4"
+    },
+    {
+      "label": "CL-D-FLUSH-BLOCKED-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0098.smt2",
+      "sha256": "e3bfd6a26da51acae7b3f1bc7af8f324a3e4c7958e47c5b66b2f7cd8d6a71504"
+    },
+    {
+      "label": "CL-FLUSH-FIN-CLOSE-WAIT -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0099.smt2",
+      "sha256": "534533da3c8c2d15db4bc447d5c6805c2077f73ccc26633c4ebb3a2add814241"
+    },
+    {
+      "label": "CL-D-FLUSH-FIRST-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0100.smt2",
+      "sha256": "1e4646e552c060c40bf3d1492bbacf5d677027c0ebd9c579baf3e9ff804be730"
+    },
+    {
+      "label": "CL-D-FLUSH-MORE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0101.smt2",
+      "sha256": "0330f25e1e4007d6b17fc1c614280a796328ec145efc060320dbc5179ae1254a"
+    },
+    {
+      "label": "CL-D-FLUSH-BLOCKED-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0102.smt2",
+      "sha256": "4e6582d4b404eacd9df2d666f20cf3d818263de58f92ad68320c116ee402c25f"
+    },
+    {
+      "label": "CL-FLUSH-FIN-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0103.smt2",
+      "sha256": "a3dbd4339d967720c19d895b87644c8948a5baf9a69c7de66eaea6659e042fd4"
+    },
+    {
+      "label": "CL-D-FLUSH-FIRST-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0104.smt2",
+      "sha256": "c6dd4d493ac48b5289ba342173c7e6c6437b9bd2e3084b661b60659eeb8e4409"
+    },
+    {
+      "label": "CL-D-FLUSH-MORE-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0105.smt2",
+      "sha256": "3bf49425396053a40a411070499fe9a1636a8449af38cca63b555e00b250fbde"
+    },
+    {
+      "label": "CL-D-FLUSH-BLOCKED-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0106.smt2",
+      "sha256": "d523f13b479d067bbba0d6709dddaa74cfc087200fe297ffb60bbc5b52ce420f"
+    },
+    {
+      "label": "CL-FLUSH-FIN-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0107.smt2",
+      "sha256": "1a9f792513ca22920b8e4747107cc858058bbe546f988c81199c1bd83d472c85"
+    },
+    {
+      "label": "CL-D-QUEUE-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0108.smt2",
+      "sha256": "9e89e5b8d831fc4c24236b2de19062bbbca4bd15a1766041bed45b8c733d35a0"
+    },
+    {
+      "label": "CL-D-SEND-EMPTY-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0109.smt2",
+      "sha256": "983b1cc53923ba81306819632e24d50b1f2f3d8f1f828e5aaa90f18a795ad30c"
+    },
+    {
+      "label": "CL-D-SEND-FULL-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0110.smt2",
+      "sha256": "06cf2af606d45ce5012417e9a84e6e04d77d2e5d7749a8e7c9202f81705a3e11"
+    },
+    {
+      "label": "CL-SEND-CLOSING-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0111.smt2",
+      "sha256": "7cfc3ca94f50c4a3afe19ea59145118aeb665a04fb2e7f33bdb9a06ca4cb38fc"
+    },
+    {
+      "label": "CL-SEND-CLOSING-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0112.smt2",
+      "sha256": "5010eb14bfb314a2b2d5c2913e0d04c4c5251d3c0969ba7b4afd2145001742de"
+    },
+    {
+      "label": "CL-SEND-CLOSING-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0113.smt2",
+      "sha256": "4b4b88da5444473f65e4b34a1f3016e3759f9d58a8480c8821e58dfc0876df16"
+    },
+    {
+      "label": "CL-SEND-CLOSING-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0114.smt2",
+      "sha256": "af739ef870c2ba31bca04c50e7e55e0818cb90baf98b146b4015382be9590860"
+    },
+    {
+      "label": "CL-SEND-CLOSING-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0115.smt2",
+      "sha256": "acd8b2d8a413e56ee9759998b2b12ee211830ced3c7e4c6f3f5c5b8875650f56"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0116.smt2",
+      "sha256": "1d0860e6442006ff5b0ab5d6383c93f2d61ed28e7212df54ab777d0fd237b382"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0117.smt2",
+      "sha256": "721be37423f04839c5036071e3ba11fdc9662d87f24ddbda9f7439c9e5c36fb0"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0118.smt2",
+      "sha256": "c35f1b824d9e3dd02ce3bd8f24d7f1218ad363de0bb5260e274480a13fb44d9a"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0119.smt2",
+      "sha256": "f1de4e8e47e09c2520814f512a945aab331e09b7bb7e6f2fb974dfe5257971af"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0120.smt2",
+      "sha256": "d9ceb088afaa4fd925bc4782a3f3ded16275028a853aa93191f5331e3aa4865e"
+    },
+    {
+      "label": "CL-D-APPLICATION-READ-TIME-WAIT -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0121.smt2",
+      "sha256": "ad77218bddd0dac819f8fac88dd8472a64a95fce308f4c25452eb2aacd42b6ab"
+    },
+    {
+      "label": "CL-S-ACK-VALID-CLOSE-WAIT-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "sat",
+      "file": "queries/0122.smt2",
+      "sha256": "908b93f5fec8f9f904596221790bf747d81e2aaa40d7be49a4ec5fe953072ac8",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0122-model.txt",
+      "witness_sha256": "34e757dace81afea053d99fca5fa2a8869a0bc225118d4b66366ae66cd9fb1bf"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-CLOSE-WAIT-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0123.smt2",
+      "sha256": "0a6084f8627e7546ee7ae7bf6cdc547a318cd025b75005f9446a03aac84fa75e"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSE-WAIT-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0124.smt2",
+      "sha256": "3514e6043705d619bb13cd3da177ffd673bcd03011ac2c572bd35a11c56eb614"
+    },
+    {
+      "label": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "sat",
+      "file": "queries/0125.smt2",
+      "sha256": "b2b6143bf8764c41466f9410cdc0fbfc6382df99e03d11c5269ae1a43f381d77",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0125-model.txt",
+      "witness_sha256": "6ffc821e98bae903edd513dbc56142dbfff653472dd19fc36cb66cc1c6afc7df"
+    },
+    {
+      "label": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0126.smt2",
+      "sha256": "6cd36348ffed6b906bd6ceb909b506863016eca10f7a27dd402ce85988351db3"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-FIN-WAIT-1-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0127.smt2",
+      "sha256": "734485562bef060fbedac4fddd8f929ab9e116ec6f0f1b4200d1e219a50a0d22"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-1-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0128.smt2",
+      "sha256": "e3548f12bb71121ad1231d755c73798b1cf77f2cc0ed447af7e18a0c97106a32"
+    },
+    {
+      "label": "CL-S-ACK-VALID-FIN-WAIT-2-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0129.smt2",
+      "sha256": "b73d0fca45087cdc5a30c3eb6ce7c587f68d659867d15c850e85046441d2c0c5"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-FIN-WAIT-2-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0130.smt2",
+      "sha256": "d07beb3e4c9e03f9e1a8b8f7e78628fd9f257184c59e6035d603627d2e21b7cc"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-2-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0131.smt2",
+      "sha256": "51ebdd5bcf057d6eb746e19e98fd0980c34feb046c3cd0f7595014c4948ba320"
+    },
+    {
+      "label": "CL-S-ACK-VALID-CLOSING-CLOSING -> CLOSING",
+      "query": "sat",
+      "file": "queries/0132.smt2",
+      "sha256": "fe4367f8d962f50dc4bed8621abb054d4e8f99d02e59dec371e7ea62f788b940",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0132-model.txt",
+      "witness_sha256": "91a13dbd946f02b27f0a07eb4827f4a1bd23c2e630bd0e4e8ebb592fad32615b"
+    },
+    {
+      "label": "CL-S-ACK-VALID-CLOSING-TIME-WAIT -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0133.smt2",
+      "sha256": "0cea5ecd90e9f7c65ab0abd6f9144d9b070e4e62b8b935e6f92b7ffa8c43ff52"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-CLOSING-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0134.smt2",
+      "sha256": "cbe25b88b6a70611bf12fb9ef3540b8dfedaf87734a5f79a1f82e78a454c2529"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSING-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0135.smt2",
+      "sha256": "1febe2305f52718d917789c8917e1a0338ff1ec63c32f3e48e91f42527f2e059"
+    },
+    {
+      "label": "CL-S-ACK-VALID-LAST-ACK-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0136.smt2",
+      "sha256": "af8867d9c2077a0cf97aaf2ca4a6aca69fde69a302fcb65f8ce1623dadd13d4e"
+    },
+    {
+      "label": "CL-S-ACK-VALID-LAST-ACK-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0137.smt2",
+      "sha256": "d1a4864fe3043befba9cb1d42ce40bccdbbcd457ab3db571be8bccb261dd4f82"
+    },
+    {
+      "label": "CL-S-ACK-FUTURE-LAST-ACK-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0138.smt2",
+      "sha256": "2c4060f4095d288f613ba4eb66575096e1d82d468d10f03fbd7024c1df9031eb"
+    },
+    {
+      "label": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-LAST-ACK-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0139.smt2",
+      "sha256": "6b133527aded5ffa715971f1c1435bf5e04ae0b38c512b06bfc4eca1e1010f0f"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-WINDOW-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0140.smt2",
+      "sha256": "8fc3706ee3aa1654cda16f36bf37011ee4c05ea68c01934189fe441da1ba5c0e"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0141.smt2",
+      "sha256": "8b3d15e805b8ea3480e45e94cfd1f7076e868db6fb719b26d7acc24d08c3d2e8"
+    },
+    {
+      "label": "CL-RETRANSMIT-FIN-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0142.smt2",
+      "sha256": "9048321e6c2b147222f2a0812f4e85cf315d5dcf2228c799bf3d41556b9fecc7"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-WINDOW-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0143.smt2",
+      "sha256": "c9e176138631f47e90e439866866b628da19c73e41346dc637973779e26a2dbf"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-ZERO-WINDOW-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0144.smt2",
+      "sha256": "1ca74f43dfb249e9fd987224a064cefae8b3804dd5e882cf50cdbbfac197809e"
+    },
+    {
+      "label": "CL-RETRANSMIT-FIN-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0145.smt2",
+      "sha256": "acad183c551c347e256d8d863fb06302e7531f7f310a6040baacf8560428ce97"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-WINDOW-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0146.smt2",
+      "sha256": "a25010383239dbcc8129efaf5ecbc46ac74ace11a3aa0f438bc83b837517e0fb"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0147.smt2",
+      "sha256": "06c635519b1e6993c73d0ca083f970fbadd18dc3583155b9efa06c8e12b9cbdf"
+    },
+    {
+      "label": "CL-RETRANSMIT-FIN-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0148.smt2",
+      "sha256": "8f206e510f669191ceb5cc86b952248552b7f059b2c9fafd3a875e7c3a88fb8d"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-WINDOW-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0149.smt2",
+      "sha256": "5abdf0b8a69e857f94405ec9438908f6c3fe2ea2fa75b70659e058f7c910a5bf"
+    },
+    {
+      "label": "CL-S-RETRANSMIT-ZERO-WINDOW-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0150.smt2",
+      "sha256": "408afe4e0aaa23e4d18df9e34b5f0ab79c79471dd2ae62c370fd2d8fb560bc03"
+    },
+    {
+      "label": "CL-RETRANSMIT-FIN-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0151.smt2",
+      "sha256": "8a3c1b2381f2c2ad4ff5369e87668f3fbf521de24bdf4d104a79650cdf88947c"
+    },
+    {
+      "label": "CL-TRANSMIT-AFTER-FIN-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0152.smt2",
+      "sha256": "c98c7a762c5dc5647ddf8239b066a6bee035fcf39107422e6ef2155bd7838af4"
+    },
+    {
+      "label": "CL-TRANSMIT-AFTER-FIN-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0153.smt2",
+      "sha256": "10a56105ae3aece415c2abc1b31e4efa18b45c517f300d39188a0c692ec3e285"
+    },
+    {
+      "label": "CL-TRANSMIT-AFTER-FIN-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0154.smt2",
+      "sha256": "0f53fc37af780d80a5adc8c7cbe181f1c05ce8c080581dd254e6c439d4fee494"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-data -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0155.smt2",
+      "sha256": "e3f499e1231c5ecf5aed3871d34edf8cbb8d372221f7e7b48d19d0c3d6e7a7fb",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0155-model.txt",
+      "witness_sha256": "82065a7b7b82e87db521a6d0f9a53ff3e990197f4e4cab34086819d8a40e774b"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-data -> CLOSE-WAIT",
+      "query": "unknown",
+      "file": "queries/0156.smt2",
+      "sha256": "e9bd72f3d9bc48e692b63dd9b774c573b202248643cd12f8130a2ca6dfbdbbeb",
+      "reason": "timeout"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin_segment -> ESTABLISHED",
+      "query": "sat",
+      "file": "queries/0157.smt2",
+      "sha256": "07de160f32e4dfa345c01a902ea1bfa705a4e9a9cf3ff03f068bd8a06bae0c58",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0157-model.txt",
+      "witness_sha256": "f0b88c496c68690ae8cad7fdb4ce79944d2bb0edb53001409ed6ff9f2b7db0fb"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin_segment -> CLOSE-WAIT",
+      "query": "sat",
+      "file": "queries/0158.smt2",
+      "sha256": "de3f3d5fc2647046f0c7efee02f451a54de1a759a41d4cc67eb76cd1dfd6dd9b",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0158-model.txt",
+      "witness_sha256": "f04ef0f97fb869bd8e046ece7986cf2d9d8fa6750de85f7bb959222a61563f3e"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0159.smt2",
+      "sha256": "06ddcca271163d66a3a95fe9eb8e1950bb78d067c7966e524f60840b74de62cb"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0160.smt2",
+      "sha256": "c68165ed6a329636ac664e0e48565882565cc8e2ffc54bdd3cc4aa8f7176b4b7"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-data -> FIN-WAIT-1",
+      "query": "unknown",
+      "file": "queries/0161.smt2",
+      "sha256": "3796ad4e9e8a3d2f5b6055f7edf70b743d4879affa3b724893f9c4893fbf77f5",
+      "reason": "timeout"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-data -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0162.smt2",
+      "sha256": "d616e7392a903b735dacae47c67295d5f60f9e40da9a9c095d04d9261fa857b2"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-data -> CLOSING",
+      "query": "unknown",
+      "file": "queries/0163.smt2",
+      "sha256": "41889cdd6c607df8260116e0e9684513b7a075eb31375ccc3aa44f0b9a373916",
+      "reason": "timeout"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-data -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0164.smt2",
+      "sha256": "98c9bb75bdac1cae1b34f1c067060f134eae11ac541aeb399beeb1a273447c95"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0165.smt2",
+      "sha256": "40ed21660e22a8605544c021aa957f8549899d18afbc6c31dd1afa98be89cbe0"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0166.smt2",
+      "sha256": "dd0156324d344e57eee000a155be78f2ed68ffd2062c8db70836c4ca39af753a"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0167.smt2",
+      "sha256": "6d6324a1fa3cb71416e75e25336837aebf7f0581a5e8ef06e226bce0d773a92f"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0168.smt2",
+      "sha256": "9188c16d826319ea7e56c2a56fb01963fbf890357daf94527aa7ec0e285511c8"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0169.smt2",
+      "sha256": "4f569f31c83ee17e0536382d71c3e00a16311a1f3bf3a320018efb146238f76f"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0170.smt2",
+      "sha256": "ae5a91cb75911256e166fba3103c0348687bf80d2ca5352bb4a81a6373ea6a0a"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0171.smt2",
+      "sha256": "89ff073de76aaead43027be1dc998f88c49146e2a3e9c94156c0d799b94ff41b"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0172.smt2",
+      "sha256": "be7fc5e8419fa6ef86d014418b3543868703db65833c781f8c113eb67ec3ec18"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-data -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0173.smt2",
+      "sha256": "943114c5817ae15b90f7602cc51e8db7735f14811bed5ca31f197f9c149e0a76"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-data -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0174.smt2",
+      "sha256": "3ff59b1845e6eb6a01e2b87f56db614e7605ec58fed0380015b8a62ba3904c15"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-fin_segment -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0175.smt2",
+      "sha256": "6bd8351cfd52d1f2fa99e69f7355f19cddb0b47c0b2de500726016511f6e5e49"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-fin_segment -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0176.smt2",
+      "sha256": "0b4137166af8331f6bd0bfe88135a128c5ed444f9cded84a67388397d5a3e198"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-fin -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0177.smt2",
+      "sha256": "e9e48d3a43dea81849aa5aea10bd14b612ef982cefa8bc4ab1fb1cad5deb9f8c"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-2-net-fin -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0178.smt2",
+      "sha256": "92b9e3c5689418536ced6f61e2d6605a7fb8968ceb5ea13b978ba64626dd8d86"
+    },
+    {
+      "label": "F-RECEIVE-CLOSE-WAIT-net-data -> CLOSE-WAIT",
+      "query": "sat",
+      "file": "queries/0179.smt2",
+      "sha256": "7a69de4b31489e1410a86e75c33b7067ee1962b0931ad0074ec34c4def628807",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0179-model.txt",
+      "witness_sha256": "697b54a8a49f05a5d81396ae5abe9ff01dc88c983d5acd5278f83e56fadbb79e"
+    },
+    {
+      "label": "F-RECEIVE-CLOSE-WAIT-net-fin_segment -> CLOSE-WAIT",
+      "query": "sat",
+      "file": "queries/0180.smt2",
+      "sha256": "a356ae56d35634ef0643bc1764202c1e52cd4f22d33e3c3e96529bd6d3b72885",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0180-model.txt",
+      "witness_sha256": "23d9e8db516c3705e32dd9e0c2ec56f5ca3fdb49bb33dceb4fd6133f78bb359d"
+    },
+    {
+      "label": "F-RECEIVE-CLOSING-net-data -> CLOSING",
+      "query": "sat",
+      "file": "queries/0181.smt2",
+      "sha256": "20559108a9ece3727105b4b77ef8588067f48a0ceb5afb5602a7fbb80beb823c",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0181-model.txt",
+      "witness_sha256": "7ba7dd8c543f8ded799bee0c7bee2a6a60d9179f52fc06901b9ae761beec3d13"
+    },
+    {
+      "label": "F-RECEIVE-CLOSING-net-data -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0182.smt2",
+      "sha256": "e076a8b3f8bcd29269bb41a41c897b52d25d3ee8a3fce8710d1dca1f513299b8"
+    },
+    {
+      "label": "F-RECEIVE-CLOSING-net-fin_segment -> CLOSING",
+      "query": "unknown",
+      "file": "queries/0183.smt2",
+      "sha256": "97666e9856e3db6963f1a1da6f50e662212dd93794305e63701caff6e178a2ec",
+      "reason": "timeout"
+    },
+    {
+      "label": "F-RECEIVE-CLOSING-net-fin_segment -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0184.smt2",
+      "sha256": "27ba7f237c1f774f023485990f57ea6b7e26f46352f409f24e02276630cc62a3"
+    },
+    {
+      "label": "F-RECEIVE-LAST-ACK-net-data -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0185.smt2",
+      "sha256": "02ce0a1eb7a2d07d52809c36d89979fdf25e3231e82d63973ed407146505c10c"
+    },
+    {
+      "label": "F-RECEIVE-LAST-ACK-net-data -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0186.smt2",
+      "sha256": "7a8792a96b6e9711267a0f76cc69039e727a19ce9fb122a0b987a42e30e53498"
+    },
+    {
+      "label": "F-RECEIVE-LAST-ACK-net-fin_segment -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0187.smt2",
+      "sha256": "4aaedee689ef1b1b8185707850d92ef322b1463461c30089329ad17c91dbf3da"
+    },
+    {
+      "label": "F-RECEIVE-LAST-ACK-net-fin_segment -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0188.smt2",
+      "sha256": "5ed68e9081a669070e57e35b59b1824f3cdab7813b31a92e29806ada3332727e"
+    },
+    {
+      "label": "F-TIME-WAIT-net-fin_segment -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0189.smt2",
+      "sha256": "62621af990df8c8a85c753128f16fa2781dd497e86a9859f1fec5c4a3e6d0822"
+    },
+    {
+      "label": "F-TIME-WAIT-net-fin -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0190.smt2",
+      "sha256": "c131bf0802fcdcabd53272e3c57066ba2dcb198ee8af34ea1c274af686b85526"
+    },
+    {
+      "label": "F-CANONICAL-CLOSED -> CLOSED",
+      "query": "unsat",
+      "file": "queries/0191.smt2",
+      "sha256": "d7a6cb3fb0bf8382f5e17f7cb9c53d5afd3b379c1d11712626fa7aab31150d95"
+    },
+    {
+      "label": "F-CANONICAL-LISTEN -> LISTEN",
+      "query": "unsat",
+      "file": "queries/0192.smt2",
+      "sha256": "1563f557fa15bffb181c968c48207f7bd911a94b66192a24cae2e29295203b58"
+    },
+    {
+      "label": "F-TIME-WAIT-DATA -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0193.smt2",
+      "sha256": "f8e02f6bf649288a009bd3291a8d11062beb66da25eda5cda955988ddc5d6662"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> FIN-WAIT-1",
+      "query": "sat",
+      "file": "queries/0194.smt2",
+      "sha256": "fe05f82a259173679f44557972e9cf131703a118de9d25015970c048c6fc3678",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0194-model.txt",
+      "witness_sha256": "495ed741088a738557ca590d68b782faed93f308facf391bafc9fe4c6add8389"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0195.smt2",
+      "sha256": "410af7504596a031b7ae1fef335efc9dd15a9289c8267268f07420d24e35d365"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> CLOSING",
+      "query": "sat",
+      "file": "queries/0196.smt2",
+      "sha256": "d4fa7ab7bb1ceadf3061ec1bfc7ddd138173ca9557409e788a5eccb9a93b0ac1",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0196-model.txt",
+      "witness_sha256": "9be399f3846ddef98330bcc0a30400161c8e39bf7a67944168e30c7ee3fbf865"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0197.smt2",
+      "sha256": "47b8cc2732f3ecf8d7dac9af885a20ecbf53665425e426405413d1dba732c5d8"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW -> FIN-WAIT-1",
+      "query": "unknown",
+      "file": "queries/0198.smt2",
+      "sha256": "a59dd9aac803714bf0a8dcd920aba0c53b55f4c9be5fb6d7493987a09d28e5a8",
+      "reason": "timeout"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0199.smt2",
+      "sha256": "8e08d055d1158038d9a07f40b1a448c3bfa3f08fcdd3af0bbc00ade709800e95"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW -> CLOSING",
+      "query": "unknown",
+      "file": "queries/0200.smt2",
+      "sha256": "88aa10b109579d4f591520ac58f82c4377c032c0f41737668dcb63c1d4169b4f",
+      "reason": "timeout"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0201.smt2",
+      "sha256": "b9a5961e0706d8e965351857a23ae1a4d79eff5b195ddd51ec5925626353d755"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0202.smt2",
+      "sha256": "8cb690c6fd533aeccf4f5879b1622ed80d8ce7796e47fc4eeb7b5ffb495a2753"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0203.smt2",
+      "sha256": "b1843efd3a9260a0665ea9228c0d6c2ba76df594ce692d9ac7647130265560aa"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0204.smt2",
+      "sha256": "31dc3a7f673fc4fc1ed03cd4b1fd4e1fd0eac6c5a49c687ca6fb0972286d756b"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0205.smt2",
+      "sha256": "5633661d085201551ceef0e71263bf586bbc37f0fab58ec0d74f382ff2ea5e1e"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> FIN-WAIT-1",
+      "query": "sat",
+      "file": "queries/0206.smt2",
+      "sha256": "445eb2a6869548e1bda084e20c10f806ec985b2b2ebb223725720af50fed80d5",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0206-model.txt",
+      "witness_sha256": "39d01c4eb75c3375e910d61fd5626b1fa12b78ca31105adc91ae820812828e5f"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0207.smt2",
+      "sha256": "63298c223b656a1ff7682131aaa42b2cc602f38a6690bdf25350e28d005c6bd6"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> CLOSING",
+      "query": "sat",
+      "file": "queries/0208.smt2",
+      "sha256": "9f559fa801cd6964886a1f954a206251f52fff4f59a6792083d2375e97b37e3d",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0208-model.txt",
+      "witness_sha256": "26849869045d3f11203df690ee0379613f382df142ff2255572f7d19f28111e2"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0209.smt2",
+      "sha256": "91014b8fe4da910c36cb746bfd1993fe6376ab7eafadd63ba300a6eb9d75df6c"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> FIN-WAIT-1",
+      "query": "unknown",
+      "file": "queries/0210.smt2",
+      "sha256": "1ce9c0f236876245fc333d0b31a445457b3ee5ef15273a8404a661a865270fb1",
+      "reason": "timeout"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0211.smt2",
+      "sha256": "7d65473db6dabf16c9e6c6d8db34f51149933ddbf07067c23ba38e34acd7b563"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> CLOSING",
+      "query": "sat",
+      "file": "queries/0212.smt2",
+      "sha256": "95614eb170942eff8fb809e423a55e7c3d7c0a385018bb625e802da1f8b09e12",
+      "classification": "arbitrary_prestate_component_failure_not_reachability_proof",
+      "witness_file": "queries/0212-model.txt",
+      "witness_sha256": "894158e395578d8d1253770b46ac4d1ac7dbe6ce54d216e0dc8fccab365a0d49"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0213.smt2",
+      "sha256": "597eedd8bbf2c128616d9e5e5726de196fc158c835007e1cbe38f44b400d6bb0"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0214.smt2",
+      "sha256": "5f8b1d8898e1542d0d167a48e581ed9c59a02a0b361071ca9c149cd444121bbe"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0215.smt2",
+      "sha256": "f4f6c41ab8ccc8627dba0020b3b8db0362c03b6ae60ac9f68362c24c2f39d4d8"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0216.smt2",
+      "sha256": "25b61c71a967eb98a278566f9f2a9997c70e6d5ad617aa21013af4cae0ed8b70"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER -> TIME-WAIT",
+      "query": "unsat",
+      "file": "queries/0217.smt2",
+      "sha256": "f30c11405425aa503ce0a7c878357abc4bd5f7d9d6e6b026134b4114a053eeb6"
+    },
+    {
+      "label": "ACK-DELAY-EXPIRE-ESTABLISHED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0218.smt2",
+      "sha256": "2632fa9c5f5caf17c41f9be437e289ce0299da0d4dffe886dde0ad9fd2c31640"
+    },
+    {
+      "label": "ACK-DELAY-EXPIRE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0219.smt2",
+      "sha256": "41c363dfa404ef57cd296017db35bfee4f653755ca967c1d2ba95f25f73718c5"
+    },
+    {
+      "label": "ACK-DELAY-EXPIRE-FIN-WAIT-2 -> FIN-WAIT-2",
+      "query": "unsat",
+      "file": "queries/0220.smt2",
+      "sha256": "bae6c89905e5ebef281263304f8c41f7bcced5c8e70408c2f1e82dcdc4f017e3"
+    },
+    {
+      "label": "PERSIST-PROBE-ESTABLISHED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0221.smt2",
+      "sha256": "dc3e1061c7583295c298f5eeca63fb5785a1d8723383ae92a23604967a277e51"
+    },
+    {
+      "label": "PERSIST-WAIT-ESTABLISHED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0222.smt2",
+      "sha256": "12d5a8c3ae450fd119f3420533aa1ab4852acd53d4de667d3eb861b676194d28"
+    },
+    {
+      "label": "PERSIST-PROBE-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0223.smt2",
+      "sha256": "207caf37a47b887898054ffac33aa0c2f455eeedaf0ca91fac879931e0cd7d75"
+    },
+    {
+      "label": "PERSIST-WAIT-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0224.smt2",
+      "sha256": "1102511055f6e1802c646235b888864c0bb9fe7616221c0a8d31379fa525ed6c"
+    },
+    {
+      "label": "PERSIST-PROBE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0225.smt2",
+      "sha256": "972c19cdfae95f5b389ea98ca1db09c59adf312b9cfc0766661043b5702736ed"
+    },
+    {
+      "label": "PERSIST-WAIT-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0226.smt2",
+      "sha256": "64cb646eec29f77f2607fe04971664c5341d656cf079018245cf3e116bc9925f"
+    },
+    {
+      "label": "PERSIST-PROBE-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0227.smt2",
+      "sha256": "4f97539d517c64d6fee77b1cc6515d1de9c725d5c407c0bd191699021bb98fe3"
+    },
+    {
+      "label": "PERSIST-WAIT-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0228.smt2",
+      "sha256": "553fba0a578dca88856c8a040e9761eded9adb3f840dd9c0d37e0546234defe3"
+    },
+    {
+      "label": "PERSIST-PROBE-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0229.smt2",
+      "sha256": "8e129e93ad89814fc1b8d83441cf3b82579e845afd78b332a0cadf02eed5889a"
+    },
+    {
+      "label": "PERSIST-WAIT-LAST-ACK -> LAST-ACK",
+      "query": "unsat",
+      "file": "queries/0230.smt2",
+      "sha256": "fb5b1a55e094b8fa8dee616af19bb6a60fb2635cff6dd0cb410855728dfba5e9"
+    },
+    {
+      "label": "CHOICE-D-FLUSH-FIRST -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0231.smt2",
+      "sha256": "ae6cfde4826e749f3f6aa9645b247b849d93217eb4f5e87d7b18d6ef8bc98836"
+    },
+    {
+      "label": "CHOICE-D-FLUSH-MORE -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0232.smt2",
+      "sha256": "96e7e01c085b2db5cef2ff078e54bff44590ab9542c1e6020f50e189193fe27c"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-FIRST-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0233.smt2",
+      "sha256": "7b14396adf7c30de562b3668c0462a829b5129054a553700cbbcde6e417e39e4"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-MORE-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0234.smt2",
+      "sha256": "fa73aeff733726687f69ac3f8c6fe65017568cde995c4061a165c9853f4fe40b"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-FIRST-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0235.smt2",
+      "sha256": "bce37067d7812d5ceebffeaa1489ec8a370c01593eec694ab70f4bdc1829f339"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-MORE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0236.smt2",
+      "sha256": "0f215ee692a51045c6f49c153292ba4cd929192ec656d6d131cc04744d2e1eef"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-FIRST-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0237.smt2",
+      "sha256": "3f2ca4202c5a5f54d9c42d8c699207b6b3fd6fe7afa70cf1a428cc2721d2a922"
+    },
+    {
+      "label": "CHOICE-CL-D-FLUSH-MORE-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0238.smt2",
+      "sha256": "6cb0a1451f164bb9bc2a104931625de1928b4a4dafeea9a00cb83504906e7d26"
+    },
+    {
+      "label": "NAGLE-OPTION-ESTABLISHED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0239.smt2",
+      "sha256": "c881d1f6b71b5793fce3bc340b4e70f2235377ad3517809fbd5ad20af0ef33e9"
+    },
+    {
+      "label": "NAGLE-OPTION-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0240.smt2",
+      "sha256": "db70f51ebe4fa6928bf2e077b551566f81f76f2fbec464c1f4f2c6465e42314f"
+    },
+    {
+      "label": "SWS-EXPIRE-ESTABLISHED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0241.smt2",
+      "sha256": "2a566e5ab95d9871b44eb5852848e9d5f169890ff730f768e8176e096d753814"
+    },
+    {
+      "label": "SWS-EXPIRE-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0242.smt2",
+      "sha256": "dc4aa6b1a560be3dfec950d630999c6881d94a29c99e066a8698efd2d3607406"
+    },
+    {
+      "label": "SWS-EXPIRE-FIN-WAIT-1 -> FIN-WAIT-1",
+      "query": "unsat",
+      "file": "queries/0243.smt2",
+      "sha256": "aa760a81bf390a0921b1501800d165a7c053dd106df2f88cb93cde019d1eed92"
+    },
+    {
+      "label": "SWS-EXPIRE-CLOSING -> CLOSING",
+      "query": "unsat",
+      "file": "queries/0244.smt2",
+      "sha256": "00496a81299274f532c86cf2e9fb768338a1b92d0279ce8f9888fe4eb2bf1825"
+    },
+    {
+      "label": "SWS-PUSH-ESTABLISHED -> ESTABLISHED",
+      "query": "unsat",
+      "file": "queries/0245.smt2",
+      "sha256": "f16b35cd40ec3e43b0e40d58219bb3c603959143cd0b5cd2ca572996e2005dff"
+    },
+    {
+      "label": "SWS-PUSH-CLOSE-WAIT -> CLOSE-WAIT",
+      "query": "unsat",
+      "file": "queries/0246.smt2",
+      "sha256": "e9e5a02ae6efe2c1590f9d40cdc3736003779eece27429f611095957ce41aa40"
+    },
+    {
+      "label": "clock_advance",
+      "query": "unsat",
+      "file": "queries/0247.smt2",
+      "sha256": "90e5862d95f43db7c43bc90e37930e9fdb376d381b70bc69281a767ff4104f92"
+    }
+  ]
+}

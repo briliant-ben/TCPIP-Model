@@ -219,3 +219,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：[基本Nagle策略](docs/tcp-nagle.md)组合发送段账本与自动LT，203规则／222不变量。8专项通过；242个条件查询及独立同输入报文／定时回调见证完成验收，旧Difference保持。完整SWS与lwIP队列等变体尚未覆盖，非一般实现证明。新8项不计在途409项冻结回归；见 `artifacts/tcp-nagle-development/acceptance.json`。
 
 2026-10-30：eaeb02ff冻结提交的409项完整发现回归一次5043.817秒全部通过（runner5044.056秒），无失败／错误／跳过，1208项依赖及环境未变。证据归档artifacts/full-regression-eaeb02ff；此前running记录是历史。后续Nagle8项和SWS开发不属于本次409集合，不能追加推算全量通过；主unknown、Linux与完整协议缺口保持，目标未完成。
+
+2026-10-30：[发送端SWS有限策略](docs/tcp-sws.md)组合历史窗口、PUSH前缀和100–1000ms override（默认200ms），209规则／223不变量。13专项、6字节时序契约、248条件查询及3独立lwIP执行验收完成；保留两个21ms／221ms发送差异，3公共回调匹配。整体BMC仍unknown，发送活性、receiver SWS／wire PSH等仍待推进。证据入口 `artifacts/tcp-sws-development/acceptance.json`。430项新增后完整回归须另跑，不能由已完成409项推算。

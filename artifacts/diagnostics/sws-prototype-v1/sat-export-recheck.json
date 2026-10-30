@@ -1,0 +1,200 @@
+{
+  "status": "retained_original_sat_queries_and_witnesses_confirmed",
+  "checker_version": "4.15.4",
+  "queries": [
+    {
+      "label": "C-ACCEPT-SYNACK -> ESTABLISHED",
+      "file": "queries/0005.smt2",
+      "sha256": "4d6d47782a23d565f4c3cf34a0e298bd207eb2261e7841eeb157fb2f0074716a",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "e2179235c5e65b33e89f17a602147acbe61521e8fc079fca0b62ac33d846f3d2"
+    },
+    {
+      "label": "C-ACCEPT-ACK -> ESTABLISHED",
+      "file": "queries/0006.smt2",
+      "sha256": "bf53b5274ce7dc39a03c249755c1043e12357fab50de1f3c3ed032eb31a3a4d6",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "26d6c67ed07e08d477347bb4c091f46cb4dd07bc132c9447626c55cf12fd5b97"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYNACK -> ESTABLISHED",
+      "file": "queries/0007.smt2",
+      "sha256": "8f022f8fb77b39abf0a1c5d6b8e47c52f9fa15fb78f1f70e63ed86b99a2b5740",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "4b11490f86ef22d8a1200c177fae1d2c3d5fcf5da51be7dbb7f9bd28f54cf77a"
+    },
+    {
+      "label": "C-ACCEPT-SYNACK-AFTER-RETRY -> ESTABLISHED",
+      "file": "queries/0008.smt2",
+      "sha256": "40b7e79e51dc5c2d6dc1c2366ff99ae038f38689c8e9e644c29c0e009de22926",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "4591349d1e8d95b0e2a3c4b42a8f647287afd16c822f145b3e56a4b36f354e5a"
+    },
+    {
+      "label": "C-ACCEPT-ACK-AFTER-RETRY -> ESTABLISHED",
+      "file": "queries/0009.smt2",
+      "sha256": "1f967878e67be70a7b417c1735cea018043f7ffb5e6774884b5e5d70cc870cf9",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "f5d7319366266d6d937d84200b3a281b2d13262121cfac271dd1772c1ebe5edb"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY -> ESTABLISHED",
+      "file": "queries/0010.smt2",
+      "sha256": "6e9c87e2ab2f8aaed2e7100c1b6ba5072b84671422190043ab9254246918d24c",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "421e85e98e5adb5ac39fcfeea7188847fb64c3a50a1ed9184054a4ccdddfc6cc"
+    },
+    {
+      "label": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES -> ESTABLISHED",
+      "file": "queries/0011.smt2",
+      "sha256": "ab0c37c9e30f77bcf4a8a227f7b551ec6103fa8922c77e189a53a6a099f3738e",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "dfa6108a6a8412ba474727300ce9dda03e314df5b0b13faa9e94cbf4fbcc43bd"
+    },
+    {
+      "label": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES -> ESTABLISHED",
+      "file": "queries/0012.smt2",
+      "sha256": "10c659442213c986f1b02649efc81db280c4bc6413d98e38a766155ed731f2e2",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "4e12cc0ed21c83a4ba589c555344ed74215463a52f9b71d8aa2614bc2e8ee991"
+    },
+    {
+      "label": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES -> ESTABLISHED",
+      "file": "queries/0013.smt2",
+      "sha256": "a44785bded1ec291c723b827bf702d566087f502eddf7e0cb4d4a9d8ef2d158a",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "118af346a033a0b235a2dfcd598b8a285e7dd37a74c0f30c7855994dfdd3cd9e"
+    },
+    {
+      "label": "S-ACK-VALID -> ESTABLISHED",
+      "file": "queries/0086.smt2",
+      "sha256": "c0da6e92e45d171e84d37a379e0208545b0889e5d66f2d8252d375e6ab9b92c0",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "d192aa72b92c1f2fe4b81bbd924f41b61585b51a8c737d756e9852eec5f60f7b"
+    },
+    {
+      "label": "CL-S-ACK-VALID-CLOSE-WAIT-CLOSE-WAIT -> CLOSE-WAIT",
+      "file": "queries/0122.smt2",
+      "sha256": "908b93f5fec8f9f904596221790bf747d81e2aaa40d7be49a4ec5fe953072ac8",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "34e757dace81afea053d99fca5fa2a8869a0bc225118d4b66366ae66cd9fb1bf"
+    },
+    {
+      "label": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-1 -> FIN-WAIT-1",
+      "file": "queries/0125.smt2",
+      "sha256": "b2b6143bf8764c41466f9410cdc0fbfc6382df99e03d11c5269ae1a43f381d77",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "6ffc821e98bae903edd513dbc56142dbfff653472dd19fc36cb66cc1c6afc7df"
+    },
+    {
+      "label": "CL-S-ACK-VALID-CLOSING-CLOSING -> CLOSING",
+      "file": "queries/0132.smt2",
+      "sha256": "fe4367f8d962f50dc4bed8621abb054d4e8f99d02e59dec371e7ea62f788b940",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "91a13dbd946f02b27f0a07eb4827f4a1bd23c2e630bd0e4e8ebb592fad32615b"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-data -> ESTABLISHED",
+      "file": "queries/0155.smt2",
+      "sha256": "e3f499e1231c5ecf5aed3871d34edf8cbb8d372221f7e7b48d19d0c3d6e7a7fb",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "82065a7b7b82e87db521a6d0f9a53ff3e990197f4e4cab34086819d8a40e774b"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin_segment -> ESTABLISHED",
+      "file": "queries/0157.smt2",
+      "sha256": "07de160f32e4dfa345c01a902ea1bfa705a4e9a9cf3ff03f068bd8a06bae0c58",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "f0b88c496c68690ae8cad7fdb4ce79944d2bb0edb53001409ed6ff9f2b7db0fb"
+    },
+    {
+      "label": "F-RECEIVE-ESTABLISHED-net-fin_segment -> CLOSE-WAIT",
+      "file": "queries/0158.smt2",
+      "sha256": "de3f3d5fc2647046f0c7efee02f451a54de1a759a41d4cc67eb76cd1dfd6dd9b",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "f04ef0f97fb869bd8e046ece7986cf2d9d8fa6750de85f7bb959222a61563f3e"
+    },
+    {
+      "label": "F-RECEIVE-CLOSE-WAIT-net-data -> CLOSE-WAIT",
+      "file": "queries/0179.smt2",
+      "sha256": "7a69de4b31489e1410a86e75c33b7067ee1962b0931ad0074ec34c4def628807",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "697b54a8a49f05a5d81396ae5abe9ff01dc88c983d5acd5278f83e56fadbb79e"
+    },
+    {
+      "label": "F-RECEIVE-CLOSE-WAIT-net-fin_segment -> CLOSE-WAIT",
+      "file": "queries/0180.smt2",
+      "sha256": "a356ae56d35634ef0643bc1764202c1e52cd4f22d33e3c3e96529bd6d3b72885",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "23d9e8db516c3705e32dd9e0c2ec56f5ca3fdb49bb33dceb4fd6133f78bb359d"
+    },
+    {
+      "label": "F-RECEIVE-CLOSING-net-data -> CLOSING",
+      "file": "queries/0181.smt2",
+      "sha256": "20559108a9ece3727105b4b77ef8588067f48a0ceb5afb5602a7fbb80beb823c",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "7ba7dd8c543f8ded799bee0c7bee2a6a60d9179f52fc06901b9ae761beec3d13"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> FIN-WAIT-1",
+      "file": "queries/0194.smt2",
+      "sha256": "fe05f82a259173679f44557972e9cf131703a118de9d25015970c048c6fc3678",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "495ed741088a738557ca590d68b782faed93f308facf391bafc9fe4c6add8389"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE -> CLOSING",
+      "file": "queries/0196.smt2",
+      "sha256": "d4fa7ab7bb1ceadf3061ec1bfc7ddd138173ca9557409e788a5eccb9a93b0ac1",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "9be399f3846ddef98330bcc0a30400161c8e39bf7a67944168e30c7ee3fbf865"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> FIN-WAIT-1",
+      "file": "queries/0206.smt2",
+      "sha256": "445eb2a6869548e1bda084e20c10f806ec985b2b2ebb223725720af50fed80d5",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "39d01c4eb75c3375e910d61fd5626b1fa12b78ca31105adc91ae820812828e5f"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE -> CLOSING",
+      "file": "queries/0208.smt2",
+      "sha256": "9f559fa801cd6964886a1f954a206251f52fff4f59a6792083d2375e97b37e3d",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "26849869045d3f11203df690ee0379613f382df142ff2255572f7d19f28111e2"
+    },
+    {
+      "label": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW -> CLOSING",
+      "file": "queries/0212.smt2",
+      "sha256": "95614eb170942eff8fb809e423a55e7c3d7c0a385018bb625e802da1f8b09e12",
+      "query": "sat",
+      "method": "all_original_assertions_plus_retained_witness_equalities",
+      "witness_sha256": "894158e395578d8d1253770b46ac4d1ac7dbe6ce54d216e0dc8fccab365a0d49"
+    }
+  ],
+  "unconstrained_recheck": "one_prior_timeout_retained_separately",
+  "reachability_proved": false
+}

@@ -1,0 +1,28 @@
+setUpClass (test_sws.SWSTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_sws.SWSTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_sws.py", line 29, in setUpClass
+    def setUpClass(cls): cls.model = load(ROOT / 'model/tcp-sws.json')
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 336, in load
+    return validate(model)
+           ^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 241, in validate
+    require(infer(arg["value"], model, rule["event"]) == model["variables"][arg["var"]]["type"], "Assignment type mismatch")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 99, in infer
+    types = [infer(x, model, event) for x in args]
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 135, in infer
+    require(op in signatures, f"Unsupported operator: {op}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Unsupported operator: max
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.772s
+
+FAILED (errors=1)
