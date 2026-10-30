@@ -1,5 +1,13 @@
 # GitHub 迁移与复现
 
+## 当前恢复点（2026-10-30）
+
+PR#3已合入main的ab9f75ba。当前开发分支是codex/tcp-modular，包含71a3e1a8的精确模查询证书／标量IR契约及main纯历史合并；以实际分支和源码为准。不要回退到早期codex/tcp-data。旧未提交refinement目录保留。
+
+430项冻结回归已通过；新442项回归按71a3e1a8在本地运行，1260依赖已核对未变，运行记录不是通过结果。31项相关专项通过。新标量模型只有2条序列空间定律，modular归纳已验收，BV主检查仍unknown；一个原ACK违例分支有等价重新导出的独立UNSAT，69其余分支未闭合，整体TCP未知报告未改。见formal/modular-normalization.md及artifacts/seq32-contract-development。
+
+真实Linux接收单段4零字节／两个握手控制场景此前已独立验收，保留窗口／ACK时刻差异；新数学实验不产生Linux或PCAP证据。2750ms lwIP差异保持。完整TCP、通用解释／翻译／实现对应及后续协议均未完成，继续原roadmap。
+
 仓库：https://github.com/briliant-ben/TCPIP-Model
 
 仓库包含作者工程、RFC 基线与来源哈希、全部模型和场景、参考执行与 Z3 检查代码、测试、文档、现有证据产物，以及保留原许可证的固定版本 lwIP 源码。不依赖原云主机上的 Git 元数据或 Python 虚拟环境。
