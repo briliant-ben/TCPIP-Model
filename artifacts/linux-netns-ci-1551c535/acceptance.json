@@ -1,0 +1,117 @@
+{
+  "status": "one_real_linux_kernel_active_open_and_quiet_window_evidence_accepted",
+  "linux_execution_evidence": true,
+  "new_linux_execution": false,
+  "kernel": "7.0.0-1017-azure",
+  "source_head": "1551c535ef7fd1f8323fcf2a3b3a66a5a57f4a9e",
+  "ci_run": 41004399031,
+  "job": 123895886417,
+  "model_semantic_sha256": "3be892210acfc335bd0dd42fdeae7b6be9231f6ab0f72e72186f4dc9abd85b10",
+  "tool_source_commit": "2a8b4d80459e157d5bb7a99fe620c83e5ce036bb",
+  "observed_window_ms": 5010.89946,
+  "declared_window_ms": 5010,
+  "selected_packets": 3,
+  "checksum_policy": "strict",
+  "projection": "active-open-v1",
+  "oracle_tolerance_ms": 0,
+  "difference": {
+    "status": "mismatch",
+    "oracle": "ordered-projection-v1",
+    "tolerance_ms": 0,
+    "compared_fields": [
+      "direction",
+      "flags",
+      "seq",
+      "ack",
+      "time_ms"
+    ],
+    "differences": [
+      {
+        "kind": "field",
+        "index": 1,
+        "packet_id": "e0002:in",
+        "event_id": "e0002",
+        "requirements": [
+          "TCP-ACCEPT-SYNACK",
+          "RTO-CANCEL",
+          "PROFILE-SCOPE"
+        ],
+        "field": "time_ms",
+        "expected": 10,
+        "observed": 10.093
+      },
+      {
+        "kind": "field",
+        "index": 2,
+        "packet_id": "e0002:out:0",
+        "event_id": "e0002",
+        "requirements": [
+          "TCP-ACCEPT-SYNACK",
+          "RTO-CANCEL",
+          "PROFILE-SCOPE"
+        ],
+        "field": "time_ms",
+        "expected": 10,
+        "observed": 10.131
+      }
+    ]
+  },
+  "scope": "one kernel active-open plus finite quiet interval; injected peer; VM and isolated network namespace",
+  "raw_capture_sha256": "bafc6b6828a4fa23e23681481d1b33c67c735c776fc5ff72ec00407c50685fd7",
+  "runtime_verification_sha256": "205060aaac3c3985961727106181346b0424e6cabc65276915904a90d7847231",
+  "offline_verification_sha256": "86e286ff68b70f4c7f2585aaa6e4932da52a683d31ba6be9d465285074157f60",
+  "negative_controls_sha256": "74d63d0e1acbd791b935d6e476bc6c834435dd6520cf9a74a6ab5f4610296b4b",
+  "local_linux_rerun": false,
+  "local_CI_binary_recheck": false,
+  "internal_RTO_state_observed": false,
+  "full_tcp_complete": false,
+  "unbounded_protocol_proof": false,
+  "physical_NIC_or_remote_loss_test": false,
+  "excluded": [
+    "TCP data/window/options/payload/recovery and later protocols",
+    "universal implementation refinement"
+  ],
+  "trusted_components": [
+    "Linux kernel/toolchain and VM provenance",
+    "packetdrill syscall/injection driver",
+    "independent tcpdump capture",
+    "IR reference/SMT encoder",
+    "PCAP parser/normalizer/comparator",
+    "GitHub VM/job/artifact provenance"
+  ],
+  "integrity_is_not_authenticity": true,
+  "artifact_zip_sha256": "5dcfd2bfb4fdc2578666c95ed70f1f40314be2bbce34c9b100b122f00f163147",
+  "input_hashes": {
+    "model/tcp.json": "119322775578a6ed366379b3434c1656e6812cb21d980016340ef22ecfaffd8b",
+    "protocol_lab/explore.py": "68636011e1712768eba7c89a5c3b7e9ab125fbfa2c20652b8db798402154b306",
+    "protocol_lab/claims.py": "e8460d0895941e91fcb47b0099da499e118919029ed6c220abfdea6bc60d2bf7",
+    "protocol_lab/profile_config.py": "9c8ae67c874dfd4ec66875d31f9d565191127e31397dba388601f4433fd7d16f",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/packets.py": "06d8334e2911affc115dbb177aab66b66865ce2846ed18cac575ca8a4139d174",
+    "protocol_lab/profiles.py": "db261ed33648fd8da346537236afb207d4ed99c395a9bcd9a0b9d633f65a6186",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974",
+    "protocol_lab/refinement.py": "971da52d2579887a2e2439f51d62725e2b702635e5226ec806852e3d9cd415c8",
+    "protocol_lab/__init__.py": "bb97e964bb7d512a84dd1f22900527dfac82a2ad05e99e7d5eaeccb0bd83ce7f",
+    "protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759",
+    "protocol_lab/lwip.py": "cd83a948e12c336a8f3045c0350cdc79edd2a205368f75004674ccbe39570e72",
+    "protocol_lab/capture.py": "46d65363d813f605e0ba177a6cb4a22d6df0dc59711d75b658129d8194f2cc92",
+    "protocol_lab/inductive.py": "757199dc6261b2bac59f6de1fbbb6e8ac5b129c1bb0fc3bac23c39257e488bb1",
+    "protocol_lab/evidence.py": "119e7f4d7e6c8e1ed8b78f4d66afcea79446c71f08bcfee327bc15361bdc5b67",
+    "protocol_lab/__main__.py": "e572c7cf0c49984fbe93f968539a109c1a22da9e438428023ff7e4d1e6904bd8",
+    "ports/linux-netns/build.sh": "73647d2584b78254ff0f0291c84f09aff2289ae22546f20a2939f8e1693ca501",
+    "ports/linux-netns/run.py": "65165e42466125ff8f388f47af371218210f6164ce603bf2e9d85c89014fdba5",
+    "ports/linux-netns/README.md": "36c25b2e9a559e54c1aca1b2276e0514ff8a548a02faf6fef82d5d46aa60f6b3",
+    "ports/linux-netns/verify.py": "60666a15ebccaaa16f06c4fe5d9197c0b12758e2161b06737c3623a07d7f0964",
+    "ports/linux-netns/tests.py": "f2afd6a325fdc8138bd09ca24b000fe5c50f9694082b0768c2bd4d6b23eeef6f",
+    "ports/linux-netns/upstream.json": "cb4706579c865653e7c65faa8c843b7ca86f67b8fbc8cfc542cbbfd6a4252842",
+    "scenarios/handshake.json": "638341941b59c740ec8ec2927e9e6cf252bdaebf538218fb38bac5d6a848f3d2",
+    "packet-profile.json": "8585bfeb9e967e0329ca5b011db4ed71a50e537df4b6c56b3cb328585d112fd9",
+    "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
+    "spec/sources/manifest.json": "0f585f8554e2f41460e8f2a59c8a5add264dc49fa6fed258204df79df227fe01",
+    ".github/workflows/linux-tcp.yml": "9f3c6c502ed71c3b1c8ee0839e9be00d270f9eac90258a0b4fa2d7d9e55e5055",
+    "spec/sources/rfc5681.txt": "a2d99a2421d5c57b248394f26ba44fc364aa546680fbf10ff0aa7034dad8b87d",
+    "spec/sources/rfc3042.txt": "c54bec6090d1cc755d111a6341abb964c07fe15b9fb4e4ef63d096d8cc078439",
+    "spec/sources/rfc6298.txt": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+    "spec/sources/rfc9293.txt": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9"
+  }
+}

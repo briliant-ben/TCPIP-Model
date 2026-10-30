@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/verify.py", line 102, in <module>
+    verify(args.out.resolve(),runtime=not args.offline)
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/verify.py", line 70, in verify
+    observed,metadata=normalize(out/'capture.pcap',read(ROOT/'packet-profile.json'),expected,
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/capture.py", line 120, in normalize
+    require(checksum_policy == "record_offload", "Invalid TCP checksum (possible offload; policy must be explicit)")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Invalid TCP checksum (possible offload; policy must be explicit)

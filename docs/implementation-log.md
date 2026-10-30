@@ -440,3 +440,12 @@ ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4�
 2026-10-30：sent-ledger原62 unknown目标的group8精确细化已终态refinement_unknown，3目标闭合、59仍unknown；2394组unsat、553组unknown。3闭合目标另用独立CLI145检查复核通过；原主unknown不改，不宣称整个220不变量或payload／时间／翻译对应证明。3134原始文件及成员SHA封存artifacts/sent-ledger-refinement-unknown，原未提交目录保留。430冻结回归仍在运行，新Linux／归档工作未改其1244依赖。
 
 2026-10-30：在已验收三包Linux观测之后继续扩展到原handshake场景5010ms settle：去掉tcpdump包数上限，延迟SO_ERROR检查后用文件barrier保持socket打开，只有capture停止后才释放工具清理；保留所有选中包、零drop门槛和0ms oracle。新增capture生命周期／quiet边界校验及model-uncovered、无效capture、执行失败、环境失败分类，3项本地准备测试通过，完整静默窗口CI待执行，尚不计完成。历史e62f三包证据保持原范围与哈希。430冻结输入不变。
+
+
+## 2026-10-30：真实 Linux 完整握手场景观察窗口验收
+
+[CI run41004399031](https://github.com/briliant-ben/TCPIP-Model/actions/runs/41004399031)在1551c535源码运行成功；证据入口artifacts/linux-netns-ci-1551c535/acceptance.json。实际Linux7.0.0-1017-azure、独立网络命名空间、固定未修改packetdrill及独立tcpdump覆盖原场景5010ms静默期，实际观察5010.89946ms，无包数上限，内核捕获丢包0。socket在抓包停止后才释放清理；有限窗口内仅观察到3个握手包。此前e62f799d仅三包前缀证据保持原范围，不能倒推其覆盖静默期。
+
+原active-open-v1、严格checksum与0ms Difference保持：方向／flags／相对SEQ／ACK匹配，SYN+ACK10.093ms、最终ACK10.131ms对模型10ms的时间差异保留，CI成功不等于投影完全匹配。原始PCAP、编译／源码／脚本／模型及查询哈希、内核／命名空间／捕获生命周期、CI日志／来源和ZIP SHA全部绑定。独立runtime验收成功；当前源码的离线重新生成／查询等价UNSAT及4个重哈希负例（参考时刻、checksum、缩短静默期、重加3包上限）通过。离线重查不是本地Linux重跑或CI二进制再执行。
+
+这是一个真实VM内核、注入对端的有限主动打开场景；不覆盖物理NIC／远端丢包、数据／窗口／选项／payload／恢复／其他协议或一般实现正确性。原lwIP2750ms与其他差异不改；本机macOS权限缺口没有改变，由独立CI通道完成此有限验证。430项回归仍运行，1244冻结依赖未变；精确ledger单目标细化仍运行，整体unknown与完整目标未完成。运行与验收说明见docs/linux-netns.md。

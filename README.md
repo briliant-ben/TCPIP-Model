@@ -4,7 +4,7 @@
 
 GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP-Model)。在新机器上的克隆、环境重建和验证步骤见 [迁移与复现说明](docs/github-handoff.md)。
 
-**v0.2 已接入独立 Z3 有界检查、PCAP 归一化和统一证据验收。真实 Linux TCP 验证仍待具备条件的测试主机执行；尚无 Ivy 或无界证明。**
+**v0.2 已接入独立 Z3 有界检查、PCAP 归一化和统一证据验收。真实 Linux 内核已完成一个主动打开及5010ms静默期场景，严格时间差异保留；数据／恢复与完整TCP验证仍待推进，尚无 Ivy 或无界证明。**
 
 **v0.3 新增 TCP 连接生命周期模型和多模型流程，并接入固定上游 lwIP 的真实 C 代码执行。整个 TCP/IP 协议栈尚未完成。** 详见 [协议栈范围与进度](docs/stack-scope.md)。
 
@@ -137,7 +137,7 @@ python3 -m protocol_lab compare artifacts/syn-loss/packets.json \
   /path/to/normalized-observation.json --out artifacts/syn-loss/difference.json
 ```
 
-仓库内 `tests/fixtures/*.synthetic.json` 是手写的合成测试夹具，只用于测试比较器，不能用作 Linux 合规性证据。独立lwIP内存接口已有真实实现抓包及差异记录；Linux packetdrill实机通道仍受本地环境限制，不能以这些lwIP记录替代。
+仓库内 `tests/fixtures/*.synthetic.json` 是手写的合成测试夹具，只用于测试比较器，不能用作 Linux 合规性证据。独立lwIP内存接口已有真实实现抓包及差异记录；另有独立CI临时VM中的[Linux内核通道](docs/linux-netns.md)，已验收一个握手及静默期场景。本地macOS仍不能运行该通道，lwIP记录不能替代Linux证据。
 
 ### 从抓包到统一验收
 
@@ -221,3 +221,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：eaeb02ff冻结提交的409项完整发现回归一次5043.817秒全部通过（runner5044.056秒），无失败／错误／跳过，1208项依赖及环境未变。证据归档artifacts/full-regression-eaeb02ff；此前running记录是历史。后续Nagle8项和SWS开发不属于本次409集合，不能追加推算全量通过；主unknown、Linux与完整协议缺口保持，目标未完成。
 
 2026-10-30：[发送端SWS有限策略](docs/tcp-sws.md)组合历史窗口、PUSH前缀和100–1000ms override（默认200ms），209规则／223不变量。13专项、6字节时序契约、248条件查询及3独立lwIP执行验收完成；保留两个21ms／221ms发送差异，3公共回调匹配。整体BMC仍unknown，发送活性、receiver SWS／wire PSH等仍待推进。证据入口 `artifacts/tcp-sws-development/acceptance.json`。430项新增后完整回归须另跑，不能由已完成409项推算。
+
+2026-10-30：[真实Linux完整场景观察](docs/linux-netns.md)在独立VM／网络命名空间验收：原5010ms窗口实际观察5010.89946ms，3包、0捕获丢包；两个严格时间Difference保留。原始抓包、CI来源、查询及4个重哈希故障检查见artifacts/linux-netns-ci-1551c535。仅此有限握手场景，不代表数据／恢复、物理网络或完整协议证明。430项冻结回归仍运行。

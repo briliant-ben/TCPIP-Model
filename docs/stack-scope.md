@@ -17,7 +17,7 @@
 
 `suite --formal` 执行已实现模型，`suite-verify` 校验本地源和产物哈希。报告始终保存尚未完成的模块，不把当前 TCP 子集标记为完整协议栈。
 
-Linux 实机通道仍受 packetdrill/TUN/网络 capabilities 缺失限制。lwIP 内存接口已提供无需权限的真实实现执行通道，但当前两个场景不能代替数据、其他协议或完整 TCP conformance 测试。
+本地macOS仍缺packetdrill/TUN/网络capabilities；独立CI临时VM已验收一个真实Linux内核主动打开及5010ms静默场景，严格时间差异保留，见[Linux通道](linux-netns.md)。数据／窗口／恢复的Linux验证仍待推进。lwIP 内存接口已提供无需权限的真实实现执行通道，但当前两个场景不能代替数据、其他协议或完整 TCP conformance 测试。
 
 后续应先把 TCP 数据模型与连接模型组合，固定有限缓冲和窗口语义；随后以 UDP/IPv4 验证跨协议分层 IR，再加入 ICMP、ARP、IPv6/NDP 与 socket 服务。每阶段保持反例重放、独立编解码、来源追溯及实现差异报告。
 
