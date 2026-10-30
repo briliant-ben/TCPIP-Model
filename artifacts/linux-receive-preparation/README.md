@@ -1,0 +1,9 @@
+# Finite incoming-data Linux preparation
+
+The current composed tcp-sws reference receives one declared four-zero-octet segment and accumulates it in its explicit IR buffer. The full tcp-connection-v1 oracle retains all five expected packets, windows, payload bytes and timing, including the model delayed ACK at60ms. The driver only expects the initial outgoing SYN and injects the SYN+ACK/data inputs; outgoing ACKs are observation-only in the driver and remain strictly compared in independent capture. No application read or observed kernel-buffer-content claim follows.
+
+Twelve local preparation/negative methods pass; fixed full-byte reference replay and an independent exported-query CLI SAT pass. These are not Linux execution evidence. Source models and old projections are unchanged. Actual CI execution and independent runtime evidence validation are still required.
+
+Official packetdrill parser.y at the pinned source commit declares TCP payload length rather than arbitrary bytes; tcp_packet.c zeroes the packet buffer. Their full Git blobs/provenance are preserved under upstream/. The adapter explicitly rejects nonzero or changed stimuli instead of replacing their bytes. The model's fixed MSS4/window16 are not forced onto the kernel; the independent oracle retains any differences.
+
+The whole5020ms interval is observed from the first SYN to the capture-stop barrier, with the quiet delay anchored at the last injected stimulus20ms. This avoids using a later model ACK as if it had been executed by the driver. Missing/extra kernel ACKs are Differences once ingress and complete capture are valid. All model interpretation files as well as IR, adapter, tool/configuration and scripts are source-bound. Tool execution explicitly preserves the existing50ms minimum and12.5% dynamic allowance; strict Difference stays0ms.

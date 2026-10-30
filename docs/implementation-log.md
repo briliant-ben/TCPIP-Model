@@ -463,3 +463,7 @@ ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4�
 上述只有两个有限主动打开实验，不覆盖Linux数据／窗口／恢复或一般协议证明。10个负例含场景标签更改，均为离线临时复制，不计新内核运行；本地未重跑Linux／CI二进制。原258输入和430回归1244冻结依赖未变；精确ACK单目标已终止unknown并归档，430回归继续，完整目标未完成。
 
 2026-10-30：4db896eb冻结的430项标准发现回归已全部通过，unittest5163.255秒／runner5163.586秒，无失败／错误／跳过，1244依赖及环境未变。原始结果、依赖／测试ID清单及完整日志归档artifacts/full-regression-4db896eb。包含Nagle与SWS新方法，但不含随后新增Linux端口7方法；历史running描述不再代表当前状态。此结果不提升整体形式unknown或完整协议声明，目标未完成。
+
+2026-10-30：新增Linux receive-four-zero-octets有限输入，引用现有tcp-sws组合IR（模型未改），完整tcp-connection-v1投影保留窗口／payload／time及全部ACK。驱动只以出站SYN锚定ISS，并注入SYN+ACK／单个4零字节段；出站ACK为显式observation-only，仍全部进入独立抓包和严格oracle，不强迫内核延迟ACK时刻。捕获完整5020ms并以最后注入20ms为quiet延迟锚点；有效输入／完整抓包下缺少输出ACK记为Difference，不误判证据无效。
+
+固定上游parser.y只有TCP payload长度，tcp_packet.c清零buffer；完整Git blob／SHA来源保存在artifacts/linux-receive-preparation/upstream。不支持非零字节或其他刺激时明确拒绝，不用零值替换，亦不声称应用读取／内核rcv_buf观测。MSS4／window16仅为IR参数，不强制Linux相同，差异保留。驱动显式绑定原12.5%动态与50000us下限，0ms oracle不变。12项准备／负例通过、组合IR固定全字节重放及独立CLI SAT通过；新增Linux CI待运行，这些准备不是实机证据。新inputs补齐所有模型本地规范解释文件绑定；旧CI快照继续使用其命名源码，不放宽哈希。

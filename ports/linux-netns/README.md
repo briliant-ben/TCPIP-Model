@@ -49,3 +49,28 @@ are bound into the report and independently reconstructed.
 The1551c535 accepted handshake snapshot is immutable and must be rechecked with
 its named source checkpoint. New scenario support changes strict source bindings;
 it does not retroactively relabel or weaken old evidence.
+
+## Finite incoming-data case
+
+`--scenario receive-four-zero-octets` uses the current composed `tcp-sws` IR.
+It injects one in-order four-zero-octet segment and observes all kernel traffic
+through the declared5020ms interval without application reads. The complete
+`tcp-connection-v1` oracle includes flags, SEQ/ACK, windows, payload and time.
+Model MSS4/window16 are not forced onto Linux. Window/time/ACK differences stay
+visible; model receive-buffer contents are not claimed as observed kernel state.
+
+The stimulus script expects only the first outgoing SYN (for ISN anchoring) and
+injects the two declared peer inputs. All outgoing ACKs are observation-only in
+packetdrill and remain in independent tcpdump and the full strict oracle. The
+saved driver-policy.json makes that distinction explicit. The model's40ms
+delayed ACK at60ms does not force kernel ACK timing. Missing/extra output ACKs
+are Differences if input and full-window capture gates pass, not automatic capture
+failures. Quiet timing is anchored at the final injected stimulus20ms, not a
+possibly later model-generated ACK.
+
+Pinned packetdrill grammar specifies TCP payload length but not arbitrary TCP
+byte strings. Only its four-zero-octet input is admitted here; nonzero or changed
+stimuli are rejected. No PSH, outbound data, read/socket-buffer-content, general
+segmentation or recovery claim follows. Independent PCAP still checks every byte.
+The command now explicitly binds the existing12.5% dynamic tool tolerance as well
+as its50000us minimum. The independent oracle remains0ms.

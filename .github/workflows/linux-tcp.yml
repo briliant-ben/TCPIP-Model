@@ -2,9 +2,9 @@ name: Linux TCP independent capture
 on:
   push:
     branches: ['codex/**', main]
-    paths: ['ports/linux-netns/**', '.github/workflows/linux-tcp.yml', 'model/tcp.json', 'scenarios/handshake.json', 'scenarios/syn-loss.json', 'protocol_lab/**', 'packet-profile.json', 'requirements-formal.txt', 'spec/sources/**']
+    paths: ['ports/linux-netns/**', '.github/workflows/linux-tcp.yml', 'model/**', 'scenarios/handshake.json', 'scenarios/syn-loss.json', 'protocol_lab/**', 'packet-profile.json', 'requirements-formal.txt', 'spec/sources/**']
   pull_request:
-    paths: ['ports/linux-netns/**', '.github/workflows/linux-tcp.yml', 'model/tcp.json', 'scenarios/handshake.json', 'scenarios/syn-loss.json', 'protocol_lab/**', 'packet-profile.json', 'requirements-formal.txt', 'spec/sources/**']
+    paths: ['ports/linux-netns/**', '.github/workflows/linux-tcp.yml', 'model/**', 'scenarios/handshake.json', 'scenarios/syn-loss.json', 'protocol_lab/**', 'packet-profile.json', 'requirements-formal.txt', 'spec/sources/**']
   workflow_dispatch:
 permissions:
   contents: read
@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scenario: [handshake, syn-loss]
+        scenario: [handshake, syn-loss, receive-four-zero-octets]
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:

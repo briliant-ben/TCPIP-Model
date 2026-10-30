@@ -28,9 +28,13 @@ def verify(out, runtime=True):
         path=(out/name).resolve(); require(path.is_relative_to(out) and digest(path)==sha,'Linux artifact changed: '+name)
     require(result['loss_mechanism']==('no peer response to first SYN; observed at egress' if scenario=='syn-loss' else 'none'),
         'Loss mechanism relabelled')
-    require(result['projection']=='active-open-v1' and result['oracle_tolerance_ms']==0
-        and result['packetdrill_tolerance_us']==50000 and not result['full_tcp_complete'], 'Linux oracle/scope changed')
+    require(result['projection']==driver.projection(scenario) and result['oracle_tolerance_ms']==0
+        and result['packetdrill_tolerance_us']==50000 and result['packetdrill_tolerance_percent']==12.5
+        and not result['full_tcp_complete'], 'Linux oracle/scope changed')
     namespace=read(out/'namespace.json')
+    require('--tolerance_usecs=50000'in namespace['packetdrill_command']
+        and '--tolerance_percent=12.5'in namespace['packetdrill_command']
+        and namespace['packetdrill_tolerance_percent']==12.5,'Tool timing configuration changed')
     driver.require_isolation(namespace['parent_netns'],namespace['execution_netns'])
     require(namespace['platform']=='Linux' and namespace['kernel']==result['kernel']
         and namespace['actual_parent_netns']==namespace['parent_netns']
@@ -69,17 +73,19 @@ def verify(out, runtime=True):
     script=driver.execution_script(base,Path(result['execution_output_dir']),driver.quiet_after_protocol_ms(expected,scenario))
     require((out/'test.pkt').read_text()==script
         and digest(out/'test.pkt')==result['input_script_sha256'],'Execution script mapping changed')
+    require(read(out/'driver-policy.json')==driver.driver_policy(expected,scenario),'Driver/observation policy changed')
     require(read(out/'execution-map.json')==driver.execution_mapping(base,script,mapping),'Execution line mapping changed')
     require(read(out/'source-validation.json')==driver.verify_sources(),'Normative-source verification differs')
     observed,metadata=normalize(out/'capture.pcap',read(ROOT/'packet-profile.json'),expected,
-        origin='external_capture',checksum_policy='strict',projection='active-open-v1')
-    require(len(observed)>=len(expected) and observed==read(out/'observed.json') and metadata==read(out/'metadata.json'),
+        origin='external_capture',checksum_policy='strict',projection=driver.projection(scenario))
+    driver.validate_observation(expected,observed,scenario)
+    require(observed==read(out/'observed.json') and metadata==read(out/'metadata.json'),
         'Independent raw-capture normalization changed')
     require(namespace['declared_settle_ms']==scene['settle_ms'],'Scenario settle scope changed')
     window_ms=(namespace['quiet_barrier_epoch_ns']-metadata['time_origin_ns'])/1000000
     require(window_ms==result['observed_window_ms'] and window_ms>=namespace['declared_settle_ms'],
         'Quiet observation window shortened or relabelled')
-    difference=compare(expected,observed,tolerance_ms=0,projection='active-open-v1')
+    difference=compare(expected,observed,tolerance_ms=0,projection=driver.projection(scenario))
     require(difference==read(out/'difference.json') and result['status']=='linux_execution_with_projection_'+difference['status'],
         'Difference changed even if rehashed')
     target=out/('runtime-query-recheck' if runtime else 'offline-query-recheck')

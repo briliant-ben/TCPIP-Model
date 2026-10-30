@@ -1,5 +1,6 @@
 """Preparation/isolation negatives; unit fixtures are never Linux evidence."""
 import tempfile
+import copy
 from pathlib import Path
 import unittest
 from unittest.mock import patch
@@ -73,6 +74,56 @@ class LinuxPlanTests(unittest.TestCase):
         self.assertEqual(driver.failure_kind('capture_validation',ValueError('packet drops')),'invalid_capture_evidence')
         self.assertEqual(driver.failure_kind('packetdrill_execution',ValueError('contract failed')),'linux_execution_attempt_failed')
         self.assertEqual(driver.failure_kind('namespace_setup',ValueError('permission denied')),'environment_or_setup_failure')
+
+
+class LinuxReceivePlanTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.scene=driver.scenario_config(driver.receive.CASE)
+        cls.model,cls.machine,cls.packets,cls.base,cls.mapping=driver.reference(Path('/unused'),driver.receive.CASE)
+
+    def test_complete_oracle_retains_both_acks_window_payload_and_timer_time(self):
+        self.assertEqual([p['time_ms']for p in self.packets],[0,10,10,20,60])
+        self.assertEqual(self.packets[3]['payload'],[0,0,0,0])
+        self.assertEqual(self.machine.values['rcv_buf'],[0,0,0,0])
+        self.assertEqual(driver.projection(driver.receive.CASE),'tcp-connection-v1')
+        self.assertEqual(len(self.packets),5)
+        self.assertIn('window',self.packets[-1])
+        self.assertEqual(self.packets[-1]['ack'],9005)
+
+    def test_driver_observes_acks_without_imposing_model_ack_timing(self):
+        roles=driver.driver_policy(self.packets,driver.receive.CASE)
+        self.assertEqual([i for i,r in enumerate(roles)if r['role']=='independent_observation_only'],[2,4])
+        self.assertEqual(len(self.mapping),3)
+        self.assertIn('+0.010 < . 1:5(4) ack 1 win 8',self.base)
+        self.assertEqual(driver.quiet_after_protocol_ms(self.packets,driver.receive.CASE),5000)
+        script=driver.execution_script(self.base,Path('/review/receive'),5000)
+        self.assertEqual(len(driver.execution_mapping(self.base,script,self.mapping)),3)
+        self.assertNotIn('> .',script)
+        self.assertIn('+5.000 getsockopt',script)
+
+    def test_arbitrary_octets_or_other_stimuli_are_explicitly_rejected(self):
+        for field,value in [('data',[0,128,255,7]),('seq',9002)]:
+            scene=copy.deepcopy(self.scene);scene['steps'][-1]['fields'][field]=value
+            with self.assertRaisesRegex(ValueError,'declared zero-octet receive stimulus'):
+                driver.receive.render(scene,self.packets)
+        packets=copy.deepcopy(self.packets);packets[3]['payload']=[1,0,0,0]
+        with self.assertRaisesRegex(ValueError,'cannot represent arbitrary'):
+            driver.receive.render(self.scene,packets)
+
+    def test_missing_output_ack_is_difference_not_incomplete_capture(self):
+        observed=copy.deepcopy(self.packets[:-1])
+        driver.validate_observation(self.packets,observed,driver.receive.CASE)
+        self.assertEqual(driver.compare(self.packets,observed,tolerance_ms=0,projection=driver.projection(driver.receive.CASE))['differences'][0]['kind'],'packet_count')
+        with self.assertRaisesRegex(ValueError,'Captured receive stimuli differ'):
+            driver.validate_observation(self.packets,observed[:3],driver.receive.CASE)
+
+    def test_observation_only_does_not_remove_strict_oracle_fields(self):
+        for index,field,value in [(3,'payload',[0,0,0,1]),(4,'window',12345),(4,'time_ms',61)]:
+            observed=copy.deepcopy(self.packets);observed[index][field]=value
+            result=driver.compare(self.packets,observed,tolerance_ms=0,projection=driver.projection(driver.receive.CASE))
+            self.assertEqual(result['status'],'mismatch')
+            self.assertEqual(result['differences'][0]['field'],field)
 
 
 if __name__=='__main__':unittest.main(verbosity=2)

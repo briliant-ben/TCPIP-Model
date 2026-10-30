@@ -1,0 +1,17 @@
+test_loss_marker_cannot_silently_select_another_packet (tests.LinuxPlanTests.test_loss_marker_cannot_silently_select_another_packet) ... ok
+test_model_generated_expectations_are_preserved_exactly (tests.LinuxPlanTests.test_model_generated_expectations_are_preserved_exactly) ... ok
+test_quiet_window_uses_selected_source_settle (tests.LinuxPlanTests.test_quiet_window_uses_selected_source_settle) ... ok
+test_shared_or_malformed_namespace_cannot_change_network (tests.LinuxPlanTests.test_shared_or_malformed_namespace_cannot_change_network) ... ok
+test_syn_loss_keeps_both_egress_syns_and_exact_source_timing (tests.LinuxPlanTests.test_syn_loss_keeps_both_egress_syns_and_exact_source_timing) ... ok
+test_uncovered_protocol_invalid_capture_and_environment_are_distinct (tests.LinuxPlanTests.test_uncovered_protocol_invalid_capture_and_environment_are_distinct) ... ok
+test_unknown_scenario_is_rejected_before_reading_any_path (tests.LinuxPlanTests.test_unknown_scenario_is_rejected_before_reading_any_path) ... ok
+test_arbitrary_octets_or_other_stimuli_are_explicitly_rejected (tests.LinuxReceivePlanTests.test_arbitrary_octets_or_other_stimuli_are_explicitly_rejected) ... ok
+test_complete_oracle_retains_both_acks_window_payload_and_timer_time (tests.LinuxReceivePlanTests.test_complete_oracle_retains_both_acks_window_payload_and_timer_time) ... ok
+test_driver_observes_acks_without_imposing_model_ack_timing (tests.LinuxReceivePlanTests.test_driver_observes_acks_without_imposing_model_ack_timing) ... ok
+test_missing_output_ack_is_difference_not_incomplete_capture (tests.LinuxReceivePlanTests.test_missing_output_ack_is_difference_not_incomplete_capture) ... ok
+test_observation_only_does_not_remove_strict_oracle_fields (tests.LinuxReceivePlanTests.test_observation_only_does_not_remove_strict_oracle_fields) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 9.692s
+
+OK

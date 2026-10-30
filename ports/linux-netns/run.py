@@ -19,9 +19,26 @@ from protocol_lab.ir import load, model_files, require
 from protocol_lab.packets import normalize_trace, packetdrill, compare
 from protocol_lab.capture import normalize
 from protocol_lab.symbolic import crosscheck_trace, model_hash
+from protocol_lab.profiles import control_packets
+import receive
 
 
-SCENARIOS = {'handshake': 'scenarios/handshake.json', 'syn-loss': 'scenarios/syn-loss.json'}
+SCENARIOS = {'handshake': 'scenarios/handshake.json', 'syn-loss': 'scenarios/syn-loss.json',
+    receive.CASE: 'ports/linux-netns/scenarios/receive-four-zero-octets.json'}
+
+
+def model_path(scenario):
+    return ROOT/('model/tcp-sws.json' if scenario==receive.CASE else 'model/tcp.json')
+
+
+def projection(scenario):
+    return 'tcp-connection-v1' if scenario==receive.CASE else 'active-open-v1'
+
+
+def driver_policy(expected,scenario):
+    return [dict(packet_id=p['packet_id'],role='independent_observation_only'
+        if scenario==receive.CASE and p['direction']=='out' and p['flags']=='A'
+        else 'tool_stimulus'if p['direction']=='in'else'tool_output_expectation')for p in expected]
 
 
 def scenario_config(scenario):
@@ -33,8 +50,9 @@ def scenario_config(scenario):
 
 def quiet_after_protocol_ms(expected, scenario='handshake'):
     settle=scenario_config(scenario)['settle_ms']
-    require(type(settle)is int and expected[-1]['time_ms'] <= settle <= 10000,'Quiet interval outside Linux channel scope')
-    return settle-expected[-1]['time_ms']
+    anchor=scenario_config(scenario)['steps'][-1]['at_ms']if scenario==receive.CASE else expected[-1]['time_ms']
+    require(type(settle)is int and max(anchor,expected[-1]['time_ms']) <= settle <= 10000,'Quiet interval outside Linux channel scope')
+    return settle-anchor
 
 
 def execution_script(base, out, quiet_ms):
@@ -66,7 +84,16 @@ def execution_mapping(base, script, mapping):
 
 
 def inputs():
-    paths = list(model_files(ROOT / 'model/tcp.json'))
+    paths=[]
+    for filename in sorted({model_path(name)for name in SCENARIOS}):
+        paths+=list(model_files(filename))
+        model=load(filename)
+        for requirement in model['requirements'].values():
+            source=requirement['source']
+            if not source.startswith('https://'):
+                path=(ROOT/source).resolve()
+                require(path.is_relative_to(ROOT)and path.is_file(),'Missing model interpretation source')
+                paths.append(path)
     paths += list((ROOT / 'protocol_lab').glob('*.py'))
     paths += [p for p in PORT.rglob('*') if p.is_file() and '__pycache__' not in p.parts]
     paths += [ROOT / n for n in [*SCENARIOS.values(), 'packet-profile.json',
@@ -76,7 +103,11 @@ def inputs():
 
 
 def reference(out, scenario='handshake'):
-    model = load(ROOT / 'model/tcp.json'); scene = scenario_config(scenario)
+    model = load(model_path(scenario)); scene = scenario_config(scenario)
+    if scenario==receive.CASE:
+        machine=run_scenario(model,scene);expected=control_packets(machine,scene)
+        script,mapping=receive.render(scene,expected)
+        return model,machine,expected,script,mapping
     drops=[] if scenario=='handshake' else ['e0001:out:0']
     require(scene['environment']['drop_outgoing']==drops,'Unsupported loss setup')
     machine = run_scenario(model, scene); expected = normalize_trace(machine, scene)
@@ -85,6 +116,17 @@ def reference(out, scenario='handshake'):
     require([p['packet_id'] for p in expected if p['dropped_after_egress']]==drops,'Loss marker differs from source')
     script, mapping = packetdrill(expected)
     return model, machine, expected, script, mapping
+
+
+def validate_observation(expected,observed,scenario):
+    if scenario!=receive.CASE:
+        require(len(observed)>=len(expected),'Active-open capture incomplete')
+        return
+    # Full-window capture can expose fewer ACKs than the model. That is a valid
+    # Difference, not evidence invalidity. Bind delivered stimuli independently.
+    keys=('direction','flags','seq','ack','window','payload')
+    fields=lambda packets:[{k:p[k]for k in keys}for p in packets if p['direction']=='in']
+    require(fields(observed)==fields(expected),'Captured receive stimuli differ from the declared input')
 
 
 def preflight():
@@ -143,7 +185,7 @@ def inside(out, parent, scenario='handshake'):
     packet_command = [tool['binary'],'--ip_version=ipv4','--local_ip='+local['ip'],
         '--remote_ip='+peer['ip'],'--netmask_ip=255.255.255.0','--gateway_ip=192.0.2.254',
         '--bind_port='+str(local['port']),'--connect_port='+str(peer['port']),
-        '--tolerance_usecs=50000',str(out/'test.pkt')]
+        '--tolerance_usecs=50000','--tolerance_percent=12.5',str(out/'test.pkt')]
     # No packet-count cap: observe the complete declared quiet interval. A file barrier
     # keeps the socket open until tcpdump has stopped, excluding tool-exit cleanup only.
     bpf = 'tcp and host '+local['ip']+' and host '+peer['ip']+' and port '+str(local['port'])+' and port '+str(peer['port'])
@@ -156,7 +198,7 @@ def inside(out, parent, scenario='handshake'):
         packetdrill_command=packet_command,capture_command=capture_command,
         capture_scope='all_selected_packets_through_scenario_settle_before_socket_cleanup',
         capture_packet_limit=None,scenario_id=scenario,declared_settle_ms=scenario_config(scenario)['settle_ms'],
-        packetdrill_tolerance_us=50000,oracle_tolerance_ms=0,host_network_mutations=False)
+        packetdrill_tolerance_us=50000,packetdrill_tolerance_percent=12.5,oracle_tolerance_ms=0,host_network_mutations=False)
     executed=None
     with (out/'capture.log').open('w') as capture_log:
         stage(out,'capture_start')
@@ -219,6 +261,7 @@ def run(out, scenario='handshake'):
     write(out/'source-validation.json',verify_sources())
     write(out/'trace.json',machine.trace); write(out/'expected.json',expected)
     write(out/'script-map.json',mapping)
+    write(out/'driver-policy.json',driver_policy(expected,scenario))
     script = execution_script(base,out,quiet_after_protocol_ms(expected,scenario))
     write(out/'execution-map.json',execution_mapping(base,script,mapping))
     (out/'base-generated.pkt').write_text(base); (out/'test.pkt').write_text(script)
@@ -232,23 +275,25 @@ def run(out, scenario='handshake'):
     namespace = read(out/'namespace.json'); require_isolation(parent,namespace['execution_netns'])
     stage(out,'observation')
     observed, metadata = normalize(out/'capture.pcap',read(ROOT/'packet-profile.json'),expected,
-        origin='external_capture',checksum_policy='strict',projection='active-open-v1')
-    require(len(observed) >= len(expected), 'Active-open capture incomplete')
+        origin='external_capture',checksum_policy='strict',projection=projection(scenario))
+    validate_observation(expected,observed,scenario)
     window_ms=(namespace['quiet_barrier_epoch_ns']-metadata['time_origin_ns'])/1000000
     require(window_ms>=namespace['declared_settle_ms'],'Quiet observation shorter than source scenario')
-    difference = compare(expected,observed,tolerance_ms=0,projection='active-open-v1')
+    difference = compare(expected,observed,tolerance_ms=0,projection=projection(scenario))
     write(out/'observed.json',observed); write(out/'metadata.json',metadata); write(out/'difference.json',difference)
     require(inputs() == before, 'Linux evidence inputs changed during execution')
     stage(out,'complete')
-    names = ['preflight.json','phase.json','tool-build.json','source-validation.json','trace.json','expected.json','script-map.json','execution-map.json','base-generated.pkt',
+    names = ['preflight.json','phase.json','tool-build.json','source-validation.json','trace.json','expected.json','script-map.json','driver-policy.json','execution-map.json','base-generated.pkt',
         'test.pkt','namespace-driver.log','namespace.json','execution.log','capture.log','capture.pcap','offload.log',
         'sysctl.log','tcpdump-version.log','namespace-command-0.log','namespace-command-1.log','namespace-command-2.log',
         'quiet-complete','capture-stopped','observed.json','metadata.json','difference.json','symbolic/result.json','symbolic/path.smt2'] + list(tool['file_hashes'])
     result = dict(status='linux_execution_with_projection_'+difference['status'],linux_execution=True,
-        host_tcp_stack=True,implementation='Linux kernel TCP',kernel=env['kernel'],projection='active-open-v1',
-        oracle_tolerance_ms=0,packetdrill_tolerance_us=50000,scenario_id=scenario,
+        host_tcp_stack=True,implementation='Linux kernel TCP',kernel=env['kernel'],projection=projection(scenario),
+        oracle_tolerance_ms=0,packetdrill_tolerance_us=50000,packetdrill_tolerance_percent=12.5,scenario_id=scenario,
         loss_mechanism='no peer response to first SYN; observed at egress' if scenario=='syn-loss' else 'none',
-        scope='one '+scenario+' active-open plus declared'+str(scenario_config(scenario)['settle_ms'])+'ms settle; options/window/payload not projected',
+        scope=('one four-zero-octet incoming segment; full flags/SEQ/ACK/window/payload/time projection; no application read or internal buffer claim'
+            if scenario==receive.CASE else 'one '+scenario+' active-open; options/window/payload not projected')
+            +'; declared settle '+str(scenario_config(scenario)['settle_ms'])+'ms',
         observed_window_ms=window_ms,
         model_semantic_sha256=model_hash(model),input_hashes=before,tool_binary_sha256=tool['binary_sha256'],
         execution_output_dir=str(out),
