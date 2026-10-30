@@ -1,0 +1,31 @@
+name: Rocq generated scalar IR pilot
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['formal/rocq-scalar/**', 'formal/rocq/check.py', 'model/seq32-contract.json', 'tests/test_rocq_scalar_binding.py', 'protocol_lab/ir.py', 'protocol_lab/symbolic.py', 'docs/semantics.md', '.github/workflows/rocq-scalar.yml']
+  pull_request:
+    paths: ['formal/rocq-scalar/**', 'formal/rocq/check.py', 'model/seq32-contract.json', 'tests/test_rocq_scalar_binding.py', 'protocol_lab/ir.py', 'protocol_lab/symbolic.py', 'docs/semantics.md', '.github/workflows/rocq-scalar.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  generated-execution:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Test complete IR to constructor binding and rejection controls
+        run: python3 -m unittest discover -s tests -p test_rocq_scalar_binding.py -v
+      - name: Pull exact Rocq 9.2.0 image
+        run: docker pull rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025
+      - name: Compile generated execution statements audit and kernel recheck
+        run: python3 formal/rocq-scalar/check.py --docker
+      - name: Preserve source binding proof objects and rejection logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: rocq-generated-scalar-${{ github.sha }}
+          path: artifacts/rocq-scalar/
+          if-no-files-found: error
