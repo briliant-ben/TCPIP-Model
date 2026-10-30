@@ -479,3 +479,75 @@ Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通�
 出站两个ACK在驱动中明确observation-only，但全部进入独立原始抓包及严格oracle；未删除ACK或修改模型以强行匹配。固定工具只支持此4零字节注入，任意字节／PSH／发送／乱序／恢复仍不计Linux验证。两个控制回归新实际窗口5010.198361／6057.786729ms，SYN重传1047.673ms对1000ms；以前1061.092ms和lwIP2750ms保留原快照不重写。命令显式记录既有50ms下限＋12.5%工具容差，独立oracle仍0ms。
 
 证据入口artifacts/linux-receive-ci-2ab2a472/acceptance.json；三套原ZIP、官方API来源、完整CI日志、原PCAP、全部源码／模型／解释文件／脚本／查询／工具绑定、runtime及独立离线重建／查询等价UNSAT已验收。5个重哈希负例含重新计算正确TCP checksum的错误payload，仍在独立解析／输入门被拒绝，原件未改。离线检查不是更多Linux执行或本地CI二进制重跑。旧258输入SHA仍未变。430组合回归已通过，新增4形式工具方法和Linux端口12方法单独记录，不冒称434全量通过；主形式unknown、一般协议与后续模块目标未完成。
+
+## 2026-10-30：精确模算术证书、声明式序列契约及单个ACK分支
+
+新增formal/modular_normalization.py，只处理已导出SMT的正整数固定模数：同模嵌套、整数加减及常数系数归并；非线性／条件项保持opaque，不跨不同模数，符号／非正模数、量词、增量／改选项／多check显式拒绝。每次实际重写生成不含协议／查询premise的通用整数等式，新CLI证明UNSAT；另一个遍历验证源子树实例、全部原断言的数量／顺序与congruence重构，并在新进程复查每个等式。Python AST检查器与Z3仍可信，未称Rocq或通用IR翻译器证明。没有改旧IR／解释器／后端默认语义或10s预算。
+
+新增独立model/seq32-contract.json：1状态／1事件规则／7变量／2不变量均显式IR。覆盖全部32bit输入及不受界的有符号整数位移，声明距离回加和位移还原两条标量定律。现有modular-int归纳义务与独立verify通过，36原始断言精确绑定，3次实际重写／3通用等式分别独立复查，原／转换query均UNSAT。8组回绕／半空间／大正负位移参考及固定输入SAT／新CLI SAT通过。默认BV32主BMC及CLI仍UNKNOWN，绝不以modular通过替换该报告。两IR故障有合法固定输入SAT见证并触发参考不变量；早期负测试误期望无约束BV搜索必得SAT，UNKNOWN原失败／源码保留，改以合法具体反例，不收窄正向域／模型guard。
+
+独立验收发现负整数的API／SMT AST表示不同；没有忽略或用其他premise掩盖，而对9个非同形断言生成无原查询前提的XOR UNSAT复查，数量／顺序仍完整。原拒绝／源码归档diagnostics/seq32-api-export-v1。5个normalizer新方法＋3个标量契约方法和已有4 tactic／6 partition／13数据语义方法合计31项一次0.959s通过；证据artifacts/seq32-contract-development，源码／命题／工具版本与binary/checker SHA绑定。它只关闭声明的标量IR性质，不证明整个Python／Z3／字节／时序或TCP实现对应。
+
+实际S-ACK-VALID→ESTABLISHED的原违例分支52保留444条原约束、模重写数0；经逐条AST重构的等价重新导出，新CLI两次UNSAT（6.140658／6.137274秒），原序列化仍10s UNKNOWN。新证据只支持该一个原分支，不能归因于模运算优化或宣布完整ACK目标闭合，其余69个原UNKNOWN分支未闭合，旧70UNKNOWN分区／59UNKNOWN目标报告保持原件。谱系及原／导出query、独立日志见artifacts/ack-modular-normalization。下一步仍需精确处理大条件SSA／环形账本赋值，并把受限IR执行与可检查语义桥逐步接入Rocq。
+
+旧258注册输入SHA未变，430冻结回归已通过；当前标准发现442项，新增8方法及旧4方法尚未在完整442集合运行，不以31专项替代全量。Linux／lwIP既有证据与2750ms差异未改；没有新增实机或完整协议证明，持续目标未完成。
+
+2026-10-30：PR#3已合入main的ab9f75ba605bd8b7fd766cc5e75e160dabd4c80e；本轮后续工作转codex/tcp-modular并合并该main（源码无差异）。新442项标准回归已在71a3e1a8冻结运行，1260项依赖当前未变，原始进程仍在运行；不重启、不冒称全量通过。新模运算／标量契约里程碑将独立提交新草稿PR，旧未提交refinement目录保持。完整目标未完成。
+
+2026-10-30：新增formal/rocq-scalar受限执行语义试点。仅接纳单状态／单application事件、无条件自环、int/seq32有序set及eq不变量，定时器／消息／条件／其他类型和额外语义字段显式拒绝。源IR的7条赋值、2个性质、初值和seq32事件域生成Compiled.v数据构造子；另一个逆向解析器逐项恢复原JSON AST与顺序，拒绝漏域／改索引／隐藏定义。Semantics.v定义该片段的求值／有序状态更新，Proofs.v的命题直接量化执行生成程序而不是独立手写方程。Python类型／片段验证及结构绑定检查器仍可信，未声称JSON编译器、Python／Z3或TCP普遍正确性。
+
+7项本地结构／故障方法通过；本机无rocq，生成及源绑定完成但kernel状态not_run，证据artifacts/rocq-scalar-local-preparation。不用此准备称kernel通过。新增digest固定Rocq9.2.0 CI，待实际编译／空公理审计／独立check及两个源IR变体（错误逆位移、错误赋值顺序）新工作目录证明拒绝。新7方法不属于正在运行的442标准发现；其1260冻结依赖未变，完整目标未完成。
+
+## 2026-10-30：实际生成IR程序的Rocq执行定理验收
+
+[CI41033653538](https://github.com/briliant-ben/TCPIP-Model/actions/runs/41033653538)在e08d3fdb源码／固定Rocq9.2.0镜像成功：Semantics、源IR生成Compiled及Proofs三模块编译，2条初态／执行定理空公理审计，另一个rocq check进程重查三对象。命题引用真实生成的7条有序赋值和2个相等性质，量化任意初始数据环境及完整声明seq32事件域，offset仍无界Z。错误逆位移／错误赋值顺序的源IR变体成功编译为数据后在执行证明Not convertible被拒绝，并各有合法参考不变量失败见证；公理注入由审计拒绝。
+
+仅限声明的单状态纯标量片段。源JSON→构造子顺序／表达式／初值／域／性质的逆解析一致性仍由可信Python检查，形式语义定义及编排／镜像来源也在可信基，不称JSON编译器、Python解释器、Z3、完整TCP／字节／时序／网络输出／活性／实现或Linux普遍证明。源标量模型关于完整kernel对应的旧排除未被重写为完成；当前kernel定理只属于生成形式程序。
+
+原ZIP／官方API来源／完整日志／源码和.vo／输入及对象SHA绑定，独立离线源／陈述／对象／日志检查及6个临时副本故障门验收成功，入口artifacts/rocq-scalar-ci-e08d3fdb/acceptance.json。本地未重跑kernel；对象破坏门仅是哈希，不能以重哈希对象的元数据代替kernel或原ZIP来源。错误字段索引、把offset收窄成seq32、削弱命题、替换错误模型及扩大解释器证明范围在重哈希后仍被拒绝。
+
+首次CI41032321238证明展开180s超时，原失败保留；第二次41033143106初态闭合、step列表引理使用失败，源码／部分对象／日志保留。三个版本的源模型、生成AST及定理陈述完全相同，没有提高上限、加公理、改不变量或缩小输入。证明体改为局部构造和显式标准库实例后才得到上述真实成功。38专项一次0.932s通过（新7绑定＋原31），当前449完整发现未跑全量；442旧集合继续在71a3e1a8冻结运行、1260依赖未变，新7不计其中。旧258注册输入、上游lwIP／Linux证据及2750ms差异保持。整体目标未完成，继续条件SSA／环形、一般IR语义／字节时序／实现及后续协议。
+
+## 2026-10-30：条件SSA精确查询及完整分支证据
+
+新增formal/conditional_ssa.py，只从实际导出查询的正合取等式和真实条件路径构造候选展开；原444断言逐项保留，完整枚举4种Boolean组合。独立检查器不信任producer替换／simplify，而围绕实际叶目标重建“原等式＋case事实⇒原目标等价”的XOR查询，再以新CLI核对。覆盖查询无原始协议前提；上下文去掉违例另查SAT，不把矛盾前提当行为证明。量词／非正合取定义／增量／多check明确拒绝，10s预算不变，Protocol IR／解释器／原编码器未改。
+
+原ACK分支092（RTT状态）、280（callback数量≤重传长度）均取自已提交archive并核对members SHA。各4叶中，独立结果分别为[UNSAT,UNKNOWN,UNKNOWN,UNSAT]及[UNSAT,UNSAT,UNKNOWN,UNSAT]；全部8个局部等价和2个无前提覆盖均UNSAT，两个上下文producer／fresh均SAT。5叶UNSAT两次复现、3叶仍unknown，两条原目标仍unknown；原其余69未知分支数量不减少，不能宣布ACK目标或父不变量基闭合。早期to_smt2序列化试验多一叶UNSAT只保留为搜索敏感性观察，不替换当前结果。
+
+独立归档解包后再跑CLI通过，证据artifacts/ack-conditional-ssa，包含原query／全部叶／局部定理／context／coverage／日志及逐成员SHA；完整原报告与用户两个未提交目录保留。7新方法＋原38共45专项一次1.794s通过，包含真实错误赋值SAT及重哈希后的缺分支／省断言／隐藏前提／假等价拒绝。首轮错误赋值测试曾拦住Z3 to_smt2省掉末尾assert true的问题；改sexpr导出保留全部断言，原失败源码／query保留diagnostics/conditional-ssa-trailing-true。大DAG语法检查只增加访问去重避免重复遍历，不改变语义或solver预算。
+
+当前标准发现456，未跑完整456；442原冻结回归仍同一session运行，1260依赖及原258注册输入未变。Python／Z3和查询来源桥仍可信，不是kernel／IR翻译正确性／可达实现或协议证明，无新增Linux／lwIP实机实验。下一步收敛这3个叶及一般ACK／环形账本语义，再按原roadmap推进，整体目标未完成。
+
+## 2026-10-30：保留无界回退的模运算编码关闭原ACK分支092
+
+新增formal/modular_piecewise.py，把正literal模数M的x mod M精确写成：-M≤x<2M时按负值／普通／溢出三段计算，否则仍用原mod。无原query前提的通用等式CLI UNSAT；区间外回退保留任意大正负整数，不收窄seq／offset，不新增协议guard。独立检查器逐source节点实例化证书并由congruence恢复完整原断言向量，source／helper／依赖／binary／命题SHA绑定；不支持的模数／量词／命令明确拒绝，10s预算未改。
+
+组合上一轮完整4种条件case，原S-ACK-VALID→ESTABLISHED违例092（RTT sample状态子句）四叶分别70／70／71／71次模展开；所有局部等价／无协议前提覆盖、两个非空上下文SAT、逐项重构与原444断言均验收。每叶两次新CLI均UNSAT，约0.12–0.34秒；组合独立复查及新解包归档复查再次通过。**仅新关闭一个原导出违例分支**，不是全部RTT不变量、ACK目标、父基、可达性或协议证明。原主／tactic／conditional unknown报告未替换。连同既有052，原70未知中仍68未闭合。
+
+直接原092的67模展开亦两次CLI UNSAT（0.438512／0.444338秒），原280的65展开仍两次UNKNOWN；该独立pilot完整保留，不抹去账本缺口。证据artifacts/ack-piecewise-092含source、4-case链、通用等式、逐节点证书、所有query／日志、直接pilot及归档成员SHA。3个临时复制故障（缺Boolean case、重哈希的assert false伪结果、更换原目标）均拒绝，原件未改。
+
+6新方法与原45共51专项一次3.242秒通过，含[-M,0,M,2M]边界及±2^80回退的SAT／错误结果UNSAT、嵌套不同mod／placeholder重名、重哈希假定理／隐藏前提／错实例／省断言／假范围拒绝。当前标准发现462但未跑完整462；原442冻结回归仍同一session运行，1260依赖／原258注册输入未改。Python／Z3与IR→SMT桥仍可信，本里程碑无新kernel／网络实现／Linux实验。继续原68查询、账本及通用字节／时间／解释翻译关系，完整目标未完成。
+
+2026-10-30：71a3e1a8冻结的442项标准回归已终态全部通过，unittest5269.704秒／runner5270.056719秒，0失败／错误／跳过，1260依赖与环境未变；原进程exit0，不再是running。原始started／输入／ID／终态／完整日志及独立核对见artifacts/full-regression-71a3e1a8。后续20新方法不在此集合，其51专项另计；当前462完整组合尚未跑。旧历史running记录保留但以此终态为准，不提升协议或形式unknown声明，完整目标未完成。
+
+## 2026-10-30：原ACK账本数量查询的完整已声明有限域
+
+新增formal/finite_specialization.py，以原非target正合取域约束证明整数case完整覆盖，再对每个取值检查仅以case等式为前提的局部XOR。每叶保留所有原断言，独立检查器围绕实际proposal重建定理并新CLI复查，不信任Python substitute／simplify。有限域最多64值、量词／非正合取／target域／缺值／省断言明确拒绝，10s不变。
+
+原分支280（S-ACK-VALID后cb_count≤rtx bytes）保留444原断言，65个通用mod展开后使用原0≤cb_head<16两条子句，全部16取值覆盖而非收窄模型。前15个default局部等价及叶均独立UNSAT；head15默认局部等价UNKNOWN，不能接受叶。额外精确tactic分别复查该局部XOR（仅head=15为premise，两个断言）及446断言叶，两者各producer／fresh UNSAT，再由组合检查器复查完整16case及context SAT。只新增关闭一个原导出分支，不称整个CB容量不变量／ACK／父基／TCP。原所有unknown报告与source/域保持不变。
+
+组合原型曾只为最后叶补证据便产生过早的本地closure标签；未验收或作为完成发布，增强门发现局部等价未证而拒绝，原源码／报告／失败记录归档diagnostics/ack-finite-composition-gate。最终门同时要求局部等价和叶各自可检查证据，重哈希“把未证default局部等价当通过”故障仍被拒绝。早期source域AST反向比较匹配失败也独立保留diagnostics/ack-finite-domain-shape，只修构造语法方向，不改模型bound。
+
+artifacts/ack-finite-280保存所有source／normalization／finite/default unknown／两个替代证书／完整日志及正向组合复查。4临时复制故障（缺head、重哈希false叶、假局部等价、替换source）全部拒绝，原件未改；5新方法及此前51共56专项一次3.675秒通过。当前标准发现467，未跑完整467；原442冻结回归已全部通过，后续25方法另计。旧258注册输入及上游／oracle／2750ms差异保持，Python／Z3及IR翻译桥仍可信。其他原分支批量细化独立验收，不将重复查询计为新覆盖；目标未完成。
+
+280证据归档后在新的解包目录再次通过完整source／mod／16case／替代局部等价及叶CLI复查，archive-verification.json保留。所有default unknown及未验收原型诊断独立保留；未放宽证据门。
+
+## 2026-10-30：其余68个原ACK未知分支的精确模展开验收
+
+在d34b1d3f冻结helper及原archive启动的68分支批次已终态完成（720.317614秒）：48个producer＋fresh CLI UNSAT，20个仍unknown，均保留444原断言、相同非空context与完整source／checker／solver绑定。每个通用模等式与节点实例化逐项独立重构，所有48个positive再经第三次新CLI通过；打包后在新解包目录重放也通过。没有提高10s预算、收窄domain、增添协议premise或把unknown改写为pass。
+
+artifacts/ack-piecewise-remaining68保留718成员及SHA、实际driver／starting commit、所有68原query／normalized／通用证书／positive与unknown日志／context／终态／独立验收。3个临时复制负例（缺原分区、重哈希false normalized、伪造UNKNOWN→UNSAT元数据及日志）全部拒绝，原件未变。旧primary／tactic／conditional报告不替换。
+
+coverage-index.json按原query SHA拼接298既有独立分支、052／092／280和此次48，368个历史source hash均与旧tactic archive一致，298具名ID集合逐项匹配，无重复计数。现在349个原分支有具名UNSAT证据、19个仍未闭合：[292,295,296,300,304,308,312,316,320,324,328,332,336,340,344,348,352,356,360]。该index不是新的完整368组合证明，更不是规范覆盖率；全部ACK目标／父不变量基／一般TCP仍unknown或未证。此次批次中的280 unknown原样保留，另一个有限域证据只是其显式独立路径。
+
+原442冻结标准回归已通过；新增方法纳入的56专项通过，467完整组合未跑。原1260冻结依赖、258注册输入、Protocol IR／参考／原翻译器／上游lwIP／严格oracle与2750ms差异均未变。本轮查询数学证据无新增Linux／网络实验或kernel／IR解释翻译正确性声明。继续19个真实未决分支与父基、字节内容／有序输出／时序及独立实现对应，再按完整roadmap推进；整体目标未完成。

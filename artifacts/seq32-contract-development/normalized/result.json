@@ -1,0 +1,87 @@
+{
+  "status": "local_modular_equalities_checked",
+  "source_file": "artifacts/seq32-contract-development/original-modular.smt2",
+  "source_sha256": "a5b378877aca95ea1599055d791b29098650dfb1d021af301782138e71e685e4",
+  "assertion_count": 36,
+  "rewrite_count": 3,
+  "rewrites": [
+    {
+      "ordinal": 66,
+      "atom_paths": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "proof": "lemma-000.smt2"
+    },
+    {
+      "ordinal": 69,
+      "atom_paths": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "proof": "lemma-001.smt2"
+    },
+    {
+      "ordinal": 76,
+      "atom_paths": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "proof": "lemma-002.smt2"
+    }
+  ],
+  "proofs": [
+    {
+      "file": "lemma-000.smt2",
+      "sha256": "083e7ab3ed178361027d5e0010446d6185fc3d843f61e876c039815fca736491",
+      "query": "unsat",
+      "seconds": 0.025638667051680386,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    },
+    {
+      "file": "lemma-001.smt2",
+      "sha256": "cea690acd7d2f21e142e431a0adac87cfd5b12712a51e4b85b0a48b40fa6d70f",
+      "query": "unsat",
+      "seconds": 0.004792208026628941,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    },
+    {
+      "file": "lemma-002.smt2",
+      "sha256": "53bc491831bd2a39ec423b9b082a441debd812dc5dba208283d5fde305e4b756",
+      "query": "unsat",
+      "seconds": 0.004572291974909604,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    }
+  ],
+  "normalized_sha256": "bf3ac680f4b07c53540d0782b4654199e685bee22f6bd3bd904ddf8328ed75aa",
+  "checker_sha256": "93b02e41b20c0f75b3983a5dc7e72f55016016d8e3bb2d0d20e8a79ebb1fa1d4",
+  "solver_binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+  "timeout_ms": 10000,
+  "query_premises_used_for_lemmas": false,
+  "kernel_checked": false,
+  "scope": "quantifier-free query equivalence by unconditional integer equalities, instantiation and congruence; no IR/translator/protocol proof"
+}

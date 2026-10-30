@@ -1,0 +1,17 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun lemma_offset () Int)
+(declare-fun lemma_a () (Seq (_ BitVec 8)))
+(declare-fun lemma_count () Int)
+(declare-fun lemma_b () (Seq (_ BitVec 8)))
+(declare-fun lemma_condition () Bool)
+(assert
+ (let ((?x206 (ite (< lemma_offset 0) 0 lemma_offset)))
+(let ((?x209 (seq.len lemma_a)))
+(let ((?x212 (ite (> ?x209 ?x206) (- ?x209 ?x206) 0)))
+(let ((?x208 (ite (< lemma_count 0) 0 lemma_count)))
+(let ((?x214 (ite (< ?x208 ?x212) ?x208 ?x212)))
+(let ((?x217 (seq.len lemma_b)))
+(let ((?x222 (ite lemma_condition ?x209 ?x217)))
+(or (and (distinct (seq.len (seq.++ lemma_a lemma_b)) (+ ?x209 ?x217)) true) (and (distinct (seq.len (ite lemma_condition lemma_a lemma_b)) ?x222) true) (and (distinct (seq.len (seq.extract lemma_a ?x206 ?x208)) ?x214) true))))))))))
+(check-sat)

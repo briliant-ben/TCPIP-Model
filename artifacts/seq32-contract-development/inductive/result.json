@@ -1,0 +1,91 @@
+{
+  "backend": "z3-invariant-induction",
+  "model_semantic_sha256": "678ae600a67d50c3bdbe33d94cd156c4bf12355ca80331dd4502fa44cdeaa4c7",
+  "solver_version": "4.15.4",
+  "status": "inductive_invariants_pass",
+  "byte_encoding": "exact_length_projection_content_insensitive_subset",
+  "sequence_encoding": "modular_integer_full_32bit_domain",
+  "symbolic_initials": [],
+  "sequence_width": 32,
+  "invariants": [
+    "SEQ32-ROUNDTRIP",
+    "SEQ32-INVERSE-DISPLACEMENT"
+  ],
+  "scope": "defined_nonterminal_transitions_and_listed_state_invariants",
+  "content_properties": "not_supported_by_length_projection",
+  "reachability_of_failed_prestates": "not_claimed",
+  "unbounded_protocol_proof": false,
+  "runtime_properties": [
+    "positive_timer_duration",
+    "active_timer_not_in_past"
+  ],
+  "preservation_query_strategy": "exact_selected_rule_substitution_fresh_solver",
+  "preservation": [
+    {
+      "transition": "PROBE",
+      "targets": [
+        {
+          "state": "READY",
+          "query": "unsat"
+        }
+      ],
+      "query": "unsat"
+    }
+  ],
+  "overlap": [],
+  "clock_progress": "not_applicable",
+  "length_lemmas": "unsat",
+  "initial_query": "unsat",
+  "target_coverage": "all_declared_destinations",
+  "clock_advance_query": "not_applicable",
+  "sample_query": "sat",
+  "sample_witness": {
+    "initial": {
+      "left": 0,
+      "right": 0,
+      "offset": 0,
+      "distance": 0,
+      "roundtrip": 0,
+      "advanced": 0,
+      "restored": 0
+    },
+    "steps": [
+      {
+        "at_ms": 1,
+        "event": "probe",
+        "origin": "application",
+        "transition": "PROBE",
+        "fields": {
+          "left": 5,
+          "right": 1,
+          "offset": 4294967296
+        },
+        "after": {
+          "state": "READY",
+          "variables": {
+            "left": 5,
+            "right": 1,
+            "offset": 4294967296,
+            "distance": 4294967292,
+            "roundtrip": 1,
+            "advanced": 5,
+            "restored": 5
+          },
+          "timers": {}
+        },
+        "emitted": []
+      }
+    ]
+  },
+  "replay": {
+    "status": "match",
+    "compared_steps": 1
+  },
+  "query_hashes": {
+    "length-lemmas.smt2": "c958b85e33afdfc2e3360799d612fdc3457f03d15aa0546471d4ea12cd31c136",
+    "initial.smt2": "4909aed391b38269c83a8f3adb7a60ce203b2a0ff86d90a6e258183a8c3c7ac3",
+    "preservation.smt2": "094af67cde2686bfc14cd6022f7903b4f1484b99431cde070eb11f5799a39cc0",
+    "overlap.smt2": "fd3cb6bc5ed4cc918a22daa11fd5607467e697bea95674d997c67869f7b2254f",
+    "sample.smt2": "b922f094cab100433c2e3000f8cb228f40bf6d27c2aeaccdb4190e35c591995e"
+  }
+}

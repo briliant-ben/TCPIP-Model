@@ -1,0 +1,54 @@
+{
+  "backend": "z3-constrained-trace",
+  "scope": "fixed_inputs_and_rule_choices",
+  "all_input_safety": "not_claimed",
+  "query_strategy": "exact_fixed_choice_encoding_and_fixed_input_substitution",
+  "steps": 1,
+  "query": "sat",
+  "model_semantic_sha256": "678ae600a67d50c3bdbe33d94cd156c4bf12355ca80331dd4502fa44cdeaa4c7",
+  "solver_version": "4.15.4",
+  "smt2_sha256": "4e422b9d7543977d0a6d09c98bc53b6f2d2c3ae8be0669b11ddc8a483c63cb15",
+  "witness": {
+    "initial": {
+      "left": 0,
+      "right": 0,
+      "offset": 0,
+      "distance": 0,
+      "roundtrip": 0,
+      "advanced": 0,
+      "restored": 0
+    },
+    "steps": [
+      {
+        "at_ms": 0,
+        "event": "probe",
+        "origin": "application",
+        "transition": "PROBE",
+        "fields": {
+          "left": 0,
+          "right": 4294967295,
+          "offset": -1
+        },
+        "after": {
+          "state": "READY",
+          "variables": {
+            "left": 0,
+            "right": 4294967295,
+            "offset": -1,
+            "distance": 4294967295,
+            "roundtrip": 4294967295,
+            "advanced": 4294967295,
+            "restored": 0
+          },
+          "timers": {}
+        },
+        "emitted": []
+      }
+    ]
+  },
+  "replay": {
+    "status": "match",
+    "compared_steps": 1
+  },
+  "status": "match"
+}

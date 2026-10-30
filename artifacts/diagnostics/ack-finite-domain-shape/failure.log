@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/ack-finite-280/check.py", line 78, in <module>
+    print(json.dumps(verify(args.out)if args.verify else produce(args.out)))
+                                                         ^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/ack-finite-280/check.py", line 44, in produce
+    domain=recipe(out/'modulo/normalized.smt2')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/ack-finite-280/check.py", line 28, in recipe
+    if not found:raise ValueError('Declared source head bound absent')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Declared source head bound absent

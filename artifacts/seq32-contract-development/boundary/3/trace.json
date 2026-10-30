@@ -1,0 +1,45 @@
+[
+  {
+    "event_id": "e0001",
+    "time_ms": 0,
+    "event": {
+      "name": "probe",
+      "fields": {
+        "left": 2147483648,
+        "right": 0,
+        "offset": -1180591620717411303421
+      }
+    },
+    "transition": "PROBE",
+    "requirements": [
+      "SEQ32-ALGEBRA"
+    ],
+    "before": {
+      "state": "READY",
+      "variables": {
+        "left": 0,
+        "right": 0,
+        "offset": 0,
+        "distance": 0,
+        "roundtrip": 0,
+        "advanced": 0,
+        "restored": 0
+      },
+      "timers": {}
+    },
+    "after": {
+      "state": "READY",
+      "variables": {
+        "left": 2147483648,
+        "right": 0,
+        "offset": -1180591620717411303421,
+        "distance": 2147483648,
+        "roundtrip": 0,
+        "advanced": 2147483651,
+        "restored": 2147483648
+      },
+      "timers": {}
+    },
+    "emitted": []
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "status": "one_exact_original_violation_disjunct_unsat_after_equivalent_reexport",
+  "target": "S-ACK-VALID -> ESTABLISHED",
+  "disjunct": 52,
+  "original_query_status": "unknown",
+  "source_sha256": "fdf96d5bc94209dfc56cd230b43583a1ca68aba554e528ade13a0e869b331318",
+  "normalized_sha256": "500e19dd4a2cb10864b569cc1ebe451915b325edc2c1a05a2bc5bf4b98e6474d",
+  "checker_sha256": "93b02e41b20c0f75b3983a5dc7e72f55016016d8e3bb2d0d20e8a79ebb1fa1d4",
+  "solver_binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+  "assertion_count": 444,
+  "modular_rewrites": 0,
+  "all_original_assertions_retained": true,
+  "fresh_cli_results": [
+    {
+      "query": "unsat",
+      "seconds": 6.140657916024793,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    },
+    {
+      "query": "unsat",
+      "seconds": 6.137274417036679,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    }
+  ],
+  "original_cli": {
+    "query": "unknown",
+    "seconds": 10.018547250016127,
+    "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+  },
+  "remaining_disjuncts_unclosed_in_this_target": 69,
+  "whole_target_closed": false,
+  "old_primary_and_partition_reports_unchanged": true,
+  "performance_attribution": "canonical serialization/search sensitivity; no modulo rewriting occurred in this query",
+  "kernel_checked": false,
+  "translator_proved": false,
+  "full_protocol_complete": false,
+  "scope": "one exact state/length induction violation disjunct under all original premises; not reachability/full-byte/time or complete TCP proof"
+}

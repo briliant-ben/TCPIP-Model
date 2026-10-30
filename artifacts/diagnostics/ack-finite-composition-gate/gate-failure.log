@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/ack-finite-280/check.py", line 126, in <module>
+    print(json.dumps(verify(args.out)if args.verify else finish(args.out)if args.finish else produce(args.out)))
+                                                         ^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/ack-finite-280/check.py", line 67, in finish
+    raise ValueError('A local specialization is unproved')
+ValueError: A local specialization is unproved

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/rocq-scalar/verify.py", line 90, in <module>
+    args=parser.parse_args();print(verify(args.out)['status'])
+                                   ^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/rocq-scalar/verify.py", line 66, in verify
+    if changed!=expected:raise ValueError('Negative IR differs from the declared source mutation')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Negative IR differs from the declared source mutation

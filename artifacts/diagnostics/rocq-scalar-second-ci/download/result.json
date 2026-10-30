@@ -1,0 +1,196 @@
+{
+  "status": "failed",
+  "kernel_checked_proof": false,
+  "source_binding_checked": true,
+  "commands": [
+    {
+      "command": [
+        "rocq",
+        "compile",
+        "--version"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-scalar/positive-4v008jgo:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "version.log"
+    },
+    {
+      "command": [
+        "opam",
+        "var",
+        "rocq-runtime:version"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-scalar/positive-4v008jgo:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "package-version.log"
+    },
+    {
+      "command": [
+        "rocq",
+        "compile",
+        "-Q",
+        ".",
+        "ScalarIR",
+        "Semantics.v"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-scalar/positive-4v008jgo:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "positive-Semantics.log"
+    },
+    {
+      "command": [
+        "rocq",
+        "compile",
+        "-Q",
+        ".",
+        "ScalarIR",
+        "Compiled.v"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-scalar/positive-4v008jgo:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "positive-Compiled.log"
+    },
+    {
+      "command": [
+        "rocq",
+        "compile",
+        "-Q",
+        ".",
+        "ScalarIR",
+        "Proofs.v"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-scalar/positive-4v008jgo:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 1,
+      "log": "positive-Proofs.log"
+    }
+  ],
+  "image": "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025",
+  "axiom_allowlist": [],
+  "theorems": [
+    "checked_generated_initial",
+    "checked_generated_step"
+  ],
+  "input_hashes": {
+    "formal/rocq-scalar/Proofs.v": "fda32b487df4ef6d2791328d6be41cd305808a17fd4adfd719c893b021b103e0",
+    "formal/rocq-scalar/check.py": "4055d6b7161823f3e87ec7134a7d42e84373666ff22c44fbbb2d841310cc0df0",
+    "formal/rocq-scalar/README.md": "3b438765867041d6edfb4802c55891f160c86d12518faee57a7b3c9b22582067",
+    "formal/rocq-scalar/Semantics.v": "a85df0b1ac22d8a3a38252f2a595b8eb63bce20f7bea7bde95c98f96d2f74cd5",
+    "formal/rocq-scalar/verify.py": "d7e1822366c1a1a175d30ae2f718b68f0a1cf1aa62599ebe6067722b490f1882",
+    "formal/rocq-scalar/compile.py": "a9966c1b8b0f34118cd9dbd3127c3703c672f96a5a9be0985d0c26a0605e60cf",
+    "model/seq32-contract.json": "eae2c87328b4c924f94894e5311c19f1244d8b4b5f3d8cf3011154f1b7a0c37c",
+    "formal/rocq/check.py": "69d4724e0479c94190f8124b0dd63def0a5324d53d4b26dd23bf1b1ad11d101f",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974",
+    "docs/semantics.md": "3d66f69a0c97f72290362ad75d2872e52c02b58a2ec31a082c04d42ac557d57b",
+    ".github/workflows/rocq-scalar.yml": "72a6e050d55624bd49791f0318474f2d223b67f4492586af05c0792f5c8e7311"
+  },
+  "scope": "actual generated single-state ordered scalar IR execution and equality invariants; current contract proof body",
+  "trusted_components": [
+    "Rocq kernel/standard library and pinned toolchain",
+    "formal scalar-fragment denotation",
+    "Python source type/fragment validation and inverse constructor binding checker",
+    "orchestration and assumption audit"
+  ],
+  "source_binding_is_kernel_proof": false,
+  "python_interpreter_proved": false,
+  "z3_translator_proved": false,
+  "tcp_protocol_proved": false,
+  "liveness_proved": false,
+  "linux_execution": false,
+  "full_protocol_complete": false,
+  "binding": {
+    "status": "source_ir_and_generated_ast_structurally_equal",
+    "variables": [
+      "left",
+      "right",
+      "offset",
+      "distance",
+      "roundtrip",
+      "advanced",
+      "restored"
+    ],
+    "fields": [
+      "left",
+      "right",
+      "offset"
+    ],
+    "actions": 7,
+    "invariants": 2,
+    "model_semantic_sha256": "678ae600a67d50c3bdbe33d94cd156c4bf12355ca80331dd4502fa44cdeaa4c7",
+    "scope": "restricted fragment constructor binding; Python checker trusted, not universal compiler/interpreter proof",
+    "source_file": "/home/runner/work/TCPIP-Model/TCPIP-Model/model/seq32-contract.json",
+    "source_sha256": "eae2c87328b4c924f94894e5311c19f1244d8b4b5f3d8cf3011154f1b7a0c37c",
+    "generated_sha256": "75ee5879082d8b75df4c5edc1d48be29f457aee833cc63c89c841c1a11d64deb",
+    "checker_sha256": "a9966c1b8b0f34118cd9dbd3127c3703c672f96a5a9be0985d0c26a0605e60cf"
+  },
+  "checker_version": "The Rocq Prover, version 9.2\ncompiled with OCaml 4.14.2",
+  "checker_package_version": "9.2.0",
+  "reason": "positive-Proofs failed: Closed under the global context\nFile \"./Proofs.v\", line 20, characters 8-21:\nError: Unable to apply lemma of type\n \"forall (A : Type) (P : A -> Prop) (l : list A),\n  Forall P l <-> (forall x : A, In x l -> P x)\"\non hypothesis of type\n \"Forall (fun index : nat => 0 <= fields index < 4294967296)\n    compiled_seq_fields\".\n\n",
+  "artifact_hashes": {
+    "Compiled.v": "75ee5879082d8b75df4c5edc1d48be29f457aee833cc63c89c841c1a11d64deb",
+    "Compiled.vo": "75a691d46a35166ffe64245803c38cce8196998d2e119d437c0bce5dc123c57e",
+    "Proofs.v": "fda32b487df4ef6d2791328d6be41cd305808a17fd4adfd719c893b021b103e0",
+    "Semantics.v": "a85df0b1ac22d8a3a38252f2a595b8eb63bce20f7bea7bde95c98f96d2f74cd5",
+    "Semantics.vo": "8d040f857d52ad3b93aba42c73224c68f35846026c1862a8bc94309c5be543f9",
+    "binding.json": "620b8e1328d014ac09e7fe5d942699e7f51b3deb5b6dac4e1a529f40dd45f470",
+    "package-version.log": "1b9487d55bea47fea50d226cc9c53bc548877ad2a318bac8fbc8b320f429e5c5",
+    "positive-Compiled.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "positive-Proofs.log": "ad69d140302d91458785fe54a1834513197620e7ba0fded85590e02551894dca",
+    "positive-Semantics.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "version.log": "307af1b4a460c148e60dcf08f607e77e6f93fe2e04d5a16b299aae991a5f3e76"
+  }
+}

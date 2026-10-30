@@ -1,0 +1,29 @@
+{
+  "backend": "z3-bmc",
+  "solver_version": "4.15.4",
+  "depth": 1,
+  "model_semantic_sha256": "678ae600a67d50c3bdbe33d94cd156c4bf12355ca80331dd4502fa44cdeaa4c7",
+  "symbolic_initials": [],
+  "sequence_width": 32,
+  "event_fields": "all_typed_values",
+  "time": "unbounded_integer_ms",
+  "scope": "defined_transitions_only",
+  "clock_progress": "not_applicable",
+  "liveness": "not_checked",
+  "unbounded_proof": false,
+  "invariants": [
+    "SEQ32-ROUNDTRIP",
+    "SEQ32-INVERSE-DISPLACEMENT"
+  ],
+  "safety_query": "unknown",
+  "runtime_properties": [
+    "positive_timer_duration"
+  ],
+  "byte_semantics": "finite_sequence_bv8_truncating_slice",
+  "sequence_order": "strict_half_space_partial_order",
+  "status": "unknown",
+  "reason": "canceled",
+  "overlap_query": "unsat",
+  "smt2_sha256": "7fa3c72463728920198e5fa74255389128d9de8aa56bb18263867ae3d40da8b9",
+  "overlap_smt2_sha256": "e986dc8fe5584b88132972c4604d2a7acc97eb74271566a24d129c746efda84f"
+}

@@ -229,3 +229,17 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：4db896eb冻结的430项标准发现回归已全部通过，unittest5163.255秒／runner5163.586秒，无失败／错误／跳过，1244依赖及环境未变。原始结果、依赖／测试ID清单及完整日志归档artifacts/full-regression-4db896eb。包含Nagle与SWS新方法，但不含随后新增Linux端口7方法；历史running描述不再代表当前状态。此结果不提升整体形式unknown或完整协议声明，目标未完成。
 
 2026-10-30：[Linux接收数据](docs/linux-netns.md)已完成首个真实内核有限场景：4零字节与累计ACK匹配，完整5020ms窗口5包／无捕获丢包；早ACK与窗口差异原样保留。三个CI执行／独立复查及5个重哈希负例（含正确checksum的错误payload）见artifacts/linux-receive-ci-2ab2a472。仅单段接收，不代表任意字节／发送／乱序／恢复或完整TCP。
+
+2026-10-30：[精确模算术查询证书](formal/modular-normalization.md)与独立[序列标量IR](model/seq32-contract.json)新增3等式／2不变量归纳及正反场景验收。默认BV检查仍unknown；31专项通过不等于442全量通过。一个原ACK违例分支有零模重写等价导出的独立UNSAT证据，整体ACK／TCP与解释器／翻译器证明未完成。
+
+2026-10-30：[生成标量IR的Rocq执行试点](docs/rocq-scalar-execution.md)已实际编译、空公理审计及独立kernel验收，包含错误源IR顺序／逆位移拒绝。源构造子一致性仍由可信Python检查，不是通用解释器／翻译器或完整TCP证明。38专项通过，442冻结全量仍运行；原始对象／来源／日志与6故障门见artifacts/rocq-scalar-ci-e08d3fdb。
+
+2026-10-30：[条件SSA查询复核](formal/conditional-ssa.md)保留全部原断言及完整Boolean分支，在两个真实ACK查询中复现5个UNSAT叶，3叶仍unknown，两个原查询尚未闭合。45专项通过；442冻结回归继续，不声称456全量通过。全部查询／来源／日志见artifacts/ack-conditional-ssa。
+
+2026-10-30：[精确分段模运算](formal/modular-piecewise.md)在无域收窄、保留任意整数fallback的条件下，关闭一个原ACK导出分支092；4个完整条件case均独立UNSAT、context SAT，51专项通过。原70未知中仍68未闭合，未宣布完整RTT／ACK／TCP证明；当前462全量未跑、原442冻结回归继续。
+
+2026-10-30：71a3e1a8冻结的442项标准回归已终态全部通过，unittest5269.704秒／runner5270.056719秒，0失败／错误／跳过，1260依赖与环境未变；原进程exit0，不再是running。原始started／输入／ID／终态／完整日志及独立核对见artifacts/full-regression-71a3e1a8。后续20新方法不在此集合，其51专项另计；当前462完整组合尚未跑。旧历史running记录保留但以此终态为准，不提升协议或形式unknown声明，完整目标未完成。
+
+2026-10-30：[原已声明有限域的精确复核](formal/finite-specialization.md)新增关闭账本数量原分支280，完整16取值与局部等价／叶逐项验收，context SAT。最后分支的default unknown保留并分别补齐两张精确证据；56专项通过，467完整组合未跑。原442冻结回归已通过；完整ACK／父基／TCP尚未完成。
+
+2026-10-30：新增48个原ACK查询的精确模展开独立UNSAT证据；与已有证据按原source SHA去重后，原70个未知仍剩19个。查询索引及完整positive／unknown日志见artifacts/ack-piecewise-remaining68。349/368是导出分支证据数，不是规范覆盖率，完整ACK／父基／TCP证明尚未完成。442冻结回归与56专项通过，467完整组合未跑。
