@@ -175,3 +175,5 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 2026-10-30：条件SSA精确查询工具完成有限验收（原444断言／每query完整4分支／无协议前提覆盖／局部XOR／独立CLI）。ACK092和280分别2／3叶UNSAT，但各仍有UNKNOWN，未关闭任何新原分支或父基。45专项通过，原442冻结运行不重启；新456全量未跑。后续重点是这3个真实未决叶／环形账本的一般ACK精确语义，不将更多切分或局部数学工具算作完整TCP。见formal/conditional-ssa.md及artifacts/ack-conditional-ssa。
 
 2026-10-30：无协议前提且保留无界fallback的模展开，已精确关闭一个原ACK违例092（4条件分支及直接query均独立UNSAT）；加原052后仍68原未决分支，不称完整ACK／父基闭合。51专项通过，462全量未跑、原442冻结回归继续。当前重点继续原未决账本／ACK的一般精确语义，保留所有旧unknown、字节／时序／实现缺口。见formal/modular-piecewise.md和artifacts/ack-piecewise-092。
+
+2026-10-30：71a3e1a8冻结的442项标准回归已终态全部通过，unittest5269.704秒／runner5270.056719秒，0失败／错误／跳过，1260依赖与环境未变；原进程exit0，不再是running。原始started／输入／ID／终态／完整日志及独立核对见artifacts/full-regression-71a3e1a8。后续20新方法不在此集合，其51专项另计；当前462完整组合尚未跑。旧历史running记录保留但以此终态为准，不提升协议或形式unknown声明，完整目标未完成。

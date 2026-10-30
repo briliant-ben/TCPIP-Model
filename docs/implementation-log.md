@@ -527,3 +527,5 @@ Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通�
 直接原092的67模展开亦两次CLI UNSAT（0.438512／0.444338秒），原280的65展开仍两次UNKNOWN；该独立pilot完整保留，不抹去账本缺口。证据artifacts/ack-piecewise-092含source、4-case链、通用等式、逐节点证书、所有query／日志、直接pilot及归档成员SHA。3个临时复制故障（缺Boolean case、重哈希的assert false伪结果、更换原目标）均拒绝，原件未改。
 
 6新方法与原45共51专项一次3.242秒通过，含[-M,0,M,2M]边界及±2^80回退的SAT／错误结果UNSAT、嵌套不同mod／placeholder重名、重哈希假定理／隐藏前提／错实例／省断言／假范围拒绝。当前标准发现462但未跑完整462；原442冻结回归仍同一session运行，1260依赖／原258注册输入未改。Python／Z3与IR→SMT桥仍可信，本里程碑无新kernel／网络实现／Linux实验。继续原68查询、账本及通用字节／时间／解释翻译关系，完整目标未完成。
+
+2026-10-30：71a3e1a8冻结的442项标准回归已终态全部通过，unittest5269.704秒／runner5270.056719秒，0失败／错误／跳过，1260依赖与环境未变；原进程exit0，不再是running。原始started／输入／ID／终态／完整日志及独立核对见artifacts/full-regression-71a3e1a8。后续20新方法不在此集合，其51专项另计；当前462完整组合尚未跑。旧历史running记录保留但以此终态为准，不提升协议或形式unknown声明，完整目标未完成。

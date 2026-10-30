@@ -58,3 +58,5 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 2026-10-30：当前分支codex/tcp-modular、草稿PR#4（以远端实际状态为准）。条件SSA里程碑见formal/conditional-ssa.md；复查命令`.venv/bin/python artifacts/ack-conditional-ssa/accept.py --out /tmp/new-ack-ssa-recheck`，输出目录必须新建，逐成员核对后真实再跑CLI，不计新TCP或Linux证明。ACK092／280仍unknown。45专项通过；原442冻结session39524继续，原1260及258输入SHA未变，新456发现不称全量通过。
 
 2026-10-30：ack-piecewise-092新增精确模运算／原分支092验收。复查`.venv/bin/python artifacts/ack-piecewise-092/accept.py --out /tmp/new-ack092-recheck`，真实新CLI重构全部case／证书／约束；原52外新增092，但仍68原未知，不是完整RTT／ACK。51专项通过；当前462发现未完整跑，原442冻结session39524继续，依赖未改。原2750ms与独立实现Difference全部保持。
+
+2026-10-30：71a3e1a8冻结的442项标准回归已终态全部通过，unittest5269.704秒／runner5270.056719秒，0失败／错误／跳过，1260依赖与环境未变；原进程exit0，不再是running。原始started／输入／ID／终态／完整日志及独立核对见artifacts/full-regression-71a3e1a8。后续20新方法不在此集合，其51专项另计；当前462完整组合尚未跑。旧历史running记录保留但以此终态为准，不提升协议或形式unknown声明，完整目标未完成。
