@@ -1,0 +1,5 @@
+# Terminal exact-refinement attempt with retained unknowns
+
+The original ledger induction has62 unknown destinations. This complete group-size8 attempt terminates refinement_unknown:3 destinations close and59 remain unknown. Original-query groups contain2394 UNSAT and553 UNKNOWN results, without promoting the latter. Three closed targets were separately verified by fresh CLI processes,145 checks in total: D-QUEUE/ESTABLISHED, CL-D-QUEUE-CLOSE-WAIT/CLOSE-WAIT, and the pending-FIN duplicate-ACK receive target to CLOSING. The original primary unknown report remains unchanged.
+
+All3134 files (source queries, grouped queries, equivalence queries and reports) are retained in unknown-attempt.tar.gz with per-member SHA256s. archive.py checks source/primary/checker bindings, rechecks only the three closed targets, verifies every packed member and leaves the original uncommitted directory intact. This is a partial state/length-preservation result, not all220 invariants, byte/time/translator/implementation refinement, an unbounded protocol proof or a Rocq proof. Unknown targets require further precise analysis.

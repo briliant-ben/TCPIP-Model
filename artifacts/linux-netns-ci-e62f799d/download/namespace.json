@@ -1,0 +1,73 @@
+{
+  "platform": "Linux",
+  "kernel": "7.0.0-1017-azure",
+  "parent_netns": "net:[4026531833]",
+  "parent_pid": 3049,
+  "actual_parent_netns": "net:[4026531833]",
+  "execution_netns": "net:[4026532268]",
+  "commands": [
+    {
+      "command": [
+        "ip",
+        "link",
+        "set",
+        "lo",
+        "up"
+      ],
+      "returncode": 0,
+      "log": "namespace-command-0.log"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-w",
+        "net.ipv4.tcp_ecn=0"
+      ],
+      "returncode": 0,
+      "log": "namespace-command-1.log"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-w",
+        "net.ipv4.tcp_timestamps=0"
+      ],
+      "returncode": 0,
+      "log": "namespace-command-2.log"
+    }
+  ],
+  "packetdrill_command": [
+    "/home/runner/work/_temp/protocol-packetdrill-9g5pdHQG/gtests/net/packetdrill/packetdrill",
+    "--ip_version=ipv4",
+    "--local_ip=192.0.2.1",
+    "--remote_ip=192.0.2.2",
+    "--netmask_ip=255.255.255.0",
+    "--gateway_ip=192.0.2.254",
+    "--bind_port=40000",
+    "--connect_port=8080",
+    "--tolerance_usecs=50000",
+    "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/linux-netns/test.pkt"
+  ],
+  "packetdrill_returncode": 0,
+  "capture_command": [
+    "tcpdump",
+    "-Z",
+    "root",
+    "-U",
+    "-n",
+    "-i",
+    "any",
+    "-y",
+    "LINUX_SLL",
+    "-c",
+    "3",
+    "-w",
+    "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/linux-netns/capture.pcap",
+    "tcp and host 192.0.2.1 and host 192.0.2.2 and port 40000 and port 8080"
+  ],
+  "capture_returncode": 0,
+  "capture_scope": "first_three_selected_handshake_packets_model_terminal_ESTABLISHED",
+  "packetdrill_tolerance_us": 50000,
+  "oracle_tolerance_ms": 0,
+  "host_network_mutations": false
+}

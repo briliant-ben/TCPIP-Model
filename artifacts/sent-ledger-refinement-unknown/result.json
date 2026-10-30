@@ -1,0 +1,81 @@
+{
+  "status": "terminal_refinement_unknown_retained_three_closed_targets_rechecked",
+  "primary_status": "unknown",
+  "refinement_status": "refinement_unknown",
+  "original_unknown_targets": 62,
+  "independently_closed_targets": [
+    {
+      "target": {
+        "transition": "D-QUEUE",
+        "state": "ESTABLISHED"
+      },
+      "directory": "partitions/target-000",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/partition_queries.py",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/sent-ledger-current-refinement/partitions/target-000",
+        "--verify"
+      ],
+      "log_sha256": "dc219cb1f819e07f082eafba2a1b251e224bfb865a23ae83ff02572ff6bbf798",
+      "checks": 47,
+      "scope": "one original state/length preservation target only"
+    },
+    {
+      "target": {
+        "transition": "CL-D-QUEUE-CLOSE-WAIT",
+        "state": "CLOSE-WAIT"
+      },
+      "directory": "partitions/target-004",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/partition_queries.py",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/sent-ledger-current-refinement/partitions/target-004",
+        "--verify"
+      ],
+      "log_sha256": "dc219cb1f819e07f082eafba2a1b251e224bfb865a23ae83ff02572ff6bbf798",
+      "checks": 49,
+      "scope": "one original state/length preservation target only"
+    },
+    {
+      "target": {
+        "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE",
+        "state": "CLOSING"
+      },
+      "directory": "partitions/target-047",
+      "command": [
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/bin/python",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/partition_queries.py",
+        "--out",
+        "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/sent-ledger-current-refinement/partitions/target-047",
+        "--verify"
+      ],
+      "log_sha256": "dc219cb1f819e07f082eafba2a1b251e224bfb865a23ae83ff02572ff6bbf798",
+      "checks": 49,
+      "scope": "one original state/length preservation target only"
+    }
+  ],
+  "remaining_unknown_targets": 59,
+  "group_queries": {
+    "unsat": 2394,
+    "unknown": 553
+  },
+  "archive_sha256": "14e6d87e95c914a8cf5297c366d530e7f3822d478f83fd3bfd4698eed42064f3",
+  "member_manifest_sha256": "de96cfbf59d0180ba873db072cfe635c42bbb3660d998866348b02e8dbd8f6b2",
+  "original_refinement_sha256": "78a2a8d13cd67725f2eba7e81f4cf3b49a4d5ae65d1d3199993d2755f6a69340",
+  "model_semantic_sha256": "f44d0c74397487e17a5c5e0358105fff4ca7a27dc5cf239130ce1c54056cf0dd",
+  "primary_result_sha256": "2689c7d6089bf5c32f627d6978e9baa05acc956a716b8deaf30ec960631ee73a",
+  "checker_sources": {
+    "protocol_lab/refinement.py": "971da52d2579887a2e2439f51d62725e2b702635e5226ec806852e3d9cd415c8",
+    "protocol_lab/inductive.py": "757199dc6261b2bac59f6de1fbbb6e8ac5b129c1bb0fc3bac23c39257e488bb1",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974",
+    "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b"
+  },
+  "unbounded_protocol_proof": false,
+  "kernel_checked_proof": false,
+  "all_state_properties_proved": false,
+  "source_directory_preserved": true,
+  "scope": "same original induction queries; unknowns not converted into passes"
+}

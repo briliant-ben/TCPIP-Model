@@ -434,3 +434,7 @@ ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4�
 验收见artifacts/tcp-sws-development/acceptance.json。258个旧注册输入SHA、旧模型／oracle及2750ms差异保持。409项完整回归已在eaeb02ff通过；新Nagle8和SWS13不在该集合，当前发现430，须在新冻结提交另跑。Nagle新增冻结profile视图复现原已验收trace，没有新增C执行。后续继续精确语义／时间与输出对应、发送活性边界、receiver SWS／wire PSH／窗口与恢复及Linux，再按原顺序推进后续协议，完整目标未完成。
 
 2026-10-30：新增ports/linux-netns和Linux TCP independent capture CI入口，使用固定官方packetdrill2a8b4d80、临时Ubuntu VM与unshare --net。现有模型生成的全部握手期望保留，仅增public bind与offload配置；独立tcpdump在模型ESTABLISHED三包边界止，严格checksum／0ms Difference。执行子进程核对真实父PID namespace和自身不同后才配置网络。原始capture／kernel／tools／编译／脚本／模型hash及独立runtime验收已编码；Mac本地2项准备测试通过，缺Linux/TUN/unshare/ip/ethtool，CI尚未实际执行，不计Linux证据。430冻结回归继续绑定4db896eb；新增通道不改其冻结输入。
+
+2026-10-30：Linux CI首次在run41002313195构建及namespace成功，但offload配置141ms导致absolute0的socket时间超过执行50ms，独立capture0包；完整失败ZIP／日志／原脚本留档。按固定官方packetdrill相对事件语义把socket改为相对setup结束，未修改任何packet期望、模型、parser、50ms执行容差或0ms Difference。run41002939358实际Linux7.0.0-1017-azure三包握手与独立runtime验收通过；源头e62f799d、命名空间／原始PCAP／kernel／工具／模型／脚本hash及GitHub ZIP摘要绑定。0ms比较仅保留10.055ms SYN+ACK／10.073ms ACK与模型10ms的时间差；非RFC bug结论，非lwIP或合成证据。边界止于ESTABLISHED三包，不含原场景5010ms静默观察，后者继续实施；非窗口／options／payload、恢复或完整TCP证明。匹配源码下离线复查通过且未冒称本地再执行Linux。证据artifacts/linux-netns-ci-e62f799d。
+
+2026-10-30：sent-ledger原62 unknown目标的group8精确细化已终态refinement_unknown，3目标闭合、59仍unknown；2394组unsat、553组unknown。3闭合目标另用独立CLI145检查复核通过；原主unknown不改，不宣称整个220不变量或payload／时间／翻译对应证明。3134原始文件及成员SHA封存artifacts/sent-ledger-refinement-unknown，原未提交目录保留。430冻结回归仍在运行，新Linux／归档工作未改其1244依赖。
