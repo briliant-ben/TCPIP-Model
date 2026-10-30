@@ -529,3 +529,15 @@ Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通�
 6新方法与原45共51专项一次3.242秒通过，含[-M,0,M,2M]边界及±2^80回退的SAT／错误结果UNSAT、嵌套不同mod／placeholder重名、重哈希假定理／隐藏前提／错实例／省断言／假范围拒绝。当前标准发现462但未跑完整462；原442冻结回归仍同一session运行，1260依赖／原258注册输入未改。Python／Z3与IR→SMT桥仍可信，本里程碑无新kernel／网络实现／Linux实验。继续原68查询、账本及通用字节／时间／解释翻译关系，完整目标未完成。
 
 2026-10-30：71a3e1a8冻结的442项标准回归已终态全部通过，unittest5269.704秒／runner5270.056719秒，0失败／错误／跳过，1260依赖与环境未变；原进程exit0，不再是running。原始started／输入／ID／终态／完整日志及独立核对见artifacts/full-regression-71a3e1a8。后续20新方法不在此集合，其51专项另计；当前462完整组合尚未跑。旧历史running记录保留但以此终态为准，不提升协议或形式unknown声明，完整目标未完成。
+
+## 2026-10-30：原ACK账本数量查询的完整已声明有限域
+
+新增formal/finite_specialization.py，以原非target正合取域约束证明整数case完整覆盖，再对每个取值检查仅以case等式为前提的局部XOR。每叶保留所有原断言，独立检查器围绕实际proposal重建定理并新CLI复查，不信任Python substitute／simplify。有限域最多64值、量词／非正合取／target域／缺值／省断言明确拒绝，10s不变。
+
+原分支280（S-ACK-VALID后cb_count≤rtx bytes）保留444原断言，65个通用mod展开后使用原0≤cb_head<16两条子句，全部16取值覆盖而非收窄模型。前15个default局部等价及叶均独立UNSAT；head15默认局部等价UNKNOWN，不能接受叶。额外精确tactic分别复查该局部XOR（仅head=15为premise，两个断言）及446断言叶，两者各producer／fresh UNSAT，再由组合检查器复查完整16case及context SAT。只新增关闭一个原导出分支，不称整个CB容量不变量／ACK／父基／TCP。原所有unknown报告与source/域保持不变。
+
+组合原型曾只为最后叶补证据便产生过早的本地closure标签；未验收或作为完成发布，增强门发现局部等价未证而拒绝，原源码／报告／失败记录归档diagnostics/ack-finite-composition-gate。最终门同时要求局部等价和叶各自可检查证据，重哈希“把未证default局部等价当通过”故障仍被拒绝。早期source域AST反向比较匹配失败也独立保留diagnostics/ack-finite-domain-shape，只修构造语法方向，不改模型bound。
+
+artifacts/ack-finite-280保存所有source／normalization／finite/default unknown／两个替代证书／完整日志及正向组合复查。4临时复制故障（缺head、重哈希false叶、假局部等价、替换source）全部拒绝，原件未改；5新方法及此前51共56专项一次3.675秒通过。当前标准发现467，未跑完整467；原442冻结回归已全部通过，后续25方法另计。旧258注册输入及上游／oracle／2750ms差异保持，Python／Z3及IR翻译桥仍可信。其他原分支批量细化独立验收，不将重复查询计为新覆盖；目标未完成。
+
+280证据归档后在新的解包目录再次通过完整source／mod／16case／替代局部等价及叶CLI复查，archive-verification.json保留。所有default unknown及未验收原型诊断独立保留；未放宽证据门。

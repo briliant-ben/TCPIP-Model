@@ -239,3 +239,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：[精确分段模运算](formal/modular-piecewise.md)在无域收窄、保留任意整数fallback的条件下，关闭一个原ACK导出分支092；4个完整条件case均独立UNSAT、context SAT，51专项通过。原70未知中仍68未闭合，未宣布完整RTT／ACK／TCP证明；当前462全量未跑、原442冻结回归继续。
 
 2026-10-30：71a3e1a8冻结的442项标准回归已终态全部通过，unittest5269.704秒／runner5270.056719秒，0失败／错误／跳过，1260依赖与环境未变；原进程exit0，不再是running。原始started／输入／ID／终态／完整日志及独立核对见artifacts/full-regression-71a3e1a8。后续20新方法不在此集合，其51专项另计；当前462完整组合尚未跑。旧历史running记录保留但以此终态为准，不提升协议或形式unknown声明，完整目标未完成。
+
+2026-10-30：[原已声明有限域的精确复核](formal/finite-specialization.md)新增关闭账本数量原分支280，完整16取值与局部等价／叶逐项验收，context SAT。最后分支的default unknown保留并分别补齐两张精确证据；56专项通过，467完整组合未跑。原442冻结回归已通过；完整ACK／父基／TCP尚未完成。
