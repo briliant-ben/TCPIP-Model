@@ -26,3 +26,6 @@ It does not rerun the Linux unit tests locally, verify the retained Mac protocol
 query bundles, compile/check Rocq, execute Linux TCP or produce PCAP evidence.
 The job/report explicitly records those scope exclusions. The raw official output
 and observed host/tool epoch are not relabeled as protocol implementation proof.
+
+The decoded official job log is losslessly compressed as decoded-job.log.gz. Its
+original UTF-8 SHA is fixed in the verifier; no raw whitespace is normalized.

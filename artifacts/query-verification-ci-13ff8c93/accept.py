@@ -5,6 +5,7 @@ Linux tests, execute a retained Linux binary or verify Mac protocol certificates
 """
 import argparse
 import hashlib
+import gzip
 import io
 import json
 from pathlib import Path
@@ -18,6 +19,7 @@ ARTIFACT=12988842253
 HEAD='13ff8c934ad8e1d58467495997d316ea09f46beb'
 CHECKOUT='748b94abd50b844d8998a1dd3cbd2fe809434d20'
 ZIP_SHA='242375bb9cf92880da0098fc72293500ee1e9a0d4c39accb0eaea03654602ff6'
+DECODED_LOG_SHA='c9fa87c3da8e2caba735c7db1f24a9716e8d72b3266f85da1037f41b2a5d6464'
 FILES={'report/inputs.json','report/started.json','report/result.json','report/test-ids.json','unittest.log'}
 
 
@@ -68,7 +70,9 @@ def verify(extracted=None):
     log=data['unittest.log'].decode()
     if 'Ran 67 tests'in log and json.loads(log.strip().splitlines()[-1])==r:pass
     else:raise ValueError('Raw unit-test log/result disagree')
-    if CHECKOUT not in (HERE/'decoded-job.log').read_text():raise ValueError('Official checkout not present in decoded job log')
+    decoded=gzip.decompress((HERE/'decoded-job.log.gz').read_bytes())
+    if hashlib.sha256(decoded).hexdigest()!=DECODED_LOG_SHA or CHECKOUT not in decoded.decode():
+        raise ValueError('Official decoded job log/checkout binding changed')
     local=json.loads((ROOT/'artifacts/ack-query-reuse/local-unit-runner/test-ids.json').read_text())
     if ids!=local:raise ValueError('CI did not cover the same selected local methods')
     required={'formal/query_certificates.py','formal/query_lemmas.py','tests/test_query_lemmas.py',
