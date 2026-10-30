@@ -20,17 +20,21 @@ from protocol_lab.symbolic import crosscheck_trace, model_hash
 
 def verify(out, runtime=True):
     result=read(out/'report.json')
+    scenario=result['scenario_id']; scene=driver.scenario_config(scenario)
     require(result['status'] in ['linux_execution_with_projection_match','linux_execution_with_projection_mismatch']
         and result['linux_execution'] and result['host_tcp_stack'] and not result['upstream_modified'], 'Not completed Linux evidence')
     require(result['input_hashes']==driver.inputs(), 'Linux source inputs changed')
     for name,sha in result['file_hashes'].items():
         path=(out/name).resolve(); require(path.is_relative_to(out) and digest(path)==sha,'Linux artifact changed: '+name)
+    require(result['loss_mechanism']==('no peer response to first SYN; observed at egress' if scenario=='syn-loss' else 'none'),
+        'Loss mechanism relabelled')
     require(result['projection']=='active-open-v1' and result['oracle_tolerance_ms']==0
         and result['packetdrill_tolerance_us']==50000 and not result['full_tcp_complete'], 'Linux oracle/scope changed')
     namespace=read(out/'namespace.json')
     driver.require_isolation(namespace['parent_netns'],namespace['execution_netns'])
     require(namespace['platform']=='Linux' and namespace['kernel']==result['kernel']
         and namespace['actual_parent_netns']==namespace['parent_netns']
+        and namespace['scenario_id']==scenario
         and namespace['packetdrill_returncode']==namespace['capture_returncode']==0
         and not namespace['host_network_mutations'], 'Execution/isolation incomplete')
     require(namespace['capture_scope']=='all_selected_packets_through_scenario_settle_before_socket_cleanup'
@@ -58,20 +62,20 @@ def verify(out, runtime=True):
         saved=read(out/'runtime-verification.json')
         require(saved['status']=='valid_linux_runtime_evidence' and saved['report_sha256']==digest(out/'report.json'),
             'Offline snapshot lacks bound runtime verification')
-    model,machine,expected,base,mapping=driver.reference(out)
+    model,machine,expected,base,mapping=driver.reference(out,scenario)
     require(model_hash(model)==result['model_semantic_sha256'] and expected==read(out/'expected.json')
         and machine.trace==read(out/'trace.json'),'Rehashed reference evidence changed')
     require((out/'base-generated.pkt').read_text()==base and read(out/'script-map.json')==mapping,'Generated script changed')
-    script=driver.execution_script(base,Path(result['execution_output_dir']),driver.quiet_after_protocol_ms(expected))
+    script=driver.execution_script(base,Path(result['execution_output_dir']),driver.quiet_after_protocol_ms(expected,scenario))
     require((out/'test.pkt').read_text()==script
         and digest(out/'test.pkt')==result['input_script_sha256'],'Execution script mapping changed')
     require(read(out/'execution-map.json')==driver.execution_mapping(base,script,mapping),'Execution line mapping changed')
     require(read(out/'source-validation.json')==driver.verify_sources(),'Normative-source verification differs')
     observed,metadata=normalize(out/'capture.pcap',read(ROOT/'packet-profile.json'),expected,
         origin='external_capture',checksum_policy='strict',projection='active-open-v1')
-    require(len(observed)>=3 and observed==read(out/'observed.json') and metadata==read(out/'metadata.json'),
+    require(len(observed)>=len(expected) and observed==read(out/'observed.json') and metadata==read(out/'metadata.json'),
         'Independent raw-capture normalization changed')
-    require(namespace['declared_settle_ms']==read(ROOT/'scenarios/handshake.json')['settle_ms'],'Scenario settle scope changed')
+    require(namespace['declared_settle_ms']==scene['settle_ms'],'Scenario settle scope changed')
     window_ms=(namespace['quiet_barrier_epoch_ns']-metadata['time_origin_ns'])/1000000
     require(window_ms==result['observed_window_ms'] and window_ms>=namespace['declared_settle_ms'],
         'Quiet observation window shortened or relabelled')

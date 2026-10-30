@@ -1,0 +1,1 @@
+Preparation test used nonexistent Machine.variables instead of the public reference object values field. The failure is in the new test, before its remaining assertions, not a Linux execution or model semantic failure. Source and failure are preserved; no protocol/oracle/upstream modification fixes it.

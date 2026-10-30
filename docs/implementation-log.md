@@ -449,3 +449,5 @@ ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4�
 原active-open-v1、严格checksum与0ms Difference保持：方向／flags／相对SEQ／ACK匹配，SYN+ACK10.093ms、最终ACK10.131ms对模型10ms的时间差异保留，CI成功不等于投影完全匹配。原始PCAP、编译／源码／脚本／模型及查询哈希、内核／命名空间／捕获生命周期、CI日志／来源和ZIP SHA全部绑定。独立runtime验收成功；当前源码的离线重新生成／查询等价UNSAT及4个重哈希负例（参考时刻、checksum、缩短静默期、重加3包上限）通过。离线重查不是本地Linux重跑或CI二进制再执行。
 
 这是一个真实VM内核、注入对端的有限主动打开场景；不覆盖物理NIC／远端丢包、数据／窗口／选项／payload／恢复／其他协议或一般实现正确性。原lwIP2750ms与其他差异不改；本机macOS权限缺口没有改变，由独立CI通道完成此有限验证。430项回归仍运行，1244冻结依赖未变；精确ledger单目标细化仍运行，整体unknown与完整目标未完成。运行与验收说明见docs/linux-netns.md。
+
+2026-10-30：Linux通道扩展为handshake／syn-loss两个白名单场景，CI各用独立VM。旧model/tcp.json、两个场景、所有原协议算子及oracle未改；loss实验保留两个出口SYN，只对首次SYN不注入响应，非物理网络丢包。按原IR1000ms重传／1010ms响应生成全部预期，syn-loss声明6010ms完整窗口；scenario身份／loss机制／settle逐项绑定验收。7项本地准备／拒绝测试通过，两个固定查询独立解析SAT，证据artifacts/linux-two-case-preparation；这些不是Linux运行证据，新CI待运行。准备测试误用Machine.variables的原始失败归档后改为现有values字段，协议不变。旧1551c535证据仅在其命名源码检查点复查，新源码哈希不被放宽。430回归／精确单目标继续运行，原2750ms差异与完整目标缺口保持。

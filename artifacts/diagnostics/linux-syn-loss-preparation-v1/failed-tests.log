@@ -1,0 +1,21 @@
+test_loss_marker_cannot_silently_select_another_packet (tests.LinuxPlanTests.test_loss_marker_cannot_silently_select_another_packet) ... ok
+test_model_generated_expectations_are_preserved_exactly (tests.LinuxPlanTests.test_model_generated_expectations_are_preserved_exactly) ... ok
+test_quiet_window_uses_selected_source_settle (tests.LinuxPlanTests.test_quiet_window_uses_selected_source_settle) ... ok
+test_shared_or_malformed_namespace_cannot_change_network (tests.LinuxPlanTests.test_shared_or_malformed_namespace_cannot_change_network) ... ok
+test_syn_loss_keeps_both_egress_syns_and_exact_source_timing (tests.LinuxPlanTests.test_syn_loss_keeps_both_egress_syns_and_exact_source_timing) ... ERROR
+test_uncovered_protocol_invalid_capture_and_environment_are_distinct (tests.LinuxPlanTests.test_uncovered_protocol_invalid_capture_and_environment_are_distinct) ... ok
+test_unknown_scenario_is_rejected_before_reading_any_path (tests.LinuxPlanTests.test_unknown_scenario_is_rejected_before_reading_any_path) ... ok
+
+======================================================================
+ERROR: test_syn_loss_keeps_both_egress_syns_and_exact_source_timing (tests.LinuxPlanTests.test_syn_loss_keeps_both_egress_syns_and_exact_source_timing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/tests.py", line 32, in test_syn_loss_keeps_both_egress_syns_and_exact_source_timing
+    self.assertEqual(machine.variables['retries'],1)
+                     ^^^^^^^^^^^^^^^^^
+AttributeError: 'Machine' object has no attribute 'variables'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.006s
+
+FAILED (errors=1)

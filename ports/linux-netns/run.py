@@ -21,8 +21,18 @@ from protocol_lab.capture import normalize
 from protocol_lab.symbolic import crosscheck_trace, model_hash
 
 
-def quiet_after_protocol_ms(expected):
-    settle=read(ROOT/'scenarios/handshake.json')['settle_ms']
+SCENARIOS = {'handshake': 'scenarios/handshake.json', 'syn-loss': 'scenarios/syn-loss.json'}
+
+
+def scenario_config(scenario):
+    require(scenario in SCENARIOS, 'Unsupported Linux scenario')
+    scene=read(ROOT/SCENARIOS[scenario])
+    require(scene['id']==scenario, 'Scenario identity changed')
+    return scene
+
+
+def quiet_after_protocol_ms(expected, scenario='handshake'):
+    settle=scenario_config(scenario)['settle_ms']
     require(type(settle)is int and expected[-1]['time_ms'] <= settle <= 10000,'Quiet interval outside Linux channel scope')
     return settle-expected[-1]['time_ms']
 
@@ -59,17 +69,20 @@ def inputs():
     paths = list(model_files(ROOT / 'model/tcp.json'))
     paths += list((ROOT / 'protocol_lab').glob('*.py'))
     paths += [p for p in PORT.rglob('*') if p.is_file() and '__pycache__' not in p.parts]
-    paths += [ROOT / n for n in ['scenarios/handshake.json', 'packet-profile.json',
+    paths += [ROOT / n for n in [*SCENARIOS.values(), 'packet-profile.json',
         'requirements-formal.txt', 'spec/sources/manifest.json', '.github/workflows/linux-tcp.yml']]
     paths += list((ROOT / 'spec/sources').glob('*.txt'))
     return {str(p.relative_to(ROOT)): digest(p) for p in paths}
 
 
-def reference(out):
-    model = load(ROOT / 'model/tcp.json'); scene = read(ROOT / 'scenarios/handshake.json')
-    require(scene['id'] == 'handshake' and scene['environment']['drop_outgoing'] == [], 'Unsupported Linux scenario')
+def reference(out, scenario='handshake'):
+    model = load(ROOT / 'model/tcp.json'); scene = scenario_config(scenario)
+    drops=[] if scenario=='handshake' else ['e0001:out:0']
+    require(scene['environment']['drop_outgoing']==drops,'Unsupported loss setup')
     machine = run_scenario(model, scene); expected = normalize_trace(machine, scene)
-    require(len(expected) == 3 and [p['flags'] for p in expected] == ['S','SA','A'], 'Only first three-packet active-open supported')
+    flags=['S','SA','A'] if scenario=='handshake' else ['S','S','SA','A']
+    require([p['flags'] for p in expected]==flags,'Unexpected finite active-open packet sequence')
+    require([p['packet_id'] for p in expected if p['dropped_after_egress']]==drops,'Loss marker differs from source')
     script, mapping = packetdrill(expected)
     return model, machine, expected, script, mapping
 
@@ -110,7 +123,7 @@ def failure_kind(phase, error):
     return 'linux_execution_attempt_failed' if phase=='packetdrill_execution' else 'environment_or_setup_failure'
 
 
-def inside(out, parent):
+def inside(out, parent, scenario='handshake'):
     require(platform.system() == 'Linux' and os.geteuid() == 0, 'Linux root namespace child required')
     actual_parent = os.readlink('/proc/' + str(os.getppid()) + '/ns/net')
     require(parent == actual_parent, 'Namespace parent argument differs from the actual live parent')
@@ -142,7 +155,7 @@ def inside(out, parent):
         actual_parent_netns=actual_parent,execution_netns=current,commands=records,
         packetdrill_command=packet_command,capture_command=capture_command,
         capture_scope='all_selected_packets_through_scenario_settle_before_socket_cleanup',
-        capture_packet_limit=None,declared_settle_ms=read(ROOT/'scenarios/handshake.json')['settle_ms'],
+        capture_packet_limit=None,scenario_id=scenario,declared_settle_ms=scenario_config(scenario)['settle_ms'],
         packetdrill_tolerance_us=50000,oracle_tolerance_ms=0,host_network_mutations=False)
     executed=None
     with (out/'capture.log').open('w') as capture_log:
@@ -190,7 +203,7 @@ def inside(out, parent):
                 except subprocess.TimeoutExpired:executed.kill();executed.wait(timeout=5)
 
 
-def run(out):
+def run(out, scenario='handshake'):
     out.mkdir(parents=True,exist_ok=True)
     before = inputs(); env = preflight()
     write(out/'preflight.json',env)
@@ -202,17 +215,17 @@ def run(out):
     require(tool['commit'] == pin['commit'] and not tool['modified_upstream_code'], 'Packetdrill source pin changed')
     require(digest(Path(tool['binary'])) == tool['binary_sha256'], 'Packetdrill binary hash changed')
     for name, sha in tool['file_hashes'].items(): require(digest(out/name) == sha, 'Tool build artifact changed')
-    model, machine, expected, base, mapping = reference(out)
+    model, machine, expected, base, mapping = reference(out,scenario)
     write(out/'source-validation.json',verify_sources())
     write(out/'trace.json',machine.trace); write(out/'expected.json',expected)
     write(out/'script-map.json',mapping)
-    script = execution_script(base,out,quiet_after_protocol_ms(expected))
+    script = execution_script(base,out,quiet_after_protocol_ms(expected,scenario))
     write(out/'execution-map.json',execution_mapping(base,script,mapping))
     (out/'base-generated.pkt').write_text(base); (out/'test.pkt').write_text(script)
     symbolic = crosscheck_trace(model,machine.trace,out/'symbolic')
     require(symbolic['status'] == 'match', 'Reference independent fixed-query failed')
     parent = os.readlink('/proc/self/ns/net')
-    invocation = ['unshare','--net','--',sys.executable,str(PORT/'run.py'),'--inside',parent,'--out',str(out)]
+    invocation = ['unshare','--net','--',sys.executable,str(PORT/'run.py'),'--inside',parent,'--scenario',scenario,'--out',str(out)]
     stage(out,'namespace_launch')
     child = command(invocation,out/'namespace-driver.log',timeout=40,required=False)
     require(child.returncode == 0, 'Isolated Linux execution failed; logs retained')
@@ -220,7 +233,7 @@ def run(out):
     stage(out,'observation')
     observed, metadata = normalize(out/'capture.pcap',read(ROOT/'packet-profile.json'),expected,
         origin='external_capture',checksum_policy='strict',projection='active-open-v1')
-    require(len(observed) >= 3, 'Handshake capture incomplete')
+    require(len(observed) >= len(expected), 'Active-open capture incomplete')
     window_ms=(namespace['quiet_barrier_epoch_ns']-metadata['time_origin_ns'])/1000000
     require(window_ms>=namespace['declared_settle_ms'],'Quiet observation shorter than source scenario')
     difference = compare(expected,observed,tolerance_ms=0,projection='active-open-v1')
@@ -233,7 +246,9 @@ def run(out):
         'quiet-complete','capture-stopped','observed.json','metadata.json','difference.json','symbolic/result.json','symbolic/path.smt2'] + list(tool['file_hashes'])
     result = dict(status='linux_execution_with_projection_'+difference['status'],linux_execution=True,
         host_tcp_stack=True,implementation='Linux kernel TCP',kernel=env['kernel'],projection='active-open-v1',
-        oracle_tolerance_ms=0,packetdrill_tolerance_us=50000,scope='one active-open handshake plus declared5010ms settle; options/window/payload not projected',
+        oracle_tolerance_ms=0,packetdrill_tolerance_us=50000,scenario_id=scenario,
+        loss_mechanism='no peer response to first SYN; observed at egress' if scenario=='syn-loss' else 'none',
+        scope='one '+scenario+' active-open plus declared'+str(scenario_config(scenario)['settle_ms'])+'ms settle; options/window/payload not projected',
         observed_window_ms=window_ms,
         model_semantic_sha256=model_hash(model),input_hashes=before,tool_binary_sha256=tool['binary_sha256'],
         execution_output_dir=str(out),
@@ -249,11 +264,12 @@ if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path,default=ROOT/'artifacts/linux-netns')
     parser.add_argument('--inside'); parser.add_argument('--execute',action='store_true')
+    parser.add_argument('--scenario',choices=SCENARIOS,default='handshake')
     args=parser.parse_args(); out=args.out.resolve()
     require(out.is_relative_to(ROOT/'artifacts'),'Output outside artifacts')
-    if args.inside: inside(out,args.inside)
+    if args.inside: inside(out,args.inside,args.scenario)
     elif args.execute:
-        try: run(out)
+        try: run(out,args.scenario)
         except Exception as error:
             phase=read(out/'phase.json')['phase'] if (out/'phase.json').exists() else 'preflight'
             kind=failure_kind(phase,error)
