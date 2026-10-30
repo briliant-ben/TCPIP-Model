@@ -225,3 +225,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：[真实Linux完整场景观察](docs/linux-netns.md)在独立VM／网络命名空间验收：原5010ms窗口实际观察5010.89946ms，3包、0捕获丢包；两个严格时间Difference保留。原始抓包、CI来源、查询及4个重哈希故障检查见artifacts/linux-netns-ci-1551c535。仅此有限握手场景，不代表数据／恢复、物理网络或完整协议证明。430项冻结回归仍运行。
 
 2026-10-30：[Linux双场景](docs/linux-netns.md)已在独立CI实际执行／验收：普通握手和首次SYN不获响应。重传实际1061.092ms对模型1000ms，严格时间Difference保留；工具执行使用max(50ms,间隔12.5%)，独立oracle仍0ms。完整窗口抓包、配置来源和10个重哈希故障检查见artifacts/linux-netns-ci-de084a26。仍不代表数据／恢复或完整TCP验证。
+
+2026-10-30：4db896eb冻结的430项标准发现回归已全部通过，unittest5163.255秒／runner5163.586秒，无失败／错误／跳过，1244依赖及环境未变。原始结果、依赖／测试ID清单及完整日志归档artifacts/full-regression-4db896eb。包含Nagle与SWS新方法，但不含随后新增Linux端口7方法；历史running描述不再代表当前状态。此结果不提升整体形式unknown或完整协议声明，目标未完成。

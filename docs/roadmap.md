@@ -153,3 +153,5 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 2026-10-30：S-ACK-VALID→ESTABLISHED的group-size1精确细化已终止unknown：368组中298个producer UNSAT、70个UNKNOWN，逐查询10s不变、原其他断言全部保留，等价查询UNSAT。370成员／6698504字节归档artifacts/sent-ledger-single-target-unknown，逐成员与原源码／checker SHA核对；未对全部组独立重跑，未闭合新目标，原62目标主unknown及group8的3闭合／59unknown均不改。原未提交目录保留。下一步需改善字节／计数／赋值编码，而非增加重复切分或把超时称为证明。Linux双场景CI41005706790正在运行；430冻结回归继续。
 
 2026-10-30：Linux两个真实CI场景（普通握手／首次SYN不获响应）已runtime及独立离线验收，10重哈希负例拒绝。重传1061.092ms对模型1000ms、两个严格握手时刻差异保留；packetdrill有效max(50ms,间隔12.5%)与0ms独立oracle明确区分。完整PCAP／工具原源码／配置解释见artifacts/linux-netns-ci-de084a26；数据／窗口／恢复仍待Linux验证，430冻结回归继续，完整目标未完成。
+
+2026-10-30：4db896eb冻结的430项标准发现回归已全部通过，unittest5163.255秒／runner5163.586秒，无失败／错误／跳过，1244依赖及环境未变。原始结果、依赖／测试ID清单及完整日志归档artifacts/full-regression-4db896eb。包含Nagle与SWS新方法，但不含随后新增Linux端口7方法；历史running描述不再代表当前状态。此结果不提升整体形式unknown或完整协议声明，目标未完成。

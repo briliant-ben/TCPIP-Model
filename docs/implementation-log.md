@@ -461,3 +461,5 @@ ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4�
 核对固定官方packetdrill源码发现原先“50000us执行容差”的描述只记录minimum，工具还默认tolerance_percent=12.5，按max(minimum,间隔*百分比)验收；1秒事件有效125ms，所以61.092ms延迟可过工具执行而仍为严格Difference。原官方run.c／config.c完整Git blob及SHA来源已存upstream-timing，无修改默认／模型／oracle强行匹配。旧报告50000字段应读作下限，旧证据不重写；此处补齐实际默认配置解释。不把线端间隔称为内部RTO观测或直接判RFC bug，尚未隔离量化／调度原因。lwIP SYN2750ms独立差异保留。
 
 上述只有两个有限主动打开实验，不覆盖Linux数据／窗口／恢复或一般协议证明。10个负例含场景标签更改，均为离线临时复制，不计新内核运行；本地未重跑Linux／CI二进制。原258输入和430回归1244冻结依赖未变；精确ACK单目标已终止unknown并归档，430回归继续，完整目标未完成。
+
+2026-10-30：4db896eb冻结的430项标准发现回归已全部通过，unittest5163.255秒／runner5163.586秒，无失败／错误／跳过，1244依赖及环境未变。原始结果、依赖／测试ID清单及完整日志归档artifacts/full-regression-4db896eb。包含Nagle与SWS新方法，但不含随后新增Linux端口7方法；历史running描述不再代表当前状态。此结果不提升整体形式unknown或完整协议声明，目标未完成。
