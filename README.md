@@ -241,3 +241,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：71a3e1a8冻结的442项标准回归已终态全部通过，unittest5269.704秒／runner5270.056719秒，0失败／错误／跳过，1260依赖与环境未变；原进程exit0，不再是running。原始started／输入／ID／终态／完整日志及独立核对见artifacts/full-regression-71a3e1a8。后续20新方法不在此集合，其51专项另计；当前462完整组合尚未跑。旧历史running记录保留但以此终态为准，不提升协议或形式unknown声明，完整目标未完成。
 
 2026-10-30：[原已声明有限域的精确复核](formal/finite-specialization.md)新增关闭账本数量原分支280，完整16取值与局部等价／叶逐项验收，context SAT。最后分支的default unknown保留并分别补齐两张精确证据；56专项通过，467完整组合未跑。原442冻结回归已通过；完整ACK／父基／TCP尚未完成。
+
+2026-10-30：新增48个原ACK查询的精确模展开独立UNSAT证据；与已有证据按原source SHA去重后，原70个未知仍剩19个。查询索引及完整positive／unknown日志见artifacts/ack-piecewise-remaining68。349/368是导出分支证据数，不是规范覆盖率，完整ACK／父基／TCP证明尚未完成。442冻结回归与56专项通过，467完整组合未跑。

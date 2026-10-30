@@ -62,3 +62,5 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 2026-10-30：71a3e1a8冻结的442项标准回归已终态全部通过，unittest5269.704秒／runner5270.056719秒，0失败／错误／跳过，1260依赖与环境未变；原进程exit0，不再是running。原始started／输入／ID／终态／完整日志及独立核对见artifacts/full-regression-71a3e1a8。后续20新方法不在此集合，其51专项另计；当前462完整组合尚未跑。旧历史running记录保留但以此终态为准，不提升协议或形式unknown声明，完整目标未完成。
 
 2026-10-30：原账本数量280精确16case里程碑见artifacts/ack-finite-280；复查`.venv/bin/python artifacts/ack-finite-280/accept.py --out /tmp/new-ack280-recheck`。最后case的局部等价与叶均需独立证据，不接受只补叶的原型状态。56专项通过，当前467全量未跑，原442已通过；其他原未决查询批量验收单独记录，范围及全部原Difference保持。
+
+2026-10-30：68原ACK分支批次已终态验收，48独立UNSAT／20UNKNOWN；入口`.venv/bin/python artifacts/ack-piecewise-remaining68/accept.py --out /tmp/new-ack68-recheck`会逐项重建和真实CLI复查。按source SHA结合另外280等证据，19未决清单与349/368具名索引见coverage-index.json（不计重复／不代表完整目标或规范覆盖）。原442通过，56专项通过，467全量未跑。后续优先19个账本／父基缺口及字节内容、输出顺序、时序与实现桥，维持完整原目标和全部Difference。

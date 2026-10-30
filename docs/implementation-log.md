@@ -541,3 +541,13 @@ Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通�
 artifacts/ack-finite-280保存所有source／normalization／finite/default unknown／两个替代证书／完整日志及正向组合复查。4临时复制故障（缺head、重哈希false叶、假局部等价、替换source）全部拒绝，原件未改；5新方法及此前51共56专项一次3.675秒通过。当前标准发现467，未跑完整467；原442冻结回归已全部通过，后续25方法另计。旧258注册输入及上游／oracle／2750ms差异保持，Python／Z3及IR翻译桥仍可信。其他原分支批量细化独立验收，不将重复查询计为新覆盖；目标未完成。
 
 280证据归档后在新的解包目录再次通过完整source／mod／16case／替代局部等价及叶CLI复查，archive-verification.json保留。所有default unknown及未验收原型诊断独立保留；未放宽证据门。
+
+## 2026-10-30：其余68个原ACK未知分支的精确模展开验收
+
+在d34b1d3f冻结helper及原archive启动的68分支批次已终态完成（720.317614秒）：48个producer＋fresh CLI UNSAT，20个仍unknown，均保留444原断言、相同非空context与完整source／checker／solver绑定。每个通用模等式与节点实例化逐项独立重构，所有48个positive再经第三次新CLI通过；打包后在新解包目录重放也通过。没有提高10s预算、收窄domain、增添协议premise或把unknown改写为pass。
+
+artifacts/ack-piecewise-remaining68保留718成员及SHA、实际driver／starting commit、所有68原query／normalized／通用证书／positive与unknown日志／context／终态／独立验收。3个临时复制负例（缺原分区、重哈希false normalized、伪造UNKNOWN→UNSAT元数据及日志）全部拒绝，原件未变。旧primary／tactic／conditional报告不替换。
+
+coverage-index.json按原query SHA拼接298既有独立分支、052／092／280和此次48，368个历史source hash均与旧tactic archive一致，298具名ID集合逐项匹配，无重复计数。现在349个原分支有具名UNSAT证据、19个仍未闭合：[292,295,296,300,304,308,312,316,320,324,328,332,336,340,344,348,352,356,360]。该index不是新的完整368组合证明，更不是规范覆盖率；全部ACK目标／父不变量基／一般TCP仍unknown或未证。此次批次中的280 unknown原样保留，另一个有限域证据只是其显式独立路径。
+
+原442冻结标准回归已通过；新增方法纳入的56专项通过，467完整组合未跑。原1260冻结依赖、258注册输入、Protocol IR／参考／原翻译器／上游lwIP／严格oracle与2750ms差异均未变。本轮查询数学证据无新增Linux／网络实验或kernel／IR解释翻译正确性声明。继续19个真实未决分支与父基、字节内容／有序输出／时序及独立实现对应，再按完整roadmap推进；整体目标未完成。
