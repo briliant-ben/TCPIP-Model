@@ -1,5 +1,6 @@
 """Dependency replay, exact context and cut direction must all be checked."""
 import contextlib,io,json
+from unittest import mock
 from pathlib import Path
 import shutil,sys,tempfile,unittest
 ROOT=Path(__file__).resolve().parents[1]
@@ -115,6 +116,78 @@ class QueryLemmaTests(unittest.TestCase):
             prior=Path(tmp)/'prior.smt2';prior.write_text(DEPENDENCY+'\n; changed serialization must not conceal a cycle\n')
             with contextlib.redirect_stdout(io.StringIO()),self.assertRaisesRegex(ValueError,'Cyclic/circular'):
                 g.produce({'prior':prior},{'reused_target':cert},Path(tmp)/'cyclic')
+
+    def test_session_reuses_only_actual_verified_results_and_new_session_rechecks(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            cert=self.certificate(Path(tmp)/'input');sha=g.c.sha(cert/'source.smt2')
+            session=q.VerificationSession()
+            with mock.patch.object(t,'verify',wraps=t.verify)as checker:
+                first=q.verify(cert,sha,_session=session)
+                second=q.verify(cert,sha,_session=session)
+                fresh=q.verify(cert,sha,_session=q.VerificationSession())
+            self.assertEqual(checker.call_count,2)
+            self.assertFalse(first['cached_verification']);self.assertTrue(second['cached_verification'])
+            self.assertFalse(fresh['cached_verification'])
+            self.assertNotEqual(first['verification_session_id'],fresh['verification_session_id'])
+            second['proof_query_fingerprints'].clear()
+            self.assertTrue(q.verify(cert,sha,_session=session)['proof_query_fingerprints'])
+
+    def test_warm_cache_does_not_hide_rehashed_false_proof_with_same_source(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            cert=self.certificate(Path(tmp)/'input');sha=g.c.sha(cert/'source.smt2')
+            session=q.VerificationSession();q.verify(cert,sha,_session=session)
+            (cert/'proof/query.smt2').write_text('(assert false)(check-sat)')
+            r=json.loads((cert/'proof/result.json').read_text())
+            # Rehash every existing SHA reference to the modified file: a file
+            # integrity label alone must not turn this different proof into a hit.
+            r['script_sha256']=g.c.sha(cert/'proof/query.smt2')
+            old=r['files'] if 'files'in r else {}
+            for name in old:
+                if (cert/'proof'/name).is_file():old[name]=g.c.sha(cert/'proof'/name)
+            g.c.write(cert/'proof/result.json',r)
+            with self.assertRaises(ValueError):q.verify(cert,sha,_session=session)
+            self.assertEqual(session.hits,0)
+
+    def test_checker_epoch_change_forces_fresh_verification(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            cert=self.certificate(Path(tmp)/'input');sha=g.c.sha(cert/'source.smt2')
+            session=q.VerificationSession();q.verify(cert,sha,_session=session)
+            with mock.patch.object(q,'checker_epoch',return_value='new-checker-epoch'),mock.patch.object(t,'verify',wraps=t.verify)as checker:
+                result=q.verify(cert,sha,_session=session)
+            self.assertEqual(checker.call_count,1);self.assertFalse(result['cached_verification'])
+            self.assertEqual(session.fresh,2)
+
+    def test_certificate_cannot_inject_persisted_cache_metadata(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            cert=self.certificate(Path(tmp)/'input');sha=g.c.sha(cert/'source.smt2')
+            session=q.VerificationSession();q.verify(cert,sha,_session=session)
+            record=json.loads((cert/'certificate.json').read_text())
+            record['cached_verification']=True;g.c.write(cert/'certificate.json',record)
+            with self.assertRaisesRegex(ValueError,'schema'):q.verify(cert,sha,_session=session)
+            self.assertEqual(session.hits,0)
+
+    def test_dag_duplicate_parent_reuses_session_but_independent_replay_starts_empty(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            root=Path(tmp);cert=self.certificate(root/'input');target=root/'target.smt2';target.write_text(TARGET)
+            q.verify(cert,g.c.sha(cert/'source.smt2'))  # identical complete trees, including prior logs
+            with contextlib.redirect_stdout(io.StringIO()):
+                r=g.produce({'target':target},{'one':cert,'two':cert},root/'graph')
+                v=g.verify(root/'graph',root/'verification')
+            for result in (r,v):
+                self.assertEqual(result['proof_cache']['fresh_certificates'],1)
+                self.assertEqual(result['proof_cache']['cache_hits'],1)
+                self.assertFalse(result['proof_cache']['loaded_from_artifacts'])
+            self.assertNotEqual(r['proof_cache']['session_id'],v['proof_cache']['session_id'])
+
+    def test_warm_nested_cache_cannot_hide_transitive_canonical_cycle(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            out,_=self.prepare(tmp);cert=self.reused(Path(tmp)/'reused',out)
+            session=q.VerificationSession();sha=g.c.sha(cert/'source.smt2')
+            with contextlib.redirect_stdout(io.StringIO()):q.verify(cert,sha,_session=session)
+            prior=Path(tmp)/'prior.smt2';prior.write_text(DEPENDENCY+'\n; same query with different bytes\n')
+            with self.assertRaisesRegex(ValueError,'cached proof dependency'):
+                q.verify(cert,sha,active={q.fingerprint(prior)},_session=session)
+            self.assertEqual(session.hits,0)
 
     def test_finite_certificate_requires_both_equivalence_and_leaf_route(self):
         with tempfile.TemporaryDirectory()as tmp:

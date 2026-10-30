@@ -4,6 +4,7 @@ Certificate directories contain data only. No Python code or commands supplied
 by a certificate are executed. Every source query is bound by its caller's SHA.
 """
 import argparse
+import copy
 import hashlib
 import json
 from pathlib import Path
@@ -16,6 +17,41 @@ import modular_piecewise as p
 import tactic_recheck as t
 
 FORMAT='standalone-query-certificate-v1'
+
+
+class VerificationSession:
+    """Volatile verified results; never restored from a certificate/report."""
+    def __init__(self):
+        self.id=uuid.uuid4().hex
+        self.entries={}
+        self.fresh=0
+        self.hits=0
+
+    def stats(self):
+        return dict(session_id=self.id,fresh_certificates=self.fresh,cache_hits=self.hits,
+                    invocation_local=True,loaded_from_artifacts=False)
+
+
+def checker_epoch():
+    folder=Path(__file__).parent
+    files=('query_certificates.py','query_lemmas.py','finite_specialization.py','modular_piecewise.py',
+           'conditional_ssa.py','modular_normalization.py','tactic_recheck.py','partition_queries.py')
+    state={name:c.sha(folder/name)for name in files}
+    state['solver_binary_sha256']=c.sha(c.solver_binary())
+    state['z3_python_version']=c.z3.get_full_version()
+    return hashlib.sha256(json.dumps(state,sort_keys=True).encode()).hexdigest()
+
+
+def certificate_digest(root):
+    """Hash complete relative file names and bytes, including unused metadata."""
+    result=hashlib.sha256()
+    for path in sorted(Path(root).rglob('*')):
+        if path.is_symlink():raise ValueError('Symlink certificate members unsupported')
+        if path.is_file():
+            name=str(path.relative_to(root)).encode()
+            result.update(len(name).to_bytes(8,'big'));result.update(name)
+            result.update(bytes.fromhex(c.sha(path)))
+    return result.hexdigest()
 
 
 def inside(root,name):
@@ -78,12 +114,22 @@ def finite(proof,expected_source):
     return dict(normalization=normalization,finite=checked,alternatives=alternatives)
 
 
-def verify(root,expected_source_sha256,active=None):
+def verify(root,expected_source_sha256,active=None,_session=None):
     root=Path(root);original,proof,kind=source(root)
     if c.sha(original)!=expected_source_sha256:raise ValueError('Certificate does not prove expected original query')
     active=set(active or ())
     key=fingerprint(original)
     if key in active:raise ValueError('Cyclic/circular query proof dependency')
+    session=_session if _session is not None else VerificationSession()
+    if type(session)is not VerificationSession:raise ValueError('Invalid private verification session')
+    digest=certificate_digest(root);epoch=checker_epoch()
+    cache_key=(expected_source_sha256,digest,epoch)
+    if cache_key in session.entries:
+        prior=session.entries[cache_key]
+        if active&set(prior['proof_query_fingerprints']):raise ValueError('Cyclic/circular cached proof dependency')
+        session.hits+=1
+        answer=copy.deepcopy(prior);answer['cached_verification']=True;answer['certificate_input_digest']=digest
+        return answer
     active.add(key)
     if kind=='tactic':detail=t.verify(proof,original)
     elif kind=='finite':detail=finite(proof,original)
@@ -96,7 +142,7 @@ def verify(root,expected_source_sha256,active=None):
         selected=[row for row in old['targets']if row['name']==target]
         if len(selected)!=1 or selected[0]['query']['query']!='unsat'or selected[0]['fresh_query']['query']!='unsat':
             raise ValueError('Reused source has no prior independently checked closure')
-        detail=g.verify(proof,root/'reuse-verifications'/uuid.uuid4().hex,_active=active)
+        detail=g.verify(proof,root/'reuse-verifications'/uuid.uuid4().hex,_active=active,_session=session)
         selected=[row for row in detail['targets']if row['name']==target]
         if len(selected)!=1 or selected[0]['query']['query']!='unsat':raise ValueError('Reused source not freshly proved')
     else:
@@ -104,9 +150,22 @@ def verify(root,expected_source_sha256,active=None):
         answer=c.cli(proof/'normalized.smt2',root/'certificate-verification.log')
         if answer['query']!='unsat':raise ValueError('Standalone normalized query not proved UNSAT: '+answer['query'])
         detail=dict(normalization=detail,query=answer)
-    return dict(status='verified_standalone_query_unsat',kind=kind,source_sha256=expected_source_sha256,
+    session.fresh+=1
+    queries={key}
+    if kind=='reuse':queries.update(detail['dependency_query_fingerprints'])
+    answer=dict(status='verified_standalone_query_unsat',kind=kind,source_sha256=expected_source_sha256,
                 verifier_sha256=c.sha(__file__),details=detail,kernel_checked=False,
+                verification_session_id=session.id,verification_id=session.fresh,cached_verification=False,
+                certificate_input_digest=digest,proof_query_fingerprints=sorted(queries),
                 scope='one provided exported SMT conjunction only; no IR translation, reachability or protocol proof')
+    # Verification can add/refresh its own logs. Both exact pre- and post-check
+    # byte trees are associated only after actual positive verification.
+    if checker_epoch()!=epoch:raise ValueError('Checker/solver epoch changed during verification')
+    session.entries[cache_key]=copy.deepcopy(answer)
+    after=certificate_digest(root)
+    session.entries[(expected_source_sha256,after,epoch)]=copy.deepcopy(answer)
+    return answer
+
 
 
 if __name__=='__main__':

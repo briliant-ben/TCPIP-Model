@@ -567,3 +567,11 @@ Protocol IR、原参考／SMT编码器、上游lwIP、全部原unknown／Differe
 2026-10-30：PR#4已合入main eebd27e5。本轮aaee733c保留并转codex/tcp-query-dag，合并main的13ff8c93与aaee源码完全相同，已新建并挂接草稿PR#5。Ubuntu新专项CI41079885224／job124145857544实际通过：67／67、10.319269秒、0失败／错误／跳过，1268源码输入与source head13ff8c93逐Git blob一致，checkout merge748b94ab；原ZIP／官方API来源／完整job及unit日志与离线验收见artifacts/query-verification-ci-13ff8c93。新Linux checker1bfaf5bb与Mac2f4cc814分别绑定，不放宽旧hash；CI只跑新证书单元测试，不计Linux TCP／PCAP／kernel证据。
 
 478项标准发现已在独立临时检出/private/tmp/tcpip-full478-_2gsnde8、detached13ff8c93启动，冻结1281输入。原进程PID21869／统一exec session4411已确认运行，输出/tmp/tcpip-full-regression-13ff8c93.log及同名目录保存started／inputs／test IDs；未到终态，不称全量通过。不得编辑该检出或因观察超时重启；主仓库继续开发不影响此冻结集合。旧442通过仍独立有效，67本地／Linux专项均不替代478完整组合。完整目标继续，剩17原ACK项及父基／字节时序／实现与后续协议缺口不变。
+
+## 2026-10-31：调用内证明缓存的完整证书／epoch／环检测
+
+为后续多层账本DAG加入仅在一次验证调用内存活的VerificationSession。命中绑定原source SHA、完整目录的相对文件名与内容、8个checker source、native solver SHA及Python Z3版本；schema／source／QF与canonical环检测仍先执行，并检查缓存的全部传递依赖是否碰到祖先。返回深复制，不从certificate／report恢复缓存；检查器或证书变化必须重新实际检查。独立verify默认新session，统计不是证据。检查器自己产生的日志会影响完整树digest，只有实际正向验证观察的前后树可复用。
+
+新增6方法，验证重复复用与新session重查、同source重哈希false proof拒绝、checker epoch变化强制重查、metadata注入拒绝、DAG重复父节点及warm跨层canonical环拒绝。73专项实跑7.574597秒通过、0失败／错误／跳过，输入清单及环境不变；完整ID／source hash／日志存artifacts/query-cache-local-73。最初重复节点测试假定不同日志树也命中，被真实断言发现；修正夹具为相同完整输入树，未放宽缓存键。当前标准发现增加6方法，旧478冻结回归仍在独立13ff8c93检出运行，不被主目录修改影响。
+
+新helper SHA／result字段有意与旧epoch不同；原ack-query-reuse归档保持不变，应在其命名13ff8c93 epoch重放，不改旧hash使之适配新版。后续新DAG须从原始SMT和primitive证书重新bootstrap，独立新session验收。另15个头记录查询在探索中得到UNSAT候选，295／296仍UNKNOWN；候选尚未重放依赖，不新增closure，具名索引仍351/368、17未决。没有IR／旧编码器／上游lwIP／oracle／2750ms差异或kernel、完整TCP范围变化，整体目标继续。

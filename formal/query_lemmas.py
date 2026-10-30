@@ -68,7 +68,7 @@ def classification(rows,context):
     return 'partial_or_unknown'
 
 
-def produce(targets,dependencies,out):
+def produce(targets,dependencies,out,_session=None):
     out=Path(out)
     if type(targets)is not dict or type(dependencies)is not dict:
         raise ValueError('Targets/dependencies must be named mappings')
@@ -85,10 +85,11 @@ def produce(targets,dependencies,out):
         (directory/'original.smt2').write_bytes(Path(source).read_bytes())
     for item,source in dependencies.items():shutil.copytree(source,out/'dependencies'/name(item))
     common,originals,parents=inputs(out,target_names,dependency_names)
+    session=_session if _session is not None else q.VerificationSession()
     parent_results=[]
     for item in dependency_names:
         path,_=parents[item]
-        checked=q.verify(out/'dependencies'/item,c.sha(path),active={q.fingerprint(out/'targets'/target/'original.smt2')for target in target_names});parent_results.append(dict(name=item,verification=checked))
+        checked=q.verify(out/'dependencies'/item,c.sha(path),active={q.fingerprint(out/'targets'/target/'original.smt2')for target in target_names},_session=session);parent_results.append(dict(name=item,verification=checked))
         print('standalone-parent',item,checked['status'],flush=True)
     c.write(out/'dependency-results.json',parent_results)
     (out/'composition.smt2').write_text(c.script(schema(len(dependency_names))))
@@ -110,20 +111,22 @@ def produce(targets,dependencies,out):
         print('target',item,query['query'],fresh['query'],flush=True)
     result=dict(status=classification(rows,context),targets=rows,dependencies=dependency_names,
         context=context,composition=composition,versions=versions(),solver_sha256=c.sha(c.solver_binary()),timeout_ms=10000,
-        kernel_checked=False,ir_translation_proved=False,whole_protocol_proved=False,scope=SCOPE)
+        kernel_checked=False,ir_translation_proved=False,whole_protocol_proved=False,proof_cache=session.stats(),scope=SCOPE)
     result['files']={str(path.relative_to(out)):c.sha(path)for path in sorted(out.rglob('*'))if path.is_file()}
     c.write(out/'result.json',result);return result
 
 
-def verify(out,verification_out,_active=None):
+def verify(out,verification_out,_active=None,_session=None):
     out=Path(out);verification_out=Path(verification_out)
     if verification_out.resolve().is_relative_to(out.resolve()):
         raise ValueError('Verification output cannot modify original evidence')
     if verification_out.exists():raise ValueError('Preserve previous verification evidence; use a fresh output')
     r=json.loads((out/'result.json').read_text())
-    if set(r)!={'status','targets','dependencies','context','composition','versions','solver_sha256','timeout_ms','kernel_checked','ir_translation_proved','whole_protocol_proved','scope','files'}:
+    if set(r)!={'status','targets','dependencies','context','composition','versions','solver_sha256','timeout_ms','kernel_checked','ir_translation_proved','whole_protocol_proved','proof_cache','scope','files'}:
         raise ValueError('Unsupported result fields or proof claims')
     if r['versions']!=versions()or r['solver_sha256']!=c.sha(c.solver_binary()):raise ValueError('Checker/dependency/solver changed')
+    if r['proof_cache'].get('invocation_local')is not True or r['proof_cache'].get('loaded_from_artifacts')is not False:
+        raise ValueError('Untrusted or persisted verification cache claim')
     if r['scope']!=SCOPE or r['timeout_ms']!=10000 or any(r[key]is not False for key in ('kernel_checked','ir_translation_proved','whole_protocol_proved')):
         raise ValueError('Scope, domain of claim or budget changed')
     actual={str(path.relative_to(out)):c.sha(path)for path in sorted(out.rglob('*'))if path.is_file()and path!=out/'result.json'}
@@ -131,11 +134,12 @@ def verify(out,verification_out,_active=None):
     target_names=[row['name']for row in r['targets']];dependency_names=r['dependencies']
     common,originals,parents=inputs(out,target_names,dependency_names)
     verification_out.mkdir(parents=True)
+    session=_session if _session is not None else q.VerificationSession()
     dependency_results=[]
     for item in dependency_names:
         copy=verification_out/'dependencies'/item;shutil.copytree(out/'dependencies'/item,copy)
         path,_=parents[item]
-        checked=q.verify(copy,c.sha(path),active=set(_active or ())|{q.fingerprint(out/'targets'/target/'original.smt2')for target in target_names});dependency_results.append(dict(name=item,verification=checked))
+        checked=q.verify(copy,c.sha(path),active=set(_active or ())|{q.fingerprint(out/'targets'/target/'original.smt2')for target in target_names},_session=session);dependency_results.append(dict(name=item,verification=checked))
         print('fresh-parent',item,checked['status'],flush=True)
     c.check_terms(out/'composition.smt2',schema(len(dependency_names)))
     composition=c.cli(out/'composition.smt2',verification_out/'composition.log')
@@ -162,7 +166,9 @@ def verify(out,verification_out,_active=None):
         print('fresh-target',item,answer['query'],flush=True)
     if r['status']!=classification(r['targets'],r['context']):raise ValueError('Classification inconsistent')
     result=dict(status='valid_shared_context_query_reuse',producer_status=r['status'],context=context,
-        dependencies=dependency_results,targets=rows,scope=SCOPE,kernel_checked=False,whole_protocol_proved=False)
+        dependencies=dependency_results,targets=rows,scope=SCOPE,kernel_checked=False,whole_protocol_proved=False,
+        proof_cache=session.stats(),dependency_query_fingerprints=sorted({key for row in dependency_results
+          for key in row['verification']['proof_query_fingerprints']}))
     c.write(verification_out/'result.json',result);return result
 
 

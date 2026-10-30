@@ -54,3 +54,23 @@ query proofs with trusted Python/Z3, source IR translation and orchestration;
 there is no kernel, whole invariant-basis, full-byte/time, reachability,
 implementation or protocol correctness claim. Full-model induction remains a
 separate requirement even if a selected rule's queries close.
+
+A verification invocation may now share a volatile `VerificationSession` across
+DAG nodes. A hit requires the same expected raw-source SHA, the complete relative
+file-name/byte tree digest, all eight checker-source digests, the native solver
+binary digest and the Python Z3 version. Source/schema/QF checks and canonical
+cycle checks run before lookup. Cached transitive query fingerprints are also
+checked against the active ancestors, so warming a nested proof cannot conceal
+a cycle. Returned results are deep copies. Any changed certificate/checker epoch
+requires real verification again; no cache entries are loaded from JSON or a
+previous process. `proof_cache` records counts only, never proof authority.
+Independent verification starts with an empty session by default and rechecks
+all distinct admitted trees. A checker may write its own logs; only exact trees
+observed before/after positive verification are reusable within that invocation.
+
+The result schema now includes these descriptive cache statistics, and the helper
+source digests have changed. Historical bundles remain bound to their named
+checker epoch (for example, `13ff8c93` for `artifacts/ack-query-reuse`). They are
+not silently accepted by the new checker. To use their raw statements in a new
+DAG, regenerate the DAG under the current helpers and independently replay its
+primitive certificates; do not rewrite historical version hashes.
