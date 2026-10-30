@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/seq32-contract-development/accept.py", line 29, in <module>
+    same_query(HERE/'original-modular.smt2',list(enc.solver.assertions()))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/seq32-contract-development/accept.py", line 18, in same_query
+    assert len(actual)==len(expected)and all(a.eq(b)for a,b in zip(actual,expected)),'Statement/assumption changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Statement/assumption changed

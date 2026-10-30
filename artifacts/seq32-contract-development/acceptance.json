@@ -1,0 +1,170 @@
+{
+  "status": "two_declared_scalar_ir_laws_inductively_checked_modular_backend",
+  "model_semantic_sha256": "678ae600a67d50c3bdbe33d94cd156c4bf12355ca80331dd4502fa44cdeaa4c7",
+  "input_hashes": {
+    "model/seq32-contract.json": "eae2c87328b4c924f94894e5311c19f1244d8b4b5f3d8cf3011154f1b7a0c37c",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974",
+    "protocol_lab/inductive.py": "757199dc6261b2bac59f6de1fbbb6e8ac5b129c1bb0fc3bac23c39257e488bb1",
+    "formal/modular_normalization.py": "93b02e41b20c0f75b3983a5dc7e72f55016016d8e3bb2d0d20e8a79ebb1fa1d4",
+    "formal/tactic_recheck.py": "76a42a9ab6265ea6453dad3e463dc0e7a73607a1d8ee72640ba7e5ab2870cd5a",
+    "formal/partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b",
+    "docs/semantics.md": "3d66f69a0c97f72290362ad75d2872e52c02b58a2ec31a082c04d42ac557d57b",
+    "requirements-formal.txt": "a7f518176888216007f17633869baaeb93fa3e23b2e8e72c4d24d271992e988a",
+    "tests/test_modular_normalization.py": "701685c025fd653d0ee831b7bc4958eac9b5e114d7d44d321c79a9992baeaeff",
+    "tests/test_seq32_contract.py": "3c98baddf4cef98736bb6a7cdf8dde931faaa30cfd5331dffff815bd5b2efdd5",
+    "artifacts/seq32-contract-development/generate.py": "045e7463a9ea9d4c89c9abbf18b8d61bba153e6f04f64f3582a8930b7be45292"
+  },
+  "statement": "roundtrip a+distance(a,b)=b for all seq32 a,b; displacement inversion for all integer offsets",
+  "semantic_domain": "full32bit sequence fields and unbounded signed integer offset; one scalar IR probe transition",
+  "original_assertions": 36,
+  "rewrites": 3,
+  "universal_equalities": 3,
+  "modular_queries": {
+    "original": {
+      "query": "unsat",
+      "seconds": 0.008590290963184088,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    },
+    "normalized": {
+      "query": "unsat",
+      "seconds": 0.007646874990314245,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    },
+    "initial.smt2": {
+      "query": "unsat",
+      "seconds": 0.0051821249653585255,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    },
+    "preservation.smt2": {
+      "query": "unsat",
+      "seconds": 0.0075537500088103116,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    },
+    "length-lemmas.smt2": {
+      "query": "unsat",
+      "seconds": 0.0067620829795487225,
+      "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+    }
+  },
+  "inductive": {
+    "status": "valid_inductive_artifacts",
+    "protocol_complete": false
+  },
+  "primary_bitvector": "unknown",
+  "primary_bitvector_safety": "unknown",
+  "boundary_scenes": [
+    {
+      "fields": {
+        "left": 0,
+        "right": 0,
+        "offset": 0
+      },
+      "symbolic": "match",
+      "fresh_cli": "sat"
+    },
+    {
+      "fields": {
+        "left": 0,
+        "right": 4294967295,
+        "offset": -1
+      },
+      "symbolic": "match",
+      "fresh_cli": "sat"
+    },
+    {
+      "fields": {
+        "left": 4294967295,
+        "right": 0,
+        "offset": 1
+      },
+      "symbolic": "match",
+      "fresh_cli": "sat"
+    },
+    {
+      "fields": {
+        "left": 2147483648,
+        "right": 0,
+        "offset": -1180591620717411303421
+      },
+      "symbolic": "match",
+      "fresh_cli": "sat"
+    },
+    {
+      "fields": {
+        "left": 0,
+        "right": 2147483648,
+        "offset": 1180591620717411303431
+      },
+      "symbolic": "match",
+      "fresh_cli": "sat"
+    },
+    {
+      "fields": {
+        "left": 123,
+        "right": 4294967295,
+        "offset": 4294967305
+      },
+      "symbolic": "match",
+      "fresh_cli": "sat"
+    },
+    {
+      "fields": {
+        "left": 4294967295,
+        "right": 1,
+        "offset": -4294967305
+      },
+      "symbolic": "match",
+      "fresh_cli": "sat"
+    },
+    {
+      "fields": {
+        "left": 4294967295,
+        "right": 4294967295,
+        "offset": 8589934592
+      },
+      "symbolic": "match",
+      "fresh_cli": "sat"
+    }
+  ],
+  "faults": [
+    {
+      "name": "reverse-distance",
+      "query": "sat",
+      "fresh_cli": "sat",
+      "replay": {
+        "status": "runtime_rejected",
+        "step": 0,
+        "error": "Invariant failed: SEQ32-ROUNDTRIP"
+      },
+      "scope": "fixed legal typed witness, not unconstrained search completeness"
+    },
+    {
+      "name": "wrong-inverse",
+      "query": "sat",
+      "fresh_cli": "sat",
+      "replay": {
+        "status": "runtime_rejected",
+        "step": 0,
+        "error": "Invariant failed: SEQ32-INVERSE-DISPLACEMENT"
+      },
+      "scope": "fixed legal typed witness, not unconstrained search completeness"
+    }
+  ],
+  "normalizer_methods": 5,
+  "contract_methods": 3,
+  "original_tcp_reports_unchanged": true,
+  "byte_content_proved": false,
+  "python_interpreter_universally_proved": false,
+  "translator_universally_proved": false,
+  "kernel_checked": false,
+  "tcp_invariants_closed": false,
+  "protocol_complete": false,
+  "trusted_components": [
+    "Protocol IR/model validation",
+    "Python expression/transition encoders and independent reference executor",
+    "Python certificate traversal/instantiation/congruence checker",
+    "Z3 modular integer logic and CLI"
+  ],
+  "scope": "declared scalar IR model laws and exact query equality; no TCP buffers/order/time/implementation or complete-protocol proof"
+}

@@ -479,3 +479,15 @@ Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通�
 出站两个ACK在驱动中明确observation-only，但全部进入独立原始抓包及严格oracle；未删除ACK或修改模型以强行匹配。固定工具只支持此4零字节注入，任意字节／PSH／发送／乱序／恢复仍不计Linux验证。两个控制回归新实际窗口5010.198361／6057.786729ms，SYN重传1047.673ms对1000ms；以前1061.092ms和lwIP2750ms保留原快照不重写。命令显式记录既有50ms下限＋12.5%工具容差，独立oracle仍0ms。
 
 证据入口artifacts/linux-receive-ci-2ab2a472/acceptance.json；三套原ZIP、官方API来源、完整CI日志、原PCAP、全部源码／模型／解释文件／脚本／查询／工具绑定、runtime及独立离线重建／查询等价UNSAT已验收。5个重哈希负例含重新计算正确TCP checksum的错误payload，仍在独立解析／输入门被拒绝，原件未改。离线检查不是更多Linux执行或本地CI二进制重跑。旧258输入SHA仍未变。430组合回归已通过，新增4形式工具方法和Linux端口12方法单独记录，不冒称434全量通过；主形式unknown、一般协议与后续模块目标未完成。
+
+## 2026-10-30：精确模算术证书、声明式序列契约及单个ACK分支
+
+新增formal/modular_normalization.py，只处理已导出SMT的正整数固定模数：同模嵌套、整数加减及常数系数归并；非线性／条件项保持opaque，不跨不同模数，符号／非正模数、量词、增量／改选项／多check显式拒绝。每次实际重写生成不含协议／查询premise的通用整数等式，新CLI证明UNSAT；另一个遍历验证源子树实例、全部原断言的数量／顺序与congruence重构，并在新进程复查每个等式。Python AST检查器与Z3仍可信，未称Rocq或通用IR翻译器证明。没有改旧IR／解释器／后端默认语义或10s预算。
+
+新增独立model/seq32-contract.json：1状态／1事件规则／7变量／2不变量均显式IR。覆盖全部32bit输入及不受界的有符号整数位移，声明距离回加和位移还原两条标量定律。现有modular-int归纳义务与独立verify通过，36原始断言精确绑定，3次实际重写／3通用等式分别独立复查，原／转换query均UNSAT。8组回绕／半空间／大正负位移参考及固定输入SAT／新CLI SAT通过。默认BV32主BMC及CLI仍UNKNOWN，绝不以modular通过替换该报告。两IR故障有合法固定输入SAT见证并触发参考不变量；早期负测试误期望无约束BV搜索必得SAT，UNKNOWN原失败／源码保留，改以合法具体反例，不收窄正向域／模型guard。
+
+独立验收发现负整数的API／SMT AST表示不同；没有忽略或用其他premise掩盖，而对9个非同形断言生成无原查询前提的XOR UNSAT复查，数量／顺序仍完整。原拒绝／源码归档diagnostics/seq32-api-export-v1。5个normalizer新方法＋3个标量契约方法和已有4 tactic／6 partition／13数据语义方法合计31项一次0.959s通过；证据artifacts/seq32-contract-development，源码／命题／工具版本与binary/checker SHA绑定。它只关闭声明的标量IR性质，不证明整个Python／Z3／字节／时序或TCP实现对应。
+
+实际S-ACK-VALID→ESTABLISHED的原违例分支52保留444条原约束、模重写数0；经逐条AST重构的等价重新导出，新CLI两次UNSAT（6.140658／6.137274秒），原序列化仍10s UNKNOWN。新证据只支持该一个原分支，不能归因于模运算优化或宣布完整ACK目标闭合，其余69个原UNKNOWN分支未闭合，旧70UNKNOWN分区／59UNKNOWN目标报告保持原件。谱系及原／导出query、独立日志见artifacts/ack-modular-normalization。下一步仍需精确处理大条件SSA／环形账本赋值，并把受限IR执行与可检查语义桥逐步接入Rocq。
+
+旧258注册输入SHA未变，430冻结回归已通过；当前标准发现442项，新增8方法及旧4方法尚未在完整442集合运行，不以31专项替代全量。Linux／lwIP既有证据与2750ms差异未改；没有新增实机或完整协议证明，持续目标未完成。
