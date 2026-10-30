@@ -1,0 +1,204 @@
+{
+  "ir_version": "0.2",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "ir-seq32-contract",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "TCP state machines, buffers, network execution, ordering and liveness",
+      "universal interpreter/translator correspondence; kernel-checked proof"
+    ]
+  },
+  "states": [
+    "READY"
+  ],
+  "initial_state": "READY",
+  "variables": {
+    "left": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "right": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "offset": {
+      "type": "int",
+      "initial": 0
+    },
+    "distance": {
+      "type": "int",
+      "initial": 0
+    },
+    "roundtrip": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "advanced": {
+      "type": "seq32",
+      "initial": 0
+    },
+    "restored": {
+      "type": "seq32",
+      "initial": 0
+    }
+  },
+  "events": {
+    "probe": {
+      "origin": "application",
+      "fields": {
+        "left": "seq32",
+        "right": "seq32",
+        "offset": "int"
+      }
+    }
+  },
+  "timers": {},
+  "messages": {},
+  "requirements": {
+    "SEQ32-ALGEBRA": {
+      "source": "docs/semantics.md",
+      "interpretation": "For modulo 2^32 seq_add and unsigned seq_distance, a+distance(a,b)=b; adding and undoing any integer displacement restores a. This finite EFSM makes only these scalar operator laws explicit, not TCP or a universal interpreter/translator proof.",
+      "kind": "modeling_choice",
+      "strength": "scalar algebra contract"
+    }
+  },
+  "transitions": [
+    {
+      "id": "PROBE",
+      "from": "READY",
+      "to": "READY",
+      "event": "probe",
+      "guard": true,
+      "requirements": [
+        "SEQ32-ALGEBRA"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "left",
+            "value": {
+              "event": "left"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "right",
+            "value": {
+              "event": "right"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "offset",
+            "value": {
+              "event": "offset"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "distance",
+            "value": {
+              "op": "seq_distance",
+              "args": [
+                {
+                  "var": "left"
+                },
+                {
+                  "var": "right"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "roundtrip",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "left"
+                },
+                {
+                  "var": "distance"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "advanced",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "left"
+                },
+                {
+                  "var": "offset"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "restored",
+            "value": {
+              "op": "seq_add",
+              "args": [
+                {
+                  "var": "advanced"
+                },
+                {
+                  "var": "offset"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "SEQ32-ROUNDTRIP",
+      "requirements": [
+        "SEQ32-ALGEBRA"
+      ],
+      "assert": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "roundtrip"
+          },
+          {
+            "var": "right"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SEQ32-INVERSE-DISPLACEMENT",
+      "requirements": [
+        "SEQ32-ALGEBRA"
+      ],
+      "assert": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "restored"
+          },
+          {
+            "var": "left"
+          }
+        ]
+      }
+    }
+  ]
+}

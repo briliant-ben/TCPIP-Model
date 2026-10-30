@@ -1,0 +1,69 @@
+{
+  "status": "retained_kernel_checked_generated_scalar_execution_accepted",
+  "source_head": "e08d3fdb5df54f0c6950f072bd565aeb4ce9349a",
+  "merge_snapshot": "7b4ebb610b870ac6d88bca6d7caca4afd08c85d5",
+  "ci_run": 41033653538,
+  "job": 123989120324,
+  "source_model_sha256": "eae2c87328b4c924f94894e5311c19f1244d8b4b5f3d8cf3011154f1b7a0c37c",
+  "model_semantic_sha256": "678ae600a67d50c3bdbe33d94cd156c4bf12355ca80331dd4502fa44cdeaa4c7",
+  "source_ordered_assignments": 7,
+  "generated_equality_invariants": 2,
+  "statements": [
+    "generated initial environment satisfies generated equalities",
+    "forall initial environments and event values in declared seq32 domains, executing generated ordered assignments satisfies generated equalities"
+  ],
+  "integer_displacement_domain": "unbounded Z; offset is not added to the seq32 field-domain list",
+  "original_ci_kernel_checked": true,
+  "empty_axiom_audits": 2,
+  "local_kernel_recheck": false,
+  "new_kernel_execution": false,
+  "source_binding_is_kernel_proof": false,
+  "python_interpreter_proved": false,
+  "z3_translator_proved": false,
+  "tcp_protocol_proved": false,
+  "bytes_time_output_liveness_proved": false,
+  "linux_tcp_execution": false,
+  "full_protocol_complete": false,
+  "source_fault_controls": {
+    "wrong-inverse": {
+      "status": "generated_module_compiles_but_execution_proof_rejected",
+      "fields": {
+        "left": 0,
+        "right": 1,
+        "offset": 1
+      },
+      "reference_rejection": "Invariant failed: SEQ32-INVERSE-DISPLACEMENT"
+    },
+    "wrong-order": {
+      "status": "generated_module_compiles_but_execution_proof_rejected",
+      "fields": {
+        "left": 0,
+        "right": 1,
+        "offset": 1
+      },
+      "reference_rejection": "Invariant failed: SEQ32-ROUNDTRIP"
+    }
+  },
+  "axiom_control": "rejected_by_audit",
+  "proof_hashes": {
+    "Semantics.v": "a85df0b1ac22d8a3a38252f2a595b8eb63bce20f7bea7bde95c98f96d2f74cd5",
+    "Compiled.v": "75ee5879082d8b75df4c5edc1d48be29f457aee833cc63c89c841c1a11d64deb",
+    "Proofs.v": "88af84f822fcc10e57b6827ef26b3a2d41fee34addb3172ee6d73d1ade32d8ea",
+    "Semantics.vo": "8d040f857d52ad3b93aba42c73224c68f35846026c1862a8bc94309c5be543f9",
+    "Compiled.vo": "75a691d46a35166ffe64245803c38cce8196998d2e119d437c0bce5dc123c57e",
+    "Proofs.vo": "0ba694f98cd00750fcbf6b91e2cbb464d01cfd9e2756ba1cb27aa64c189be03b"
+  },
+  "negative_controls_sha256": "89a695f0364387905c63ff7593aa59f696568a4949ac6e5f551fe6d53075a9ba",
+  "offline_verification_sha256": "1bc9204a29889d6f69aed3d6800e836a433c2bd7012c93887a3138fe13b1dcde",
+  "original_report_sha256": "67a90b4c541d642ecbb08cf8db68ec27a91686d55315fee0e69aa20f09818a33",
+  "original_ci_zip_sha256": "781b0065359e7f817d73928eaf92a246da020f4f9b16833b93df4493cb9cb1e6",
+  "integrity_is_not_authenticity": true,
+  "trusted_components": [
+    "Rocq kernel/standard library and pinned toolchain",
+    "formal scalar-fragment denotation",
+    "Python source type/fragment validation and inverse constructor binding checker",
+    "orchestration and assumption audit",
+    "GitHub runner/job/artifact provenance and original ZIP integrity"
+  ],
+  "scope": "restricted generated scalar IR formal execution; source-to-constructor equality checked by trusted inverse Python parser, not a universal compiler/interpreter proof"
+}

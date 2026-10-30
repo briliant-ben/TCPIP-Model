@@ -1,0 +1,36 @@
+{
+  "status": "valid_retained_generated_scalar_execution_bindings",
+  "source_model_sha256": "eae2c87328b4c924f94894e5311c19f1244d8b4b5f3d8cf3011154f1b7a0c37c",
+  "original_report_sha256": "67a90b4c541d642ecbb08cf8db68ec27a91686d55315fee0e69aa20f09818a33",
+  "checker_sha256": "d7e1822366c1a1a175d30ae2f718b68f0a1cf1aa62599ebe6067722b490f1882",
+  "source_constructor_binding": {
+    "status": "source_ir_and_generated_ast_structurally_equal",
+    "variables": [
+      "left",
+      "right",
+      "offset",
+      "distance",
+      "roundtrip",
+      "advanced",
+      "restored"
+    ],
+    "fields": [
+      "left",
+      "right",
+      "offset"
+    ],
+    "actions": 7,
+    "invariants": 2,
+    "model_semantic_sha256": "678ae600a67d50c3bdbe33d94cd156c4bf12355ca80331dd4502fa44cdeaa4c7",
+    "scope": "restricted fragment constructor binding; Python checker trusted, not universal compiler/interpreter proof"
+  },
+  "kernel_rechecked_locally": false,
+  "new_kernel_execution": false,
+  "provenance_and_original_zip_required": true,
+  "integrity_is_not_authenticity": true,
+  "source_binding_is_kernel_proof": false,
+  "python_interpreter_proved": false,
+  "z3_translator_proved": false,
+  "tcp_protocol_proved": false,
+  "scope": "source/constructor, reviewed statements, existing compiler/kernel/audit logs and immutable object hash bindings"
+}

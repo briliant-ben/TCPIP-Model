@@ -231,3 +231,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：[Linux接收数据](docs/linux-netns.md)已完成首个真实内核有限场景：4零字节与累计ACK匹配，完整5020ms窗口5包／无捕获丢包；早ACK与窗口差异原样保留。三个CI执行／独立复查及5个重哈希负例（含正确checksum的错误payload）见artifacts/linux-receive-ci-2ab2a472。仅单段接收，不代表任意字节／发送／乱序／恢复或完整TCP。
 
 2026-10-30：[精确模算术查询证书](formal/modular-normalization.md)与独立[序列标量IR](model/seq32-contract.json)新增3等式／2不变量归纳及正反场景验收。默认BV检查仍unknown；31专项通过不等于442全量通过。一个原ACK违例分支有零模重写等价导出的独立UNSAT证据，整体ACK／TCP与解释器／翻译器证明未完成。
+
+2026-10-30：[生成标量IR的Rocq执行试点](docs/rocq-scalar-execution.md)已实际编译、空公理审计及独立kernel验收，包含错误源IR顺序／逆位移拒绝。源构造子一致性仍由可信Python检查，不是通用解释器／翻译器或完整TCP证明。38专项通过，442冻结全量仍运行；原始对象／来源／日志与6故障门见artifacts/rocq-scalar-ci-e08d3fdb。
