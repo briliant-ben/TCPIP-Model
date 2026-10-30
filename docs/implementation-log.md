@@ -432,3 +432,5 @@ SWS-INV聚合新窗口／prefix／timer所有权／发送理由状态性质，�
 ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4方法一次269.069s通过，3个新真实C执行全部独立CLI／导出SAT验收；1线端匹配、2线端差异、3服务匹配。完整4字节在21ms一致，两个1字节写（含历史窗口16缩至1）实际21ms，模型按所选SWS策略221ms；230ms sent callback一致。保留严格0ms／checksum／顺序Difference，不据此判RFC bug、观测内部SWS或泛化lwIP符合。修正invariant前的3捕获另存历史，与修正后新执行的原始PCAP和公共摘要完全相同，不重标历史hash。PUSH／wire PSH不在此C适配器范围，只有参考／SMT证据；非Linux。
 
 验收见artifacts/tcp-sws-development/acceptance.json。258个旧注册输入SHA、旧模型／oracle及2750ms差异保持。409项完整回归已在eaeb02ff通过；新Nagle8和SWS13不在该集合，当前发现430，须在新冻结提交另跑。Nagle新增冻结profile视图复现原已验收trace，没有新增C执行。后续继续精确语义／时间与输出对应、发送活性边界、receiver SWS／wire PSH／窗口与恢复及Linux，再按原顺序推进后续协议，完整目标未完成。
+
+2026-10-30：新增ports/linux-netns和Linux TCP independent capture CI入口，使用固定官方packetdrill2a8b4d80、临时Ubuntu VM与unshare --net。现有模型生成的全部握手期望保留，仅增public bind与offload配置；独立tcpdump在模型ESTABLISHED三包边界止，严格checksum／0ms Difference。执行子进程核对真实父PID namespace和自身不同后才配置网络。原始capture／kernel／tools／编译／脚本／模型hash及独立runtime验收已编码；Mac本地2项准备测试通过，缺Linux/TUN/unshare/ip/ethtool，CI尚未实际执行，不计Linux证据。430冻结回归继续绑定4db896eb；新增通道不改其冻结输入。
