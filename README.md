@@ -249,3 +249,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：[新Ubuntu专项CI](artifacts/query-verification-ci-13ff8c93/README.md)实际67／67通过，官方ZIP和1268源输入已离线核对；不是Linux TCP／kernel或旧Mac证据重放。PR#4已合入，新草稿PR#5承接DAG里程碑；478标准回归在独立13ff8c93检出运行中，未宣称全量通过，整体目标未完成。
 
 2026-10-31：[ACK头记录证据链](artifacts/ack-query-head-chain/README.md)在当前epoch重建依赖后，15个原始查询的两次native UNSAT、安全解包独立重检、366个IR/export来源绑定及3项故障拒绝全部通过。具名证据现366/368，该分区295／296仍未证，完整ACK／父基及全字节时序／实现仍开放。73专项本地与Ubuntu CI通过；旧478冻结回归单独运行，当前484完整组合未宣称通过。整体项目继续。
+
+2026-10-31：独立13ff8c93冻结的478项标准回归已终态全部通过，unittest5348.520秒／runner5348.724803秒，0失败／错误／跳过，1281依赖及环境未变，原session4411实际exit0。原started／输入／478唯一ID／result／完整日志与独立验收存artifacts/full-regression-13ff8c93；1281输入还逐不可变Git blob及运行结束后的独立检出原字节核对通过，检出clean且保留。此前running叙述仅为历史，以此终态为准，不再轮询或重启原进程。该478是命名旧source集合；后续缓存／候选生成器方法与专项另计，不能推算为后续组合全通过。没有新增Linux TCP／PCAP、kernel或完整协议证明；原UNKNOWN及2750ms等Difference保留，完整目标继续。

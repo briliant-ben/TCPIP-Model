@@ -587,3 +587,5 @@ artifacts/ack-query-head-chain从原始SMT和primitive证书在当前helper epoc
 具名索引由351/368增至366/368，仅新增304、308、…、360共15个原头几何子句。仍295（partial prefix非负）／296（≤3）未闭合，不是完整ACK／父不变量基、全368组合、字节内容／有序输出／时序／实现／TCP证明。额外探索295仍UNKNOWN、296在加入15候选结论后UNSAT，仅保存diagnostics/ack-last-two-exploration，未作为296证据；前17候选及core UNKNOWN均完整保留diagnostics/ack-head-chain-exploration。旧UNKNOWN和命名旧epoch报告未改。
 
 当前发现484方法；73专项在本地和实际Ubuntu f3c2753c CI通过，不能替代独立13ff8c93的478冻结回归。该旧进程及源检出仍单独保留，1281输入已逐Git blob核对，无新全量通过声明。Protocol IR、原参考／SMT编码器、上游lwIP、oracle及2750ms Difference不动；无新Linux TCP／PCAP或kernel证据。下一步继续295／296、完整账本基及全字节时序／实现桥，再按原协议roadmap推进，整体目标未完成。
+
+2026-10-31：独立13ff8c93冻结的478项标准回归已终态全部通过，unittest5348.520秒／runner5348.724803秒，0失败／错误／跳过，1281依赖及环境未变，原session4411实际exit0。原started／输入／478唯一ID／result／完整日志与独立验收存artifacts/full-regression-13ff8c93；1281输入还逐不可变Git blob及运行结束后的独立检出原字节核对通过，检出clean且保留。此前running叙述仅为历史，以此终态为准，不再轮询或重启原进程。该478是命名旧source集合；后续缓存／候选生成器方法与专项另计，不能推算为后续组合全通过。没有新增Linux TCP／PCAP、kernel或完整协议证明；原UNKNOWN及2750ms等Difference保留，完整目标继续。
