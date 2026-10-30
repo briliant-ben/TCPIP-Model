@@ -1,0 +1,13 @@
+# Two actual Linux active-open experiments
+
+Source de084a26deaa6d3c48e26e747410968a5e6a32ef / PR merge ca46eb95093ef38bd0362e337f7e0ba0233ce7d0, CI41005706790. Two independent VM jobs run Linux7.0.0-1017-azure with distinct network namespaces, pinned unmodified packetdrill and independent tcpdump. Acceptance is in acceptance.json; each case retains original ZIP/provenance/job log and raw artifacts, plus separate offline reconstruction/query-equivalence checks. No local Linux or CI-binary rerun is claimed.
+
+Handshake: observed5010.313562ms for declared5010ms,3 packets, strict time differences10.051/10.064ms versus10ms.
+
+SYN-loss: observed6071.244654ms for declared6010ms,4 packets. The first egress SYN is captured but receives no injected response. Retransmitted SYN occurs1061.092ms versus model1000ms; injected SYN+ACK1071.217ms and final ACK1071.238ms versus1010ms. Both outgoing SYNs are retained; no synthetic PCAP, capture trimming or upstream/oracle modification makes a match. This is response withholding by an injected peer, not physical network loss or a remote peer experiment. Both captures report zero kernel packet drops and cover the full declared quiet interval before socket cleanup.
+
+The independent oracle remains0ms. Packetdrill's --tolerance_usecs=50000 is a minimum, not its entire timing rule. Pinned upstream config.c defaults tolerance_percent12.5; run.c takes the maximum of the minimum and that percentage of the event interval. A1s interval therefore permits125ms in the execution tool; the observed61.092ms delay is accepted by that tool and remains a strict Difference. Full official source blobs and Git-blob/SHA256 provenance are preserved in upstream-timing/. These default settings were not changed for these runs. Do not label this as an observed internal kernel RTO value or an RFC bug; no PCB/timer internals were read and scheduling/clock quantization causes were not isolated. The independent lwIP2750ms difference remains separate and unchanged.
+
+Ten temporary-copy offline controls reject rehashed reference times, corrupt checksums, shortened quiet windows, packet-count caps and changed scenario labels across both cases. They are not additional Linux executions. Run faults.py and accept.py at the named source checkpoint; source changes intentionally fail current-source binding checks. The member manifest binds original and locally added files; CI ZIP provenance is a separate authenticity trust boundary.
+
+Scope: two finite active-open cases on one kernel version, including first SYN non-response. No TCP data/window/options/payload/congestion/data-recovery, physical NIC, later protocol, universal refinement or unbounded proof follows.

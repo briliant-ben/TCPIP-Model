@@ -453,3 +453,11 @@ ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4�
 2026-10-30：Linux通道扩展为handshake／syn-loss两个白名单场景，CI各用独立VM。旧model/tcp.json、两个场景、所有原协议算子及oracle未改；loss实验保留两个出口SYN，只对首次SYN不注入响应，非物理网络丢包。按原IR1000ms重传／1010ms响应生成全部预期，syn-loss声明6010ms完整窗口；scenario身份／loss机制／settle逐项绑定验收。7项本地准备／拒绝测试通过，两个固定查询独立解析SAT，证据artifacts/linux-two-case-preparation；这些不是Linux运行证据，新CI待运行。准备测试误用Machine.variables的原始失败归档后改为现有values字段，协议不变。旧1551c535证据仅在其命名源码检查点复查，新源码哈希不被放宽。430回归／精确单目标继续运行，原2750ms差异与完整目标缺口保持。
 
 2026-10-30：S-ACK-VALID→ESTABLISHED的group-size1精确细化已终止unknown：368组中298个producer UNSAT、70个UNKNOWN，逐查询10s不变、原其他断言全部保留，等价查询UNSAT。370成员／6698504字节归档artifacts/sent-ledger-single-target-unknown，逐成员与原源码／checker SHA核对；未对全部组独立重跑，未闭合新目标，原62目标主unknown及group8的3闭合／59unknown均不改。原未提交目录保留。下一步需改善字节／计数／赋值编码，而非增加重复切分或把超时称为证明。Linux双场景CI41005706790正在运行；430冻结回归继续。
+
+## 2026-10-30：双场景真实Linux与工具动态容差澄清
+
+[CI41005706790](https://github.com/briliant-ben/TCPIP-Model/actions/runs/41005706790)在de084a26源码的handshake／syn-loss独立VM jobs均执行及runtime验收成功。原始ZIP SHA、官方来源、完整日志、PCAP、独立离线重建与查询等价、10个重哈希负例及逐成员哈希归档artifacts/linux-netns-ci-de084a26，acceptance.json验收通过。均实际Linux7.0.0-1017-azure，无包数截断／捕获内核丢包，socket清理在抓包停止后。handshake完整窗口5010.313562ms，3包，10.051／10.064ms对10ms；syn-loss完整窗口6071.244654ms，4包，重传1061.092ms对1000ms、响应1071.217／ACK1071.238ms对1010ms。只有时间Difference，0ms oracle原样保留。首次SYN出口仍被抓到，仅注入对端不响应；不是物理网络丢包。
+
+核对固定官方packetdrill源码发现原先“50000us执行容差”的描述只记录minimum，工具还默认tolerance_percent=12.5，按max(minimum,间隔*百分比)验收；1秒事件有效125ms，所以61.092ms延迟可过工具执行而仍为严格Difference。原官方run.c／config.c完整Git blob及SHA来源已存upstream-timing，无修改默认／模型／oracle强行匹配。旧报告50000字段应读作下限，旧证据不重写；此处补齐实际默认配置解释。不把线端间隔称为内部RTO观测或直接判RFC bug，尚未隔离量化／调度原因。lwIP SYN2750ms独立差异保留。
+
+上述只有两个有限主动打开实验，不覆盖Linux数据／窗口／恢复或一般协议证明。10个负例含场景标签更改，均为离线临时复制，不计新内核运行；本地未重跑Linux／CI二进制。原258输入和430回归1244冻结依赖未变；精确ACK单目标已终止unknown并归档，430回归继续，完整目标未完成。

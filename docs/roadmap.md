@@ -151,3 +151,5 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 2026-10-30：Linux通道扩展为handshake／syn-loss两个白名单场景，CI各用独立VM。旧model/tcp.json、两个场景、所有原协议算子及oracle未改；loss实验保留两个出口SYN，只对首次SYN不注入响应，非物理网络丢包。按原IR1000ms重传／1010ms响应生成全部预期，syn-loss声明6010ms完整窗口；scenario身份／loss机制／settle逐项绑定验收。7项本地准备／拒绝测试通过，两个固定查询独立解析SAT，证据artifacts/linux-two-case-preparation；这些不是Linux运行证据，新CI待运行。准备测试误用Machine.variables的原始失败归档后改为现有values字段，协议不变。旧1551c535证据仅在其命名源码检查点复查，新源码哈希不被放宽。430回归／精确单目标继续运行，原2750ms差异与完整目标缺口保持。
 
 2026-10-30：S-ACK-VALID→ESTABLISHED的group-size1精确细化已终止unknown：368组中298个producer UNSAT、70个UNKNOWN，逐查询10s不变、原其他断言全部保留，等价查询UNSAT。370成员／6698504字节归档artifacts/sent-ledger-single-target-unknown，逐成员与原源码／checker SHA核对；未对全部组独立重跑，未闭合新目标，原62目标主unknown及group8的3闭合／59unknown均不改。原未提交目录保留。下一步需改善字节／计数／赋值编码，而非增加重复切分或把超时称为证明。Linux双场景CI41005706790正在运行；430冻结回归继续。
+
+2026-10-30：Linux两个真实CI场景（普通握手／首次SYN不获响应）已runtime及独立离线验收，10重哈希负例拒绝。重传1061.092ms对模型1000ms、两个严格握手时刻差异保留；packetdrill有效max(50ms,间隔12.5%)与0ms独立oracle明确区分。完整PCAP／工具原源码／配置解释见artifacts/linux-netns-ci-de084a26；数据／窗口／恢复仍待Linux验证，430冻结回归继续，完整目标未完成。

@@ -1,0 +1,88 @@
+{
+  "status": "ten_offline_faults_rejected",
+  "tests": [
+    {
+      "scenario": "handshake",
+      "fault": "reference",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Rehashed reference evidence changed",
+      "log": "handshake/reference-rejected.log",
+      "log_sha256": "3ed2183480ed4443a73cd0101e642f9c1e876bdb87b395d60c749639014b53f6"
+    },
+    {
+      "scenario": "handshake",
+      "fault": "checksum",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Invalid TCP checksum",
+      "log": "handshake/checksum-rejected.log",
+      "log_sha256": "e5aca4a29a1cbb7b1bbe11d79a0f616d967440e6f245f8f674d7aebbcbed2e03"
+    },
+    {
+      "scenario": "handshake",
+      "fault": "short_window",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Quiet observation window shortened",
+      "log": "handshake/short_window-rejected.log",
+      "log_sha256": "42bd58867e6df26e8dd8ed93b83de124d24c6dc508834146aed5ee56be65f100"
+    },
+    {
+      "scenario": "handshake",
+      "fault": "packet_cap",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Capture was silently packet-count limited",
+      "log": "handshake/packet_cap-rejected.log",
+      "log_sha256": "b83901c2ad5ecd5cfe9d2ec6541651737e16b2ec445ca91cf4bc3dcf75f00db0"
+    },
+    {
+      "scenario": "handshake",
+      "fault": "scenario",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Execution/isolation incomplete",
+      "log": "handshake/scenario-rejected.log",
+      "log_sha256": "a39ddf549edaf99db4d78b1397e80eb758730353ddef0da4c3cd9c69d4038999"
+    },
+    {
+      "scenario": "syn-loss",
+      "fault": "reference",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Rehashed reference evidence changed",
+      "log": "syn-loss/reference-rejected.log",
+      "log_sha256": "3ed2183480ed4443a73cd0101e642f9c1e876bdb87b395d60c749639014b53f6"
+    },
+    {
+      "scenario": "syn-loss",
+      "fault": "checksum",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Invalid TCP checksum",
+      "log": "syn-loss/checksum-rejected.log",
+      "log_sha256": "e5aca4a29a1cbb7b1bbe11d79a0f616d967440e6f245f8f674d7aebbcbed2e03"
+    },
+    {
+      "scenario": "syn-loss",
+      "fault": "short_window",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Quiet observation window shortened",
+      "log": "syn-loss/short_window-rejected.log",
+      "log_sha256": "42bd58867e6df26e8dd8ed93b83de124d24c6dc508834146aed5ee56be65f100"
+    },
+    {
+      "scenario": "syn-loss",
+      "fault": "packet_cap",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Capture was silently packet-count limited",
+      "log": "syn-loss/packet_cap-rejected.log",
+      "log_sha256": "b83901c2ad5ecd5cfe9d2ec6541651737e16b2ec445ca91cf4bc3dcf75f00db0"
+    },
+    {
+      "scenario": "syn-loss",
+      "fault": "scenario",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Execution/isolation incomplete",
+      "log": "syn-loss/scenario-rejected.log",
+      "log_sha256": "a39ddf549edaf99db4d78b1397e80eb758730353ddef0da4c3cd9c69d4038999"
+    }
+  ],
+  "new_linux_execution": false,
+  "original_evidence_unchanged": true,
+  "checker_sha256": "bfb075a197ea70297b3e821c372c28d51cd607d427cd730dbfcd5877c13897de"
+}

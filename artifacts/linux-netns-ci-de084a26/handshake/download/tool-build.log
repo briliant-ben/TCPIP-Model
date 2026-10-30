@@ -1,0 +1,67 @@
+cc -g -Wall -Werror    -c -o packetdrill.o packetdrill.c
+cc -g -Wall -Werror    -c -o checksum.o checksum.c
+cc -g -Wall -Werror    -c -o code.o code.c
+cc -g -Wall -Werror    -c -o config.o config.c
+cc -g -Wall -Werror    -c -o hash.o hash.c
+cc -g -Wall -Werror    -c -o hash_map.o hash_map.c
+cc -g -Wall -Werror    -c -o ip_address.o ip_address.c
+cc -g -Wall -Werror    -c -o ip_prefix.o ip_prefix.c
+cc -g -Wall -Werror    -c -o netdev.o netdev.c
+cc -g -Wall -Werror    -c -o net_utils.o net_utils.c
+cc -g -Wall -Werror    -c -o packet.o packet.c
+cc -g -Wall -Werror    -c -o packet_socket_linux.o packet_socket_linux.c
+cc -g -Wall -Werror    -c -o packet_socket_pcap.o packet_socket_pcap.c
+cc -g -Wall -Werror    -c -o packet_checksum.o packet_checksum.c
+cc -g -Wall -Werror    -c -o packet_parser.o packet_parser.c
+cc -g -Wall -Werror    -c -o packet_to_string.o packet_to_string.c
+cc -g -Wall -Werror    -c -o symbols_linux.o symbols_linux.c
+cc -g -Wall -Werror    -c -o symbols_freebsd.o symbols_freebsd.c
+cc -g -Wall -Werror    -c -o symbols_openbsd.o symbols_openbsd.c
+cc -g -Wall -Werror    -c -o symbols_netbsd.o symbols_netbsd.c
+cc -g -Wall -Werror    -c -o gre_packet.o gre_packet.c
+cc -g -Wall -Werror    -c -o icmp_packet.o icmp_packet.c
+cc -g -Wall -Werror    -c -o ip_packet.o ip_packet.c
+cc -g -Wall -Werror    -c -o tcp_packet.o tcp_packet.c
+cc -g -Wall -Werror    -c -o udp_packet.o udp_packet.c
+cc -g -Wall -Werror    -c -o mpls_packet.o mpls_packet.c
+cc -g -Wall -Werror    -c -o psp_packet.o psp_packet.c
+cc -g -Wall -Werror    -c -o run.o run.c
+cc -g -Wall -Werror    -c -o run_command.o run_command.c
+cc -g -Wall -Werror    -c -o run_packet.o run_packet.c
+cc -g -Wall -Werror    -c -o run_system_call.o run_system_call.c
+cc -g -Wall -Werror    -c -o script.o script.c
+cc -g -Wall -Werror    -c -o socket.o socket.c
+cc -g -Wall -Werror    -c -o system.o system.c
+cc -g -Wall -Werror    -c -o tcp_options.o tcp_options.c
+cc -g -Wall -Werror    -c -o tcp_options_iterator.o tcp_options_iterator.c
+cc -g -Wall -Werror    -c -o tcp_options_to_string.o tcp_options_to_string.c
+cc -g -Wall -Werror    -c -o logging.o logging.c
+cc -g -Wall -Werror    -c -o types.o types.c
+bison --output=parser.c --defines=parser.h --report=state parser.y
+cc -g -Wall -Werror    -c -o fmemopen.o fmemopen.c
+cc -g -Wall -Werror    -c -o open_memstream.o open_memstream.c
+cc -g -Wall -Werror    -c -o link_layer.o link_layer.c
+cc -g -Wall -Werror    -c -o wire_conn.o wire_conn.c
+cc -g -Wall -Werror    -c -o wire_protocol.o wire_protocol.c
+cc -g -Wall -Werror  -c parser.c
+cc -g -Wall -Werror    -c -o wire_client.o wire_client.c
+cc -g -Wall -Werror    -c -o wire_client_netdev.o wire_client_netdev.c
+cc -g -Wall -Werror    -c -o wire_server.o wire_server.c
+cc -g -Wall -Werror    -c -o wire_server_netdev.o wire_server_netdev.c
+cc -g -Wall -Werror    -c -o epoll.o epoll.c
+cc -g -Wall -Werror    -c -o pipe.o pipe.c
+cc -g -Wall -Werror    -c -o file.o file.c
+cc -g -Wall -Werror    -c -o so_testing.o so_testing.c
+cc -g -Wall -Werror    -c -o wrap.o wrap.c
+cc -g -Wall -Werror    -c -o psp_state.o psp_state.c
+cc -g -Wall -Werror    -c -o checksum_test.o checksum_test.c
+cc -g -Wall -Werror    -c -o packet_parser_test.o packet_parser_test.c
+cc -g -Wall -Werror    -c -o packet_to_string_test.o packet_to_string_test.c
+flex -olexer.c lexer.l
+cc -O2 -g -Wall -c lexer.c
+cc -o packetdrill -g packetdrill.o checksum.o code.o config.o hash.o hash_map.o ip_address.o ip_prefix.o netdev.o net_utils.o packet.o packet_socket_linux.o packet_socket_pcap.o packet_checksum.o packet_parser.o packet_to_string.o symbols_linux.o symbols_freebsd.o symbols_openbsd.o symbols_netbsd.o gre_packet.o icmp_packet.o ip_packet.o tcp_packet.o udp_packet.o mpls_packet.o psp_packet.o run.o run_command.o run_packet.o run_system_call.o script.o socket.o system.o tcp_options.o tcp_options_iterator.o tcp_options_to_string.o logging.o types.o lexer.o parser.o fmemopen.o open_memstream.o link_layer.o wire_conn.o wire_protocol.o wire_client.o wire_client_netdev.o wire_server.o wire_server_netdev.o epoll.o pipe.o file.o so_testing.o wrap.o psp_state.o   -lpthread -lrt -ldl
+cc -o checksum_test checksum.o code.o config.o hash.o hash_map.o ip_address.o ip_prefix.o netdev.o net_utils.o packet.o packet_socket_linux.o packet_socket_pcap.o packet_checksum.o packet_parser.o packet_to_string.o symbols_linux.o symbols_freebsd.o symbols_openbsd.o symbols_netbsd.o gre_packet.o icmp_packet.o ip_packet.o tcp_packet.o udp_packet.o mpls_packet.o psp_packet.o run.o run_command.o run_packet.o run_system_call.o script.o socket.o system.o tcp_options.o tcp_options_iterator.o tcp_options_to_string.o logging.o types.o lexer.o parser.o fmemopen.o open_memstream.o link_layer.o wire_conn.o wire_protocol.o wire_client.o wire_client_netdev.o wire_server.o wire_server_netdev.o epoll.o pipe.o file.o so_testing.o wrap.o psp_state.o  checksum_test.o  -lpthread -lrt -ldl
+cc -o packet_parser_test checksum.o code.o config.o hash.o hash_map.o ip_address.o ip_prefix.o netdev.o net_utils.o packet.o packet_socket_linux.o packet_socket_pcap.o packet_checksum.o packet_parser.o packet_to_string.o symbols_linux.o symbols_freebsd.o symbols_openbsd.o symbols_netbsd.o gre_packet.o icmp_packet.o ip_packet.o tcp_packet.o udp_packet.o mpls_packet.o psp_packet.o run.o run_command.o run_packet.o run_system_call.o script.o socket.o system.o tcp_options.o tcp_options_iterator.o tcp_options_to_string.o logging.o types.o lexer.o parser.o fmemopen.o open_memstream.o link_layer.o wire_conn.o wire_protocol.o wire_client.o wire_client_netdev.o wire_server.o wire_server_netdev.o epoll.o pipe.o file.o so_testing.o wrap.o psp_state.o  packet_parser_test.o \
+                 -lpthread -lrt -ldl
+cc -o packet_to_string_test checksum.o code.o config.o hash.o hash_map.o ip_address.o ip_prefix.o netdev.o net_utils.o packet.o packet_socket_linux.o packet_socket_pcap.o packet_checksum.o packet_parser.o packet_to_string.o symbols_linux.o symbols_freebsd.o symbols_openbsd.o symbols_netbsd.o gre_packet.o icmp_packet.o ip_packet.o tcp_packet.o udp_packet.o mpls_packet.o psp_packet.o run.o run_command.o run_packet.o run_system_call.o script.o socket.o system.o tcp_options.o tcp_options_iterator.o tcp_options_to_string.o logging.o types.o lexer.o parser.o fmemopen.o open_memstream.o link_layer.o wire_conn.o wire_protocol.o wire_client.o wire_client_netdev.o wire_server.o wire_server_netdev.o epoll.o pipe.o file.o so_testing.o wrap.o psp_state.o  packet_to_string_test.o \
+                 -lpthread -lrt -ldl

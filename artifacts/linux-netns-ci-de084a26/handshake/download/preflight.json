@@ -1,0 +1,13 @@
+{
+  "platform": "Linux",
+  "kernel": "7.0.0-1017-azure",
+  "euid": 0,
+  "tun": true,
+  "tools": {
+    "unshare": "/usr/bin/unshare",
+    "ip": "/usr/sbin/ip",
+    "tcpdump": "/usr/bin/tcpdump",
+    "ethtool": "/usr/sbin/ethtool",
+    "sysctl": "/usr/sbin/sysctl"
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "status": "two_real_linux_active_open_scenarios_accepted_with_differences",
+  "source_head": "de084a26deaa6d3c48e26e747410968a5e6a32ef",
+  "merge_snapshot": "ca46eb95093ef38bd0362e337f7e0ba0233ce7d0",
+  "ci_run": 41005706790,
+  "cases": [
+    {
+      "scenario": "handshake",
+      "status": "real_linux_execution_with_retained_time_differences",
+      "kernel": "7.0.0-1017-azure",
+      "observed_window_ms": 5010.313562,
+      "declared_window_ms": 5010,
+      "selected_packets": 3,
+      "observed_flags_and_times": [
+        {
+          "flags": "S",
+          "time_ms": 0.0
+        },
+        {
+          "flags": "SA",
+          "time_ms": 10.051
+        },
+        {
+          "flags": "A",
+          "time_ms": 10.064
+        }
+      ],
+      "difference": {
+        "status": "mismatch",
+        "oracle": "ordered-projection-v1",
+        "tolerance_ms": 0,
+        "compared_fields": [
+          "direction",
+          "flags",
+          "seq",
+          "ack",
+          "time_ms"
+        ],
+        "differences": [
+          {
+            "kind": "field",
+            "index": 1,
+            "packet_id": "e0002:in",
+            "event_id": "e0002",
+            "requirements": [
+              "TCP-ACCEPT-SYNACK",
+              "RTO-CANCEL",
+              "PROFILE-SCOPE"
+            ],
+            "field": "time_ms",
+            "expected": 10,
+            "observed": 10.051
+          },
+          {
+            "kind": "field",
+            "index": 2,
+            "packet_id": "e0002:out:0",
+            "event_id": "e0002",
+            "requirements": [
+              "TCP-ACCEPT-SYNACK",
+              "RTO-CANCEL",
+              "PROFILE-SCOPE"
+            ],
+            "field": "time_ms",
+            "expected": 10,
+            "observed": 10.064
+          }
+        ]
+      },
+      "raw_capture_sha256": "c46b540bbbd253497de7da734d66e7460712cdb24901481f4888d9c54c6e8ef1",
+      "report_sha256": "ed6646d757b232eaf9a53331f8d844f19888212506ec91dd712f66e49faf58c5",
+      "runtime_verification_sha256": "9f64146bf549c4e32d21df174031949ce8f182aed56ca228a63f5479c334fe30",
+      "offline_verification_sha256": "8e214620dee73b3a866d293b8d99c9292d8222d55a9451c2e9fdc2842e46217b",
+      "artifact_id": 12955232422,
+      "job": 123900008817,
+      "zip_sha256": "9275c4cd28557bd2e581a895ca4e8d08c50823bb8a6ea2f0cf2dc730a4600e48"
+    },
+    {
+      "scenario": "syn-loss",
+      "status": "real_linux_execution_with_retained_time_differences",
+      "kernel": "7.0.0-1017-azure",
+      "observed_window_ms": 6071.244654,
+      "declared_window_ms": 6010,
+      "selected_packets": 4,
+      "observed_flags_and_times": [
+        {
+          "flags": "S",
+          "time_ms": 0.0
+        },
+        {
+          "flags": "S",
+          "time_ms": 1061.092
+        },
+        {
+          "flags": "SA",
+          "time_ms": 1071.217
+        },
+        {
+          "flags": "A",
+          "time_ms": 1071.238
+        }
+      ],
+      "difference": {
+        "status": "mismatch",
+        "oracle": "ordered-projection-v1",
+        "tolerance_ms": 0,
+        "compared_fields": [
+          "direction",
+          "flags",
+          "seq",
+          "ack",
+          "time_ms"
+        ],
+        "differences": [
+          {
+            "kind": "field",
+            "index": 1,
+            "packet_id": "e0002:out:0",
+            "event_id": "e0002",
+            "requirements": [
+              "TCP-RETRANSMIT",
+              "RTO-BACKOFF"
+            ],
+            "field": "time_ms",
+            "expected": 1000,
+            "observed": 1061.092
+          },
+          {
+            "kind": "field",
+            "index": 2,
+            "packet_id": "e0003:in",
+            "event_id": "e0003",
+            "requirements": [
+              "TCP-ACCEPT-SYNACK",
+              "RTO-CANCEL",
+              "PROFILE-SCOPE"
+            ],
+            "field": "time_ms",
+            "expected": 1010,
+            "observed": 1071.217
+          },
+          {
+            "kind": "field",
+            "index": 3,
+            "packet_id": "e0003:out:0",
+            "event_id": "e0003",
+            "requirements": [
+              "TCP-ACCEPT-SYNACK",
+              "RTO-CANCEL",
+              "PROFILE-SCOPE"
+            ],
+            "field": "time_ms",
+            "expected": 1010,
+            "observed": 1071.238
+          }
+        ]
+      },
+      "raw_capture_sha256": "cc1d9e519b1e68b08dc5977a1bb3e2812967a24e6497eb3eabb79723ab986251",
+      "report_sha256": "70e9784278a5368601eb2e0982caca403f3a8ff55d919b35555bfe16ac0e6340",
+      "runtime_verification_sha256": "7326d67a14f768c87d9dba588c11ef690f4442e6267f1dbcb3b9360a2f2f0d24",
+      "offline_verification_sha256": "e771f2208ca67e8dc6a3bde0137157a0bd4e0388d41780a72e736ae00bf6f160",
+      "artifact_id": 12955108849,
+      "job": 123900009128,
+      "zip_sha256": "94dbeda61ff73e36a138a7fb65420792072ab69015acba1406e4ea88683d8ee9"
+    }
+  ],
+  "packetdrill_execution_tolerance": {
+    "minimum_us": 50000,
+    "upstream_default_percent": 12.5,
+    "rule": "max(minimum_us, percent/100 * event_interval_us)",
+    "one_second_event_effective_us": 125000,
+    "source_pin": "2a8b4d80459e157d5bb7a99fe620c83e5ce036bb",
+    "configuration_inferred_from_pinned_default": true
+  },
+  "independent_difference_tolerance_ms": 0,
+  "negative_controls_sha256": "83ca3ed815f4ce46ce0eb80dc8e6399fb6ab7f5a26e5c8c418db2278ec20065e",
+  "local_linux_rerun": false,
+  "local_CI_binary_recheck": false,
+  "physical_network_loss": false,
+  "internal_kernel_RTO_state_observed": false,
+  "full_tcp_complete": false,
+  "unbounded_protocol_proof": false,
+  "scope": "two finite VM kernel active-open runs with an injected peer, including unanswered first SYN; not data/window/recovery or later protocols",
+  "retained_lwip_syn_loss_ms": 2750,
+  "integrity_is_not_authenticity": true,
+  "trusts": [
+    "GitHub VM/job/artifact provenance",
+    "Linux kernel/toolchain",
+    "pinned packetdrill",
+    "independent tcpdump",
+    "IR reference/SMT encoder",
+    "PCAP parser/normalizer/comparator",
+    "offline Python/Z3 evidence checkers"
+  ]
+}
