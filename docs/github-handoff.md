@@ -64,3 +64,5 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 2026-10-30：原账本数量280精确16case里程碑见artifacts/ack-finite-280；复查`.venv/bin/python artifacts/ack-finite-280/accept.py --out /tmp/new-ack280-recheck`。最后case的局部等价与叶均需独立证据，不接受只补叶的原型状态。56专项通过，当前467全量未跑，原442已通过；其他原未决查询批量验收单独记录，范围及全部原Difference保持。
 
 2026-10-30：68原ACK分支批次已终态验收，48独立UNSAT／20UNKNOWN；入口`.venv/bin/python artifacts/ack-piecewise-remaining68/accept.py --out /tmp/new-ack68-recheck`会逐项重建和真实CLI复查。按source SHA结合另外280等证据，19未决清单与349/368具名索引见coverage-index.json（不计重复／不代表完整目标或规范覆盖）。原442通过，56专项通过，467全量未跑。后续优先19个账本／父基缺口及字节内容、输出顺序、时序与实现桥，维持完整原目标和全部Difference。
+
+2026-10-30：DAG cut里程碑见formal/query-lemmas.md及artifacts/ack-query-reuse，复查`.venv/bin/python artifacts/ack-query-reuse/accept.py --out /tmp/new-ack-query-reuse-check`会重放58父证书、两目标和1260输入／模型／export锚点；checker或模型改变应保留命名旧检查点，不放宽hash。351/368具名查询、17未决，原unknown与Difference均保留。67专项通过、478完整发现未跑，旧442通过；query-verification Ubuntu CI只计新证书专项，等待实际CI验收。当前实际分支codex/tcp-modular／PR#4，以远端状态为准，完整原目标保持。

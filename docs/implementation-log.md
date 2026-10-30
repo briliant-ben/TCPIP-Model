@@ -551,3 +551,15 @@ artifacts/ack-piecewise-remaining68保留718成员及SHA、实际driver／starti
 coverage-index.json按原query SHA拼接298既有独立分支、052／092／280和此次48，368个历史source hash均与旧tactic archive一致，298具名ID集合逐项匹配，无重复计数。现在349个原分支有具名UNSAT证据、19个仍未闭合：[292,295,296,300,304,308,312,316,320,324,328,332,336,340,344,348,352,356,360]。该index不是新的完整368组合证明，更不是规范覆盖率；全部ACK目标／父不变量基／一般TCP仍unknown或未证。此次批次中的280 unknown原样保留，另一个有限域证据只是其显式独立路径。
 
 原442冻结标准回归已通过；新增方法纳入的56专项通过，467完整组合未跑。原1260冻结依赖、258注册输入、Protocol IR／参考／原翻译器／上游lwIP／严格oracle与2750ms差异均未变。本轮查询数学证据无新增Linux／网络实验或kernel／IR解释翻译正确性声明。继续19个真实未决分支与父基、字节内容／有序输出／时序及独立实现对应，再按完整roadmap推进；整体目标未完成。
+
+## 2026-10-30：可检查的查询证明DAG与原292／300闭合
+
+新增formal/query_certificates.py和query_lemmas.py：依赖证书只能交给固定内建tactic／无前提mod／分段mod／完整有限域／已验证DAG检查器，不执行证书提供的Python／shell。每项依赖原式A∧D必须新CLI验收为UNSAT，完整有序A向量逐项相同后才允许追加¬D。目标保留全部原断言；独立Boolean组合schema检查cut推理。自依赖、跨层canonical查询环（含不同空白／注释）、上下文变化、额外假设、错极性、缺原式／未证局部等价和scope冒领均拒绝；source／checker／dependency／binary版本与所有query／log SHA绑定。独立复查使用新的输出目录，原证据不改。
+
+真实应用把core只用于选择候选，随后逐个重放全部58份既有证书。原292（账本质量守恒）、300（slot0头记录几何关系）各444原断言追加58个实际已证结论，502断言精确mod重构后producer／fresh均UNSAT：292约1.7600／1.7627秒，300约5.9087／5.9850秒；新目录独立重放全部依赖及两目标再UNSAT，context SAT。所有query仍10s。命名IR／export anchor确认当前tcp-sent-ledger语义SHA f44d0c74、原export b83da01c、1260原source／encoder／spec输入及60个selected分区重建一致；编译器仍可信，不称IR翻译证明。
+
+4真实临时复制故障（前提变更、目标充作父节点、为错极性cut重做合法mod证书、冒领协议scope）全部拒绝且原件不变。新归档安全解包后再次重放全部依赖／目标和IR锚点通过，入口artifacts/ack-query-reuse；早期只加已有索引结论而未重新验证依赖的广／core探索仅存diagnostics/ack-query-lemma-exploration，不计原目标闭合，295／296原UNKNOWN保留。新coverage-index按原source SHA从349／368推进到351／368具名查询证据，仍17未决：[295,296,304,308,312,316,320,324,328,332,336,340,344,348,352,356,360]。不是规范覆盖率或新的全368合并证明，整个ACK／父基仍未闭合。
+
+11新方法含多层复用／递归环拒绝／false依赖／错极性／vacuity等，与此前56合计67专项通过；新版本绑定runner实测67／67、0失败／错误／跳过、约5.735秒，完整输入清单／环境／ID／日志归档local-unit-runner。当前478标准发现未完整跑；旧442冻结回归已通过，原1260及258注册输入未变。新增固定checkout／upload action SHA的Ubuntu query-verification CI仅生成新证书跑专项，不调用旧Mac snapshot验收，不记Linux TCP／kernel证据。真实CI执行尚待推送后验收。
+
+Protocol IR、原参考／SMT编码器、上游lwIP、全部原unknown／Difference、严格oracle和2750ms差异未改；新增证明只属于命名有限账本state／length检查点，不覆盖全字节内容／时序／实现或TCP。运行时新helper source SHA是实际代码依据，parent Git commit仅记录祖先，完整新源码随本bundle提交。持续目标未完成，接续17项、父基及字节／有序输出／时序／实现桥与完整协议roadmap。

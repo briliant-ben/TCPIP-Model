@@ -1,0 +1,115 @@
+"""Verify standalone UNSAT query certificates using fixed built-in checkers.
+
+Certificate directories contain data only. No Python code or commands supplied
+by a certificate are executed. Every source query is bound by its caller's SHA.
+"""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import uuid
+
+import conditional_ssa as c
+import finite_specialization as f
+import modular_normalization as n
+import modular_piecewise as p
+import tactic_recheck as t
+
+FORMAT='standalone-query-certificate-v1'
+
+
+def inside(root,name):
+    if not isinstance(name,str)or not name:raise ValueError('Invalid certificate path')
+    path=Path(name)
+    if path.is_absolute()or '..'in path.parts:raise ValueError('Unsafe certificate path')
+    result=(root/path).resolve()
+    if not result.is_relative_to(root.resolve()):raise ValueError('Certificate path escapes root')
+    return result
+
+
+def admitted(terms):
+    seen=set()
+    def visit(expr):
+        if expr.get_id()in seen:return
+        seen.add(expr.get_id())
+        if not c.z3.is_app(expr):raise ValueError('Quantifiers and bound variables unsupported')
+        for child in expr.children():visit(child)
+    for term in terms:visit(term)
+
+
+def source(root):
+    root=Path(root)
+    record=json.loads((root/'certificate.json').read_text())
+    expected={'format','kind','source','proof'}|({'target'}if record.get('kind')=='reuse'else set())
+    if set(record)!=expected or record['format']!=FORMAT:
+        raise ValueError('Unsupported certificate schema')
+    if record['kind']not in ('tactic','piecewise','modular-normalization','finite','reuse'):
+        raise ValueError('Unsupported certificate kind; no custom checker execution')
+    path=inside(root,record['source']);admitted(c.read_query(path))
+    return path,inside(root,record['proof']),record['kind']
+
+
+def fingerprint(path):
+    """Canonical assertion vector, independent of comments/SMT whitespace."""
+    return hashlib.sha256(c.script(c.read_query(path)).encode()).hexdigest()
+
+
+def finite(proof,expected_source):
+    if c.sha(proof/'original.smt2')!=c.sha(expected_source):raise ValueError('Finite original source mismatch')
+    normalization=p.verify(proof/'modulo',expected_source)
+    checked=f.verify(proof/'finite',proof/'modulo/normalized.smt2')
+    old=json.loads((proof/'finite/result.json').read_text())
+    methods=json.loads((proof/'proof-methods.json').read_text())
+    values=old['recipe']['values']
+    if len(methods)!=len(values)or [row['value']for row in methods]!=values:raise ValueError('Incomplete finite certificate')
+    alternatives=[]
+    for index,(value,method)in enumerate(zip(values,methods)):
+        allowed={'value','method','equivalence_method','method_source_sha256','equivalence_method_source_sha256'}
+        if not set(method)<=allowed:raise ValueError('Unsupported finite proof route fields')
+        for kind,key,file in (('equivalence','equivalence_method','equivalence.smt2'),('query','method','query.smt2')):
+            if method.get(key)=='finite_default':
+                if old['cases'][index][kind]['query']!='unsat'or checked['cases'][index][kind]['query']!='unsat':
+                    raise ValueError('Unproved direct finite '+kind)
+            elif method.get(key)=='exact_tactic':
+                original=proof/f'finite/case-{index:02}'/file
+                if method.get(key+'_source_sha256')!=c.sha(original):raise ValueError('Alternate finite source changed')
+                alternatives.append(dict(value=value,kind=kind,result=t.verify(proof/f'{kind}-tactic-{index:02}',original)))
+            else:raise ValueError('Missing finite local-equivalence or leaf proof')
+    return dict(normalization=normalization,finite=checked,alternatives=alternatives)
+
+
+def verify(root,expected_source_sha256,active=None):
+    root=Path(root);original,proof,kind=source(root)
+    if c.sha(original)!=expected_source_sha256:raise ValueError('Certificate does not prove expected original query')
+    active=set(active or ())
+    key=fingerprint(original)
+    if key in active:raise ValueError('Cyclic/circular query proof dependency')
+    active.add(key)
+    if kind=='tactic':detail=t.verify(proof,original)
+    elif kind=='finite':detail=finite(proof,original)
+    elif kind=='reuse':
+        import query_lemmas as g
+        record=json.loads((root/'certificate.json').read_text());target=g.name(record['target'])
+        if c.sha(proof/'targets'/target/'original.smt2')!=expected_source_sha256:
+            raise ValueError('Reused proof target does not match expected source')
+        old=json.loads((proof/'result.json').read_text())
+        selected=[row for row in old['targets']if row['name']==target]
+        if len(selected)!=1 or selected[0]['query']['query']!='unsat'or selected[0]['fresh_query']['query']!='unsat':
+            raise ValueError('Reused source has no prior independently checked closure')
+        detail=g.verify(proof,root/'reuse-verifications'/uuid.uuid4().hex,_active=active)
+        selected=[row for row in detail['targets']if row['name']==target]
+        if len(selected)!=1 or selected[0]['query']['query']!='unsat':raise ValueError('Reused source not freshly proved')
+    else:
+        detail=p.verify(proof,original)if kind=='piecewise'else n.verify(proof,original)
+        answer=c.cli(proof/'normalized.smt2',root/'certificate-verification.log')
+        if answer['query']!='unsat':raise ValueError('Standalone normalized query not proved UNSAT: '+answer['query'])
+        detail=dict(normalization=detail,query=answer)
+    return dict(status='verified_standalone_query_unsat',kind=kind,source_sha256=expected_source_sha256,
+                verifier_sha256=c.sha(__file__),details=detail,kernel_checked=False,
+                scope='one provided exported SMT conjunction only; no IR translation, reachability or protocol proof')
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('certificate',type=Path)
+    parser.add_argument('--source',required=True,type=Path);args=parser.parse_args()
+    print(json.dumps(verify(args.certificate,c.sha(args.source))))
