@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/verify.py", line 112, in <module>
+    verify(args.out.resolve(),runtime=not args.offline)
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/verify.py", line 76, in verify
+    require(read(out/'driver-policy.json')==driver.driver_policy(expected,scenario),'Driver/observation policy changed')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Driver/observation policy changed

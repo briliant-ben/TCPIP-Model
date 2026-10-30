@@ -1,0 +1,21 @@
+{
+  "status": "mismatch",
+  "oracle": "ordered-connection-data-projection-v1",
+  "tolerance_ms": 0,
+  "compared_fields": [
+    "direction",
+    "flags",
+    "seq",
+    "ack",
+    "time_ms",
+    "window",
+    "payload"
+  ],
+  "differences": [
+    {
+      "kind": "packet_count",
+      "expected": 6,
+      "observed": 7
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "status": "retained_unknown_not_proof",
+  "target": "S-ACK-VALID -> ESTABLISHED",
+  "group_size": 1,
+  "groups": {
+    "unsat": 298,
+    "unknown": 70
+  },
+  "disjunct_count": 368,
+  "source_sha256": "b83da01cb5f1f4ec72c7e9485e357ec9c57044d99c5411be5634087bc62aad8d",
+  "checker_sha256": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b",
+  "timeout_ms": 10000,
+  "equivalence": {
+    "query": "unsat"
+  },
+  "all_other_assertions_retained": true,
+  "archive_sha256": "636651513564538c3d6e1be7313aaf43f97e0ad7f1f699be88650910029acb08",
+  "members_sha256": "08bb8b827d03a0381865eeb32022b757c231b62bae5c7058c2e9b715525c1820",
+  "producer_report_sha256": "b860eb0363012201ae137b8e81e6a292b59db9b064008c63a5e3d2c05eccb32e",
+  "independent_all_group_recheck": false,
+  "original_reports_unchanged": true,
+  "original_directory_preserved": true,
+  "scope": "one exact S-ACK-VALID state/length obligation remains unknown; no new target closed or reachability/full-byte/time/kernel claim"
+}

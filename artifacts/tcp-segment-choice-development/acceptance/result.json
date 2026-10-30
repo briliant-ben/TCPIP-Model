@@ -1,0 +1,92 @@
+{
+  "status": "finite_declared_segment_choice_milestone_verified_primary_unknown_preserved",
+  "registered": false,
+  "model_semantic_sha256": "63cf758c8fb49f600f0ee4439f05627315a18ff99a8fc25594e1093df9ccf94b",
+  "rules": 201,
+  "invariants": 195,
+  "new_choice_rules": 8,
+  "test_methods": 8,
+  "test_seconds": 500.431,
+  "immediate_parent_compatibility_stimuli": 22,
+  "legacy_contracts_not_rewritten": true,
+  "fixed_input_full_byte_and_synthetic_codec_scenarios": 3,
+  "primary_bmc": {
+    "status": "unknown",
+    "backend": "z3-bmc",
+    "depth": 6,
+    "reason": "canceled",
+    "safety_query": "unknown",
+    "overlap_query": "unknown"
+  },
+  "primary_induction": "unknown",
+  "new_choice_state_preservation_queries": "eight_unsat",
+  "primary_unknown_targets": [
+    {
+      "transition": "CL-S-ACK-VALID-CLOSING-CLOSING",
+      "state": "CLOSING"
+    },
+    {
+      "transition": "F-RECEIVE-ESTABLISHED-net-data",
+      "state": "ESTABLISHED"
+    },
+    {
+      "transition": "F-RECEIVE-ESTABLISHED-net-fin_segment",
+      "state": "ESTABLISHED"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW",
+      "state": "FIN-WAIT-1"
+    },
+    {
+      "transition": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE",
+      "state": "FIN-WAIT-1"
+    }
+  ],
+  "supplementary_groups": 1342,
+  "supplementary_checks_including_equivalence": 1347,
+  "independent_refinement_verification": "passed",
+  "existing_independent_capture_prefix_witness": {
+    "cutoff_ms": 21,
+    "packets": 5,
+    "status": "match_with_declared_counts_2_plus_2",
+    "negative_variants": 3,
+    "new_implementation_execution": false,
+    "full_original_comparison": "mismatch_preserved",
+    "application_call_correspondence_proved": false
+  },
+  "ongoing370_regression": {
+    "commit": "2d296f8941d41043921ba9c637d4192eb183753c",
+    "status": "running_at_archive_not_passed",
+    "frozen_dependencies_unchanged": 1125,
+    "eight_new_methods_not_in_test_set": true
+  },
+  "linux_execution": false,
+  "full_stack_complete": false,
+  "scope_exclusions": [
+    "full PCAP acceptance and public API call alignment",
+    "Nagle/SWS policies, alternate retransmission/timer relations and general permitted-output refinement",
+    "complete TCP or universal content/output/time/translation/implementation proof"
+  ],
+  "bindings": {
+    "model/tcp-segment-choice.json": "05a7c4f01db7e390c6adcb4571f280d1a90a7f65e942977a467f83ebad09aa7b",
+    "tools/build_segment_choice_model.py": "6d257f8596e062dadc3670b0680b716b84a7466f17a4408aaca8506f8831ede5",
+    "tests/test_segment_choice.py": "cfedc87f6a683e11f0b1918719f63b495ec122f9d264c034f42225afcf61a50a",
+    "artifacts/tcp-segment-choice-development/report.json": "16ddd4b9ac25b97ed3fa34bfc2fb5c728d238fdaa8395a4b410ea6616ee7f1ef",
+    "artifacts/tcp-segment-choice-development/development-verification.json": "ceeb6728d115adfd0fc629b82f5b30118932fed76e1910523d12f53e1a271ed2",
+    "artifacts/segment-choice-initial-induction/result.json": "78a5e0ba245b2724c3b9221d90ea0ef2f36be34eead883b613e26170a8fb25fe",
+    "artifacts/segment-choice-initial-refinement/result.json": "131b95394b5c98a56f31ac433fb8965662ffd29ae2872141c88004b852a99d51",
+    "artifacts/segment-choice-prefix/result.json": "005189c615413dd0e89e9779a50e2ddc2c70b6812cfff50f24f740a64195265d",
+    "artifacts/diagnostics/segment-choice-parent-contract-v1/manifest.json": "880eda4b9809e987101ceb75a924d4378c4503292f82002e987131d435cebea9"
+  },
+  "acceptance_files": {
+    "development-verifier.py": "6f47a5a480255bd22297157826887f769b7fc9905ce67eda3472a7f5c9867ae7",
+    "development-verification.log": "88adc455376854031c1b4fc2f67f08a6baa5b29b6d6ee1c2ab4d23a84f05b1a6",
+    "development-generation.log": "1bed4ded87ee2fdda5b363021caefa6ed9bf0ecc4c0ef0e34017ee060c059ff8",
+    "refinement.log": "bfac55cb8f13e06717cbe8bb1685af9576e61bf5c8f7a162cd6a0c122762a16a",
+    "primary-induction.log": "a60e256623b48b256981eb8b6c4a190d132b202774fd935e7f7f1ff2e6a39ece",
+    "tests.log": "0dd71e05750de66d8e11ea2a659dd8914bcf9b4183a40aa8eefb28aaa801296b",
+    "development-driver.py": "68bcacfeb6cc2147c3a5a6455c1c1f65ab8afa7aa65c0c6a889bedd632437bb5",
+    "refinement-verification.log": "2d4186f4397518a257efdf78f4bc60369410fd4dd829763ebb34cf7987caf250",
+    "prefix-witness.log": "c131c4281a7c1ba2e11c5a2999ce1518e46779fa0197e0d29fb14106ee75f502"
+  }
+}

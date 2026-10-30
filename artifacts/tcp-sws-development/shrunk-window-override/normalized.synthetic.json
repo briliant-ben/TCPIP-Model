@@ -1,0 +1,64 @@
+[
+  {
+    "direction": "out",
+    "flags": "S",
+    "seq": 1000,
+    "ack": 0,
+    "time_ms": 0.0,
+    "capture_frame": 1,
+    "window": 16,
+    "payload": []
+  },
+  {
+    "direction": "in",
+    "flags": "SA",
+    "seq": 9000,
+    "ack": 1001,
+    "time_ms": 10.0,
+    "capture_frame": 2,
+    "window": 16,
+    "payload": []
+  },
+  {
+    "direction": "out",
+    "flags": "A",
+    "seq": 1001,
+    "ack": 9001,
+    "time_ms": 10.0,
+    "capture_frame": 3,
+    "window": 16,
+    "payload": []
+  },
+  {
+    "direction": "in",
+    "flags": "A",
+    "seq": 9001,
+    "ack": 1001,
+    "time_ms": 15.0,
+    "capture_frame": 4,
+    "window": 1,
+    "payload": []
+  },
+  {
+    "direction": "out",
+    "flags": "A",
+    "seq": 1001,
+    "ack": 9001,
+    "time_ms": 221.0,
+    "capture_frame": 5,
+    "window": 16,
+    "payload": [
+      128
+    ]
+  },
+  {
+    "direction": "in",
+    "flags": "A",
+    "seq": 9001,
+    "ack": 1002,
+    "time_ms": 230.0,
+    "capture_frame": 6,
+    "window": 1,
+    "payload": []
+  }
+]

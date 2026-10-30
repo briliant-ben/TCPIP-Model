@@ -1,0 +1,45 @@
+{
+  "status": "five_receive_faults_rejected",
+  "tests": [
+    {
+      "fault": "payload",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Captured receive stimuli differ",
+      "log": "payload-rejected.log",
+      "log_sha256": "598af8e9083e5c8a4fdec76c39b3ac0160c84c06e9724b0a60ecc8af5243f185"
+    },
+    {
+      "fault": "reference",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Rehashed reference evidence changed",
+      "log": "reference-rejected.log",
+      "log_sha256": "209ded9cda69b3ecb2b8619ff303ba96c2bb314f2484a0d25d331f3d3fb7a98b"
+    },
+    {
+      "fault": "policy",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Driver/observation policy changed",
+      "log": "policy-rejected.log",
+      "log_sha256": "985e4276183b3abbd77b1bb4af65ca21b6d9c621817cbbdab0a651e2bcab130d"
+    },
+    {
+      "fault": "checksum",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Invalid TCP checksum",
+      "log": "checksum-rejected.log",
+      "log_sha256": "078fd9644b949900ba8399151846472a1a37efb93ab5b5a83ebafe753b6df86d"
+    },
+    {
+      "fault": "quiet",
+      "status": "rejected_after_rehash",
+      "expected_failure": "Quiet observation window shortened",
+      "log": "quiet-rejected.log",
+      "log_sha256": "8bdc770ec453a2934537f9fb5778ec55852ab3ffadbed4dadf93eacae3bada1d"
+    }
+  ],
+  "checksum_valid_payload_fault": true,
+  "original_evidence_unchanged": true,
+  "new_linux_execution": false,
+  "checker_sha256": "3d90ab087972bbfdc1ebf1d546b33985068817b47b26fbd77a27f31c9568c799",
+  "report_sha256": "873c18a8d6c7cd7d797b45231a16aa768d6a1b0223822ed7e3df25a2580ba6c8"
+}

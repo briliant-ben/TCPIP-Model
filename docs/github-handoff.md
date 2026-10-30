@@ -42,3 +42,7 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 独立的 Linux packetdrill 通道还需要 packetdrill、`/dev/net/tun`、CAP_NET_ADMIN 和 CAP_NET_RAW。该通道与 lwIP 内存接口分别验收，不必先完成它才能继续开发模型。
 
 目前整栈尚未完成；已有模型范围与剩余协议见 `docs/stack-scope.md` 和 `profiles.json`。
+
+## 2026-10-30 Linux CI checkpoint
+
+独立临时VM／网络命名空间已完成一个真实内核主动打开及5010ms静默期验收，仍保留0ms时间Difference；源码1551c535，CI41004399031，证据artifacts/linux-netns-ci-1551c535。重现和范围见[Linux通道](linux-netns.md)。本地macOS环境限制继续存在，后续数据／恢复验证不能由此握手或lwIP证据代替。离线验收不是Linux重跑，源码变化必须保留旧检查点哈希。

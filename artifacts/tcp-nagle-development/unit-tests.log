@@ -1,0 +1,12 @@
+test_automatic_lt_cannot_bypass_nagle_but_full_mss_still_sends (test_nagle.NagleTests.test_automatic_lt_cannot_bypass_nagle_but_full_mss_still_sends) ... ok
+test_full_segment_remains_subject_to_receiver_and_congestion_budgets (test_nagle.NagleTests.test_full_segment_remains_subject_to_receiver_and_congestion_budgets) ... ok
+test_lt_gate_fault_is_caught_by_declared_nagle_invariant (test_nagle.NagleTests.test_lt_gate_fault_is_caught_by_declared_nagle_invariant) ... ok
+test_nodelay_option_preserves_bytes_credit_and_requires_new_opportunity (test_nagle.NagleTests.test_nodelay_option_preserves_bytes_credit_and_requires_new_opportunity) ... ok
+test_partial_ack_keeps_short_segment_buffered_then_full_ack_unblocks (test_nagle.NagleTests.test_partial_ack_keeps_short_segment_buffered_then_full_ack_unblocks) ... ok
+test_short_retransmission_is_not_blocked_and_does_not_recredit (test_nagle.NagleTests.test_short_retransmission_is_not_blocked_and_does_not_recredit) ... ok
+test_source_preserving_witness_matches_retained_duplicate_future_capture (test_nagle.NagleTests.test_source_preserving_witness_matches_retained_duplicate_future_capture) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 129.194s
+
+OK

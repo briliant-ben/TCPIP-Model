@@ -1,0 +1,1 @@
+390 standard-discovery tests passed at a7866f0b50d626115f33fdd27b105febbe80ed3c in4257.189s unittest time (4257.370s runner). No failures/errors/skips;1155 dependencies and environment unchanged. Includes segment-choice and output-schedule methods, not subsequent sent-ledger work or independent standalone port methods. Not complete TCP, Linux or universal refinement evidence.

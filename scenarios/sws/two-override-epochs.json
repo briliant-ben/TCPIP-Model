@@ -1,0 +1,171 @@
+{
+  "scenario_version": "0.2",
+  "id": "two-override-epochs",
+  "description": "Independent handwritten byte/order/time contract for sender SWS composition",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "finite IR reference/SMT/synthetic codec only; not an independent C or Linux execution"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 15,
+      "event": "app.nodelay",
+      "fields": {
+        "enabled": true
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 80,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          128
+        ]
+      }
+    },
+    {
+      "at_ms": 90,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 220,
+      "tick": true,
+      "expect_trace": []
+    },
+    {
+      "at_ms": 221,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 221,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 221,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      },
+      "expect_trace": [
+        {
+          "at_ms": 221,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 420,
+      "tick": true,
+      "expect_trace": []
+    },
+    {
+      "at_ms": 421,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 421,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 421,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      },
+      "expect_trace": [
+        {
+          "at_ms": 421,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1002,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  128
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 430,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 440,
+      "tick": true,
+      "expect_trace": []
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "cb_acked_total": 2,
+      "svc_acked_bytes": 2,
+      "snd_buf": [],
+      "rtx_buf": [],
+      "sws_push_bytes": 0,
+      "sws_max_window": 16
+    },
+    "timers": {}
+  }
+}

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/artifacts/diagnostics/sent-ledger-credit-bound-v1/reproduce.py", line 26, in <module>
+    old, old_result = replay(load(historical))
+                             ^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 293, in load
+    files = model_files(path)
+            ^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 287, in model_files
+    require(base.is_relative_to(path.parent), "Model base escapes model directory")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Model base escapes model directory

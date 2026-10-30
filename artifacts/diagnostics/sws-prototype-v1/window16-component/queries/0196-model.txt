@@ -1,0 +1,1214 @@
+(define-fun v_0_lt_before_nxt () Int
+  0)
+(define-fun v_0_sched_open () Bool
+  false)
+(define-fun v_1_rx_slot_10 () Int
+  0)
+(define-fun input_0_net.data_ack () Int
+  0)
+(define-fun v_0_cc_ca_credit () Int
+  1)
+(define-fun v_0_cb_head () Int
+  13)
+(define-fun v_0_tx_time_01 () Int
+  1)
+(define-fun v_0_local_window () Int
+  4)
+(define-fun due_0_user () Int
+  3)
+(define-fun input_0_app.send_data () Int
+  0)
+(define-fun v_0_tx_previous_rto () Int
+  1000)
+(define-fun v_0_cc_rto_05 () Bool
+  true)
+(define-fun v_1_rttvar_ms () Real
+  (/ 3.0 8.0))
+(define-fun input_0_net.data_data () Int
+  0)
+(define-fun v_0_tx_eligible () Int
+  0)
+(define-fun due_0_rtx () Int
+  3)
+(define-fun v_0_persist_previous_interval_ms () Int
+  1000)
+(define-fun v_0_cc_rto_00 () Bool
+  true)
+(define-fun v_0_rx_slot_04 () Int
+  0)
+(define-fun v_1_idle_event_ms () Int
+  2)
+(define-fun v_0_cb_end_03 () Int
+  4)
+(define-fun v_0_cc_rto_06 () Bool
+  true)
+(define-fun input_0_net.fin_seq () Int
+  0)
+(define-fun v_0_cb_end_02 () Int
+  3)
+(define-fun v_0_rx_fin_offset () Int
+  0)
+(define-fun v_1_fr_before_retries () Int
+  0)
+(define-fun v_0_sched_bytes () Int
+  0)
+(define-fun v_1_cb_length_04 () Int
+  1)
+(define-fun v_0_tx_elapsed () Int
+  0)
+(define-fun v_0_rtt_start_ms () Int
+  0)
+(define-fun v_0_msl_ms () Int
+  1)
+(define-fun v_0_tx_waiting () Bool
+  true)
+(define-fun v_0_fr_exited () Bool
+  false)
+(define-fun v_0_cb_end_04 () Int
+  5)
+(define-fun v_0_cb_step_bytes () Int
+  0)
+(define-fun v_0_tx_time_04 () Int
+  1)
+(define-fun v_0_tx_time_07 () Int
+  1)
+(define-fun v_1_persist_was_active () Bool
+  false)
+(define-fun input_0_net.fin_segment_seq () Int
+  1)
+(define-fun v_0_user_timeout_ms () Int
+  1)
+(define-fun v_0_persist_deadline_ms () Int
+  0)
+(define-fun v_0_cb_end_11 () Int
+  12)
+(define-fun v_0_cb_new_count () Int
+  0)
+(define-fun v_0_sched_at_ms () Int
+  2)
+(define-fun v_1_cc_before_window () Int
+  16)
+(define-fun v_0_fr_before_nxt () Int
+  12)
+(define-fun v_0_sws_deadline_ms () Int
+  0)
+(define-fun v_0_rtt_error_ms () Real
+  0.0)
+(define-fun v_0_svc_drop_step () Int
+  0)
+(define-fun input_0_net.data_seq () Int
+  0)
+(define-fun input_0_net.fin_segment_data () Int
+  12)
+(define-fun v_0_ack_delay_ms () Int
+  1)
+(define-fun v_0_tx_time_13 () Int
+  1)
+(define-fun v_0_sws_decision_flight () Int
+  1)
+(define-fun v_1_cb_length_03 () Int
+  1)
+(define-fun v_1_cb_length_10 () Int
+  1)
+(define-fun v_0_rtt_sample_used () Bool
+  false)
+(define-fun v_0_rx_slot_13 () Int
+  0)
+(define-fun v_0_persist_elapsed_ms () Int
+  0)
+(define-fun v_1_fr_window_ignored () Bool
+  false)
+(define-fun v_1_cb_length_13 () Int
+  1)
+(define-fun v_0_snd_wl2 () Int
+  4294967292)
+(define-fun v_0_rtt_previous_var () Real
+  0.0)
+(define-fun now_0 () Int
+  2)
+(define-fun v_0_cc_rto_15 () Bool
+  true)
+(define-fun v_0_tx_time_00 () Int
+  1)
+(define-fun input_0_net.fin_ack () Int
+  0)
+(define-fun v_0_tx_time_14 () Int
+  1)
+(define-fun v_1_cb_length_01 () Int
+  1)
+(define-fun v_1_svc_abandoned_bytes () Int
+  0)
+(define-fun v_0_cb_end_01 () Int
+  2)
+(define-fun v_0_cb_end_10 () Int
+  11)
+(define-fun active_0_delack () Bool
+  false)
+(define-fun v_0_rx_slot_09 () Int
+  0)
+(define-fun v_0_tx_retransmitted () Bool
+  false)
+(define-fun v_0_cc_initial_window () Int
+  4)
+(define-fun v_1_snd_nxt () Int
+  13)
+(define-fun v_0_cc_rto_13 () Bool
+  true)
+(define-fun v_0_tx_time_11 () Int
+  1)
+(define-fun v_0_sws_decision_ready () Bool
+  false)
+(define-fun v_0_idle_elapsed_ms () Int
+  0)
+(define-fun v_0_tx_ack () Int
+  0)
+(define-fun input_0_net.ack_ack () Int
+  0)
+(define-fun v_1_cb_abandoned_total () Int
+  0)
+(define-fun v_1_sws_previous_max () Int
+  16)
+(define-fun v_0_choice_before_nxt () Int
+  0)
+(define-fun v_0_rx_slot_11 () Int
+  0)
+(define-fun v_0_idle_last_data_ms () Int
+  0)
+(define-fun v_0_cc_rto_07 () Bool
+  true)
+(define-fun v_0_sws_override_ready () Bool
+  false)
+(define-fun v_0_tx_time_05 () Int
+  1)
+(define-fun v_0_rx_advance () Int
+  0)
+(define-fun v_1_cb_live_total () Int
+  16)
+(define-fun v_0_sws_previous_max () Int
+  16)
+(define-fun v_0_irs () Int
+  0)
+(define-fun v_0_cb_end_15 () Int
+  0)
+(define-fun v_0_persist_last_ms () Int
+  0)
+(define-fun v_1_cb_length_06 () Int
+  1)
+(define-fun v_0_sws_override_ms () Int
+  100)
+(define-fun v_0_tx_time_10 () Int
+  1)
+(define-fun v_0_ack_full_segments () Int
+  0)
+(define-fun v_0_fr_emit_count () Int
+  0)
+(define-fun v_0_sws_push_bytes () Int
+  0)
+(define-fun v_0_persist_probe_sent () Bool
+  false)
+(define-fun v_1_lt_before_bytes () Int
+  7)
+(define-fun v_0_choice_used () Bool
+  false)
+(define-fun v_0_cc_growth () Int
+  0)
+(define-fun v_0_nagle_before_disabled () Bool
+  true)
+(define-fun v_0_rcv_nxt () Int
+  13)
+(define-fun input_0_net.fin_segment_window () Int
+  17)
+(define-fun v_0_tx_time_08 () Int
+  1)
+(define-fun v_0_cc_initial_threshold () Int
+  8)
+(define-fun v_0_cc_rto_10 () Bool
+  true)
+(define-fun v_1_lt_loss_flight () Int
+  9)
+(define-fun v_0_cc_threshold_updates () Int
+  0)
+(define-fun v_0_lt_emitted () Bool
+  false)
+(define-fun input_0_net.ack_seq () Int
+  0)
+(define-fun v_1_cb_length_11 () Int
+  1)
+(define-fun v_0_choice_limit () Int
+  0)
+(define-fun v_0_sws_decision_maximum () Int
+  1)
+(define-fun v_0_persist_since_ms () Int
+  0)
+(define-fun v_1_cb_length_08 () Int
+  1)
+(define-fun v_0_tx_time_15 () Int
+  1)
+(define-fun v_0_rx_slot_01 () Int
+  1)
+(define-fun v_0_cb_end_09 () Int
+  10)
+(define-fun v_0_rtt_last_ms () Int
+  0)
+(define-fun v_0_cc_new_sent () Int
+  0)
+(define-fun v_0_persist_interval_ms () Int
+  1000)
+(define-fun input_0_net.synack_ack () Int
+  0)
+(define-fun v_0_fr_retransmitted () Bool
+  false)
+(define-fun v_1_fr_before_rto () Int
+  60000)
+(define-fun v_0_persist_probes () Int
+  0)
+(define-fun v_0_cc_rto_11 () Bool
+  true)
+(define-fun v_0_rx_slot_03 () Int
+  0)
+(define-fun v_0_rx_slot_15 () Int
+  0)
+(define-fun v_0_rtt_active () Bool
+  false)
+(define-fun input_0_net.synack_seq () Int
+  0)
+(define-fun v_0_sws_decision_disabled () Bool
+  false)
+(define-fun v_0_cc_rto_09 () Bool
+  true)
+(define-fun v_0_cc_rto_08 () Bool
+  true)
+(define-fun v_1_cb_length_02 () Int
+  1)
+(define-fun v_0_idle_before_rto () Int
+  0)
+(define-fun v_0_cb_end_12 () Int
+  13)
+(define-fun v_0_lt_loss_flight () Int
+  0)
+(define-fun v_0_nagle_first_bytes () Int
+  0)
+(define-fun v_1_cb_emitted_total () Int
+  16)
+(define-fun v_0_snd_wl1 () Int
+  0)
+(define-fun v_0_ack_since_ms () Int
+  0)
+(define-fun v_0_idle_restart () Bool
+  false)
+(define-fun v_0_cb_append_end () Int
+  0)
+(define-fun input_0_net.rstack_seq () Int
+  0)
+(define-fun v_0_rttvar_ms () Real
+  (/ 3.0 8.0))
+(define-fun v_0_rtt_previous_srtt () Real
+  0.0)
+(define-fun v_0_iss () Int
+  0)
+(define-fun v_0_rtt_sample_was_ambiguous () Bool
+  true)
+(define-fun v_1_cc_before_cwnd () Int
+  4)
+(define-fun v_0_tx_is_fin () Bool
+  true)
+(define-fun v_1_rtt_samples () Int
+  1)
+(define-fun v_0_fr_window_valid () Bool
+  true)
+(define-fun v_0_tx_time_09 () Int
+  1)
+(define-fun v_0_tx_time_02 () Int
+  1)
+(define-fun v_0_rx_slot_10 () Int
+  0)
+(define-fun input_0_net.syn_seq () Int
+  0)
+(define-fun v_0_rx_slot_02 () Int
+  0)
+(define-fun v_0_cb_end_05 () Int
+  6)
+(define-fun v_0_rx_slot_07 () Int
+  0)
+(define-fun v_0_idle_data_emitted () Bool
+  false)
+(define-fun v_0_cc_acked () Int
+  0)
+(define-fun v_0_rx_slot_08 () Int
+  0)
+(define-fun v_0_idle_event_ms () Int
+  1)
+(define-fun v_0_rtt_remaining () Int
+  0)
+(define-fun input_0_net.rstack_ack () Int
+  0)
+(define-fun v_0_cb_end_06 () Int
+  7)
+(define-fun v_0_rx_slot_14 () Int
+  0)
+(define-fun v_1_cb_length_15 () Int
+  1)
+(define-fun v_1_idle_before_threshold () Int
+  8)
+(define-fun v_0_sws_decision_usable () Int
+  (- 1))
+(define-fun v_0_rx_slot_05 () Int
+  0)
+(define-fun v_0_fr_last_window () Int
+  0)
+(define-fun v_1_cb_length_12 () Int
+  1)
+(define-fun v_0_cc_rto_02 () Bool
+  true)
+(define-fun v_0_cc_rto_03 () Bool
+  true)
+(define-fun v_0_ack_delta () Int
+  0)
+(define-fun v_1_cb_count () Int
+  16)
+(define-fun v_0_cb_before_nxt () Int
+  0)
+(define-fun v_1_cb_length_07 () Int
+  1)
+(define-fun v_0_cb_end_08 () Int
+  9)
+(define-fun v_1_fr_was_active () Bool
+  true)
+(define-fun v_0_fr_before_una () Int
+  0)
+(define-fun v_0_cc_rto_01 () Bool
+  true)
+(define-fun v_0_idle_restart_count () Int
+  0)
+(define-fun v_0_svc_accept_step () Int
+  0)
+(define-fun v_0_cc_rto_04 () Bool
+  true)
+(define-fun v_0_lt_epoch_packets () Int
+  2)
+(define-fun v_0_cb_drop_step () Int
+  0)
+(define-fun v_0_cc_rto_12 () Bool
+  true)
+(define-fun v_0_ack_bytes () Int
+  0)
+(define-fun v_0_tx_seq () Int
+  0)
+(define-fun v_1_svc_before_total () Int
+  16)
+(define-fun v_0_tx_emit_count () Int
+  2)
+(define-fun v_0_cb_end_13 () Int
+  4294967294)
+(define-fun v_0_srtt_ms () Real
+  (/ 479981.0 8.0))
+(define-fun v_0_tx_time_03 () Int
+  1)
+(define-fun v_0_fr_window_ignored () Bool
+  false)
+(define-fun v_0_rx_slot_06 () Int
+  0)
+(define-fun v_0_sws_sent_count () Int
+  0)
+(define-fun v_0_cb_end_14 () Int
+  4294967295)
+(define-fun v_0_tx_time_06 () Int
+  1)
+(define-fun v_0_rtt_end () Int
+  0)
+(define-fun v_0_tx_fin_time () Int
+  0)
+(define-fun v_0_rtt_sample_at_ms () Int
+  0)
+(define-fun v_0_fr_dupacks () Int
+  4)
+(define-fun v_0_choice_count () Int
+  0)
+(define-fun v_0_fr_before_window_valid () Bool
+  false)
+(define-fun v_0_cc_before_una () Int
+  0)
+(define-fun v_0_rx_slot_12 () Int
+  0)
+(define-fun v_0_nagle_before_flight () Int
+  0)
+(define-fun v_0_fr_entered () Bool
+  false)
+(define-fun v_1_cb_length_09 () Int
+  1)
+(define-fun v_0_cc_send_budget () Int
+  0)
+(define-fun input_0_net.rst_seq () Int
+  0)
+(define-fun v_0_cb_end_07 () Int
+  8)
+(define-fun v_0_tx_max_previous () Int
+  0)
+(define-fun active_0_sws () Bool
+  false)
+(define-fun v_0_sws_started_ms () Int
+  0)
+(define-fun v_0_cc_rto_14 () Bool
+  true)
+(define-fun v_0_fr_entries () Int
+  0)
+(define-fun v_0_sws_decision_at_ms () Int
+  0)
+(define-fun v_0_rx_fin_seq () Int
+  14)
+(define-fun v_0_tx_time_12 () Int
+  1)
+(define-fun v_0_cb_end_00 () Int
+  1)
+(define-fun v_0_sched_packets () Int
+  0)
+(define-fun v_1_svc_written_bytes () Int
+  16)
+(define-fun v_1_cb_length_05 () Int
+  1)
+(define-fun v_1_cb_length_14 () Int
+  1)
+(define-fun v_0_fin_seq () Int
+  0)
+(define-fun v_0_fr_before_retries () Int
+  0)
+(define-fun v_0_lt_before_cwnd () Int
+  4)
+(define-fun v_0_idle_before_threshold () Int
+  8)
+(define-fun v_0_fr_before_wire_window () Int
+  0)
+(define-fun v_0_sws_decision_queued () Int
+  0)
+(define-fun v_0_sws_decision_pushed () Int
+  0)
+(define-fun v_0_sws_decision_deadline_ms () Int
+  0)
+(define-fun v_0_sws_decision_started_ms () Int
+  (- 100))
+(define-fun v_0_choice_before_flight () Int
+  16)
+(define-fun v_0_fr_before_rto () Int
+  60000)
+(define-fun v_0_take () Int
+  0)
+(define-fun v_0_sws_decision_count () Int
+  0)
+(define-fun v_0_lt_before_flight () Int
+  0)
+(define-fun v_0_lt_take () Int
+  16)
+(define-fun v_0_lt_before_bytes () Int
+  0)
+(define-fun v_0_fr_before_flight () Int
+  0)
+(define-fun v_0_cb_partial_prefix () Int
+  0)
+(define-fun v_1_ack_full_segments () Int
+  0)
+(define-fun v_1_tx_max_previous () Int
+  0)
+(define-fun v_1_cc_initial_threshold () Int
+  8)
+(define-fun v_0_tx_syn_pending () Bool
+  false)
+(define-fun v_1_choice_limit () Int
+  0)
+(define-fun v_1_fin_sent () Bool
+  false)
+(define-fun v_0_cb_length_03 () Int
+  1)
+(define-fun v_1_cb_done_15 () Bool
+  false)
+(define-fun v_1_persist_since_ms () Int
+  0)
+(define-fun v_0_idle_data_valid () Bool
+  false)
+(define-fun v_1_idle_data_valid () Bool
+  false)
+(define-fun v_1_cc_rto_06 () Bool
+  true)
+(define-fun v_0_snd_wnd () Int
+  16)
+(define-fun v_1_rto_base_ms () Int
+  60000)
+(define-fun v_1_cb_end_08 () Int
+  9)
+(define-fun v_1_cb_done_07 () Bool
+  false)
+(define-fun v_1_fr_entries () Int
+  0)
+(define-fun v_1_tx_time_10 () Int
+  1)
+(define-fun v_1_lt_eligible () Bool
+  false)
+(define-fun v_1_ack_delay_ms () Int
+  1)
+(define-fun v_1_idle_restart () Bool
+  false)
+(define-fun v_1_cc_threshold_updates () Int
+  0)
+(define-fun v_1_cc_initial_window () Int
+  4)
+(define-fun v_1_persist_probe_sent () Bool
+  false)
+(define-fun v_1_tx_time_11 () Int
+  1)
+(define-fun v_1_tx_time_01 () Int
+  1)
+(define-fun v_0_cb_length_04 () Int
+  1)
+(define-fun v_0_retries () Int
+  0)
+(define-fun v_0_fin_sent () Bool
+  false)
+(define-fun v_1_rx_slot_09 () Int
+  0)
+(define-fun v_1_user_timeout_ms () Int
+  1)
+(define-fun v_1_tx_time_08 () Int
+  1)
+(define-fun v_1_sws_decision_ready () Bool
+  false)
+(define-fun v_1_tx_time_02 () Int
+  1)
+(define-fun v_0_cb_length_00 () Int
+  1)
+(define-fun state_0 () Int
+  5)
+(define-fun v_0_sws_requested () Bool
+  false)
+(define-fun active_1_sws () Bool
+  false)
+(define-fun v_0_cb_length_01 () Int
+  1)
+(define-fun v_1_cc_rto_09 () Bool
+  true)
+(define-fun v_1_cc_rto_04 () Bool
+  true)
+(define-fun v_1_cc_rto_00 () Bool
+  true)
+(define-fun v_1_snd_una () Int
+  4294967293)
+(define-fun v_1_rtx_buf () Int
+  16)
+(define-fun v_0_svc_abandoned_bytes () Int
+  0)
+(define-fun v_1_snd_buf () Int
+  0)
+(define-fun v_1_tx_time_06 () Int
+  1)
+(define-fun v_1_rx_slot_15 () Int
+  0)
+(define-fun v_1_fr_entered () Bool
+  false)
+(define-fun v_1_cb_end_11 () Int
+  12)
+(define-fun v_1_cc_before_una () Int
+  4294967293)
+(define-fun v_1_rx_slot_14 () Int
+  0)
+(define-fun v_1_cb_end_10 () Int
+  11)
+(define-fun v_0_tx_syn_time () Int
+  0)
+(define-fun v_1_iss () Int
+  0)
+(define-fun v_1_sws_decision_started_ms () Int
+  0)
+(define-fun v_1_sched_at_ms () Int
+  2)
+(define-fun v_1_cb_end_02 () Int
+  3)
+(define-fun v_1_rcv_buf () Int
+  12)
+(define-fun active_0_rtx () Bool
+  true)
+(define-fun v_1_cc_rto_14 () Bool
+  true)
+(define-fun v_1_rtt_last_ms () Int
+  0)
+(define-fun v_0_persist_active () Bool
+  false)
+(define-fun v_1_srtt_ms () Real
+  (/ 479981.0 8.0))
+(define-fun v_1_cb_is_new () Bool
+  false)
+(define-fun v_1_snd_wnd () Int
+  17)
+(define-fun v_1_cc_rto_03 () Bool
+  true)
+(define-fun v_1_snd_wl1 () Int
+  1)
+(define-fun due_0_sws () Int
+  0)
+(define-fun due_1_sws () Int
+  0)
+(define-fun v_1_fin_seq () Int
+  0)
+(define-fun v_1_sws_allowed_at_send () Bool
+  false)
+(define-fun v_1_sws_need_arm () Bool
+  false)
+(define-fun active_1_user () Bool
+  true)
+(define-fun active_0_time_wait () Bool
+  false)
+(define-fun due_1_user () Int
+  3)
+(define-fun v_1_tx_time_05 () Int
+  1)
+(define-fun v_1_rx_slot_04 () Int
+  0)
+(define-fun due_0_delack () Int
+  0)
+(define-fun due_1_delack () Int
+  0)
+(define-fun v_1_cb_done_03 () Bool
+  false)
+(define-fun v_1_svc_drop_step () Int
+  0)
+(define-fun v_1_rx_slot_05 () Int
+  0)
+(define-fun v_1_sws_deadline_ms () Int
+  0)
+(define-fun v_1_cb_done_04 () Bool
+  false)
+(define-fun v_1_persist_interval_ms () Int
+  1000)
+(define-fun v_1_rcv_nxt () Int
+  14)
+(define-fun v_1_sws_decision_at_ms () Int
+  0)
+(define-fun v_1_sws_decision_queued () Int
+  0)
+(define-fun v_0_cb_length_13 () Int
+  1)
+(define-fun v_0_cb_tail () Int
+  13)
+(define-fun v_1_rtt_active () Bool
+  false)
+(define-fun v_1_rx_slot_07 () Int
+  0)
+(define-fun v_1_rx_slot_13 () Int
+  0)
+(define-fun v_1_rx_slot_03 () Int
+  0)
+(define-fun v_0_snd_buf () Int
+  0)
+(define-fun v_1_cb_tail () Int
+  13)
+(define-fun v_0_rtt_samples () Int
+  1)
+(define-fun v_0_rx_chunk () Int
+  0)
+(define-fun v_1_rtt_previous_srtt () Real
+  0.0)
+(define-fun v_1_cb_step_bytes () Int
+  0)
+(define-fun v_1_cc_growth () Int
+  0)
+(define-fun v_1_cc_before_flight () Int
+  16)
+(define-fun v_1_persist_first () Bool
+  false)
+(define-fun v_1_rx_fin_done () Bool
+  true)
+(define-fun v_1_cb_end_05 () Int
+  6)
+(define-fun v_1_persist_elapsed_ms () Int
+  0)
+(define-fun active_1_persist () Bool
+  false)
+(define-fun v_1_tx_retransmitted () Bool
+  false)
+(define-fun v_1_rtt_end () Int
+  0)
+(define-fun v_0_cb_acked_total () Int
+  0)
+(define-fun v_1_cb_done_02 () Bool
+  false)
+(define-fun v_1_ack_window_update () Bool
+  true)
+(define-fun v_1_sws_decision_count () Int
+  0)
+(define-fun v_1_ack_advance () Bool
+  false)
+(define-fun v_1_cc_rto_11 () Bool
+  true)
+(define-fun v_1_tx_elapsed () Int
+  0)
+(define-fun v_1_sws_requested () Bool
+  false)
+(define-fun v_1_cb_done_08 () Bool
+  false)
+(define-fun v_1_ack_defer_now () Bool
+  false)
+(define-fun v_1_tx_time_00 () Int
+  1)
+(define-fun v_1_cb_end_13 () Int
+  4294967294)
+(define-fun v_1_cc_send_budget () Int
+  0)
+(define-fun v_1_cb_end_01 () Int
+  2)
+(define-fun v_1_sched_cause () Int
+  0)
+(define-fun v_0_svc_acked_bytes () Int
+  0)
+(define-fun v_0_cc_cwnd () Int
+  4)
+(define-fun v_1_cb_done_06 () Bool
+  false)
+(define-fun v_1_cb_before_nxt () Int
+  13)
+(define-fun v_1_rto_ms () Int
+  60000)
+(define-fun input_0_net.fin_segment_ack () Int
+  4294967293)
+(define-fun v_0_fin_requested () Bool
+  true)
+(define-fun v_1_rtt_error_ms () Real
+  0.0)
+(define-fun state_1 () Int
+  8)
+(define-fun v_1_sws_active () Bool
+  false)
+(define-fun v_1_nagle_before_disabled () Bool
+  false)
+(define-fun v_1_nagle_disabled () Bool
+  false)
+(define-fun v_1_idle_before_cwnd () Int
+  4)
+(define-fun v_0_rtt_ambiguous () Bool
+  false)
+(define-fun v_1_rtt_sample_was_ambiguous () Bool
+  false)
+(define-fun v_0_cb_length_12 () Int
+  1)
+(define-fun v_1_cc_rto_10 () Bool
+  true)
+(define-fun v_1_sched_packets () Int
+  0)
+(define-fun v_1_tx_time_07 () Int
+  1)
+(define-fun v_1_sws_decision_pushed () Int
+  0)
+(define-fun v_1_fr_retransmitted () Bool
+  false)
+(define-fun v_1_fr_extra () Bool
+  false)
+(define-fun v_1_cb_end_00 () Int
+  1)
+(define-fun v_1_syn_timeout_eligible () Bool
+  false)
+(define-fun v_1_sws_decision_usable () Int
+  0)
+(define-fun v_1_rtt_previous_var () Real
+  0.0)
+(define-fun v_1_persist_previous_interval_ms () Int
+  1000)
+(define-fun v_1_irs () Int
+  0)
+(define-fun v_1_cb_end_09 () Int
+  10)
+(define-fun v_1_tx_fin_time () Int
+  0)
+(define-fun v_1_rx_fin_pending () Bool
+  false)
+(define-fun v_0_cb_length_07 () Int
+  1)
+(define-fun v_1_cb_append_end () Int
+  0)
+(define-fun v_1_sched_bytes () Int
+  0)
+(define-fun v_1_tx_is_fin () Bool
+  true)
+(define-fun v_1_fr_emit_count () Int
+  0)
+(define-fun v_0_cc_ssthresh () Int
+  8)
+(define-fun v_0_cb_length_15 () Int
+  1)
+(define-fun v_1_tx_time_14 () Int
+  1)
+(define-fun v_1_ack_since_ms () Int
+  0)
+(define-fun v_1_rtt_ambiguous () Bool
+  false)
+(define-fun v_0_cb_length_14 () Int
+  1)
+(define-fun v_1_sws_override_ms () Int
+  100)
+(define-fun v_1_persist_probe_new () Bool
+  false)
+(define-fun v_1_tx_ack () Int
+  0)
+(define-fun v_1_seg_acceptable () Bool
+  true)
+(define-fun v_0_rx_slot_00 () Int
+  0)
+(define-fun v_1_persist_deadline_ms () Int
+  0)
+(define-fun v_1_cb_retired_count () Int
+  0)
+(define-fun v_1_sws_decision_flight () Int
+  0)
+(define-fun v_0_cb_length_08 () Int
+  1)
+(define-fun v_1_cb_end_07 () Int
+  8)
+(define-fun v_1_tx_waiting () Bool
+  false)
+(define-fun v_1_rx_advance () Int
+  0)
+(define-fun v_1_cc_rto_13 () Bool
+  true)
+(define-fun v_1_tx_eligible () Int
+  0)
+(define-fun v_1_rtt_start_new () Bool
+  false)
+(define-fun v_0_rx_fin_pending () Bool
+  false)
+(define-fun v_1_cb_end_06 () Int
+  7)
+(define-fun v_1_sws_decision_disabled () Bool
+  false)
+(define-fun v_1_fr_dupacks () Int
+  4)
+(define-fun v_0_snd_nxt () Int
+  13)
+(define-fun v_1_ack_delta () Int
+  0)
+(define-fun active_1_time_wait () Bool
+  false)
+(define-fun v_1_rtt_sample_used () Bool
+  false)
+(define-fun v_0_tx_flags () String
+  "")
+(define-fun v_1_tx_flags () String
+  "")
+(define-fun v_1_rtt_start_ms () Int
+  0)
+(define-fun v_1_fr_before_flight () Int
+  16)
+(define-fun v_1_fr_active () Bool
+  true)
+(define-fun v_0_fr_active () Bool
+  true)
+(define-fun v_1_cb_done_14 () Bool
+  false)
+(define-fun v_1_rx_slot_01 () Int
+  0)
+(define-fun v_1_sws_decision_deadline_ms () Int
+  0)
+(define-fun v_0_lt_epoch_bytes () Int
+  7)
+(define-fun v_1_rx_slot_00 () Int
+  0)
+(define-fun v_1_cb_acked_total () Int
+  0)
+(define-fun v_1_choice_before_nxt () Int
+  0)
+(define-fun v_1_cb_append_length () Int
+  0)
+(define-fun v_1_cc_rto_02 () Bool
+  true)
+(define-fun v_1_take () Int
+  0)
+(define-fun v_1_tx_syn_time () Int
+  0)
+(define-fun v_1_ack_defer_candidate () Bool
+  false)
+(define-fun v_1_persist_eligible () Bool
+  false)
+(define-fun v_1_sws_push_bytes () Int
+  0)
+(define-fun v_1_cb_head () Int
+  13)
+(define-fun v_0_rtt_previous_measured () Bool
+  false)
+(define-fun v_1_rtt_previous_measured () Bool
+  false)
+(define-fun v_1_idle_elapsed_ms () Int
+  0)
+(define-fun v_1_cb_end_04 () Int
+  5)
+(define-fun v_0_rto_ms () Int
+  60000)
+(define-fun v_1_lt_before_cwnd () Int
+  4)
+(define-fun v_0_cb_live_total () Int
+  16)
+(define-fun v_0_ack_rmss () Int
+  4)
+(define-fun v_1_cc_loss () Bool
+  false)
+(define-fun v_1_local_window () Int
+  4)
+(define-fun v_1_cc_rto_05 () Bool
+  true)
+(define-fun v_1_lt_emitted () Bool
+  false)
+(define-fun v_1_nagle_first_bytes () Int
+  0)
+(define-fun active_1_rtx () Bool
+  true)
+(define-fun v_0_nagle_disabled () Bool
+  false)
+(define-fun v_1_cc_cwnd () Int
+  4)
+(define-fun v_1_fr_before_wire_window () Int
+  0)
+(define-fun v_1_cc_rto_08 () Bool
+  true)
+(define-fun v_0_snd_una () Int
+  4294967293)
+(define-fun v_1_ack_bytes () Int
+  0)
+(define-fun v_1_idle_before_rto () Int
+  60000)
+(define-fun v_0_rcv_buf () Int
+  12)
+(define-fun choice_0 () Int
+  174)
+(define-fun v_1_cb_length_00 () Int
+  1)
+(define-fun v_1_tx_time_13 () Int
+  1)
+(define-fun v_0_cb_abandoned_total () Int
+  0)
+(define-fun v_1_lt_before_flight () Int
+  16)
+(define-fun v_1_svc_accept_step () Int
+  0)
+(define-fun v_1_cc_ca_credit () Int
+  0)
+(define-fun v_0_cb_length_06 () Int
+  1)
+(define-fun v_1_tx_syn_pending () Bool
+  false)
+(define-fun v_1_sws_started_ms () Int
+  0)
+(define-fun v_1_lt_before_nxt () Int
+  13)
+(define-fun v_1_fr_before_window_valid () Bool
+  true)
+(define-fun v_1_cc_rto_07 () Bool
+  true)
+(define-fun v_1_lt_before_window () Int
+  16)
+(define-fun v_1_persist_probes () Int
+  0)
+(define-fun v_0_cb_length_10 () Int
+  1)
+(define-fun v_1_sws_sent_count () Int
+  0)
+(define-fun v_1_cb_done_11 () Bool
+  false)
+(define-fun v_1_rx_acceptable () Bool
+  true)
+(define-fun v_0_svc_ack_step () Int
+  0)
+(define-fun active_1_delack () Bool
+  false)
+(define-fun v_1_fr_duplicate () Bool
+  false)
+(define-fun v_1_rx_fin_consumed () Bool
+  true)
+(define-fun v_1_cb_partial_prefix () Int
+  0)
+(define-fun v_1_snd_wl2 () Int
+  4294967293)
+(define-fun v_1_rx_slot_08 () Int
+  0)
+(define-fun v_1_cb_done_10 () Bool
+  false)
+(define-fun v_1_cc_acked () Int
+  0)
+(define-fun v_1_choice_before_flight () Int
+  16)
+(define-fun v_1_cb_done_01 () Bool
+  false)
+(define-fun v_1_lt_epoch_packets () Int
+  2)
+(define-fun v_0_rto_base_ms () Int
+  60000)
+(define-fun v_1_idle_restart_count () Int
+  0)
+(define-fun v_1_idle_last_data_ms () Int
+  0)
+(define-fun v_1_rx_slot_12 () Int
+  0)
+(define-fun v_1_cc_rto_12 () Bool
+  true)
+(define-fun v_1_tx_emit_count () Int
+  2)
+(define-fun v_1_persist_last_ms () Int
+  0)
+(define-fun v_1_rtt_sample_at_ms () Int
+  0)
+(define-fun v_1_sws_max_window () Int
+  17)
+(define-fun v_1_cb_done_05 () Bool
+  false)
+(define-fun v_0_sws_active () Bool
+  false)
+(define-fun v_1_sws_decision_maximum () Int
+  0)
+(define-fun v_1_fin_acknowledged () Bool
+  false)
+(define-fun v_1_cb_end_15 () Int
+  0)
+(define-fun v_1_idle_data_emitted () Bool
+  false)
+(define-fun v_1_rx_slot_11 () Int
+  0)
+(define-fun v_1_choice_used () Bool
+  false)
+(define-fun v_1_ack_is_future () Bool
+  false)
+(define-fun v_1_rx_slot_02 () Int
+  0)
+(define-fun v_1_rx_chunk () Int
+  0)
+(define-fun due_0_persist () Int
+  0)
+(define-fun due_1_persist () Int
+  0)
+(define-fun v_1_sws_override_ready () Bool
+  false)
+(define-fun v_0_sws_max_window () Int
+  16)
+(define-fun v_1_fr_last_window () Int
+  17)
+(define-fun now_1 () Int
+  2)
+(define-fun v_1_cb_end_14 () Int
+  4294967295)
+(define-fun v_1_tx_time_09 () Int
+  1)
+(define-fun v_1_cc_ssthresh () Int
+  8)
+(define-fun v_1_tx_time_12 () Int
+  1)
+(define-fun v_1_fin_requested () Bool
+  true)
+(define-fun v_1_cc_new_sent () Int
+  0)
+(define-fun v_1_rtt_measured () Bool
+  true)
+(define-fun v_1_cb_new_count () Int
+  0)
+(define-fun v_0_svc_written_bytes () Int
+  16)
+(define-fun v_0_cb_emitted_total () Int
+  16)
+(define-fun v_1_sched_open () Bool
+  false)
+(define-fun v_1_fr_exited () Bool
+  false)
+(define-fun v_1_ack_pending () Bool
+  false)
+(define-fun v_1_tx_time_04 () Int
+  1)
+(define-fun v_1_rx_slot_06 () Int
+  0)
+(define-fun v_1_ack_is_new () Bool
+  false)
+(define-fun v_1_tx_previous_rto () Int
+  1000)
+(define-fun v_0_active_open () Bool
+  false)
+(define-fun v_1_active_open () Bool
+  false)
+(define-fun v_1_svc_acked_bytes () Int
+  0)
+(define-fun v_1_cb_drop_step () Int
+  0)
+(define-fun v_1_rx_fin_seq () Int
+  13)
+(define-fun v_1_cc_rto_01 () Bool
+  true)
+(define-fun v_0_cb_length_05 () Int
+  1)
+(define-fun v_0_ack_pending () Bool
+  false)
+(define-fun v_1_nagle_before_flight () Int
+  16)
+(define-fun v_1_ack_rmss () Int
+  4)
+(define-fun v_1_rtt_remaining () Int
+  0)
+(define-fun v_1_cb_end_12 () Int
+  13)
+(define-fun v_1_cb_done_09 () Bool
+  false)
+(define-fun v_0_rx_fin_done () Bool
+  false)
+(define-fun v_1_fr_window_valid () Bool
+  true)
+(define-fun v_1_tx_time_03 () Int
+  1)
+(define-fun v_1_retries () Int
+  0)
+(define-fun v_0_cb_length_09 () Int
+  1)
+(define-fun v_1_lt_epoch_bytes () Int
+  7)
+(define-fun v_1_lt_take () Int
+  0)
+(define-fun v_1_cc_threshold_changed () Bool
+  false)
+(define-fun v_1_tx_time_15 () Int
+  1)
+(define-fun v_0_rtx_buf () Int
+  16)
+(define-fun v_1_choice_count () Int
+  0)
+(define-fun due_1_rtx () Int
+  3)
+(define-fun v_0_cb_length_02 () Int
+  1)
+(define-fun v_1_msl_ms () Int
+  1)
+(define-fun active_0_user () Bool
+  true)
+(define-fun v_1_cb_done_00 () Bool
+  false)
+(define-fun v_1_rx_fin_offset () Int
+  0)
+(define-fun v_1_cb_end_03 () Int
+  4)
+(define-fun v_1_cb_done_12 () Bool
+  false)
+(define-fun v_0_rtt_measured () Bool
+  true)
+(define-fun v_0_cb_length_11 () Int
+  1)
+(define-fun due_0_time_wait () Int
+  0)
+(define-fun due_1_time_wait () Int
+  0)
+(define-fun v_1_fr_before_una () Int
+  4294967293)
+(define-fun v_1_persist_start () Bool
+  false)
+(define-fun v_1_tx_seq () Int
+  0)
+(define-fun active_0_persist () Bool
+  false)
+(define-fun v_1_cb_done_13 () Bool
+  false)
+(define-fun v_0_cb_count () Int
+  16)
+(define-fun v_1_fr_before_nxt () Int
+  13)
+(define-fun v_1_cc_before_persist () Bool
+  false)
+(define-fun v_1_cc_rto_15 () Bool
+  true)
+(define-fun v_1_persist_active () Bool
+  false)
+(define-fun v_1_svc_ack_step () Int
+  0)

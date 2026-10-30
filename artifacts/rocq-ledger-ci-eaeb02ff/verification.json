@@ -1,0 +1,53 @@
+{
+  "status": "valid_retained_CI_kernel_evidence",
+  "kernel_checked_in_CI": true,
+  "local_kernel_rerun": false,
+  "theorems": [
+    "checked_callback_credit_bound",
+    "checked_callback_credit_sharp",
+    "checked_original_record_mass",
+    "checked_deferred_ack_credit",
+    "checked_unsent_budget_transfer"
+  ],
+  "scope": "five abstract integer sent-credit lemmas only",
+  "does_not_prove": [
+    "JSON actions satisfy the abstract equations",
+    "IR interpreter/translator correspondence",
+    "TCP or lwIP behavior",
+    "implementation refinement",
+    "Linux TCP execution"
+  ],
+  "tampered_object": "rejected",
+  "file_hashes": {
+    "README.md": "4cd2c13c2be3c78cace91498baae36707913705449fb8ad3a9511172eda4ed9c",
+    "download/rocq/Check.v": "3b2b667ec9be9524c5987626f134d08073ed7122f26f1793dac8e114b040c98e",
+    "download/rocq/Check.vo": "277bdbe6d414bbc7d43dc56a0889cc60436c679a19ac81cf0bf8fb6e4d10f26b",
+    "download/rocq/IRPrimitives.v": "7c96e73a60901822ee5e01a77bd649665cc4ac68d06b3c4cc492920fe6a1a999",
+    "download/rocq/IRPrimitives.vo": "782767b7523aa605a1f39ac3beb27942d3a19cdc44aac73870f3b4bcef0d343a",
+    "download/rocq/assumptions.log": "99a6704258822ca71cbc86001bd22c279bfa19b98dd2513510b2a59528c8e97f",
+    "download/rocq/ci-origin.json": "74bfa9e1252042c0a787dc142354658cd47317453930b5398e95bf1aea3369e9",
+    "download/rocq/kernel.log": "42fab67f193d424bca8dcb12c661827f1e4591165469147df7473b9b8171abf5",
+    "download/rocq/package-version.log": "1b9487d55bea47fea50d226cc9c53bc548877ad2a318bac8fbc8b320f429e5c5",
+    "download/rocq/primitives.log": "50811df20cfcb55e6e048f2a6c5e36167b53a78db7b25663bbd7ae1b2395d8c8",
+    "download/rocq/reject-axiom.log": "176d61d218a4b902b839e6ce8001436c62063a9c7a5a31e187eb8595328eb8fc",
+    "download/rocq/reject-false-proof.log": "74cceb2f1a6d337f18171c6a95ce727a299e54734611eba69a60219871bb65c8",
+    "download/rocq/result.json": "34ccb6fbe5719a44e8268d58c8ecd11389f37226bd645b3670fbf1d4b25bfbf4",
+    "download/rocq/version.log": "307af1b4a460c148e60dcf08f607e77e6f93fe2e04d5a16b299aae991a5f3e76",
+    "download/rocq-ledger/Check.v": "bfc7175f1be9d9dacd2528acbd87656d5c48474ffdd1adf97ae0a4d5f690b045",
+    "download/rocq-ledger/Check.vo": "4077ba04abddeda84fa2f87e70ba70964f34b483a17f539ffd0c0aaa462dee80",
+    "download/rocq-ledger/Ledger.v": "ea0ba536cbe76540d3b12f48c89780ca9bfe98a434efbbbbd51c5c1db8a7111c",
+    "download/rocq-ledger/Ledger.vo": "7b236ab47dafcbc25bf740cac03e41fa7e4072dd5fa87480b00b9387e7eb1500",
+    "download/rocq-ledger/assumptions.log": "87696c04fea9fc5d85183a5c6b8c26d7ef7026cd2285f9c336d37ad7c4114cd2",
+    "download/rocq-ledger/kernel.log": "713fddc6bafa0295e30c95651033ad75d2ea316f6c6a905374089eb1690f1574",
+    "download/rocq-ledger/package-version.log": "1b9487d55bea47fea50d226cc9c53bc548877ad2a318bac8fbc8b320f429e5c5",
+    "download/rocq-ledger/proof-bodies.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "download/rocq-ledger/reject-axiom.log": "176d61d218a4b902b839e6ce8001436c62063a9c7a5a31e187eb8595328eb8fc",
+    "download/rocq-ledger/reject-false-proof.log": "74cceb2f1a6d337f18171c6a95ce727a299e54734611eba69a60219871bb65c8",
+    "download/rocq-ledger/result.json": "e1ac1cd4300de020a22d45128a8c8ceeba11a0c73742c0e39b15bacb2eaa34ae",
+    "download/rocq-ledger/version.log": "307af1b4a460c148e60dcf08f607e77e6f93fe2e04d5a16b299aae991a5f3e76",
+    "job.log": "d8106c48516362738ae5e9f1cade2bc0ea2b63c4eca10dd4b99fc296dc34041e",
+    "provenance.json": "ace720f267e0965a186554952e7c32b49ddbfb50d1535f1abda201f808d955a3",
+    "verify.py": "c87537507564fac0d7be214ae74ded5ea6bac49426408c5dfee14dab2f86524e",
+    "workflow-artifact.zip": "cac9fc03b830d1f65c6ade1f4e866c574ff78382af6ab3cfc65dbe502c881dfa"
+  }
+}

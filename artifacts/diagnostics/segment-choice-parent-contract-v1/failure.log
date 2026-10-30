@@ -1,0 +1,27 @@
+test_coherent_take_count_fault_rejected (test_segment_choice.SegmentChoiceTests.test_coherent_take_count_fault_rejected) ... ok
+test_full_byte_contracts_source_lock_and_generator (test_segment_choice.SegmentChoiceTests.test_full_byte_contracts_source_lock_and_generator) ... ok
+test_idle_guard_and_canonical_flush_remain_available (test_segment_choice.SegmentChoiceTests.test_idle_guard_and_canonical_flush_remain_available) ... ok
+test_invalid_or_exhausted_choices_are_uncovered_and_atomic (test_segment_choice.SegmentChoiceTests.test_invalid_or_exhausted_choices_are_uncovered_and_atomic) ... ok
+test_legacy_fixed_inputs_keep_their_canonical_behavior (test_segment_choice.SegmentChoiceTests.test_legacy_fixed_inputs_keep_their_canonical_behavior) ... 
+  test_legacy_fixed_inputs_keep_their_canonical_behavior (test_segment_choice.SegmentChoiceTests.test_legacy_fixed_inputs_keep_their_canonical_behavior) (scene='fast-budget-new-data') ... ERROR
+test_maximum_choice_matches_canonical_shared_state (test_segment_choice.SegmentChoiceTests.test_maximum_choice_matches_canonical_shared_state) ... ok
+test_two_short_segments_preserve_order_budget_and_first_timer (test_segment_choice.SegmentChoiceTests.test_two_short_segments_preserve_order_budget_and_first_timer) ... ok
+test_wrap_and_half_close_reuse_parent_data_actions (test_segment_choice.SegmentChoiceTests.test_wrap_and_half_close_reuse_parent_data_actions) ... ok
+
+======================================================================
+ERROR: test_legacy_fixed_inputs_keep_their_canonical_behavior (test_segment_choice.SegmentChoiceTests.test_legacy_fixed_inputs_keep_their_canonical_behavior) (scene='fast-budget-new-data')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_segment_choice.py", line 91, in test_legacy_fixed_inputs_keep_their_canonical_behavior
+    with self.subTest(scene=p.stem): run_scenario(self.model, read(p))
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 94, in run_scenario
+    require(machine.values.get(key) == value, f"Scenario variable mismatch: {key}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Scenario variable mismatch: cc_new_sent
+
+----------------------------------------------------------------------
+Ran 8 tests in 300.657s
+
+FAILED (errors=1)

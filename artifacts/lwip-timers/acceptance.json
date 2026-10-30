@@ -1,0 +1,76 @@
+{
+  "status": "finite_independent_data_timer_milestone_verified_with_differences",
+  "implementation": "pinned_unmodified_lwIP_2.2.1",
+  "model": "model/tcp-limited-transmit.json",
+  "scenarios": 5,
+  "strict_matches": 0,
+  "valid_difference_evidence": 5,
+  "test_methods": 10,
+  "test_seconds": 201.402,
+  "independent_exported_full_byte_query_checks": 5,
+  "clock_partition_raw_capture": "identical",
+  "clock_partition_commands": {
+    "coarse": 5,
+    "fine": 52
+  },
+  "max_observed_time_ms": 12000,
+  "driver_virtual_step_ms": 1,
+  "clock_counters_validated": true,
+  "internal_timer_or_cwnd_values_observed": false,
+  "upstream_modified": false,
+  "oracle_or_hash_checks_relaxed": false,
+  "linux_execution": false,
+  "full_stack_complete": false,
+  "prior357_regression": {
+    "status": "passed",
+    "commit": "cb163fe79b373f009201059a04c626afd7d2e5d2",
+    "tests": 357,
+    "seconds": 3470.718
+  },
+  "ongoing370_regression": {
+    "commit": "2d296f8941d41043921ba9c637d4192eb183753c",
+    "status": "running_not_passed",
+    "frozen_dependencies_unchanged": 1125,
+    "timer_port_methods_not_in_test_set": true
+  },
+  "source_lock": {
+    "rfc": 6298,
+    "url": "https://www.rfc-editor.org/rfc/rfc6298.txt",
+    "version": "June 2011",
+    "sections": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "sha256": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+    "driver_clock": {
+      "step_ms": 1,
+      "max_time_ms": 12000,
+      "max_events": 64
+    },
+    "upstream_modified": false
+  },
+  "source_traceability": {
+    "initial_rto": "third_party/lwip/src/include/lwip/opt.h:1375",
+    "timer_dispatch": "third_party/lwip/src/core/tcp.c:239",
+    "rto_counter_and_backoff": "third_party/lwip/src/core/tcp.c:1275",
+    "partial_ack_retains_segments": "third_party/lwip/src/core/tcp_in.c:1288"
+  },
+  "scope_exclusions": [
+    "real peer/network loss causality, host TCP or Linux",
+    "internal RTO/cwnd conformance and general permitted-output correspondence",
+    "complete TCP or universal byte/output/timing/translator/implementation proof"
+  ],
+  "hashes": {
+    "verification.json": "66e48f675d5dd44b8c7f563ef55e1bbb4c0dd799540ea573702727d1586aa3e2",
+    "verify-all.py": "29a37b8da73692a233093c528d9c5c1ae21679fd09b3f8ececf1cd10cc01f908",
+    "observations.json": "d914dd30be8d39d52b95109c00d82ae361329dff15acca3c7a1f2d241fc6d592",
+    "tests.log": "135c6e9eda3b2cac0ab319ae8a1a8e2f528f606e2b7ef3c3f43ec8b7e74b0f7c",
+    "generation.log": "e2adfc3530ac6b2a337fe3e3ff43aa435432043f43d7e015c30e41ea470ed9fc",
+    "verification.log": "73367d0f63387275b9882961bafecb6438d83e0fa76039507e2c00db1886415b",
+    "clock-check.log": "c791001e261048cb262240f1b05ea206b5fc0fff0c156c019fea4cc9224008c0",
+    "clock-partition/result.json": "a4030bd36748b6b6b8b1b7936e9f632ffad93da89f5bf5485777df77f3b2134e"
+  },
+  "fixture_diagnostic_manifest_sha256": "583e18714e0d5550a4db9604b1ecff2c5b90f340d7ac0dab88ecafdd67c2da73"
+}

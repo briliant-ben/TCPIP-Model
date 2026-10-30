@@ -344,3 +344,138 @@ fast原因与timeout原因分开，不删除父TX-INV-NO-EARLY-TIMEOUT；更新�
 另建ports/lwip-limited-transmit复用未修改的C驱动，先各发送4字节，随后可排队1或3段，再注入前两个dup。3实际PCAP输入、固定查询新进程及独立验收完成，2匹配、1有效差异；2独立port方法175.862s通过并拒绝重哈希伪造oracle。首次测试错误假定lwIP不会发排队数据，两个失败预期及实际包归档。实际一个排队段30ms与模型相同；12排队字节在lwIP按自身普通cwnd预算30ms一次发三段，而模型30/31ms各一段。来源解释是ACK处理末端tcp_output在上游IW16内发送，不是测得内部LT变量或RFC bug，也不能由单段匹配推断LT支持。脚本在31ms结束，全部数据尚未确认；不等于永不发／真实peer丢包或Linux证据。
 
 旧注册258项输入及在途357回归1108依赖未变；后者仍绑定cb163fe7，不将13新方法追加为该次通过。模型验收绑定于artifacts/tcp-limited-transmit-development/acceptance/result.json，独立实现另见artifacts/lwip-limited-transmit/acceptance.json。原2750ms差异与上游源码／oracle／哈希验收保持。继续独立数据计时／丢包恢复、一般允许输出及用户完整后续协议范围，目标未完成。
+
+2026-10-29：cb163fe7冻结提交的357项完整发现回归一次3470.718s全部通过，无错误／失败／跳过，1108冻结依赖和工具环境未变；原始结果／输入／测试ID／日志归档artifacts/full-regression-cb163fe7。先前running条目为历史，不将后续13项LT或独立port测试冒计入本次，主unknown与协议／Linux缺口保持。
+
+## 2026-10-29：独立数据RTO／退避与逐毫秒公共驱动
+
+远端确认PR#2已合入main（ade065bb，包含6fa46e82）。本轮从实际main建立codex/tcp-timers，保留未提交新通道，并cherry-pick357项归档为0da112de。原370回归仍绑定原2d296f89；切换后1125项源码依赖逐项SHA确认未变，不把新分支／端口测试追加入旧发现集合。
+
+ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件；每个虚拟毫秒调用sys_check_timeouts，新增只推进时钟的TICK。不直接调用tcp_tmr／slowtmr、不读写内部PCB计时或拥塞变量。C摘要记录end_ms、clock_step_ms、clock_checks，必须等于真实输入终点、1及end_ms+commands。C/Python两端拒绝非法／非单调／超界TICK；其余16写字节／64peer字节、无PSH／选项／app.read边界保持。IR仍唯一权威，使用共享tcp-limited-transmit链，原模型／执行器／形式后端无改动；重新生成参考轨迹、全字节查询与严格0ms包／接收关系，通过现有独立解析及哈希验收，不能以重哈希伪造oracle或执行时钟。
+
+10项独立port方法一次201.402s通过，5场景全量重建与独立验收、导出查询新进程SAT全部完成。5场景均有效mismatch：无ACK数据在IR为21ms初发、1021/3021/7021重传，实际为21/2750/8750；完整ACK3600后实际与IR都停止后续重传至12000，摘要及12007时钟调用确认窗口走完。partial ACK1003在1000ms到来后，IR2000/4000重传1003处[255,7]，实际3750从1001重发原[0,128,255,7]，随后完整ACK5100后窗口内不再重传。idle6001的新8字节，IR按RW4发一段，实际发两段；不据此推断内部cwnd一致或宣称完整idle符合。
+
+源码opt.h:1375名义初始RTO3000，tcp.c:239调度250ms fast及500ms slow，1275附近按coarse计数／退避；这些是2750相位与后续6000ms间隔的解释线索，不是实际读取PCB RTO，也不直接判定RFC6298违规。tcp_in.c:1288整体释放已全部确认段，是partial ACK后原整段重发的解释线索；严格Difference不因可能的允许输出策略而被抹去。RFC6298 June2011 §§2/3/4/5原文、来源SHA与时钟配置锁均校验，错误SHA／版本／步长／上游修改标志被拒绝。原SYN-loss2750ms证据保持独立。
+
+在12秒无ACK输入中，将单个TICK12000分成48个250ms间隔TICK，仍用同一真实二进制执行，两个原始PCAP逐字节相同；fine52条命令及12052时钟调用、执行日志和原始捕获单独归档clock-partition。此为固定输入驱动分划检查，不是通用调度证明。初次夹具缺expect.timers导致参考阶段KeyError，原夹具／失败日志／incomplete报告保存在lwip-timer-fixture-v1，新增输入门槛拒绝，不计成TCP差异；来源门槛增强前9方法成功日志作为历史保留。
+
+验收与逐包观测见artifacts/lwip-timers/acceptance.json、observations.json和verification.json。编译器／命令／来源／二进制SHA、C日志、原始PCAP、模型轨迹与查询均保留，二进制不提交需迁移后重建。没有独立真实peer丢包、Linux、内部RTO/cwnd、一般合法输出关系或完整TCP／通用精化证明。主模型原unknown不变。370项组合回归仍在运行，10端口方法不在其中；继续输出策略／时序对应及完整后续协议范围。
+
+## 2026-10-29：显式分段调度选择与有限线端前缀见证
+
+新增tcp-segment-choice继承LT／idle／恢复及共享字节／窗口链，共201规则／195不变量。choice.segment(count)是声明的模型调度决策，不是socket参数或真实网络输入；只在已有新发规则可用时允许1..实际take上界，禁止越MSS／发送队列／rwnd／cwnd预算。8条clone完整保留父发送动作，将take换为受guard约束count；原app.transmit保持确定选择。guard上界由父赋值前缀精确替入原take表达式，避免idle缩窗之前的旧cwnd绕过预算。生成器只产JSON，遇非赋值prefix效果或父规则结构变化明确拒绝。无执行器／形式后端算子改动或Python协议回调。RFC9293 August2022 §3.7及其MSS子节为有限分段来源；未覆盖Nagle/SWS等全部发送约束，不能把MSS许可直接当完整TCP符合。
+
+8方法一次500.431s通过：2+2字节顺序／首timer／逐字节时刻，负长度／零／超量／耗尽的Uncovered与原子拒绝，最大选择对5种窗口的canonical共享状态相等，idle后预算，wrap／CLOSE-WAIT以及一致错误take的负例。22组旧刺激逐步比较新模型与即时父LT模型的全部共享变量／计时器／输出；初次测试误用LT之前fast-budget-new-data的原契约，失败及旧测试源码保存在segment-choice-parent-contract-v1。未修改任何旧场景／oracle，修正测试为同一父语义的差分比较，不声称旧profile契约跨层自动成立。
+
+三个独立手写字节／输出时刻契约完成参考、完整字节SMT、新进程导出查询、synthetic-only codec、claims和输入／产物SHA验收。主depth6 safety/overlap仍unknown（reason canceled），主初值／clock与guard unsat；8个新选择规则状态保持查询unsat，5个旧接收／ACK目标unknown保留。1342完整单项分组及5等价共1347检查与独立CLI复查通过，只支持声明状态／长度性质，不替代通用字节完整性或翻译证明。
+
+另以旧lwIP四字节peer-window的完整有效抓包建立截至21ms的五包前缀见证：先独立验收旧报告（仍full mismatch），再运行选择2+2的当前IR并全字节复查，原解析器／严格0ms比较得到初始数据前缀match。载荷逆序、错误SEQ、错误时刻均mismatch；原canonical前缀仍mismatch，原完整Difference字节SHA不变。无重新执行独立实现或新伪造PCAP，原raw capture／报告哈希与新见证均绑定。此处不证明完整API调用对应或后续包接受，也不引入重传／时钟／窗口策略容差。见artifacts/segment-choice-prefix/result.json及tcp-segment-choice-development/acceptance/result.json。
+
+370项旧组合回归仍绑定2d296f89，1125冻结输入未改，新8方法单列。全协议、一般允许输出／应用事件关系、内容／时间／解释翻译及实现精化、Linux和后续协议仍未完成；原2750ms差异／上游源码／oracle／SHA验收保持。继续推进可检查内容与事件对应关系，不将有限前缀见证当作完整符合性闭环。
+## 2026-10-29：370项冻结回归完成
+
+2d296f8941d41043921ba9c637d4192eb183753c的370项标准发现回归已经终止并全部通过，runner用时3618.822秒，失败／错误／跳过均为零；1125项冻结依赖及工具环境未变。原始开始记录、测试集合、输入SHA、完整日志和最终结果归档artifacts/full-regression-2d296f89，先前“仍运行”条目保留为历史。后续segment-choice八方法、output-schedule专项和独立端口测试均不计入本次完整回归。主形式unknown、完整TCP、Linux及后续协议缺口保持。
+
+
+## 2026-10-29：完整源输入下的发送机会、服务记账与线端见证
+
+新增未注册tcp-output-schedule，继承segment-choice共享连接／序列／缓冲／恢复链，201规则／200不变量。flush与原有效pure ACK只授予当毫秒的显式发送机会，choice.segment保留父预算及实际发送动作；其他源事件关闭机会，延时选择由guard拒绝。源输入由通用replay_schedule.py按索引顺序各一次消费，禁止伪造网络输入／改字段／重排／省略。默认严格入口继续要求原canonical终态；观察入口只返回该终态的明确差异，必须另做完整线端／公共服务投影判断，宿主无TCP协议回调。服务累计写入、data确认信用及放弃字节在IR中显式质量守恒；固定完整segment ACK范围下才映射C公共sent回调，不推广一般partial ACK。
+
+完整12方法一次495.456秒通过，包含22组旧刺激逐源事件对照父协议全部共享非choice变量、状态、timer与带时刻输出，及输入重排／伪造／遗漏、过期选择、未来ACK、RST放弃而非确认和一致错误确认记账负例。两条手写字节／时刻契约重新生成参考、完整字节SMT和synthetic-only codec，claims／输入SHA／导出查询新进程SAT与独立验收通过。depth6 safety/overlap仍unknown；主归纳初值／clock／长度引理unsat，3个旧FIN-WAIT-1接收目标unknown，845完整单项分组及848含等价检查和独立CLI复查通过。原主报告保持unknown，不是一般字节／时间／翻译或完整TCP证明。
+
+旧lwIP窗口4捕获先经原通道独立验收，完整Difference仍mismatch。消费全部7源输入，选择21ms的2+2、30ms的一段2字节，严格checksum／顺序／0ms比较全部9包match，公共写入8／确认4与IR服务变量相等。最后40ms的ACK1009是future ACK，IR与实际都给纠正ACK；保留snd_una1005、snd_nxt1007、待发[65,129]、待确认[17,33]及rtx1030。因此原canonical终态继续mismatch，报告完整保留这5项差异。30ms再发最后2字节的候选虽然满足原canonical终态，却与抓包／公共确认字节冲突，作为反例保留。载荷／SEQ／时刻故障均mismatch；不改原输入、旧oracle、严格比较器或Difference SHA。此为单输入存在性完整观察窗口见证，不是旧夹具通过、真实隐藏调用因果、一般Nagle/SWS或实现精化；复用旧真实捕获，不计新C执行或Linux证据。
+
+最初四段候选和错误全确认假设归档output-schedule-canonical-final-v1。新增兼容性检查另发现idle_before_cwnd8与4不同，进一步重放确认flush和choice重复执行idle前缀，连实际重启计数也多一次。修正flush为idle_restart=false，延迟缩窗／清CA／计数到实际choice；不排除任何idle字段比较。历史1774成员、失败12方法日志及隔离旧expanded IR重现见output-schedule-idle-prefix-v1；其旧形式结果未发现该可达记账缺陷，不能归给修正后的模型。当前模型与所有形式／固定输入产物均重建复查，诊断同时验证旧计数差异及新模型全部共享变量一致。
+
+验收见artifacts/tcp-output-schedule-development/acceptance.json和artifacts/output-schedule-alignment/result.json。RFC9293 August2022 §§3.7、3.9.1.2、3.10.7.4版本／原文SHA锁定。258项旧注册输入逐一SHA未变，上游lwIP／2750ms差异保留。已完成370项全量回归不含此12方法及此前segment-choice8方法；当前标准发现390方法，下一组合回归按本里程碑提交冻结，未完成前不计通过。继续一般内容／事件／计时对应及完整后续协议目标。
+
+2026-10-29：a7866f0b冻结提交的390项完整发现回归一次4257.189秒全部通过（runner4257.370秒），无失败／错误／跳过，1155项依赖及环境未变。证据归档artifacts/full-regression-a7866f0b，历史running条目不再代表当前状态；新sent-ledger及独立端口方法另行验收，不提升主unknown或完整TCP／Linux声明。
+
+## 2026-10-30：显式发送段账本、部分 ACK 服务观察与条件组件检查
+
+新增tcp-sent-ledger及生成器，继承当前输出调度／恢复链，201规则／220不变量。16槽环形原始发送段记录、序列末端、部分头段前缀、callback／abandoned lifetime计数均为JSON IR；重传不增加原始发送信用，ACK只释放完整原始段，异常清理明确计入放弃量。与父规则逐项比较guards／目标及去掉cb赋值后的actions，无任意Python协议回调／新语义算子。RFC9293 August2022条款及上游lwIP2.2.1源码锁固定；whole-original-segment公共回调是有限实现服务投影，不冒称RFC统一socket语义。
+
+新增11项模型方法一次356.789s通过，覆盖部分／重复／未来ACK、重传、环形槽复用、回绕、重连和负例。具体可达测试发现16在途字节并不限制一次原始段信用至16：部分头段3字节加16未确认字节可释放19。保留旧源码／失败／隔离重放。任意前态归纳又发现11个缺少emitted+pending<=written约束的SAT状态；未证明这些前态可达，不宣称TCP实现bug。只增预算不变量，保持原guards／actions，当前主归纳无SAT但42规则的62目标unknown；depth6 safety／overlap也unknown，原报告不改。
+
+9个固定输入完成参考、全字节SMT、新进程SAT、synthetic-only codec与SHA验收。独立ports/lwip-service仅增加公共tcp_sent时间／字节记录，无PCB读取／上游改动；10方法一次655.913s通过，8真实C捕获及独立CLI／导出查询验收完成。原始严格线端4匹配4差异，服务5匹配3差异。3个替代调度仍消费原刺激一次且有完整字节见证，其中2个完整包与回调匹配；duplicate-future保留自动LT在30ms发出而实际40ms才发的线端差异。所有原Difference与canonical失败保留；替代见证不是新C执行或一般实现精化。wide-window真实4字节段的部分ACK不回调，与window4实际2+2分段的回调区别得到观测。既有2750ms／partial-RTO差异原样保留，不判RFC错误。
+
+新增独立条件组件检查器，只以200个未变父不变量和预算性质自身为前态假设，对初值／201规则各目标／clock等240查询生成与独立复查全部unsat，并有非空全字节SAT重放。498次断言对应检查包含独立AC证书／无条件原语定律与无其他premise的逐clause等价；错误命题重哈希／漏覆盖／父basis变化／重复数丢失等负例被拒绝。组件4方法及AC4方法分别通过。此结论不证明父basis在子模型闭包、其余child不变量、通用字节／解释器／翻译器或实现对应；可信Python/Z3组件明确列出。历史共享上下文超时与序列化／等价失败档案保留，未放宽10s预算或哈希／oracle。
+
+新增Rocq5个抽象整数命题与独立编译／假设审计／kernel重查及故障门槛，使用固定9.2.0镜像。macOS本地无Docker，当前not_run，等待提交后CI；模型哈希只作上下文绑定，未建立IR精化桥。阶段验收位于artifacts/tcp-sent-ledger-development/acceptance.json。已完成390项回归不包含本轮新增19方法；409项完整发现回归应在本轮冻结提交另跑。一般Nagle／短段与LT组合、完整发送／服务／时间关系、Linux实机及全部后续协议仍待推进，完整目标未完成。
+
+2026-10-30：eaeb02ff的[Rocq CI](https://github.com/briliant-ben/TCPIP-Model/actions/runs/40926132635)完成成功。新增5个发送信用抽象整数命题已编译、空公理审计及独立kernel重查，错误证明／公理注入拒绝；ZIP、证明对象、来源与日志SHA绑定在artifacts/rocq-ledger-ci-eaeb02ff，独立本地绑定验收及损坏对象负例通过。此前local not_run和CI pending记录保留为历史；本地未重跑kernel，也未证明IR动作／解释器／翻译器／TCP／lwIP对应。409项冻结回归仍在运行，完整目标未完成。
+
+## 2026-10-30：基本Nagle与自动LT组合的显式策略
+
+新增tcp-nagle继承sent-ledger，共203规则／222不变量；RFC9293 August2022 §3.7.4的基本合并策略以IR guards／actions表达，固定Eff.snd.MSS4。有在途数据时短choice被拒绝，自动LT只在允许发送完整4字节时生效；ACK处理、dup计数与旧timer保持，不能用LT绕过基本Nagle。app.nodelay(enabled)在ESTABLISHED／CLOSE-WAIT显式切换，当前有限API不直接授予发送机会，新open恢复默认。重传与persist保留父语义；lwIP unsent多节点／FIN／内存压力／fast-recovery例外、动态MSS及完整sender SWS/override未覆盖，不称完整TCP。
+
+8专项方法一次149.494s全部通过，覆盖短段／部分ACK等待、完整ACK放行、fullMSS LT、rwnd／cwnd约束、选项无隐式输出／信用、短段重传、CLOSE-WAIT加wrap／FIN ACK及去除LT门槛故障。初版使用gt被类型检查明确拒绝，随后复用空send规则的option误带empty_send通知由负预期发现并去除精确锚定通知；旧原型源码／失败／其242条件查询单性质通过记录保留，展示局部性质不能证明全部API输出。补充FIN夹具曾漏必需ACK字段，原schema拒绝保留，修正夹具而不改协议语义。
+
+基本新数据门槛单性质242查询与2420断言对应检查独立复查通过，前态假设为220个父不变量加该性质；不证明父basis在child闭包或其余新旧性质，当前overlay全模型BMC／归纳未跑，父整体unknown保持。原duplicate-future真实捕获现在有同原始10输入、2个显式choice的完整严格见证：21ms首2字节，重复ACK不LT发短段，40ms完整ACK后发剩余2字节。全部报文／checksum／顺序／0ms时间及2@40、2@50公共callback匹配；原canonical匹配，但旧模型Difference和服务Difference SHA原样保留。此为复用已有独立C捕获的一场景关系，不计新C执行／Linux或一般lwIP符合。逐字节查询、独立重新执行／生成、查询等价UNSAT、新进程SAT及payload／SEQ／1ms负例全部验收。
+
+验收入口artifacts/tcp-nagle-development/acceptance.json；来源锁spec/sources/tcp-nagle.json，保留RFC3042与lwIP固定版本对变体的解释。生成器确定性及旧258注册输入SHA确认未变。新8方法不属于eaeb02ff正在运行的409项冻结回归，完整发现现为417项，尚不宣称组合全部通过。继续sender SWS／短段队列策略、服务／时序／恢复及IR解释／翻译对应，再按原计划推进UDP与后续协议；完整目标未完成。
+
+2026-10-30：eaeb02ff冻结提交的409项完整发现回归一次5043.817秒全部通过（runner5044.056秒），无失败／错误／跳过，1208项依赖及环境未变。证据归档artifacts/full-regression-eaeb02ff；此前running记录是历史。后续Nagle8项和SWS开发不属于本次409集合，不能追加推算全量通过；主unknown、Linux与完整协议缺口保持，目标未完成。
+
+## 2026-10-30：发送端SWS有限策略、PUSH前缀与独立窗口观测
+
+新增tcp-sws继承Nagle及共享发送／接收／恢复链，209规则／223不变量。RFC9293 August2022 §3.8.6.2.1 MUST-38及推荐算法固定MSS4、Fs1/2，历史最大接受窗口与当前usable window分开。正常choice／自动LT必须发完整MSS、全部已push队列、至少历史最大窗口的一半，或已有超时授权；实际选取prefix满足条件，仍受父Nagle／rwnd／cwnd约束。app.push仅标记当时队列前缀，后来写入不继承，close标记自身前缀。无新运行时算子／Python协议回调，上游lwIP不改。
+
+另设sws timer，默认200ms，配置100..1000。首次pending输出请求启动，更多写入／重复请求不延后；实际新字节推进才开始剩余队列新周期。到期提供同刻choice机会及持续ready，并不直接自动发包，fairness／mandatory输出活性仍开放。清理、队列耗尽或离开发送状态取消。IR尚无actual timer deadline表达式，metadata与实际deadline的独立状态等式未证明；到期guard、精确参考／SMT时序及早／晚arm故障分别验收，不把状态检查提升为通用计时器对应。
+
+13方法一次232.550s全部通过，覆盖exact221ms、奇数半窗口上取整、窗口缩减与future ACK不污染max、push前缀、不相互关闭Nagle／SWS、重复请求不延后、新周期与旧RTO截止点、零窗口不越权、reset重连、65535窗口域及CLOSE-WAIT／wrap／FIN flush。六个独立手写字节／时刻／顺序契约（含push、两轮override、wrap关闭）完成参考、全字节新进程SAT、独立重建／查询等价和synthetic-only codec验收。新depth6 safety与overlap均unknown/canceled，报告保留。
+
+SWS-INV聚合新窗口／prefix／timer所有权／发送理由状态性质，在222父不变量及自身为前态假设下，248查询全部unsat，并独立复查1863个断言对应；此组件不证明父basis在child闭包、其他父性质、字节／解释／翻译或实现对应。八个旧choice guard只增强，其他旧guard保持；六个新event/state组是新鲜单例，表示未扩大旧冲突可能，不替换原整体overlap unknown。
+
+初版max误限16导致24个SAT目标，实际父通告窗口允许0..65535；已在隔离旧IR中用正常window17握手重现可达失败，修正后接受。完整原IR仅一个invariant literal变为65535，guards／actions不改，所有原查询／witness／源码保留；24个原SAT导出保留全部断言并绑定保存witness，在原10s预算下重新SAT。一例无约束重查timeout单独保留，未升级为成功或宣称24前态全可达。初始max算子被类型检查拒绝，改用已有ge／ite；半关闭新夹具曾错误假设数据发送或ACK即发FIN，按父CL-FLUSH-FIN显式调度修正，旧oracle未动，原失败留档。
+
+ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4方法一次269.069s通过，3个新真实C执行全部独立CLI／导出SAT验收；1线端匹配、2线端差异、3服务匹配。完整4字节在21ms一致，两个1字节写（含历史窗口16缩至1）实际21ms，模型按所选SWS策略221ms；230ms sent callback一致。保留严格0ms／checksum／顺序Difference，不据此判RFC bug、观测内部SWS或泛化lwIP符合。修正invariant前的3捕获另存历史，与修正后新执行的原始PCAP和公共摘要完全相同，不重标历史hash。PUSH／wire PSH不在此C适配器范围，只有参考／SMT证据；非Linux。
+
+验收见artifacts/tcp-sws-development/acceptance.json。258个旧注册输入SHA、旧模型／oracle及2750ms差异保持。409项完整回归已在eaeb02ff通过；新Nagle8和SWS13不在该集合，当前发现430，须在新冻结提交另跑。Nagle新增冻结profile视图复现原已验收trace，没有新增C执行。后续继续精确语义／时间与输出对应、发送活性边界、receiver SWS／wire PSH／窗口与恢复及Linux，再按原顺序推进后续协议，完整目标未完成。
+
+2026-10-30：新增ports/linux-netns和Linux TCP independent capture CI入口，使用固定官方packetdrill2a8b4d80、临时Ubuntu VM与unshare --net。现有模型生成的全部握手期望保留，仅增public bind与offload配置；独立tcpdump在模型ESTABLISHED三包边界止，严格checksum／0ms Difference。执行子进程核对真实父PID namespace和自身不同后才配置网络。原始capture／kernel／tools／编译／脚本／模型hash及独立runtime验收已编码；Mac本地2项准备测试通过，缺Linux/TUN/unshare/ip/ethtool，CI尚未实际执行，不计Linux证据。430冻结回归继续绑定4db896eb；新增通道不改其冻结输入。
+
+2026-10-30：Linux CI首次在run41002313195构建及namespace成功，但offload配置141ms导致absolute0的socket时间超过执行50ms，独立capture0包；完整失败ZIP／日志／原脚本留档。按固定官方packetdrill相对事件语义把socket改为相对setup结束，未修改任何packet期望、模型、parser、50ms执行容差或0ms Difference。run41002939358实际Linux7.0.0-1017-azure三包握手与独立runtime验收通过；源头e62f799d、命名空间／原始PCAP／kernel／工具／模型／脚本hash及GitHub ZIP摘要绑定。0ms比较仅保留10.055ms SYN+ACK／10.073ms ACK与模型10ms的时间差；非RFC bug结论，非lwIP或合成证据。边界止于ESTABLISHED三包，不含原场景5010ms静默观察，后者继续实施；非窗口／options／payload、恢复或完整TCP证明。匹配源码下离线复查通过且未冒称本地再执行Linux。证据artifacts/linux-netns-ci-e62f799d。
+
+2026-10-30：sent-ledger原62 unknown目标的group8精确细化已终态refinement_unknown，3目标闭合、59仍unknown；2394组unsat、553组unknown。3闭合目标另用独立CLI145检查复核通过；原主unknown不改，不宣称整个220不变量或payload／时间／翻译对应证明。3134原始文件及成员SHA封存artifacts/sent-ledger-refinement-unknown，原未提交目录保留。430冻结回归仍在运行，新Linux／归档工作未改其1244依赖。
+
+2026-10-30：在已验收三包Linux观测之后继续扩展到原handshake场景5010ms settle：去掉tcpdump包数上限，延迟SO_ERROR检查后用文件barrier保持socket打开，只有capture停止后才释放工具清理；保留所有选中包、零drop门槛和0ms oracle。新增capture生命周期／quiet边界校验及model-uncovered、无效capture、执行失败、环境失败分类，3项本地准备测试通过，完整静默窗口CI待执行，尚不计完成。历史e62f三包证据保持原范围与哈希。430冻结输入不变。
+
+
+## 2026-10-30：真实 Linux 完整握手场景观察窗口验收
+
+[CI run41004399031](https://github.com/briliant-ben/TCPIP-Model/actions/runs/41004399031)在1551c535源码运行成功；证据入口artifacts/linux-netns-ci-1551c535/acceptance.json。实际Linux7.0.0-1017-azure、独立网络命名空间、固定未修改packetdrill及独立tcpdump覆盖原场景5010ms静默期，实际观察5010.89946ms，无包数上限，内核捕获丢包0。socket在抓包停止后才释放清理；有限窗口内仅观察到3个握手包。此前e62f799d仅三包前缀证据保持原范围，不能倒推其覆盖静默期。
+
+原active-open-v1、严格checksum与0ms Difference保持：方向／flags／相对SEQ／ACK匹配，SYN+ACK10.093ms、最终ACK10.131ms对模型10ms的时间差异保留，CI成功不等于投影完全匹配。原始PCAP、编译／源码／脚本／模型及查询哈希、内核／命名空间／捕获生命周期、CI日志／来源和ZIP SHA全部绑定。独立runtime验收成功；当前源码的离线重新生成／查询等价UNSAT及4个重哈希负例（参考时刻、checksum、缩短静默期、重加3包上限）通过。离线重查不是本地Linux重跑或CI二进制再执行。
+
+这是一个真实VM内核、注入对端的有限主动打开场景；不覆盖物理NIC／远端丢包、数据／窗口／选项／payload／恢复／其他协议或一般实现正确性。原lwIP2750ms与其他差异不改；本机macOS权限缺口没有改变，由独立CI通道完成此有限验证。430项回归仍运行，1244冻结依赖未变；精确ledger单目标细化仍运行，整体unknown与完整目标未完成。运行与验收说明见docs/linux-netns.md。
+
+2026-10-30：Linux通道扩展为handshake／syn-loss两个白名单场景，CI各用独立VM。旧model/tcp.json、两个场景、所有原协议算子及oracle未改；loss实验保留两个出口SYN，只对首次SYN不注入响应，非物理网络丢包。按原IR1000ms重传／1010ms响应生成全部预期，syn-loss声明6010ms完整窗口；scenario身份／loss机制／settle逐项绑定验收。7项本地准备／拒绝测试通过，两个固定查询独立解析SAT，证据artifacts/linux-two-case-preparation；这些不是Linux运行证据，新CI待运行。准备测试误用Machine.variables的原始失败归档后改为现有values字段，协议不变。旧1551c535证据仅在其命名源码检查点复查，新源码哈希不被放宽。430回归／精确单目标继续运行，原2750ms差异与完整目标缺口保持。
+
+2026-10-30：S-ACK-VALID→ESTABLISHED的group-size1精确细化已终止unknown：368组中298个producer UNSAT、70个UNKNOWN，逐查询10s不变、原其他断言全部保留，等价查询UNSAT。370成员／6698504字节归档artifacts/sent-ledger-single-target-unknown，逐成员与原源码／checker SHA核对；未对全部组独立重跑，未闭合新目标，原62目标主unknown及group8的3闭合／59unknown均不改。原未提交目录保留。下一步需改善字节／计数／赋值编码，而非增加重复切分或把超时称为证明。Linux双场景CI41005706790正在运行；430冻结回归继续。
+
+## 2026-10-30：双场景真实Linux与工具动态容差澄清
+
+[CI41005706790](https://github.com/briliant-ben/TCPIP-Model/actions/runs/41005706790)在de084a26源码的handshake／syn-loss独立VM jobs均执行及runtime验收成功。原始ZIP SHA、官方来源、完整日志、PCAP、独立离线重建与查询等价、10个重哈希负例及逐成员哈希归档artifacts/linux-netns-ci-de084a26，acceptance.json验收通过。均实际Linux7.0.0-1017-azure，无包数截断／捕获内核丢包，socket清理在抓包停止后。handshake完整窗口5010.313562ms，3包，10.051／10.064ms对10ms；syn-loss完整窗口6071.244654ms，4包，重传1061.092ms对1000ms、响应1071.217／ACK1071.238ms对1010ms。只有时间Difference，0ms oracle原样保留。首次SYN出口仍被抓到，仅注入对端不响应；不是物理网络丢包。
+
+核对固定官方packetdrill源码发现原先“50000us执行容差”的描述只记录minimum，工具还默认tolerance_percent=12.5，按max(minimum,间隔*百分比)验收；1秒事件有效125ms，所以61.092ms延迟可过工具执行而仍为严格Difference。原官方run.c／config.c完整Git blob及SHA来源已存upstream-timing，无修改默认／模型／oracle强行匹配。旧报告50000字段应读作下限，旧证据不重写；此处补齐实际默认配置解释。不把线端间隔称为内部RTO观测或直接判RFC bug，尚未隔离量化／调度原因。lwIP SYN2750ms独立差异保留。
+
+上述只有两个有限主动打开实验，不覆盖Linux数据／窗口／恢复或一般协议证明。10个负例含场景标签更改，均为离线临时复制，不计新内核运行；本地未重跑Linux／CI二进制。原258输入和430回归1244冻结依赖未变；精确ACK单目标已终止unknown并归档，430回归继续，完整目标未完成。
+
+2026-10-30：4db896eb冻结的430项标准发现回归已全部通过，unittest5163.255秒／runner5163.586秒，无失败／错误／跳过，1244依赖及环境未变。原始结果、依赖／测试ID清单及完整日志归档artifacts/full-regression-4db896eb。包含Nagle与SWS新方法，但不含随后新增Linux端口7方法；历史running描述不再代表当前状态。此结果不提升整体形式unknown或完整协议声明，目标未完成。
+
+2026-10-30：新增Linux receive-four-zero-octets有限输入，引用现有tcp-sws组合IR（模型未改），完整tcp-connection-v1投影保留窗口／payload／time及全部ACK。驱动只以出站SYN锚定ISS，并注入SYN+ACK／单个4零字节段；出站ACK为显式observation-only，仍全部进入独立抓包和严格oracle，不强迫内核延迟ACK时刻。捕获完整5020ms并以最后注入20ms为quiet延迟锚点；有效输入／完整抓包下缺少输出ACK记为Difference，不误判证据无效。
+
+固定上游parser.y只有TCP payload长度，tcp_packet.c清零buffer；完整Git blob／SHA来源保存在artifacts/linux-receive-preparation/upstream。不支持非零字节或其他刺激时明确拒绝，不用零值替换，亦不声称应用读取／内核rcv_buf观测。MSS4／window16仅为IR参数，不强制Linux相同，差异保留。驱动显式绑定原12.5%动态与50000us下限，0ms oracle不变。12项准备／负例通过、组合IR固定全字节重放及独立CLI SAT通过；新增Linux CI待运行，这些准备不是实机证据。新inputs补齐所有模型本地规范解释文件绑定；旧CI快照继续使用其命名源码，不放宽哈希。
+
+2026-10-30：新增通用formal/tactic_recheck.py，严格接受单个SMT conjunction，拒绝增量／改选项／多次check，原断言逐项AST对应后用固定simplify→propagate-values→solve-eqs→simplify→smt策略和10s预算执行，再由新CLI进程复查，工具4方法及既有partition6方法通过。未改变IR／解释器／旧翻译器。S-ACK原始368组与等价查询均完整重建；298组加等价299项分别两次新CLI UNSAT，70仍UNKNOWN，终态refinement_unknown。没有新增闭合目标；原主报告、其他断言／domain与所有旧unknown保留。全部脚本／来源／producer及独立日志打包、逐成员核对在artifacts/sent-ledger-tactic-refinement。
+
+Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通赋值展开也未闭合，探索记录保留。此轮增加可迁移的精确查询／独立进程证据门，不把策略重查说成协议或编码正确性证明。下一步需处理模算术与大条件／环形账本赋值的精确编码，不继续用更多启发式替代语义工作。已完成430组合回归不含新增4工具方法（现发现434但未跑完整组合）；Linux接收CI单独验收，完整目标未完成。
+
+## 2026-10-30：首个真实Linux接收数据有限场景验收
+
+[CI41014477824](https://github.com/briliant-ben/TCPIP-Model/actions/runs/41014477824)的2ab2a472源码在Linux7.0.0-1017-azure完成receive-four-zero-octets及两个控制场景；三个独立VM jobs运行时验收全部通过。现有tcp-sws组合IR未改，独立tcpdump捕获5包／完整5020.014606ms／0内核捕获丢包，4个零字节和累计ACK9005匹配。完整方向／flags／SEQ／ACK／window／payload／time的0ms oracle保留7项字段Difference（3窗口＋4时间）：内核ACK20.059ms对模型60ms，通告窗口64240→64236对16→12。未强制内核MSS／窗口，也未观测其内部rcv_buf或应用读取；模型40ms delayed-ACK是RFC9293 §3.8.6.3范围内选定策略，不将提前ACK／配置差异判RFC bug。
+
+出站两个ACK在驱动中明确observation-only，但全部进入独立原始抓包及严格oracle；未删除ACK或修改模型以强行匹配。固定工具只支持此4零字节注入，任意字节／PSH／发送／乱序／恢复仍不计Linux验证。两个控制回归新实际窗口5010.198361／6057.786729ms，SYN重传1047.673ms对1000ms；以前1061.092ms和lwIP2750ms保留原快照不重写。命令显式记录既有50ms下限＋12.5%工具容差，独立oracle仍0ms。
+
+证据入口artifacts/linux-receive-ci-2ab2a472/acceptance.json；三套原ZIP、官方API来源、完整CI日志、原PCAP、全部源码／模型／解释文件／脚本／查询／工具绑定、runtime及独立离线重建／查询等价UNSAT已验收。5个重哈希负例含重新计算正确TCP checksum的错误payload，仍在独立解析／输入门被拒绝，原件未改。离线检查不是更多Linux执行或本地CI二进制重跑。旧258输入SHA仍未变。430组合回归已通过，新增4形式工具方法和Linux端口12方法单独记录，不冒称434全量通过；主形式unknown、一般协议与后续模块目标未完成。

@@ -1,0 +1,5 @@
+# Arbitrary-prestate sent-credit budget gap
+
+The immutable historical snapshot contains the 219-invariant prototype, its fixed-input evidence and independent C observations, and the full induction queries. Eleven SAT preservation counterstates expose missing accounting between emitted, pending and accepted-write bytes. Each violates emitted + pending <= written. Reachability of these arbitrary induction prestates was not established; this is not evidence of an implementation bug.
+
+The current 220-invariant model adds CB-INV-UNSENT-BUDGET without changing protocol guards or actions. All eleven retained counterstates are rejected. A separate conditional component checker verifies this one property using the unchanged immediate-parent invariants and the property itself as assumptions. The full current induction still has 62 unknown destination obligations; neither the new budget nor the component check proves the other child invariants or a complete TCP refinement. Historical logs and snapshot bytes remain unchanged. member-hashes.json describes the archive members.

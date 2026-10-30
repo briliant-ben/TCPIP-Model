@@ -1,0 +1,216 @@
+{
+  "status": "kernel_checked_sent_credit_arithmetic",
+  "kernel_checked_proof": true,
+  "theorems": [
+    "checked_callback_credit_bound",
+    "checked_callback_credit_sharp",
+    "checked_original_record_mass",
+    "checked_deferred_ack_credit",
+    "checked_unsent_budget_transfer"
+  ],
+  "scope": "five abstract integer sent-credit lemmas only",
+  "axiom_allowlist": [],
+  "commands": [
+    {
+      "command": [
+        "rocq",
+        "compile",
+        "--version"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-ledger/ledger-proof-utreciqs:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "version.log"
+    },
+    {
+      "command": [
+        "opam",
+        "var",
+        "rocq-runtime:version"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-ledger/ledger-proof-utreciqs:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "package-version.log"
+    },
+    {
+      "command": [
+        "rocq",
+        "compile",
+        "-Q",
+        ".",
+        "SentLedger",
+        "Ledger.v"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-ledger/ledger-proof-utreciqs:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "proof-bodies.log"
+    },
+    {
+      "command": [
+        "rocq",
+        "compile",
+        "-Q",
+        ".",
+        "SentLedger",
+        "Check.v"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-ledger/ledger-proof-utreciqs:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "assumptions.log"
+    },
+    {
+      "command": [
+        "rocq",
+        "check",
+        "-Q",
+        ".",
+        "SentLedger",
+        "SentLedger.Ledger",
+        "SentLedger.Check"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-ledger/ledger-proof-utreciqs:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "kernel.log"
+    },
+    {
+      "command": [
+        "rocq",
+        "compile",
+        "FalseProof.v"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-ledger/ledger-proof-utreciqs:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 1,
+      "log": "reject-false-proof.log"
+    },
+    {
+      "command": [
+        "rocq",
+        "compile",
+        "AxiomProbe.v"
+      ],
+      "container_prefix": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--volume",
+        "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/rocq-ledger/ledger-proof-utreciqs:/proof",
+        "--workdir",
+        "/proof",
+        "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025"
+      ],
+      "returncode": 0,
+      "log": "reject-axiom.log"
+    }
+  ],
+  "image": "rocq/rocq-prover:9.2.0@sha256:33926fb3757b2b560c3844157bd64173a26b6d338a256be1ae5eec8df2019025",
+  "input_hashes": {
+    "formal/rocq-ledger/Ledger.v": "ea0ba536cbe76540d3b12f48c89780ca9bfe98a434efbbbbd51c5c1db8a7111c",
+    "formal/rocq-ledger/Check.v": "bfc7175f1be9d9dacd2528acbd87656d5c48474ffdd1adf97ae0a4d5f690b045",
+    "formal/rocq-ledger/check.py": "c1c0a9b10c873445901b6ddb11e204930115d198ffa2d8bb20efdef5469756d7",
+    "formal/rocq-ledger/README.md": "8f30a8182d9cd6a657b328b91b9f14ec257b79ee7f64b0266c21ae0993f91e3b",
+    "formal/rocq/check.py": "69d4724e0479c94190f8124b0dd63def0a5324d53d4b26dd23bf1b1ad11d101f",
+    "model/tcp-sent-ledger.json": "1a2e3f26de06e73c0735b7d55c44face19344c8365a11ccc51a0c281a3ca89ca",
+    "spec/sources/tcp-sent-ledger.json": "e6b59733654894a8bd71339c357367bd54131ec4f693039db28ba8040de2b64b",
+    "docs/tcp-sent-ledger.md": "6bd8807d1685221a02674ac0848dabac9c86c38b203e41426662c6f959bf9771"
+  },
+  "trusted_components": [
+    "Rocq kernel and standard library",
+    "pinned toolchain provenance",
+    "statement review",
+    "orchestration and assumption-output audit"
+  ],
+  "does_not_prove": [
+    "JSON actions satisfy the abstract equations",
+    "IR interpreter/translator correspondence",
+    "TCP or lwIP behavior",
+    "implementation refinement",
+    "Linux TCP execution"
+  ],
+  "checker_version": "The Rocq Prover, version 9.2\ncompiled with OCaml 4.14.2",
+  "checker_package_version": "9.2.0",
+  "negative_controls": {
+    "false_proof": "rejected_by_compiler",
+    "axiom_injection": "rejected_by_audit"
+  },
+  "statement_sha256": "bfc7175f1be9d9dacd2528acbd87656d5c48474ffdd1adf97ae0a4d5f690b045",
+  "artifact_hashes": {
+    "package-version.log": "1b9487d55bea47fea50d226cc9c53bc548877ad2a318bac8fbc8b320f429e5c5",
+    "reject-axiom.log": "176d61d218a4b902b839e6ce8001436c62063a9c7a5a31e187eb8595328eb8fc",
+    "Check.v": "bfc7175f1be9d9dacd2528acbd87656d5c48474ffdd1adf97ae0a4d5f690b045",
+    "version.log": "307af1b4a460c148e60dcf08f607e77e6f93fe2e04d5a16b299aae991a5f3e76",
+    "kernel.log": "713fddc6bafa0295e30c95651033ad75d2ea316f6c6a905374089eb1690f1574",
+    "Ledger.vo": "7b236ab47dafcbc25bf740cac03e41fa7e4072dd5fa87480b00b9387e7eb1500",
+    "proof-bodies.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assumptions.log": "87696c04fea9fc5d85183a5c6b8c26d7ef7026cd2285f9c336d37ad7c4114cd2",
+    "Ledger.v": "ea0ba536cbe76540d3b12f48c89780ca9bfe98a434efbbbbd51c5c1db8a7111c",
+    "Check.vo": "4077ba04abddeda84fa2f87e70ba70964f34b483a17f539ffd0c0aaa462dee80",
+    "reject-false-proof.log": "74cceb2f1a6d337f18171c6a95ce727a299e54734611eba69a60219871bb65c8"
+  }
+}

@@ -1,0 +1,35 @@
+setUpClass (test_nagle.NagleTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_nagle.NagleTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_nagle.py", line 36, in setUpClass
+    cls.model = load(ROOT / 'model/tcp-nagle.json')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 336, in load
+    return validate(model)
+           ^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 272, in validate
+    require(infer(inv["assert"], model) == "bool", "Non-boolean invariant")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 99, in infer
+    types = [infer(x, model, event) for x in args]
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 99, in infer
+    types = [infer(x, model, event) for x in args]
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 99, in infer
+    types = [infer(x, model, event) for x in args]
+             ^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 135, in infer
+    require(op in signatures, f"Unsupported operator: {op}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Unsupported operator: gt
+
+----------------------------------------------------------------------
+Ran 0 tests in 1.659s
+
+FAILED (errors=1)

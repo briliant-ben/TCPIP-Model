@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py", line 125, in <module>
+    result = verify(args.out, args.scenario) if args.verify else run(args.out, args.scenario)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py", line 116, in verify
+    return stream.verify(out, scenario_path(scene))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/run.py", line 225, in verify
+    require(read(out/'receiver-difference.json')==delivery,'Receiver Difference changed')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Receiver Difference changed

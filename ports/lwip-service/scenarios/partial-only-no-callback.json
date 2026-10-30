@@ -1,0 +1,77 @@
+{
+  "scenario_version": "0.1",
+  "id": "partial-only-no-callback",
+  "description": "Explicit whole-segment sent-credit service observation; source calls unchanged by IR choices",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS4/queue16; <=16 total written; public callback time/count; 1ms clock; no internal state or Linux claim"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 4
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1003,
+        "window": 4
+      }
+    },
+    {
+      "at_ms": 200,
+      "tick": true
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1003,
+      "snd_nxt": 1005,
+      "snd_buf": [],
+      "rtx_buf": [
+        255,
+        7
+      ],
+      "cb_acked_total": 0,
+      "svc_acked_bytes": 2,
+      "cb_count": 1,
+      "cb_partial_prefix": 2
+    },
+    "timers": {
+      "rtx": 1030
+    }
+  }
+}

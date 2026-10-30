@@ -1,0 +1,16 @@
+// GENERATED finite receive stimuli from Protocol IR; ACKs observed independently.
+// No application reads, PSH, loss or internal kernel receive-buffer claim.
+0 `ethtool -K tun0 tx off tso off gso off gro off > /home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/linux-netns/offload.log 2>&1 && ethtool -k tun0 >> /home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/linux-netns/offload.log 2>&1`
++0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
++0 fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK) = 0
++0 bind(3, ..., ...) = 0
++0 connect(3, ..., ...) = -1 EINPROGRESS (Operation now in progress)
+// e0001:out:0
++0.000 > S 0:0(0) <...>
+// e0002:in
++0.010 < S. 0:0(0) ack 1 win 8
+// e0003:in
++0.010 < . 1:5(4) ack 1 win 8
++0 getsockopt(3, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
++5.000 getsockopt(3, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
++0 `touch /home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/linux-netns/quiet-complete && while test ! -f /home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/linux-netns/capture-stopped; do sleep 0.01; done`

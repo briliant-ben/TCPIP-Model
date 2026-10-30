@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/verify.py", line 106, in <module>
+    verify(args.out.resolve(),runtime=not args.offline)
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/verify.py", line 66, in verify
+    require(model_hash(model)==result['model_semantic_sha256'] and expected==read(out/'expected.json')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Rehashed reference evidence changed

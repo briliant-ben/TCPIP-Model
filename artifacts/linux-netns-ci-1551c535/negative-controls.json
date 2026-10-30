@@ -1,0 +1,34 @@
+{
+  "status": "four_offline_semantic_faults_rejected",
+  "tests": [
+    {
+      "fault": "reference",
+      "status": "rejected_even_after_rehash",
+      "expected_failure": "Rehashed reference evidence changed",
+      "log_sha256": "0406effc940a5b175aba69b8aa7baaa48453f1ca56a7483d28033b959a4767d4"
+    },
+    {
+      "fault": "checksum",
+      "status": "rejected_even_after_rehash",
+      "expected_failure": "Invalid TCP checksum",
+      "log_sha256": "e85705b337618d57b24051b90e4cb902f72bff560c4396378496289df07a06af"
+    },
+    {
+      "fault": "short_window",
+      "status": "rejected_even_after_rehash",
+      "expected_failure": "Quiet observation window shortened",
+      "log_sha256": "7989898116eda289769fddf38d1c05c57dc1c808389fc331163fd51166a93808"
+    },
+    {
+      "fault": "packet_cap",
+      "status": "rejected_even_after_rehash",
+      "expected_failure": "Capture was silently packet-count limited",
+      "log_sha256": "b3ae0011098005ce7f1f159bfb83e4003d12da56c95c6c22ad2ad0b0696ed73d"
+    }
+  ],
+  "new_linux_execution": false,
+  "original_evidence_unchanged": true,
+  "report_sha256": "be7584da425f8322edae424f9c960e86ce02f6b7fb9bb451b9ee4add7c5cd6c5",
+  "checker_sha256": "60666a15ebccaaa16f06c4fe5d9197c0b12758e2161b06737c3623a07d7f0964",
+  "trusted_CI_origin_checked_separately": true
+}

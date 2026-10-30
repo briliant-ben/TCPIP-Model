@@ -1,0 +1,20 @@
+test_automatic_lt_cannot_bypass_nagle_but_full_mss_still_sends (test_nagle.NagleTests.test_automatic_lt_cannot_bypass_nagle_but_full_mss_still_sends) ... ok
+test_full_segment_remains_subject_to_receiver_and_congestion_budgets (test_nagle.NagleTests.test_full_segment_remains_subject_to_receiver_and_congestion_budgets) ... ok
+test_lt_gate_fault_is_caught_by_declared_nagle_invariant (test_nagle.NagleTests.test_lt_gate_fault_is_caught_by_declared_nagle_invariant) ... ok
+test_nodelay_option_preserves_bytes_credit_and_requires_new_opportunity (test_nagle.NagleTests.test_nodelay_option_preserves_bytes_credit_and_requires_new_opportunity) ... FAIL
+test_partial_ack_keeps_short_segment_buffered_then_full_ack_unblocks (test_nagle.NagleTests.test_partial_ack_keeps_short_segment_buffered_then_full_ack_unblocks) ... ok
+test_short_retransmission_is_not_blocked_and_does_not_recredit (test_nagle.NagleTests.test_short_retransmission_is_not_blocked_and_does_not_recredit) ... ok
+test_source_preserving_witness_matches_retained_duplicate_future_capture (test_nagle.NagleTests.test_source_preserving_witness_matches_retained_duplicate_future_capture) ... ok
+
+======================================================================
+FAIL: test_nodelay_option_preserves_bytes_credit_and_requires_new_opportunity (test_nagle.NagleTests.test_nodelay_option_preserves_bytes_credit_and_requires_new_opportunity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_nagle.py", line 79, in test_nodelay_option_preserves_bytes_credit_and_requires_new_opportunity
+    self.assertFalse(m.trace[-1]['emitted'])
+AssertionError: [{'message': 'application', 'fields': {'code': 'empty_send'}}] is not false
+
+----------------------------------------------------------------------
+Ran 7 tests in 120.782s
+
+FAILED (failures=1)

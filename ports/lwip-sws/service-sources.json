@@ -1,0 +1,20 @@
+{
+  "rfc": 9293,
+  "version": "August 2022",
+  "sections": [
+    "3.4",
+    "3.10.7.4"
+  ],
+  "url": "https://www.rfc-editor.org/rfc/rfc9293.txt",
+  "implementation": {
+    "release": "lwIP2.2.1",
+    "commit": "77dcd25a72509eb83f72b033d219b1d40cd8eb95",
+    "policy": "tcp_free_acked_segments then TCP_EVENT_SENT; whole original segments; public raw API only"
+  },
+  "sha256": {
+    "spec/sources/rfc9293.txt": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+    "third_party/lwip/src/include/lwip/tcp.h": "eb514477b21ed78dd4d527f4aea3bed5585200e285b85c666689b9c43b77a89a",
+    "third_party/lwip/src/core/tcp_in.c": "f79b20e6b123af2ed2cfc2b470fe982d0c88d1357fc5a11537bab9cd20d4b639",
+    "third_party/lwip/src/core/tcp_out.c": "d8d8d5a54097114904f89f8c5602c937ef3b086933f2132a557698fc65d7e4af"
+  }
+}

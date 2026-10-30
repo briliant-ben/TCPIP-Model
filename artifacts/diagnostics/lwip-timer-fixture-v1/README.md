@@ -1,0 +1,1 @@
+Initial driver run stopped before symbolic replay or C execution because the new fixture omitted mandatory expect.timers. This is a fixture/schema failure, not a TCP or independent-implementation difference. Preserve original scenario and failure. The timer adapter now rejects missing expectation shape during input validation; no oracle/hash check is relaxed.

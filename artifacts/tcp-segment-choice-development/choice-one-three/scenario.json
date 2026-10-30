@@ -1,0 +1,119 @@
+{
+  "scenario_version": "0.2",
+  "id": "choice-one-three",
+  "description": "choice-one-three",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Explicit model scheduling counts; not public socket parameters; no API-call alignment claim"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 4
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7,
+          17,
+          33,
+          65,
+          129
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      },
+      "expect_trace": [
+        {
+          "at_ms": 21,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 21,
+      "event": "choice.segment",
+      "fields": {
+        "count": 3
+      },
+      "expect_trace": [
+        {
+          "at_ms": 21,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1002,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  128,
+                  255,
+                  7
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_nxt": 1005,
+      "rtx_buf": [
+        0,
+        128,
+        255,
+        7
+      ],
+      "snd_buf": [
+        17,
+        33,
+        65,
+        129
+      ]
+    },
+    "timers": {
+      "rtx": 1021
+    }
+  }
+}

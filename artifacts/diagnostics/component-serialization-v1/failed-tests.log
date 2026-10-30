@@ -1,0 +1,22 @@
+test_changed_parent_basis_cannot_be_substituted (test_component_induction.ComponentInductionTests.test_changed_parent_basis_cannot_be_substituted) ... ok
+test_incorrect_double_credit_produces_arbitrary_prestate_counterexample (test_component_induction.ComponentInductionTests.test_incorrect_double_credit_produces_arbitrary_prestate_counterexample) ... ok
+test_property_only_scope_and_every_target_clock_initial_are_verified (test_component_induction.ComponentInductionTests.test_property_only_scope_and_every_target_clock_initial_are_verified) ... ERROR
+test_rehashed_query_scope_and_missing_query_are_rejected (test_component_induction.ComponentInductionTests.test_rehashed_query_scope_and_missing_query_are_rejected) ... ok
+
+======================================================================
+ERROR: test_property_only_scope_and_every_target_clock_initial_are_verified (test_component_induction.ComponentInductionTests.test_property_only_scope_and_every_target_clock_initial_are_verified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_component_induction.py", line 47, in test_property_only_scope_and_every_target_clock_initial_are_verified
+    self.assertEqual(verify(model, parent, 'B', folder / 'proof')['status'], 'valid_conditional_component_preservation')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/component_induction.py", line 134, in verify
+    require(len(actual) == len(expected) and all(z3.eq(a, b) for a, b in zip(actual, expected)), 'Exported query differs from reconstructed component semantics')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Exported query differs from reconstructed component semantics
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.059s
+
+FAILED (errors=1)

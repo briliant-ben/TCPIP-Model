@@ -1,0 +1,178 @@
+{
+  "status": "one_real_linux_receive_case_and_two_regressions_accepted_with_differences",
+  "source_head": "2ab2a4729909ea9ea972b05bc70a0d43a830b3bb",
+  "merge_snapshot": "0f24b7c17217b333c9912f0c31f37e72428e350e",
+  "ci_run": 41014477824,
+  "cases": [
+    {
+      "scenario": "receive-four-zero-octets",
+      "status": "linux_execution_with_projection_mismatch",
+      "kernel": "7.0.0-1017-azure",
+      "projection": "tcp-connection-v1",
+      "observed_window_ms": 5020.014606,
+      "declared_window_ms": 5020,
+      "packets": 5,
+      "raw_capture_sha256": "9369ef38522a0fd4aa2caea22091b33145403d9795d96c4e707dc059dfd25970",
+      "report_sha256": "873c18a8d6c7cd7d797b45231a16aa768d6a1b0223822ed7e3df25a2580ba6c8",
+      "runtime_verification_sha256": "f6a91c35bd52c08c70b1112782e163e084b5d6122a3755c8a6c93b43e9fc84c9",
+      "offline_verification_sha256": "b76d035ca79d762f409eff70fa783e64cb27554aaca633553dc7d06074fcbd69",
+      "difference_sha256": "f4f808761c0ff9a73110b542fc0f9b7b9f59f7a89a565c7fc821691c01a314d3",
+      "difference_fields": [
+        {
+          "index": 0,
+          "field": "window",
+          "expected": 16,
+          "observed": 64240
+        },
+        {
+          "index": 1,
+          "field": "time_ms",
+          "expected": 10,
+          "observed": 10.051
+        },
+        {
+          "index": 2,
+          "field": "time_ms",
+          "expected": 10,
+          "observed": 10.071
+        },
+        {
+          "index": 2,
+          "field": "window",
+          "expected": 16,
+          "observed": 64240
+        },
+        {
+          "index": 3,
+          "field": "time_ms",
+          "expected": 20,
+          "observed": 20.05
+        },
+        {
+          "index": 4,
+          "field": "time_ms",
+          "expected": 60,
+          "observed": 20.059
+        },
+        {
+          "index": 4,
+          "field": "window",
+          "expected": 12,
+          "observed": 64236
+        }
+      ],
+      "artifact": 12958997182,
+      "job": 123927572389,
+      "zip_sha256": "5ced9dadd9618371e77414873e3c615bd4883fe7dad50a8d079e42ce7278b170"
+    },
+    {
+      "scenario": "handshake",
+      "status": "linux_execution_with_projection_mismatch",
+      "kernel": "7.0.0-1017-azure",
+      "projection": "active-open-v1",
+      "observed_window_ms": 5010.198361,
+      "declared_window_ms": 5010,
+      "packets": 3,
+      "raw_capture_sha256": "3686d8d7299837708f02c3eb5ecca2b5aa854aebc535ab415b14453f0643f48c",
+      "report_sha256": "9210a96ab96d25a384299346ab7714e68182baff11205843354b50cd0d1f83ef",
+      "runtime_verification_sha256": "a3f785ca2ebf76d9aee371165a38fd226d7b67be79b9464e5fd20f25a8a13bfd",
+      "offline_verification_sha256": "051106936fe454fbbdba5ef73c95098067baa3c04e87bfee8242dbfc210e21c7",
+      "difference_sha256": "2cc7312d5f05ec21d4edc92b1f7e905dd6f5c489235fd705d42aa08463b2d6d5",
+      "difference_fields": [
+        {
+          "index": 1,
+          "field": "time_ms",
+          "expected": 10,
+          "observed": 10.046
+        },
+        {
+          "index": 2,
+          "field": "time_ms",
+          "expected": 10,
+          "observed": 10.056
+        }
+      ],
+      "artifact": 12959160911,
+      "job": 123927572568,
+      "zip_sha256": "774d952b35edbaa45cd27662f4e02f96aa3357062fd3a2e6a04fb6380f790011"
+    },
+    {
+      "scenario": "syn-loss",
+      "status": "linux_execution_with_projection_mismatch",
+      "kernel": "7.0.0-1017-azure",
+      "projection": "active-open-v1",
+      "observed_window_ms": 6057.786729,
+      "declared_window_ms": 6010,
+      "packets": 4,
+      "raw_capture_sha256": "9ffb2a93c23597d932606a92f3331d82fc8aecf8df667040fa34e4eba94ed389",
+      "report_sha256": "1a77aca1c6c236653d5cd4c349139d738ec188330957b32b807eac11e329f21d",
+      "runtime_verification_sha256": "90acf2a578c2563694c6544e77af8f063293e6be8dd2d002f19f93d83a11cbf3",
+      "offline_verification_sha256": "19848024da2aca185f9df5f29fb30f409861091534eee980f64e402a3510bd98",
+      "difference_sha256": "7ae503f1a0d20a09d41a687e9d26c48f9cdb4a7a328c6854481790ab07226d9e",
+      "difference_fields": [
+        {
+          "index": 1,
+          "field": "time_ms",
+          "expected": 1000,
+          "observed": 1047.673
+        },
+        {
+          "index": 2,
+          "field": "time_ms",
+          "expected": 1010,
+          "observed": 1057.791
+        },
+        {
+          "index": 3,
+          "field": "time_ms",
+          "expected": 1010,
+          "observed": 1057.815
+        }
+      ],
+      "artifact": 12959635107,
+      "job": 123927572610,
+      "zip_sha256": "8f30e62348887c3765b3f7c92b3e372d6ee7b70db5156af6bb02be84c9543333"
+    }
+  ],
+  "received_payload": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "cumulative_ack": 9005,
+  "model_ack_ms": 60,
+  "kernel_ack_ms": 20.059,
+  "model_receive_window_before_after": [
+    16,
+    12
+  ],
+  "kernel_advertised_window_before_after": [
+    64240,
+    64236
+  ],
+  "strict_difference_tolerance_ms": 0,
+  "packetdrill_tolerance_minimum_us": 50000,
+  "packetdrill_tolerance_percent": 12.5,
+  "negative_controls_sha256": "e8e191e90cb88786f409b05a52c3c1e4af7e5c7c7ac8617a35bd91e5a5e1ba5f",
+  "local_linux_rerun": false,
+  "local_CI_binary_recheck": false,
+  "kernel_receive_buffer_contents_observed": false,
+  "application_read_tested": false,
+  "general_receive_or_data_recovery": false,
+  "physical_network_loss": false,
+  "full_tcp_complete": false,
+  "unbounded_proof": false,
+  "scope": "one finite injected in-order four-zero-octet segment on one VM kernel; separate active-open regressions",
+  "original_lwip_syn_loss_ms": 2750,
+  "integrity_is_not_authenticity": true,
+  "trusts": [
+    "GitHub runner/job/artifact provenance",
+    "Linux kernel/toolchain",
+    "pinned packetdrill injection driver",
+    "independent tcpdump",
+    "IR reference/SMT encoder",
+    "PCAP parser/normalizer/comparator",
+    "offline Python/Z3 checkers"
+  ]
+}

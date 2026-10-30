@@ -1,0 +1,4 @@
+{"case": "full", "pipeline": ["simplify", "propagate-values", "solve-eqs", "simplify", "smt"], "result": "unknown", "reason": "timeout", "seconds": 10.015248209005222}
+{"case": "full", "pipeline": ["simplify", "ctx-solver-simplify", "solve-eqs", "smt"], "result": "unknown", "reason": "timeout", "seconds": 10.019344750035089}
+{"case": "branch52", "pipeline": ["simplify", "propagate-values", "solve-eqs", "simplify", "smt"], "result": "unsat", "reason": null, "seconds": 1.6776683749631047}
+{"case": "branch52", "pipeline": ["simplify", "ctx-solver-simplify", "solve-eqs", "smt"], "result": "unknown", "reason": "timeout", "seconds": 12.327064458047971}

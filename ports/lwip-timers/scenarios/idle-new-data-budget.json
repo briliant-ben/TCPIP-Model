@@ -1,0 +1,90 @@
+{
+  "scenario_version": "0.1",
+  "id": "idle-new-data-budget",
+  "description": "idle-new-data-budget",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS4/window16; scripted peer; 1ms driver clock; fixed source configuration; no internal RTO observation"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 6000,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          17,
+          33,
+          65,
+          129,
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "at_ms": 6001,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 6200,
+      "tick": true
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1005,
+      "snd_nxt": 1009,
+      "cc_cwnd": 4
+    },
+    "timers": {
+      "rtx": 7001
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "scenario_version": "0.2",
+  "id": "schedule-one-segment",
+  "description": "Public flush and one full-size choice, then complete ACK",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Explicit finite same-time scheduling policy"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {},
+      "expect_trace": [
+        {
+          "at_ms": 21,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 21,
+      "event": "choice.segment",
+      "fields": {
+        "count": 4
+      },
+      "expect_trace": [
+        {
+          "at_ms": 21,
+          "emitted": [
+            {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": 1001,
+                "ack": 9001,
+                "window": 16,
+                "payload": [
+                  0,
+                  128,
+                  255,
+                  7
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1005,
+      "snd_nxt": 1005,
+      "snd_buf": [],
+      "rtx_buf": []
+    },
+    "timers": {}
+  }
+}

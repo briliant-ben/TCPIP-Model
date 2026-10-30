@@ -1,0 +1,79 @@
+{
+  "platform": "Linux",
+  "kernel": "7.0.0-1017-azure",
+  "parent_netns": "net:[4026531833]",
+  "parent_pid": 3094,
+  "actual_parent_netns": "net:[4026531833]",
+  "execution_netns": "net:[4026532267]",
+  "commands": [
+    {
+      "command": [
+        "ip",
+        "link",
+        "set",
+        "lo",
+        "up"
+      ],
+      "returncode": 0,
+      "log": "namespace-command-0.log"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-w",
+        "net.ipv4.tcp_ecn=0"
+      ],
+      "returncode": 0,
+      "log": "namespace-command-1.log"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-w",
+        "net.ipv4.tcp_timestamps=0"
+      ],
+      "returncode": 0,
+      "log": "namespace-command-2.log"
+    }
+  ],
+  "packetdrill_command": [
+    "/home/runner/work/_temp/protocol-packetdrill-ur5t8ENX/gtests/net/packetdrill/packetdrill",
+    "--ip_version=ipv4",
+    "--local_ip=192.0.2.1",
+    "--remote_ip=192.0.2.2",
+    "--netmask_ip=255.255.255.0",
+    "--gateway_ip=192.0.2.254",
+    "--bind_port=40000",
+    "--connect_port=8080",
+    "--tolerance_usecs=50000",
+    "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/linux-netns/test.pkt"
+  ],
+  "capture_command": [
+    "tcpdump",
+    "-Z",
+    "root",
+    "-U",
+    "-n",
+    "-i",
+    "any",
+    "-y",
+    "LINUX_SLL",
+    "-w",
+    "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/linux-netns/capture.pcap",
+    "tcp and host 192.0.2.1 and host 192.0.2.2 and port 40000 and port 8080"
+  ],
+  "capture_scope": "all_selected_packets_through_scenario_settle_before_socket_cleanup",
+  "capture_packet_limit": null,
+  "declared_settle_ms": 5010,
+  "packetdrill_tolerance_us": 50000,
+  "oracle_tolerance_ms": 0,
+  "host_network_mutations": false,
+  "capture_ready_monotonic_ns": 697244542257,
+  "packetdrill_start_monotonic_ns": 697244914514,
+  "quiet_interval_complete": true,
+  "quiet_barrier_epoch_ns": 1793335443647509460,
+  "quiet_barrier_monotonic_ns": 702452276619,
+  "capture_exit_monotonic_ns": 702483888351,
+  "packetdrill_returncode": 0,
+  "capture_returncode": 0
+}

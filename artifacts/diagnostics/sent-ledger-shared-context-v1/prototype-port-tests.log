@@ -1,0 +1,49 @@
+test_all_reference_callback_contracts_are_handwritten (__main__.IndependentServiceTests.test_all_reference_callback_contracts_are_handwritten) ... ok
+test_cumulative_mixed_ack_and_two_by_two_service_events (__main__.IndependentServiceTests.test_cumulative_mixed_ack_and_two_by_two_service_events) ... ok
+test_independent_verifier_reconstructs_all_inputs_queries_and_observations (__main__.IndependentServiceTests.test_independent_verifier_reconstructs_all_inputs_queries_and_observations) ... 
+  test_independent_verifier_reconstructs_all_inputs_queries_and_observations (__main__.IndependentServiceTests.test_independent_verifier_reconstructs_all_inputs_queries_and_observations) (name='cumulative-mixed-segments') ... ERROR
+  test_independent_verifier_reconstructs_all_inputs_queries_and_observations (__main__.IndependentServiceTests.test_independent_verifier_reconstructs_all_inputs_queries_and_observations) (name='duplicate-future-no-credit') ... ERROR
+test_partial_rto_preserves_wire_difference_and_service_agreement (__main__.IndependentServiceTests.test_partial_rto_preserves_wire_difference_and_service_agreement) ... ok
+test_real_partial_ack_does_not_release_original_segment_credit (__main__.IndependentServiceTests.test_real_partial_ack_does_not_release_original_segment_credit) ... ok
+test_rehashed_service_oracle_still_rejected (__main__.IndependentServiceTests.test_rehashed_service_oracle_still_rejected) ... ok
+test_summary_time_type_credit_and_sum_corruption_rejected (__main__.IndependentServiceTests.test_summary_time_type_credit_and_sum_corruption_rejected) ... ok
+test_window4_and_window8_have_distinct_actual_segment_boundaries (__main__.IndependentServiceTests.test_window4_and_window8_have_distinct_actual_segment_boundaries) ... ok
+test_primary_source_version_policy_and_hash_changes_rejected (__main__.ServiceSchemaTests.test_primary_source_version_policy_and_hash_changes_rejected) ... ok
+test_unsupported_input_and_choice_injection_rejected (__main__.ServiceSchemaTests.test_unsupported_input_and_choice_injection_rejected) ... ok
+
+======================================================================
+ERROR: test_independent_verifier_reconstructs_all_inputs_queries_and_observations (__main__.IndependentServiceTests.test_independent_verifier_reconstructs_all_inputs_queries_and_observations) (name='cumulative-mixed-segments')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/tests.py", line 92, in test_independent_verifier_reconstructs_all_inputs_queries_and_observations
+    answer = driver.verify(out, scene)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py", line 98, in verify
+    return stream.verify(out, scenario_path(scene))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/run.py", line 216, in verify
+    require(equivalence['status']=='unsat','Exported fixed-byte query differs from regenerated semantics or recheck inconclusive: '+str(equivalence))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Exported fixed-byte query differs from regenerated semantics or recheck inconclusive: {'status': 'unknown', 'reason': 'timeout', 'encoding': 'exact_shared_conjunct_factoring', 'checker_version': '4.15.4', 'common_assertions': 377, 'left_unique': 18, 'right_unique': 18}
+
+======================================================================
+ERROR: test_independent_verifier_reconstructs_all_inputs_queries_and_observations (__main__.IndependentServiceTests.test_independent_verifier_reconstructs_all_inputs_queries_and_observations) (name='duplicate-future-no-credit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/tests.py", line 92, in test_independent_verifier_reconstructs_all_inputs_queries_and_observations
+    answer = driver.verify(out, scene)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-service/run.py", line 98, in verify
+    return stream.verify(out, scenario_path(scene))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/lwip-stream/run.py", line 216, in verify
+    require(equivalence['status']=='unsat','Exported fixed-byte query differs from regenerated semantics or recheck inconclusive: '+str(equivalence))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Exported fixed-byte query differs from regenerated semantics or recheck inconclusive: {'status': 'unknown', 'reason': 'timeout', 'encoding': 'exact_shared_conjunct_factoring', 'checker_version': '4.15.4', 'common_assertions': 334, 'left_unique': 8, 'right_unique': 8}
+
+----------------------------------------------------------------------
+Ran 10 tests in 718.567s
+
+FAILED (errors=2)

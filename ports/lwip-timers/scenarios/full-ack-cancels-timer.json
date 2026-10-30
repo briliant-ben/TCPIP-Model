@@ -1,0 +1,71 @@
+{
+  "scenario_version": "0.1",
+  "id": "full-ack-cancels-timer",
+  "description": "full-ack-cancels-timer",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "SMSS4/window16; scripted peer; 1ms driver clock; fixed source configuration; no internal RTO observation"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 3500,
+      "tick": true
+    },
+    {
+      "at_ms": 3600,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1005,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 12000,
+      "tick": true
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "snd_una": 1005,
+      "snd_nxt": 1005,
+      "rtx_buf": []
+    },
+    "timers": {}
+  }
+}

@@ -1,0 +1,35 @@
+test_ack_credit_cannot_be_reclassified_as_abandonment (test_output_schedule.OutputScheduleTests.test_ack_credit_cannot_be_reclassified_as_abandonment) ... ok
+test_exact_full_source_replay_and_unchanged_final_contract (test_output_schedule.OutputScheduleTests.test_exact_full_source_replay_and_unchanged_final_contract) ... ok
+test_flush_creates_opportunity_without_bytes_or_empty_timer (test_output_schedule.OutputScheduleTests.test_flush_creates_opportunity_without_bytes_or_empty_timer) ... ok
+test_late_choice_and_intervening_application_event_close_opportunity (test_output_schedule.OutputScheduleTests.test_late_choice_and_intervening_application_event_close_opportunity) ... ok
+test_maximum_choices_preserve_parent_protocol_on_legacy_inputs (test_output_schedule.OutputScheduleTests.test_maximum_choices_preserve_parent_protocol_on_legacy_inputs) ... 
+  test_maximum_choices_preserve_parent_protocol_on_legacy_inputs (test_output_schedule.OutputScheduleTests.test_maximum_choices_preserve_parent_protocol_on_legacy_inputs) (scene='idle-request-keeps-history') ... FAIL
+  test_maximum_choices_preserve_parent_protocol_on_legacy_inputs (test_output_schedule.OutputScheduleTests.test_maximum_choices_preserve_parent_protocol_on_legacy_inputs) (scene='idle-restart-budget') ... FAIL
+test_missing_duplicate_reordered_or_forged_source_steps_rejected (test_output_schedule.OutputScheduleTests.test_missing_duplicate_reordered_or_forged_source_steps_rejected) ... ok
+test_observation_replay_retains_canonical_final_mismatch (test_output_schedule.OutputScheduleTests.test_observation_replay_retains_canonical_final_mismatch) ... ok
+test_omitted_output_choices_do_not_satisfy_final_source_contract (test_output_schedule.OutputScheduleTests.test_omitted_output_choices_do_not_satisfy_final_source_contract) ... ok
+test_removing_epoch_guard_is_detected_by_state_invariant (test_output_schedule.OutputScheduleTests.test_removing_epoch_guard_is_detected_by_state_invariant) ... ok
+test_reset_abandons_pending_service_credit_without_faking_ack (test_output_schedule.OutputScheduleTests.test_reset_abandons_pending_service_credit_without_faking_ack) ... ok
+test_source_lock_generator_and_full_byte_contracts (test_output_schedule.OutputScheduleTests.test_source_lock_generator_and_full_byte_contracts) ... ok
+test_valid_ack_grants_but_future_ack_does_not (test_output_schedule.OutputScheduleTests.test_valid_ack_grants_but_future_ack_does_not) ... ok
+
+======================================================================
+FAIL: test_maximum_choices_preserve_parent_protocol_on_legacy_inputs (test_output_schedule.OutputScheduleTests.test_maximum_choices_preserve_parent_protocol_on_legacy_inputs) (scene='idle-request-keeps-history')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_output_schedule.py", line 129, in test_maximum_choices_preserve_parent_protocol_on_legacy_inputs
+    self.assertEqual(a.values[name], b.values[name], name)
+AssertionError: 8 != 4 : idle_before_cwnd
+
+======================================================================
+FAIL: test_maximum_choices_preserve_parent_protocol_on_legacy_inputs (test_output_schedule.OutputScheduleTests.test_maximum_choices_preserve_parent_protocol_on_legacy_inputs) (scene='idle-restart-budget')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_output_schedule.py", line 129, in test_maximum_choices_preserve_parent_protocol_on_legacy_inputs
+    self.assertEqual(a.values[name], b.values[name], name)
+AssertionError: 8 != 4 : idle_before_cwnd
+
+----------------------------------------------------------------------
+Ran 12 tests in 494.079s
+
+FAILED (failures=2)

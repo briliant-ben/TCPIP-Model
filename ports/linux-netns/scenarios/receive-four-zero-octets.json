@@ -1,0 +1,21 @@
+{
+  "scenario_version": "0.1",
+  "id": "receive-four-zero-octets",
+  "description": "One injected in-order four-zero-octet TCP segment; retain every kernel ACK/window/time difference. No application read or socket-buffer-content claim.",
+  "initial": {},
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "Pinned packetdrill generates zero-filled incoming TCP payloads; arbitrary byte injection is unsupported by this finite adapter.",
+      "IR fixed MSS4/window16 are model parameters; Linux MSS and receive window are not forced to equal them.",
+      "No outbound application data, PSH, FIN, loss or kernel-internal state observation."
+    ]
+  },
+  "steps": [
+    {"at_ms": 0, "event": "app.connect", "fields": {}},
+    {"at_ms": 10, "event": "net.synack", "fields": {"seq": 9000, "ack": 1001, "window": 8}},
+    {"at_ms": 20, "event": "net.data", "fields": {"seq": 9001, "ack": 1001, "window": 8, "data": [0,0,0,0]}}
+  ],
+  "expect": {"state": "ESTABLISHED", "variables": {"rcv_nxt": 9005, "rcv_buf": [0,0,0,0]}, "timers": {}},
+  "settle_ms": 5020
+}

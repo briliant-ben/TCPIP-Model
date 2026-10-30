@@ -1,0 +1,41 @@
+name: Linux TCP independent capture
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['ports/linux-netns/**', '.github/workflows/linux-tcp.yml', 'model/**', 'scenarios/handshake.json', 'scenarios/syn-loss.json', 'protocol_lab/**', 'packet-profile.json', 'requirements-formal.txt', 'spec/sources/**']
+  pull_request:
+    paths: ['ports/linux-netns/**', '.github/workflows/linux-tcp.yml', 'model/**', 'scenarios/handshake.json', 'scenarios/syn-loss.json', 'protocol_lab/**', 'packet-profile.json', 'requirements-formal.txt', 'spec/sources/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  active-open:
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario: [handshake, syn-loss, receive-four-zero-octets]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install Linux tool prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bison flex build-essential python3-venv net-tools iptables iproute2 tcpdump ethtool
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -r requirements-formal.txt
+      - name: Build exact unmodified official packetdrill source
+        run: bash ports/linux-netns/build.sh
+      - name: Run isolated kernel active-open and independent capture
+        run: sudo .venv/bin/python ports/linux-netns/run.py --execute --scenario ${{ matrix.scenario }}
+      - name: Independently reconstruct and verify actual Linux evidence
+        run: sudo .venv/bin/python ports/linux-netns/verify.py
+      - name: Preserve raw capture, logs, hashes and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: linux-tcp-${{ matrix.scenario }}-${{ github.sha }}
+          path: artifacts/linux-netns/
+          if-no-files-found: error

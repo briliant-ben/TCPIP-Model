@@ -4,7 +4,7 @@
 
 GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP-Model)。在新机器上的克隆、环境重建和验证步骤见 [迁移与复现说明](docs/github-handoff.md)。
 
-**v0.2 已接入独立 Z3 有界检查、PCAP 归一化和统一证据验收。真实 Linux TCP 验证仍待具备条件的测试主机执行；尚无 Ivy 或无界证明。**
+**v0.2 已接入独立 Z3 有界检查、PCAP 归一化和统一证据验收。真实 Linux 内核已验收主动打开、首次SYN不获响应及单段4零字节接收，严格差异保留；一般数据／恢复与完整TCP验证仍待推进，尚无 Ivy 或无界证明。**
 
 **v0.3 新增 TCP 连接生命周期模型和多模型流程，并接入固定上游 lwIP 的真实 C 代码执行。整个 TCP/IP 协议栈尚未完成。** 详见 [协议栈范围与进度](docs/stack-scope.md)。
 
@@ -19,6 +19,7 @@ GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP
 | `model/tcp-fin.json` | 显式 FIN 窗口／payload、乱序 EOF 标记与字节重组、单次 FIN 消费及条件关闭目标；完整恢复与独立实现闭环仍未完成 |
 | `model/tcp-rto.json` | IR 0.3 精确有理 RTT/RTO、Karn 歧义采样、部分 ACK 与 SYN/FIN 组合；一般发送历史时序、delayed ACK、persist、拥塞／恢复仍未完成 |
 | `model/tcp-tx-history.json` | 逐字节／FIN 发送历史、ACK 时间槽移动与时龄裁剪，修正数据超时过早重传；原归纳 unknown 保留，独立精确查询分组、非空重放与单独命题已接入 suite 统一验收；完整恢复仍待推进 |
+| `model/tcp-sent-ledger.json` | 继承输出调度／恢复链，201 条规则、220 个不变量；显式原始发送段与部分 ACK 回调记账。有限行为及独立 lwIP 观察已验收，整体归纳仍 unknown，尚未完成 TCP |
 
 2026-10-24：已恢复本地基线并推进 [IR 数据语义](docs/semantics.md) 和 [有限 TCP 数据切片](docs/tcp-data.md)。数据切片的 15 个场景具有参考轨迹和独立 Z3 固定输入重放；全输入混合查询可能为 `unknown`，suite 明确保留 `formal_pending`。这不影响旧模型的独立有界检查，也不将合成 PCAP 计为 Linux/lwIP 数据验证。持续实施记录见 [实施日志](docs/implementation-log.md)。
 
@@ -136,7 +137,7 @@ python3 -m protocol_lab compare artifacts/syn-loss/packets.json \
   /path/to/normalized-observation.json --out artifacts/syn-loss/difference.json
 ```
 
-仓库内 `tests/fixtures/*.synthetic.json` 是手写的合成测试夹具，只用于测试比较器，不能用作 Linux 合规性证据。PCAP 解析入口已实现，当前没有真实实现抓包或差异结果。
+仓库内 `tests/fixtures/*.synthetic.json` 是手写的合成测试夹具，只用于测试比较器，不能用作 Linux 合规性证据。独立lwIP内存接口已有真实实现抓包及差异记录；另有独立CI临时VM中的[Linux内核通道](docs/linux-netns.md)，已验收一个握手及静默期场景。本地macOS仍不能运行该通道，lwIP记录不能替代Linux证据。
 
 ### 从抓包到统一验收
 
@@ -204,3 +205,27 @@ docs/                  语义、外部测试约定、里程碑
 [空闲重启开发切片](docs/tcp-idle-restart.md)增加实际数据输出时钟与严格当前RTO判断，发送前恢复RW并清CA信用。10+3方法分开通过，3个固定字节／合成codec输入验收，主unknown保留，1749组／1756含等价补充及独立复查通过；未计为独立实现或完整TCP证明。此前344项完整回归已在91e36724通过，新增后的组合回归另按新提交冻结。
 
 [Limited Transmit开发切片](docs/tcp-limited-transmit.md)显式组合前两个重复ACK自动新发、cwnd不增长及第三dup排除LT字节的损失基数。13方法、4固定字节／输出时序场景及2085组补充／独立验收通过，主unknown保留。[独立lwIP观测](ports/lwip-limited-transmit/README.md)3输入验收完成，2匹配、1保留初始拥塞策略导致的突发时刻差异；不证明内部LT状态一致。原归纳前提缺口SAT和端口测试错误预期均保留。
+
+[独立lwIP数据定时器通道](ports/lwip-timers/README.md)将公共驱动扩展为逐虚拟毫秒推进、至多12秒，实际捕获数据RTO、退避、partial/full ACK和空闲新发。10项专项方法与5场景独立验收通过，5个严格差异均保留；粗／细TICK分划的真实PCAP逐字节相同。该驱动不改上游或oracle，不读取内部RTO/cwnd，不等于Linux或完整实现证明。357项及370项冻结组合回归已分别通过，后续新增测试另行记录。
+
+[显式分段选择开发切片](docs/tcp-segment-choice.md)在IR中声明正长度prefix选择与既有预算／序列／计时动作，保留原确定app.transmit。8方法（含22组父模型刺激投影比较）、3全字节契约及1342组补充／独立复查通过，主unknown保留。旧lwIP窗口4实验截至21ms的2+2字节前缀有严格见证，但旧确定前缀／完整Difference仍mismatch；不等于完整捕获或应用调用对应验收。
+
+[发送机会与服务观察开发切片](docs/tcp-output-schedule.md)将flush／有效ACK后的发送机会及字节服务记账显式放入IR，通用适配器按顺序各一次消费原输入。既有lwIP窗口4实验全部7输入／9包及写入8、确认4的公共回调有严格见证，原canonical终态和完整Difference仍明确mismatch；不存在重写输入或提升为一般实现精化。父模型的idle重启只在实际choice执行，重复前缀原型及失败日志独立归档。主BMC／归纳unknown保持，补充分组与固定轨迹验证的范围分别标明。370项旧冻结回归已完整通过，新增方法及后续390项组合回归另行记录。
+
+2026-10-30：[发送确认账本](docs/tcp-sent-ledger.md)使用显式 IR 环形段记录区分 TCP 字节确认与公共 sent 回调。9 个固定输入字节场景、11 项模型专项、4 项条件组件检查测试、4 项 AC 检查测试及10项独立端口测试通过。8 个真实 lwIP 场景中原始严格比较为4个线端匹配／4个差异、5个服务匹配／3个差异；额外调度见证有2个完整线端与服务匹配，1个自动 LT 线端差异保留。240 个独立复查查询仅证明预算性质在声明父不变量假设下的保持性；整体归纳仍 unknown。Rocq 新增5个抽象算术命题待 CI 检查，非 IR／TCP 对应证明。证据入口为 `artifacts/tcp-sent-ledger-development/acceptance.json`。最近已完成的标准全量回归仍为390项；新增后的409项需另行冻结执行，不能由专项通过推算。
+
+2026-10-30：eaeb02ff的[Rocq CI](https://github.com/briliant-ben/TCPIP-Model/actions/runs/40926132635)完成成功。新增5个发送信用抽象整数命题已编译、空公理审计及独立kernel重查，错误证明／公理注入拒绝；ZIP、证明对象、来源与日志SHA绑定在artifacts/rocq-ledger-ci-eaeb02ff，独立本地绑定验收及损坏对象负例通过。此前local not_run和CI pending记录保留为历史；本地未重跑kernel，也未证明IR动作／解释器／翻译器／TCP／lwIP对应。409项冻结回归仍在运行，完整目标未完成。
+
+2026-10-30：[基本Nagle策略](docs/tcp-nagle.md)组合发送段账本与自动LT，203规则／222不变量。8专项通过；242个条件查询及独立同输入报文／定时回调见证完成验收，旧Difference保持。完整SWS与lwIP队列等变体尚未覆盖，非一般实现证明。新8项不计在途409项冻结回归；见 `artifacts/tcp-nagle-development/acceptance.json`。
+
+2026-10-30：eaeb02ff冻结提交的409项完整发现回归一次5043.817秒全部通过（runner5044.056秒），无失败／错误／跳过，1208项依赖及环境未变。证据归档artifacts/full-regression-eaeb02ff；此前running记录是历史。后续Nagle8项和SWS开发不属于本次409集合，不能追加推算全量通过；主unknown、Linux与完整协议缺口保持，目标未完成。
+
+2026-10-30：[发送端SWS有限策略](docs/tcp-sws.md)组合历史窗口、PUSH前缀和100–1000ms override（默认200ms），209规则／223不变量。13专项、6字节时序契约、248条件查询及3独立lwIP执行验收完成；保留两个21ms／221ms发送差异，3公共回调匹配。整体BMC仍unknown，发送活性、receiver SWS／wire PSH等仍待推进。证据入口 `artifacts/tcp-sws-development/acceptance.json`。430项新增后完整回归须另跑，不能由已完成409项推算。
+
+2026-10-30：[真实Linux完整场景观察](docs/linux-netns.md)在独立VM／网络命名空间验收：原5010ms窗口实际观察5010.89946ms，3包、0捕获丢包；两个严格时间Difference保留。原始抓包、CI来源、查询及4个重哈希故障检查见artifacts/linux-netns-ci-1551c535。仅此有限握手场景，不代表数据／恢复、物理网络或完整协议证明。430项冻结回归仍运行。
+
+2026-10-30：[Linux双场景](docs/linux-netns.md)已在独立CI实际执行／验收：普通握手和首次SYN不获响应。重传实际1061.092ms对模型1000ms，严格时间Difference保留；工具执行使用max(50ms,间隔12.5%)，独立oracle仍0ms。完整窗口抓包、配置来源和10个重哈希故障检查见artifacts/linux-netns-ci-de084a26。仍不代表数据／恢复或完整TCP验证。
+
+2026-10-30：4db896eb冻结的430项标准发现回归已全部通过，unittest5163.255秒／runner5163.586秒，无失败／错误／跳过，1244依赖及环境未变。原始结果、依赖／测试ID清单及完整日志归档artifacts/full-regression-4db896eb。包含Nagle与SWS新方法，但不含随后新增Linux端口7方法；历史running描述不再代表当前状态。此结果不提升整体形式unknown或完整协议声明，目标未完成。
+
+2026-10-30：[Linux接收数据](docs/linux-netns.md)已完成首个真实内核有限场景：4零字节与累计ACK匹配，完整5020ms窗口5包／无捕获丢包；早ACK与窗口差异原样保留。三个CI执行／独立复查及5个重哈希负例（含正确checksum的错误payload）见artifacts/linux-receive-ci-2ab2a472。仅单段接收，不代表任意字节／发送／乱序／恢复或完整TCP。

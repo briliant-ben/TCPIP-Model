@@ -1,0 +1,74 @@
+{
+  "status": "reachable_historical_duplicate_idle_accounting_current_fixed",
+  "steps": [
+    {
+      "time_ms": 0,
+      "event": "app.connect",
+      "historical_differences": {},
+      "current_differences": {}
+    },
+    {
+      "time_ms": 10,
+      "event": "net.synack",
+      "historical_differences": {},
+      "current_differences": {}
+    },
+    {
+      "time_ms": 20,
+      "event": "app.send",
+      "historical_differences": {},
+      "current_differences": {}
+    },
+    {
+      "time_ms": 21,
+      "event": "app.transmit",
+      "historical_differences": {},
+      "current_differences": {}
+    },
+    {
+      "time_ms": 40,
+      "event": "net.ack",
+      "historical_differences": {},
+      "current_differences": {}
+    },
+    {
+      "time_ms": 1021,
+      "event": "app.send",
+      "historical_differences": {},
+      "current_differences": {}
+    },
+    {
+      "time_ms": 1022,
+      "event": "app.transmit",
+      "historical_differences": {
+        "idle_before_cwnd": {
+          "parent": 8,
+          "historical": 4
+        },
+        "idle_restart_count": {
+          "parent": 1,
+          "historical": 2
+        },
+        "lt_before_cwnd": {
+          "parent": 8,
+          "historical": 4
+        }
+      },
+      "current_differences": {}
+    },
+    {
+      "time_ms": 1022,
+      "event": "app.transmit",
+      "historical_differences": {
+        "idle_restart_count": {
+          "parent": 1,
+          "historical": 2
+        }
+      },
+      "current_differences": {}
+    }
+  ],
+  "historical_model_sha256": "29cf016e35fb68eb5214ddc30e3714f8511fece94d98debbadf39e796e85f0ad",
+  "current_model_sha256": "e7bd9f7914e9128972fef95079ae534cb0c2c6a2dd8797d3c2bcee6f6001d55d",
+  "source_sha256": "f702d628a16707b68bfb66656429a42fabcd66d9c1c6a4f96c38d16e4634c349"
+}

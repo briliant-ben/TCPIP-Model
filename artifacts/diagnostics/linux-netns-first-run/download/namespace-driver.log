@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/runner/work/TCPIP-Model/TCPIP-Model/ports/linux-netns/run.py", line 201, in <module>
+    if args.inside: inside(out,args.inside)
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/TCPIP-Model/TCPIP-Model/ports/linux-netns/run.py", line 136, in inside
+    require(executed.returncode == 0, 'packetdrill execution contract failed')
+  File "/home/runner/work/TCPIP-Model/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: packetdrill execution contract failed

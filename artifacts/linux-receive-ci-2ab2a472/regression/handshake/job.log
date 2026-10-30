@@ -1,0 +1,374 @@
+﻿2026-10-30T06:30:31.1677698Z Current runner version: '2.338.0'
+2026-10-30T06:30:31.1712300Z ##[group]Runner Image Provisioner
+2026-10-30T06:30:31.1713645Z Hosted Compute Agent
+2026-10-30T06:30:31.1714581Z Version: 20261021.618
+2026-10-30T06:30:31.1716079Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-30T06:30:31.1717348Z Build Date: 2026-10-21T00:45:21Z
+2026-10-30T06:30:31.1718438Z Worker ID: {be0e205d-1478-4345-afe1-3f955a4f5d96}
+2026-10-30T06:30:31.1719769Z Region: eastus2
+2026-10-30T06:30:31.1720696Z Cloud: Azure
+2026-10-30T06:30:31.1721659Z ##[endgroup]
+2026-10-30T06:30:31.1724544Z ##[group]Operating System
+2026-10-30T06:30:31.1725905Z Ubuntu
+2026-10-30T06:30:31.1726838Z 24.04.5
+2026-10-30T06:30:31.1727684Z LTS
+2026-10-30T06:30:31.1728633Z ##[endgroup]
+2026-10-30T06:30:31.1729565Z ##[group]Runner Image
+2026-10-30T06:30:31.1730561Z Image: ubuntu-24.04
+2026-10-30T06:30:31.1731643Z Version: 20261025.353.1
+2026-10-30T06:30:31.1733832Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-30T06:30:31.1736857Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+2026-10-30T06:30:31.1738544Z ##[endgroup]
+2026-10-30T06:30:31.1740364Z ##[group]GITHUB_TOKEN Permissions
+2026-10-30T06:30:31.1743367Z Contents: read
+2026-10-30T06:30:31.1744335Z Metadata: read
+2026-10-30T06:30:31.1745636Z ##[endgroup]
+2026-10-30T06:30:31.1748626Z Secret source: Actions
+2026-10-30T06:30:31.1750007Z Cache mode: write
+2026-10-30T06:30:31.1751636Z Prepare workflow directory
+2026-10-30T06:30:31.2234903Z Prepare all required actions
+2026-10-30T06:30:31.2307122Z Getting action download info
+2026-10-30T06:30:31.4304611Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2026-10-30T06:30:31.5665950Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-30T06:30:31.7831034Z Complete job name: active-open (handshake)
+2026-10-30T06:30:31.8888297Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-10-30T06:30:31.8889352Z with:
+2026-10-30T06:30:31.8889794Z   persist-credentials: false
+2026-10-30T06:30:31.8890337Z   repository: briliant-ben/TCPIP-Model
+2026-10-30T06:30:31.8894139Z   token: ***
+2026-10-30T06:30:31.8894560Z   ssh-strict: true
+2026-10-30T06:30:31.8894999Z   ssh-user: git
+2026-10-30T06:30:31.8895638Z   clean: true
+2026-10-30T06:30:31.8896084Z   sparse-checkout-cone-mode: true
+2026-10-30T06:30:31.8896602Z   fetch-depth: 1
+2026-10-30T06:30:31.8897020Z   fetch-tags: false
+2026-10-30T06:30:31.8897471Z   show-progress: true
+2026-10-30T06:30:31.8897914Z   lfs: false
+2026-10-30T06:30:31.8898328Z   submodules: false
+2026-10-30T06:30:31.8898771Z   set-safe-directory: true
+2026-10-30T06:30:31.8899551Z ##[endgroup]
+2026-10-30T06:30:32.1561321Z Syncing repository: briliant-ben/TCPIP-Model
+2026-10-30T06:30:32.1564564Z ##[group]Getting Git version info
+2026-10-30T06:30:32.1566712Z Working directory is '/home/runner/work/TCPIP-Model/TCPIP-Model'
+2026-10-30T06:30:32.1568979Z [command]/usr/bin/git version
+2026-10-30T06:30:32.1667302Z git version 2.56.0
+2026-10-30T06:30:32.1747525Z ##[endgroup]
+2026-10-30T06:30:32.1756971Z Temporarily overriding HOME='/home/runner/work/_temp/e4aa85a7-492b-4b44-a457-0f78bf05ed23' before making global git config changes
+2026-10-30T06:30:32.1760450Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-30T06:30:32.1763283Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/TCPIP-Model/TCPIP-Model
+2026-10-30T06:30:32.1769851Z Deleting the contents of '/home/runner/work/TCPIP-Model/TCPIP-Model'
+2026-10-30T06:30:32.1775607Z ##[group]Initializing the repository
+2026-10-30T06:30:32.1783594Z [command]/usr/bin/git init /home/runner/work/TCPIP-Model/TCPIP-Model
+2026-10-30T06:30:32.1923855Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-30T06:30:32.1927412Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-30T06:30:32.1931604Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-30T06:30:32.1933799Z hint: call:
+2026-10-30T06:30:32.1934966Z hint:
+2026-10-30T06:30:32.1936871Z hint: 	git config --global init.defaultBranch <name>
+2026-10-30T06:30:32.1938505Z hint:
+2026-10-30T06:30:32.1939913Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-30T06:30:32.1942056Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-30T06:30:32.1943895Z hint:
+2026-10-30T06:30:32.1944894Z hint: 	git branch -m <name>
+2026-10-30T06:30:32.1946555Z hint:
+2026-10-30T06:30:32.1948054Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-30T06:30:32.1951746Z Initialized empty Git repository in /home/runner/work/TCPIP-Model/TCPIP-Model/.git/
+2026-10-30T06:30:32.1960491Z [command]/usr/bin/git remote add origin https://github.com/briliant-ben/TCPIP-Model
+2026-10-30T06:30:32.2022804Z ##[endgroup]
+2026-10-30T06:30:32.2024960Z ##[group]Disabling automatic garbage collection
+2026-10-30T06:30:32.2027504Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-30T06:30:32.2077210Z ##[endgroup]
+2026-10-30T06:30:32.2079291Z ##[group]Setting up auth
+2026-10-30T06:30:32.2084934Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-30T06:30:32.2149646Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-30T06:30:32.2688826Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-30T06:30:32.2739196Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-30T06:30:32.2990458Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-30T06:30:32.3041383Z ##[endgroup]
+2026-10-30T06:30:32.3042790Z ##[group]Fetching the repository
+2026-10-30T06:30:32.3054217Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +0f24b7c17217b333c9912f0c31f37e72428e350e:refs/remotes/pull/3/merge
+2026-10-30T06:30:49.6332641Z From https://github.com/briliant-ben/TCPIP-Model
+2026-10-30T06:30:49.6333788Z  * [new ref]           0f24b7c17217b333c9912f0c31f37e72428e350e -> pull/3/merge
+2026-10-30T06:30:49.6338434Z ##[endgroup]
+2026-10-30T06:30:49.6339627Z ##[group]Determining the checkout info
+2026-10-30T06:30:49.6342271Z ##[endgroup]
+2026-10-30T06:30:49.6350400Z [command]/usr/bin/git sparse-checkout disable
+2026-10-30T06:30:49.6413636Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-30T06:30:49.6453316Z ##[group]Checking out the ref
+2026-10-30T06:30:49.6458985Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/3/merge
+2026-10-30T06:30:50.7472176Z Updating files:   3% (1164/29942)
+2026-10-30T06:30:50.9040663Z Updating files:   4% (1198/29942)
+2026-10-30T06:30:51.0842044Z Updating files:   5% (1498/29942)
+2026-10-30T06:30:51.1058876Z Updating files:   6% (1797/29942)
+2026-10-30T06:30:51.2368307Z Updating files:   7% (2096/29942)
+2026-10-30T06:30:51.3833822Z Updating files:   8% (2396/29942)
+2026-10-30T06:30:51.4096277Z Updating files:   9% (2695/29942)
+2026-10-30T06:30:51.4396103Z Updating files:  10% (2995/29942)
+2026-10-30T06:30:51.4701580Z Updating files:  11% (3294/29942)
+2026-10-30T06:30:51.5072975Z Updating files:  12% (3594/29942)
+2026-10-30T06:30:51.6075584Z Updating files:  13% (3893/29942)
+2026-10-30T06:30:51.6643063Z Updating files:  14% (4192/29942)
+2026-10-30T06:30:51.6699612Z Updating files:  15% (4492/29942)
+2026-10-30T06:30:51.6908093Z Updating files:  15% (4561/29942)
+2026-10-30T06:30:51.7275907Z Updating files:  16% (4791/29942)
+2026-10-30T06:30:51.7629364Z Updating files:  17% (5091/29942)
+2026-10-30T06:30:51.7971867Z Updating files:  18% (5390/29942)
+2026-10-30T06:30:51.8832816Z Updating files:  19% (5689/29942)
+2026-10-30T06:30:51.9453960Z Updating files:  20% (5989/29942)
+2026-10-30T06:30:51.9926087Z Updating files:  21% (6288/29942)
+2026-10-30T06:30:52.0278350Z Updating files:  22% (6588/29942)
+2026-10-30T06:30:52.0736337Z Updating files:  23% (6887/29942)
+2026-10-30T06:30:52.1006469Z Updating files:  24% (7187/29942)
+2026-10-30T06:30:52.1395915Z Updating files:  25% (7486/29942)
+2026-10-30T06:30:52.1646898Z Updating files:  26% (7785/29942)
+2026-10-30T06:30:52.1990310Z Updating files:  27% (8085/29942)
+2026-10-30T06:30:52.2334109Z Updating files:  28% (8384/29942)
+2026-10-30T06:30:52.2696560Z Updating files:  29% (8684/29942)
+2026-10-30T06:30:52.2963308Z Updating files:  30% (8983/29942)
+2026-10-30T06:30:52.3092503Z Updating files:  31% (9283/29942)
+2026-10-30T06:30:52.3225676Z Updating files:  32% (9582/29942)
+2026-10-30T06:30:52.3354428Z Updating files:  33% (9881/29942)
+2026-10-30T06:30:52.3489721Z Updating files:  34% (10181/29942)
+2026-10-30T06:30:52.3616453Z Updating files:  35% (10480/29942)
+2026-10-30T06:30:52.3746218Z Updating files:  36% (10780/29942)
+2026-10-30T06:30:52.3880334Z Updating files:  37% (11079/29942)
+2026-10-30T06:30:52.5633643Z Updating files:  38% (11378/29942)
+2026-10-30T06:30:52.5926859Z Updating files:  39% (11678/29942)
+2026-10-30T06:30:52.6195805Z Updating files:  40% (11977/29942)
+2026-10-30T06:30:52.6574945Z Updating files:  41% (12277/29942)
+2026-10-30T06:30:52.6699966Z Updating files:  42% (12576/29942)
+2026-10-30T06:30:52.6844238Z Updating files:  42% (12722/29942)
+2026-10-30T06:30:52.7113259Z Updating files:  43% (12876/29942)
+2026-10-30T06:30:52.7928260Z Updating files:  44% (13175/29942)
+2026-10-30T06:30:52.9177489Z Updating files:  45% (13474/29942)
+2026-10-30T06:30:52.9555937Z Updating files:  46% (13774/29942)
+2026-10-30T06:30:52.9923281Z Updating files:  47% (14073/29942)
+2026-10-30T06:30:53.0224029Z Updating files:  48% (14373/29942)
+2026-10-30T06:30:53.0615947Z Updating files:  49% (14672/29942)
+2026-10-30T06:30:53.0930830Z Updating files:  50% (14971/29942)
+2026-10-30T06:30:53.1058351Z Updating files:  51% (15271/29942)
+2026-10-30T06:30:53.5076417Z Updating files:  52% (15570/29942)
+2026-10-30T06:30:53.7224810Z Updating files:  53% (15870/29942)
+2026-10-30T06:30:53.7402734Z Updating files:  53% (15934/29942)
+2026-10-30T06:30:53.7569030Z Updating files:  54% (16169/29942)
+2026-10-30T06:30:53.7682864Z Updating files:  55% (16469/29942)
+2026-10-30T06:30:53.8522872Z Updating files:  56% (16768/29942)
+2026-10-30T06:30:53.8901653Z Updating files:  57% (17067/29942)
+2026-10-30T06:30:53.9340917Z Updating files:  58% (17367/29942)
+2026-10-30T06:30:54.0705778Z Updating files:  59% (17666/29942)
+2026-10-30T06:30:54.0982750Z Updating files:  60% (17966/29942)
+2026-10-30T06:30:54.1506296Z Updating files:  61% (18265/29942)
+2026-10-30T06:30:54.3986026Z Updating files:  62% (18565/29942)
+2026-10-30T06:30:54.4252843Z Updating files:  63% (18864/29942)
+2026-10-30T06:30:54.5601003Z Updating files:  64% (19163/29942)
+2026-10-30T06:30:54.7247369Z Updating files:  65% (19463/29942)
+2026-10-30T06:30:54.7311012Z Updating files:  65% (19676/29942)
+2026-10-30T06:30:54.7542392Z Updating files:  66% (19762/29942)
+2026-10-30T06:30:55.0045854Z Updating files:  67% (20062/29942)
+2026-10-30T06:30:55.0316299Z Updating files:  68% (20361/29942)
+2026-10-30T06:30:55.2066190Z Updating files:  69% (20660/29942)
+2026-10-30T06:30:55.2506817Z Updating files:  70% (20960/29942)
+2026-10-30T06:30:55.4234394Z Updating files:  71% (21259/29942)
+2026-10-30T06:30:55.4487161Z Updating files:  72% (21559/29942)
+2026-10-30T06:30:55.5914089Z Updating files:  73% (21858/29942)
+2026-10-30T06:30:55.6523536Z Updating files:  74% (22158/29942)
+2026-10-30T06:30:55.6700142Z Updating files:  75% (22457/29942)
+2026-10-30T06:30:55.6966536Z Updating files:  75% (22602/29942)
+2026-10-30T06:30:55.7259873Z Updating files:  76% (22756/29942)
+2026-10-30T06:30:55.8948720Z Updating files:  77% (23056/29942)
+2026-10-30T06:30:55.9303749Z Updating files:  78% (23355/29942)
+2026-10-30T06:30:55.9685666Z Updating files:  79% (23655/29942)
+2026-10-30T06:30:55.9814129Z Updating files:  80% (23954/29942)
+2026-10-30T06:30:55.9956542Z Updating files:  81% (24254/29942)
+2026-10-30T06:30:56.0083756Z Updating files:  82% (24553/29942)
+2026-10-30T06:30:56.0217534Z Updating files:  83% (24852/29942)
+2026-10-30T06:30:56.0355571Z Updating files:  84% (25152/29942)
+2026-10-30T06:30:56.0864815Z Updating files:  85% (25451/29942)
+2026-10-30T06:30:56.3776511Z Updating files:  86% (25751/29942)
+2026-10-30T06:30:56.4048110Z Updating files:  87% (26050/29942)
+2026-10-30T06:30:56.6806927Z Updating files:  88% (26349/29942)
+2026-10-30T06:30:56.6904676Z Updating files:  88% (26571/29942)
+2026-10-30T06:30:57.0472988Z Updating files:  89% (26649/29942)
+2026-10-30T06:30:57.0807430Z Updating files:  90% (26948/29942)
+2026-10-30T06:30:57.1203506Z Updating files:  91% (27248/29942)
+2026-10-30T06:30:57.1472136Z Updating files:  92% (27547/29942)
+2026-10-30T06:30:57.2851355Z Updating files:  93% (27847/29942)
+2026-10-30T06:30:57.6148409Z Updating files:  94% (28146/29942)
+2026-10-30T06:30:57.7418580Z Updating files:  95% (28445/29942)
+2026-10-30T06:30:57.9179466Z Updating files:  95% (28632/29942)
+2026-10-30T06:30:58.2785706Z Updating files:  96% (28745/29942)
+2026-10-30T06:30:58.2972319Z Updating files:  97% (29044/29942)
+2026-10-30T06:30:58.3198821Z Updating files:  98% (29344/29942)
+2026-10-30T06:30:58.3418532Z Updating files:  99% (29643/29942)
+2026-10-30T06:30:58.3419465Z Updating files: 100% (29942/29942)
+2026-10-30T06:30:58.3419838Z Updating files: 100% (29942/29942), done.
+2026-10-30T06:30:58.3693804Z Note: switching to 'refs/remotes/pull/3/merge'.
+2026-10-30T06:30:58.3694324Z 
+2026-10-30T06:30:58.3694750Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-30T06:30:58.3695948Z changes and commit them, and you can discard any commits you make in this
+2026-10-30T06:30:58.3696894Z state without impacting any branches by switching back to a branch.
+2026-10-30T06:30:58.3697274Z 
+2026-10-30T06:30:58.3697537Z If you want to create a new branch to retain commits you create, you may
+2026-10-30T06:30:58.3698128Z do so (now or later) by using -c with the switch command. Example:
+2026-10-30T06:30:58.3698464Z 
+2026-10-30T06:30:58.3698594Z   git switch -c <new-branch-name>
+2026-10-30T06:30:58.3698819Z 
+2026-10-30T06:30:58.3698948Z Or undo this operation with:
+2026-10-30T06:30:58.3699147Z 
+2026-10-30T06:30:58.3699263Z   git switch -
+2026-10-30T06:30:58.3699415Z 
+2026-10-30T06:30:58.3699714Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-30T06:30:58.3700150Z 
+2026-10-30T06:30:58.3700546Z HEAD is now at 0f24b7c1 Merge 2ab2a4729909ea9ea972b05bc70a0d43a830b3bb into ade065bb85cb61a8c2eb1f03a5694f628c9d0c37
+2026-10-30T06:30:58.3865882Z ##[endgroup]
+2026-10-30T06:30:58.3917370Z [command]/usr/bin/git log -1 --format=%H
+2026-10-30T06:30:58.3952480Z 0f24b7c17217b333c9912f0c31f37e72428e350e
+2026-10-30T06:30:58.3963011Z ##[group]Removing auth
+2026-10-30T06:30:58.3967357Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-30T06:30:58.4011165Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-30T06:30:58.4302313Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-30T06:30:58.4334264Z http.https://github.com/.extraheader
+2026-10-30T06:30:58.4342374Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-30T06:30:58.4386581Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-30T06:30:58.4678021Z ##[endgroup]
+2026-10-30T06:30:58.4893730Z ##[group]Run sudo apt-get update
+2026-10-30T06:30:58.4894117Z [36;1msudo apt-get update[0m
+2026-10-30T06:30:58.4894662Z [36;1msudo apt-get install -y bison flex build-essential python3-venv net-tools iptables iproute2 tcpdump ethtool[0m
+2026-10-30T06:30:58.4895643Z [36;1mpython3 -m venv .venv[0m
+2026-10-30T06:30:58.4896005Z [36;1m.venv/bin/python -m pip install -r requirements-formal.txt[0m
+2026-10-30T06:30:58.4919524Z shell: /usr/bin/bash -e {0}
+2026-10-30T06:30:58.4919797Z ##[endgroup]
+2026-10-30T06:30:58.5680492Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-30T06:30:58.5992558Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-10-30T06:30:58.6739317Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-30T06:30:58.6749621Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-10-30T06:30:58.6787471Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-10-30T06:30:58.6789099Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [682 kB]
+2026-10-30T06:30:58.6817843Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-10-30T06:30:58.6980119Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [617 kB]
+2026-10-30T06:30:58.7919570Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1408 kB]
+2026-10-30T06:30:58.7996213Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [311 kB]
+2026-10-30T06:30:58.8013739Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1708 kB]
+2026-10-30T06:30:58.8116557Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [343 kB]
+2026-10-30T06:30:58.8120328Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1813 kB]
+2026-10-30T06:30:58.8212461Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [412 kB]
+2026-10-30T06:30:58.8236377Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]
+2026-10-30T06:30:58.9037363Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1146 kB]
+2026-10-30T06:30:58.9089807Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [231 kB]
+2026-10-30T06:30:58.9105882Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1223 kB]
+2026-10-30T06:30:58.9647458Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [246 kB]
+2026-10-30T06:31:01.8185660Z Fetched 10.5 MB in 1s (9654 kB/s)
+2026-10-30T06:31:02.8710526Z Reading package lists...
+2026-10-30T06:31:02.9090126Z Reading package lists...
+2026-10-30T06:31:03.0944754Z Building dependency tree...
+2026-10-30T06:31:03.0951813Z Reading state information...
+2026-10-30T06:31:03.2494775Z bison is already the newest version (2:3.8.2+dfsg-1ubuntu0.24.04.1).
+2026-10-30T06:31:03.2495802Z flex is already the newest version (2.6.4-8.2build1).
+2026-10-30T06:31:03.2496467Z python3-venv is already the newest version (3.12.3-0ubuntu2.1).
+2026-10-30T06:31:03.2497173Z net-tools is already the newest version (2.10-0.1ubuntu4.4).
+2026-10-30T06:31:03.2497830Z iptables is already the newest version (1.8.10-3ubuntu2).
+2026-10-30T06:31:03.2498383Z iptables set to manually installed.
+2026-10-30T06:31:03.2498731Z iproute2 is already the newest version (6.1.0-1ubuntu6.4).
+2026-10-30T06:31:03.2499159Z tcpdump is already the newest version (4.99.4-3ubuntu4.24.04.1).
+2026-10-30T06:31:03.2499518Z tcpdump set to manually installed.
+2026-10-30T06:31:03.2499824Z ethtool is already the newest version (1:6.7-1build1).
+2026-10-30T06:31:03.2500153Z ethtool set to manually installed.
+2026-10-30T06:31:03.2500565Z The following NEW packages will be installed:
+2026-10-30T06:31:03.2501081Z   build-essential
+2026-10-30T06:31:03.2692593Z 0 upgraded, 1 newly installed, 0 to remove and 6 not upgraded.
+2026-10-30T06:31:03.2693431Z Need to get 4928 B of archives.
+2026-10-30T06:31:03.2694007Z After this operation, 17.4 kB of additional disk space will be used.
+2026-10-30T06:31:03.2694711Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-30T06:31:03.3109295Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 build-essential amd64 12.10ubuntu1 [4928 B]
+2026-10-30T06:31:03.5647402Z Fetched 4928 B in 0s (91.3 kB/s)
+2026-10-30T06:31:03.5876174Z Selecting previously unselected package build-essential.
+2026-10-30T06:31:03.6178332Z (Reading database ... 
+2026-10-30T06:31:03.6179106Z (Reading database ... 5%
+2026-10-30T06:31:03.6179513Z (Reading database ... 10%
+2026-10-30T06:31:03.6179879Z (Reading database ... 15%
+2026-10-30T06:31:03.6180246Z (Reading database ... 20%
+2026-10-30T06:31:03.6180600Z (Reading database ... 25%
+2026-10-30T06:31:03.6180933Z (Reading database ... 30%
+2026-10-30T06:31:03.6181338Z (Reading database ... 35%
+2026-10-30T06:31:03.6181833Z (Reading database ... 40%
+2026-10-30T06:31:03.6182131Z (Reading database ... 45%
+2026-10-30T06:31:03.6182473Z (Reading database ... 50%
+2026-10-30T06:31:03.6250518Z (Reading database ... 55%
+2026-10-30T06:31:03.7525741Z (Reading database ... 60%
+2026-10-30T06:31:03.9387990Z (Reading database ... 65%
+2026-10-30T06:31:04.1831401Z (Reading database ... 70%
+2026-10-30T06:31:04.3537664Z (Reading database ... 75%
+2026-10-30T06:31:04.5487696Z (Reading database ... 80%
+2026-10-30T06:31:04.6902427Z (Reading database ... 85%
+2026-10-30T06:31:04.8492178Z (Reading database ... 90%
+2026-10-30T06:31:05.0049958Z (Reading database ... 95%
+2026-10-30T06:31:05.0050326Z (Reading database ... 100%
+2026-10-30T06:31:05.0050753Z (Reading database ... 215504 files and directories currently installed.)
+2026-10-30T06:31:05.0093915Z Preparing to unpack .../build-essential_12.10ubuntu1_amd64.deb ...
+2026-10-30T06:31:05.0123429Z Unpacking build-essential (12.10ubuntu1) ...
+2026-10-30T06:31:05.0527496Z Setting up build-essential (12.10ubuntu1) ...
+2026-10-30T06:31:05.7603179Z 
+2026-10-30T06:31:05.7603869Z Running kernel seems to be up-to-date.
+2026-10-30T06:31:05.7604346Z 
+2026-10-30T06:31:05.7604559Z No services need to be restarted.
+2026-10-30T06:31:05.7604933Z 
+2026-10-30T06:31:05.7605381Z No containers need to be restarted.
+2026-10-30T06:31:05.7605763Z 
+2026-10-30T06:31:05.7606037Z No user sessions are running outdated binaries.
+2026-10-30T06:31:05.7606480Z 
+2026-10-30T06:31:05.7606900Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-30T06:31:09.8523343Z Collecting z3-solver==4.15.4.0 (from -r requirements-formal.txt (line 2))
+2026-10-30T06:31:09.8966572Z   Downloading z3_solver-4.15.4.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (602 bytes)
+2026-10-30T06:31:09.9076347Z Downloading z3_solver-4.15.4.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (29.3 MB)
+2026-10-30T06:31:10.2366237Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 29.3/29.3 MB 112.3 MB/s eta 0:00:00
+2026-10-30T06:31:10.2845685Z Installing collected packages: z3-solver
+2026-10-30T06:31:10.9431054Z Successfully installed z3-solver-4.15.4.0
+2026-10-30T06:31:11.1015832Z ##[group]Run bash ports/linux-netns/build.sh
+2026-10-30T06:31:11.1016356Z [36;1mbash ports/linux-netns/build.sh[0m
+2026-10-30T06:31:11.1044003Z shell: /usr/bin/bash -e {0}
+2026-10-30T06:31:11.1044414Z ##[endgroup]
+2026-10-30T06:31:15.4801050Z ##[group]Run sudo .venv/bin/python ports/linux-netns/run.py --execute --scenario handshake
+2026-10-30T06:31:15.4801742Z [36;1msudo .venv/bin/python ports/linux-netns/run.py --execute --scenario handshake[0m
+2026-10-30T06:31:15.4821713Z shell: /usr/bin/bash -e {0}
+2026-10-30T06:31:15.4821987Z ##[endgroup]
+2026-10-30T06:31:30.4018322Z linux_execution_with_projection_mismatch
+2026-10-30T06:31:30.4315802Z ##[group]Run sudo .venv/bin/python ports/linux-netns/verify.py
+2026-10-30T06:31:30.4316302Z [36;1msudo .venv/bin/python ports/linux-netns/verify.py[0m
+2026-10-30T06:31:30.4336229Z shell: /usr/bin/bash -e {0}
+2026-10-30T06:31:30.4336668Z ##[endgroup]
+2026-10-30T06:31:35.2557847Z valid_linux_runtime_evidence
+2026-10-30T06:31:35.2825622Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-30T06:31:35.2826074Z with:
+2026-10-30T06:31:35.2826408Z   name: linux-tcp-handshake-0f24b7c17217b333c9912f0c31f37e72428e350e
+2026-10-30T06:31:35.2826818Z   path: artifacts/linux-netns/
+2026-10-30T06:31:35.2827081Z   if-no-files-found: error
+2026-10-30T06:31:35.2827325Z   compression-level: 6
+2026-10-30T06:31:35.2827550Z   overwrite: false
+2026-10-30T06:31:35.2827773Z   include-hidden-files: false
+2026-10-30T06:31:35.2828015Z ##[endgroup]
+2026-10-30T06:31:35.4489411Z (node:3077) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-30T06:31:35.4490166Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-30T06:31:35.4699129Z With the provided path, there will be 38 files uploaded
+2026-10-30T06:31:35.4699667Z Artifact name is valid!
+2026-10-30T06:31:35.4699910Z Root directory input is valid!
+2026-10-30T06:31:35.6964374Z Beginning upload of artifact content to blob storage
+2026-10-30T06:31:35.7620482Z (node:3077) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-30T06:31:35.7835307Z Uploaded bytes 21619
+2026-10-30T06:31:35.7961414Z Finished uploading artifact content to blob storage!
+2026-10-30T06:31:35.7962468Z SHA256 digest of uploaded artifact zip is 774d952b35edbaa45cd27662f4e02f96aa3357062fd3a2e6a04fb6380f790011
+2026-10-30T06:31:35.7964620Z Finalizing artifact upload
+2026-10-30T06:31:36.2173931Z Artifact linux-tcp-handshake-0f24b7c17217b333c9912f0c31f37e72428e350e.zip successfully finalized. Artifact ID 12959160911
+2026-10-30T06:31:36.2176419Z Artifact linux-tcp-handshake-0f24b7c17217b333c9912f0c31f37e72428e350e has been successfully uploaded! Final size is 21619 bytes. Artifact ID is 12959160911
+2026-10-30T06:31:36.2181294Z Artifact download URL: https://github.com/briliant-ben/TCPIP-Model/actions/runs/41014477824/artifacts/12959160911
+2026-10-30T06:31:36.2416548Z Post job cleanup.
+2026-10-30T06:31:36.3298339Z [command]/usr/bin/git version
+2026-10-30T06:31:36.3341862Z git version 2.56.0
+2026-10-30T06:31:36.3382534Z Temporarily overriding HOME='/home/runner/work/_temp/c009664c-743b-4c3b-985f-664c147b097e' before making global git config changes
+2026-10-30T06:31:36.3383939Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-30T06:31:36.3389500Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/TCPIP-Model/TCPIP-Model
+2026-10-30T06:31:36.3431788Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-30T06:31:36.3469867Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-30T06:31:36.3766431Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-30T06:31:36.3814472Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-30T06:31:36.4274089Z Cleaning up orphan processes
+2026-10-30T06:31:36.4725531Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

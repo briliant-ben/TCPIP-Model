@@ -1,0 +1,25 @@
+test_partial_head_plus_full_unacked_queue_can_release19 (test_sent_ledger_bound.SentLedgerBoundTests.test_partial_head_plus_full_unacked_queue_can_release19) ... ERROR
+
+======================================================================
+ERROR: test_partial_head_plus_full_unacked_queue_can_release19 (test_sent_ledger_bound.SentLedgerBoundTests.test_partial_head_plus_full_unacked_queue_can_release19)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_sent_ledger_bound.py", line 14, in test_partial_head_plus_full_unacked_queue_can_release19
+    machine = run_scenario(model, scene)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 84, in run_scenario
+    machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 425, in dispatch
+    candidate._fire(name, copy.deepcopy(fields or {}))
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 408, in _fire
+    self.check_invariants()
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 360, in check_invariants
+    require(evaluate(inv["assert"], self), f"Invariant failed: {inv['id']}")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Invariant failed: CB-INV-MASS
+
+----------------------------------------------------------------------
+Ran 1 test in 31.931s
+
+FAILED (errors=1)

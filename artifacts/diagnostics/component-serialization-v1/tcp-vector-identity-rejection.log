@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/component_induction.py", line 171, in <module>
+    result = verify(model, parent, args.property, args.out) if args.verify else prove(model, parent, args.property, args.out)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/component_induction.py", line 143, in verify
+    require(len(actual) == len(expected) and all(z3.eq(a, b) for a, b in zip(actual, expected)), 'Exported query differs from reconstructed component semantics')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Exported query differs from reconstructed component semantics

@@ -1,0 +1,84 @@
+[
+  {
+    "id": "partial-only-no-callback",
+    "sent_events": [],
+    "wire_expected_status": "match"
+  },
+  {
+    "id": "partial-then-full",
+    "sent_events": [
+      {
+        "time_ms": 40,
+        "bytes": 4
+      }
+    ],
+    "wire_expected_status": "match"
+  },
+  {
+    "id": "cumulative-mixed-segments",
+    "sent_events": [
+      {
+        "time_ms": 40,
+        "bytes": 4
+      },
+      {
+        "time_ms": 70,
+        "bytes": 4
+      },
+      {
+        "time_ms": 80,
+        "bytes": 4
+      },
+      {
+        "time_ms": 120,
+        "bytes": 4
+      }
+    ],
+    "wire_expected_status": "match"
+  },
+  {
+    "id": "partial-rto-credit",
+    "sent_events": [
+      {
+        "time_ms": 5100,
+        "bytes": 4
+      }
+    ],
+    "wire_expected_status": "mismatch"
+  },
+  {
+    "id": "duplicate-future-no-credit",
+    "sent_events": [
+      {
+        "time_ms": 50,
+        "bytes": 4
+      }
+    ],
+    "wire_expected_status": "match"
+  },
+  {
+    "id": "two-by-two-pending",
+    "sent_events": [
+      {
+        "time_ms": 30,
+        "bytes": 4
+      }
+    ],
+    "wire_expected_status": "match"
+  },
+  {
+    "id": "wide-window-partial-no-callback",
+    "sent_events": [],
+    "wire_expected_status": "match"
+  },
+  {
+    "id": "wide-window-partial-then-full",
+    "sent_events": [
+      {
+        "time_ms": 40,
+        "bytes": 4
+      }
+    ],
+    "wire_expected_status": "match"
+  }
+]

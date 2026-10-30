@@ -1,0 +1,222 @@
+{
+  "scenario_version": "0.1",
+  "id": "credit19-circular-boundary",
+  "description": "Model queue16 plus a previously ACKed3-byte head prefix; outside C total-written16 channel scope",
+  "initial": {
+    "cc_initial_window": 16,
+    "cc_cwnd": 16
+  },
+  "environment": {
+    "drop_outgoing": [],
+    "assumptions": [
+      "queue16/SMSS4;19 total accepted/emitted bytes over time; no C execution claim"
+    ]
+  },
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.connect",
+      "fields": {}
+    },
+    {
+      "at_ms": 10,
+      "event": "net.synack",
+      "fields": {
+        "seq": 9000,
+        "ack": 1001,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 20,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          128,
+          255,
+          7
+        ]
+      }
+    },
+    {
+      "at_ms": 21,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 21,
+      "event": "choice.segment",
+      "fields": {
+        "count": 4
+      }
+    },
+    {
+      "at_ms": 30,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1004,
+        "window": 16
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "app.send",
+      "fields": {
+        "data": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "app.transmit",
+      "fields": {}
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 31,
+      "event": "choice.segment",
+      "fields": {
+        "count": 1
+      }
+    },
+    {
+      "at_ms": 40,
+      "event": "net.ack",
+      "fields": {
+        "seq": 9001,
+        "ack": 1020,
+        "window": 16
+      }
+    }
+  ],
+  "expect": {
+    "state": "ESTABLISHED",
+    "variables": {
+      "cb_acked_total": 19,
+      "cb_emitted_total": 19,
+      "cb_step_bytes": 19,
+      "cb_count": 0,
+      "cb_partial_prefix": 0,
+      "svc_acked_bytes": 19,
+      "snd_una": 1020,
+      "snd_nxt": 1020,
+      "snd_buf": [],
+      "rtx_buf": []
+    },
+    "timers": {}
+  }
+}
