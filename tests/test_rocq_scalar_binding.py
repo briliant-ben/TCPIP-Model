@@ -22,6 +22,7 @@ class RocqScalarBindingTests(unittest.TestCase):
         text=c.render(self.model)
         for bad in (text.replace('(EField 0%nat)','(EField 1%nat)',1),
                     text.replace('[0%nat; 1%nat]','[0%nat]'),
+                    text.replace('[0%nat; 1%nat]','[0%nat; 1%nat; 2%nat]'),
                     text.replace('(EVar 4%nat)','(EVar 99%nat)',1)):
             with self.assertRaisesRegex(ValueError,'does not match|outside source'):c.verify_text(self.model,bad)
 

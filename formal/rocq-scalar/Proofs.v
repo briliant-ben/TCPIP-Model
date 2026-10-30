@@ -17,9 +17,10 @@ Theorem checked_generated_step : forall (state fields : env),
     compiled_invariants.
 Proof.
   intros state fields H.
-  apply Forall_forall in H.
-  pose proof (H 0%nat (or_introl eq_refl)) as Ha.
-  pose proof (H 1%nat (or_intror (or_introl eq_refl))) as Hb.
+  pose proof ((proj1 (@Forall_forall nat
+    (fun index => 0 <= fields index < 4294967296) compiled_seq_fields)) H) as Hfields.
+  pose proof (Hfields 0%nat (or_introl eq_refl)) as Ha.
+  pose proof (Hfields 1%nat (or_intror (or_introl eq_refl))) as Hb.
   unfold compiled_invariants; constructor.
   - change ((fields 0%nat + (fields 1%nat - fields 0%nat) mod 4294967296)
       mod 4294967296 = fields 1%nat).
