@@ -414,3 +414,5 @@ ports/lwip-timers复制并明确扩展公共raw API驱动为<=12000ms／64事件
 基本新数据门槛单性质242查询与2420断言对应检查独立复查通过，前态假设为220个父不变量加该性质；不证明父basis在child闭包或其余新旧性质，当前overlay全模型BMC／归纳未跑，父整体unknown保持。原duplicate-future真实捕获现在有同原始10输入、2个显式choice的完整严格见证：21ms首2字节，重复ACK不LT发短段，40ms完整ACK后发剩余2字节。全部报文／checksum／顺序／0ms时间及2@40、2@50公共callback匹配；原canonical匹配，但旧模型Difference和服务Difference SHA原样保留。此为复用已有独立C捕获的一场景关系，不计新C执行／Linux或一般lwIP符合。逐字节查询、独立重新执行／生成、查询等价UNSAT、新进程SAT及payload／SEQ／1ms负例全部验收。
 
 验收入口artifacts/tcp-nagle-development/acceptance.json；来源锁spec/sources/tcp-nagle.json，保留RFC3042与lwIP固定版本对变体的解释。生成器确定性及旧258注册输入SHA确认未变。新8方法不属于eaeb02ff正在运行的409项冻结回归，完整发现现为417项，尚不宣称组合全部通过。继续sender SWS／短段队列策略、服务／时序／恢复及IR解释／翻译对应，再按原计划推进UDP与后续协议；完整目标未完成。
+
+2026-10-30：eaeb02ff冻结提交的409项完整发现回归一次5043.817秒全部通过（runner5044.056秒），无失败／错误／跳过，1208项依赖及环境未变。证据归档artifacts/full-regression-eaeb02ff；此前running记录是历史。后续Nagle8项和SWS开发不属于本次409集合，不能追加推算全量通过；主unknown、Linux与完整协议缺口保持，目标未完成。
