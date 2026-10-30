@@ -235,3 +235,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：[生成标量IR的Rocq执行试点](docs/rocq-scalar-execution.md)已实际编译、空公理审计及独立kernel验收，包含错误源IR顺序／逆位移拒绝。源构造子一致性仍由可信Python检查，不是通用解释器／翻译器或完整TCP证明。38专项通过，442冻结全量仍运行；原始对象／来源／日志与6故障门见artifacts/rocq-scalar-ci-e08d3fdb。
 
 2026-10-30：[条件SSA查询复核](formal/conditional-ssa.md)保留全部原断言及完整Boolean分支，在两个真实ACK查询中复现5个UNSAT叶，3叶仍unknown，两个原查询尚未闭合。45专项通过；442冻结回归继续，不声称456全量通过。全部查询／来源／日志见artifacts/ack-conditional-ssa。
+
+2026-10-30：[精确分段模运算](formal/modular-piecewise.md)在无域收窄、保留任意整数fallback的条件下，关闭一个原ACK导出分支092；4个完整条件case均独立UNSAT、context SAT，51专项通过。原70未知中仍68未闭合，未宣布完整RTT／ACK／TCP证明；当前462全量未跑、原442冻结回归继续。

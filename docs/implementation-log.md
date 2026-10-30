@@ -517,3 +517,13 @@ Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通�
 独立归档解包后再跑CLI通过，证据artifacts/ack-conditional-ssa，包含原query／全部叶／局部定理／context／coverage／日志及逐成员SHA；完整原报告与用户两个未提交目录保留。7新方法＋原38共45专项一次1.794s通过，包含真实错误赋值SAT及重哈希后的缺分支／省断言／隐藏前提／假等价拒绝。首轮错误赋值测试曾拦住Z3 to_smt2省掉末尾assert true的问题；改sexpr导出保留全部断言，原失败源码／query保留diagnostics/conditional-ssa-trailing-true。大DAG语法检查只增加访问去重避免重复遍历，不改变语义或solver预算。
 
 当前标准发现456，未跑完整456；442原冻结回归仍同一session运行，1260依赖及原258注册输入未变。Python／Z3和查询来源桥仍可信，不是kernel／IR翻译正确性／可达实现或协议证明，无新增Linux／lwIP实机实验。下一步收敛这3个叶及一般ACK／环形账本语义，再按原roadmap推进，整体目标未完成。
+
+## 2026-10-30：保留无界回退的模运算编码关闭原ACK分支092
+
+新增formal/modular_piecewise.py，把正literal模数M的x mod M精确写成：-M≤x<2M时按负值／普通／溢出三段计算，否则仍用原mod。无原query前提的通用等式CLI UNSAT；区间外回退保留任意大正负整数，不收窄seq／offset，不新增协议guard。独立检查器逐source节点实例化证书并由congruence恢复完整原断言向量，source／helper／依赖／binary／命题SHA绑定；不支持的模数／量词／命令明确拒绝，10s预算未改。
+
+组合上一轮完整4种条件case，原S-ACK-VALID→ESTABLISHED违例092（RTT sample状态子句）四叶分别70／70／71／71次模展开；所有局部等价／无协议前提覆盖、两个非空上下文SAT、逐项重构与原444断言均验收。每叶两次新CLI均UNSAT，约0.12–0.34秒；组合独立复查及新解包归档复查再次通过。**仅新关闭一个原导出违例分支**，不是全部RTT不变量、ACK目标、父基、可达性或协议证明。原主／tactic／conditional unknown报告未替换。连同既有052，原70未知中仍68未闭合。
+
+直接原092的67模展开亦两次CLI UNSAT（0.438512／0.444338秒），原280的65展开仍两次UNKNOWN；该独立pilot完整保留，不抹去账本缺口。证据artifacts/ack-piecewise-092含source、4-case链、通用等式、逐节点证书、所有query／日志、直接pilot及归档成员SHA。3个临时复制故障（缺Boolean case、重哈希的assert false伪结果、更换原目标）均拒绝，原件未改。
+
+6新方法与原45共51专项一次3.242秒通过，含[-M,0,M,2M]边界及±2^80回退的SAT／错误结果UNSAT、嵌套不同mod／placeholder重名、重哈希假定理／隐藏前提／错实例／省断言／假范围拒绝。当前标准发现462但未跑完整462；原442冻结回归仍同一session运行，1260依赖／原258注册输入未改。Python／Z3与IR→SMT桥仍可信，本里程碑无新kernel／网络实现／Linux实验。继续原68查询、账本及通用字节／时间／解释翻译关系，完整目标未完成。
