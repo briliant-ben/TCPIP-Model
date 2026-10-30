@@ -471,3 +471,11 @@ ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4�
 2026-10-30：新增通用formal/tactic_recheck.py，严格接受单个SMT conjunction，拒绝增量／改选项／多次check，原断言逐项AST对应后用固定simplify→propagate-values→solve-eqs→simplify→smt策略和10s预算执行，再由新CLI进程复查，工具4方法及既有partition6方法通过。未改变IR／解释器／旧翻译器。S-ACK原始368组与等价查询均完整重建；298组加等价299项分别两次新CLI UNSAT，70仍UNKNOWN，终态refinement_unknown。没有新增闭合目标；原主报告、其他断言／domain与所有旧unknown保留。全部脚本／来源／producer及独立日志打包、逐成员核对在artifacts/sent-ledger-tactic-refinement。
 
 Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通赋值展开也未闭合，探索记录保留。此轮增加可迁移的精确查询／独立进程证据门，不把策略重查说成协议或编码正确性证明。下一步需处理模算术与大条件／环形账本赋值的精确编码，不继续用更多启发式替代语义工作。已完成430组合回归不含新增4工具方法（现发现434但未跑完整组合）；Linux接收CI单独验收，完整目标未完成。
+
+## 2026-10-30：首个真实Linux接收数据有限场景验收
+
+[CI41014477824](https://github.com/briliant-ben/TCPIP-Model/actions/runs/41014477824)的2ab2a472源码在Linux7.0.0-1017-azure完成receive-four-zero-octets及两个控制场景；三个独立VM jobs运行时验收全部通过。现有tcp-sws组合IR未改，独立tcpdump捕获5包／完整5020.014606ms／0内核捕获丢包，4个零字节和累计ACK9005匹配。完整方向／flags／SEQ／ACK／window／payload／time的0ms oracle保留7项字段Difference（3窗口＋4时间）：内核ACK20.059ms对模型60ms，通告窗口64240→64236对16→12。未强制内核MSS／窗口，也未观测其内部rcv_buf或应用读取；模型40ms delayed-ACK是RFC9293 §3.8.6.3范围内选定策略，不将提前ACK／配置差异判RFC bug。
+
+出站两个ACK在驱动中明确observation-only，但全部进入独立原始抓包及严格oracle；未删除ACK或修改模型以强行匹配。固定工具只支持此4零字节注入，任意字节／PSH／发送／乱序／恢复仍不计Linux验证。两个控制回归新实际窗口5010.198361／6057.786729ms，SYN重传1047.673ms对1000ms；以前1061.092ms和lwIP2750ms保留原快照不重写。命令显式记录既有50ms下限＋12.5%工具容差，独立oracle仍0ms。
+
+证据入口artifacts/linux-receive-ci-2ab2a472/acceptance.json；三套原ZIP、官方API来源、完整CI日志、原PCAP、全部源码／模型／解释文件／脚本／查询／工具绑定、runtime及独立离线重建／查询等价UNSAT已验收。5个重哈希负例含重新计算正确TCP checksum的错误payload，仍在独立解析／输入门被拒绝，原件未改。离线检查不是更多Linux执行或本地CI二进制重跑。旧258输入SHA仍未变。430组合回归已通过，新增4形式工具方法和Linux端口12方法单独记录，不冒称434全量通过；主形式unknown、一般协议与后续模块目标未完成。

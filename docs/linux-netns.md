@@ -45,3 +45,13 @@ The new named receive-four-zero-octets case uses the current composed tcp-sws IR
 The pinned packetdrill grammar accepts TCP payload length, not arbitrary bytes; its builder zeroes the packet buffer. The finite adapter therefore supports one four-zero-octet incoming segment and rejects other bytes/stimuli. This does not establish application read semantics, kernel buffer contents, PSH, outgoing-data behavior or recovery. The5020ms observation is anchored at the first SYN and delayed from the final injected stimulus20ms, rather than from a later modeled ACK.
 
 Twelve preparation/negative methods and a current composed-IR fixed-byte query/fresh CLI SAT pass. Those artifacts in artifacts/linux-receive-preparation are explicitly not Linux execution evidence; the new real CI and independent runtime gate must finish before such a claim. The tool command now explicitly passes its existing12.5% dynamic allowance, retaining the0ms independent oracle.
+
+## Accepted incoming-data checkpoint2ab2a472
+
+[CI41014477824](https://github.com/briliant-ben/TCPIP-Model/actions/runs/41014477824) now completes actual kernel execution and independent runtime verification for the finite receive case plus both control regressions. The earlier preparation-only paragraph is historical. See artifacts/linux-receive-ci-2ab2a472/acceptance.json for the original ZIPs/provenance/PCAPs/logs and the separate offline checks.
+
+The receive case captures five packets over5020.014606ms with zero kernel capture drops. Complete payload [0,0,0,0] and cumulative ACK9005 match. Three window and four time Differences remain at0ms tolerance: actual ACK20.059ms versus model60ms, actual advertised window64240→64236 versus model16→12. No kernel state/quick-ACK mechanism or exact MSS/RMSS relation was measured, and these policy/configuration observations are not RFC-bug findings. RFC9293 §3.8.6.3 does not require every ACK to occur at the model's selected40ms delay.
+
+Independent current-source offline regeneration and query-equivalence UNSAT pass for all three retained runs. Five rehashed temporary-copy controls reject modified reference payloads, ACK policies, checksums, quiet boundaries and even a wrong payload with a valid recomputed TCP checksum. They do not constitute more kernel executions. Source changes intentionally make current-source snapshots stale; reproduce with the named checkpoint rather than relaxing bindings.
+
+General receive/reordering/window/recovery, arbitrary payload byte strings, application reads, outbound data/PSH and later protocols remain open. The old Linux1061.092ms and lwIP2750ms SYN observations remain separate historical runs.

@@ -4,7 +4,7 @@
 
 GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP-Model)。在新机器上的克隆、环境重建和验证步骤见 [迁移与复现说明](docs/github-handoff.md)。
 
-**v0.2 已接入独立 Z3 有界检查、PCAP 归一化和统一证据验收。真实 Linux 内核已完成一个主动打开及5010ms静默期场景，严格时间差异保留；数据／恢复与完整TCP验证仍待推进，尚无 Ivy 或无界证明。**
+**v0.2 已接入独立 Z3 有界检查、PCAP 归一化和统一证据验收。真实 Linux 内核已验收主动打开、首次SYN不获响应及单段4零字节接收，严格差异保留；一般数据／恢复与完整TCP验证仍待推进，尚无 Ivy 或无界证明。**
 
 **v0.3 新增 TCP 连接生命周期模型和多模型流程，并接入固定上游 lwIP 的真实 C 代码执行。整个 TCP/IP 协议栈尚未完成。** 详见 [协议栈范围与进度](docs/stack-scope.md)。
 
@@ -227,3 +227,5 @@ docs/                  语义、外部测试约定、里程碑
 2026-10-30：[Linux双场景](docs/linux-netns.md)已在独立CI实际执行／验收：普通握手和首次SYN不获响应。重传实际1061.092ms对模型1000ms，严格时间Difference保留；工具执行使用max(50ms,间隔12.5%)，独立oracle仍0ms。完整窗口抓包、配置来源和10个重哈希故障检查见artifacts/linux-netns-ci-de084a26。仍不代表数据／恢复或完整TCP验证。
 
 2026-10-30：4db896eb冻结的430项标准发现回归已全部通过，unittest5163.255秒／runner5163.586秒，无失败／错误／跳过，1244依赖及环境未变。原始结果、依赖／测试ID清单及完整日志归档artifacts/full-regression-4db896eb。包含Nagle与SWS新方法，但不含随后新增Linux端口7方法；历史running描述不再代表当前状态。此结果不提升整体形式unknown或完整协议声明，目标未完成。
+
+2026-10-30：[Linux接收数据](docs/linux-netns.md)已完成首个真实内核有限场景：4零字节与累计ACK匹配，完整5020ms窗口5包／无捕获丢包；早ACK与窗口差异原样保留。三个CI执行／独立复查及5个重哈希负例（含正确checksum的错误payload）见artifacts/linux-receive-ci-2ab2a472。仅单段接收，不代表任意字节／发送／乱序／恢复或完整TCP。

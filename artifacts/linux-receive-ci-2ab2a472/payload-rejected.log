@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/verify.py", line 112, in <module>
+    verify(args.out.resolve(),runtime=not args.offline)
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/verify.py", line 81, in verify
+    driver.validate_observation(expected,observed,scenario)
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-netns/run.py", line 129, in validate_observation
+    require(fields(observed)==fields(expected),'Captured receive stimuli differ from the declared input')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Captured receive stimuli differ from the declared input
