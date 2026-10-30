@@ -438,3 +438,5 @@ ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4�
 2026-10-30：Linux CI首次在run41002313195构建及namespace成功，但offload配置141ms导致absolute0的socket时间超过执行50ms，独立capture0包；完整失败ZIP／日志／原脚本留档。按固定官方packetdrill相对事件语义把socket改为相对setup结束，未修改任何packet期望、模型、parser、50ms执行容差或0ms Difference。run41002939358实际Linux7.0.0-1017-azure三包握手与独立runtime验收通过；源头e62f799d、命名空间／原始PCAP／kernel／工具／模型／脚本hash及GitHub ZIP摘要绑定。0ms比较仅保留10.055ms SYN+ACK／10.073ms ACK与模型10ms的时间差；非RFC bug结论，非lwIP或合成证据。边界止于ESTABLISHED三包，不含原场景5010ms静默观察，后者继续实施；非窗口／options／payload、恢复或完整TCP证明。匹配源码下离线复查通过且未冒称本地再执行Linux。证据artifacts/linux-netns-ci-e62f799d。
 
 2026-10-30：sent-ledger原62 unknown目标的group8精确细化已终态refinement_unknown，3目标闭合、59仍unknown；2394组unsat、553组unknown。3闭合目标另用独立CLI145检查复核通过；原主unknown不改，不宣称整个220不变量或payload／时间／翻译对应证明。3134原始文件及成员SHA封存artifacts/sent-ledger-refinement-unknown，原未提交目录保留。430冻结回归仍在运行，新Linux／归档工作未改其1244依赖。
+
+2026-10-30：在已验收三包Linux观测之后继续扩展到原handshake场景5010ms settle：去掉tcpdump包数上限，延迟SO_ERROR检查后用文件barrier保持socket打开，只有capture停止后才释放工具清理；保留所有选中包、零drop门槛和0ms oracle。新增capture生命周期／quiet边界校验及model-uncovered、无效capture、执行失败、环境失败分类，3项本地准备测试通过，完整静默窗口CI待执行，尚不计完成。历史e62f三包证据保持原范围与哈希。430冻结输入不变。

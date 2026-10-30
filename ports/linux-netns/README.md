@@ -10,9 +10,11 @@ unchanged packetdrill packet expectations. The execution wrapper adds a public
 endpoint bind and TUN offload setup, and starts the first socket call relative
 to setup completion. Protocol time is normalized to the first SYN; execution
 and Difference tolerances are unchanged. The pinned unmodified official packetdrill
-coordinates syscalls and packet injection; independent tcpdump captures the first
-three selected handshake packets, ending at the model's terminal ESTABLISHED
-boundary before tool-exit socket cleanup. Capture uses classic LINUX_SLL PCAP,
+coordinates syscalls and packet injection; independent tcpdump captures every
+selected packet through the source scenario's5010ms settle interval, without a
+packet-count cap. A public SO_ERROR check and file barrier keep the socket alive
+until capture has stopped, excluding only later tool-exit cleanup. Capture lifetime,
+quiet-boundary timestamps and zero kernel packet drops are checked. Capture uses classic LINUX_SLL PCAP,
 strict checksums, no deduplication and the existing active-open-v1 projection.
 
 Packetdrill execution tolerance remains50000us; the independent Difference uses

@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
 import subprocess
 import sys
 ROOT = Path(__file__).resolve().parents[2]
@@ -32,6 +33,13 @@ def verify(out, runtime=True):
         and namespace['actual_parent_netns']==namespace['parent_netns']
         and namespace['packetdrill_returncode']==namespace['capture_returncode']==0
         and not namespace['host_network_mutations'], 'Execution/isolation incomplete')
+    require(namespace['capture_scope']=='all_selected_packets_through_scenario_settle_before_socket_cleanup'
+        and namespace['capture_packet_limit']is None and namespace['quiet_interval_complete'], 'Quiet capture scope changed')
+    require('-c' not in namespace['capture_command'],'Capture was silently packet-count limited')
+    require(namespace['capture_ready_monotonic_ns']<=namespace['packetdrill_start_monotonic_ns']
+        <=namespace['quiet_barrier_monotonic_ns']<=namespace['capture_exit_monotonic_ns'],'Capture lifecycle order changed')
+    dropped=re.findall(r'(\d+) packets dropped by kernel',(out/'capture.log').read_text())
+    require(dropped and int(dropped[-1])==0,'Capture drops invalidate complete observation')
     tool=read(out/'tool-build.json'); pin=read(driver.PORT/'upstream.json')
     require(tool['commit']==pin['commit']==result['source_commit'] and not tool['modified_upstream_code'], 'Tool source pin differs')
     require(tool['binary_sha256']==result['tool_binary_sha256'], 'Tool binary binding differs')
@@ -39,6 +47,7 @@ def verify(out, runtime=True):
         require(platform.system()=='Linux' and platform.release()==result['kernel'], 'Original Linux runtime required')
         require(os.readlink('/proc/self/ns/net')==namespace['parent_netns'], 'Runtime parent namespace differs')
         require(result['execution_output_dir']==str(out),'Runtime evidence output path differs')
+        require((out/'quiet-complete').stat().st_mtime_ns==namespace['quiet_barrier_epoch_ns'],'Runtime barrier metadata differs')
         require(digest(Path(tool['binary']))==tool['binary_sha256'], 'Runtime packetdrill binary missing/changed')
         require(digest(Path(tool['compiler_path']))==tool['compiler_sha256'],'Runtime compiler binding changed')
         head=subprocess.check_output(['git','-c','safe.directory='+tool['source_root'],'-C',tool['source_root'],'rev-parse','HEAD'],text=True).strip()
@@ -53,15 +62,19 @@ def verify(out, runtime=True):
     require(model_hash(model)==result['model_semantic_sha256'] and expected==read(out/'expected.json')
         and machine.trace==read(out/'trace.json'),'Rehashed reference evidence changed')
     require((out/'base-generated.pkt').read_text()==base and read(out/'script-map.json')==mapping,'Generated script changed')
-    script=driver.execution_script(base,Path(result['execution_output_dir']))
+    script=driver.execution_script(base,Path(result['execution_output_dir']),driver.quiet_after_protocol_ms(expected))
     require((out/'test.pkt').read_text()==script
         and digest(out/'test.pkt')==result['input_script_sha256'],'Execution script mapping changed')
     require(read(out/'execution-map.json')==driver.execution_mapping(base,script,mapping),'Execution line mapping changed')
     require(read(out/'source-validation.json')==driver.verify_sources(),'Normative-source verification differs')
     observed,metadata=normalize(out/'capture.pcap',read(ROOT/'packet-profile.json'),expected,
         origin='external_capture',checksum_policy='strict',projection='active-open-v1')
-    require(len(observed)==3 and observed==read(out/'observed.json') and metadata==read(out/'metadata.json'),
+    require(len(observed)>=3 and observed==read(out/'observed.json') and metadata==read(out/'metadata.json'),
         'Independent raw-capture normalization changed')
+    require(namespace['declared_settle_ms']==read(ROOT/'scenarios/handshake.json')['settle_ms'],'Scenario settle scope changed')
+    window_ms=(namespace['quiet_barrier_epoch_ns']-metadata['time_origin_ns'])/1000000
+    require(window_ms==result['observed_window_ms'] and window_ms>=namespace['declared_settle_ms'],
+        'Quiet observation window shortened or relabelled')
     difference=compare(expected,observed,tolerance_ms=0,projection='active-open-v1')
     require(difference==read(out/'difference.json') and result['status']=='linux_execution_with_projection_'+difference['status'],
         'Difference changed even if rehashed')

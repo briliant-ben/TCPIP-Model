@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
 import shlex
 import shutil
 import subprocess
@@ -20,7 +21,13 @@ from protocol_lab.capture import normalize
 from protocol_lab.symbolic import crosscheck_trace, model_hash
 
 
-def execution_script(base, out):
+def quiet_after_protocol_ms(expected):
+    settle=read(ROOT/'scenarios/handshake.json')['settle_ms']
+    require(type(settle)is int and expected[-1]['time_ms'] <= settle <= 10000,'Quiet interval outside Linux channel scope')
+    return settle-expected[-1]['time_ms']
+
+
+def execution_script(base, out, quiet_ms):
     """Only device setup and public endpoint bind; preserve every generated expectation."""
     lines = base.splitlines()
     socket = lines.index('0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3')
@@ -32,6 +39,9 @@ def execution_script(base, out):
     lines.insert(socket, setup)
     index = lines.index('+0 fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK) = 0')
     lines.insert(index + 1, '+0 bind(3, ..., ...) = 0')
+    lines.append(f'+{quiet_ms/1000:.3f} getsockopt(3, SOL_SOCKET, SO_ERROR, [0], [4]) = 0')
+    marker=shlex.quote(str(out/'quiet-complete')); release=shlex.quote(str(out/'capture-stopped'))
+    lines.append('+0 `touch '+marker+' && while test ! -f '+release+'; do sleep 0.01; done`')
     return '\n'.join(lines) + '\n'
 
 
@@ -90,6 +100,16 @@ def command(args, log, timeout=10, required=True):
 def stage(out, name): write(out/'phase.json',dict(phase=name))
 
 
+def failure_kind(phase, error):
+    if phase=='observation':
+        unsupported=['TCP control flags outside this active-open slice',
+            'TCP payload is outside this active-open slice',
+            'Payload on SYN/FIN/RST is outside this data slice']
+        return 'model_uncovered_capture_shape' if any(text in str(error) for text in unsupported) else 'invalid_capture_evidence'
+    if phase=='capture_validation':return 'invalid_capture_evidence'
+    return 'linux_execution_attempt_failed' if phase=='packetdrill_execution' else 'environment_or_setup_failure'
+
+
 def inside(out, parent):
     require(platform.system() == 'Linux' and os.geteuid() == 0, 'Linux root namespace child required')
     actual_parent = os.readlink('/proc/' + str(os.getppid()) + '/ns/net')
@@ -111,11 +131,20 @@ def inside(out, parent):
         '--remote_ip='+peer['ip'],'--netmask_ip=255.255.255.0','--gateway_ip=192.0.2.254',
         '--bind_port='+str(local['port']),'--connect_port='+str(peer['port']),
         '--tolerance_usecs=50000',str(out/'test.pkt')]
-    # The model terminates at ESTABLISHED. Capture stops independently at its three-packet boundary,
-    # before tool-exit socket cleanup; unexpected packets within that boundary are not discarded.
+    # No packet-count cap: observe the complete declared quiet interval. A file barrier
+    # keeps the socket open until tcpdump has stopped, excluding tool-exit cleanup only.
     bpf = 'tcp and host '+local['ip']+' and host '+peer['ip']+' and port '+str(local['port'])+' and port '+str(peer['port'])
-    capture_command = ['tcpdump','-Z','root','-U','-n','-i','any','-y','LINUX_SLL','-c','3',
+    capture_command = ['tcpdump','-Z','root','-U','-n','-i','any','-y','LINUX_SLL',
         '-w',str(out/'capture.pcap'),bpf]
+    marker=out/'quiet-complete'; release=out/'capture-stopped'
+    require(not marker.exists() and not release.exists(),'Use fresh output: old capture barriers are retained')
+    context=dict(platform='Linux',kernel=platform.release(),parent_netns=parent,parent_pid=os.getppid(),
+        actual_parent_netns=actual_parent,execution_netns=current,commands=records,
+        packetdrill_command=packet_command,capture_command=capture_command,
+        capture_scope='all_selected_packets_through_scenario_settle_before_socket_cleanup',
+        capture_packet_limit=None,declared_settle_ms=read(ROOT/'scenarios/handshake.json')['settle_ms'],
+        packetdrill_tolerance_us=50000,oracle_tolerance_ms=0,host_network_mutations=False)
+    executed=None
     with (out/'capture.log').open('w') as capture_log:
         stage(out,'capture_start')
         capture = subprocess.Popen(capture_command,stdout=capture_log,stderr=capture_log)
@@ -125,22 +154,40 @@ def inside(out, parent):
                 require(capture.poll() is None, 'Independent capture failed to start')
                 time.sleep(0.02)
             require('listening on' in (out/'capture.log').read_text(), 'Capture readiness timeout')
+            context['capture_ready_monotonic_ns']=time.monotonic_ns()
             stage(out,'packetdrill_execution')
-            executed = command(packet_command,out/'execution.log',timeout=20,required=False)
-            try: code = capture.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                capture.send_signal(2); code = capture.wait(timeout=5)
-            write(out/'namespace.json',dict(platform='Linux',kernel=platform.release(),parent_netns=parent,
-                parent_pid=os.getppid(),actual_parent_netns=actual_parent,
-                execution_netns=current,commands=records,packetdrill_command=packet_command,
-                packetdrill_returncode=executed.returncode,capture_command=capture_command,
-                capture_returncode=code,capture_scope='first_three_selected_handshake_packets_model_terminal_ESTABLISHED',
-                packetdrill_tolerance_us=50000,oracle_tolerance_ms=0,host_network_mutations=False))
+            with (out/'execution.log').open('w') as execution_log:
+                context['packetdrill_start_monotonic_ns']=time.monotonic_ns()
+                executed=subprocess.Popen(packet_command,stdout=execution_log,stderr=execution_log)
+                limit=time.monotonic()+20
+                while not marker.exists() and executed.poll()is None and time.monotonic()<limit:
+                    require(capture.poll()is None,'Independent capture ended before quiet-window completion')
+                    time.sleep(0.01)
+                complete=marker.exists()
+                context['quiet_interval_complete']=complete
+                if complete:
+                    context['quiet_barrier_epoch_ns']=marker.stat().st_mtime_ns
+                    context['quiet_barrier_monotonic_ns']=time.monotonic_ns()
+                capture.send_signal(2); code=capture.wait(timeout=5)
+                context['capture_exit_monotonic_ns']=time.monotonic_ns()
+                # Release only after capture is closed, so socket cleanup cannot race it.
+                release.write_text(str(context['capture_exit_monotonic_ns'])+'\n')
+                executed.wait(timeout=5)
+            context.update(packetdrill_returncode=executed.returncode,capture_returncode=code)
+            write(out/'namespace.json',context)
             require(executed.returncode == 0, 'packetdrill execution contract failed')
+            require(complete,'Declared quiet-window observation did not finish')
             require(code == 0, 'Independent capture did not complete')
+            stage(out,'capture_validation')
+            dropped=re.findall(r'(\d+) packets dropped by kernel',(out/'capture.log').read_text())
+            require(dropped and int(dropped[-1])==0,'Independent capture reports packet drops')
         finally:
             if capture.poll() is None:
                 capture.send_signal(2); capture.wait(timeout=5)
+            if executed is not None and executed.poll()is None:
+                release.touch(); executed.terminate()
+                try:executed.wait(timeout=5)
+                except subprocess.TimeoutExpired:executed.kill();executed.wait(timeout=5)
 
 
 def run(out):
@@ -159,7 +206,7 @@ def run(out):
     write(out/'source-validation.json',verify_sources())
     write(out/'trace.json',machine.trace); write(out/'expected.json',expected)
     write(out/'script-map.json',mapping)
-    script = execution_script(base,out)
+    script = execution_script(base,out,quiet_after_protocol_ms(expected))
     write(out/'execution-map.json',execution_mapping(base,script,mapping))
     (out/'base-generated.pkt').write_text(base); (out/'test.pkt').write_text(script)
     symbolic = crosscheck_trace(model,machine.trace,out/'symbolic')
@@ -173,7 +220,9 @@ def run(out):
     stage(out,'observation')
     observed, metadata = normalize(out/'capture.pcap',read(ROOT/'packet-profile.json'),expected,
         origin='external_capture',checksum_policy='strict',projection='active-open-v1')
-    require(len(observed) == 3, 'Handshake capture coverage differs')
+    require(len(observed) >= 3, 'Handshake capture incomplete')
+    window_ms=(namespace['quiet_barrier_epoch_ns']-metadata['time_origin_ns'])/1000000
+    require(window_ms>=namespace['declared_settle_ms'],'Quiet observation shorter than source scenario')
     difference = compare(expected,observed,tolerance_ms=0,projection='active-open-v1')
     write(out/'observed.json',observed); write(out/'metadata.json',metadata); write(out/'difference.json',difference)
     require(inputs() == before, 'Linux evidence inputs changed during execution')
@@ -181,10 +230,11 @@ def run(out):
     names = ['preflight.json','phase.json','tool-build.json','source-validation.json','trace.json','expected.json','script-map.json','execution-map.json','base-generated.pkt',
         'test.pkt','namespace-driver.log','namespace.json','execution.log','capture.log','capture.pcap','offload.log',
         'sysctl.log','tcpdump-version.log','namespace-command-0.log','namespace-command-1.log','namespace-command-2.log',
-        'observed.json','metadata.json','difference.json','symbolic/result.json','symbolic/path.smt2'] + list(tool['file_hashes'])
+        'quiet-complete','capture-stopped','observed.json','metadata.json','difference.json','symbolic/result.json','symbolic/path.smt2'] + list(tool['file_hashes'])
     result = dict(status='linux_execution_with_projection_'+difference['status'],linux_execution=True,
         host_tcp_stack=True,implementation='Linux kernel TCP',kernel=env['kernel'],projection='active-open-v1',
-        oracle_tolerance_ms=0,packetdrill_tolerance_us=50000,scope='one active-open terminal handshake; options/window/payload not projected',
+        oracle_tolerance_ms=0,packetdrill_tolerance_us=50000,scope='one active-open handshake plus declared5010ms settle; options/window/payload not projected',
+        observed_window_ms=window_ms,
         model_semantic_sha256=model_hash(model),input_hashes=before,tool_binary_sha256=tool['binary_sha256'],
         execution_output_dir=str(out),
         input_script_sha256=digest(out/'test.pkt'),source_commit=pin['commit'],namespace_invocation=invocation,
@@ -206,8 +256,7 @@ if __name__ == '__main__':
         try: run(out)
         except Exception as error:
             phase=read(out/'phase.json')['phase'] if (out/'phase.json').exists() else 'preflight'
-            kind='invalid_capture_evidence' if phase=='observation' else (
-                'linux_execution_attempt_failed' if phase=='packetdrill_execution' else 'environment_or_setup_failure')
+            kind=failure_kind(phase,error)
             write(out/'failure.json',dict(status=kind,phase=phase,error_type=type(error).__name__,error=str(error),
                 linux_execution_evidence=False,synthetic_substitution=False))
             raise
