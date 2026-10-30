@@ -51,7 +51,12 @@ def check(out,model_file,docker=False):
         return work
     def run(work,name,args,required=True):
         prefix=['docker','run','--rm','--network','none','--volume',str(work)+':/proof','--workdir','/proof',base.IMAGE]if docker else[]
-        result=subprocess.run(prefix+args,cwd=work,capture_output=True,text=True,timeout=180)
+        try:result=subprocess.run(prefix+args,cwd=work,capture_output=True,text=True,timeout=180)
+        except subprocess.TimeoutExpired as error:
+            def decoded(x):return x.decode(errors='replace')if isinstance(x,bytes)else x or ''
+            (out/(name+'.log')).write_text(decoded(error.stdout)+decoded(error.stderr)+'\nCommand timed out at180s\n')
+            r['commands'].append(dict(command=args,container_prefix=prefix,returncode=None,timed_out=True,log=name+'.log'))
+            raise
         text=result.stdout+result.stderr;(out/(name+'.log')).write_text(text)
         r['commands'].append(dict(command=args,container_prefix=prefix,returncode=result.returncode,log=name+'.log'))
         if required and result.returncode:raise RuntimeError(name+' failed: '+text)
@@ -95,6 +100,9 @@ def check(out,model_file,docker=False):
             axiom_injection='rejected_by_audit',proof_statement='forall initial environments and typed scalar event fields, executing generated ordered assignments satisfies generated equalities; generated initial state also satisfies them')
     except (OSError,RuntimeError,subprocess.TimeoutExpired,ValueError)as error:r.update(status='failed',reason=str(error))
     finally:
+        if work is not None:
+            for filename in ('Semantics.v','Compiled.v','Proofs.v','Semantics.vo','Compiled.vo','Proofs.vo'):
+                if (work/filename).is_file():shutil.copyfile(work/filename,out/filename)
         for folder in all_work:shutil.rmtree(folder)
     if any(base.digest(ROOT/p)!=h for p,h in r['input_hashes'].items()):r.update(status='source_changed',kernel_checked_proof=False)
     r['artifact_hashes']={str(p.relative_to(out)):base.digest(p)for p in sorted(out.rglob('*'))if p.is_file()and p.name!='result.json'}

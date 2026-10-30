@@ -8,7 +8,7 @@ Open Scope Z_scope.
 Theorem checked_generated_initial :
   Forall (fun property => holds property (initial compiled_initial) (fun _ => 0))
     compiled_invariants.
-Proof. vm_compute; repeat constructor. Qed.
+Proof. unfold compiled_invariants; repeat constructor. Qed.
 Print Assumptions checked_generated_initial.
 
 Theorem checked_generated_step : forall (state fields : env),
