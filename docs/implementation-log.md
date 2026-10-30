@@ -467,3 +467,7 @@ ports/lwip-sws使用相同公共sent-event C驱动、1ms sys_check_timeouts，4�
 2026-10-30：新增Linux receive-four-zero-octets有限输入，引用现有tcp-sws组合IR（模型未改），完整tcp-connection-v1投影保留窗口／payload／time及全部ACK。驱动只以出站SYN锚定ISS，并注入SYN+ACK／单个4零字节段；出站ACK为显式observation-only，仍全部进入独立抓包和严格oracle，不强迫内核延迟ACK时刻。捕获完整5020ms并以最后注入20ms为quiet延迟锚点；有效输入／完整抓包下缺少输出ACK记为Difference，不误判证据无效。
 
 固定上游parser.y只有TCP payload长度，tcp_packet.c清零buffer；完整Git blob／SHA来源保存在artifacts/linux-receive-preparation/upstream。不支持非零字节或其他刺激时明确拒绝，不用零值替换，亦不声称应用读取／内核rcv_buf观测。MSS4／window16仅为IR参数，不强制Linux相同，差异保留。驱动显式绑定原12.5%动态与50000us下限，0ms oracle不变。12项准备／负例通过、组合IR固定全字节重放及独立CLI SAT通过；新增Linux CI待运行，这些准备不是实机证据。新inputs补齐所有模型本地规范解释文件绑定；旧CI快照继续使用其命名源码，不放宽哈希。
+
+2026-10-30：新增通用formal/tactic_recheck.py，严格接受单个SMT conjunction，拒绝增量／改选项／多次check，原断言逐项AST对应后用固定simplify→propagate-values→solve-eqs→simplify→smt策略和10s预算执行，再由新CLI进程复查，工具4方法及既有partition6方法通过。未改变IR／解释器／旧翻译器。S-ACK原始368组与等价查询均完整重建；298组加等价299项分别两次新CLI UNSAT，70仍UNKNOWN，终态refinement_unknown。没有新增闭合目标；原主报告、其他断言／domain与所有旧unknown保留。全部脚本／来源／producer及独立日志打包、逐成员核对在artifacts/sent-ledger-tactic-refinement。
+
+Python内pilot曾得group052 UNSAT，但CLI10s未复现，不能晋级；普通赋值展开也未闭合，探索记录保留。此轮增加可迁移的精确查询／独立进程证据门，不把策略重查说成协议或编码正确性证明。下一步需处理模算术与大条件／环形账本赋值的精确编码，不继续用更多启发式替代语义工作。已完成430组合回归不含新增4工具方法（现发现434但未跑完整组合）；Linux接收CI单独验收，完整目标未完成。

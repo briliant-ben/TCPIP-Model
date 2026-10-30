@@ -1,0 +1,29 @@
+defs 268
+derived (let ((a!1 (<= (mod (+ input_0_net.ack_seq (* (- 1) v_0_rcv_nxt)) 4294967296)
+               (+ (- 1) v_0_local_window)))
+      (a!3 (<= 1 (mod (+ input_0_net.ack_ack (* (- 1) v_0_snd_una)) 4294967296)))
+      (a!4 (<= (mod (+ input_0_net.ack_ack (* (- 1) v_0_snd_una)) 4294967296)
+               v_0_rtx_buf))
+      (a!5 (<= v_0_rtx_buf
+               (mod (+ input_0_net.ack_ack (* (- 1) v_0_snd_una)) 4294967296)))
+      (a!6 (* (- 1)
+              (mod (+ input_0_net.ack_ack (* (- 1) v_0_snd_una)) 4294967296)))
+      (a!8 (<= 2147483648
+               (mod (+ input_0_net.ack_ack (* (- 1) v_0_snd_wl2)) 4294967296)))
+      (a!9 (<= (mod (+ input_0_net.ack_seq (* (- 1) v_0_snd_wl1)) 4294967296) 0))
+      (a!10 (<= 2147483648
+                (mod (+ input_0_net.ack_seq (* (- 1) v_0_snd_wl1)) 4294967296)))
+      (a!17 (ite (and (<= 1 v_0_rtx_buf)
+                      (not v_0_persist_active)
+                      v_0_fr_window_valid
+                      (<= 1 v_0_snd_wnd)
+                      (= input_0_net.ack_ack v_0_snd_una)
+                      (= input_0_net.ack_window v_0_fr_last_window)
+                      (<= 1 input_0_net.ack_window))
+                 (+ 1 v_0_fr_dupacks)
+                 v_0_fr_dupacks))
+      (a!22 (to_int (+ (* (- (/ 1.0 2.0)) (to_real v_0_rtx_buf))
+                       (* (/ 1.0 2.0) (to_real v_0_lt_epoch_bytes)))))
+      (a!38 (>= (mod (+ input_0_net.ack_ack (* (- 1) v_0_snd_una)) 4294967296)
+                (mod (+ v_0_rtt_end (* (- 1) v_0_s
+result unknown seconds 10.01383775001159
