@@ -1,0 +1,29 @@
+test_all_scenarios (test_flow.FlowTests.test_all_scenarios) ... ok
+test_bad_drop_pointer_fails (test_flow.FlowTests.test_bad_drop_pointer_fails) ... ok
+test_bad_network_field_fails_validation (test_flow.FlowTests.test_bad_network_field_fails_validation) ... ok
+test_build_is_reproducible_and_reports_external_gates (test_flow.FlowTests.test_build_is_reproducible_and_reports_external_gates) ... ok
+test_cancelled_timer_does_not_emit_later (test_flow.FlowTests.test_cancelled_timer_does_not_emit_later) ... ok
+test_equal_deadline_runs_timeout_before_network_event (test_flow.FlowTests.test_equal_deadline_runs_timeout_before_network_event) ... ok
+test_loss_annotation_is_at_sender_capture_point (test_flow.FlowTests.test_loss_annotation_is_at_sender_capture_point) ... ok
+test_missing_requirement_is_rejected (test_flow.FlowTests.test_missing_requirement_is_rejected) ... ok
+test_model_checker_distinguishes_gaps_from_violations (test_flow.FlowTests.test_model_checker_distinguishes_gaps_from_violations) ... ok
+test_mutation_missing_timer_cancel_has_replayable_counterexample (test_flow.FlowTests.test_mutation_missing_timer_cancel_has_replayable_counterexample) ... ok
+test_mutation_sequence_advance_on_retry_is_caught (test_flow.FlowTests.test_mutation_sequence_advance_on_retry_is_caught) ... ok
+test_oracle_detects_missing_packets_and_reordering (test_flow.FlowTests.test_oracle_detects_missing_packets_and_reordering) ... ok
+test_oracle_timing_tolerance_and_malformed_input (test_flow.FlowTests.test_oracle_timing_tolerance_and_malformed_input) ... ok
+test_oracle_uses_independently_authored_fixture (test_flow.FlowTests.test_oracle_uses_independently_authored_fixture) ... ok
+test_overlapping_guards_report_conflict (test_flow.FlowTests.test_overlapping_guards_report_conflict) ... ok
+test_packetdrill_relative_numbers_and_line_mapping (test_flow.FlowTests.test_packetdrill_relative_numbers_and_line_mapping) ... ok
+test_pcap_framing_and_checksums (test_flow.FlowTests.test_pcap_framing_and_checksums) ... ok
+test_plain_integer_ordering_on_seq32_is_rejected (test_flow.FlowTests.test_plain_integer_ordering_on_seq32_is_rejected) ... ok
+test_serial_numbers_wrap_at_both_peers (test_flow.FlowTests.test_serial_numbers_wrap_at_both_peers) ... ok
+test_sources_are_pinned (test_flow.FlowTests.test_sources_are_pinned) ... ok
+test_timeout_is_not_early_and_backoff_uses_doubled_rto (test_flow.FlowTests.test_timeout_is_not_early_and_backoff_uses_doubled_rto) ... ok
+test_timer_cannot_be_injected (test_flow.FlowTests.test_timer_cannot_be_injected) ... ok
+test_uncovered_is_not_accepted_or_silently_ignored (test_flow.FlowTests.test_uncovered_is_not_accepted_or_silently_ignored) ... ok
+test_unknown_code_expression_is_rejected (test_flow.FlowTests.test_unknown_code_expression_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.092s
+
+OK
