@@ -86,3 +86,5 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 2026-10-31：S-ACK-VALID→ESTABLISHED的原完整状态／长度保持query已通过fresh全368分支重放、无协议前提partition等价、原断言保留与Boolean组合、SAT非空上下文及IR/compiler输入前后锚点，见artifacts/ack-complete-cover。不同于此前仅组件索引，现闭合一个命名原target；其余模型／父基、全字节时序／实现及完整TCP仍未证。首次286旧tactic10s UNKNOWN及旧主报告保留；v2只引用同source的piecewise证书，旧包、模型、预算与oracle不动。84专项本地／Ubuntu、旧478冻结完整回归分别通过，当前495组合未完整跑，完整目标继续。
 
 2026-10-31：当前495项标准回归已在独立临时Git检出/private/tmp/tcpip-full495-i8vc8l0_、detached aec3c95cc95a322011ea006fc8760a64663d4de3启动。源／环境快照已冻结1287输入，原PID40193／统一exec session91353已确认实际运行；输出/tmp/tcpip-full-regression-aec3c95c.log及同名目录保存started／inputs／495 IDs，指针/tmp/tcpip-full495-checkout.json。不得编辑该检出或因观察超时重启；主目录继续工作不影响这份源。当前未到终态，旧13ff8c93的478通过与f2acf9f9的84本地／Ubuntu专项分别独立有效，不推算新495通过。原478 session4411已exit0，不再运行；其检出clean保留。完整平台目标仍未完成。
+
+2026-10-31：冻结 aec3c95c 的当前标准回归已终态通过495/495，5334.775秒，0失败／错误／跳过，输入及环境未改变。完整原始日志、result、495 IDs、1287输入清单及逐不可变Git blob验收见 artifacts/full-regression-aec3c95c；1287输入另与保留的隔离检出逐字节核对。原exec句柄已过期，不冒称恢复了进程exit code；终态报告与日志相符，无重启。这取代此前“495仍运行”的进度，旧478及84 Ubuntu专项仍为各自独立证据。命名ACK保持义务已闭合，但主报告UNKNOWN、其他义务、字节／时序／解释翻译及完整平台缺口保持，目标未完成。
