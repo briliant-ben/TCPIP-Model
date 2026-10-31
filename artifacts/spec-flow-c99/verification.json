@@ -1,0 +1,31 @@
+{
+  "status": "retained_generated_native_scalar_evidence_accepted",
+  "scenarios": [
+    {
+      "id": "handshake",
+      "transitions": 2
+    },
+    {
+      "id": "syn-loss",
+      "transitions": 3
+    },
+    {
+      "id": "two-syn-losses",
+      "transitions": 4
+    },
+    {
+      "id": "sequence-wrap",
+      "transitions": 3
+    }
+  ],
+  "generated_source_sha256": "0ad50c2788b79279b73ccbd7657bbf22efdcfb2609776b2e90c23c7106cfd5e8",
+  "original_executable_sha256": "f9f8a7163a11d6d60fdfd687d3091e93cebe39868a21118e24765ef395d3640d",
+  "native_tests": 12,
+  "legacy_flow_tests": 24,
+  "fresh_native_execution": false,
+  "binary_in_repository": false,
+  "compiler_correctness_proved": false,
+  "wire_or_pcap_evidence": false,
+  "whole_flow_complete": false,
+  "scope": "actual generated scalar TCP active-open native execution; no bytes/IPv4 or second-spec acceptance"
+}
