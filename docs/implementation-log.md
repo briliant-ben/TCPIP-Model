@@ -607,3 +607,9 @@ artifacts/ack-prefix-bounds使原295（cb_partial_prefix≥0）／296（≤3）�
 默认finite策略在新生成阶段明确not run／UNKNOWN；独立checker仍重建并运行默认检查，295默认局部等价仍可UNKNOWN，但全部32替代路线必须各自新CLI通过才接受该原query，不能把默认UNKNOWN／native候选标签当证明。两项首次独立验收后安全封存，再新目录解包重查全部source／覆盖／局部等价／叶，均通过。原IR f44d0c74／export b83da01c、1260原输入和两个完整query AST锚点一致。4个临时重哈希故障（少case、添加原协议合取作隐藏局部前提且重建真正native UNSAT证书、改source、冒领整个target）全部拒绝、原件不变。query／runtime checker及生成器source／两阶段日志／成员SHA／真实故障均保留。验收后index报告器的小语法错误已修复，未改变数学检查器或证明数据；归档保留验收时快照，当前报告器另有top-level SHA绑定。
 
 具名证据索引从366增至368/368、该原分区无缺名分支，新增仅295／296。尚未构造／检查原始完整target的合并证明，不等于完整ACK／父不变量基；旧主inductive／BMC UNKNOWN报告不改。解释／翻译桥、全字节／输出顺序／时间／实现与完整TCP及其他协议范围仍开放。77本地／Ubuntu专项与478旧source完整回归分别通过，当前488组合没有宣称全量通过。无新Linux TCP／PCAP或kernel证据；上游lwIP、oracle及2750ms Difference保持，完整目标继续。
+
+## 2026-10-31：完整导出query的通用分区覆盖检查器
+
+新增formal/query_cover.py，读取SHA绑定的export／label／断言位置与已有证书包引用，安全解包为数据而不运行包内Python；严格要求全分区index一次覆盖、每个证明完整有序前提及原违例一致。三个native义务分别验收原selected断言与全OR等价、原断言前后顺序保留的Boolean schema、已实际检查的A∧D_i UNSAT到原query的Boolean组合schema；局部重构不添加协议前提。然后以新调用内session交给既有q/g固定检查器实际重放所有父／目标；只有全部通过才关闭该命名导出合取。source、bundle及checker epoch在前后核对，不从metadata装载cache。数学8核心模块及Protocol IR均未改变，新增模块单独绑定自身source SHA。
+
+5新方法覆盖非最后selected断言的完整组合、缺／重索引、收窄前提、重哈希false组合／冒领scope、显式vacuity；与既有77合计82专项8.880724秒通过，0失败／错误／跳过，输入／环境未变，见artifacts/query-cover-local-82。当前标准发现493未跑新完整组合，旧478冻结回归通过不推算至493。真实S-ACK-VALID→ESTABLISHED全368源分支组合已提出，partition等价单独native0.070280秒UNSAT；完整分支重放仍在运行，尚未宣称原target关闭。原368具名组件、主UNKNOWN、byte/time／父基／实现及完整协议缺口均保持。
