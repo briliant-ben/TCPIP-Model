@@ -1,0 +1,104 @@
+{
+  "schema": "spec-flow-task-v1",
+  "id": "tcp-active-open",
+  "model": "model/tcp.json",
+  "sources": [
+    {
+      "id": "rfc9293",
+      "path": "spec/sources/rfc9293.txt",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "version": "August 2022",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc9293.html",
+        "https://www.rfc-editor.org/rfc/rfc9293.txt"
+      ]
+    },
+    {
+      "id": "rfc6298",
+      "path": "spec/sources/rfc6298.txt",
+      "sha256": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+      "version": "June 2011",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc6298.html",
+        "https://www.rfc-editor.org/rfc/rfc6298.txt"
+      ]
+    },
+    {
+      "id": "ir-semantics",
+      "path": "docs/semantics.md",
+      "sha256": "3d66f69a0c97f72290362ad75d2872e52c02b58a2ec31a082c04d42ac557d57b",
+      "version": "repository named semantic contract",
+      "uri_aliases": [
+        "docs/semantics.md"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "TCP-ACTIVE-OPEN": {
+      "source": "rfc9293",
+      "clause": "3.10.1",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.1"
+    },
+    "TCP-ACCEPT-SYNACK": {
+      "source": "rfc9293",
+      "clause": "3.10.7.3",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.3"
+    },
+    "TCP-RETRANSMIT": {
+      "source": "rfc9293",
+      "clause": "3.10.8",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.8"
+    },
+    "RTO-INITIAL": {
+      "source": "rfc6298",
+      "clause": "2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-2"
+    },
+    "RTO-CANCEL": {
+      "source": "rfc6298",
+      "clause": "5",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5"
+    },
+    "RTO-BACKOFF": {
+      "source": "rfc6298",
+      "clause": "5",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5"
+    },
+    "PROFILE-SCOPE": {
+      "source": "ir-semantics",
+      "clause": "scope assumptions",
+      "reference": "docs/semantics.md"
+    }
+  },
+  "exploration": "model/exploration.json",
+  "seeds": [
+    "scenarios/handshake.json",
+    "scenarios/sequence-wrap.json",
+    "scenarios/syn-loss.json",
+    "scenarios/two-syn-losses.json"
+  ],
+  "formal": {
+    "depth": 6,
+    "symbolic_initials": [
+      "iss"
+    ]
+  },
+  "limits": {
+    "stage_seconds": 120,
+    "max_prefixes": 256,
+    "max_cases": 64
+  },
+  "scope": {
+    "purpose": "first event-level orchestration of actual generated TCP active-open code",
+    "assumptions": [
+      "Typed validated SYN+ACK input events",
+      "Reference-derived finite test domains; source interpretation remains trusted"
+    ],
+    "excluded": [
+      "IPv4 wire input/output",
+      "payload and general TCP",
+      "second-spec migration",
+      "unbounded proof or proof of English-to-IR interpretation"
+    ]
+  }
+}

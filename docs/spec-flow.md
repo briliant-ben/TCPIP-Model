@@ -67,3 +67,57 @@ handoff. A pipeline must distinguish unsupported models, conflicts, invariant
 failures, environment/resource limits, stale evidence and implementation
 differences. UNKNOWN remains UNKNOWN. Existing pinned evidence and 2750ms lwIP
 Difference remain intact. Completing this first backend does not complete the goal.
+
+## One repeatable task
+
+```
+python3 -m protocol_lab.pipeline run flows/tcp-active-open.json \
+  --workspace . --out /tmp/new-flow-job
+python3 -m protocol_lab.pipeline verify /tmp/new-flow-job --workspace .
+```
+
+The task declares pinned source bytes/versions, requirement-to-source references,
+a candidate IR, finite exploration inputs, seed cases, formal bounds and resource
+limits. The caller/modeling agent supplies the interpreted candidate and its
+bindings. This runner does not automatically translate English into IR and does
+not claim that hash/URI binding proves the interpretation correct. Any provider or
+agent harness can prepare these files and invoke the same CLI; no API keys or
+provider-specific client is required.
+
+The ten fixed stages are sources, IR, formal, tests, reference, generate, build,
+execute, compare and traceability. There are no task-supplied Python/shell commands.
+Bounded exploration generates one rule witness per initial configuration/rule and
+explicit IR rejection cases; pinned seeds supplement these model-derived tests.
+The baseline produces six witnesses, four seeds and two model-gap rejections. A
+successful rejection test means the native implementation matches IR rejection,
+not that the unmodeled invalid-ACK behavior satisfies the TCP specification.
+
+Each stage runs in a separate POSIX process group with a deadline. Timed-out
+workers and descendant compiler/native processes are cleaned up. Independent
+source/formal/reference channels continue if a compiler is missing. Conflicts,
+invariants, source integrity failures, unsupported semantics, backend integer or
+resource limits, dependencies and implementation differences remain distinct.
+Unique run IDs and exclusively created output directories permit concurrent
+callers. Source/workspace file hashes and the closed tool-source file set are
+checked before accepting a run; tool code should be deployed read-only and each
+modeling agent should edit its own candidate workspace/check-out.
+
+CLI stdout is JSONL: stage-start events followed by the final report. The report
+separates execution_status from assessment. A completed process is not a successful
+validation. Assessments include verified_event_slice, failed, unresolved, blocked
+and invalidated_inputs. Z3 UNKNOWN remains unresolved and does not prevent other
+independent stages from running. Exit0 denotes the accepted event-level slice;
+exit1 denotes completed but failed/unresolved/blocked assessment; exit2 denotes
+invalid request/evidence. Nonzero results retain diagnostic files.
+
+The final manifest binds all task/model/spec/tool inputs and every artifact,
+including generated tests, queries, C source, binary, exact stdin/stdout, reference
+operations, per-case differences, source clauses and worker receipts. Verification
+is read-only retained-integrity checking, not fresh execution or authenticity
+attestation; it also rejects incomplete dependencies, UNKNOWN promotion and
+broadened observation/proof scope. Rerun the task in a fresh directory for new
+execution. Do not copy reference observations into a claimed native result.
+
+This event-level prototype explicitly reports no PCAP or IPv4 evidence, no
+universal generator/English-to-IR proof, and no whole-goal completion. Its scope is
+recorded separately from the later TCP/IPv4 and second-spec acceptance gates.
