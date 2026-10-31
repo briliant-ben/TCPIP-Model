@@ -1,0 +1,46 @@
+{
+  "status": "partition_cover_proposed_pending_replay",
+  "versions": {
+    "query_lemmas.py": "b6feff183f1b91b930e3350468a1e9b538ed94ab83b2abb97967d0b82e55a731",
+    "query_certificates.py": "25c54e18e5f84ceaf41e0c7ecf9a0ac1a4cba36905c2a256ad2657509e149a7b",
+    "finite_specialization.py": "74bb9d96102e58c79053cb1cc2c58bcc376b5e70dc9f3ffae8c31d6205ac7251",
+    "modular_piecewise.py": "14901e0480e062d3e67614f69c14d71a4ab81a042cd19b7203a8dff819b2365d",
+    "conditional_ssa.py": "3e06e5b65abe8596368d0d163c8b443c001a7c30b3271edf2a0fcdee58d501a3",
+    "modular_normalization.py": "93b02e41b20c0f75b3983a5dc7e72f55016016d8e3bb2d0d20e8a79ebb1fa1d4",
+    "tactic_recheck.py": "76a42a9ab6265ea6453dad3e463dc0e7a73607a1d8ee72640ba7e5ab2870cd5a",
+    "partition_queries.py": "6d1e3227f31bd16b4145b67c7a101c3c4f5a94a345d4a98884d0af941eee7f3b",
+    "query_cover.py": "76b0b83cb65f2c72bf130f60323ba839d29a2a63462a2849d60ffbb736d63405"
+  },
+  "solver_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+  "inputs": {
+    "source_sha256": "b83da01cb5f1f4ec72c7e9485e357ec9c57044d99c5411be5634087bc62aad8d",
+    "bundles": {
+      "heads": {
+        "archive_sha256": "45fa540dd30ea92c6c979ae59383acfb013e7dc64bb5c842a539ffbb374756b8",
+        "members_sha256": "8b245f1948dcc80168c11077d99c46b2bbd02fa82ab07fec8eb37ecc12a7bf09"
+      },
+      "prefix": {
+        "archive_sha256": "4914d9d61f4847c2d34b096884d67a7561d324ebbcd5da717490b6db50a74d61",
+        "members_sha256": "3df87609d48415e16fc31e657de97dbc276a81dd63f7dcf4bf0839f3bf950ea2"
+      },
+      "parent286": {
+        "archive_sha256": "f999c535b15b85ba54cc4a335ab13cdb3e08ded10fac93a398c2f3c741f3dbdc",
+        "members_sha256": "5030b57e66531bc09fc03cb9e7c87bfce34474ac39caf2e617a08c675378f287"
+      }
+    }
+  },
+  "source_assertions": 444,
+  "disjuncts": 368,
+  "timeout_ms": 10000,
+  "kernel_checked": false,
+  "ir_translation_proved": false,
+  "whole_protocol_proved": false,
+  "scope": "one exact labelled exported conjunction; trusted Python/Z3/encoder, no kernel, invariant-basis, reachability, implementation or protocol proof",
+  "files": {
+    "partition-equivalence.smt2": "b6409d5170ac46c1037fc9af68b48aad08ff54865cfb304337d7abfcb7195f38",
+    "plan.json": "923b7dad3ad46c0e0082eb951d6eedbabaa2a92fa2f9c1cc1fa0cc4716570dac",
+    "assertion-order.smt2": "8cbabfd0da28090502bfdc8c843682b0b47394f0101a8ae8b0ff799967f348ac",
+    "context.smt2": "a9eb14b779bf70d4f606315267ecc9d7a81719487239edb85e712b6312912c46",
+    "composition.smt2": "bbf6f474610d3b9e14fad85be26356b78644a512e50f0fe643932cdd997678c8"
+  }
+}

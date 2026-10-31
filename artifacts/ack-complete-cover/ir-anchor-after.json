@@ -1,0 +1,14 @@
+{
+  "status": "valid_named_ir_and_encoder_input_anchor",
+  "model": "model/tcp-sent-ledger.json",
+  "model_semantic_sha256": "f44d0c74397487e17a5c5e0358105fff4ca7a27dc5cf239130ce1c54056cf0dd",
+  "source_export_sha256": "b83da01cb5f1f4ec72c7e9485e357ec9c57044d99c5411be5634087bc62aad8d",
+  "label": "S-ACK-VALID -> ESTABLISHED",
+  "assertion_index": 440,
+  "unchanged_original_inputs": 1260,
+  "input_manifest_sha256": "227a81b115ad341b4fbd7ba2d2792bd578d6f05ba2d12e5565388a65991e5942",
+  "byte_encoding": "exact_length_projection_content_insensitive_subset",
+  "sequence_encoding": "modular_integer_full_32bit_domain",
+  "ir_translation_proved": false,
+  "scope": "named finite state/length IR checkpoint; encoder remains trusted, not general TCP or implementation correctness"
+}
