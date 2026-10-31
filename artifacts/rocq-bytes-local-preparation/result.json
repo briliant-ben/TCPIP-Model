@@ -1,0 +1,61 @@
+{
+  "status": "not_run",
+  "kernel_checked_proof": false,
+  "source_binding_checked": true,
+  "commands": [],
+  "image": null,
+  "axiom_allowlist": [],
+  "theorems": [
+    "checked_generated_initial",
+    "checked_generated_step"
+  ],
+  "input_hashes": {
+    "formal/rocq-bytes/check.py": "ce417c64f729c47cf16b7c7fdb79e47857e999942027c0f7286c15ca31678725",
+    "formal/rocq-bytes/Proofs.v": "26bfaa2ee395b9267a6f3a3040d0a31860f87893308ec1748c5d1244a144d7b4",
+    "formal/rocq-bytes/README.md": "5f099c919e8c890467c810831e2d7b02c8ad1a3f24424cf63f59b7aa94f34e96",
+    "formal/rocq-bytes/compile.py": "3271ed8a11b9abe3bbbbb7600626d56e8c91a5ec3144677a157cab9747208ca6",
+    "formal/rocq-bytes/Semantics.v": "00930c9345de06c3abcfda07f9fe418b219295c61de05b588f24dd82d23ef643",
+    "model/bytes-contract.json": "1be2157e14d1279c13236f99c1d5994930e9faba5bfc99c157ff739d92a650cd",
+    "formal/rocq/check.py": "69d4724e0479c94190f8124b0dd63def0a5324d53d4b26dd23bf1b1ad11d101f",
+    "protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974",
+    "docs/semantics.md": "3d66f69a0c97f72290362ad75d2872e52c02b58a2ec31a082c04d42ac557d57b",
+    ".github/workflows/rocq-bytes.yml": "008d5f7200f48e97403da7df67828e2ccfec6d01d2aee2571e56f91f0b2c7826"
+  },
+  "scope": "actual generated single-state ordered byte-buffer execution and full-content equality; current contract proof body",
+  "trusted_components": [
+    "Rocq kernel/standard library and pinned toolchain",
+    "formal bytes-fragment denotation",
+    "Python source type/fragment validation and inverse constructor binding checker",
+    "orchestration and assumption audit"
+  ],
+  "source_binding_is_kernel_proof": false,
+  "python_interpreter_proved": false,
+  "z3_translator_proved": false,
+  "tcp_protocol_proved": false,
+  "liveness_proved": false,
+  "linux_execution": false,
+  "full_protocol_complete": false,
+  "binding": {
+    "status": "source_ir_and_generated_ast_structurally_equal",
+    "variables": [
+      "buffer",
+      "whole",
+      "prefix",
+      "suffix",
+      "restored"
+    ],
+    "fields": [
+      "data",
+      "offset"
+    ],
+    "actions": 4,
+    "invariants": 1,
+    "model_semantic_sha256": "8568dd54ca84eec72248fb1a820b5438f6b58d2f278a676a155d900f513a4227",
+    "scope": "restricted full-byte constructor binding; Python bridge trusted, not a compiler proof",
+    "source_sha256": "1be2157e14d1279c13236f99c1d5994930e9faba5bfc99c157ff739d92a650cd",
+    "generated_sha256": "cfeb3ad577699e7d9ce661f5d592f4aa1e8d6d075d5a34e39915749dce9d1b08",
+    "checker_sha256": "3271ed8a11b9abe3bbbbb7600626d56e8c91a5ec3144677a157cab9747208ca6"
+  },
+  "reason": "rocq executable unavailable"
+}
