@@ -1,0 +1,2155 @@
+{
+  "status": "valid_shared_context_query_reuse",
+  "producer_status": "original_queries_unsat_nonvacuous",
+  "context": {
+    "query": "sat",
+    "seconds": 1.600090874999296,
+    "log_sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e"
+  },
+  "dependencies": [
+    {
+      "name": "group-008",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "93f88a194b134e68ce52d774827089e5a5be565a242670ec70e6c925f06c50ad",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "93f88a194b134e68ce52d774827089e5a5be565a242670ec70e6c925f06c50ad",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.04081270802998915,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-050",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "48156ded3bf9129cf3b250c3dc77803fe81103edd25a7da54a512cb4dd49866e",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "48156ded3bf9129cf3b250c3dc77803fe81103edd25a7da54a512cb4dd49866e",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.01963008299935609,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-051",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "74a0ccde8464d4054c6114a4a107f050ce3c22b6b5c733ccb7a813635691a924",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "74a0ccde8464d4054c6114a4a107f050ce3c22b6b5c733ccb7a813635691a924",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.019801750022452325,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-052",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "modular-normalization",
+        "source_sha256": "fdf96d5bc94209dfc56cd230b43583a1ca68aba554e528ade13a0e869b331318",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_modular_normalization",
+            "assertions": 444,
+            "rewrites": 0,
+            "universal_equalities": 0,
+            "independent_checks": [],
+            "kernel_checked": false,
+            "source_sha256": "fdf96d5bc94209dfc56cd230b43583a1ca68aba554e528ade13a0e869b331318"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 6.144313625001814,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-177",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "e4aef774bbb52d4ea3f92ab55ce120c80861606abd45bc59c399bd8b513b0ab6",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "e4aef774bbb52d4ea3f92ab55ce120c80861606abd45bc59c399bd8b513b0ab6",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.020075500011444092,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-231",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "5ad072c006798c458ebfbe67b46a5e9eb8803dd9b96e0d698bd14c5958f8a2e2",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "5ad072c006798c458ebfbe67b46a5e9eb8803dd9b96e0d698bd14c5958f8a2e2",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.04858675005380064,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-252",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "fccd55e3ce4c5561f7a59badc755fe45aea718e81541efceedb77eb089be19ef",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "fccd55e3ce4c5561f7a59badc755fe45aea718e81541efceedb77eb089be19ef",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.05902029201388359,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-270",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "f80c0db2255591c9cfbc3fc770b0fcb99644561e0b9b9cb6fa63ab408d16b637",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "f80c0db2255591c9cfbc3fc770b0fcb99644561e0b9b9cb6fa63ab408d16b637",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.027926707989536226,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-273",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "c34664ab993d221b698b2735dac19425331dec7cf6f79ff6e55e4fcc60a052c8",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "c34664ab993d221b698b2735dac19425331dec7cf6f79ff6e55e4fcc60a052c8",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.031072875019162893,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-274",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "2b513f6623b0ac8ed848c429924d64c8621ec066bac7dff2052201ed1048fc82",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "2b513f6623b0ac8ed848c429924d64c8621ec066bac7dff2052201ed1048fc82",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.01602333300979808,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-275",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "3b241df1a6cffcf62a7250a29c182da352fdfb28ba047aad6104c6117f92b337",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "3b241df1a6cffcf62a7250a29c182da352fdfb28ba047aad6104c6117f92b337",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.04620354203507304,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-276",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "b40a83c195bf3e06c5b65bca104839cb5ba74616322da0654a9e70a94400a075",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "b40a83c195bf3e06c5b65bca104839cb5ba74616322da0654a9e70a94400a075",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.053139208001084626,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-279",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "e9115b8011c2ab245e5c43a3edab084eb1331a2520a6f98ae1e8b3c4162f02f3",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "e9115b8011c2ab245e5c43a3edab084eb1331a2520a6f98ae1e8b3c4162f02f3",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.17521245800890028,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-280",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "finite",
+        "source_sha256": "b0235dd6beb755069012c49639033e0f3629ddc3986dedb35f510dd477b29919",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "b0235dd6beb755069012c49639033e0f3629ddc3986dedb35f510dd477b29919",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007146540971007198,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "finite": {
+            "status": "valid_finite_specialization",
+            "producer_status": "local_equivalence_unknown",
+            "fresh_status": "local_equivalence_unknown",
+            "source_sha256": "cc63a22bec531386b672f7b18547dad9ffb403ef05edeaf79cb7fa9a7484211b",
+            "context": {
+              "query": "sat",
+              "seconds": 1.6900724159786478,
+              "log_sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e"
+            },
+            "cases": [
+              {
+                "value": 0,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 4.3427631669910625,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.5633604160393588,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 1,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 4.617616207979154,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.713849666994065,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 2,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 4.579385249991901,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.7524917909759097,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 3,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 4.789692374994047,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.7617827919893898,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 4,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 4.54972229100531,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.9256697910022922,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 5,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 4.152517334034201,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.7291124169714749,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 6,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 5.492812458018307,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 2.0231344579951838,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 7,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 3.340585416997783,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 2.0317276249988936,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 8,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 3.3128054160042666,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.6288158749812283,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 9,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 4.004459374991711,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.8421925000147894,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 10,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 0.6841847919858992,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.5398673749878071,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 11,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 2.819702958979178,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.8423287500045262,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 12,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 3.8147106670076028,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.4896690829773434,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 13,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 3.0791997089982033,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.7854801670182496,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 14,
+                "equivalence": {
+                  "query": "unsat",
+                  "seconds": 3.6714836669852957,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                },
+                "query": {
+                  "query": "unsat",
+                  "seconds": 1.6701633750344627,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              },
+              {
+                "value": 15,
+                "equivalence": {
+                  "query": "unknown",
+                  "seconds": 10.018239750002977,
+                  "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+                },
+                "query": {
+                  "query": "unknown"
+                }
+              }
+            ],
+            "scope": "one exported conjunction; finite specialization, not IR/kernel/reachability/protocol proof",
+            "kernel_checked": false
+          },
+          "alternatives": [
+            {
+              "value": 15,
+              "kind": "equivalence",
+              "result": {
+                "status": "valid_exact_query_tactic_unsat",
+                "assertions": 2,
+                "source_sha256": "413ec169e0fbd4173c89fc1d9a6745ac6ea9c411b5e59b3a88709c78449ca80c",
+                "fresh_cli": {
+                  "query": "unsat",
+                  "seconds": 4.15098079101881,
+                  "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                  "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                },
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                "kernel_checked": false
+              }
+            },
+            {
+              "value": 15,
+              "kind": "query",
+              "result": {
+                "status": "valid_exact_query_tactic_unsat",
+                "assertions": 446,
+                "source_sha256": "7659b74e73760cf6e70636594aca60747ccf1d851d0e82d945a46e904d45a773",
+                "fresh_cli": {
+                  "query": "unsat",
+                  "seconds": 1.577340167015791,
+                  "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                  "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                },
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                "kernel_checked": false
+              }
+            }
+          ]
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-281",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "36c4cd788f7aa10aac1568a38fca89639ee93774e10f2835781ab19edf99601c",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "36c4cd788f7aa10aac1568a38fca89639ee93774e10f2835781ab19edf99601c",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.08381312503479421,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-282",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "651b620a7856c76db23679dcf00404c33bdf7e71e8a0e4f30a3409fbcfd68390",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "651b620a7856c76db23679dcf00404c33bdf7e71e8a0e4f30a3409fbcfd68390",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.025022666959557682,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-283",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "84f4c9a503779604fa7444972ab517fed89d6c8457ee57db783ece97046a516c",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "84f4c9a503779604fa7444972ab517fed89d6c8457ee57db783ece97046a516c",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.025180709024425596,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-289",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "2056a5b4475ece899a4078211f7e029e2823220df91829b33940e74f26406ce3",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "2056a5b4475ece899a4078211f7e029e2823220df91829b33940e74f26406ce3",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.04684416699456051,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-290",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "tactic",
+        "source_sha256": "c5f0bc4a274705b9e43241a352c9ada30a58dbbb6f45610031b6b7d20318ecba",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "status": "valid_exact_query_tactic_unsat",
+          "assertions": 444,
+          "source_sha256": "c5f0bc4a274705b9e43241a352c9ada30a58dbbb6f45610031b6b7d20318ecba",
+          "fresh_cli": {
+            "query": "unsat",
+            "seconds": 0.032463833049405366,
+            "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+            "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+          },
+          "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+          "kernel_checked": false
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-298",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "2b1a984af0c77b26df4a505f828e2f895ca7eaab56f24ac819590047ae4d8d87",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "2b1a984af0c77b26df4a505f828e2f895ca7eaab56f24ac819590047ae4d8d87",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006930334027856588,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.5161580000421964,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-299",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "ec5dd54465fcdd0c62ac43825d5eb26bda8fb8f75a3889f8fa7fb3affee573b8",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "ec5dd54465fcdd0c62ac43825d5eb26bda8fb8f75a3889f8fa7fb3affee573b8",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.00699041603365913,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 7.896911834017374,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-302",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "6a9a20a91e94d3510c293b3da9a194992d14dde92f3e78641ee0890d70886430",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "6a9a20a91e94d3510c293b3da9a194992d14dde92f3e78641ee0890d70886430",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006894833000842482,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.7466687920386903,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-303",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "ca3c341addcd624d0c4dfce4a4fdfc8b63c50e79abbce5fd2226f2e80d9b93b0",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "ca3c341addcd624d0c4dfce4a4fdfc8b63c50e79abbce5fd2226f2e80d9b93b0",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006892000033985823,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 4.395355457963888,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-305",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "ea1777afa51bbf81ab29e09f7c38179cb2740248a5e99e33f1e03e6ab78fc3e8",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "ea1777afa51bbf81ab29e09f7c38179cb2740248a5e99e33f1e03e6ab78fc3e8",
+            "assertions": 444,
+            "rewrites": 66,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.00697916594799608,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.865857458033133,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-306",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "c552f1c15b22b4f8480d2f05b3aa8467c8d903a206fbcd3d2c115ff9f412dc55",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "c552f1c15b22b4f8480d2f05b3aa8467c8d903a206fbcd3d2c115ff9f412dc55",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007802957959938794,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.592805333028082,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-307",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "753c0cab4319fe9f2cd74838341f8d98a507d912555ea784fb27b13b4443cc7f",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "753c0cab4319fe9f2cd74838341f8d98a507d912555ea784fb27b13b4443cc7f",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006910957978107035,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.213002583011985,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-309",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "51ffe8f52cbd7fdf606d45349ed7380eba31c1b226063aa55527720ec18e7857",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "51ffe8f52cbd7fdf606d45349ed7380eba31c1b226063aa55527720ec18e7857",
+            "assertions": 444,
+            "rewrites": 66,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006845291994977742,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.80956545798108,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-310",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "a67c458e10f852ad366b78af3a1e28ddd929cc78b2838deb3b3671c8306e6aba",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "a67c458e10f852ad366b78af3a1e28ddd929cc78b2838deb3b3671c8306e6aba",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006914875004440546,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.771495416003745,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-311",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "df99522bd863a22e1abc9dddf5ca1d1578f1e7bc5254f0b75369e26ab7291135",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "df99522bd863a22e1abc9dddf5ca1d1578f1e7bc5254f0b75369e26ab7291135",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007172374986112118,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.053161208052188,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-313",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "29a06926b31476d6e1a835309336b48f1223afbe37ee96f2051d30ad53b1912b",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "29a06926b31476d6e1a835309336b48f1223afbe37ee96f2051d30ad53b1912b",
+            "assertions": 444,
+            "rewrites": 66,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007167792005930096,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 4.630931583000347,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-314",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "0e87d02e79493d92d562200c43d61f2008f85bb20a108b7bd33f5750397495b7",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "0e87d02e79493d92d562200c43d61f2008f85bb20a108b7bd33f5750397495b7",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007308125030249357,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.542488958046306,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-315",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "2a2e0331ef10bcd0605f47d0c6631b6b05c37d6a78e516ee355f4117b1496437",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "2a2e0331ef10bcd0605f47d0c6631b6b05c37d6a78e516ee355f4117b1496437",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006959040998481214,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.57924708299106,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-317",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "fd05524e0f8cabcf36f3c964b6ea2c1da549f918d613735b372c3ae9c40e4ad1",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "fd05524e0f8cabcf36f3c964b6ea2c1da549f918d613735b372c3ae9c40e4ad1",
+            "assertions": 444,
+            "rewrites": 66,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007143458002246916,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 6.054015707981307,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-318",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "30b9e70bf0b73a5f9490347aaf1e2366c1f797c1aea97e51da4ce2260e7cffb5",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "30b9e70bf0b73a5f9490347aaf1e2366c1f797c1aea97e51da4ce2260e7cffb5",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.0068286670139059424,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 4.533174249983858,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-319",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "2dd82167f7628f6960dcb05a2c4da77fddebc25974d12f3fe9fb5642992fc8d0",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "2dd82167f7628f6960dcb05a2c4da77fddebc25974d12f3fe9fb5642992fc8d0",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006820667011197656,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.538576874998398,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-321",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "a17ac69fe30d6fd17b96e881c0a625d7c4956585fbd2646f2ded6364187d69e1",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "a17ac69fe30d6fd17b96e881c0a625d7c4956585fbd2646f2ded6364187d69e1",
+            "assertions": 444,
+            "rewrites": 66,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006992041016928852,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 4.447167624952272,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-322",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "a001b28fbc5fce1a94f723ca19ca9cc33be1959dd7441539f92bbbc682886a2e",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "a001b28fbc5fce1a94f723ca19ca9cc33be1959dd7441539f92bbbc682886a2e",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007049540989100933,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.061745457991492,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-323",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "40b4527363240d62a8a837d0ae4e56151235319fb4d4dfce644ebc70da609afc",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "40b4527363240d62a8a837d0ae4e56151235319fb4d4dfce644ebc70da609afc",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007142208982259035,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.610036541009322,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-325",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "5162c657e8cec6112e8b38d45cc598df4dc851ac1638a313203e3cfd64c7620e",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "5162c657e8cec6112e8b38d45cc598df4dc851ac1638a313203e3cfd64c7620e",
+            "assertions": 444,
+            "rewrites": 66,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007358792005106807,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.402430457994342,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-326",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "d28094c83195fc6f51c37f2aaed43b327668aedaad38fa4c8c82ad923b0040d4",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "d28094c83195fc6f51c37f2aaed43b327668aedaad38fa4c8c82ad923b0040d4",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007013124995864928,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.1446932909893803,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-327",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "094686f751f83c6c977e8f7b90e3e8adee2f73adbe8aa9cbcf55558dfb643f04",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "094686f751f83c6c977e8f7b90e3e8adee2f73adbe8aa9cbcf55558dfb643f04",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.0070917909615673125,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.408153083990328,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-329",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "77349b3723f4792a052fe0acf796e1b4b984a094fad4c1be742dd6410675a7a0",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "77349b3723f4792a052fe0acf796e1b4b984a094fad4c1be742dd6410675a7a0",
+            "assertions": 444,
+            "rewrites": 66,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006990958994720131,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 4.015982667042408,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-330",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "3c97ef5ed043693df437f3f45c966ecfc5a53e2574a4d09968d5ff574a4bfc90",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "3c97ef5ed043693df437f3f45c966ecfc5a53e2574a4d09968d5ff574a4bfc90",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006852916965726763,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 4.080216875008773,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-331",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "a70dd647aa91cb6ad7039ba8a838c548cd97481a0827b2e573865590b271db99",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "a70dd647aa91cb6ad7039ba8a838c548cd97481a0827b2e573865590b271db99",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006833584047853947,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.6343066659756005,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-334",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "883fad19d6bec1a6ef425a9d6a2146879ed6a7f53d94e59047312bcf55230c0e",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "883fad19d6bec1a6ef425a9d6a2146879ed6a7f53d94e59047312bcf55230c0e",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007109833008144051,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.9732364999945275,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-335",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "7f27dfcbfb7fbfd95ddea777cd2b4973d365bd326085e90a68beffab8fc0237f",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "7f27dfcbfb7fbfd95ddea777cd2b4973d365bd326085e90a68beffab8fc0237f",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007112166960723698,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 7.457880457979627,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-338",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "c8c52b634a17c420b4b65edb543bf5d9283861436e812d3920e66ac2c25fc452",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "c8c52b634a17c420b4b65edb543bf5d9283861436e812d3920e66ac2c25fc452",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007201042026281357,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 4.020106291980483,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-339",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "9bfc312d712b6f33b68105629cd7f99f33149268f18d88b51b357367eb04195f",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "9bfc312d712b6f33b68105629cd7f99f33149268f18d88b51b357367eb04195f",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006847958022262901,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.232015874993522,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-342",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "8ceef71d26c05435c6b899a5a7001056db485a9c3777fae2375d62058ca67d4a",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "8ceef71d26c05435c6b899a5a7001056db485a9c3777fae2375d62058ca67d4a",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007017457974143326,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.8623754589934833,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-343",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "96279be9224730323268b13b2c9208ae38952fe6c2d8ad5f329f51802609a98e",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "96279be9224730323268b13b2c9208ae38952fe6c2d8ad5f329f51802609a98e",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007129208010155708,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.961368124990258,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-346",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "02b5d8464b133b1fe250251df8f17ec0222b665d83245b26a40dff295c375515",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "02b5d8464b133b1fe250251df8f17ec0222b665d83245b26a40dff295c375515",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006860458001028746,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.6891139579820447,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-347",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "003fced4d6abf996cdecdea7e4b79d8103c8f32aa56dde543b999a50082f68f3",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "003fced4d6abf996cdecdea7e4b79d8103c8f32aa56dde543b999a50082f68f3",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007461207977030426,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 7.598730625002645,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-350",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "3895106c3f7813e55fdfc401ab0e7d0d798ed38ba3875ba7c902999860494427",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "3895106c3f7813e55fdfc401ab0e7d0d798ed38ba3875ba7c902999860494427",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007067291997373104,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.499456709017977,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-351",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "3d2e09304d850f0a3345456a79d810bb9f9ac51cd715c19f647a07df5724f8f9",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "3d2e09304d850f0a3345456a79d810bb9f9ac51cd715c19f647a07df5724f8f9",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006935874989721924,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 5.678508332988713,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-354",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "2f2a6e311da425131e4712a89010435f7d8ec7e2be97df6d1ab722cd06011764",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "2f2a6e311da425131e4712a89010435f7d8ec7e2be97df6d1ab722cd06011764",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007044166966807097,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 2.4971948330057785,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-355",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "c4e8434e1e67e59b180971a19a148da85e16f51756031000f56baa7d11e7683d",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "c4e8434e1e67e59b180971a19a148da85e16f51756031000f56baa7d11e7683d",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007001666002906859,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 6.734474625030998,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-358",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "71072f91a722ad54c7a03b893e4f38222148e82c2e18275e7b4bcd25261cb003",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "71072f91a722ad54c7a03b893e4f38222148e82c2e18275e7b4bcd25261cb003",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.006954000040423125,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 3.6670910000102594,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    },
+    {
+      "name": "group-359",
+      "verification": {
+        "status": "verified_standalone_query_unsat",
+        "kind": "piecewise",
+        "source_sha256": "85821aa2bb4bfb76ba9d872670ed09183f1eed2517c8daebb76fb2111aa8417e",
+        "verifier_sha256": "a492aa2f0ed921bc29a225c68e6eb1e572c1b8a704fc6f5134791e9972a53747",
+        "details": {
+          "normalization": {
+            "status": "valid_exact_piecewise_modulo_expansion",
+            "source_sha256": "85821aa2bb4bfb76ba9d872670ed09183f1eed2517c8daebb76fb2111aa8417e",
+            "assertions": 444,
+            "rewrites": 65,
+            "local_equalities": [
+              {
+                "file": "lemma-000.smt2",
+                "query": "unsat",
+                "seconds": 0.007357833033893257,
+                "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+              }
+            ],
+            "integer_domain_restricted": false,
+            "kernel_checked": false,
+            "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+          },
+          "query": {
+            "query": "unsat",
+            "seconds": 6.600967334001325,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        },
+        "kernel_checked": false,
+        "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+      }
+    }
+  ],
+  "targets": [
+    {
+      "name": "group-292",
+      "source_sha256": "548a16346b120555a2759c7e478d04a03b955efd6bdfe811060c2a88af8d6f8d",
+      "normalization": {
+        "status": "valid_exact_piecewise_modulo_expansion",
+        "source_sha256": "d71a0599a47d017bcfe22e2d6450fbc8309055f1141a770de37c35461a1edc50",
+        "assertions": 502,
+        "rewrites": 74,
+        "local_equalities": [
+          {
+            "file": "lemma-000.smt2",
+            "query": "unsat",
+            "seconds": 0.00705733394715935,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        ],
+        "integer_domain_restricted": false,
+        "kernel_checked": false,
+        "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+      },
+      "query": {
+        "query": "unsat",
+        "seconds": 1.8191017499775626,
+        "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+      }
+    },
+    {
+      "name": "group-300",
+      "source_sha256": "a8397f06542727d5b64cb60d97ce74a5c88cadab4dbccecef89ee601dfcca7a2",
+      "normalization": {
+        "status": "valid_exact_piecewise_modulo_expansion",
+        "source_sha256": "e1c699e668df70e8f632eb73dc52606b8b21f22e029f3d190a4811a41e080b54",
+        "assertions": 502,
+        "rewrites": 75,
+        "local_equalities": [
+          {
+            "file": "lemma-000.smt2",
+            "query": "unsat",
+            "seconds": 0.006626082991715521,
+            "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+          }
+        ],
+        "integer_domain_restricted": false,
+        "kernel_checked": false,
+        "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+      },
+      "query": {
+        "query": "unsat",
+        "seconds": 5.989118375000544,
+        "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+      }
+    }
+  ],
+  "scope": "acyclic checked-proof reuse for exact exported conjunctions; not IR/kernel/reachability/protocol or invariant-basis proof",
+  "kernel_checked": false,
+  "whole_protocol_proved": false
+}

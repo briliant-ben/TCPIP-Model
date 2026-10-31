@@ -1,0 +1,834 @@
+{
+  "status": "derived_named_query_index_not_a_combined_proof",
+  "target": "S-ACK-VALID -> ESTABLISHED",
+  "previous_index": "artifacts/ack-piecewise-remaining68/coverage-index.json",
+  "previous_index_sha256": "2889a1db8c2193bc77efb927809a84a7fa3932d019f4207d2d571699b52d08bb",
+  "previous_named_unsat_disjuncts": 349,
+  "new_checked_disjuncts": [
+    {
+      "disjunct": 292,
+      "source_sha256": "548a16346b120555a2759c7e478d04a03b955efd6bdfe811060c2a88af8d6f8d",
+      "checkpoint": "artifacts/ack-query-reuse/acceptance.json",
+      "checkpoint_sha256": "0dc7818b9e644b2363b0738095836a78e66bfcdbff0fdf8205d8befcc9799265",
+      "proof_kind": "checked_same_context_dependencies",
+      "source_assertions": 444,
+      "proved_dependencies": 58,
+      "declared_invariant": "CB-INV-MASS",
+      "ir_assertion": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "and",
+                                            "args": [
+                                              true,
+                                              {
+                                                "op": "ge",
+                                                "args": [
+                                                  {
+                                                    "var": "cb_emitted_total"
+                                                  },
+                                                  0
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "var": "cb_acked_total"
+                                              },
+                                              0
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "op": "add",
+                                            "args": [
+                                              {
+                                                "var": "cb_acked_total"
+                                              },
+                                              {
+                                                "var": "cb_partial_prefix"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "var": "svc_acked_bytes"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "le",
+                                    "args": [
+                                      {
+                                        "var": "cb_emitted_total"
+                                      },
+                                      {
+                                        "var": "svc_written_bytes"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "var": "cb_abandoned_total"
+                                  },
+                                  0
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "var": "cb_step_bytes"
+                              },
+                              0
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "le",
+                        "args": [
+                          {
+                            "var": "cb_step_bytes"
+                          },
+                          19
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "var": "cb_drop_step"
+                      },
+                      0
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "cb_emitted_total"
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "var": "cb_acked_total"
+                          },
+                          {
+                            "var": "cb_abandoned_total"
+                          }
+                        ]
+                      },
+                      {
+                        "var": "cb_live_total"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "cb_live_total"
+              },
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "op": "add",
+                                    "args": [
+                                      {
+                                        "op": "add",
+                                        "args": [
+                                          {
+                                            "op": "add",
+                                            "args": [
+                                              {
+                                                "op": "add",
+                                                "args": [
+                                                  {
+                                                    "op": "add",
+                                                    "args": [
+                                                      {
+                                                        "op": "add",
+                                                        "args": [
+                                                          {
+                                                            "op": "add",
+                                                            "args": [
+                                                              {
+                                                                "op": "add",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "add",
+                                                                    "args": [
+                                                                      {
+                                                                        "op": "add",
+                                                                        "args": [
+                                                                          {
+                                                                            "op": "add",
+                                                                            "args": [
+                                                                              0,
+                                                                              {
+                                                                                "var": "cb_length_00"
+                                                                              }
+                                                                            ]
+                                                                          },
+                                                                          {
+                                                                            "var": "cb_length_01"
+                                                                          }
+                                                                        ]
+                                                                      },
+                                                                      {
+                                                                        "var": "cb_length_02"
+                                                                      }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "var": "cb_length_03"
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "var": "cb_length_04"
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "var": "cb_length_05"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "var": "cb_length_06"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "var": "cb_length_07"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "var": "cb_length_08"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "var": "cb_length_09"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "var": "cb_length_10"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "var": "cb_length_11"
+                                  }
+                                ]
+                              },
+                              {
+                                "var": "cb_length_12"
+                              }
+                            ]
+                          },
+                          {
+                            "var": "cb_length_13"
+                          }
+                        ]
+                      },
+                      {
+                        "var": "cb_length_14"
+                      }
+                    ]
+                  },
+                  {
+                    "var": "cb_length_15"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": {
+        "CB-LEDGER": {
+          "source": "docs/tcp-sent-ledger.md",
+          "interpretation": "Finite circular ledger of actual first-send data segment lengths and seq32 exclusive ends. At most16 records, SMSS4. Retransmissions, SYN and FIN do not add a record. Existing protocol queues, sequence arithmetic and timers remain authoritative.",
+          "kind": "modeling_choice",
+          "strength": "explicit bounded segment provenance"
+        },
+        "CB-CREDIT": {
+          "source": "spec/sources/tcp-sent-ledger.json",
+          "interpretation": "Pinned lwIP2.2.1 tcp_free_acked_segments releases complete original segments; recv_acked is reported through the public sent callback once per input in this <=16-byte scope. This optional service projection retires every whole segment covered by accepted cumulative ACK, not each newly ACKed byte. It is implementation-policy modeling, not a normative TCP callback requirement.",
+          "kind": "modeling_choice",
+          "strength": "whole-original-segment sent credit"
+        },
+        "CB-ACK": {
+          "source": "spec/sources/rfc9293.txt",
+          "interpretation": "August2022 sections3.4/3.10.7.4: cumulative sequence-space acknowledgments are inherited unchanged. TCP byte credit and implementation callback credit are different observables. Accepted data ACK credit gates retirement; future/old/duplicate ACKs cannot fabricate callbacks.",
+          "kind": "modeling_choice",
+          "strength": "shared sequence/ACK semantics"
+        },
+        "CB-SCOPE": {
+          "source": "docs/tcp-sent-ledger.md",
+          "interpretation": "cb_step_bytes is an explicit IR service observation, not a Python protocol callback. Metadata tracks at most one new-data emission per atomic rule and fails an invariant on overflow. Fixed source/witness replays and real public C callbacks do not prove general TCP, socket semantics, Nagle/SWS or translator/implementation refinement.",
+          "kind": "modeling_choice",
+          "strength": "bounded observability scope"
+        }
+      },
+      "trace_scope": "documentation trace to resolved source IR; independent IR-to-SMT compiler correctness is not proved"
+    },
+    {
+      "disjunct": 300,
+      "source_sha256": "a8397f06542727d5b64cb60d97ce74a5c88cadab4dbccecef89ee601dfcca7a2",
+      "checkpoint": "artifacts/ack-query-reuse/acceptance.json",
+      "checkpoint_sha256": "0dc7818b9e644b2363b0738095836a78e66bfcdbff0fdf8205d8befcc9799265",
+      "proof_kind": "checked_same_context_dependencies",
+      "source_assertions": 444,
+      "proved_dependencies": 58,
+      "declared_invariant": "CB-INV-SLOT-00",
+      "ir_assertion": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "implies",
+                        "args": [
+                          {
+                            "op": "not",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "ite",
+                                    "args": [
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          0,
+                                          {
+                                            "var": "cb_head"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "sub",
+                                        "args": [
+                                          0,
+                                          {
+                                            "var": "cb_head"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "sub",
+                                        "args": [
+                                          16,
+                                          {
+                                            "var": "cb_head"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "var": "cb_count"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  true,
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      {
+                                        "var": "cb_length_00"
+                                      },
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "var": "cb_length_00"
+                                  },
+                                  4
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "implies",
+                    "args": [
+                      {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "not",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "ite",
+                                    "args": [
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          0,
+                                          {
+                                            "var": "cb_head"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "sub",
+                                        "args": [
+                                          0,
+                                          {
+                                            "var": "cb_head"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "sub",
+                                        "args": [
+                                          16,
+                                          {
+                                            "var": "cb_head"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "var": "cb_count"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              true,
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "var": "cb_length_00"
+                                  },
+                                  0
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "var": "cb_end_00"
+                              },
+                              {
+                                "seq": 0
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "implies",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "not",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "ite",
+                                    "args": [
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          0,
+                                          {
+                                            "var": "cb_head"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "sub",
+                                        "args": [
+                                          0,
+                                          {
+                                            "var": "cb_head"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "sub",
+                                        "args": [
+                                          16,
+                                          {
+                                            "var": "cb_head"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "var": "cb_count"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "var": "cb_head"
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          true,
+                          {
+                            "op": "not",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "var": "cb_partial_prefix"
+                                  },
+                                  {
+                                    "var": "cb_length_00"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "var": "cb_end_00"
+                          },
+                          {
+                            "op": "seq_add",
+                            "args": [
+                              {
+                                "var": "snd_una"
+                              },
+                              {
+                                "op": "sub",
+                                "args": [
+                                  {
+                                    "var": "cb_length_00"
+                                  },
+                                  {
+                                    "var": "cb_partial_prefix"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "implies",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "op": "ite",
+                                "args": [
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      0,
+                                      {
+                                        "var": "cb_head"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "sub",
+                                    "args": [
+                                      0,
+                                      {
+                                        "var": "cb_head"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "sub",
+                                    "args": [
+                                      16,
+                                      {
+                                        "var": "cb_head"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "var": "cb_count"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "op": "ite",
+                        "args": [
+                          {
+                            "op": "ge",
+                            "args": [
+                              0,
+                              {
+                                "var": "cb_head"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "sub",
+                            "args": [
+                              0,
+                              {
+                                "var": "cb_head"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "sub",
+                            "args": [
+                              16,
+                              {
+                                "var": "cb_head"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      1
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "cb_end_00"
+                  },
+                  {
+                    "op": "seq_add",
+                    "args": [
+                      {
+                        "var": "cb_end_15"
+                      },
+                      {
+                        "var": "cb_length_00"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": {
+        "CB-LEDGER": {
+          "source": "docs/tcp-sent-ledger.md",
+          "interpretation": "Finite circular ledger of actual first-send data segment lengths and seq32 exclusive ends. At most16 records, SMSS4. Retransmissions, SYN and FIN do not add a record. Existing protocol queues, sequence arithmetic and timers remain authoritative.",
+          "kind": "modeling_choice",
+          "strength": "explicit bounded segment provenance"
+        },
+        "CB-CREDIT": {
+          "source": "spec/sources/tcp-sent-ledger.json",
+          "interpretation": "Pinned lwIP2.2.1 tcp_free_acked_segments releases complete original segments; recv_acked is reported through the public sent callback once per input in this <=16-byte scope. This optional service projection retires every whole segment covered by accepted cumulative ACK, not each newly ACKed byte. It is implementation-policy modeling, not a normative TCP callback requirement.",
+          "kind": "modeling_choice",
+          "strength": "whole-original-segment sent credit"
+        },
+        "CB-ACK": {
+          "source": "spec/sources/rfc9293.txt",
+          "interpretation": "August2022 sections3.4/3.10.7.4: cumulative sequence-space acknowledgments are inherited unchanged. TCP byte credit and implementation callback credit are different observables. Accepted data ACK credit gates retirement; future/old/duplicate ACKs cannot fabricate callbacks.",
+          "kind": "modeling_choice",
+          "strength": "shared sequence/ACK semantics"
+        },
+        "CB-SCOPE": {
+          "source": "docs/tcp-sent-ledger.md",
+          "interpretation": "cb_step_bytes is an explicit IR service observation, not a Python protocol callback. Metadata tracks at most one new-data emission per atomic rule and fails an invariant on overflow. Fixed source/witness replays and real public C callbacks do not prove general TCP, socket semantics, Nagle/SWS or translator/implementation refinement.",
+          "kind": "modeling_choice",
+          "strength": "bounded observability scope"
+        }
+      },
+      "trace_scope": "documentation trace to resolved source IR; independent IR-to-SMT compiler correctness is not proved"
+    }
+  ],
+  "total_named_unsat_disjuncts": 351,
+  "total_original_disjuncts": 368,
+  "remaining_unknown_disjuncts": [
+    295,
+    296,
+    304,
+    308,
+    312,
+    316,
+    320,
+    324,
+    328,
+    332,
+    336,
+    340,
+    344,
+    348,
+    352,
+    356,
+    360
+  ],
+  "whole_target_closed": false,
+  "kernel_checked": false,
+  "scope": "exact original ledger state/length partition only; not specification coverage, whole ACK/basis or TCP proof"
+}

@@ -551,3 +551,85 @@ artifacts/ack-piecewise-remaining68保留718成员及SHA、实际driver／starti
 coverage-index.json按原query SHA拼接298既有独立分支、052／092／280和此次48，368个历史source hash均与旧tactic archive一致，298具名ID集合逐项匹配，无重复计数。现在349个原分支有具名UNSAT证据、19个仍未闭合：[292,295,296,300,304,308,312,316,320,324,328,332,336,340,344,348,352,356,360]。该index不是新的完整368组合证明，更不是规范覆盖率；全部ACK目标／父不变量基／一般TCP仍unknown或未证。此次批次中的280 unknown原样保留，另一个有限域证据只是其显式独立路径。
 
 原442冻结标准回归已通过；新增方法纳入的56专项通过，467完整组合未跑。原1260冻结依赖、258注册输入、Protocol IR／参考／原翻译器／上游lwIP／严格oracle与2750ms差异均未变。本轮查询数学证据无新增Linux／网络实验或kernel／IR解释翻译正确性声明。继续19个真实未决分支与父基、字节内容／有序输出／时序及独立实现对应，再按完整roadmap推进；整体目标未完成。
+
+## 2026-10-30：可检查的查询证明DAG与原292／300闭合
+
+新增formal/query_certificates.py和query_lemmas.py：依赖证书只能交给固定内建tactic／无前提mod／分段mod／完整有限域／已验证DAG检查器，不执行证书提供的Python／shell。每项依赖原式A∧D必须新CLI验收为UNSAT，完整有序A向量逐项相同后才允许追加¬D。目标保留全部原断言；独立Boolean组合schema检查cut推理。自依赖、跨层canonical查询环（含不同空白／注释）、上下文变化、额外假设、错极性、缺原式／未证局部等价和scope冒领均拒绝；source／checker／dependency／binary版本与所有query／log SHA绑定。独立复查使用新的输出目录，原证据不改。
+
+真实应用把core只用于选择候选，随后逐个重放全部58份既有证书。原292（账本质量守恒）、300（slot0头记录几何关系）各444原断言追加58个实际已证结论，502断言精确mod重构后producer／fresh均UNSAT：292约1.7600／1.7627秒，300约5.9087／5.9850秒；新目录独立重放全部依赖及两目标再UNSAT，context SAT。所有query仍10s。命名IR／export anchor确认当前tcp-sent-ledger语义SHA f44d0c74、原export b83da01c、1260原source／encoder／spec输入及60个selected分区重建一致；编译器仍可信，不称IR翻译证明。
+
+4真实临时复制故障（前提变更、目标充作父节点、为错极性cut重做合法mod证书、冒领协议scope）全部拒绝且原件不变。新归档安全解包后再次重放全部依赖／目标和IR锚点通过，入口artifacts/ack-query-reuse；早期只加已有索引结论而未重新验证依赖的广／core探索仅存diagnostics/ack-query-lemma-exploration，不计原目标闭合，295／296原UNKNOWN保留。新coverage-index按原source SHA从349／368推进到351／368具名查询证据，仍17未决：[295,296,304,308,312,316,320,324,328,332,336,340,344,348,352,356,360]。不是规范覆盖率或新的全368合并证明，整个ACK／父基仍未闭合。
+
+11新方法含多层复用／递归环拒绝／false依赖／错极性／vacuity等，与此前56合计67专项通过；新版本绑定runner实测67／67、0失败／错误／跳过、约5.735秒，完整输入清单／环境／ID／日志归档local-unit-runner。当前478标准发现未完整跑；旧442冻结回归已通过，原1260及258注册输入未变。新增固定checkout／upload action SHA的Ubuntu query-verification CI仅生成新证书跑专项，不调用旧Mac snapshot验收，不记Linux TCP／kernel证据。真实CI执行尚待推送后验收。
+
+Protocol IR、原参考／SMT编码器、上游lwIP、全部原unknown／Difference、严格oracle和2750ms差异未改；新增证明只属于命名有限账本state／length检查点，不覆盖全字节内容／时序／实现或TCP。运行时新helper source SHA是实际代码依据，parent Git commit仅记录祖先，完整新源码随本bundle提交。持续目标未完成，接续17项、父基及字节／有序输出／时序／实现桥与完整协议roadmap。
+
+2026-10-30：PR#4已合入main eebd27e5。本轮aaee733c保留并转codex/tcp-query-dag，合并main的13ff8c93与aaee源码完全相同，已新建并挂接草稿PR#5。Ubuntu新专项CI41079885224／job124145857544实际通过：67／67、10.319269秒、0失败／错误／跳过，1268源码输入与source head13ff8c93逐Git blob一致，checkout merge748b94ab；原ZIP／官方API来源／完整job及unit日志与离线验收见artifacts/query-verification-ci-13ff8c93。新Linux checker1bfaf5bb与Mac2f4cc814分别绑定，不放宽旧hash；CI只跑新证书单元测试，不计Linux TCP／PCAP／kernel证据。
+
+478项标准发现已在独立临时检出/private/tmp/tcpip-full478-_2gsnde8、detached13ff8c93启动，冻结1281输入。原进程PID21869／统一exec session4411已确认运行，输出/tmp/tcpip-full-regression-13ff8c93.log及同名目录保存started／inputs／test IDs；未到终态，不称全量通过。不得编辑该检出或因观察超时重启；主仓库继续开发不影响此冻结集合。旧442通过仍独立有效，67本地／Linux专项均不替代478完整组合。完整目标继续，剩17原ACK项及父基／字节时序／实现与后续协议缺口不变。
+
+## 2026-10-31：调用内证明缓存的完整证书／epoch／环检测
+
+为后续多层账本DAG加入仅在一次验证调用内存活的VerificationSession。命中绑定原source SHA、完整目录的相对文件名与内容、8个checker source、native solver SHA及Python Z3版本；schema／source／QF与canonical环检测仍先执行，并检查缓存的全部传递依赖是否碰到祖先。返回深复制，不从certificate／report恢复缓存；检查器或证书变化必须重新实际检查。独立verify默认新session，统计不是证据。检查器自己产生的日志会影响完整树digest，只有实际正向验证观察的前后树可复用。
+
+新增6方法，验证重复复用与新session重查、同source重哈希false proof拒绝、checker epoch变化强制重查、metadata注入拒绝、DAG重复父节点及warm跨层canonical环拒绝。73专项实跑7.574597秒通过、0失败／错误／跳过，输入清单及环境不变；完整ID／source hash／日志存artifacts/query-cache-local-73。最初重复节点测试假定不同日志树也命中，被真实断言发现；修正夹具为相同完整输入树，未放宽缓存键。当前标准发现增加6方法，旧478冻结回归仍在独立13ff8c93检出运行，不被主目录修改影响。
+
+新helper SHA／result字段有意与旧epoch不同；原ack-query-reuse归档保持不变，应在其命名13ff8c93 epoch重放，不改旧hash使之适配新版。后续新DAG须从原始SMT和primitive证书重新bootstrap，独立新session验收。另15个头记录查询在探索中得到UNSAT候选，295／296仍UNKNOWN；候选尚未重放依赖，不新增closure，具名索引仍351/368、17未决。没有IR／旧编码器／上游lwIP／oracle／2750ms差异或kernel、完整TCP范围变化，整体目标继续。
+
+2026-10-31：缓存里程碑f3c2753c实际Ubuntu CI41086527120／job124169024837／artifact12991692309通过73/73，12.623310秒、0失败／错误／跳过。原ZIP SHA8b65d8ab、官方job／artifact来源、source head f3c2753c与checkout merge fe7cc9d8、完整decoded job gzip／unit日志已存artifacts/query-cache-ci-f3c2753c；独立离线验收逐Git blob检查1268输入，73 IDs与本地相同，全部通过。原Mac与Linux binary各自严格绑定，无旧snapshot哈希变更。仅新生成证明单元测试的Linux执行，不计Linux TCP／PCAP／kernel或新增ACK闭合；新的15头记录DAG仍在真实依赖重放中。
+
+## 2026-10-31：原ACK其余15个头记录查询的独立证据链
+
+artifacts/ack-query-head-chain从原始SMT和primitive证书在当前helper epoch重新bootstrap292／300，再逐项核验351个依赖；全部443有序共同前提逐项相同，15个原444断言目标各仅追加351个实际已证结论，795断言完整保留。每个producer两次native UNSAT，范围4.162133–6.165996秒；每query10s不变，上下文SAT。调用内351份不同证书实际检查、174次同完整树复用，绝不从报告装载缓存。
+
+原件封存后安全解包，新的空session独立复查全部依赖／嵌套bootstrap／15目标，native范围4.248876–6.154632秒，全部UNSAT且context SAT；fresh统计390次实际证书检查、77次调用内复用；统计按完整目录树区分，不等同原查询数，不能充当证明依据。原IR语义f44d0c74／export b83da01c、1260旧输入与全部366选中分区逐式重建再次验收；3个重哈希临时副本故障（改父source、改目标source、冒领协议scope）全拒绝、原件不变。完整query／实际runtime helper source／控制器与选择／原日志／解包重检日志及SHA清单已保留，入口accept.py须使用新输出目录。该验收本身同时覆盖独立重检与归档恢复，不额外重复同一完整运行。
+
+具名索引由351/368增至366/368，仅新增304、308、…、360共15个原头几何子句。仍295（partial prefix非负）／296（≤3）未闭合，不是完整ACK／父不变量基、全368组合、字节内容／有序输出／时序／实现／TCP证明。额外探索295仍UNKNOWN、296在加入15候选结论后UNSAT，仅保存diagnostics/ack-last-two-exploration，未作为296证据；前17候选及core UNKNOWN均完整保留diagnostics/ack-head-chain-exploration。旧UNKNOWN和命名旧epoch报告未改。
+
+当前发现484方法；73专项在本地和实际Ubuntu f3c2753c CI通过，不能替代独立13ff8c93的478冻结回归。该旧进程及源检出仍单独保留，1281输入已逐Git blob核对，无新全量通过声明。Protocol IR、原参考／SMT编码器、上游lwIP、oracle及2750ms Difference不动；无新Linux TCP／PCAP或kernel证据。下一步继续295／296、完整账本基及全字节时序／实现桥，再按原协议roadmap推进，整体目标未完成。
+
+2026-10-31：独立13ff8c93冻结的478项标准回归已终态全部通过，unittest5348.520秒／runner5348.724803秒，0失败／错误／跳过，1281依赖及环境未变，原session4411实际exit0。原started／输入／478唯一ID／result／完整日志与独立验收存artifacts/full-regression-13ff8c93；1281输入还逐不可变Git blob及运行结束后的独立检出原字节核对通过，检出clean且保留。此前running叙述仅为历史，以此终态为准，不再轮询或重启原进程。该478是命名旧source集合；后续缓存／候选生成器方法与专项另计，不能推算为后续组合全通过。没有新增Linux TCP／PCAP、kernel或完整协议证明；原UNKNOWN及2750ms等Difference保留，完整目标继续。
+
+## 2026-10-31：原样有限替换的非可信候选生成器
+
+新增tools/propose_finite_certificate.py，只生成既有finite／piecewise／exact-tactic格式数据，不改变8个固定检查器、模型、IR或oracle。每case保留原断言并添加完整源域case等式与raw替换候选；原样打印后必须先读回实际query，再据此构造局部XOR，严格结构检查保持不变。初版虽全部native路线UNSAT，真实295仍因共享合取在序列化中重结合而被现有f.check_terms拒绝；修复生成器而非放宽检查，原候选／源码／拒绝日志／默认UNKNOWN完整保存diagnostics/ack-prefix-proposal-serialization。
+
+每case局部等价及叶均有来源SHA绑定的固定tactic证书；默认finite策略本生成阶段未执行，明确unknown/not run，不能把native_routes_complete_unverified当验收。独立检查器仍重建／运行默认检查，再新CLI验收全部替代路线。4新方法覆盖独立验收、重哈希错候选及伪正结果、可满足source的metadata冒领、真实大共享合取回归；与既有73合计77专项8.003138秒通过，0失败／错误／跳过，原始input／IDs／环境／日志见artifacts/finite-proposal-local-77。runner显式绑定未提交的新生成器源码，实际SHA而非parent Git识别本次代码。当前发现488但未完整跑新组合；478旧source已完整通过并独立归档。
+
+295／296新版各32条native候选路线已UNSAT，尚在独立证书复查中，不新增已验收闭合，索引仍366/368。IR→SMT桥／Python／Z3仍可信；无新kernel、Linux TCP／PCAP或完整协议声明。旧IR／编码器／lwIP／所有Difference及2750ms保持，完整目标继续。
+
+2026-10-31：raw finite生成器ca9d6f24的实际Ubuntu CI41165740563／job124432792129／artifact13029157918通过77/77，14.931918秒、0失败／错误／跳过。原ZIP SHA4e96a94a、官方来源／decoded job gzip／unit日志及验收存artifacts/finite-proposal-ci-ca9d6f24；source head ca9d6f24／checkout merge7ee7ecdd分开绑定，1271源输入逐不可变Git blob核对，77 IDs与本地相同。仅新证书专项和真实共享合取结构回归，不计Linux TCP／PCAP、旧Mac实证重放或kernel。当前488组合未跑，旧478标准回归已通过；295／296虽各已独立证书验收，最终来源／故障／安全解包验收尚在进行，具名索引仍366/368。完整目标继续。
+
+## 2026-10-31：原ACK最后两项prefix上下界的完整有限域证据
+
+artifacts/ack-prefix-bounds使原295（cb_partial_prefix≥0）／296（≤3）各具完整16-case原式证书。源v_0_cb_head原已有0≤head<16，完整覆盖只使用原420断言两个正子句；不是新模型界。所有444原断言在每个446断言叶中保留，加case等式和raw候选；每条局部XOR只含case等式，不含协议原式作前提。每原query的16局部等价＋16叶均有完整源SHA绑定固定tactic，producer及独立复查均UNSAT，context SAT，10s预算不变。生成器8286bf8f先序列化query并读回实际proposal再构造XOR；此前不稳定AST及默认UNKNOWN原样保留，没有改8个固定检查器或旧source／哈希。
+
+默认finite策略在新生成阶段明确not run／UNKNOWN；独立checker仍重建并运行默认检查，295默认局部等价仍可UNKNOWN，但全部32替代路线必须各自新CLI通过才接受该原query，不能把默认UNKNOWN／native候选标签当证明。两项首次独立验收后安全封存，再新目录解包重查全部source／覆盖／局部等价／叶，均通过。原IR f44d0c74／export b83da01c、1260原输入和两个完整query AST锚点一致。4个临时重哈希故障（少case、添加原协议合取作隐藏局部前提且重建真正native UNSAT证书、改source、冒领整个target）全部拒绝、原件不变。query／runtime checker及生成器source／两阶段日志／成员SHA／真实故障均保留。验收后index报告器的小语法错误已修复，未改变数学检查器或证明数据；归档保留验收时快照，当前报告器另有top-level SHA绑定。
+
+具名证据索引从366增至368/368、该原分区无缺名分支，新增仅295／296。尚未构造／检查原始完整target的合并证明，不等于完整ACK／父不变量基；旧主inductive／BMC UNKNOWN报告不改。解释／翻译桥、全字节／输出顺序／时间／实现与完整TCP及其他协议范围仍开放。77本地／Ubuntu专项与478旧source完整回归分别通过，当前488组合没有宣称全量通过。无新Linux TCP／PCAP或kernel证据；上游lwIP、oracle及2750ms Difference保持，完整目标继续。
+
+## 2026-10-31：完整导出query的通用分区覆盖检查器
+
+新增formal/query_cover.py，读取SHA绑定的export／label／断言位置与已有证书包引用，安全解包为数据而不运行包内Python；严格要求全分区index一次覆盖、每个证明完整有序前提及原违例一致。三个native义务分别验收原selected断言与全OR等价、原断言前后顺序保留的Boolean schema、已实际检查的A∧D_i UNSAT到原query的Boolean组合schema；局部重构不添加协议前提。然后以新调用内session交给既有q/g固定检查器实际重放所有父／目标；只有全部通过才关闭该命名导出合取。source、bundle及checker epoch在前后核对，不从metadata装载cache。数学8核心模块及Protocol IR均未改变，新增模块单独绑定自身source SHA。
+
+5新方法覆盖非最后selected断言的完整组合、缺／重索引、收窄前提、重哈希false组合／冒领scope、显式vacuity；与既有77合计82专项8.880724秒通过，0失败／错误／跳过，输入／环境未变，见artifacts/query-cover-local-82。当前标准发现493未跑新完整组合，旧478冻结回归通过不推算至493。真实S-ACK-VALID→ESTABLISHED全368源分支组合已提出，partition等价单独native0.070280秒UNSAT；完整分支重放仍在运行，尚未宣称原target关闭。原368具名组件、主UNKNOWN、byte/time／父基／实现及完整协议缺口均保持。
+
+## 2026-10-31：完整cover的同命题证书替换与真实UNKNOWN保留
+
+第一次真实全368组合重放在286父节点的原exact-tactic返回UNKNOWN，进程exit1，无完整query通过；该证书历史producer9.431829秒已贴近10s上限。原proposal／当时query_cover源码／实际新native日志／286原source与策略完整保留diagnostics/ack-complete-cover-first-replay，不因观察等待重启或把UNKNOWN升级。相同原444断言source acc4b87a的piecewise替代证书已由原q检查器实际独立UNSAT（6.532520秒）。模型、逻辑命题、8个核心检查器、旧输入包、预算和oracle均不变。
+
+cover plan v2允许显式原source字节完全相同的依赖证书引用；安全解包后只在新工作目录构造候选图，记录原result SHA／新证书digest，保留原叶、schema、context及历史producer元数据，重算新候选的文件清单。原归档不可变；重算清单本身不是证明，固定g检查器仍须重建并实际新CLI验收所有依赖与所有目标。任何新原式／收窄前提／未知替换种类均拒绝。2新增图模式正反方法通过，84专项10.550627秒、0失败／错误／跳过、输入与环境未变，见artifacts/query-cover-local-84；原7种图／分区行为均含其中。当前495标准发现未完整跑，旧478通过保持独立。
+
+v2真实全目标重放已在新目录/tmp/ack-complete-cover-replay-v2开始，引用原head／prefix包及286新证书；尚未验收命名原query，368组件索引不冒领完整target／父基／TCP。失败v1和所有旧UNKNOWN及2750ms Difference保持。完整原目标继续。
+
+2026-10-31：cover v2实际Ubuntu CI41169349726／job124443724284／artifact13029694863通过84/84，18.208204秒、0失败／错误／跳过。官方原ZIP SHAa30fc2d7、source head f2acf9f9／checkout merge5299b9e8、完整decoded job gzip／unit日志及独立验收见artifacts/query-cover-ci-f2acf9f9；1274输入逐不可变Git blob核对，84 IDs与本地同。仅新证书专项，不计真实TCP目标已证、Linux TCP／PCAP、旧Mac协议证据重放或kernel。真实全368 cover v1因286旧tactic10s UNKNOWN失败保留，v2换同原source证书后已过286但整体仍在重放，未宣称命名原target关闭。当前495组合未跑，旧478完整回归和原368组件证据保持，完整协议平台目标继续。
+
+## 2026-10-31：S-ACK-VALID→ESTABLISHED原完整保持义务闭合
+
+v2完整cover实际进程在/tmp/ack-complete-cover-replay-v2终态exit0，verified_original_query_cover，全部368原source分支恰一次映射，context SAT（1.623087秒）。原selected断言与全OR的无协议前提等价、原断言保留／顺序重排的Boolean schema、已验收A∧D_i到原合取的Boolean组合schema均native UNSAT，分别0.019820／0.006203／0.006089秒；不是用原协议合取作局部前提。固定g重新验收351依赖、两层bootstrap／15目标，再固定q重查295／296全部16-case与两类路线。新session392次实际证书检查、77次同树复用，未从数据加载cache；这些调用数不当作规范覆盖率。286替代piecewise在真实整图中再次UNSAT（6.310867秒），原source acc4b87a字节不变，旧包和首次10s UNKNOWN保持。
+
+artifacts/ack-complete-cover记录 bit-identical proposal、依赖包引用及SHA、actual fresh verification.json、完整native日志的无损gzip、9884条JSON／log记录及成员SHA、所有可信checker源SHA与新286证书。既有head／prefix40MB包按哈希引用、不再次复制；安全解包由实际cover.verify执行。当前IR语义f44d0c74、原export b83da01c、1260原compiler／spec输入在执行期间及终态一致；模型来源anchor单独实际执行前后检查，数学原query与当前命名IR绑定。复制相同proposal后只核对字节SHA，不为包装再重复同一重放；accept.py供将来重新从头执行数学检查和来源检查，读取retained acceptance／审计hash本身不算新数学重放。
+
+现已关闭该命名有限状态／长度保持原合取，不仅是368个组件的索引。结论只为S-ACK-VALID→ESTABLISHED，whole_model_inductive_proof／kernel／IR translation／whole_protocol均false；初值、其他transition／overlap、完整父基、字节内容／输出顺序／时间、解释翻译／实现对应与完整TCP等仍独立开放。旧主native UNKNOWN／深度6报告不覆盖或篡改；这是有严格源绑定的新组合证据。84专项本地和实际Ubuntu通过，旧478完整回归通过，当前495组合尚未完整跑。保持IR唯一权威、原参考与编码器、上游lwIP、oracle及2750ms差异；无新增Linux TCP／PCAP或kernel证据，完整原平台目标继续。
+
+2026-10-31：当前495项标准回归已在独立临时Git检出/private/tmp/tcpip-full495-i8vc8l0_、detached aec3c95cc95a322011ea006fc8760a64663d4de3启动。源／环境快照已冻结1287输入，原PID40193／统一exec session91353已确认实际运行；输出/tmp/tcpip-full-regression-aec3c95c.log及同名目录保存started／inputs／495 IDs，指针/tmp/tcpip-full495-checkout.json。不得编辑该检出或因观察超时重启；主目录继续工作不影响这份源。当前未到终态，旧13ff8c93的478通过与f2acf9f9的84本地／Ubuntu专项分别独立有效，不推算新495通过。原478 session4411已exit0，不再运行；其检出clean保留。完整平台目标仍未完成。

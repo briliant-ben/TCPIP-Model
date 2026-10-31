@@ -1,0 +1,27 @@
+{
+  "status": "all_query_reuse_controls_rejected",
+  "controls": [
+    {
+      "fault": "changed-dependency-context",
+      "status": "rejected",
+      "reason": "Original dependency identity changed"
+    },
+    {
+      "fault": "target-as-parent",
+      "status": "rejected",
+      "reason": "Original dependency identity changed"
+    },
+    {
+      "fault": "wrong-cut-polarity",
+      "status": "rejected",
+      "reason": "Assertion order, coverage or expression changed: /var/folders/8z/yn99y21n7xzcw_z2z_k8m4bc0000gn/T/ack-reuse-fault-m1at4_4d/copy/graph/targets/group-292/augmented.smt2"
+    },
+    {
+      "fault": "promoted-protocol-scope",
+      "status": "rejected",
+      "reason": "Scope, domain of claim or budget changed"
+    }
+  ],
+  "original_unchanged": true,
+  "scope": "temporary-copy proof-evidence controls only; no new protocol/implementation execution"
+}

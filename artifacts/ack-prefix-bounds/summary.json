@@ -1,0 +1,77 @@
+{
+  "status": "two_original_prefix_queries_accepted_nonvacuous",
+  "queries": [
+    {
+      "disjunct": 295,
+      "source_sha256": "4097f50eb1c0cd97d2cde64c37193377ae6e68e6a65fe14aff843d9c42e92b15",
+      "finite_cases": 16,
+      "exact_tactic_routes": 32,
+      "first_seconds": {
+        "equivalence": {
+          "min": 0.014574458997230977,
+          "max": 0.018199041951447725
+        },
+        "query": {
+          "min": 1.5059492500149645,
+          "max": 2.410312999971211
+        }
+      },
+      "fresh_seconds": {
+        "equivalence": {
+          "min": 0.014905834046658128,
+          "max": 0.015807041025254875
+        },
+        "query": {
+          "min": 1.5048417079960927,
+          "max": 2.380766209040303
+        }
+      },
+      "default_producer_status": "local_equivalence_unknown",
+      "default_replay_status": "local_equivalence_unknown",
+      "context": {
+        "query": "sat",
+        "seconds": 1.674737333029043,
+        "log_sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e"
+      }
+    },
+    {
+      "disjunct": 296,
+      "source_sha256": "ba069205a93a2e98465fd5e13f81b40fb6038463f96a3d6e0a22e555af0bbb74",
+      "finite_cases": 16,
+      "exact_tactic_routes": 32,
+      "first_seconds": {
+        "equivalence": {
+          "min": 0.015049874957185239,
+          "max": 0.019150667008943856
+        },
+        "query": {
+          "min": 0.7937268749810755,
+          "max": 1.5634257909841835
+        }
+      },
+      "fresh_seconds": {
+        "equivalence": {
+          "min": 0.014739584003109485,
+          "max": 0.01566066697705537
+        },
+        "query": {
+          "min": 0.7908733339863829,
+          "max": 1.5624752910225652
+        }
+      },
+      "default_producer_status": "local_equivalence_unknown",
+      "default_replay_status": "exact_finite_query_unsat_nonvacuous",
+      "context": {
+        "query": "sat",
+        "seconds": 1.8645723750232719,
+        "log_sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e"
+      }
+    }
+  ],
+  "source_assertions": 444,
+  "leaf_assertions": 446,
+  "source_domain": "all16 source-allowed v_0_cb_head values0..15",
+  "kernel_checked": false,
+  "whole_target_closed": false,
+  "scope": "two named finite ledger state/length queries; not combined368/basis/IR translation/bytes/time/implementation/TCP proof"
+}

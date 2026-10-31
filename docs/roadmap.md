@@ -181,3 +181,25 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 2026-10-30：通用source有限域完整覆盖／局部XOR工具完成，原账本数量280通过完整16头索引复查；head15 default unknown保留，以独立局部等价＋叶的两张精确证据闭合，不接受只证明叶的组合。56专项通过、467全量未跑；原442冻结回归已通过。当前仍需其余原ACK目标／父基／字节时序／IR-解释翻译与实现对应，不把局部闭合当完整协议。
 
 2026-10-30：其余68原ACK未知的精确模展开批次已验收：48独立UNSAT＋20UNKNOWN，原context SAT，归档新目录复查通过。与298旧具名证据及052／092／有限域280按原source SHA去重，现349/368具名证据、19原分支未闭合，完整ACK目标／父基仍未证；不是规范覆盖率。入口artifacts/ack-piecewise-remaining68及coverage-index.json。下一步按19项真实清单推进精确账本／父基与字节时序对应，保持完整协议roadmap。
+
+2026-10-30：通用可检查DAG复用把同前提已证结论作为严格cut，不允许metadata／core代替父证书。58依赖／当前IR-export锚点与原292／300完整重复验收，具名查询351/368、17仍未决；完整ACK与父基未闭合。67专项通过、478组合未跑，旧442已通过。下一步继续17账本缺口／父基，并增强全字节、有序输出、时序与实现对应；DAG query证明不替代IR语义kernel桥或完整协议。
+
+2026-10-30：PR#4已合入main eebd27e5。本轮aaee733c保留并转codex/tcp-query-dag，合并main的13ff8c93与aaee源码完全相同，已新建并挂接草稿PR#5。Ubuntu新专项CI41079885224／job124145857544实际通过：67／67、10.319269秒、0失败／错误／跳过，1268源码输入与source head13ff8c93逐Git blob一致，checkout merge748b94ab；原ZIP／官方API来源／完整job及unit日志与离线验收见artifacts/query-verification-ci-13ff8c93。新Linux checker1bfaf5bb与Mac2f4cc814分别绑定，不放宽旧hash；CI只跑新证书单元测试，不计Linux TCP／PCAP／kernel证据。
+
+478项标准发现已在独立临时检出/private/tmp/tcpip-full478-_2gsnde8、detached13ff8c93启动，冻结1281输入。原进程PID21869／统一exec session4411已确认运行，输出/tmp/tcpip-full-regression-13ff8c93.log及同名目录保存started／inputs／test IDs；未到终态，不称全量通过。不得编辑该检出或因观察超时重启；主仓库继续开发不影响此冻结集合。旧442通过仍独立有效，67本地／Linux专项均不替代478完整组合。完整目标继续，剩17原ACK项及父基／字节时序／实现与后续协议缺口不变。
+
+2026-10-31：新增完整证书树／checker与solver epoch绑定的调用内证明缓存，6个正反方法随73专项通过；独立重检默认从空缓存开始，warm传递依赖环仍拒绝。历史证据保持命名epoch，不重写版本hash。15个头记录UNSAT仍仅探索候选，未独立验收，具名查询仍351/368、17未决；下一步以新版DAG重新bootstrap和验收，295／296 unknown及父基／全字节时序／实现缺口不变。旧478冻结回归继续独立运行。
+
+2026-10-31：[ACK头记录证据链](../artifacts/ack-query-head-chain/README.md)在当前epoch重建依赖后，15个原始查询的两次native UNSAT、安全解包独立重检、366个IR/export来源绑定及3项故障拒绝全部通过。具名证据现366/368，该分区295／296仍未证，完整ACK／父基及全字节时序／实现仍开放。73专项本地与Ubuntu CI通过；旧478冻结回归单独运行，当前484完整组合未宣称通过。整体项目继续。
+
+2026-10-31：独立13ff8c93冻结的478项标准回归已终态全部通过，unittest5348.520秒／runner5348.724803秒，0失败／错误／跳过，1281依赖及环境未变，原session4411实际exit0。原started／输入／478唯一ID／result／完整日志与独立验收存artifacts/full-regression-13ff8c93；1281输入还逐不可变Git blob及运行结束后的独立检出原字节核对通过，检出clean且保留。此前running叙述仅为历史，以此终态为准，不再轮询或重启原进程。该478是命名旧source集合；后续缓存／候选生成器方法与专项另计，不能推算为后续组合全通过。没有新增Linux TCP／PCAP、kernel或完整协议证明；原UNKNOWN及2750ms等Difference保留，完整目标继续。
+
+2026-10-31：raw finite候选生成器用实际序列化后的表达式绑定局部XOR，既有检查器不变；4新正反／真实结构回归与77专项通过。295／296各32候选路线UNSAT仍待独立验收，具名索引保持366/368，不把未执行default或native候选标签当证明。478旧组合终态通过，当前488组合尚未跑；继续两项原查询、父基及全字节时序／实现对应和完整协议roadmap。
+
+2026-10-31：原ACK分区最后295／296的完整16-case证书、源域覆盖、全部局部等价与叶、新目录安全解包复查、1260输入／IR-export锚点及4项真实故障拒绝通过，见artifacts/ack-prefix-bounds。具名证据现368/368；原始完整target的合并证明、全父基及字节／时间／实现仍另行待证，旧主UNKNOWN未改。77专项本地与实际Ubuntu CI通过；13ff8c93的478完整回归终态通过，当前488组合未完整跑。下一步做具名目标的完整组合验收，并继续其他模型义务及全字节时序／实现桥，完整协议平台目标仍有效。
+
+2026-10-31：通用完整partition cover检查器及5正反方法完成，82专项通过；它按哈希引用既有包，安全解包后实际重放，要求全index和完整源前提一致，独立验证partition／断言保留／组合schema并报告vacuity。真实原ACK命名target的全368组合仍在重放，暂不称原query关闭；当前493完整组合未跑。继续完整目标验收、其他模型义务与全字节／时序／实现桥和完整协议范围。
+
+2026-10-31：S-ACK-VALID→ESTABLISHED的原完整状态／长度保持query已通过fresh全368分支重放、无协议前提partition等价、原断言保留与Boolean组合、SAT非空上下文及IR/compiler输入前后锚点，见artifacts/ack-complete-cover。不同于此前仅组件索引，现闭合一个命名原target；其余模型／父基、全字节时序／实现及完整TCP仍未证。首次286旧tactic10s UNKNOWN及旧主报告保留；v2只引用同source的piecewise证书，旧包、模型、预算与oracle不动。84专项本地／Ubuntu、旧478冻结完整回归分别通过，当前495组合未完整跑，完整目标继续。
+
+2026-10-31：当前495项标准回归已在独立临时Git检出/private/tmp/tcpip-full495-i8vc8l0_、detached aec3c95cc95a322011ea006fc8760a64663d4de3启动。源／环境快照已冻结1287输入，原PID40193／统一exec session91353已确认实际运行；输出/tmp/tcpip-full-regression-aec3c95c.log及同名目录保存started／inputs／495 IDs，指针/tmp/tcpip-full495-checkout.json。不得编辑该检出或因观察超时重启；主目录继续工作不影响这份源。当前未到终态，旧13ff8c93的478通过与f2acf9f9的84本地／Ubuntu专项分别独立有效，不推算新495通过。原478 session4411已exit0，不再运行；其检出clean保留。完整平台目标仍未完成。
