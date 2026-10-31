@@ -60,8 +60,10 @@ not yet the required second protocol/spec portability demonstration, a proof of
 the generator or a complete TCP implementation. The optional wire binding below
 adds selected TCP/IPv4 header observations to this event interface.
 
-Remaining acceptance work: a second small specification and reproducible server
-handoff acceptance. Byte-capable native data generation and broader IPv4 behavior
+The second small-spec migration case is now `flows/udp-header.json`; its finite
+scope and acceptance are recorded below. Server reproduction uses the external
+client described in `docs/spec-flow-server.md`. New Ubuntu acceptance remains a
+separate gate until the corresponding CI run completes. Byte-capable native data generation and broader IPv4 behavior
 are later extensions beyond the first fixed-header active-open slice. A pipeline must distinguish unsupported models, conflicts, invariant
 failures, environment/resource limits, stale evidence and implementation
 differences. UNKNOWN remains UNKNOWN. Existing pinned evidence and 2750ms lwIP
@@ -191,3 +193,24 @@ wire execution reports explicitly name their virtual-link origin and scope.
 Original task-v2 actual Ubuntu run41220822030/job124594805326 passed all stages,
 its 18-method flow tests and retained verification at a4776f69. That evidence is
 for task-v2, not the later wire changes. The new wire CI must pass independently.
+
+
+## Second specification and external callers
+
+`flows/udp-header.json` feeds RFC768 and RFC1122 section4.1.3.4 through the same
+unchanged ten-stage executor, Z3 encoding and native generator. Its seven explicit
+rules cover header/service descriptors, default/configurable checksum generation,
+source-port zero, length interpretation, and silent checksum/length discards.
+Three independently fixed scenario0.2 contracts supplement bounded generated
+witnesses and model-gap negatives. See `docs/udp-header-flow.md` for the exact
+abstraction: payload bytes, checksum arithmetic, UDP wire and full UDP behavior
+are excluded, and `sum_valid` is an assumed input fact.
+
+The provider-neutral client `examples/run_spec_candidate.py` accepts a candidate
+workspace, task, approved task digest and fresh output root. It invokes trusted
+tools from the tool checkout, runs retained verify after actual success and emits
+a structured caller result. A real concurrent test invokes separate TCP-wire and
+UDP candidates from an unrelated directory; no vendor-specific harness is used.
+`docs/spec-flow-server.md` gives the input/output, failure, iteration and isolation
+contract for a single caller or multiple agents. The adapter does not call an LLM
+or turn its opinion into acceptance.

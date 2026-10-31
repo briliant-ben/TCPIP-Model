@@ -655,3 +655,6 @@ artifacts/ack-complete-cover记录 bit-identical proposal、依赖包引用及SH
 
 
 2026-11-01：新增可选原生IPv4/TCP fixed-header适配，task-v3接入原十阶段flow；生成实现本身解码P命令IPv4字节、核对双校验和，通过IR guard/动作执行TCP，再产生真实C端IPv4字节。记录器仅封装原字节，不从参考输出合成egress；现有独立PCAP解码器核验，额外比较absolute seq/ACK/time/window防止归一化掩盖编码差异。一个任务保留13标量比较，并执行5完整wire种子；42输入和204产物核验一致。9 wire正反/故障测试通过，包括错误校验和、格式/四元组超范围、合法包错误ACK及生成器序列偏移；旧12原生、20流程和24旧flow分别实际通过。RFC791原文已从官方获取并固定SHA6cfb387f，格式依据§3.1及RFC9293§3.1。仅无payload/options/fragments的虚拟链路切片，无LinuxTCP/物理网络/完整IPv4行为；TCP状态与计时保持IR唯一权威。第二份规范迁移和服务器交接验收继续开放。此前task-v2 Ubuntu41220822030/job124594805326实际success，不能替代新wire版本CI。
+
+
+2026-11-01：第二份官方规范迁移案例已落地：model/udp-header.json＋RFC768/RFC1122 §4.1.3.4，声明7规则、默认／可配置checksum、零source port、长度解释及静默discard；范围为header/service descriptor，明确假设sum_valid输入，不含payload字节／checksum算术／UDP wire。未修改任何protocol_lab通用工具；同十阶段在本地实际通过，7规则覆盖、12例和14独立契约步骤，depth6 safety/overlap UNSAT仅为有界IR检查。8迁移／客户端测试通过，包括错误默认checksum、header长度及错误discard响应的独立契约拒绝。新增examples/run_spec_candidate.py和docs/spec-flow-server.md，外部调用方传独立workspace／taskSHA／out，真实并发TCP-wire＋UDP候选从无关CWD运行、独立runID并核验；无供应商API/SDK或特定agent框架依赖。客户端保留自身／Python SHA、原始JSONL和verify。此前wire Ubuntu41221600238/job124597120710全部实际success；本次新UDP／交接Ubuntu验收待对应新CI终态，不以旧CI代替。目标尚未宣布完成。

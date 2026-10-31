@@ -1,0 +1,1323 @@
+{
+  "ir_version": "0.2",
+  "protocol": "udp-ipv4-header-descriptor",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "payload byte content/copying",
+      "UDP/IP wire codec and checksum arithmetic",
+      "IPv6 checksum rules",
+      "IP address/route/fragmentation/options behavior",
+      "port binding lifecycle and ICMP port unreachable",
+      "queue/socket API and resource exhaustion",
+      "reliability or delivery/duplicate guarantees"
+    ]
+  },
+  "states": [
+    "READY"
+  ],
+  "initial_state": "READY",
+  "variables": {
+    "checksums_enabled": {
+      "type": "bool",
+      "initial": true
+    },
+    "tx_count": {
+      "type": "int",
+      "initial": 0
+    },
+    "rx_count": {
+      "type": "int",
+      "initial": 0
+    },
+    "discard_count": {
+      "type": "int",
+      "initial": 0
+    },
+    "last_payload_length": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "events": {
+    "app.configure_checksum": {
+      "origin": "application",
+      "fields": {
+        "enabled": "bool"
+      }
+    },
+    "app.send": {
+      "origin": "application",
+      "fields": {
+        "source_port": "int",
+        "destination_port": "int",
+        "payload_length": "int"
+      }
+    },
+    "net.datagram": {
+      "origin": "network",
+      "fields": {
+        "source_port": "int",
+        "destination_port": "int",
+        "length": "int",
+        "available_length": "int",
+        "checksum": "int",
+        "sum_valid": "bool"
+      }
+    }
+  },
+  "timers": {},
+  "messages": {
+    "udp.datagram": {
+      "fields": {
+        "source_port": "int",
+        "destination_port": "int",
+        "length": "int",
+        "checksum_present": "bool"
+      }
+    },
+    "udp.delivery": {
+      "fields": {
+        "source_port": "int",
+        "destination_port": "int",
+        "payload_length": "int"
+      }
+    },
+    "udp.error": {
+      "fields": {
+        "reason": "string"
+      }
+    }
+  },
+  "requirements": {
+    "UDP-LENGTH": {
+      "source": "https://www.rfc-editor.org/rfc/rfc768.txt",
+      "interpretation": "Length includes the eight-octet UDP header and data; derive descriptor payload_length=length-8.",
+      "strength": "definition",
+      "kind": "protocol_interpretation"
+    },
+    "UDP-SOURCE-PORT": {
+      "source": "https://www.rfc-editor.org/rfc/rfc768.txt",
+      "interpretation": "Source port zero represents an unused optional source port and is admitted.",
+      "strength": "definition",
+      "kind": "protocol_interpretation"
+    },
+    "UDP-CHECKSUM-ZERO": {
+      "source": "https://www.rfc-editor.org/rfc/rfc768.txt",
+      "interpretation": "A transmitted checksum of zero means checksum absent; this IPv4 profile accepts absent checksums.",
+      "strength": "definition",
+      "kind": "protocol_interpretation"
+    },
+    "UDP-CHECKSUM-RECEIVE": {
+      "source": "https://www.rfc-editor.org/rfc/rfc1122.txt",
+      "interpretation": "A nonzero invalid checksum silently discards the datagram; no delivery or network response is emitted. sum_valid is an explicit lower-layer validation fact, not a proved checksum algorithm.",
+      "strength": "MUST",
+      "kind": "protocol_interpretation"
+    },
+    "UDP-CHECKSUM-DEFAULT": {
+      "source": "https://www.rfc-editor.org/rfc/rfc1122.txt",
+      "interpretation": "Checksum generation defaults on; this profile supports optional application configuration of checksum generation.",
+      "strength": "MUST/MAY",
+      "kind": "protocol_interpretation"
+    },
+    "UDP-INTERFACE": {
+      "source": "https://www.rfc-editor.org/rfc/rfc768.txt",
+      "interpretation": "Send/receive descriptors preserve source/destination ports and payload length; byte content and IP addresses are abstracted by the selected fixed-address profile.",
+      "strength": "SHOULD",
+      "kind": "protocol_interpretation"
+    },
+    "UDP-PROFILE": {
+      "source": "docs/udp-header-flow.md",
+      "interpretation": "Bound local receive port8080 and validated IPv4 metadata; available_length0..65515, ports16bit; no IP options/fragmentation. Invalid lengths silently discard as the selected parser profile; oversized local sends produce a local error. Wrong local ports and impossible typed header fields remain model gaps, not an ICMP/drop claim.",
+      "strength": "assumption",
+      "kind": "environment_assumption"
+    }
+  },
+  "transitions": [
+    {
+      "id": "U-CONFIGURE",
+      "from": "READY",
+      "to": "READY",
+      "event": "app.configure_checksum",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "checksums_enabled",
+            "value": {
+              "event": "enabled"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "UDP-CHECKSUM-DEFAULT",
+        "UDP-PROFILE"
+      ]
+    },
+    {
+      "id": "U-SEND",
+      "from": "READY",
+      "to": "READY",
+      "event": "app.send",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "source_port"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "source_port"
+                      },
+                      65535
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "destination_port"
+                      },
+                      1
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "destination_port"
+                      },
+                      65535
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "payload_length"
+                  },
+                  0
+                ]
+              },
+              {
+                "op": "le",
+                "args": [
+                  {
+                    "event": "payload_length"
+                  },
+                  65507
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "tx_count",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "tx_count"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "udp.datagram",
+            "fields": {
+              "source_port": {
+                "event": "source_port"
+              },
+              "destination_port": {
+                "event": "destination_port"
+              },
+              "length": {
+                "op": "add",
+                "args": [
+                  {
+                    "event": "payload_length"
+                  },
+                  8
+                ]
+              },
+              "checksum_present": {
+                "var": "checksums_enabled"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "UDP-LENGTH",
+        "UDP-SOURCE-PORT",
+        "UDP-CHECKSUM-DEFAULT",
+        "UDP-INTERFACE",
+        "UDP-PROFILE"
+      ]
+    },
+    {
+      "id": "U-SEND-SIZE-ERROR",
+      "from": "READY",
+      "to": "READY",
+      "event": "app.send",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "source_port"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "source_port"
+                      },
+                      65535
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "destination_port"
+                      },
+                      1
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "destination_port"
+                      },
+                      65535
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "payload_length"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "payload_length"
+                      },
+                      65507
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "udp.error",
+            "fields": {
+              "reason": "payload_length_outside_ipv4_profile"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "UDP-PROFILE"
+      ]
+    },
+    {
+      "id": "U-DISCARD-LENGTH",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.datagram",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "source_port"
+                                  },
+                                  0
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "source_port"
+                                  },
+                                  65535
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "event": "destination_port"
+                              },
+                              8080
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "event": "length"
+                              },
+                              0
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "event": "length"
+                              },
+                              65535
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "event": "available_length"
+                          },
+                          0
+                        ]
+                      },
+                      {
+                        "op": "le",
+                        "args": [
+                          {
+                            "event": "available_length"
+                          },
+                          65515
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "checksum"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "checksum"
+                      },
+                      65535
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "length"
+                      },
+                      8
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "length"
+                      },
+                      {
+                        "event": "available_length"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "discard_count",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "discard_count"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "UDP-LENGTH",
+        "UDP-PROFILE"
+      ]
+    },
+    {
+      "id": "U-DISCARD-CHECKSUM",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.datagram",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          {
+                                            "event": "source_port"
+                                          },
+                                          0
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "event": "source_port"
+                                          },
+                                          65535
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "event": "destination_port"
+                                      },
+                                      8080
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      {
+                                        "event": "length"
+                                      },
+                                      0
+                                    ]
+                                  },
+                                  {
+                                    "op": "le",
+                                    "args": [
+                                      {
+                                        "event": "length"
+                                      },
+                                      65535
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "available_length"
+                                  },
+                                  0
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "available_length"
+                                  },
+                                  65515
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "event": "checksum"
+                              },
+                              0
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "event": "checksum"
+                              },
+                              65535
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "event": "length"
+                          },
+                          8
+                        ]
+                      },
+                      {
+                        "op": "le",
+                        "args": [
+                          {
+                            "event": "length"
+                          },
+                          {
+                            "event": "available_length"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "event": "checksum"
+                      },
+                      0
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "event": "sum_valid"
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "discard_count",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "discard_count"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "UDP-CHECKSUM-RECEIVE",
+        "UDP-PROFILE"
+      ]
+    },
+    {
+      "id": "U-DELIVER-NO-CHECKSUM",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.datagram",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      {
+                                        "event": "source_port"
+                                      },
+                                      0
+                                    ]
+                                  },
+                                  {
+                                    "op": "le",
+                                    "args": [
+                                      {
+                                        "event": "source_port"
+                                      },
+                                      65535
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "event": "destination_port"
+                                  },
+                                  8080
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "length"
+                                  },
+                                  0
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "length"
+                                  },
+                                  65535
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "event": "available_length"
+                              },
+                              0
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "event": "available_length"
+                              },
+                              65515
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "event": "checksum"
+                          },
+                          0
+                        ]
+                      },
+                      {
+                        "op": "le",
+                        "args": [
+                          {
+                            "event": "checksum"
+                          },
+                          65535
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "length"
+                      },
+                      8
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "length"
+                      },
+                      {
+                        "event": "available_length"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "event": "checksum"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rx_count",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "rx_count"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "last_payload_length",
+            "value": {
+              "op": "sub",
+              "args": [
+                {
+                  "event": "length"
+                },
+                8
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "udp.delivery",
+            "fields": {
+              "source_port": {
+                "event": "source_port"
+              },
+              "destination_port": {
+                "event": "destination_port"
+              },
+              "payload_length": {
+                "var": "last_payload_length"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "UDP-LENGTH",
+        "UDP-SOURCE-PORT",
+        "UDP-CHECKSUM-ZERO",
+        "UDP-INTERFACE",
+        "UDP-PROFILE"
+      ]
+    },
+    {
+      "id": "U-DELIVER-CHECKSUM",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.datagram",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          {
+                                            "event": "source_port"
+                                          },
+                                          0
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "event": "source_port"
+                                          },
+                                          65535
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "event": "destination_port"
+                                      },
+                                      8080
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      {
+                                        "event": "length"
+                                      },
+                                      0
+                                    ]
+                                  },
+                                  {
+                                    "op": "le",
+                                    "args": [
+                                      {
+                                        "event": "length"
+                                      },
+                                      65535
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "available_length"
+                                  },
+                                  0
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "available_length"
+                                  },
+                                  65515
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "event": "checksum"
+                              },
+                              0
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "event": "checksum"
+                              },
+                              65535
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "event": "length"
+                          },
+                          8
+                        ]
+                      },
+                      {
+                        "op": "le",
+                        "args": [
+                          {
+                            "event": "length"
+                          },
+                          {
+                            "event": "available_length"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "event": "checksum"
+                      },
+                      0
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "event": "sum_valid"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "rx_count",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "rx_count"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "last_payload_length",
+            "value": {
+              "op": "sub",
+              "args": [
+                {
+                  "event": "length"
+                },
+                8
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "udp.delivery",
+            "fields": {
+              "source_port": {
+                "event": "source_port"
+              },
+              "destination_port": {
+                "event": "destination_port"
+              },
+              "payload_length": {
+                "var": "last_payload_length"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "UDP-LENGTH",
+        "UDP-SOURCE-PORT",
+        "UDP-CHECKSUM-RECEIVE",
+        "UDP-INTERFACE",
+        "UDP-PROFILE"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "U-COUNTERS-NONNEGATIVE",
+      "requirements": [
+        "UDP-PROFILE"
+      ],
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "tx_count"
+                  },
+                  0
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "rx_count"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "discard_count"
+              },
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "U-DELIVERY-LENGTH",
+      "requirements": [
+        "UDP-LENGTH",
+        "UDP-PROFILE"
+      ],
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "last_payload_length"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "last_payload_length"
+              },
+              65507
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
