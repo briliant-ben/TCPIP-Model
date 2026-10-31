@@ -599,3 +599,11 @@ artifacts/ack-query-head-chain从原始SMT和primitive证书在当前helper epoc
 295／296新版各32条native候选路线已UNSAT，尚在独立证书复查中，不新增已验收闭合，索引仍366/368。IR→SMT桥／Python／Z3仍可信；无新kernel、Linux TCP／PCAP或完整协议声明。旧IR／编码器／lwIP／所有Difference及2750ms保持，完整目标继续。
 
 2026-10-31：raw finite生成器ca9d6f24的实际Ubuntu CI41165740563／job124432792129／artifact13029157918通过77/77，14.931918秒、0失败／错误／跳过。原ZIP SHA4e96a94a、官方来源／decoded job gzip／unit日志及验收存artifacts/finite-proposal-ci-ca9d6f24；source head ca9d6f24／checkout merge7ee7ecdd分开绑定，1271源输入逐不可变Git blob核对，77 IDs与本地相同。仅新证书专项和真实共享合取结构回归，不计Linux TCP／PCAP、旧Mac实证重放或kernel。当前488组合未跑，旧478标准回归已通过；295／296虽各已独立证书验收，最终来源／故障／安全解包验收尚在进行，具名索引仍366/368。完整目标继续。
+
+## 2026-10-31：原ACK最后两项prefix上下界的完整有限域证据
+
+artifacts/ack-prefix-bounds使原295（cb_partial_prefix≥0）／296（≤3）各具完整16-case原式证书。源v_0_cb_head原已有0≤head<16，完整覆盖只使用原420断言两个正子句；不是新模型界。所有444原断言在每个446断言叶中保留，加case等式和raw候选；每条局部XOR只含case等式，不含协议原式作前提。每原query的16局部等价＋16叶均有完整源SHA绑定固定tactic，producer及独立复查均UNSAT，context SAT，10s预算不变。生成器8286bf8f先序列化query并读回实际proposal再构造XOR；此前不稳定AST及默认UNKNOWN原样保留，没有改8个固定检查器或旧source／哈希。
+
+默认finite策略在新生成阶段明确not run／UNKNOWN；独立checker仍重建并运行默认检查，295默认局部等价仍可UNKNOWN，但全部32替代路线必须各自新CLI通过才接受该原query，不能把默认UNKNOWN／native候选标签当证明。两项首次独立验收后安全封存，再新目录解包重查全部source／覆盖／局部等价／叶，均通过。原IR f44d0c74／export b83da01c、1260原输入和两个完整query AST锚点一致。4个临时重哈希故障（少case、添加原协议合取作隐藏局部前提且重建真正native UNSAT证书、改source、冒领整个target）全部拒绝、原件不变。query／runtime checker及生成器source／两阶段日志／成员SHA／真实故障均保留。验收后index报告器的小语法错误已修复，未改变数学检查器或证明数据；归档保留验收时快照，当前报告器另有top-level SHA绑定。
+
+具名证据索引从366增至368/368、该原分区无缺名分支，新增仅295／296。尚未构造／检查原始完整target的合并证明，不等于完整ACK／父不变量基；旧主inductive／BMC UNKNOWN报告不改。解释／翻译桥、全字节／输出顺序／时间／实现与完整TCP及其他协议范围仍开放。77本地／Ubuntu专项与478旧source完整回归分别通过，当前488组合没有宣称全量通过。无新Linux TCP／PCAP或kernel证据；上游lwIP、oracle及2750ms Difference保持，完整目标继续。

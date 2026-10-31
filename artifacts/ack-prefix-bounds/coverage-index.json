@@ -1,0 +1,207 @@
+{
+  "status": "all_named_disjuncts_have_evidence_not_a_combined_target_proof",
+  "target": "S-ACK-VALID -> ESTABLISHED",
+  "previous_index": "artifacts/ack-query-head-chain/coverage-index.json",
+  "previous_index_sha256": "31f0537cf57b29600f37830aaad2509184d60615358a8d4ebc2e60f38d3173f1",
+  "previous_named_unsat_disjuncts": 366,
+  "new_checked_disjuncts": [
+    {
+      "disjunct": 295,
+      "source_sha256": "4097f50eb1c0cd97d2cde64c37193377ae6e68e6a65fe14aff843d9c42e92b15",
+      "checkpoint": "artifacts/ack-prefix-bounds/acceptance.json",
+      "checkpoint_sha256": "c048935b180e70ec0a61263fddc6104e9b75f11c7041a69783777057b322dd77",
+      "proof_kind": "full_source_domain_raw_finite_with_checked_local_and_leaf_routes",
+      "source_assertions": 444,
+      "finite_cases": 16,
+      "checked_tactic_routes": 32,
+      "declared_invariant": "CB-INV-PARTIAL",
+      "ir_assertion": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  true,
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "cb_partial_prefix"
+                      },
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "var": "cb_live_total"
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "rtx_buf"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "cb_partial_prefix"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "cb_partial_prefix"
+              },
+              3
+            ]
+          }
+        ]
+      },
+      "requirements": {
+        "CB-LEDGER": {
+          "source": "docs/tcp-sent-ledger.md",
+          "interpretation": "Finite circular ledger of actual first-send data segment lengths and seq32 exclusive ends. At most16 records, SMSS4. Retransmissions, SYN and FIN do not add a record. Existing protocol queues, sequence arithmetic and timers remain authoritative.",
+          "kind": "modeling_choice",
+          "strength": "explicit bounded segment provenance"
+        },
+        "CB-CREDIT": {
+          "source": "spec/sources/tcp-sent-ledger.json",
+          "interpretation": "Pinned lwIP2.2.1 tcp_free_acked_segments releases complete original segments; recv_acked is reported through the public sent callback once per input in this <=16-byte scope. This optional service projection retires every whole segment covered by accepted cumulative ACK, not each newly ACKed byte. It is implementation-policy modeling, not a normative TCP callback requirement.",
+          "kind": "modeling_choice",
+          "strength": "whole-original-segment sent credit"
+        },
+        "CB-ACK": {
+          "source": "spec/sources/rfc9293.txt",
+          "interpretation": "August2022 sections3.4/3.10.7.4: cumulative sequence-space acknowledgments are inherited unchanged. TCP byte credit and implementation callback credit are different observables. Accepted data ACK credit gates retirement; future/old/duplicate ACKs cannot fabricate callbacks.",
+          "kind": "modeling_choice",
+          "strength": "shared sequence/ACK semantics"
+        },
+        "CB-SCOPE": {
+          "source": "docs/tcp-sent-ledger.md",
+          "interpretation": "cb_step_bytes is an explicit IR service observation, not a Python protocol callback. Metadata tracks at most one new-data emission per atomic rule and fails an invariant on overflow. Fixed source/witness replays and real public C callbacks do not prove general TCP, socket semantics, Nagle/SWS or translator/implementation refinement.",
+          "kind": "modeling_choice",
+          "strength": "bounded observability scope"
+        }
+      },
+      "trace_scope": "one lower/upper prefix subclause in the declared finite IR invariant; IR compiler correctness remains trusted"
+    },
+    {
+      "disjunct": 296,
+      "source_sha256": "ba069205a93a2e98465fd5e13f81b40fb6038463f96a3d6e0a22e555af0bbb74",
+      "checkpoint": "artifacts/ack-prefix-bounds/acceptance.json",
+      "checkpoint_sha256": "c048935b180e70ec0a61263fddc6104e9b75f11c7041a69783777057b322dd77",
+      "proof_kind": "full_source_domain_raw_finite_with_checked_local_and_leaf_routes",
+      "source_assertions": 444,
+      "finite_cases": 16,
+      "checked_tactic_routes": 32,
+      "declared_invariant": "CB-INV-PARTIAL",
+      "ir_assertion": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  true,
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "cb_partial_prefix"
+                      },
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "var": "cb_live_total"
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "rtx_buf"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "cb_partial_prefix"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "cb_partial_prefix"
+              },
+              3
+            ]
+          }
+        ]
+      },
+      "requirements": {
+        "CB-LEDGER": {
+          "source": "docs/tcp-sent-ledger.md",
+          "interpretation": "Finite circular ledger of actual first-send data segment lengths and seq32 exclusive ends. At most16 records, SMSS4. Retransmissions, SYN and FIN do not add a record. Existing protocol queues, sequence arithmetic and timers remain authoritative.",
+          "kind": "modeling_choice",
+          "strength": "explicit bounded segment provenance"
+        },
+        "CB-CREDIT": {
+          "source": "spec/sources/tcp-sent-ledger.json",
+          "interpretation": "Pinned lwIP2.2.1 tcp_free_acked_segments releases complete original segments; recv_acked is reported through the public sent callback once per input in this <=16-byte scope. This optional service projection retires every whole segment covered by accepted cumulative ACK, not each newly ACKed byte. It is implementation-policy modeling, not a normative TCP callback requirement.",
+          "kind": "modeling_choice",
+          "strength": "whole-original-segment sent credit"
+        },
+        "CB-ACK": {
+          "source": "spec/sources/rfc9293.txt",
+          "interpretation": "August2022 sections3.4/3.10.7.4: cumulative sequence-space acknowledgments are inherited unchanged. TCP byte credit and implementation callback credit are different observables. Accepted data ACK credit gates retirement; future/old/duplicate ACKs cannot fabricate callbacks.",
+          "kind": "modeling_choice",
+          "strength": "shared sequence/ACK semantics"
+        },
+        "CB-SCOPE": {
+          "source": "docs/tcp-sent-ledger.md",
+          "interpretation": "cb_step_bytes is an explicit IR service observation, not a Python protocol callback. Metadata tracks at most one new-data emission per atomic rule and fails an invariant on overflow. Fixed source/witness replays and real public C callbacks do not prove general TCP, socket semantics, Nagle/SWS or translator/implementation refinement.",
+          "kind": "modeling_choice",
+          "strength": "bounded observability scope"
+        }
+      },
+      "trace_scope": "one lower/upper prefix subclause in the declared finite IR invariant; IR compiler correctness remains trusted"
+    }
+  ],
+  "total_named_unsat_disjuncts": 368,
+  "total_original_disjuncts": 368,
+  "remaining_unknown_disjuncts": [],
+  "whole_target_closed": false,
+  "kernel_checked": false,
+  "scope": "named original finite ledger query evidence only; original combined target and full basis/IR/bytes/time/implementation/TCP proof are separate"
+}

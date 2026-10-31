@@ -1,0 +1,1638 @@
+{
+  "status": "accepted_original_prefix_queries_after_archive_replay",
+  "closed_original_disjuncts": [
+    295,
+    296
+  ],
+  "ir_anchor": {
+    "status": "valid_named_ir_export_anchor",
+    "model": "model/tcp-sent-ledger.json",
+    "model_semantic_sha256": "f44d0c74397487e17a5c5e0358105fff4ca7a27dc5cf239130ce1c54056cf0dd",
+    "source_export_sha256": "b83da01cb5f1f4ec72c7e9485e357ec9c57044d99c5411be5634087bc62aad8d",
+    "source_input_manifest_sha256": "227a81b115ad341b4fbd7ba2d2792bd578d6f05ba2d12e5565388a65991e5942",
+    "unchanged_input_files": 1260,
+    "queries": [
+      {
+        "disjunct": 295,
+        "source_sha256": "4097f50eb1c0cd97d2cde64c37193377ae6e68e6a65fe14aff843d9c42e92b15"
+      },
+      {
+        "disjunct": 296,
+        "source_sha256": "ba069205a93a2e98465fd5e13f81b40fb6038463f96a3d6e0a22e555af0bbb74"
+      }
+    ],
+    "byte_encoding": "exact_length_projection_content_insensitive_subset",
+    "sequence_encoding": "modular_integer_full_32bit_domain",
+    "ir_translation_proved": false,
+    "kernel_checked": false,
+    "scope": "named finite ledger state/length checkpoint only; encoder remains trusted, no full-byte/time/implementation or general protocol proof"
+  },
+  "proof_checks": {
+    "status": "verified_original_prefix_queries_nonvacuous",
+    "queries": [
+      {
+        "disjunct": 295,
+        "verification": {
+          "status": "verified_standalone_query_unsat",
+          "kind": "finite",
+          "source_sha256": "4097f50eb1c0cd97d2cde64c37193377ae6e68e6a65fe14aff843d9c42e92b15",
+          "verifier_sha256": "25c54e18e5f84ceaf41e0c7ecf9a0ac1a4cba36905c2a256ad2657509e149a7b",
+          "details": {
+            "normalization": {
+              "status": "valid_exact_piecewise_modulo_expansion",
+              "source_sha256": "4097f50eb1c0cd97d2cde64c37193377ae6e68e6a65fe14aff843d9c42e92b15",
+              "assertions": 444,
+              "rewrites": 65,
+              "local_equalities": [
+                {
+                  "file": "lemma-000.smt2",
+                  "query": "unsat",
+                  "seconds": 0.010467042040545493,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              ],
+              "integer_domain_restricted": false,
+              "kernel_checked": false,
+              "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+            },
+            "finite": {
+              "status": "valid_finite_specialization",
+              "producer_status": "local_equivalence_unknown",
+              "fresh_status": "local_equivalence_unknown",
+              "source_sha256": "dccb636c93e59be4bbfebd3033fc6c45e578056efa5d5641e582dce0c3442d31",
+              "context": {
+                "query": "sat",
+                "seconds": 1.674737333029043,
+                "log_sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e"
+              },
+              "cases": [
+                {
+                  "value": 0,
+                  "equivalence": {
+                    "query": "unknown",
+                    "seconds": 10.01715604198398,
+                    "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+                  },
+                  "query": {
+                    "query": "unknown"
+                  }
+                },
+                {
+                  "value": 1,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 6.501398416992743,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 2.092564916005358,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 2,
+                  "equivalence": {
+                    "query": "unknown",
+                    "seconds": 10.018577874987386,
+                    "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+                  },
+                  "query": {
+                    "query": "unknown"
+                  }
+                },
+                {
+                  "value": 3,
+                  "equivalence": {
+                    "query": "unknown",
+                    "seconds": 10.019067250017542,
+                    "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+                  },
+                  "query": {
+                    "query": "unknown"
+                  }
+                },
+                {
+                  "value": 4,
+                  "equivalence": {
+                    "query": "unknown",
+                    "seconds": 10.019291125005111,
+                    "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+                  },
+                  "query": {
+                    "query": "unknown"
+                  }
+                },
+                {
+                  "value": 5,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 5.3083019579644315,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 2.15867395803798,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 6,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 0.28521875001024455,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 2.0101275839842856,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 7,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 4.483461333962623,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.9632669579586945,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 8,
+                  "equivalence": {
+                    "query": "unknown",
+                    "seconds": 10.019368416978978,
+                    "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+                  },
+                  "query": {
+                    "query": "unknown"
+                  }
+                },
+                {
+                  "value": 9,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 8.33228416700149,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 2.0368979159975424,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 10,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 7.7219785419874825,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.9363012080430053,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 11,
+                  "equivalence": {
+                    "query": "unknown",
+                    "seconds": 10.0171244579833,
+                    "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+                  },
+                  "query": {
+                    "query": "unknown"
+                  }
+                },
+                {
+                  "value": 12,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 9.361045792000368,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 2.050574583001435,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 13,
+                  "equivalence": {
+                    "query": "unknown",
+                    "seconds": 10.019468541024253,
+                    "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+                  },
+                  "query": {
+                    "query": "unknown"
+                  }
+                },
+                {
+                  "value": 14,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 4.827704249997623,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 2.142704917001538,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 15,
+                  "equivalence": {
+                    "query": "unknown",
+                    "seconds": 10.015290000010282,
+                    "log_sha256": "7f51b4fb44dbc72708fac0a474600c2e9d8af4ce3a8b8f1680330454f6a8d68f"
+                  },
+                  "query": {
+                    "query": "unknown"
+                  }
+                }
+              ],
+              "scope": "one exported conjunction; finite specialization, not IR/kernel/reachability/protocol proof",
+              "kernel_checked": false
+            },
+            "alternatives": [
+              {
+                "value": 0,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "51d59c90ffdea6e168f88824efe9ac92996efa3214d5a25f8ad82a024078317b",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015807041025254875,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 0,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "4c95b1af6da28043b4ed3c831db7f62363ebabe785f83b550cbb97e9e206c25a",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.5048417079960927,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 1,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "56ed1b12244c916f5ffaa6f3f22f036b58e7dd044b1b5625934eade120b572de",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015780707995872945,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 1,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "3ec79261fc8da59b00017259485ddd8728937a99868fc757d43405484fc7b9f8",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.856551666976884,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 2,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "7524b3774e840f513a2680716aa492353b816fd89e80d0a0cc337969c551b1dd",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015229084005113691,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 2,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "d6391e3a795be0262de9f3eb5c2037ee0c6865a40b3fab809f0c8f001eb9174a",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 2.380766209040303,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 3,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "8e36651211b4dc6fdae27fa7b1868e7e8101410603eb8ff76c3aca682d33b6d2",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015199833957012743,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 3,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "b8b87ded5c885c5f35f09c74dec68f1b7f2ba43c5a6341a759c01eded8fbf709",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.981600166996941,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 4,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "1b836cb7f67b9b5886a730c05afdc04e8927d9ae00467f005c0f14611c7fe7bd",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015343458973802626,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 4,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "67e4ebc190ca9359f13aef342cb1754358826a035a5cd55b212bad81dc7b88bb",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.6259068750077859,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 5,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "a0a932e59c9d0a4c023de167bd46a65d39cdf5067a233d7f119218535a5affa0",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015248959010932595,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 5,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "9db73d0310b3c3197864742ac6aad45f37af01fd454ad118769c4e3d8b6b3ae4",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.8246929590241052,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 6,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "c65a8ddd8eb0239d883aae66d5887c59adc7c02270ed40bfa39be67cbce98766",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.0153079999727197,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 6,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "825e4578803e33d552d693fcc9649e91f7439959ef81a50bf8fb9644a6a21b1b",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.6260221250122413,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 7,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "59a9f38ff9a1c86295ba097c533f2d56e83afdbbc0d78f45aac876d179733059",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015210666984785348,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 7,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "4ee0612588f452743d13f944f59dd0fc3e28787de6a65c6cc922b657b920548f",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.68522754102014,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 8,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "006670d085ff904c5cfe6a04251159dec265e960690658ccfb83f8ed056c8217",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.014940666034817696,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 8,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "6456711227e5c418509950629d7478729aa99a5b0bfa581a11179593ddde65db",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.7243181660305709,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 9,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "3325de906500697220ff4861fbe7f6b9b3055d7070067bbb351423f3f566534c",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015215250023175031,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 9,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "68aaaffd11f1ea587d7e0abf7ecde09c913fb650988f4ead75f79993e05565da",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.827719959022943,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 10,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "708ee1e8c84f5637f48995f465ae7c40b3ab82ba45a598aaa464aa9c84ec0151",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.014905834046658128,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 10,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "b1be248cc4d4e6b5651d1eb0537903232da8edc61944529d531e431fe2a1e6a0",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 2.101350042037666,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 11,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "40555b4280f7a2018a935b1406d52b1ed1c4d530e65d82d01edb663fcda05b3d",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.014956416969653219,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 11,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "7ce5a5f6c094664ae384dfd0ae20daae6b59acc5813a50a48fd879cb25b34273",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 2.091201125003863,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 12,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "4b0f4a2a0a64021699c99c73ab5b6f88ecdbf55598906c8dec73463b8a49f737",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015205542033072561,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 12,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "ab65c84388e9f3eaa2c80246e2c89351e475a798dc2e84217424d2bbf7103ef6",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.5704058749834076,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 13,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "513cef6edcd8ed694fd554f05a4acc7eb74485c1640e3d00b18dc9c4fcb6e6f7",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015082291967701167,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 13,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "13015f0b0f83bfd2900de6bec0ea6bd67e7e6ca11c92f22867fd15eb7d592163",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.8237100830301642,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 14,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "1ae0fa5144f82db4281726ec55873e93dbd28e0cf768290164bd631e4f1ce2b6",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015270875010173768,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 14,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "e3d70b8f297201b9afda3feb1956888bc964a4c76cc81d5c9843d9fff55e1558",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.9752337919780985,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 15,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "e8c7c5a69b119d61aa56331f4bdf2bafb6ae2759752e195160ce8435be7f6541",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015219374967273325,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 15,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "df4471b2e4e0c864ffc3c953aa6da9965de872eae1770b6a43668b4425df188c",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 2.0009231669828296,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              }
+            ]
+          },
+          "kernel_checked": false,
+          "verification_session_id": "4ea3ceb4f437420abf8ff0b9eba5e862",
+          "verification_id": 1,
+          "cached_verification": false,
+          "certificate_input_digest": "fdd3eeb9b6c4c08449bb1b4ccbc171114b93af53d8341ecd9d13fe4f9d3938d5",
+          "proof_query_fingerprints": [
+            "74865898639c6c623fb5c50a20b9e22c642ed09c488c59bc83a2b55a78dc69be"
+          ],
+          "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+        }
+      },
+      {
+        "disjunct": 296,
+        "verification": {
+          "status": "verified_standalone_query_unsat",
+          "kind": "finite",
+          "source_sha256": "ba069205a93a2e98465fd5e13f81b40fb6038463f96a3d6e0a22e555af0bbb74",
+          "verifier_sha256": "25c54e18e5f84ceaf41e0c7ecf9a0ac1a4cba36905c2a256ad2657509e149a7b",
+          "details": {
+            "normalization": {
+              "status": "valid_exact_piecewise_modulo_expansion",
+              "source_sha256": "ba069205a93a2e98465fd5e13f81b40fb6038463f96a3d6e0a22e555af0bbb74",
+              "assertions": 444,
+              "rewrites": 65,
+              "local_equalities": [
+                {
+                  "file": "lemma-000.smt2",
+                  "query": "unsat",
+                  "seconds": 0.007185709022451192,
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                }
+              ],
+              "integer_domain_restricted": false,
+              "kernel_checked": false,
+              "scope": "exact quantifier-free integer remainder expansion; no IR, reachability, kernel or protocol proof"
+            },
+            "finite": {
+              "status": "valid_finite_specialization",
+              "producer_status": "local_equivalence_unknown",
+              "fresh_status": "exact_finite_query_unsat_nonvacuous",
+              "source_sha256": "84c8825bafdf0d0e76029581a6ac211b472d5bc28f48ff56a74fcf4e4e0bf21a",
+              "context": {
+                "query": "sat",
+                "seconds": 1.8645723750232719,
+                "log_sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e"
+              },
+              "cases": [
+                {
+                  "value": 0,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 1.939009708003141,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.5587975829839706,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 1,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 6.599334333033767,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.3055124169914052,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 2,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 2.858897124999203,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.2591664160136133,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 3,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 1.7144919160054997,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.2507924170349725,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 4,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 3.0566767919808626,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.467922959011048,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 5,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 6.330332541023381,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.4613836249918677,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 6,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 0.5526429999736138,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.4189683750155382,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 7,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 2.790369875030592,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.784716833033599,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 8,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 2.2251180000021122,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.0725315000163391,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 9,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 2.256692666967865,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.4745328329736367,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 10,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 6.332854458014481,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.7294841660186648,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 11,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 3.10595929203555,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.3199445829959586,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 12,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 2.013877166027669,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.1140298750251532,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 13,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 5.5291387920151465,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.6917936670361087,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 14,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 6.658945749979466,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 1.2709472089773044,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                },
+                {
+                  "value": 15,
+                  "equivalence": {
+                    "query": "unsat",
+                    "seconds": 5.057097957993392,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  },
+                  "query": {
+                    "query": "unsat",
+                    "seconds": 0.9590491660055704,
+                    "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18"
+                  }
+                }
+              ],
+              "scope": "one exported conjunction; finite specialization, not IR/kernel/reachability/protocol proof",
+              "kernel_checked": false
+            },
+            "alternatives": [
+              {
+                "value": 0,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "7dfd9d688b2c6a39e768f21eb955a304e488a5921021d0b06b9e46364f0ff2b2",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015294166980311275,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 0,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "3c91961f9c298e4eae00f1abe29b79963f579b8134152662303965f60ce36d91",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.0672820839681663,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 1,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "19d7df5049589cd3a11e61c27e7c934795805f5a5d7a2dd04a6ed49428feeffe",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015544959052931517,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 1,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "1d2a73e77f9e163deca5844dee8e2ef089d6f5b7f70e08044bd3365122f72a6f",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.1730985409813002,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 2,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "ab5cd550b2bf3784380088f5ad6bdbdd4158cf77bc6532e61bf9915060da840b",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015407375001814216,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 2,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "0d7d85cbbdb4bc3ad16512de92af8463ed1b814d779cb2f6f314ab13c9d3e678",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.462736333021894,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 3,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "abcd73035f4d000a9454f6b7fa7d78fe91b7b09f662951a69f7d5609e63514b2",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015139374998398125,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 3,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "bad3a6387a5b5fef691adc8d1c154aba11e0c217d0b4999967d68462e30a6f3a",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.7908733339863829,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 4,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "45a876a40447092793465b954a31326d8c5ed3959c41a6652905f998e1de348e",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.01566066697705537,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 4,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "4ec5db1535dc0137be9a1553fe78d41203b5352f9abe7effb0bc937c7ce2dc3d",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.2692156250122935,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 5,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "a8250d3787f5b08e31a36e1772961e1d42be97dfa8502e7de305ac68d92403eb",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015396583010442555,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 5,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "7a4c341a18f978727e379cc6a4448ff288276b600fb8d521a1debf4b872eef1e",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.9139931669924408,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 6,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "267534c7f39d8e6e8a01b2783cda971e443a62325cb352de66b0639dfbcfddd2",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015542915964033455,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 6,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "5a8f22df78bcac3cefc6687ffb67bd80ca80af0c8c97c10fc1865d60baa77966",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.094189000024926,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 7,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "de5b4d4e00fdfe21e34124a2abc6cc68d6befe9fd6dbd5100b32d6f77818becb",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015360915975179523,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 7,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "b37f9d28c57cbedea5db8a784254cb1bdbc9527ddace5f043b20a4b99aaf5c37",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.1227584580192342,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 8,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "b6d280a2ce9884bd1bec7897b86c73a43f13bd6a3d99281269c9f27cbda0050b",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015411042026244104,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 8,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "718a1555c5013b10258b16c03e73d2d16db2d04368e186fa5ad2863b1ca48214",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.2460202079964802,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 9,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "ab5129beea1557297d0e2b8d566ff36afd9bcb836b3eb8b66ad9be6073bb6a95",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.01497658301377669,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 9,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "79322f15063337d8bb40c0344c9346b6b80f826c0b407ec25f79e0362bef84b1",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.312056249997113,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 10,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "30c6e7db96ec1359d356dd8c0eb6f7ae7157a3d7a4be65adb65ee1140252458a",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.014934165985323489,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 10,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "0cd6e1bd3e661d1e8d93768db220f01ed9cfea348323bd9d5734e1e4dd32c278",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.2490658749593422,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 11,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "0dbd0f9d58aa7a8aae2f7a8ee814808db7e63fae94f2743bc9ccceba994af140",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.014973875018768013,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 11,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "9565325125c516ea607e8b451c8fc0dfd41fd5c50531c7b940d1d8a25dec2cc6",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.0964645419735461,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 12,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "c786656812ea0eca43113323d5bcba2063088f28d7b99f2a4d2ce2a147d20853",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.014739584003109485,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 12,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "841d617896106b45e0b30f13a2de671a0de3ed86f2624799e6fe71c4e4ccc1c8",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.1274308750289492,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 13,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "3ec430d6d94c1c5d9d3a471dbd18c7ef4ad33d90a7709bbcc43d285fd26a9fdb",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.015116582973860204,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 13,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "965577ae7ee14d0370dacae9d46ce52ef9bed37bb77a79f7595e72893ff8b59c",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.209122916974593,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 14,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "7ad46bf8235ffcd94aa2b6b661f1e3a64c83dc9ab85a61971dd66ea5d36e144c",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.014904875017236918,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 14,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "861b71d279c1f1c42daf6693a168d23f5be93e528cc3aa389575ca2a57fb9c3f",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.5624752910225652,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 15,
+                "kind": "equivalence",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 2,
+                  "source_sha256": "7c96e4613a61f8cfe45609ab4561e752328dddfc000e2210f99bf4dd59542bec",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 0.014927666983567178,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              },
+              {
+                "value": 15,
+                "kind": "query",
+                "result": {
+                  "status": "valid_exact_query_tactic_unsat",
+                  "assertions": 446,
+                  "source_sha256": "1b1d18cf8017cfbe83304b93171e80362f3dea97068a09589c48d6ad56fb4046",
+                  "fresh_cli": {
+                    "query": "unsat",
+                    "seconds": 1.247114124998916,
+                    "binary_sha256": "2f4cc81460f49c8c9b8d4851df08282450ce223a961f20d35b3a036b2584ad88",
+                    "solver_cli_version": "Z3 version 4.15.4 - 64 bit"
+                  },
+                  "log_sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+                  "kernel_checked": false
+                }
+              }
+            ]
+          },
+          "kernel_checked": false,
+          "verification_session_id": "115c52d3424e4e7abf61383d859b3258",
+          "verification_id": 1,
+          "cached_verification": false,
+          "certificate_input_digest": "5ca17ffc0d29effce1ded158e460ab3b4bc0f4de98b9ea784f05ccb6032b871b",
+          "proof_query_fingerprints": [
+            "c8f95347759fdd72c5eb0dc892c4e303d86c3e2e765878318241440c1556aaa7"
+          ],
+          "scope": "one provided exported SMT conjunction only; no IR translation, reachability or protocol proof"
+        }
+      }
+    ],
+    "scope": "two named finite ledger state/length queries; not full ACK, invariant basis, IR translation, bytes/time, implementation or TCP proof",
+    "kernel_checked": false,
+    "whole_target_closed": false
+  },
+  "kernel_checked": false,
+  "ir_translation_proved": false,
+  "whole_target_closed": false,
+  "scope": "two original finite state/length queries only; no combined368/basis/IR translation/byte/time/implementation/TCP proof"
+}
