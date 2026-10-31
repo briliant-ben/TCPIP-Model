@@ -5,7 +5,7 @@ import re
 
 TOOL=Path(__file__).resolve().parents[1]
 SCHEMA='spec-flow-task-v2'
-SCHEMAS={'spec-flow-task-v1',SCHEMA}
+SCHEMAS={'spec-flow-task-v1',SCHEMA,'spec-flow-task-v3'}
 
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
@@ -26,9 +26,14 @@ def load_task(filename,workspace):
     if not filename.is_relative_to(workspace):raise ValueError('Task outside workspace')
     t=read(filename)
     keys={'schema','id','model','sources','requirement_bindings','exploration','seeds','formal','limits','scope'}
+    if t.get('schema')=='spec-flow-task-v3':keys.add('wire')
     if set(t)!=keys or t['schema']not in SCHEMAS:raise ValueError('Unknown task fields/version')
     if not isinstance(t['id'],str)or not re.fullmatch(r'[A-Za-z0-9_.-]+',t['id']):raise ValueError('Invalid task ID')
     names=[t['model'],t['exploration'],*t['seeds'],*(s['path']for s in t['sources'])]
+    if 'wire'in t:
+        w=t['wire']
+        if set(w)!={'binding','scenarios'}or not isinstance(w['scenarios'],list)or not w['scenarios']:raise ValueError('Explicit wire binding/scenarios required')
+        names += [w['binding'],*w['scenarios']]
     if any(Path(n).is_absolute()for n in names):raise ValueError('Task input paths must be relative to workspace')
     resolve(workspace,t['model']);resolve(workspace,t['exploration'])
     if not isinstance(t['seeds'],list):raise ValueError('Seeds must be a list')
@@ -42,9 +47,10 @@ def load_task(filename,workspace):
         if not re.fullmatch('[0-9a-f]{64}',s['sha256']):raise ValueError('Invalid source digest')
         if not isinstance(s['uri_aliases'],list)or not s['uri_aliases']or any(not isinstance(u,str)or not u for u in s['uri_aliases']):raise ValueError('Source URI aliases required')
     if len(ids)!=len(set(ids)):raise ValueError('Duplicate source ID')
-    if t['schema']=='spec-flow-task-v2':
+    if t['schema']in ('spec-flow-task-v2','spec-flow-task-v3'):
         pinned={resolve(workspace,s['path'])for s in t['sources']}
         required={resolve(workspace,t['exploration']),*(resolve(workspace,n)for n in t['seeds'])}
+        if 'wire'in t:required|={resolve(workspace,t['wire']['binding']),*(resolve(workspace,n)for n in t['wire']['scenarios'])}
         if not required<=pinned:raise ValueError('Task v2 must pin every seed and exploration input')
     if not isinstance(t['requirement_bindings'],dict):raise ValueError('Requirement bindings required')
     for b in t['requirement_bindings'].values():

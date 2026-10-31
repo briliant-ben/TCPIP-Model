@@ -125,6 +125,14 @@ def verify(out,workspace,expected_task_sha256=None):
     if r['expected_task_sha256']!=request['expected_task_sha256']or r['task_pin_matched']is not (request['expected_task_sha256'] is not None):raise ValueError('Task pin claim differs')
     if request['expected_task_sha256']is not None and request['expected_task_sha256']!=r['task_sha256']:raise ValueError('Original caller pin differs')
     if expected_task_sha256 is not None and expected_task_sha256!=r['task_sha256']:raise ValueError('Task differs from verifier caller pin')
+    wire=r['stages']['execute']['data'].get('wire_cases',[])
+    if 'wire'in canonical and r['stages']['execute']['status']=='pass':
+        if [w['scenario']for w in wire]!=canonical['wire']['scenarios']:raise ValueError('Incomplete wire scenario coverage')
+        for w in wire:
+            observed=read(out/w['path'])
+            if observed['status']!=w['status']or observed['linux_tcp_network_evidence']or observed['physical_network_evidence']:raise ValueError('Wire result/scope differs')
+        if r['stages']['compare']['status']=='pass'and (r['stages']['compare']['data'].get('wire_cases')!=wire or any(w['status']!='pass'for w in wire)):raise ValueError('Failed wire result falsely promoted')
+    elif wire:raise ValueError('Undeclared wire evidence')
     frozen=r['source_snapshot']
     if frozen['workspace']!='source-snapshot/workspace'or frozen['tool']!='source-snapshot/tool/protocol_lab':raise ValueError('Snapshot locations changed')
     expected_files={n:('source-snapshot/workspace/'+n.split('/',1)[1]if n.startswith('workspace/')else'source-snapshot/tool/protocol_lab/'+n.split('/',1)[1])for n in r['input_hashes']}

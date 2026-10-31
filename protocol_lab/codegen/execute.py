@@ -24,7 +24,9 @@ def build(generation,out):
     for name,digest in r['inputs'].items():
         if sha(name)!=digest:raise ValueError('Generation input changed: '+name)
     if sha(generation/'protocol.c')!=r['outputs']['protocol.c']:raise ValueError('Generated source hash changed')
-    if render(load(r['model_file']))!=(generation/'protocol.c').read_text():raise ValueError('Generated source differs from actual IR lowering')
+    if ('wire_binding'in r)!=('wire_binding_file'in r):raise ValueError('Incomplete wire binding evidence')
+    if 'wire_binding'in r and json.loads(Path(r['wire_binding_file']).read_text())!=r['wire_binding']:raise ValueError('Wire binding differs from source')
+    if render(load(r['model_file']),r.get('wire_binding'))!=(generation/'protocol.c').read_text():raise ValueError('Generated source differs from actual IR lowering')
     out.mkdir(parents=True);cc=shutil.which('cc')
     result=dict(schema='spec-flow-stage-v1',stage='compile',status='blocked'if not cc else'incomplete',
                 classification='environment',generation_sha256=sha(generation/'generation.json'),

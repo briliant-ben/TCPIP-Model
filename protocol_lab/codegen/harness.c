@@ -48,7 +48,11 @@ int main(void) {
         } else if(!failure && !strcmp(tokens[0],"B")) {
             if(begun||count!=1)failure="invalid_begin";
             else if(invariants(&candidate)){begun=1;reply(&committed,"ready",NULL);continue;}
-        } else if(!failure && (!strcmp(tokens[0],"D")||!strcmp(tokens[0],"T"))) {
+        } else if(!failure && (!strcmp(tokens[0],"D")||!strcmp(tokens[0],"T")
+#ifdef WIRE_PROFILE
+                  ||!strcmp(tokens[0],"P")
+#endif
+                  )) {
             if(!begun||count<2||!parse_integer(tokens[1],&at))failure="invalid_command";
             if(!failure && !strcmp(tokens[0],"D")) {
                 if(count<3)failure="invalid_command";
@@ -59,7 +63,14 @@ int main(void) {
                     else if(count!=3+event_fields[event])failure="event_field_mismatch";
                     else for(i=0;i<event_fields[event];i++)if(!parse_integer(tokens[3+i],&fields[i])||!valid(fields[i],event_kinds[event][i]))failure="invalid_event_value";
                 }
-            } else if(!failure && count!=2)failure="invalid_command";
+            }
+#ifdef WIRE_PROFILE
+            else if(!failure && !strcmp(tokens[0],"P")) {
+                if(count!=3)failure="invalid_wire_command";
+                else if(wire_decode(tokens[2],fields))event=WIRE_EVENT;
+            }
+#endif
+            else if(!failure && count!=2)failure="invalid_command";
             if(!failure && advance(&candidate,at,&log)) {
                 if(event>=0)fire(&candidate,event,fields,-1,&log);
                 else invariants(&candidate);

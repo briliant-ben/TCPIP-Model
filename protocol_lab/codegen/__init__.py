@@ -76,10 +76,13 @@ def admit(m):
         expr(inv['assert'])
 
 
-def render(m):
+def render(m,wire=None):
     admit(m)
     variables=list(m['variables']);events=list(m['events']);timers=list(m['timers']);states=m['states']
     lines=[(HERE/'runtime.c').read_text()]
+    if wire is not None:
+        from .wire import render_codec
+        lines.append(render_codec(m,wire))
     emit=lines.append
     def exp(e,event=None):
         if type(e)is bool:return '1'if e else'0'
@@ -150,7 +153,11 @@ def render(m):
                 emit('if(emitted++)text(&messages,",");');literal('&messages','{"message":'+json.dumps(p['message'])+',"fields":{')
                 for j,(name,e)in enumerate(p['fields'].items()):
                     literal('&messages',(','if j else'')+json.dumps(name)+':');value('&messages',e,m['messages'][p['message']]['fields'][name],ev)
-                literal('&messages','}}');emit('}')
+                literal('&messages','}}');
+                if wire is not None:
+                    if p['message']!=wire['message']:raise Unsupported('Wire profile cannot encode another message')
+                    f=p['fields'];emit('wire_emit(log,'+','.join(exp(f[n],ev)for n in ('flags','seq','ack','window'))+',m->now);')
+                emit('}')
             elif k in ('arm','arm_if'):
                 emit('if('+exp(p['when'],ev)+') {'if k=='arm_if'else'{');emit('int64_t delay='+exp(p['delay_ms'],ev)+'; if(delay<=0){failure="invalid_timer_delay";return 0;}')
                 ix=str(timers.index(p['timer']));emit('m->due['+ix+']=add(m->now,delay);m->active['+ix+']=1;}')
@@ -169,12 +176,16 @@ def render(m):
     return '\n'.join(lines)+'\n'
 
 
-def generate(model_file,out):
+def generate(model_file,out,wire_binding_file=None):
     model_file=Path(model_file).resolve();out=Path(out).resolve()
     if out.exists():raise ValueError('Fresh output directory required')
     paths=model_files(model_file)+[HERE/'__init__.py',HERE/'__main__.py',HERE/'runtime.c',HERE/'harness.c',Path(__file__).parents[1]/'ir.py',Path(__file__).parents[1]/'symbolic.py']
+    wire=None
+    if wire_binding_file is not None:
+        wire_binding_file=Path(wire_binding_file).resolve();wire=json.loads(wire_binding_file.read_text())
+        paths += [wire_binding_file,HERE/'wire.py',HERE/'wire.c']
     inputs={str(p):sha(p)for p in paths}
-    m=load(model_file);source=render(m)
+    m=load(model_file);source=render(m,wire)
     if any(sha(p)!=h for p,h in inputs.items()):raise ValueError('Source changed during generation')
     out.mkdir(parents=True);(out/'protocol.c').write_text(source)
     result=dict(schema='spec-flow-stage-v1',stage='generate',status='pass',backend='direct-c99-scalar-v1',
@@ -185,4 +196,5 @@ def generate(model_file,out):
                 unsupported=['byte buffers','rational','clock-v3','post-action target cases','dynamic strings'],
                 rules=[dict(id=r['id'],requirements=r['requirements'])for r in m['transitions']],
                 scope=m['scope'])
+    if wire is not None:result.update(wire_binding=wire,wire_binding_file=str(wire_binding_file),wire_scope='fixed IPv4/TCP header codec and selected input shape; not full IPv4 behavior')
     (out/'generation.json').write_text(json.dumps(result,indent=2)+'\n');return result

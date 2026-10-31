@@ -122,9 +122,15 @@ def stage(name,t,workspace,job,out):
             p=out/(c['key']+'.json');write(p,r);rows.append(dict(key=c['key'],path=str(p.relative_to(job)),negative=c['negative'],
                              trace_contract_steps_checked=0 if c['negative']else sum('expect_trace'in step for step in case['steps'])))
         return result('pass'if rows else'unknown',None if rows else'no_reference_cases',dict(cases=rows,trace_contract_steps_checked=sum(r['trace_contract_steps_checked']for r in rows)))
-    if name=='generate':return result(data=generate_native(model_file,out/'generation'))
+    if name=='generate':
+        data=generate_native(model_file,out/'generation')
+        if 'wire'in t:data['wire_generation']=generate_native(model_file,out/'wire-generation',resolve(workspace,t['wire']['binding']))
+        return result(data=data)
     if name=='build':
         r=build(job/'stages/generate/generation',out/'build')
+        if 'wire'in t and r['status']=='pass':
+            w=build(job/'stages/generate/wire-generation',out/'wire-build');r['wire_compile']=w
+            if w['status']!='pass':return result(w['status'],w['classification'],r)
         return result(r['status'],r['classification'],r)
     if name=='execute':
         compiler=prior(job,'build');binary=job/'stages/build/build/protocol-native'
@@ -138,7 +144,14 @@ def stage(name,t,workspace,job,out):
             rows.append(dict(key=c['key'],returncode=p.returncode,stdout=str((folder/'stdout').relative_to(job)),
                              stderr=str((folder/'stderr').relative_to(job)),negative=c['negative']))
         if sha(binary)!=compiler['executable_sha256']:raise ValueError('Executable changed during observation')
-        return result(data=dict(cases=rows,observation_origin='generated_native_execution',
+        wire_rows=[]
+        if 'wire'in t:
+            from ..codegen.wire_execute import run as run_wire
+            for i,scenario in enumerate(t['wire']['scenarios']):
+                folder=out/('wire-'+str(i).zfill(3))
+                w=run_wire(job/'stages/generate/wire-generation',job/'stages/build/wire-build',resolve(workspace,scenario),folder)
+                wire_rows.append(dict(scenario=scenario,status=w['status'],path=str((folder/'execution.json').relative_to(job)),native_egress_packets=w['native_egress_packets']))
+        return result(data=dict(cases=rows,wire_cases=wire_rows,observation_origin='generated_native_execution',
                                 executable_sha256=compiler['executable_sha256'],reference_values_supplied=False,
                                 linux_network_evidence=False,pcap_evidence=False))
     if name=='compare':
@@ -151,8 +164,12 @@ def stage(name,t,workspace,job,out):
             if (job/r['stderr']).read_text():comparison=result('fail','native_stderr',comparison['data'])
             p=out/(r['key']+'.json');write(p,comparison)
             rows.append(dict(key=r['key'],status=comparison['status'],classification=comparison['classification'],path=str(p.relative_to(job))))
-        failures=[r for r in rows if r['status']!='pass']
-        return result('fail'if failures else'pass',failures[0]['classification']if failures else None,dict(cases=rows))
+        wire_rows=prior(job,'execute').get('wire_cases',[])
+        for w in wire_rows:
+            observed=read(job/w['path'])
+            if observed['status']!=w['status']or observed['observation_kind']!='generated_native_ipv4_virtual_link'or observed['linux_tcp_network_evidence']or observed['physical_network_evidence']:raise ValueError('Wire observation binding/scope differs')
+        failures=[r for r in rows+wire_rows if r['status']!='pass']
+        return result('fail'if failures else'pass',failures[0].get('classification','wire_implementation_difference')if failures else None,dict(cases=rows,wire_cases=wire_rows))
     if name=='traceability':
         sources={s['id']:s for s in t['sources']};bindings=t['requirement_bindings']
         if set(bindings)!=set(model['requirements']):raise ValueError('Incomplete requirement binding coverage')

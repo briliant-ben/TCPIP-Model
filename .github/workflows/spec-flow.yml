@@ -2,9 +2,9 @@ name: Repeatable spec flow
 on:
   push:
     branches: ['codex/**', main]
-    paths: ['protocol_lab/**', 'flows/**', 'tests/test_pipeline.py', 'model/tcp.json', 'model/exploration.json', 'scenarios/*.json', 'spec/sources/**', 'docs/semantics.md', 'requirements-formal.txt', '.github/workflows/spec-flow.yml']
+    paths: ['protocol_lab/**', 'flows/**', 'tests/test_pipeline.py', 'model/tcp.json', 'model/exploration.json', 'scenarios/**', 'bindings/**', 'tests/test_codegen_wire.py', 'spec/sources/**', 'docs/semantics.md', 'requirements-formal.txt', '.github/workflows/spec-flow.yml']
   pull_request:
-    paths: ['protocol_lab/**', 'flows/**', 'tests/test_pipeline.py', 'model/tcp.json', 'model/exploration.json', 'scenarios/*.json', 'spec/sources/**', 'docs/semantics.md', 'requirements-formal.txt', '.github/workflows/spec-flow.yml']
+    paths: ['protocol_lab/**', 'flows/**', 'tests/test_pipeline.py', 'model/tcp.json', 'model/exploration.json', 'scenarios/**', 'bindings/**', 'tests/test_codegen_wire.py', 'spec/sources/**', 'docs/semantics.md', 'requirements-formal.txt', '.github/workflows/spec-flow.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -24,6 +24,8 @@ jobs:
         run: |
           mkdir -p artifacts/spec-flow-ci
           /tmp/spec-flow-venv/bin/python -m unittest discover -s tests -p test_pipeline.py -v > artifacts/spec-flow-ci/tests.log 2>&1
+      - name: Check independent native wire packets and faults
+        run: /tmp/spec-flow-venv/bin/python -m unittest discover -s tests -p test_codegen_wire.py -v > artifacts/spec-flow-ci/wire-tests.log 2>&1
       - name: Run the actual complete event-level task
         run: |
           FLOW_TASK_SHA=$(sha256sum flows/tcp-active-open.json | cut -d ' ' -f 1)
@@ -32,6 +34,11 @@ jobs:
         run: |
           FLOW_TASK_SHA=$(sha256sum flows/tcp-active-open.json | cut -d ' ' -f 1)
           /tmp/spec-flow-venv/bin/python -m protocol_lab.pipeline verify artifacts/spec-flow-ci/run --workspace . --task-sha256 "$FLOW_TASK_SHA" > artifacts/spec-flow-ci/verification.json
+      - name: Run and verify native IPv4 virtual-link task
+        run: |
+          FLOW_WIRE_TASK_SHA=$(sha256sum flows/tcp-active-open-ipv4.json | cut -d ' ' -f 1)
+          /tmp/spec-flow-venv/bin/python -m protocol_lab.pipeline run flows/tcp-active-open-ipv4.json --workspace . --task-sha256 "$FLOW_WIRE_TASK_SHA" --out artifacts/spec-flow-ci/wire-run > artifacts/spec-flow-ci/wire-run.jsonl
+          /tmp/spec-flow-venv/bin/python -m protocol_lab.pipeline verify artifacts/spec-flow-ci/wire-run --workspace . --task-sha256 "$FLOW_WIRE_TASK_SHA" > artifacts/spec-flow-ci/wire-verification.json
       - name: Preserve formal tests native observations and source bindings
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

@@ -57,13 +57,12 @@ The backend runs the four existing active-open cases, including loss/backoff and
 32-bit wrap, against the same IR as the Python reference. The separate scalar
 algebra contract exercises ordered assignments through the same backend. This is
 not yet the required second protocol/spec portability demonstration, a proof of
-the generator, a complete TCP implementation, or TCP/IPv4 wire acceptance.
+the generator or a complete TCP implementation. The optional wire binding below
+adds selected TCP/IPv4 header observations to this event interface.
 
-Remaining acceptance work: byte-capable native generation and the selected
-TCP data slice; minimal IPv4 wire input/output and independent observation;
-a second
-small specification; and reproducible server/multi-agent task isolation and
-handoff. A pipeline must distinguish unsupported models, conflicts, invariant
+Remaining acceptance work: a second small specification and reproducible server
+handoff acceptance. Byte-capable native data generation and broader IPv4 behavior
+are later extensions beyond the first fixed-header active-open slice. A pipeline must distinguish unsupported models, conflicts, invariant
 failures, environment/resource limits, stale evidence and implementation
 differences. UNKNOWN remains UNKNOWN. Existing pinned evidence and 2750ms lwIP
 Difference remain intact. Completing this first backend does not complete the goal.
@@ -139,6 +138,56 @@ attestation; it also rejects incomplete dependencies, UNKNOWN promotion and
 broadened observation/proof scope. Rerun the task in a fresh directory for new
 execution. Do not copy reference observations into a claimed native result.
 
-This event-level prototype explicitly reports no PCAP or IPv4 evidence, no
-universal generator/English-to-IR proof, and no whole-goal completion. Its scope is
-recorded separately from the later TCP/IPv4 and second-spec acceptance gates.
+The event-only task explicitly reports no PCAP or IPv4 evidence. Its scope stays
+separate from the optional native wire task below. Neither task claims a universal
+generator/English-to-IR proof or whole-goal completion.
+
+
+## Native IPv4 virtual-link task
+
+```
+TASK_SHA=$(shasum -a 256 flows/tcp-active-open-ipv4.json | cut -d ' ' -f 1)
+python3 -m protocol_lab.pipeline run flows/tcp-active-open-ipv4.json \
+  --workspace . --out /tmp/new-wire-flow --task-sha256 "$TASK_SHA"
+python3 -m protocol_lab.pipeline verify /tmp/new-wire-flow --workspace . \
+  --task-sha256 "$TASK_SHA"
+```
+
+Task-v3 adds a pinned `wire.binding` and explicit pinned `wire.scenarios` to the
+same ten-stage flow. Generation/build create a second native program with the
+selected codec; execution retains the original 13 scalar comparisons and runs
+five complete wire scenarios (four existing seeds plus the independent contract).
+The comparison stage requires both channels to pass. These are repeated executions
+of one authoritative IR, not separate TCP state machines.
+
+The program accepts `P milliseconds ipv4-hex` directly and emits `wire_packet`
+records containing actual C-produced IPv4 bytes. Input decoding/checksums, output
+serialization and the generated EFSM all execute inside that native program;
+Python supplies test stimuli and records observations. The PCAP recorder wraps
+unchanged native egress bytes plus explicitly supplied ingress stimuli. An
+independent existing PCAP decoder checks checksums and fields. Acceptance compares
+absolute sequence/ACK/time/window values as well as normalized opening fields, so
+normalization cannot waive raw codec differences. A faulty generator emitting
+shifted TCP sequences is detected even though its event-level trace still agrees.
+
+`bindings/tcp-active-open-ipv4.json` declares one four-tuple, TTL and the event/message
+mapping. RFC791 September1981 section3.1 and RFC9293 August2022 section3.1 provide
+header representation/checksum sources; both raw specifications are pinned in
+the task. This is a representation adapter, not an IPv4 host/router model. Selected
+packets have 20-byte IPv4 and 20-byte TCP headers; ingress is SYN+ACK, without
+payload/options/fragments. Unsupported shapes and unrelated tuples are explicit
+interface rejections, not claims of RFC-compliant drops or resets. A well-formed
+packet with an invalid ACK reaches the IR guard and retains its model-gap rejection.
+The native command rolls back timer/output effects on rejection.
+
+Egress DF=1, identification=0 and TTL=64 are profile choices for unfragmented
+atomic datagrams, not universal protocol rules. TCP state, sequence/ACK computation,
+window advertisement and retransmission timing remain generated from IR. This
+uses virtual time and no network stack, sockets, TUN or privileges. It is generated
+implementation PCAP evidence, never Linux TCP, physical-network or full IPv4
+behavior evidence. The top-level event-task PCAP claim stays false; individual
+wire execution reports explicitly name their virtual-link origin and scope.
+
+Original task-v2 actual Ubuntu run41220822030/job124594805326 passed all stages,
+its 18-method flow tests and retained verification at a4776f69. That evidence is
+for task-v2, not the later wire changes. The new wire CI must pass independently.

@@ -51,6 +51,29 @@ class PipelineTests(unittest.TestCase):
         self.assertFalse(r['stages']['traceability']['data']['english_to_ir_correctness_proved'])
         self.assertEqual(verify(self.out,ROOT)['status'],'retained_evidence_consistent')
 
+    def test_wire_task_runs_generated_ipv4_implementation_and_checks_coverage(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            out=Path(tmp)/'wire';r=quiet_run(ROOT/'flows/tcp-active-open-ipv4.json',ROOT,out)
+            self.assertEqual(r['assessment'],'verified_event_slice')
+            rows=r['stages']['execute']['data']['wire_cases']
+            self.assertEqual(len(rows),5)
+            self.assertTrue(all(w['status']=='pass'for w in rows))
+            for w in rows:
+                e=read(out/w['path'])
+                self.assertGreaterEqual(e['native_egress_packets'],2)
+                self.assertFalse(e['linux_tcp_network_evidence'])
+            self.assertEqual(verify(out,ROOT)['assessment'],'verified_event_slice')
+            r['stages']['execute']['data']['wire_cases']=rows[:-1];write(out/'flow.json',r)
+            with self.assertRaisesRegex(ValueError,'wire scenario coverage'):verify(out,ROOT)
+
+    def test_wire_task_must_pin_binding_source(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            root=Path(tmp);t=read(ROOT/'flows/tcp-active-open-ipv4.json')
+            for name in {t['model'],t['exploration'],*t['seeds'],*(s['path']for s in t['sources'])}:
+                p=root/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,p)
+            t['sources']=[s for s in t['sources']if s['id']!='wire-binding'];write(root/'task.json',t)
+            with self.assertRaisesRegex(ValueError,'pin every'):load_task(root/'task.json',root)
+
     def test_workers_use_frozen_inputs_and_tool_source(self):
         r=self.report;frozen=r['source_snapshot']
         self.assertEqual(r['stages']['reference']['data']['trace_contract_steps_checked'],2)
