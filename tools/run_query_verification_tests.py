@@ -16,7 +16,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT/'formal')]
 import query_lemmas as g
 
-PATTERNS=('test_query_lemmas.py','test_finite_specialization.py','test_modular_piecewise.py',
+PATTERNS=('test_query_lemmas.py','test_finite_specialization.py','test_finite_proposals.py','test_modular_piecewise.py',
           'test_conditional_ssa.py','test_modular_normalization.py','test_tactic_recheck.py',
           'test_query_partition.py','test_seq32_contract.py','test_rocq_scalar_binding.py','test_data_semantics.py')
 
@@ -37,6 +37,7 @@ def main():
     for file,digest in g.versions().items():before['formal/'+file]=digest
     for pattern in PATTERNS:before['tests/'+pattern]=frozen.digest(ROOT/'tests'/pattern)
     before['tools/run_query_verification_tests.py']=frozen.digest(__file__)
+    before['tools/propose_finite_certificate.py']=frozen.digest(ROOT/'tools/propose_finite_certificate.py')
     before['.github/workflows/query-verification.yml']=frozen.digest(ROOT/'.github/workflows/query-verification.yml')
     environment=frozen.environment();commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     out.mkdir(parents=True)

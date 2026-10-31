@@ -589,3 +589,11 @@ artifacts/ack-query-head-chain从原始SMT和primitive证书在当前helper epoc
 当前发现484方法；73专项在本地和实际Ubuntu f3c2753c CI通过，不能替代独立13ff8c93的478冻结回归。该旧进程及源检出仍单独保留，1281输入已逐Git blob核对，无新全量通过声明。Protocol IR、原参考／SMT编码器、上游lwIP、oracle及2750ms Difference不动；无新Linux TCP／PCAP或kernel证据。下一步继续295／296、完整账本基及全字节时序／实现桥，再按原协议roadmap推进，整体目标未完成。
 
 2026-10-31：独立13ff8c93冻结的478项标准回归已终态全部通过，unittest5348.520秒／runner5348.724803秒，0失败／错误／跳过，1281依赖及环境未变，原session4411实际exit0。原started／输入／478唯一ID／result／完整日志与独立验收存artifacts/full-regression-13ff8c93；1281输入还逐不可变Git blob及运行结束后的独立检出原字节核对通过，检出clean且保留。此前running叙述仅为历史，以此终态为准，不再轮询或重启原进程。该478是命名旧source集合；后续缓存／候选生成器方法与专项另计，不能推算为后续组合全通过。没有新增Linux TCP／PCAP、kernel或完整协议证明；原UNKNOWN及2750ms等Difference保留，完整目标继续。
+
+## 2026-10-31：原样有限替换的非可信候选生成器
+
+新增tools/propose_finite_certificate.py，只生成既有finite／piecewise／exact-tactic格式数据，不改变8个固定检查器、模型、IR或oracle。每case保留原断言并添加完整源域case等式与raw替换候选；原样打印后必须先读回实际query，再据此构造局部XOR，严格结构检查保持不变。初版虽全部native路线UNSAT，真实295仍因共享合取在序列化中重结合而被现有f.check_terms拒绝；修复生成器而非放宽检查，原候选／源码／拒绝日志／默认UNKNOWN完整保存diagnostics/ack-prefix-proposal-serialization。
+
+每case局部等价及叶均有来源SHA绑定的固定tactic证书；默认finite策略本生成阶段未执行，明确unknown/not run，不能把native_routes_complete_unverified当验收。独立检查器仍重建／运行默认检查，再新CLI验收全部替代路线。4新方法覆盖独立验收、重哈希错候选及伪正结果、可满足source的metadata冒领、真实大共享合取回归；与既有73合计77专项8.003138秒通过，0失败／错误／跳过，原始input／IDs／环境／日志见artifacts/finite-proposal-local-77。runner显式绑定未提交的新生成器源码，实际SHA而非parent Git识别本次代码。当前发现488但未完整跑新组合；478旧source已完整通过并独立归档。
+
+295／296新版各32条native候选路线已UNSAT，尚在独立证书复查中，不新增已验收闭合，索引仍366/368。IR→SMT桥／Python／Z3仍可信；无新kernel、Linux TCP／PCAP或完整协议声明。旧IR／编码器／lwIP／所有Difference及2750ms保持，完整目标继续。
