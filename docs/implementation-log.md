@@ -658,3 +658,6 @@ artifacts/ack-complete-cover记录 bit-identical proposal、依赖包引用及SH
 
 
 2026-11-01：第二份官方规范迁移案例已落地：model/udp-header.json＋RFC768/RFC1122 §4.1.3.4，声明7规则、默认／可配置checksum、零source port、长度解释及静默discard；范围为header/service descriptor，明确假设sum_valid输入，不含payload字节／checksum算术／UDP wire。未修改任何protocol_lab通用工具；同十阶段在本地实际通过，7规则覆盖、12例和14独立契约步骤，depth6 safety/overlap UNSAT仅为有界IR检查。8迁移／客户端测试通过，包括错误默认checksum、header长度及错误discard响应的独立契约拒绝。新增examples/run_spec_candidate.py和docs/spec-flow-server.md，外部调用方传独立workspace／taskSHA／out，真实并发TCP-wire＋UDP候选从无关CWD运行、独立runID并核验；无供应商API/SDK或特定agent框架依赖。客户端保留自身／Python SHA、原始JSONL和verify。此前wire Ubuntu41221600238/job124597120710全部实际success；本次新UDP／交接Ubuntu验收待对应新CI终态，不以旧CI代替。目标尚未宣布完成。
+
+
+2026-11-01：新双规范Ubuntu41222440458/job124599629037在d72b7f3d实际success；20流程＋9wire＋8迁移/客户端测试无skip，并实际运行/verify TCP事件、TCP-wire及UDP三任务。官方ZIP13050482735、946217字节、SHAfd69b4bc、原始无损日志及accept在artifacts/spec-flow-migration-ci-d72b7f3d；53输入/客户端逐不可变Git blob匹配，29通用工具源在三任务完全相同。独立安全解包后仅运行原Git只读校验器，三任务复核一致，不执行归档Python/ELF/solver、不放宽hash。逐目标验收见docs/spec-flow-acceptance.md；当前约定的可运行/可复现/可迁移flow原型门槛满足，完整TCP/IP、payload/UDP wire、通用编译器或无界证明仍不作结论。服务器/单多调用方交接见docs/spec-flow-server.md。

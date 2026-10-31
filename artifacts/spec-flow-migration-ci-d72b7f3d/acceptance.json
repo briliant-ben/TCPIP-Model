@@ -1,0 +1,54 @@
+{
+  "status": "original_ubuntu_two_spec_flow_accepted",
+  "source_head": "d72b7f3d4f0832a876ca87967916b47fbb6cb51c",
+  "merge_snapshot": "6a46f71127159d9573e4a837dd4bf0687d5fcddc",
+  "ci_run": 41222440458,
+  "job": 124599629037,
+  "artifact_id": 13050482735,
+  "original_zip_sha256": "fd69b4bc7c23c6209c863ce339b8acf631d60dfe0b243c7e344efc709c649543",
+  "tests_run": {
+    "tests.log": 20,
+    "wire-tests.log": 9,
+    "migration-tests.log": 8
+  },
+  "source_git_blobs_checked": 53,
+  "identical_generic_tool_files": 29,
+  "tasks": [
+    {
+      "task": "tcp_event",
+      "inputs": 40,
+      "artifacts": 161,
+      "cases": 13,
+      "wire_cases": 0,
+      "native_executable_sha256": "f30a110d7a8394d2df17394188330807f51d8704c2c16945b8f64c1ed293152e",
+      "compiler_sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+      "compiler_version": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    },
+    {
+      "task": "tcp_wire",
+      "inputs": 42,
+      "artifacts": 204,
+      "cases": 13,
+      "wire_cases": 5,
+      "native_executable_sha256": "f30a110d7a8394d2df17394188330807f51d8704c2c16945b8f64c1ed293152e",
+      "compiler_sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+      "compiler_version": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    },
+    {
+      "task": "udp_descriptor",
+      "inputs": 38,
+      "artifacts": 153,
+      "cases": 12,
+      "wire_cases": 0,
+      "native_executable_sha256": "984632d7e7dec87b3b94310922b79f64b0a9c432309cd540b9690020ebc3ab45",
+      "compiler_sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+      "compiler_version": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    }
+  ],
+  "validator_source_epoch": "d72b7f3d4f0832a876ca87967916b47fbb6cb51c",
+  "validator_from_immutable_git": true,
+  "archive_code_executed": false,
+  "new_native_or_solver_execution": false,
+  "linux_tcp_network_evidence": false,
+  "scope": "actual Ubuntu TCP event/wire and UDP descriptor migration; retained audit only; no full protocol or English-to-IR/generator proof"
+}

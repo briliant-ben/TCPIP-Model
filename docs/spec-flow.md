@@ -62,8 +62,8 @@ adds selected TCP/IPv4 header observations to this event interface.
 
 The second small-spec migration case is now `flows/udp-header.json`; its finite
 scope and acceptance are recorded below. Server reproduction uses the external
-client described in `docs/spec-flow-server.md`. New Ubuntu acceptance remains a
-separate gate until the corresponding CI run completes. Byte-capable native data generation and broader IPv4 behavior
+client described in `docs/spec-flow-server.md`. Actual Ubuntu two-spec acceptance is recorded in
+`docs/spec-flow-acceptance.md` with source commit, original evidence and limits. Byte-capable native data generation and broader IPv4 behavior
 are later extensions beyond the first fixed-header active-open slice. A pipeline must distinguish unsupported models, conflicts, invariant
 failures, environment/resource limits, stale evidence and implementation
 differences. UNKNOWN remains UNKNOWN. Existing pinned evidence and 2750ms lwIP
@@ -192,7 +192,8 @@ wire execution reports explicitly name their virtual-link origin and scope.
 
 Original task-v2 actual Ubuntu run41220822030/job124594805326 passed all stages,
 its 18-method flow tests and retained verification at a4776f69. That evidence is
-for task-v2, not the later wire changes. The new wire CI must pass independently.
+for task-v2, not the later wire changes. The newer two-spec Ubuntu run41222440458/job124599629037 also passed independently;
+its original evidence and requirement audit are in `docs/spec-flow-acceptance.md`.
 
 
 ## Second specification and external callers
@@ -214,3 +215,8 @@ UDP candidates from an unrelated directory; no vendor-specific harness is used.
 `docs/spec-flow-server.md` gives the input/output, failure, iteration and isolation
 contract for a single caller or multiple agents. The adapter does not call an LLM
 or turn its opinion into acceptance.
+
+
+The flow prototype now satisfies its scoped run/reproduction/migration gates;
+see `docs/spec-flow-acceptance.md`. This conclusion does not expand either model's
+protocol coverage or turn per-task success into a whole-protocol proof.
