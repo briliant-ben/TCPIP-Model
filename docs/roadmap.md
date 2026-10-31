@@ -201,3 +201,5 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 2026-10-31：通用完整partition cover检查器及5正反方法完成，82专项通过；它按哈希引用既有包，安全解包后实际重放，要求全index和完整源前提一致，独立验证partition／断言保留／组合schema并报告vacuity。真实原ACK命名target的全368组合仍在重放，暂不称原query关闭；当前493完整组合未跑。继续完整目标验收、其他模型义务与全字节／时序／实现桥和完整协议范围。
 
 2026-10-31：S-ACK-VALID→ESTABLISHED的原完整状态／长度保持query已通过fresh全368分支重放、无协议前提partition等价、原断言保留与Boolean组合、SAT非空上下文及IR/compiler输入前后锚点，见artifacts/ack-complete-cover。不同于此前仅组件索引，现闭合一个命名原target；其余模型／父基、全字节时序／实现及完整TCP仍未证。首次286旧tactic10s UNKNOWN及旧主报告保留；v2只引用同source的piecewise证书，旧包、模型、预算与oracle不动。84专项本地／Ubuntu、旧478冻结完整回归分别通过，当前495组合未完整跑，完整目标继续。
+
+2026-10-31：当前495项标准回归已在独立临时Git检出/private/tmp/tcpip-full495-i8vc8l0_、detached aec3c95cc95a322011ea006fc8760a64663d4de3启动。源／环境快照已冻结1287输入，原PID40193／统一exec session91353已确认实际运行；输出/tmp/tcpip-full-regression-aec3c95c.log及同名目录保存started／inputs／495 IDs，指针/tmp/tcpip-full495-checkout.json。不得编辑该检出或因观察超时重启；主目录继续工作不影响这份源。当前未到终态，旧13ff8c93的478通过与f2acf9f9的84本地／Ubuntu专项分别独立有效，不推算新495通过。原478 session4411已exit0，不再运行；其检出clean保留。完整平台目标仍未完成。
