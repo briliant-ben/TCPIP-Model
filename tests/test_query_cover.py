@@ -5,6 +5,8 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'formal'))
 import query_cover as cover
 import query_certificates as q
+import query_lemmas as g
+import modular_piecewise as piecewise
 import tactic_recheck as t
 c=cover.c
 
@@ -67,6 +69,40 @@ class QueryCoverTests(unittest.TestCase):
                 else:r['whole_protocol_proved']=True
                 c.write(out/'result.json',r)
                 with self.assertRaisesRegex(ValueError,'coverage or expression|Scope or budget'):cover.verify(out,root/'verification')
+
+    def graph_with_override(self,tmp,wrong=False):
+        root,plan=self.prepare(tmp);inputs=root/'input'
+        target=inputs/'certificate-0/source.smt2';parent=inputs/'certificate-1'
+        with contextlib.redirect_stdout(io.StringIO()):g.produce({'target':target},{'parent':parent},inputs/'graph')
+        alternative=inputs/'alternative';alternative.mkdir()
+        raw=(parent/'source.smt2').read_text()
+        if wrong:raw=raw.replace('(>= x 0)','(> x 0)')
+        (alternative/'source.smt2').write_text(raw)
+        piecewise.produce(alternative/'source.smt2',alternative/'proof')
+        c.write(alternative/'certificate.json',dict(format=q.FORMAT,kind='piecewise',source='source.smt2',proof='proof'))
+        members={};archive=root/'graph-bundle.tar.gz'
+        with tarfile.open(archive,'w:gz')as stream:
+            for path in sorted(inputs.rglob('*')):
+                if path.is_file():
+                    name=str(path.relative_to(inputs));members[name]=c.sha(path);stream.add(path,arcname=name,recursive=False)
+        manifest=root/'graph-members.json';c.write(manifest,members)
+        plan['bundles']['test']=dict(archive=str(archive),sha256=c.sha(archive),members=str(manifest),members_sha256=c.sha(manifest))
+        plan['proofs']=[dict(kind='graph',bundle='test',path='graph',dependencies={'1':'parent'},targets={'0':'target'},overrides={'parent':dict(bundle='test',path='alternative')})]
+        return root,plan
+
+    def test_source_preserving_graph_override_is_rechecked_with_fixed_checker(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            root,plan=self.graph_with_override(tmp);cover.stage(plan,root/'proposal')
+            before=c.sha(root/'graph-bundle.tar.gz')
+            with contextlib.redirect_stdout(io.StringIO()):r=cover.verify(root/'proposal',root/'verification')
+            self.assertEqual(r['proof_results'][0]['dependencies'][0]['verification']['kind'],'piecewise')
+            self.assertEqual([x['group']for x in r['original_groups']],[0,1])
+            self.assertEqual(before,c.sha(root/'graph-bundle.tar.gz'))
+
+    def test_changed_override_source_cannot_be_rehashed_into_the_original(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            root,plan=self.graph_with_override(tmp,wrong=True);cover.stage(plan,root/'proposal')
+            with self.assertRaisesRegex(ValueError,'byte-identical original source'):cover.verify(root/'proposal',root/'verification')
 
     def test_vacuous_context_is_reported_and_not_claimed_reachable(self):
         with tempfile.TemporaryDirectory()as tmp:

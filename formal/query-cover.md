@@ -47,3 +47,22 @@ duplicate indices, a narrowed source context, rehashed false composition/scope
 claims, and explicit vacuity. The82-method focused runner binds this checker,
 selected tests and complete input/environment/log evidence. Real TCP coverage
 replay and its source-model anchor have separate acceptance artifacts.
+
+Plan v2 can reference an alternative certificate for an existing graph dependency.
+The replacement must prove byte-identical original source. This is an untrusted
+successor proposal in a fresh work directory: the original archive is unchanged,
+original leaf/context/schema statements and historical producer data are retained,
+and a source-preserving override record binds the original result and replacement
+certificate digest. The unchanged DAG checker reconstructs every statement and
+natively rechecks every parent and target. No old hash, checker, assumption,
+assertion, domain or timeout is waived. Unsupported override fields/kinds and
+changed source are rejected. No cache or positive result is restored from data.
+
+The first real whole-ACK replay stopped when original parent286's9.43s tactic
+route returned UNKNOWN within10s. No combined proof was accepted. Its original
+proposal, checker source, failure and actual native logs remain under
+`artifacts/diagnostics/ack-complete-cover-first-replay`. A separately checked
+piecewise certificate proves the identical source in6.53s; this is a new proof
+route, not a rewrite of the old observation. Two additional graph-override tests
+bring the focused suite to84 methods. Real full-target v2 replay remains a
+separate gate; fresh unit tests do not establish that protocol checkpoint.

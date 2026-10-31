@@ -16,7 +16,7 @@ import query_certificates as q
 import query_lemmas as g
 
 ROOT=Path(__file__).resolve().parents[1]
-FORMAT='checked-partition-cover-v1'
+FORMAT='checked-partition-cover-v2'
 SCOPE='one exact labelled exported conjunction; trusted Python/Z3/encoder, no kernel, invariant-basis, reachability, implementation or protocol proof'
 
 
@@ -59,8 +59,15 @@ def checked_plan(plan):
     for proof in plan['proofs']:
         if type(proof)is not dict:raise ValueError('Unsupported proof set')
         kind=proof.get('kind');required={'kind','bundle','path'}|({'group'}if kind=='certificate'else{'dependencies','targets'}if kind=='graph'else set())
-        if kind not in ('certificate','graph')or set(proof)!=required or proof['bundle']not in plan['bundles']:raise ValueError('Unsupported proof kind or fields')
+        allowed=required|({'overrides'}if kind=='graph'else set())
+        if kind not in ('certificate','graph')or not required<=set(proof)or not set(proof)<=allowed or proof['bundle']not in plan['bundles']:raise ValueError('Unsupported proof kind or fields')
         inside(ROOT,proof['path'])
+        if kind=='graph':
+            if type(proof.get('overrides',{}))is not dict:raise ValueError('Overrides must be named data references')
+            for node,replacement in proof.get('overrides',{}).items():
+                g.name(node)
+                if type(replacement)is not dict or set(replacement)!={'bundle','path'}or replacement['bundle']not in plan['bundles']:raise ValueError('Unsupported certificate override')
+                inside(ROOT,replacement['path'])
         if kind=='certificate':
             if type(proof['group'])is not int:raise ValueError('Group must be an integer')
             covered.append(proof['group'])
@@ -116,6 +123,31 @@ def unpack(bundle,destination):
             target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw)
 
 
+def refresh_graph(original,overrides,imports,work):
+    """Propose data changes only; the unchanged DAG checker replays everything."""
+    original,work=Path(original),Path(work)
+    if not overrides:return original
+    old=json.loads((original/'result.json').read_text());replacements=[]
+    for node,reference in overrides.items():
+        if node not in old['dependencies']:raise ValueError('Override must name an existing dependency')
+        replacement=inside(imports/reference['bundle'],reference['path'])
+        before=q.source(original/'dependencies'/node)[0];after=q.source(replacement)[0]
+        if before.read_bytes()!=after.read_bytes():raise ValueError('Override must prove byte-identical original source')
+        replacements.append((node,replacement,c.sha(before),q.certificate_digest(replacement)))
+    shutil.copytree(original,work)
+    for node,replacement,_,_ in replacements:
+        shutil.rmtree(work/'dependencies'/node);shutil.copytree(replacement,work/'dependencies'/node)
+    c.write(work/'source-preserving-overrides.json',dict(original_graph_result_sha256=c.sha(original/'result.json'),
+        changes=[dict(node=node,original_source_sha256=sha,replacement_source_sha256=sha,replacement_certificate_digest=digest)
+            for node,_,sha,digest in replacements],
+        scope='untrusted successor proposal; original producer leaf/context/schema data and event metadata retained; every parent and target must be freshly rechecked'))
+    # This is a new proposal, not an edit of the referenced immutable bundle.
+    # Original leaf proofs have identical statements and logical parent facts.
+    # The fixed verifier reconstructs them and checks every replacement natively.
+    old['files']={str(p.relative_to(work)):c.sha(p)for p in sorted(work.rglob('*'))if p.is_file()and p!=work/'result.json'}
+    c.write(work/'result.json',old);return work
+
+
 def match(path,group,common,branches):
     actual=c.read_query(path);expected=common+[c.z3.Or(branches[group])]
     if len(actual)!=len(expected)or any(not a.eq(b)for a,b in zip(actual,expected)):
@@ -152,6 +184,7 @@ def verify(proposal,out):
             if checked['status']!='verified_standalone_query_unsat':raise ValueError('Standalone original group not proved')
             closures.append(dict(group=proof['group'],source_sha256=c.sha(source),proof_set=ordinal,kind='certificate'))
         else:
+            path=refresh_graph(path,proof.get('overrides',{}),out/'imports',out/f'graph-proposal-{ordinal:03}')
             for role in ('dependencies','targets'):
                 for key,node in proof[role].items():
                     source=q.source(path/'dependencies'/node)[0]if role=='dependencies'else path/'targets'/node/'original.smt2'

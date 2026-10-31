@@ -613,3 +613,11 @@ artifacts/ack-prefix-bounds使原295（cb_partial_prefix≥0）／296（≤3）�
 新增formal/query_cover.py，读取SHA绑定的export／label／断言位置与已有证书包引用，安全解包为数据而不运行包内Python；严格要求全分区index一次覆盖、每个证明完整有序前提及原违例一致。三个native义务分别验收原selected断言与全OR等价、原断言前后顺序保留的Boolean schema、已实际检查的A∧D_i UNSAT到原query的Boolean组合schema；局部重构不添加协议前提。然后以新调用内session交给既有q/g固定检查器实际重放所有父／目标；只有全部通过才关闭该命名导出合取。source、bundle及checker epoch在前后核对，不从metadata装载cache。数学8核心模块及Protocol IR均未改变，新增模块单独绑定自身source SHA。
 
 5新方法覆盖非最后selected断言的完整组合、缺／重索引、收窄前提、重哈希false组合／冒领scope、显式vacuity；与既有77合计82专项8.880724秒通过，0失败／错误／跳过，输入／环境未变，见artifacts/query-cover-local-82。当前标准发现493未跑新完整组合，旧478冻结回归通过不推算至493。真实S-ACK-VALID→ESTABLISHED全368源分支组合已提出，partition等价单独native0.070280秒UNSAT；完整分支重放仍在运行，尚未宣称原target关闭。原368具名组件、主UNKNOWN、byte/time／父基／实现及完整协议缺口均保持。
+
+## 2026-10-31：完整cover的同命题证书替换与真实UNKNOWN保留
+
+第一次真实全368组合重放在286父节点的原exact-tactic返回UNKNOWN，进程exit1，无完整query通过；该证书历史producer9.431829秒已贴近10s上限。原proposal／当时query_cover源码／实际新native日志／286原source与策略完整保留diagnostics/ack-complete-cover-first-replay，不因观察等待重启或把UNKNOWN升级。相同原444断言source acc4b87a的piecewise替代证书已由原q检查器实际独立UNSAT（6.532520秒）。模型、逻辑命题、8个核心检查器、旧输入包、预算和oracle均不变。
+
+cover plan v2允许显式原source字节完全相同的依赖证书引用；安全解包后只在新工作目录构造候选图，记录原result SHA／新证书digest，保留原叶、schema、context及历史producer元数据，重算新候选的文件清单。原归档不可变；重算清单本身不是证明，固定g检查器仍须重建并实际新CLI验收所有依赖与所有目标。任何新原式／收窄前提／未知替换种类均拒绝。2新增图模式正反方法通过，84专项10.550627秒、0失败／错误／跳过、输入与环境未变，见artifacts/query-cover-local-84；原7种图／分区行为均含其中。当前495标准发现未完整跑，旧478通过保持独立。
+
+v2真实全目标重放已在新目录/tmp/ack-complete-cover-replay-v2开始，引用原head／prefix包及286新证书；尚未验收命名原query，368组件索引不冒领完整target／父基／TCP。失败v1和所有旧UNKNOWN及2750ms Difference保持。完整原目标继续。
