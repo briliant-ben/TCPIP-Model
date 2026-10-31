@@ -1,0 +1,59 @@
+{
+  "archive_files": 205,
+  "artifacts": 204,
+  "assessment": "verified_event_slice",
+  "inputs": 42,
+  "linux_tcp_network_evidence": false,
+  "native_egress_packets": 15,
+  "pcap_origin": "supplied stimuli plus unchanged native C egress bytes; virtual time/link only",
+  "run_id": "f14df959-5544-4b69-b014-dc5b3540bbcd",
+  "scalar_cases": 13,
+  "source_commit": "2e27d737a2fedafc0b0ef6e512960b573a312496",
+  "stages": {
+    "build": "pass",
+    "compare": "pass",
+    "execute": "pass",
+    "formal": "pass",
+    "generate": "pass",
+    "ir": "pass",
+    "reference": "pass",
+    "sources": "pass",
+    "tests": "pass",
+    "traceability": "pass"
+  },
+  "task_pin_matched": true,
+  "task_sha256": "ba85267b6ca44561cd616d75b491ab3240e316f2e795d9f88b9f3196d600e6b4",
+  "whole_goal_complete": false,
+  "wire_cases": [
+    {
+      "native_egress_packets": 2,
+      "path": "stages/execute/wire-000/execution.json",
+      "scenario": "scenarios/handshake.json",
+      "status": "pass"
+    },
+    {
+      "native_egress_packets": 3,
+      "path": "stages/execute/wire-001/execution.json",
+      "scenario": "scenarios/sequence-wrap.json",
+      "status": "pass"
+    },
+    {
+      "native_egress_packets": 3,
+      "path": "stages/execute/wire-002/execution.json",
+      "scenario": "scenarios/syn-loss.json",
+      "status": "pass"
+    },
+    {
+      "native_egress_packets": 4,
+      "path": "stages/execute/wire-003/execution.json",
+      "scenario": "scenarios/two-syn-losses.json",
+      "status": "pass"
+    },
+    {
+      "native_egress_packets": 3,
+      "path": "stages/execute/wire-004/execution.json",
+      "scenario": "scenarios/flow-contracts/active-open.json",
+      "status": "pass"
+    }
+  ]
+}
