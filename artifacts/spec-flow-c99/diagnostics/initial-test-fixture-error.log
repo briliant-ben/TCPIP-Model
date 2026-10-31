@@ -1,0 +1,33 @@
+test_all_four_baseline_scenarios_match_exact_native_traces (test_codegen_native.NativeCodegenTests.test_all_four_baseline_scenarios_match_exact_native_traces) ... ok
+test_bytes_and_unknown_semantics_are_rejected_without_output (test_codegen_native.NativeCodegenTests.test_bytes_and_unknown_semantics_are_rejected_without_output) ... ERROR
+test_failed_operation_rolls_back_timers_state_and_staged_emissions (test_codegen_native.NativeCodegenTests.test_failed_operation_rolls_back_timers_state_and_staged_emissions) ... ok
+test_integer_overflow_rejected_without_committing_retry (test_codegen_native.NativeCodegenTests.test_integer_overflow_rejected_without_committing_retry) ... ok
+test_real_wrong_sequence_native_mutant_is_detected_by_reference_oracle (test_codegen_native.NativeCodegenTests.test_real_wrong_sequence_native_mutant_is_detected_by_reference_oracle) ... ok
+test_rehashed_generated_source_change_rejected_before_build (test_codegen_native.NativeCodegenTests.test_rehashed_generated_source_change_rejected_before_build) ... ok
+test_rule_conflict_is_explicit_and_atomic (test_codegen_native.NativeCodegenTests.test_rule_conflict_is_explicit_and_atomic) ... ok
+test_separate_scalar_contract_uses_same_backend_and_ordered_assignments (test_codegen_native.NativeCodegenTests.test_separate_scalar_contract_uses_same_backend_and_ordered_assignments) ... ok
+test_timer_injection_bad_domain_and_backwards_clock_rejected (test_codegen_native.NativeCodegenTests.test_timer_injection_bad_domain_and_backwards_clock_rejected) ... ok
+
+======================================================================
+ERROR: test_bytes_and_unknown_semantics_are_rejected_without_output (test_codegen_native.NativeCodegenTests.test_bytes_and_unknown_semantics_are_rejected_without_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_codegen_native.py", line 97, in test_bytes_and_unknown_semantics_are_rejected_without_output
+    with self.assertRaises(Unsupported):generate(path,out)
+                                        ^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/codegen/__init__.py", line 175, in generate
+    m=load(model_file);source=render(m);out.mkdir(parents=True)
+      ^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 336, in load
+    return validate(model)
+           ^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 227, in validate
+    require(model["semantics"] in POST_SEMANTICS_VERSIONS and model["ir_version"] in DATA_VERSIONS, "Post targets require versioned post-target semantics")
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 34, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Post targets require versioned post-target semantics
+
+----------------------------------------------------------------------
+Ran 9 tests in 2.225s
+
+FAILED (errors=1)

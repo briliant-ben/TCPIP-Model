@@ -1,0 +1,147 @@
+{
+  "scenario_version": "0.2",
+  "initial": {},
+  "environment": {
+    "assumptions": [
+      "Descriptor-only UDP/IPv4 profile; checksum sum_valid supplied, not computed/proved",
+      "Literal independent contract from RFC768 Fields/User Interface and RFC1122 4.1.3.4; no wire or full UDP claim"
+    ]
+  },
+  "id": "send-default-and-config",
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "app.send",
+      "fields": {
+        "source_port": 0,
+        "destination_port": 8080,
+        "payload_length": 0
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "udp.datagram",
+              "fields": {
+                "source_port": 0,
+                "destination_port": 8080,
+                "length": 8,
+                "checksum_present": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 1,
+      "event": "app.configure_checksum",
+      "fields": {
+        "enabled": false
+      },
+      "expect_trace": [
+        {
+          "at_ms": 1,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 2,
+      "event": "app.send",
+      "fields": {
+        "source_port": 65535,
+        "destination_port": 1,
+        "payload_length": 65507
+      },
+      "expect_trace": [
+        {
+          "at_ms": 2,
+          "emitted": [
+            {
+              "message": "udp.datagram",
+              "fields": {
+                "source_port": 65535,
+                "destination_port": 1,
+                "length": 65515,
+                "checksum_present": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 3,
+      "event": "app.send",
+      "fields": {
+        "source_port": 1234,
+        "destination_port": 8080,
+        "payload_length": 65508
+      },
+      "expect_trace": [
+        {
+          "at_ms": 3,
+          "emitted": [
+            {
+              "message": "udp.error",
+              "fields": {
+                "reason": "payload_length_outside_ipv4_profile"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 4,
+      "event": "app.configure_checksum",
+      "fields": {
+        "enabled": true
+      },
+      "expect_trace": [
+        {
+          "at_ms": 4,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 5,
+      "event": "app.send",
+      "fields": {
+        "source_port": 1234,
+        "destination_port": 65535,
+        "payload_length": 7
+      },
+      "expect_trace": [
+        {
+          "at_ms": 5,
+          "emitted": [
+            {
+              "message": "udp.datagram",
+              "fields": {
+                "source_port": 1234,
+                "destination_port": 65535,
+                "length": 15,
+                "checksum_present": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "tx_count": 3,
+      "rx_count": 0,
+      "discard_count": 0,
+      "last_payload_length": 0,
+      "checksums_enabled": true
+    },
+    "timers": {}
+  }
+}

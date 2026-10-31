@@ -1,5 +1,7 @@
 # GitHub 迁移与复现
 
+当前活动 flow 原型的逐项验收与范围见 [spec-flow-acceptance.md](spec-flow-acceptance.md)，服务器／外部调用方入口见 [spec-flow-server.md](spec-flow-server.md)。下文保留此前更大 TCP 平台路线和历史检查点，不表示这些扩展已完成。
+
 ## 当前恢复点（2026-10-30）
 
 PR#3已合入main的ab9f75ba。当前开发分支是codex/tcp-modular，包含71a3e1a8的精确模查询证书／标量IR契约及main纯历史合并；以实际分支和源码为准。不要回退到早期codex/tcp-data。旧未提交refinement目录保留。
@@ -94,3 +96,23 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 2026-10-31：字节IR生成执行试点41544085已实际CI41199833714／job124533279559内核验收通过，artifact13041509676官方ZIP SHA18dd1fa4及原始无损job日志、三模块源码／对象、12具名Git输入、两次空公理审计及独立kernel见 artifacts/rocq-bytes-ci-41544085。四条生成有序赋值／一完整内容等式对任意初态byte列表、任意输入和无界整数偏移成立；无payload长度界。错误suffix count／顺序源模型生成数据编译成功而执行定理失败，参考合法输入亦拒绝；6离线重哈希／完整性故障均拒绝、原件不变。只证明该受限IR契约执行，不是TCP、通用Python／Z3翻译、输出顺序／时序或实现证明；可信桥与范围明确。旧495冻结回归及新7方法分别通过，502组合未完整跑；完整平台目标继续。
 
 2026-10-31：新增 tcp-byte-content 声明式观察overlay，在实际tcp-sws的14条规则上检查完整字节内容；擦除观察赋值恢复全部209条继承动作，额外逐实际emit／emit_if绑定payload及条件，防止过时ghost掩盖线端变化。涵盖队列／拒绝、8条ESTABLISHED与关闭态FIRST／MORE分段、两种重传和ACK。现有独立Seq(BV8)／BV32后端完整一步查询不假设前态不变量或后态性质，21项UNSAT、ACK BC-PARTITION 1项UNKNOWN，14规则及22适用上下文均SAT；独立重建全断言并新CLI复查得到同样结果。所有源／原始查询／双阶段日志、首轮及固定tactic UNKNOWN／序列化拒绝诊断保留artifacts/tcp-byte-content；复查accept.py --replay-out须新目录。7新方法50.567秒通过，原7字节／7标量另过，495冻结输入未变但509组合未完整跑。不是完整归纳、TCP／时序／解释翻译／实现或Linux证明，不改原ACK长度闭合、主UNKNOWN、上游lwIP、oracle及2750ms Difference。详见docs/tcp-byte-content.md；完整平台目标继续。
+
+2026-10-31：用户已将目标调整为供应商／调用框架无关的可重复spec建模flow；完整TCP/IP及闭合所有证明不再是本阶段前提。新增protocol_lab.codegen直接C99标量后端与分离的generate/build/execute_compare JSON阶段；从现有IR显式生成guard／有序action／timer／emit／不变量，原生进程不读取JSON模型、不调用Python或现成协议栈。主动握手四基线场景实际编译执行并与参考全轨迹／状态／timer精确匹配，产物artifacts/spec-flow-c99；12原生正反测试及24旧flow测试通过。显式拒绝bytes／rational／clock-v3／post targets，int64及资源限额越界拒绝、整操作含定时器与输出原子回滚。尚未打通字节／IPv4线端、统一编排及第二份小规范迁移，不宣称完整flow；下一步按docs/spec-flow.md推进。已有模型、UNKNOWN、hash／oracle和2750ms差异不改。PR#6保留旧字节／证明里程碑，新flow代码将独立提交。
+
+2026-10-31：新flow的C99后端0ee33d52已在实际Ubuntu CI41212382314／job124569888828通过12原生测试（3.103秒），GCC13.3.0另实际生成／编译／运行syn-loss，三条规则、报文字段、状态与timer精确匹配独立参考。原官方ZIP artifact13046537061 SHA96e5c854、原始无损job日志、C源码／编译／输入／观测及ELF哈希在artifacts/spec-flow-c99-ci-0ee33d52；10项运行源哈希及基于checkout来源的test／workflow两项均逐具名Git blob核对。只读验收不执行归档ELF、不冒称本机Linux重跑；官方ZIP保留原ELF证据，无独立本地编译二进制入库。Mac／Linux生成C字节一致，平台编译器和binary SHA分别绑定。仅标量代码生成服务器通道，不计TCP网络／PCAP、IPv4、字节、第二spec或完整flow验收；原UNKNOWN及差异保持。当前新分支codex/spec-flow-c99，草稿PR#7叠在尚未合并的PR#6上，合并前核对远端状态。
+
+2026-10-31：新增protocol_lab.pipeline及flows/tcp-active-open.json，供应商／框架无关的十阶段任务入口已实际通过sources、IR、depth6 Z3、bounded test generation、reference、C generate/build、native execute、compare、traceability。6生成规则见证＋4种子＋2模型缺口拒绝合计12例精确匹配；36输入／115产物绑定和原116文件任务在artifacts/spec-flow-pipeline安全数据归档。候选IR及规范解释由调用方／建模agent提供，不假称自动或已证明English→IR。12流程正反／真实并发／进程组超时测试、12原生及24旧flow回归通过，编译器缺失仅阻塞相依通道；坏spec来源、冲突、后端int64范围、实现差异及UNKNOWN提升分别分类。所有步骤固定worker，无任务提供shell/Python回调；源码集合闭合检查、独占新目录、唯一run ID支持并发调用；只读verify非新执行／真实性证明。当前仍为event-level原型，无IPv4／PCAP、字节与第二spec验收，不标记目标complete。命令及调用方交接边界见docs/spec-flow.md。
+
+2026-10-31：十阶段event原型987c0994已实际Ubuntu CI41216276646／job124581357915通过12流程方法及全任务／verify；artifact13048601703官方ZIP SHAbc78a22b、无损原job日志及验收在artifacts/spec-flow-pipeline-ci-987c0994。36原输入逐不可变Git blob匹配；独立数据解包后导出原Git校验器源码进行只读复核，不运行归档Python／ELF／solver且不放宽旧hash，支持后续工具版本演进。原任务为0.1种子，不能据此声称0.2 expect_trace已检查；复查发现新reference步骤未调用旧trace-contract门禁，后续检查点将修复并加入独立验收契约。IPv4／字节／第二spec及完整目标仍开放。
+
+
+2026-11-01：修复十阶段reference遗漏scenario0.2 expect_trace门禁的问题，调用原run_scenario核对独立轨迹／最终状态；新增固定SYN、1000ms重传及ACK的独立契约，当前6生成＋5种子＋2IR拒绝共13例。task-v2固定spec、探索域和全部种子来源，外部调用方可用--task-sha256绑定验收任务；候选自产SHA不是外部审批或真实性证明。运行前冻结37项数据／可信工具输入，worker使用同一捕获版本，原工作区变化仍使验收失效。18专项实际通过，包括错误IR、同时篡改oracle、弱化任务、运行中修改候选及并发隔离；本地新任务十阶段通过，158产物只读核验一致、2项独立轨迹契约通过。旧987c0994证据按原Git校验器保留，不放宽hash。仍无IPv4／PCAP及第二份规范迁移验收；目标未完成。
+
+
+2026-11-01：新增可选原生IPv4/TCP fixed-header适配，task-v3接入原十阶段flow；生成实现本身解码P命令IPv4字节、核对双校验和，通过IR guard/动作执行TCP，再产生真实C端IPv4字节。记录器仅封装原字节，不从参考输出合成egress；现有独立PCAP解码器核验，额外比较absolute seq/ACK/time/window防止归一化掩盖编码差异。一个任务保留13标量比较，并执行5完整wire种子；42输入和204产物核验一致。9 wire正反/故障测试通过，包括错误校验和、格式/四元组超范围、合法包错误ACK及生成器序列偏移；旧12原生、20流程和24旧flow分别实际通过。RFC791原文已从官方获取并固定SHA6cfb387f，格式依据§3.1及RFC9293§3.1。仅无payload/options/fragments的虚拟链路切片，无LinuxTCP/物理网络/完整IPv4行为；TCP状态与计时保持IR唯一权威。第二份规范迁移和服务器交接验收继续开放。此前task-v2 Ubuntu41220822030/job124594805326实际success，不能替代新wire版本CI。
+
+
+2026-11-01：第二份官方规范迁移案例已落地：model/udp-header.json＋RFC768/RFC1122 §4.1.3.4，声明7规则、默认／可配置checksum、零source port、长度解释及静默discard；范围为header/service descriptor，明确假设sum_valid输入，不含payload字节／checksum算术／UDP wire。未修改任何protocol_lab通用工具；同十阶段在本地实际通过，7规则覆盖、12例和14独立契约步骤，depth6 safety/overlap UNSAT仅为有界IR检查。8迁移／客户端测试通过，包括错误默认checksum、header长度及错误discard响应的独立契约拒绝。新增examples/run_spec_candidate.py和docs/spec-flow-server.md，外部调用方传独立workspace／taskSHA／out，真实并发TCP-wire＋UDP候选从无关CWD运行、独立runID并核验；无供应商API/SDK或特定agent框架依赖。客户端保留自身／Python SHA、原始JSONL和verify。此前wire Ubuntu41221600238/job124597120710全部实际success；本次新UDP／交接Ubuntu验收待对应新CI终态，不以旧CI代替。目标尚未宣布完成。
+
+
+2026-11-01：新双规范Ubuntu41222440458/job124599629037在d72b7f3d实际success；20流程＋9wire＋8迁移/客户端测试无skip，并实际运行/verify TCP事件、TCP-wire及UDP三任务。官方ZIP13050482735、946217字节、SHAfd69b4bc、原始无损日志及accept在artifacts/spec-flow-migration-ci-d72b7f3d；53输入/客户端逐不可变Git blob匹配，29通用工具源在三任务完全相同。独立安全解包后仅运行原Git只读校验器，三任务复核一致，不执行归档Python/ELF/solver、不放宽hash。逐目标验收见docs/spec-flow-acceptance.md；当前约定的可运行/可复现/可迁移flow原型门槛满足，完整TCP/IP、payload/UDP wire、通用编译器或无界证明仍不作结论。服务器/单多调用方交接见docs/spec-flow-server.md。
