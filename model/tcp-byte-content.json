@@ -1,0 +1,6157 @@
+{
+  "ir_version": "0.3",
+  "extends": "tcp-sws.json",
+  "protocol": "tcp-byte-content",
+  "variables": {
+    "bc_before_snd": {
+      "type": "bytes",
+      "initial": []
+    },
+    "bc_before_rtx": {
+      "type": "bytes",
+      "initial": []
+    },
+    "bc_removed": {
+      "type": "bytes",
+      "initial": []
+    },
+    "bc_wire": {
+      "type": "bytes",
+      "initial": []
+    },
+    "bc_accepted": {
+      "type": "bytes",
+      "initial": []
+    },
+    "bc_kind": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "requirements": {
+    "BC-CONTENT": {
+      "source": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.4",
+      "interpretation": "RFC9293 August2022 \u00a7\u00a73.4,3.10.7.4,3.10.8 motivate cumulative byte retirement, stream-order preservation and retransmission of queued content. This observer overlay checks explicit finite model queue/content contracts only; it does not prove all sequence/ACK conditions or the RFC. Ghost assignments do not change inherited behavior.",
+      "kind": "modeling_choice",
+      "strength": "full content one-step conservation"
+    }
+  },
+  "amend_transitions": [
+    {
+      "id": "C-ACTIVE-OPEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-PASSIVE-OPEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-LISTEN-SYN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-SYNACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYNACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-SYNACK-AFTER-RETRY",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-ACK-AFTER-RETRY",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYNACK-AFTER-RETRY",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-BAD-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-BAD-SYNACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-BARE-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-BAD-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-CLOSE-LISTEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-CLOSE-SYN-SENT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REPEATED-CLOSE-TIME-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-FIN-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-FIN-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-DUPLICATE-FIN-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RETRANSMIT-SYN-SENT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RETRANSMIT-SYN-RECEIVED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-SYN-SENT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-SYN-RECEIVED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-USER-TIMEOUT-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-TIME-WAIT-EXPIRED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-CLOSED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-LISTEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-SYN-SENT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-SYN-RECEIVED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-ESTABLISHED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-ABORT-TIME-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-IGNORE-NET-RST-CLOSED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-IGNORE-NET-RST-LISTEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-NET-RST",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-NET-RST-PASSIVE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-NET-RST-ACTIVE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-ESTABLISHED-rst",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-FIN-WAIT-1-rst",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-FIN-WAIT-2-rst",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-CLOSE-WAIT-rst",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-CLOSING-rst",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-LAST-ACK-rst",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-TIME-WAIT-rst",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-IGNORE-NET-RSTACK-CLOSED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-IGNORE-NET-RSTACK-LISTEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-SENT-NET-RSTACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-NET-RSTACK-PASSIVE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-SYN-RECEIVED-NET-RSTACK-ACTIVE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-ESTABLISHED-rstack",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-FIN-WAIT-1-rstack",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-FIN-WAIT-2-rstack",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-CLOSE-WAIT-rstack",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-CLOSING-rstack",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-LAST-ACK-rstack",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-RESET-TIME-WAIT-rstack",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REJECT-ACK-CLOSED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REJECT-ACK-LISTEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REJECT-SYNACK-CLOSED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REJECT-SYNACK-LISTEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REJECT-FIN-CLOSED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-REJECT-FIN-LISTEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "C-CLOSED-SYN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "D-QUEUE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 1
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "event": "data"
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 175,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "D-SEND-EMPTY",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 4
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 174,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "D-SEND-FULL",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 4
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 174,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "D-FLUSH-FIRST",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "D-FLUSH-MORE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "D-FLUSH-BLOCKED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "D-APPLICATION-READ",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S-ACK-VALID",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 3
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 314,
+          "expected": {
+            "emit_if": {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_nxt"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              },
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      true,
+                      {
+                        "var": "lt_eligible"
+                      }
+                    ]
+                  },
+                  true
+                ]
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "and",
+                              "args": [
+                                true,
+                                {
+                                  "var": "lt_eligible"
+                                }
+                              ]
+                            },
+                            true
+                          ]
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "snd_buf"
+                            },
+                            0,
+                            {
+                              "var": "take"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_nxt"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      0,
+                      {
+                        "var": "take"
+                      }
+                    ]
+                  }
+                },
+                "when": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "and",
+                      "args": [
+                        true,
+                        {
+                          "var": "lt_eligible"
+                        }
+                      ]
+                    },
+                    true
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 239,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 123,
+          "expected": {
+            "set": {
+              "var": "rtx_buf",
+              "value": {
+                "op": "ite",
+                "args": [
+                  {
+                    "var": "ack_advance"
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      {
+                        "var": "ack_delta"
+                      },
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rtx_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "var": "rtx_buf"
+                  }
+                ]
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_removed",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "ack_advance"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        },
+                        0,
+                        {
+                          "var": "ack_delta"
+                        }
+                      ]
+                    },
+                    {
+                      "bytes": []
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
+                "var": "rtx_buf",
+                "value": {
+                  "op": "ite",
+                  "args": [
+                    {
+                      "var": "ack_advance"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "rtx_buf"
+                        },
+                        {
+                          "var": "ack_delta"
+                        },
+                        {
+                          "op": "bytes_len",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "var": "rtx_buf"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "S-ACK-FUTURE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S-ACK-UNACCEPTABLE-SEQUENCE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "S-RETRANSMIT-WINDOW",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 4
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 244,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 105,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "tx_emit_count"
+                  },
+                  1
+                ]
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "tx_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "op": "ge",
+                          "args": [
+                            {
+                              "var": "tx_emit_count"
+                            },
+                            1
+                          ]
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "tx_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "op": "ge",
+                  "args": [
+                    {
+                      "var": "tx_emit_count"
+                    },
+                    1
+                  ]
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "tx_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "S-RETRANSMIT-ZERO-WINDOW",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 4
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 244,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 105,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "tx_emit_count"
+                  },
+                  1
+                ]
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "tx_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "op": "ge",
+                          "args": [
+                            {
+                              "var": "tx_emit_count"
+                            },
+                            1
+                          ]
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "tx_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "op": "ge",
+                  "args": [
+                    {
+                      "var": "tx_emit_count"
+                    },
+                    1
+                  ]
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "tx_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "CL-CLOSE-ESTABLISHED-FIN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-CLOSE-ESTABLISHED-QUEUE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-CLOSE-CLOSE-WAIT-FIN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-CLOSE-CLOSE-WAIT-QUEUE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-REPEATED-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-FLUSH-FIRST-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-FLUSH-MORE-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-FLUSH-BLOCKED-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-FLUSH-FIN-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-FLUSH-FIRST-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-FLUSH-MORE-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-FLUSH-BLOCKED-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-FLUSH-FIN-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-FLUSH-FIRST-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-FLUSH-MORE-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-FLUSH-BLOCKED-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-FLUSH-FIN-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-QUEUE-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-SEND-EMPTY-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-SEND-FULL-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-SEND-CLOSING-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-SEND-CLOSING-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-SEND-CLOSING-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-SEND-CLOSING-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-SEND-CLOSING-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-APPLICATION-READ-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-APPLICATION-READ-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-APPLICATION-READ-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-APPLICATION-READ-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-APPLICATION-READ-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-D-APPLICATION-READ-TIME-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-VALID-CLOSE-WAIT-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-FUTURE-CLOSE-WAIT-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSE-WAIT-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-VALID-FIN-WAIT-1-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-FUTURE-FIN-WAIT-1-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-1-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-VALID-FIN-WAIT-2-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-FUTURE-FIN-WAIT-2-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-FIN-WAIT-2-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-VALID-CLOSING-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-VALID-CLOSING-TIME-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-FUTURE-CLOSING-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-CLOSING-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-VALID-LAST-ACK-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-VALID-LAST-ACK-CLOSED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-FUTURE-LAST-ACK-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-ACK-UNACCEPTABLE-SEQUENCE-LAST-ACK-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-RETRANSMIT-WINDOW-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-RETRANSMIT-FIN-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-RETRANSMIT-WINDOW-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-RETRANSMIT-ZERO-WINDOW-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-RETRANSMIT-FIN-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-RETRANSMIT-WINDOW-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-RETRANSMIT-ZERO-WINDOW-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-RETRANSMIT-FIN-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-RETRANSMIT-WINDOW-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-S-RETRANSMIT-ZERO-WINDOW-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-RETRANSMIT-FIN-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-TRANSMIT-AFTER-FIN-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-TRANSMIT-AFTER-FIN-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CL-TRANSMIT-AFTER-FIN-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-ESTABLISHED-net-data",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-ESTABLISHED-net-fin_segment",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-ESTABLISHED-net-fin",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-1-net-data",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-FINACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-1-net-fin",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-2-net-data",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-2-net-fin_segment",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-2-net-fin",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-CLOSE-WAIT-net-data",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-CLOSE-WAIT-net-fin_segment",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-CLOSING-net-data",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-CLOSING-net-fin_segment",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-LAST-ACK-net-data",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-LAST-ACK-net-fin_segment",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-TIME-WAIT-net-fin_segment",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-TIME-WAIT-net-fin",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-CANONICAL-CLOSED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-CANONICAL-LISTEN",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-TIME-WAIT-DATA",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-DUPLICATE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-NEW",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-PENDING-ACK-OTHER",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-DUPLICATE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-NEW",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F-RECEIVE-FIN-WAIT-1-net-fin_segment-OTHER-ACK-OTHER",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACK-DELAY-EXPIRE-ESTABLISHED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACK-DELAY-EXPIRE-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACK-DELAY-EXPIRE-FIN-WAIT-2",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-PROBE-ESTABLISHED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-WAIT-ESTABLISHED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-PROBE-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-WAIT-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-PROBE-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-WAIT-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-PROBE-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-WAIT-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-PROBE-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "PERSIST-WAIT-LAST-ACK",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHOICE-D-FLUSH-FIRST",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 2
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 226,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 123,
+          "expected": {
+            "emit": {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_nxt"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        },
+                        0,
+                        {
+                          "var": "take"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit": {
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_nxt"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      0,
+                      {
+                        "var": "take"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "CHOICE-D-FLUSH-MORE",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 2
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 225,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 123,
+          "expected": {
+            "emit": {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_nxt"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        },
+                        0,
+                        {
+                          "var": "take"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit": {
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_nxt"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      0,
+                      {
+                        "var": "take"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "CHOICE-CL-D-FLUSH-FIRST-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 2
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 226,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 123,
+          "expected": {
+            "emit": {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_nxt"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        },
+                        0,
+                        {
+                          "var": "take"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit": {
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_nxt"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      0,
+                      {
+                        "var": "take"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "CHOICE-CL-D-FLUSH-MORE-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 2
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 225,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 123,
+          "expected": {
+            "emit": {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_nxt"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        },
+                        0,
+                        {
+                          "var": "take"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit": {
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_nxt"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      0,
+                      {
+                        "var": "take"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "CHOICE-CL-D-FLUSH-FIRST-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 2
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 226,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 123,
+          "expected": {
+            "emit": {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_nxt"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        },
+                        0,
+                        {
+                          "var": "take"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit": {
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_nxt"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      0,
+                      {
+                        "var": "take"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "CHOICE-CL-D-FLUSH-MORE-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 2
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 225,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 123,
+          "expected": {
+            "emit": {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_nxt"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        },
+                        0,
+                        {
+                          "var": "take"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit": {
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_nxt"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      0,
+                      {
+                        "var": "take"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "CHOICE-CL-D-FLUSH-FIRST-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 2
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 226,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 123,
+          "expected": {
+            "emit": {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_nxt"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        },
+                        0,
+                        {
+                          "var": "take"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit": {
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_nxt"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      0,
+                      {
+                        "var": "take"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "CHOICE-CL-D-FLUSH-MORE-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 2
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_snd",
+            "value": {
+              "var": "snd_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_before_rtx",
+            "value": {
+              "var": "rtx_buf"
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_removed",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_wire",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "bc_accepted",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "edit_actions": [
+        {
+          "at": 225,
+          "expected": {
+            "emit_if": {
+              "when": {
+                "var": "fr_retransmitted"
+              },
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_una"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "var": "local_window"
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "rtx_buf"
+                    },
+                    0,
+                    {
+                      "var": "fr_emit_count"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "ite",
+                      "args": [
+                        {
+                          "var": "fr_retransmitted"
+                        },
+                        {
+                          "op": "bytes_slice",
+                          "args": [
+                            {
+                              "var": "rtx_buf"
+                            },
+                            0,
+                            {
+                              "var": "fr_emit_count"
+                            }
+                          ]
+                        },
+                        {
+                          "bytes": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit_if": {
+                "when": {
+                  "var": "fr_retransmitted"
+                },
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_una"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "var": "local_window"
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      0,
+                      {
+                        "var": "fr_emit_count"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "at": 123,
+          "expected": {
+            "emit": {
+              "message": "tcp_data",
+              "fields": {
+                "flags": "A",
+                "seq": {
+                  "var": "snd_nxt"
+                },
+                "ack": {
+                  "var": "rcv_nxt"
+                },
+                "window": {
+                  "op": "sub",
+                  "args": [
+                    16,
+                    {
+                      "op": "bytes_len",
+                      "args": [
+                        {
+                          "var": "rcv_buf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "payload": {
+                  "op": "bytes_slice",
+                  "args": [
+                    {
+                      "var": "snd_buf"
+                    },
+                    0,
+                    {
+                      "var": "take"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "with": [
+            {
+              "set": {
+                "var": "bc_wire",
+                "value": {
+                  "op": "bytes_concat",
+                  "args": [
+                    {
+                      "var": "bc_wire"
+                    },
+                    {
+                      "op": "bytes_slice",
+                      "args": [
+                        {
+                          "var": "snd_buf"
+                        },
+                        0,
+                        {
+                          "var": "take"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "emit": {
+                "message": "tcp_data",
+                "fields": {
+                  "flags": "A",
+                  "seq": {
+                    "var": "snd_nxt"
+                  },
+                  "ack": {
+                    "var": "rcv_nxt"
+                  },
+                  "window": {
+                    "op": "sub",
+                    "args": [
+                      16,
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "rcv_buf"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "payload": {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      0,
+                      {
+                        "var": "take"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "add_requirements": [
+        "BC-CONTENT"
+      ]
+    },
+    {
+      "id": "NAGLE-OPTION-ESTABLISHED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "NAGLE-OPTION-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWS-EXPIRE-ESTABLISHED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWS-EXPIRE-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWS-EXPIRE-FIN-WAIT-1",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWS-EXPIRE-CLOSING",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWS-PUSH-ESTABLISHED",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWS-PUSH-CLOSE-WAIT",
+      "prepend_actions": [
+        {
+          "set": {
+            "var": "bc_kind",
+            "value": 0
+          }
+        }
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "BC-QUEUE",
+      "requirements": [
+        "BC-CONTENT"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "bc_kind"
+              },
+              1
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "var": "rtx_buf"
+                  },
+                  {
+                    "var": "snd_buf"
+                  }
+                ]
+              },
+              {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "var": "bc_before_rtx"
+                      },
+                      {
+                        "var": "bc_before_snd"
+                      }
+                    ]
+                  },
+                  {
+                    "var": "bc_accepted"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BC-PARTITION",
+      "requirements": [
+        "BC-CONTENT"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "bc_kind"
+                  },
+                  2
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "bc_kind"
+                  },
+                  3
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "var": "bc_removed"
+                  },
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      {
+                        "var": "snd_buf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "var": "bc_before_rtx"
+                  },
+                  {
+                    "var": "bc_before_snd"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BC-FLUSH-WIRE",
+      "requirements": [
+        "BC-CONTENT"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "bc_kind"
+              },
+              2
+            ]
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "var": "bc_wire"
+                      },
+                      {
+                        "var": "snd_buf"
+                      }
+                    ]
+                  },
+                  {
+                    "var": "bc_before_snd"
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "rtx_buf"
+                  },
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "var": "bc_before_rtx"
+                      },
+                      {
+                        "var": "bc_wire"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "BC-RETRANSMIT",
+      "requirements": [
+        "BC-CONTENT"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "var": "bc_kind"
+              },
+              4
+            ]
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "snd_buf"
+                      },
+                      {
+                        "var": "bc_before_snd"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "rtx_buf"
+                      },
+                      {
+                        "var": "bc_before_rtx"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "var": "bc_wire"
+                      },
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "var": "bc_before_rtx"
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "bc_wire"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "var": "bc_before_rtx"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "var": "bc_before_rtx"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

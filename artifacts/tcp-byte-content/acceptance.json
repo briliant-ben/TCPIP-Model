@@ -1,0 +1,49 @@
+{
+  "status": "retained_partial_full_byte_step_evidence_accepted",
+  "selected_rules": 14,
+  "content_properties_verified": 21,
+  "content_properties_unknown": 1,
+  "unresolved": [
+    {
+      "rule": "S-ACK-VALID",
+      "property": "BC-PARTITION"
+    }
+  ],
+  "native_contexts_sat": 14,
+  "native_property_applicability_sat": 22,
+  "original_two_native_stages": true,
+  "new_native_replay": false,
+  "old_frozen_inputs_unchanged": 1287,
+  "observer_binding": {
+    "status": "inherited_semantics_erasure_and_wire_observation_checked",
+    "base_model_semantic_sha256": "ded28c89185b7e2277ffed6a587d4c86f1aa4e0f68340120e1433c1e72ac17ec",
+    "observed_model_semantic_sha256": "b41de5e85a071705e556cf8d1a75e542a1e9c1daaa187f7fee46fea4f7592fac",
+    "inherited_rules_checked": 209,
+    "selected_rules": [
+      "D-QUEUE",
+      "D-SEND-EMPTY",
+      "D-SEND-FULL",
+      "S-ACK-VALID",
+      "S-RETRANSMIT-WINDOW",
+      "S-RETRANSMIT-ZERO-WINDOW",
+      "CHOICE-D-FLUSH-FIRST",
+      "CHOICE-D-FLUSH-MORE",
+      "CHOICE-CL-D-FLUSH-FIRST-CLOSE-WAIT",
+      "CHOICE-CL-D-FLUSH-MORE-CLOSE-WAIT",
+      "CHOICE-CL-D-FLUSH-FIRST-FIN-WAIT-1",
+      "CHOICE-CL-D-FLUSH-MORE-FIN-WAIT-1",
+      "CHOICE-CL-D-FLUSH-FIRST-CLOSING",
+      "CHOICE-CL-D-FLUSH-MORE-CLOSING"
+    ],
+    "exact_ordered_data_emission_sites": 25,
+    "observer_structure_is_kernel_proof": false,
+    "protocol_correctness_proved": false
+  },
+  "whole_model_induction": false,
+  "whole_protocol_proved": false,
+  "kernel_checked": false,
+  "source_encoder_trusted": true,
+  "interpreter_correspondence_proved": false,
+  "linux_execution": false,
+  "scope": "selected actual TCP byte-queue/content steps only; ACK content obligation remains unresolved"
+}
