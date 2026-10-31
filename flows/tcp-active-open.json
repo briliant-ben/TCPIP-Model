@@ -1,5 +1,5 @@
 {
-  "schema": "spec-flow-task-v1",
+  "schema": "spec-flow-task-v2",
   "id": "tcp-active-open",
   "model": "model/tcp.json",
   "sources": [
@@ -30,6 +30,60 @@
       "version": "repository named semantic contract",
       "uri_aliases": [
         "docs/semantics.md"
+      ]
+    },
+    {
+      "id": "acceptance-input-0",
+      "path": "model/exploration.json",
+      "sha256": "254b489d4fd9e0e733c11661632e940e1069f1971bbab2545542acad53699978",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "model/exploration.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-1",
+      "path": "scenarios/handshake.json",
+      "sha256": "638341941b59c740ec8ec2927e9e6cf252bdaebf538218fb38bac5d6a848f3d2",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/handshake.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-2",
+      "path": "scenarios/sequence-wrap.json",
+      "sha256": "fd66c07cb206670ecb6f4cd8378d6a8c06dd901cbb5b78595d7695b42eee8177",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/sequence-wrap.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-3",
+      "path": "scenarios/syn-loss.json",
+      "sha256": "0e6602d76c241dcf23dfd55e9465c9dfe2c0e5e7f47ab9cf5deeda368772f6ff",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/syn-loss.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-4",
+      "path": "scenarios/two-syn-losses.json",
+      "sha256": "b74d2d486c4adb506aec8c09b1424380eb71e64b36119cb2b780f8f34e2d2bb5",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/two-syn-losses.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-5",
+      "path": "scenarios/flow-contracts/active-open.json",
+      "sha256": "fbb3fc87988ccb451e2b1d7db652813400bea553d8060436d0915ed81283b55b",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/flow-contracts/active-open.json"
       ]
     }
   ],
@@ -75,7 +129,8 @@
     "scenarios/handshake.json",
     "scenarios/sequence-wrap.json",
     "scenarios/syn-loss.json",
-    "scenarios/two-syn-losses.json"
+    "scenarios/two-syn-losses.json",
+    "scenarios/flow-contracts/active-open.json"
   ],
   "formal": {
     "depth": 6,
@@ -92,7 +147,8 @@
     "purpose": "first event-level orchestration of actual generated TCP active-open code",
     "assumptions": [
       "Typed validated SYN+ACK input events",
-      "Reference-derived finite test domains; source interpretation remains trusted"
+      "Reference-derived finite test domains; source interpretation remains trusted",
+      "The controller pins the approved task; modelers change candidate IR, not acceptance sources or seed oracles"
     ],
     "excluded": [
       "IPv4 wire input/output",

@@ -61,7 +61,7 @@ the generator, a complete TCP implementation, or TCP/IPv4 wire acceptance.
 
 Remaining acceptance work: byte-capable native generation and the selected
 TCP data slice; minimal IPv4 wire input/output and independent observation;
-unified stage orchestration/test-generation/verification manifests; a second
+a second
 small specification; and reproducible server/multi-agent task isolation and
 handoff. A pipeline must distinguish unsupported models, conflicts, invariant
 failures, environment/resource limits, stale evidence and implementation
@@ -71,9 +71,11 @@ Difference remain intact. Completing this first backend does not complete the go
 ## One repeatable task
 
 ```
+TASK_SHA=$(shasum -a 256 flows/tcp-active-open.json | cut -d ' ' -f 1)
 python3 -m protocol_lab.pipeline run flows/tcp-active-open.json \
-  --workspace . --out /tmp/new-flow-job
-python3 -m protocol_lab.pipeline verify /tmp/new-flow-job --workspace .
+  --workspace . --out /tmp/new-flow-job --task-sha256 "$TASK_SHA"
+python3 -m protocol_lab.pipeline verify /tmp/new-flow-job --workspace . \
+  --task-sha256 "$TASK_SHA"
 ```
 
 The task declares pinned source bytes/versions, requirement-to-source references,
@@ -88,7 +90,11 @@ The ten fixed stages are sources, IR, formal, tests, reference, generate, build,
 execute, compare and traceability. There are no task-supplied Python/shell commands.
 Bounded exploration generates one rule witness per initial configuration/rule and
 explicit IR rejection cases; pinned seeds supplement these model-derived tests.
-The baseline produces six witnesses, four seeds and two model-gap rejections. A
+The current baseline produces six witnesses, five seeds and two model-gap
+rejections (13 native cases). The additional seed independently fixes the exact
+SYN/retransmission/ACK trace and final state using the existing scenario0.2 contract
+checker; reference execution must satisfy it before comparison. Model-derived
+tests alone cannot detect a shared model/implementation mistake. A
 successful rejection test means the native implementation matches IR rejection,
 not that the unmodeled invalid-ACK behavior satisfies the TCP specification.
 
@@ -101,6 +107,21 @@ Unique run IDs and exclusively created output directories permit concurrent
 callers. Source/workspace file hashes and the closed tool-source file set are
 checked before accepting a run; tool code should be deployed read-only and each
 modeling agent should edit its own candidate workspace/check-out.
+
+Task-v2 pins every exploration/seed input as well as specification sources. An
+acceptance caller can supply an independently approved task SHA via
+`--task-sha256`; changing bounds, scope or oracle data then changes the approved
+task. Computing a SHA from a candidate is useful for version binding, but is not
+external approval or authentication. The approval digest belongs to the caller,
+separate from the agent proposing IR changes. Unpinned exploratory runs remain
+possible and report that fact explicitly.
+
+Before stages start, the runner freezes all bound workspace files and its trusted
+tool sources into the job. Workers read only this captured version. Live edits
+cannot mix candidates across stages; final checks still invalidate a job if its
+original inputs changed. Retained verification checks the frozen copies as well
+as the original source epoch. This is reproducibility/isolation, not a sandbox
+for executing untrusted task-supplied code.
 
 CLI stdout is JSONL: stage-start events followed by the final report. The report
 separates execution_status from assessment. A completed process is not a successful

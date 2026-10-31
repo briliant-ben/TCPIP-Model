@@ -4,7 +4,8 @@ from pathlib import Path
 import re
 
 TOOL=Path(__file__).resolve().parents[1]
-SCHEMA='spec-flow-task-v1'
+SCHEMA='spec-flow-task-v2'
+SCHEMAS={'spec-flow-task-v1',SCHEMA}
 
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
@@ -25,8 +26,10 @@ def load_task(filename,workspace):
     if not filename.is_relative_to(workspace):raise ValueError('Task outside workspace')
     t=read(filename)
     keys={'schema','id','model','sources','requirement_bindings','exploration','seeds','formal','limits','scope'}
-    if set(t)!=keys or t['schema']!=SCHEMA:raise ValueError('Unknown task fields/version')
+    if set(t)!=keys or t['schema']not in SCHEMAS:raise ValueError('Unknown task fields/version')
     if not isinstance(t['id'],str)or not re.fullmatch(r'[A-Za-z0-9_.-]+',t['id']):raise ValueError('Invalid task ID')
+    names=[t['model'],t['exploration'],*t['seeds'],*(s['path']for s in t['sources'])]
+    if any(Path(n).is_absolute()for n in names):raise ValueError('Task input paths must be relative to workspace')
     resolve(workspace,t['model']);resolve(workspace,t['exploration'])
     if not isinstance(t['seeds'],list):raise ValueError('Seeds must be a list')
     for name in t['seeds']:resolve(workspace,name)
@@ -39,6 +42,10 @@ def load_task(filename,workspace):
         if not re.fullmatch('[0-9a-f]{64}',s['sha256']):raise ValueError('Invalid source digest')
         if not isinstance(s['uri_aliases'],list)or not s['uri_aliases']or any(not isinstance(u,str)or not u for u in s['uri_aliases']):raise ValueError('Source URI aliases required')
     if len(ids)!=len(set(ids)):raise ValueError('Duplicate source ID')
+    if t['schema']=='spec-flow-task-v2':
+        pinned={resolve(workspace,s['path'])for s in t['sources']}
+        required={resolve(workspace,t['exploration']),*(resolve(workspace,n)for n in t['seeds'])}
+        if not required<=pinned:raise ValueError('Task v2 must pin every seed and exploration input')
     if not isinstance(t['requirement_bindings'],dict):raise ValueError('Requirement bindings required')
     for b in t['requirement_bindings'].values():
         if set(b)!={'source','clause','reference'}or b['source']not in ids or any(not isinstance(b[k],str)or not b[k]for k in b):raise ValueError('Incomplete requirement binding')
@@ -64,12 +71,28 @@ def inputs(filename,workspace,t):
     return result
 
 
-def check_inputs(snapshot,workspace):
+def check_inputs(snapshot,workspace,tool_root=TOOL):
+    tool_root=Path(tool_root).resolve()
     expected={n for n in snapshot if n.startswith('tool/')}
-    actual={'tool/'+p.relative_to(TOOL).as_posix()for p in TOOL.rglob('*')if p.is_file()and p.suffix in ('.py','.c')}
+    actual={'tool/'+p.relative_to(tool_root).as_posix()for p in tool_root.rglob('*')if p.is_file()and p.suffix in ('.py','.c')}
     if expected!=actual:raise ValueError('Tool source file set changed')
     for name,h in snapshot.items():
-        prefix,tail=name.split('/',1);root=Path(workspace).resolve()if prefix=='workspace'else TOOL if prefix=='tool'else None
+        prefix,tail=name.split('/',1);root=Path(workspace).resolve()if prefix=='workspace'else tool_root if prefix=='tool'else None
         if root is None:raise ValueError('Unknown input namespace')
         path=(root/tail).resolve()
         if not path.is_relative_to(root)or sha(path)!=h:raise ValueError('Source input changed: '+name)
+
+
+def freeze_inputs(snapshot,workspace,out):
+    roots={'workspace':Path(workspace).resolve(),'tool':TOOL}
+    targets={'workspace':Path(out)/'source-snapshot/workspace',
+             'tool':Path(out)/'source-snapshot/tool/protocol_lab'}
+    files={}
+    for name,h in snapshot.items():
+        prefix,tail=name.split('/',1);source=(roots[prefix]/tail).resolve()
+        if not source.is_relative_to(roots[prefix]):raise ValueError('Snapshot source escapes input root')
+        raw=source.read_bytes()
+        if hashlib.sha256(raw).hexdigest()!=h:raise ValueError('Input changed while freezing: '+name)
+        target=targets[prefix]/tail;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw);target.chmod(0o444)
+        files[name]=target.relative_to(out).as_posix()
+    return dict(workspace='source-snapshot/workspace',tool='source-snapshot/tool/protocol_lab',files=files)

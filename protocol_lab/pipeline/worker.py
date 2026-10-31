@@ -104,15 +104,24 @@ def stage(name,t,workspace,job,out):
     if name=='reference':
         rows=[]
         for c in cases(job):
-            case=read(job/c['path']);r=reference_case(model,case)
+            case=read(job/c['path'])
+            if not c['negative']:
+                # Reuse the existing, independently authored scenario0.2 gate.
+                # In particular, never reduce expect_trace to final-state checks.
+                from ..flow import run_scenario,TraceContractMismatch
+                try:run_scenario(model,case)
+                except TraceContractMismatch as e:
+                    return result('fail','scenario_contract',dict(scenario=e.scenario,at_ms=e.at_ms,expected=e.expected,observed=e.observed))
+            r=reference_case(model,case)
             if c['negative']:
                 if not r['error']or r['error']['classification']!=case['expected_rejection']:return result('fail','reference_rejection_mismatch')
             elif r['error']:return result('fail',r['error']['classification'],r)
             if not c['negative']:
                 e=case['expect']
                 if r['final']['state']!=e['state']or r['final']['timers']!=e['timers']or any(r['final']['variables'][k]!=v for k,v in e.get('variables',{}).items()):return result('fail','scenario_contract')
-            p=out/(c['key']+'.json');write(p,r);rows.append(dict(key=c['key'],path=str(p.relative_to(job)),negative=c['negative']))
-        return result(data=dict(cases=rows))
+            p=out/(c['key']+'.json');write(p,r);rows.append(dict(key=c['key'],path=str(p.relative_to(job)),negative=c['negative'],
+                             trace_contract_steps_checked=0 if c['negative']else sum('expect_trace'in step for step in case['steps'])))
+        return result('pass'if rows else'unknown',None if rows else'no_reference_cases',dict(cases=rows,trace_contract_steps_checked=sum(r['trace_contract_steps_checked']for r in rows)))
     if name=='generate':return result(data=generate_native(model_file,out/'generation'))
     if name=='build':
         r=build(job/'stages/generate/generation',out/'build')
@@ -133,6 +142,7 @@ def stage(name,t,workspace,job,out):
                                 executable_sha256=compiler['executable_sha256'],reference_values_supplied=False,
                                 linux_network_evidence=False,pcap_evidence=False))
     if name=='compare':
+        if not cases(job):return result('unknown','no_native_cases')
         refs={r['key']:r for r in prior(job,'reference')['cases']};rows=[]
         for r in prior(job,'execute')['cases']:
             try:observed=[json.loads(x)for x in (job/r['stdout']).read_text().splitlines()]
@@ -160,7 +170,7 @@ def stage(name,t,workspace,job,out):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=('sources','ir','formal','tests','reference','generate','build','execute','compare','traceability'));p.add_argument('--job',type=Path,required=True)
     a=p.parse_args();job=a.job.resolve();config=read(job/'request.json');out=job/'stages'/a.name;out.mkdir(parents=True,exist_ok=False)
-    try:r=stage(a.name,config['task'],Path(config['workspace']),job,out)
+    try:r=stage(a.name,config['task'],Path(config.get('execution_workspace',config['workspace'])),job,out)
     except Unsupported as e:r=result('rejected','unsupported_semantics',dict(reason=str(e)))
     except ModelError as e:
         missing='Z3 is missing'in str(e)

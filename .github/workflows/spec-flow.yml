@@ -25,9 +25,13 @@ jobs:
           mkdir -p artifacts/spec-flow-ci
           /tmp/spec-flow-venv/bin/python -m unittest discover -s tests -p test_pipeline.py -v > artifacts/spec-flow-ci/tests.log 2>&1
       - name: Run the actual complete event-level task
-        run: /tmp/spec-flow-venv/bin/python -m protocol_lab.pipeline run flows/tcp-active-open.json --workspace . --out artifacts/spec-flow-ci/run > artifacts/spec-flow-ci/run.jsonl
+        run: |
+          FLOW_TASK_SHA=$(sha256sum flows/tcp-active-open.json | cut -d ' ' -f 1)
+          /tmp/spec-flow-venv/bin/python -m protocol_lab.pipeline run flows/tcp-active-open.json --workspace . --task-sha256 "$FLOW_TASK_SHA" --out artifacts/spec-flow-ci/run > artifacts/spec-flow-ci/run.jsonl
       - name: Verify immutable task and stage evidence
-        run: /tmp/spec-flow-venv/bin/python -m protocol_lab.pipeline verify artifacts/spec-flow-ci/run --workspace . > artifacts/spec-flow-ci/verification.json
+        run: |
+          FLOW_TASK_SHA=$(sha256sum flows/tcp-active-open.json | cut -d ' ' -f 1)
+          /tmp/spec-flow-venv/bin/python -m protocol_lab.pipeline verify artifacts/spec-flow-ci/run --workspace . --task-sha256 "$FLOW_TASK_SHA" > artifacts/spec-flow-ci/verification.json
       - name: Preserve formal tests native observations and source bindings
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
