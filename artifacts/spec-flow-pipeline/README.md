@@ -29,3 +29,7 @@ This remains an event-level flow prototype. IPv4/wire PCAP, byte/data generation
 second-spec migration and whole-goal acceptance are not claimed. The candidate IR
 and source interpretation are supplied by the caller/modeling agent and remain
 trusted interpretation; URI/hash binding is not an English-to-IR correctness proof.
+
+All36 original inputs additionally match immutable Git source987c0994. Run the
+audit at the recorded source checkpoint; changed/added tool files require a new
+flow execution, never a relaxed hash check.
