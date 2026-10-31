@@ -597,3 +597,5 @@ artifacts/ack-query-head-chain从原始SMT和primitive证书在当前helper epoc
 每case局部等价及叶均有来源SHA绑定的固定tactic证书；默认finite策略本生成阶段未执行，明确unknown/not run，不能把native_routes_complete_unverified当验收。独立检查器仍重建／运行默认检查，再新CLI验收全部替代路线。4新方法覆盖独立验收、重哈希错候选及伪正结果、可满足source的metadata冒领、真实大共享合取回归；与既有73合计77专项8.003138秒通过，0失败／错误／跳过，原始input／IDs／环境／日志见artifacts/finite-proposal-local-77。runner显式绑定未提交的新生成器源码，实际SHA而非parent Git识别本次代码。当前发现488但未完整跑新组合；478旧source已完整通过并独立归档。
 
 295／296新版各32条native候选路线已UNSAT，尚在独立证书复查中，不新增已验收闭合，索引仍366/368。IR→SMT桥／Python／Z3仍可信；无新kernel、Linux TCP／PCAP或完整协议声明。旧IR／编码器／lwIP／所有Difference及2750ms保持，完整目标继续。
+
+2026-10-31：raw finite生成器ca9d6f24的实际Ubuntu CI41165740563／job124432792129／artifact13029157918通过77/77，14.931918秒、0失败／错误／跳过。原ZIP SHA4e96a94a、官方来源／decoded job gzip／unit日志及验收存artifacts/finite-proposal-ci-ca9d6f24；source head ca9d6f24／checkout merge7ee7ecdd分开绑定，1271源输入逐不可变Git blob核对，77 IDs与本地相同。仅新证书专项和真实共享合取结构回归，不计Linux TCP／PCAP、旧Mac实证重放或kernel。当前488组合未跑，旧478标准回归已通过；295／296虽各已独立证书验收，最终来源／故障／安全解包验收尚在进行，具名索引仍366/368。完整目标继续。
