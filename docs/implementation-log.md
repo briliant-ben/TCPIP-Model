@@ -621,3 +621,5 @@ artifacts/ack-prefix-bounds使原295（cb_partial_prefix≥0）／296（≤3）�
 cover plan v2允许显式原source字节完全相同的依赖证书引用；安全解包后只在新工作目录构造候选图，记录原result SHA／新证书digest，保留原叶、schema、context及历史producer元数据，重算新候选的文件清单。原归档不可变；重算清单本身不是证明，固定g检查器仍须重建并实际新CLI验收所有依赖与所有目标。任何新原式／收窄前提／未知替换种类均拒绝。2新增图模式正反方法通过，84专项10.550627秒、0失败／错误／跳过、输入与环境未变，见artifacts/query-cover-local-84；原7种图／分区行为均含其中。当前495标准发现未完整跑，旧478通过保持独立。
 
 v2真实全目标重放已在新目录/tmp/ack-complete-cover-replay-v2开始，引用原head／prefix包及286新证书；尚未验收命名原query，368组件索引不冒领完整target／父基／TCP。失败v1和所有旧UNKNOWN及2750ms Difference保持。完整原目标继续。
+
+2026-10-31：cover v2实际Ubuntu CI41169349726／job124443724284／artifact13029694863通过84/84，18.208204秒、0失败／错误／跳过。官方原ZIP SHAa30fc2d7、source head f2acf9f9／checkout merge5299b9e8、完整decoded job gzip／unit日志及独立验收见artifacts/query-cover-ci-f2acf9f9；1274输入逐不可变Git blob核对，84 IDs与本地同。仅新证书专项，不计真实TCP目标已证、Linux TCP／PCAP、旧Mac协议证据重放或kernel。真实全368 cover v1因286旧tactic10s UNKNOWN失败保留，v2换同原source证书后已过286但整体仍在重放，未宣称命名原target关闭。当前495组合未跑，旧478完整回归和原368组件证据保持，完整协议平台目标继续。
