@@ -670,3 +670,6 @@ artifacts/ack-complete-cover记录 bit-identical proposal、依赖包引用及SH
 
 
 2026-11-01：原生字节里程碑2a2fed2c已在既有Linux服务器独立发布目录实际通过63专项（20流程/9wire/8迁移/12标量/14字节，含ASan/UBSan）、三基线任务/verify、15TCPdata原生及独立固定输入Z3匹配、101连接原生回归。184具名Git文件及1188原始服务器证据在artifacts/native-bytes-server-2a2fed2c；只读验收导出原Git工具复核三任务、重渲染C、重比较116原始观测，核对15SMT/result但不执行归档Python/ELF/solver。两种归档/重哈希观测故障均拒绝。源包约314KB，旧发布不变，无网络/SSH变更、测试零API调用。字节后端有限域可用，完整IPv4端点与payload线端组合仍开放，不标记总体完成；旧depth6 UNKNOWN和2750ms差异保持。
+
+
+2026-11-01：用户授权agent后台运行、偶尔检查并节省token。新增固定JSON双角色建模作业控制器、UDP payload字节服务描述契约及3项离线正反门禁测试；最多两初始请求/两修正，共享原12请求台账，零自动失败重试，240秒验证/两小时作业界限。独立reviewer先产literal oracle并冻结，候选只能改IR，自动跑参考/生成C/固定输入Z3及depth3检查；UNKNOWN/超时保持unresolved，candidate_ready仍需控制器复核，不自动集成/合并。范围为payload跨层的前置描述切片，不冒称UDP线端。PR#9五条CI已实际success。后台进程实际启动与结果另按status/服务器回执记录，见docs/unattended-model-jobs.md。
