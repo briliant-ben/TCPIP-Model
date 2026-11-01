@@ -230,3 +230,11 @@ retains its original epoch/domain. The15 existing TCP-data scenarios now have
 actual generated C and independent fixed-input Z3 replay; this does not change
 old whole-model UNKNOWNs or add native payload PCAP. Exact semantics, capacity
 failures and deployment profile are documented in `docs/native-bytes.md`.
+
+The controller-reviewed agent UDP byte candidate is now integrated as
+`flows/udp-payload.json`:19 exact generated/native/reference cases including13
+literal output-contract steps, depth3 safety/overlap checks, full traceability and
+read-only verification. The same tool sources run four tasks in the separate
+Linux release; scope/evidence are in docs/udp-payload-flow.md and
+artifacts/udp-payload-flow-34e47060. This remains a service descriptor without
+UDP wire/checksum arithmetic or PCAP.
