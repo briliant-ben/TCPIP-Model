@@ -1,0 +1,826 @@
+{
+  "request_sha256": "9dec6a09d7b9ab96a7f8b41a8856459d88e8cd1fdeb0b6de3773f09108358202",
+  "model": "deepseek-flash",
+  "response": {
+    "ir": {
+      "ir_version": "0.2",
+      "protocol": "ipv4-endhost-input-header-slice",
+      "semantics": "flat-efsm-atomic-ordered-v1",
+      "scope": {
+        "terminal_states": [],
+        "excluded": [
+          "IP options (IHL>5)",
+          "fragmentation and reassembly",
+          "IP addresses and routing/local delivery decisions",
+          "ICMP generation and processing",
+          "payload byte content/copying",
+          "header checksum arithmetic (sum_valid is a lower-layer fact)",
+          "router forwarding and TTL decrement",
+          "TCP/UDP transport behavior",
+          "wire codec"
+        ]
+      },
+      "states": [
+        "READY"
+      ],
+      "initial_state": "READY",
+      "variables": {
+        "accepted": {
+          "type": "int",
+          "initial": 0
+        },
+        "discarded": {
+          "type": "int",
+          "initial": 0
+        },
+        "last_payload_length": {
+          "type": "int",
+          "initial": 0
+        }
+      },
+      "events": {
+        "net.ipv4": {
+          "origin": "network",
+          "fields": {
+            "version": "int",
+            "ihl": "int",
+            "total_length": "int",
+            "available_length": "int",
+            "ttl": "int",
+            "header_checksum_valid": "bool",
+            "protocol": "int"
+          }
+        }
+      },
+      "timers": {},
+      "messages": {
+        "ip.delivery": {
+          "fields": {
+            "protocol": "int",
+            "payload_length": "int",
+            "ttl": "int"
+          }
+        }
+      },
+      "requirements": {
+        "IP-VERSION": {
+          "source": "https://www.rfc-editor.org/rfc/rfc1122.txt",
+          "interpretation": "Datagrams whose version field is not 4 are silently discarded.",
+          "strength": "MUST",
+          "kind": "protocol_interpretation"
+        },
+        "IP-CHECKSUM": {
+          "source": "https://www.rfc-editor.org/rfc/rfc1122.txt",
+          "interpretation": "Header checksum failure silently discards; validity is an explicit lower-layer fact.",
+          "strength": "MUST",
+          "kind": "protocol_interpretation"
+        },
+        "IP-LENGTH": {
+          "source": "https://www.rfc-editor.org/rfc/rfc791.txt",
+          "interpretation": "total_length counts complete IPv4 bytes incl header; must be >= header length and <= available_length (padding tolerated).",
+          "strength": "MUST",
+          "kind": "protocol_interpretation"
+        },
+        "IP-TTL-HOST": {
+          "source": "https://www.rfc-editor.org/rfc/rfc1122.txt",
+          "interpretation": "Host admission does not reject solely on TTL; TTL0 and TTL1 are admitted, no forwarding/decrement.",
+          "strength": "MUST",
+          "kind": "protocol_interpretation"
+        },
+        "IP-PROFILE": {
+          "source": "docs/ipv4-input-slice.md",
+          "interpretation": "No-options (IHL=5), unfragmented, already-local valid-address profile; IHL>5 out of profile (model gap), not a modeled RFC drop.",
+          "strength": "assumption",
+          "kind": "environment_assumption"
+        }
+      },
+      "transitions": [
+        {
+          "id": "IP-DISCARD-VERSION",
+          "from": "READY",
+          "to": "READY",
+          "event": "net.ipv4",
+          "guard": {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      15
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      4
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "set": {
+                "var": "discarded",
+                "value": {
+                  "op": "add",
+                  "args": [
+                    {
+                      "var": "discarded"
+                    },
+                    1
+                  ]
+                }
+              }
+            }
+          ],
+          "requirements": [
+            "IP-VERSION",
+            "IP-PROFILE"
+          ]
+        },
+        {
+          "id": "IP-DISCARD-CHECKSUM",
+          "from": "READY",
+          "to": "READY",
+          "event": "net.ipv4",
+          "guard": {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      15
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      4
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "event": "header_checksum_valid"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "set": {
+                "var": "discarded",
+                "value": {
+                  "op": "add",
+                  "args": [
+                    {
+                      "var": "discarded"
+                    },
+                    1
+                  ]
+                }
+              }
+            }
+          ],
+          "requirements": [
+            "IP-CHECKSUM",
+            "IP-PROFILE"
+          ]
+        },
+        {
+          "id": "IP-GAP-IHL",
+          "from": "READY",
+          "to": "READY",
+          "event": "net.ipv4",
+          "guard": {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      15
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "event": "version"
+                          },
+                          4
+                        ]
+                      },
+                      {
+                        "event": "header_checksum_valid"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "event": "ihl"
+                          },
+                          0
+                        ]
+                      },
+                      {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "event": "ihl"
+                              },
+                              5
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [],
+          "requirements": [
+            "IP-PROFILE"
+          ]
+        },
+        {
+          "id": "IP-DISCARD-LENGTH",
+          "from": "READY",
+          "to": "READY",
+          "event": "net.ipv4",
+          "guard": {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      15
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "event": "version"
+                                  },
+                                  4
+                                ]
+                              },
+                              {
+                                "event": "header_checksum_valid"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "event": "ihl"
+                              },
+                              5
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "event": "total_length"
+                              },
+                              0
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "event": "total_length"
+                              },
+                              65535
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "event": "available_length"
+                              },
+                              0
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "event": "available_length"
+                              },
+                              65535
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "total_length"
+                                  },
+                                  20
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "total_length"
+                                  },
+                                  {
+                                    "event": "available_length"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "set": {
+                "var": "discarded",
+                "value": {
+                  "op": "add",
+                  "args": [
+                    {
+                      "var": "discarded"
+                    },
+                    1
+                  ]
+                }
+              }
+            }
+          ],
+          "requirements": [
+            "IP-LENGTH",
+            "IP-PROFILE"
+          ]
+        },
+        {
+          "id": "IP-DELIVER",
+          "from": "READY",
+          "to": "READY",
+          "event": "net.ipv4",
+          "guard": {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "event": "version"
+                      },
+                      15
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "event": "version"
+                                      },
+                                      4
+                                    ]
+                                  },
+                                  {
+                                    "event": "header_checksum_valid"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "event": "ihl"
+                                  },
+                                  5
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "total_length"
+                                  },
+                                  0
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "total_length"
+                                  },
+                                  65535
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "available_length"
+                                  },
+                                  0
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "available_length"
+                                  },
+                                  65535
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "event": "total_length"
+                                  },
+                                  20
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "event": "total_length"
+                                  },
+                                  {
+                                    "event": "available_length"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "event": "ttl"
+                          },
+                          0
+                        ]
+                      },
+                      {
+                        "op": "le",
+                        "args": [
+                          {
+                            "event": "ttl"
+                          },
+                          255
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "set": {
+                "var": "accepted",
+                "value": {
+                  "op": "add",
+                  "args": [
+                    {
+                      "var": "accepted"
+                    },
+                    1
+                  ]
+                }
+              }
+            },
+            {
+              "set": {
+                "var": "last_payload_length",
+                "value": {
+                  "op": "sub",
+                  "args": [
+                    {
+                      "event": "total_length"
+                    },
+                    20
+                  ]
+                }
+              }
+            },
+            {
+              "emit": {
+                "message": "ip.delivery",
+                "fields": {
+                  "protocol": {
+                    "event": "protocol"
+                  },
+                  "payload_length": {
+                    "var": "last_payload_length"
+                  },
+                  "ttl": {
+                    "event": "ttl"
+                  }
+                }
+              }
+            }
+          ],
+          "requirements": [
+            "IP-VERSION",
+            "IP-CHECKSUM",
+            "IP-LENGTH",
+            "IP-TTL-HOST",
+            "IP-PROFILE"
+          ]
+        }
+      ],
+      "invariants": [
+        {
+          "id": "IP-COUNTERS-NONNEGATIVE",
+          "assert": {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "var": "accepted"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "var": "discarded"
+                      },
+                      0
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "last_payload_length"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          "requirements": [
+            "IP-PROFILE"
+          ]
+        },
+        {
+          "id": "IP-PAYLOAD-BOUND",
+          "assert": {
+            "op": "le",
+            "args": [
+              {
+                "var": "last_payload_length"
+              },
+              65515
+            ]
+          },
+          "requirements": [
+            "IP-LENGTH",
+            "IP-PROFILE"
+          ]
+        }
+      ]
+    },
+    "interpretations": [
+      "version must be 4 (IHL=5 no-options profile); other versions silently discarded",
+      "header_checksum_valid is a lower-layer validation fact; false silently discards",
+      "total_length includes the 20-byte header and must satisfy 20 <= total_length <= available_length; padding beyond total_length is ignored",
+      "TTL 0 and 1 are admitted; host slice never decrements TTL and emits no forwarding",
+      "payload_length = total_length - 20; protocol and ttl forwarded in ip.delivery"
+    ],
+    "gaps": [
+      "IHL>5 (options) is outside profile, not admitted and not an RFC-claimed drop; no transition covers it",
+      "fragmentation/reassembly, addresses, ICMP, payload bytes, routing and forwarding excluded",
+      "header checksum arithmetic not modeled; only the boolean validation fact",
+      "typed fields outside declared integer domains are unmodeled"
+    ]
+  },
+  "usage": {
+    "prompt_tokens": 8041,
+    "completion_tokens": 2114,
+    "total_tokens": 10155,
+    "prompt_tokens_details": {
+      "cached_tokens": 7808
+    },
+    "prompt_cache_hit_tokens": 7808,
+    "prompt_cache_miss_tokens": 233
+  },
+  "provider_id": "4327e985-a4ef-47c8-ac6b-788d353494c6"
+}
