@@ -248,3 +248,6 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 
 
 2026-11-02：34e47060集成UDP字节flow已在独立Linux发布实际通过41专项及四完整任务/verify（原三基线全部回归）。UDP任务4见证+6原字面量种子+9model-gap拒绝共19例、13独立trace、depth3双UNSAT；70源码/约285KB包。751原服务器文件及原本地探索编码失败在artifacts/udp-payload-flow-34e47060，只读验收逐70不可变Git blob/原Git校验器核验四job，不运行归档Python/ELF/solver。通用protocol_lab源码未改，独立数据模块经相同flow成立；未宣称UDP wire/PCAP/完整IPv4端点。另一有界agent已返回UDP线编码IR语义设计提案，尚未实现或批准，保留artifacts/udp-wire-design-0001；累计10调用75605已知token，原12上限不重置；本轮集成/部署/验收零API，仅此新设计调用9492token。旧2e67601e五CI实际通过，新集成提交CI需单独等终态。下一步审查新字节/packing/checksum显式IR语义并同步参考/独立Z3/C后端；禁止将提案当实现或绕过formal拒绝。
+
+
+2026-11-02：新codex/wire-primitives分支接850b81cc（PR9）；其五CI已实际success。控制器拒绝原UDP wire设计整体：AC2真实checksum=ff8e而非零、AC4长度/内容矛盾，且UDP策略混入算子、pseudoheader/容量/位宽表述不一致；原提案保留，审查在controller-review.json。实现最小纯算术IR0.4子集：显式mod8/mod16be打包与Internet checksum16，参考任意整数总语义，独立Z3精确递归Seq/BV17携带加法，不调用参考、不设内容截断；C有界uint32逐字折叠，UDP缺省/零映射仍须模型显式写。新backend v3，旧证据不放宽hash；长度投影与未知/旧版本算子显式拒绝。RFC1071官方原文SHA e10dfd68固定；新docs/wire-arithmetic.md完整语义，旧冻结semantics源不改。8新专项通过（含SMT递归定义导出重载、任意整数打包义务、内容翻译故障、满4096边界）；旧12标量/14字节/9wire/13数据语义/20流程/8迁移/4UDP/6部署分别通过，非全仓回归。11字面量种子+1规则见证的新十阶段任务本地全部通过/verify，depth2 safety/overlap UNSAT仅为长度/range合同；无完整checksum或编译器正确性证明。新88测试/五任务Linux发布待实际完成；仍未实现UDP wire/PCAP/完整栈。API保持10调用75605已知token，本轮零API。

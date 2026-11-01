@@ -1,6 +1,6 @@
 # Direct native bytes and finite string-state backend
 
-`direct-c99-bytes-v2` extends the admitted IR0.1/0.2 atomic-ordered-v1 native
+The historical `direct-c99-bytes-v2` milestone extends the admitted IR0.1/0.2 atomic-ordered-v1 native
 backend with bytes in state, inputs, outputs, equality/inequality, conditional
 values, length, concatenation and slicing. Reference execution, independent Z3
 semantics and existing protocol IR files are unchanged. The implementation emits
@@ -80,3 +80,6 @@ The separate Linux release at source2a2fed2c passed all of these gates. Original
 C/ELF,63 test logs, three flow jobs and15+101 native cases are retained and audited
 in `artifacts/native-bytes-server-2a2fed2c`. Its verifier exports immutable original
 Git tools and re-compares stored observations; it never runs archive code or ELF.
+
+Current backend direct-c99-wire-arithmetic-v3 adds explicit IR0.4 pure arithmetic.
+See docs/wire-arithmetic.md. Original v2 evidence retains its original Git checker.

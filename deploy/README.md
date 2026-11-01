@@ -53,3 +53,7 @@ model TCP safety. Existing flow-only releases and private credentials stay separ
 The fixed `udp-payload` profile adds the integrated byte-descriptor task and four
 UDP payload methods to the default release:41 methods and four full task runs/verify.
 It leaves flow/native-bytes profiles unchanged. No provider requests are needed.
+
+The fixed `wire-arithmetic` profile adds IR0.4 arithmetic alongside the four
+existing tasks,88 specialized methods and the15-data/101-connection native suites.
+It retains the old profiles and accepted releases separately.

@@ -1,0 +1,180 @@
+{
+  "schema": "spec-flow-task-v2",
+  "id": "wire-arithmetic-contract",
+  "model": "model/wire-arithmetic.json",
+  "sources": [
+    {
+      "id": "rfc1071",
+      "path": "spec/sources/rfc1071.txt",
+      "sha256": "e10dfd6816447843d47a7f1b990eba756a791a6308fd5b698a6276075a8e4f9b",
+      "version": "September1988 informational RFC1071",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc1071.txt"
+      ]
+    },
+    {
+      "id": "arithmetic-profile",
+      "path": "docs/wire-arithmetic.md",
+      "sha256": "bb3ba94ab47573436f108f811ebd1d2dd7bb609b4067b59023bc586dcb399012",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "docs/wire-arithmetic.md"
+      ]
+    },
+    {
+      "id": "exploration",
+      "path": "model/wire-arithmetic-exploration.json",
+      "sha256": "6b1b64e8a48c4e023516aaea73c709a5db4e6824a0f5459fd32b28a4e5d1ee3d",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "model/wire-arithmetic-exploration.json"
+      ]
+    },
+    {
+      "id": "seed-0",
+      "path": "scenarios/wire-arithmetic/carry-bit16.json",
+      "sha256": "41d34dca990587c7ef579d0f03e308e1a52db02d3ff7d06a10874246764ce312",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/carry-bit16.json"
+      ]
+    },
+    {
+      "id": "seed-1",
+      "path": "scenarios/wire-arithmetic/empty.json",
+      "sha256": "91006b1c26c694faf6ad1bd49ef01734f80d5d8f8fd707978e98f65778dbbdd6",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/empty.json"
+      ]
+    },
+    {
+      "id": "seed-2",
+      "path": "scenarios/wire-arithmetic/negative-zero.json",
+      "sha256": "e791f9ce060741af0bd42b4776fcd9e2e806ab1eb7b263da069767644ed81a94",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/negative-zero.json"
+      ]
+    },
+    {
+      "id": "seed-3",
+      "path": "scenarios/wire-arithmetic/odd-NUL.json",
+      "sha256": "b2b10956e001986855004dd833f025fd5928ce10bb651034ac5ef4dcc422a373",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/odd-NUL.json"
+      ]
+    },
+    {
+      "id": "seed-4",
+      "path": "scenarios/wire-arithmetic/odd-byte.json",
+      "sha256": "f9c190d805e0db6552b5b4d7801c3118c38c616d39590dba23036dafaf316b83",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/odd-byte.json"
+      ]
+    },
+    {
+      "id": "seed-5",
+      "path": "scenarios/wire-arithmetic/odd-carry.json",
+      "sha256": "9311f61106efd338068d29392044e5934f64264ba1d109e9aa6bdfec390a54db",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/odd-carry.json"
+      ]
+    },
+    {
+      "id": "seed-6",
+      "path": "scenarios/wire-arithmetic/positive-zero.json",
+      "sha256": "9ea7e153e35c4e46e60a832c871c320af0d0aeb6e73c4824d88d7f73798ee0e7",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/positive-zero.json"
+      ]
+    },
+    {
+      "id": "seed-7",
+      "path": "scenarios/wire-arithmetic/rfc1071-section3.json",
+      "sha256": "ec7cc1646f23bbb45f41bec9ee3773531a5594964377e1a8ffd6fd423bd015b9",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/rfc1071-section3.json"
+      ]
+    },
+    {
+      "id": "seed-8",
+      "path": "scenarios/wire-arithmetic/signed-max.json",
+      "sha256": "1b09cea4ce1b69e60e57e65f3226249026af49b7ef4eb20ad9d2167dc58063f5",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/signed-max.json"
+      ]
+    },
+    {
+      "id": "seed-9",
+      "path": "scenarios/wire-arithmetic/signed-min.json",
+      "sha256": "ebd4e4eba523d376ced310e81e8b97b60f8d7aded7181316574902d9ba77bd39",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/signed-min.json"
+      ]
+    },
+    {
+      "id": "seed-10",
+      "path": "scenarios/wire-arithmetic/udp-agent-zero-fault.json",
+      "sha256": "1c5eb7ee49153e7625598e85a3e6ec75f0c8ee184fcc41a43f077c3d6800d067",
+      "version": "IR0.4 exact arithmetic profile v1",
+      "uri_aliases": [
+        "scenarios/wire-arithmetic/udp-agent-zero-fault.json"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "PACK-MOD": {
+      "source": "arithmetic-profile",
+      "clause": "Types and exact semantics",
+      "reference": "docs/wire-arithmetic.md"
+    },
+    "CHECKSUM": {
+      "source": "rfc1071",
+      "clause": "section1 equations1/2; section3 numerical example",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1071.txt"
+    }
+  },
+  "exploration": "model/wire-arithmetic-exploration.json",
+  "seeds": [
+    "scenarios/wire-arithmetic/carry-bit16.json",
+    "scenarios/wire-arithmetic/empty.json",
+    "scenarios/wire-arithmetic/negative-zero.json",
+    "scenarios/wire-arithmetic/odd-NUL.json",
+    "scenarios/wire-arithmetic/odd-byte.json",
+    "scenarios/wire-arithmetic/odd-carry.json",
+    "scenarios/wire-arithmetic/positive-zero.json",
+    "scenarios/wire-arithmetic/rfc1071-section3.json",
+    "scenarios/wire-arithmetic/signed-max.json",
+    "scenarios/wire-arithmetic/signed-min.json",
+    "scenarios/wire-arithmetic/udp-agent-zero-fault.json"
+  ],
+  "formal": {
+    "depth": 2,
+    "symbolic_initials": []
+  },
+  "limits": {
+    "stage_seconds": 120,
+    "max_prefixes": 64,
+    "max_cases": 64
+  },
+  "scope": {
+    "purpose": "Pure modular byte packing and exact Internet checksum arithmetic through independent reference/Z3 and generated C",
+    "assumptions": [
+      "Native signed64 input and4096-byte buffer domain declared separately",
+      "Modular packing intentionally wraps; network-field validation belongs in protocol IR guards"
+    ],
+    "excluded": [
+      "UDP/IP packet layout and protocol policy",
+      "network/PCAP execution",
+      "unbounded checksum correctness and compiler proof"
+    ]
+  }
+}

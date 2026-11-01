@@ -1,4 +1,4 @@
-"""Independent bounded symbolic semantics for IR 0.1/0.2/0.3 (Z3 optional).
+"""Independent bounded symbolic semantics for IR 0.1/0.2/0.3/0.4 (Z3 optional).
 
 No call to runtime evaluate/dispatch is used to construct the transition system.
 The runtime is invoked only afterwards to cross-check solver witnesses.
@@ -7,7 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from .ir import CLOCK_SEMANTICS, MOD, Machine, ModelError, infer, require, validate
+from .ir import CLOCK_SEMANTICS, MOD, WIRE_OPS, Machine, ModelError, infer, require, validate
 
 
 def model_hash(model):
@@ -155,6 +155,7 @@ class Encoding:
         require(type(depth) is int and 1 <= depth <= 30, "Symbolic depth must be 1..30")
         require(all(n in model["variables"] for n in symbolic_initials), "Unknown symbolic initial variable")
         self.byte_sort = z3.SeqSort(z3.BitVecSort(8)) if byte_encoding == "sequence" else z3.IntSort()
+        self.checksum_sum = None
         self.sorts = {"bool": z3.BoolSort(), "int": z3.IntSort(),
                       "seq32": z3.BitVecSort(32) if sequence_encoding == "bitvector" else z3.IntSort(),
                       "string": z3.StringSort(), "bytes": self.byte_sort, "rational": z3.RealSort()}
@@ -196,6 +197,7 @@ class Encoding:
         def visit(expr, event=None):
             if type(expr) is not dict or "op" not in expr:
                 return
+            require(expr['op']not in WIRE_OPS,"Length projection does not support wire arithmetic")
             if expr["op"] in ("eq", "ne"):
                 require(infer(expr["args"][0], self.model, event) != "bytes",
                         "Length projection does not support byte-content equality")
@@ -275,6 +277,9 @@ class Encoding:
                 "ite": z.If,
                 "bytes_len": z.Length,
                 "bytes_concat": z.Concat,
+                "bytes_pack8_mod": lambda n: z.Unit(z.Int2BV(n,8)),
+                "bytes_pack16be_mod": lambda n: z.Concat(z.Unit(z.Extract(15,8,z.Int2BV(n,16))),z.Unit(z.Extract(7,0,z.Int2BV(n,16)))),
+                "bytes_internet_checksum16": self.checksum_expr,
                 "bytes_slice": lambda a, offset, count: z.SubSeq(a, z.If(offset < 0, 0, offset), z.If(count < 0, 0, count)),
                 "seq_distance": lambda a, b: z.BV2Int(b - a, is_signed=False),
                 "seq_comparable": lambda a, b: b - a != z.BitVecVal(1 << 31, 32),
@@ -296,6 +301,26 @@ class Encoding:
                              seq_le=lambda a, b: (b-a) % MOD < MOD//2)
         require(value["op"] in operators, f"Unsupported symbolic operator: {value['op']}")
         return operators[value["op"]](*args)
+
+    def checksum_expr(self, sequence):
+        """Exact recursive BV sequence fold, independent of runtime arithmetic.
+
+        No byte-length cut-off or concrete reference evaluation is substituted.
+        The solver may return UNKNOWN for general recursive obligations.
+        """
+        z=self.z
+        require(self.byte_encoding=='sequence','Checksum needs exact byte content')
+        if self.checksum_sum is None:
+            name='ir4_ones_sum16_'+str(z.FreshInt('checksum_instance'))
+            f=z.RecFunction(name,self.byte_sort,z.BitVecSort(16))
+            s=z.Const(name+'_input',self.byte_sort);length=z.Length(s)
+            word=z.Concat(s[0],z.If(length>1,s[1],z.BitVecVal(0,8)))
+            rest=f(z.SubSeq(s,2,z.If(length>2,length-2,0)))
+            wide=z.ZeroExt(1,word)+z.ZeroExt(1,rest)
+            folded=z.Extract(15,0,wide)+z.ZeroExt(15,z.Extract(16,16,wide))
+            z.RecAddDefinition(f,s,z.If(length==0,z.BitVecVal(0,16),folded))
+            self.checksum_sum=f
+        return z.BV2Int(~self.checksum_sum(sequence),is_signed=False)
 
     def encode_step(self, index):
         z, m = self.z, self.model
@@ -451,7 +476,7 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
               "clock_progress": "monotonic_integer_before_next_due" if enc.clock_progress else "not_applicable", "liveness": "not_checked", "unbounded_proof": False,
               "invariants": [i["id"] for i in model["invariants"]], "safety_query": str(answer)}
     report["runtime_properties"] = ["positive_timer_duration"]
-    if model["ir_version"] in ("0.2", "0.3"):
+    if model["ir_version"] in ("0.2", "0.3", "0.4"):
         report["byte_semantics"] = "finite_sequence_bv8_truncating_slice"
         report["sequence_order"] = "strict_half_space_partial_order"
     if answer == z.sat:
