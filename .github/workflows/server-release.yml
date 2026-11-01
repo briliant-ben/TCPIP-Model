@@ -23,3 +23,5 @@ jobs:
         run: /tmp/deploy-tests-venv/bin/python -m unittest discover -s tests -p test_server_deploy.py -v
       - name: Test reviewed IPv4 candidate and independent contracts
         run: /tmp/deploy-tests-venv/bin/python -m unittest discover -s tests -p test_ipv4_input.py -v
+      - name: Test unattended model job isolation without API calls
+        run: /tmp/deploy-tests-venv/bin/python -m unittest discover -s tests -p test_model_job.py -v

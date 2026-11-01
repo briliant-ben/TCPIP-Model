@@ -1,5 +1,6 @@
 """Bounded unattended IR proposer/reviewer job; never execute provider code."""
 import argparse
+import copy
 from concurrent.futures import ThreadPoolExecutor
 import fcntl
 import hashlib
@@ -40,6 +41,19 @@ def frozen_scenarios(response,job):
         for step in case['steps']:
             if step.get('event')not in job['events']or 'expect_trace'not in step:raise ValueError('Missing literal step output oracle')
     return cases
+
+
+def scenario_envelopes(response):
+    """Fill transport metadata only, deriving time from the reviewer's literal row."""
+    result=copy.deepcopy(response);changes=[]
+    for i,case in enumerate(result.get('scenarios',[])):
+        if 'scenario_version'not in case:
+            case['scenario_version']='0.2';changes.append(dict(case=i,added='scenario_version',value='0.2'))
+        for j,step in enumerate(case.get('steps',[])):
+            trace=step.get('expect_trace',[])
+            if 'at_ms'not in step and len(trace)==1 and type(trace[0].get('at_ms'))is int:
+                step['at_ms']=trace[0]['at_ms'];changes.append(dict(case=i,step=j,added='at_ms',value=step['at_ms']))
+    return result,changes
 
 
 def worker(model,scenarios,out,depth):
@@ -89,6 +103,7 @@ def run(job_path,out,tools,ledger,credential_file):
                 model_future=pool.submit(call,'proposer','Return {"model": COMPLETE_IR_OBJECT}. Implement ONLY the pinned contract. Match schema_example literally: from/to/event/guard/actions/requirements, event refs {"event":"field"}, set {"var":name,"value":expr}. bytes_slice uses offset,count. Requirement kind/strength must follow requirement_examples. No undocumented keys or missing schema fields. Do not create scenarios.',8192)
                 reviewer_future=pool.submit(call,'reviewer','Independently derive literal expected outputs ONLY from pinned contract/specification, without seeing candidate IR. Return {"scenarios":[...]}. Supply6 short scenario0.2 cases, at most3 steps per case, each step with expect_trace:[{"at_ms":t,"emitted":[{"message":name,"fields":...}]}]. Each scenario initial:{} and expect:{"state":"READY","timers":{}}. Include nonzero/NUL bytes, odd lengths, zero-length, padding, duplicates, invalid checksum/length and an unsupported port. No assertions generated from model execution. No model.',6000)
                 proposal=model_future.result();review=reviewer_future.result()
+            review,changes=scenario_envelopes(review);write(out/'review-envelope-normalization.json',changes)
             cases=frozen_scenarios(review,job);scenario_dir=out/'scenarios';scenario_dir.mkdir(exist_ok=True)
             for i,case in enumerate(cases):
                 p=scenario_dir/(str(i).zfill(2)+'.json')
@@ -98,7 +113,7 @@ def run(job_path,out,tools,ledger,credential_file):
             feedback=None
             for attempt in range(3):
                 if attempt:
-                    proposal=call('repair-'+str(attempt),'Repair ONLY model using this previous proposal and tool diagnosis. Never alter pinned contract, reviewer scenarios, tool/backend or oracle. Return {"model":COMPLETE_IR_OBJECT}. '+json.dumps(dict(previous=proposal,feedback=feedback)),8192)
+                    proposal=call('repair-'+str(attempt),'Repair ONLY model using this previous proposal and tool diagnosis. Never alter pinned contract, reviewer scenarios, tool/backend or oracle. Return {"model":COMPLETE_IR_OBJECT}. STRICT GRAMMAR: all operators use {"op":NAME,"args":[...]}; and/or are BINARY (nest for more terms), not is UNARY; never {"and":[...]}. Emitting action is {"emit":{"message":NAME,"fields":{...}}}, never send. Do not use emit_if. '+json.dumps(dict(previous=proposal,feedback=feedback)),8192)
                 folder=out/('attempt-'+str(attempt));folder.mkdir(exist_ok=True);model_file=folder/'model.json'
                 try:
                     if (folder/'assessment.json').exists():feedback=read(folder/'assessment.json')

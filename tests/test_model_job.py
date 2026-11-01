@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-from agents.run_model_job import frozen_scenarios,validate_shape,run,write
+from agents.run_model_job import frozen_scenarios,scenario_envelopes,validate_shape,run,write
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -36,6 +36,13 @@ class UnattendedModelJobTests(unittest.TestCase):
             with patch('agents.run_model_job.request')as api,patch('agents.run_model_job.subprocess.run')as execute:
                 self.assertEqual(run(path,out,ROOT,out/'ledger',out/'absent-key'),prior)
                 api.assert_not_called();execute.assert_not_called()
+
+    def test_envelope_normalization_never_derives_or_changes_expected_content(self):
+        original={'scenarios':[{'steps':[{'expect_trace':[{'at_ms':7,'emitted':[{'message':'x','fields':{'data':[0,255]}}]}]}]}]}
+        changed,audit=scenario_envelopes(original)
+        self.assertEqual(changed['scenarios'][0]['steps'][0]['at_ms'],7)
+        self.assertEqual(changed['scenarios'][0]['steps'][0]['expect_trace'],original['scenarios'][0]['steps'][0]['expect_trace'])
+        self.assertNotIn('scenario_version',original['scenarios'][0]);self.assertEqual(len(audit),2)
 
 
 if __name__=='__main__':unittest.main()
