@@ -676,3 +676,6 @@ artifacts/ack-complete-cover记录 bit-identical proposal、依赖包引用及SH
 
 
 2026-11-01：已实际启动服务器nohup受限双agent。首次udp-payload-0001因reviewer缺scenario版本/step时间元数据停止，原两请求成功共12591token，未丢原literal输出；审查器元数据规范化仅补0.2并从原单条trace拷贝时间、逐项记账、不改expected内容。修订d1b19c9d在新0002工作区复用两缓存响应（零重复付费），初始错误IR由工具诊断触发有界修正。已核实进程586075运行中，状态/日志及四小时稀疏本聊天巡检位置见docs/unattended-model-jobs.md。4离线门禁通过并加入离线CI；不宣称作业已验收或完整栈完成。
+
+
+2026-11-01后台巡检：0002作业终态unresolved，六个原生场景和固定输入Z3匹配，但depth3 safety UNKNOWN/canceled、overlap UNSAT。控制器发现真实合同缺陷：接收规则缺uint16及bytes<=4096域条件，负端口被接收，超容量输入未排除；六个场景通过不足以验收。原始候选/ELF/SMT/UNKNOWN及拒绝审查在artifacts/udp-payload-agent-0002，未集成。共享台账八请求56821已知token（本轮三调用21210，修正输入缓存4224）。在原12上限内仅安排一次新修正，固定oracle不变，并新增九个恶意域探针。最新后台作业/home/blxu/protocol-flow/candidates/udp-payload-0003/status.json，控制器/home/blxu/protocol-flow/controllers/6efcc2e7/agents/repair_model_job.py，日志同控制器目录job.log，初始PID593317；以实际进程及状态为准，不自动重启。原UNKNOWN不改写，不为solver期限付费重试。
