@@ -128,3 +128,6 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-01：用户授权agent后台运行、偶尔检查并节省token。新增固定JSON双角色建模作业控制器、UDP payload字节服务描述契约及3项离线正反门禁测试；最多两初始请求/两修正，共享原12请求台账，零自动失败重试，240秒验证/两小时作业界限。独立reviewer先产literal oracle并冻结，候选只能改IR，自动跑参考/生成C/固定输入Z3及depth3检查；UNKNOWN/超时保持unresolved，candidate_ready仍需控制器复核，不自动集成/合并。范围为payload跨层的前置描述切片，不冒称UDP线端。PR#9五条CI已实际success。后台进程实际启动与结果另按status/服务器回执记录，见docs/unattended-model-jobs.md。
+
+
+2026-11-01：已实际启动服务器nohup受限双agent。首次udp-payload-0001因reviewer缺scenario版本/step时间元数据停止，原两请求成功共12591token，未丢原literal输出；审查器元数据规范化仅补0.2并从原单条trace拷贝时间、逐项记账、不改expected内容。修订d1b19c9d在新0002工作区复用两缓存响应（零重复付费），初始错误IR由工具诊断触发有界修正。已核实进程586075运行中，状态/日志及四小时稀疏本聊天巡检位置见docs/unattended-model-jobs.md。4离线门禁通过并加入离线CI；不宣称作业已验收或完整栈完成。

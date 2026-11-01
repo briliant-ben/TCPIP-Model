@@ -39,3 +39,27 @@ the job directory prevents the next API request (an in-flight request/validation
 may finish). Partial validation is retained for inspection. Terminal jobs exit;
 no daily billable scheduling is installed on the server. A sparse local heartbeat
 inspects meaningful changes without provider calls during read-only monitoring.
+
+## Current deployment and monitoring
+
+Controller Git source: d1b19c9dc13c3e30fb9cf14abf513fb29cc2f3c6.
+Server controller: /home/blxu/protocol-flow/controllers/d1b19c9d/agents/run_model_job.py.
+Current job: /home/blxu/protocol-flow/candidates/udp-payload-0002/status.json.
+Detached process initially586075; verify process identity before any operation.
+Log: /home/blxu/protocol-flow/controllers/d1b19c9d/job.log.
+Tools/venv: /home/blxu/protocol-flow/releases/native-bytes-2a2fed2c.
+A local thread heartbeat checks about every four hours and stays quiet on unchanged
+state. It requires the local Codex scheduler to be available; server execution itself
+does not require the local app or SSH connection to remain open.
+
+The first0001 run stopped before validation because the reviewer omitted scenario
+version and step time envelopes; its independent literal output rows contained the
+times. Both initial paid results succeeded (12591 tokens total) and are retained.
+The revised controller adds only missing version metadata and copies each step's
+time from its single reviewer-authored literal trace row, recording every addition;
+it does not alter expected content or infer it from the model. Both initial role
+requests in0002 reuse the exact cached requests, not new paid calls. The initial IR
+used invalid and/send syntax; tool diagnosis now drives a bounded model repair.
+Four offline controller methods pass, including output-preserving normalization.
+A task may finish or stop before the next heartbeat; it is not an infinite coding
+service or authority to bypass the shared budget/acceptance review.
