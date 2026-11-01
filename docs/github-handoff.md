@@ -137,3 +137,6 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 续：0003一次付费修正完成后因两处三元and被严格IR拒绝（Boolean type mismatch）；原候选保留，不自动付费重试。累计九调用66113已知token，预算仍12。控制器在新0004工作区仅把两处and(a,b,c)显式结合为and(and(a,b),c)，操作数/顺序不变，normalization.json绑定原模型SHA及两处路径；无API调用，不改原六场景。最新状态/home/blxu/protocol-flow/candidates/udp-payload-0004/status.json，日志controller.log，初始PID593635，原固定九域探针及参考/C/固定输入Z3/depth3门禁重新实际运行。此结构规范化不构成批准，仍待实际结果；0002 UNKNOWN保持。
+
+
+巡检结果：0004固定验证实际通过，六原生场景/13字面量trace步骤、六独立固定输入Z3匹配、九非法接收域探针、depth3 safety及overlap均UNSAT。控制器已逐完整模型JSON核对仅两处and结构规范化、原场景SHA不变，重渲染C/重比较六原观测、六生成器输入对2a2fed2c不可变Git及SMT哈希一致；76原始文件在artifacts/udp-payload-agent-0004。零API本地核验，不执行归档Python/ELF/solver；旧0002 UNKNOWN单独保留。累计九调用66113已知token，原12上限不重置。候选有限切片门槛通过但尚未集成model/与十阶段flow，也不是UDP线端/PCAP或完整IPv4栈。下一检查点先固定源/场景/探索域/task并串行集成，再推进wire/跨层。0004进程已自然结束，不应重启已完成作业。

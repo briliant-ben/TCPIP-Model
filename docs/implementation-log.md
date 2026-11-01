@@ -685,3 +685,6 @@ artifacts/ack-complete-cover记录 bit-identical proposal、依赖包引用及SH
 
 
 执行补记：0004首次内联验证脚本因SSH引号丢失导致SyntaxError，未执行任何native/Z3步骤，原controller.log保留。改为传输仓库agents/validate_normalized_job.py文件启动，零API，实际进程593884，日志validation-controller.log；不得将原启动记录当作完成验证。
+
+
+巡检结果：0004固定验证实际通过，六原生场景/13字面量trace步骤、六独立固定输入Z3匹配、九非法接收域探针、depth3 safety及overlap均UNSAT。控制器已逐完整模型JSON核对仅两处and结构规范化、原场景SHA不变，重渲染C/重比较六原观测、六生成器输入对2a2fed2c不可变Git及SMT哈希一致；76原始文件在artifacts/udp-payload-agent-0004。零API本地核验，不执行归档Python/ELF/solver；旧0002 UNKNOWN单独保留。累计九调用66113已知token，原12上限不重置。候选有限切片门槛通过但尚未集成model/与十阶段flow，也不是UDP线端/PCAP或完整IPv4栈。下一检查点先固定源/场景/探索域/task并串行集成，再推进wire/跨层。0004进程已自然结束，不应重启已完成作业。
