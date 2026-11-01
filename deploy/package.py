@@ -21,11 +21,11 @@ def blob(commit,name):
 
 
 def build(out,source='HEAD',profile='flow'):
-    if profile not in ('flow','native-bytes'):raise ValueError('Unknown fixed release profile')
+    if profile not in ('flow','native-bytes','udp-payload'):raise ValueError('Unknown fixed release profile')
     commit=subprocess.check_output(['git','rev-parse','--verify',source+'^{commit}'],cwd=ROOT,text=True).strip()
     paths=set(TESTS)|{'examples/run_spec_candidate.py','requirements-formal.txt','docs/spec-flow-server.md','docs/spec-flow-acceptance.md'}
     tasks=[]
-    for task_path in TASKS:
+    for task_path in TASKS+(('flows/udp-payload.json',)if profile=='udp-payload'else()):
         raw=blob(commit,task_path);task=json.loads(raw);paths.add(task_path)
         paths|={task['model'],task['exploration'],*task['seeds'],*(s['path']for s in task['sources'])}
         # These two accepted tasks have direct models; reject an unhandled base
@@ -34,6 +34,8 @@ def build(out,source='HEAD',profile='flow'):
         if 'extends'in model or 'base'in model:raise ValueError('Deployment builder needs explicit inherited-model closure')
         tasks.append(dict(path=task_path,sha256=hashlib.sha256(raw).hexdigest(),id=task['id']))
     tests=list(TESTS);native_suites=[]
+    if profile=='udp-payload':
+        tests.append('tests/test_udp_payload.py');paths.add('tests/test_udp_payload.py')
     if profile=='native-bytes':
         tests += ['tests/test_codegen_native.py','tests/test_codegen_bytes.py']
         paths |= set(tests)|{'examples/run_native_suite.py','model/bytes-contract.json','model/seq32-contract.json'}
@@ -72,7 +74,7 @@ def build(out,source='HEAD',profile='flow'):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',required=True,type=Path);parser.add_argument('--source',default='HEAD');parser.add_argument('--profile',choices=('flow','native-bytes'),default='flow');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',required=True,type=Path);parser.add_argument('--source',default='HEAD');parser.add_argument('--profile',choices=('flow','native-bytes','udp-payload'),default='flow');args=parser.parse_args()
     try:report=build(args.out,args.source,args.profile)
     except (ValueError,OSError,subprocess.CalledProcessError)as error:report=dict(status='rejected',reason=str(error));print(json.dumps(report));raise SystemExit(1)
     print(json.dumps(report))

@@ -49,3 +49,7 @@ data model chain, its local interpretation sources,15 data and101 connection sce
 native suite driver. Bootstrap runs26 additional native methods and the fixed-
 input Z3/native data suite plus101 native connection cases. Its pass scope is concrete input correspondence, not whole-
 model TCP safety. Existing flow-only releases and private credentials stay separate.
+
+The fixed `udp-payload` profile adds the integrated byte-descriptor task and four
+UDP payload methods to the default release:41 methods and four full task runs/verify.
+It leaves flow/native-bytes profiles unchanged. No provider requests are needed.

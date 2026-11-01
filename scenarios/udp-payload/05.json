@@ -1,0 +1,59 @@
+{
+  "id": "s6-checksum-config",
+  "note": "app.configure_checksum emits nothing and updates checksum_enabled reflected in subsequent udp.send",
+  "steps": [
+    {
+      "event": "app.configure_checksum",
+      "fields": {
+        "enabled": false
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": []
+        }
+      ],
+      "at_ms": 0
+    },
+    {
+      "event": "app.send",
+      "fields": {
+        "source_port": 65535,
+        "destination_port": 8080,
+        "data": [
+          1,
+          2,
+          3
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "udp.send",
+              "fields": {
+                "source_port": 65535,
+                "destination_port": 8080,
+                "length": 11,
+                "checksum_enabled": false,
+                "data": [
+                  1,
+                  2,
+                  3
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "at_ms": 0
+    }
+  ],
+  "initial": {},
+  "expect": {
+    "state": "READY",
+    "timers": {}
+  },
+  "scenario_version": "0.2"
+}

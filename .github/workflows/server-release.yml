@@ -2,9 +2,9 @@ name: Server release and IPv4 admission
 on:
   push:
     branches: ['codex/**', main]
-    paths: ['deploy/**', 'agents/**', 'tests/test_server_deploy.py', 'tests/test_ipv4_input.py', 'model/ipv4-input*.json', 'flows/ipv4-input.json', 'scenarios/ipv4-input/**', 'docs/ipv4-input-slice.md', '.github/workflows/server-release.yml']
+    paths: ['deploy/**', 'agents/**', 'tests/test_server_deploy.py', 'tests/test_udp_payload.py', 'tests/test_model_job.py', 'tests/test_ipv4_input.py', 'model/ipv4-input*.json', 'flows/ipv4-input.json', 'scenarios/ipv4-input/**', 'docs/ipv4-input-slice.md', '.github/workflows/server-release.yml']
   pull_request:
-    paths: ['deploy/**', 'agents/**', 'tests/test_server_deploy.py', 'tests/test_ipv4_input.py', 'model/ipv4-input*.json', 'flows/ipv4-input.json', 'scenarios/ipv4-input/**', 'docs/ipv4-input-slice.md', '.github/workflows/server-release.yml']
+    paths: ['deploy/**', 'agents/**', 'tests/test_server_deploy.py', 'tests/test_udp_payload.py', 'tests/test_model_job.py', 'tests/test_ipv4_input.py', 'model/ipv4-input*.json', 'flows/ipv4-input.json', 'scenarios/ipv4-input/**', 'docs/ipv4-input-slice.md', '.github/workflows/server-release.yml']
 permissions:
   contents: read
 jobs:
@@ -25,3 +25,5 @@ jobs:
         run: /tmp/deploy-tests-venv/bin/python -m unittest discover -s tests -p test_ipv4_input.py -v
       - name: Test unattended model job isolation without API calls
         run: /tmp/deploy-tests-venv/bin/python -m unittest discover -s tests -p test_model_job.py -v
+      - name: Test integrated UDP payload contracts without API calls
+        run: /tmp/deploy-tests-venv/bin/python -m unittest discover -s tests -p test_udp_payload.py -v
