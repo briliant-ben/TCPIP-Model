@@ -75,3 +75,8 @@ executes the existing37 tests,14 byte tests and12 scalar tests, the three baseli
 flows,15-case independent fixed-input data suite and101-case native connection
 regression. The connection regression does not request a new symbolic replay. The prior accepted server
 release stays intact; no network/SSH changes or new model API credential is needed.
+
+The separate Linux release at source2a2fed2c passed all of these gates. Original
+C/ELF,63 test logs, three flow jobs and15+101 native cases are retained and audited
+in `artifacts/native-bytes-server-2a2fed2c`. Its verifier exports immutable original
+Git tools and re-compares stored observations; it never runs archive code or ELF.
