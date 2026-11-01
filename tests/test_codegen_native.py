@@ -114,9 +114,12 @@ class NativeCodegenTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'source changed after compilation'):
             run(self.g,self.b,ROOT/'scenarios/handshake.json',self.root/'stale-run')
 
-    def test_bytes_and_unknown_semantics_are_rejected_without_output(self):
+    def test_rational_and_unknown_semantics_are_rejected_without_output(self):
         out=self.root/'unsupported'
-        with self.assertRaisesRegex(Unsupported,'state supported'):generate(ROOT/'model/bytes-contract.json',out)
+        m=load(ROOT/'model/tcp.json');m['ir_version']='0.3'
+        m['variables']['sample']={'type':'rational','initial':{'n':0,'d':1}}
+        rational=self.root/'rational.json';write(rational,m)
+        with self.assertRaisesRegex(Unsupported,'IR0.1/0.2'):generate(rational,out)
         self.assertFalse(out.exists())
         m=load(ROOT/'model/tcp.json');m['unexpected_semantics']=True
         path=self.root/'extra.json';write(path,m)

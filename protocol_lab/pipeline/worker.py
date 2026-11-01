@@ -41,7 +41,7 @@ def native_class(name):
     if name=='uncovered_event':return 'model_gap'
     if name=='rule_conflict':return 'rule_conflict'
     if name.startswith('invariant:'):return 'invariant_failure'
-    if name in ('integer_overflow','output_capacity','input_capacity','timer_step_capacity'):return 'backend_domain_exceeded'
+    if name in ('integer_overflow','byte_capacity','output_capacity','input_capacity','timer_step_capacity'):return 'backend_domain_exceeded'
     return 'invalid_input_or_model'
 
 

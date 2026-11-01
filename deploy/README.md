@@ -42,3 +42,10 @@ an independent scenario set and one rejected model JSON response; the controller
 found a literal discard-count error in that scenario set too. Neither result was
 silently treated as correct. Original provider usage remains accounted for and
 no automatic retry bypassed the shared budget.
+
+
+The optional fixed `native-bytes` profile additionally includes the inherited TCP
+data model chain, its local interpretation sources,15 data and101 connection scenarios and the generic
+native suite driver. Bootstrap runs26 additional native methods and the fixed-
+input Z3/native data suite plus101 native connection cases. Its pass scope is concrete input correspondence, not whole-
+model TCP safety. Existing flow-only releases and private credentials stay separate.
