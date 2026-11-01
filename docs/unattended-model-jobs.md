@@ -69,3 +69,6 @@ service or authority to bypass the shared budget/acceptance review.
 
 
 续：0003一次付费修正完成后因两处三元and被严格IR拒绝（Boolean type mismatch）；原候选保留，不自动付费重试。累计九调用66113已知token，预算仍12。控制器在新0004工作区仅把两处and(a,b,c)显式结合为and(and(a,b),c)，操作数/顺序不变，normalization.json绑定原模型SHA及两处路径；无API调用，不改原六场景。最新状态/home/blxu/protocol-flow/candidates/udp-payload-0004/status.json，日志controller.log，初始PID593635，原固定九域探针及参考/C/固定输入Z3/depth3门禁重新实际运行。此结构规范化不构成批准，仍待实际结果；0002 UNKNOWN保持。
+
+
+执行补记：0004首次内联验证脚本因SSH引号丢失导致SyntaxError，未执行任何native/Z3步骤，原controller.log保留。改为传输仓库agents/validate_normalized_job.py文件启动，零API，实际进程593884，日志validation-controller.log；不得将原启动记录当作完成验证。
