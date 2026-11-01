@@ -66,3 +66,6 @@ service or authority to bypass the shared budget/acceptance review.
 
 
 2026-11-01后台巡检：0002作业终态unresolved，六个原生场景和固定输入Z3匹配，但depth3 safety UNKNOWN/canceled、overlap UNSAT。控制器发现真实合同缺陷：接收规则缺uint16及bytes<=4096域条件，负端口被接收，超容量输入未排除；六个场景通过不足以验收。原始候选/ELF/SMT/UNKNOWN及拒绝审查在artifacts/udp-payload-agent-0002，未集成。共享台账八请求56821已知token（本轮三调用21210，修正输入缓存4224）。在原12上限内仅安排一次新修正，固定oracle不变，并新增九个恶意域探针。最新后台作业/home/blxu/protocol-flow/candidates/udp-payload-0003/status.json，控制器/home/blxu/protocol-flow/controllers/6efcc2e7/agents/repair_model_job.py，日志同控制器目录job.log，初始PID593317；以实际进程及状态为准，不自动重启。原UNKNOWN不改写，不为solver期限付费重试。
+
+
+续：0003一次付费修正完成后因两处三元and被严格IR拒绝（Boolean type mismatch）；原候选保留，不自动付费重试。累计九调用66113已知token，预算仍12。控制器在新0004工作区仅把两处and(a,b,c)显式结合为and(and(a,b),c)，操作数/顺序不变，normalization.json绑定原模型SHA及两处路径；无API调用，不改原六场景。最新状态/home/blxu/protocol-flow/candidates/udp-payload-0004/status.json，日志controller.log，初始PID593635，原固定九域探针及参考/C/固定输入Z3/depth3门禁重新实际运行。此结构规范化不构成批准，仍待实际结果；0002 UNKNOWN保持。
