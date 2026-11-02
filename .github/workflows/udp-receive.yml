@@ -21,7 +21,7 @@ jobs:
           /tmp/udp-receive-venv/bin/python -m pip install -r requirements-formal.txt
           mkdir -p artifacts/udp-receive-ci
       - name: Check literal raw packets independent Z3 and native delivery faults
-        run: /tmp/udp-receive-venv/bin/python -m unittest discover -s tests -p test_byte_access.py -v > artifacts/udp-receive-ci/tests.log 2>&1
+        run: /tmp/udp-receive-venv/bin/python -m unittest discover -s tests -p test_udp_receive.py -v > artifacts/udp-receive-ci/tests.log 2>&1
       - name: Execute and verify ten stages
         run: |
           UDP_RECEIVE_TASK_SHA=$(sha256sum flows/udp-wire-receive.json | cut -d ' ' -f 1)
