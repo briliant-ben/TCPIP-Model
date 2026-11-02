@@ -700,3 +700,6 @@ artifacts/ack-complete-cover记录 bit-identical proposal、依赖包引用及SH
 
 
 2026-11-02：3180159b的IR0.4纯算术已在Linux独立发布实际通过88专项、五完整任务/verify、15TCPdata原生+固定输入Z3及101连接原生回归；213源码/约349KB包，1562原始文件在artifacts/wire-arithmetic-server-3180159b。原Git只读验收核213输入、五job、重渲染/重比较116原始TCP观测，检查15SMT/result，不执行归档Python/ELF/solver。算术任务12例/11literaltrace，depth2双UNSAT只为长度/range；另外固定odd-carry查询在全新Z3 context重载后UNSAT，单独保存查询/哈希，不扩称全checksum等价。独立DeepSeek源码审查2245token，无具体findings且列出限制，不算证明；台账累计11调用77850已知token，原12上限未重置。服务器新版本所有门禁通过，本轮新CI待新分支PR终态。后续优先补显式字节读取/原始IPv4-UDP线编码IR与PCAP，不能把纯算术当UDP实现。旧UNKNOWN、2750ms差异及用户未提交目录保持。
+
+
+2026-11-02：新codex/udp-wire-transmit接71b23357（PR10九CI已全部success）。无需新opcode/协议codec回调，从IR0.4显式拼完整IPv4/UDP发送字节：固定文档地址/40000→8080、TTL64、DF1/ID0、MTU1500/data1472，所有长度、pseudoheader、checksum默认/配置及0→FFFF映射均为guard/action/表达式。RFC6864§4/4.1官方源SHA e00ff443固定，ID0只限原子数据报。新增独立观测解码器和provider-neutral后置门禁：先普通十阶段flow，再把实际C emission原字节封入PCAP，独立解码/校验并对固定rawhex/字段/时间oracle，绝不从参考输出造PCAP。六固定种子、2规则见证、1超MTU拒绝共9例，10literaltrace步骤、9实际native packets，本地全部通过/verify，depth2长度/MTU双UNSAT不等checksum/协议完整证明。7新测试及旧20流程/6部署分别通过，含zero-map故障、合法checksum但payload旋转、PCAP/校验和/长度/fragment故障、stdout/oracle篡改拒绝。仍为发送虚拟链路，无UDP接收/ARP/ICMP/Linuxpeer/物理抓包/完整栈。新95测试/六flow+PCAP Linux发布待实际完成；保留旧UNKNOWN/2750ms。最后一次有界DeepSeek独立IR审查已启动，原12上限不重置，结果另计，不执行模型输出。
