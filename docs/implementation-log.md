@@ -715,3 +715,6 @@ artifacts/ack-complete-cover记录 bit-identical proposal、依赖包引用及SH
 
 
 2026-11-02：b959876b的IR0.5读取前置里程碑已实际通过本地103专项+6部署测试、9例/8字面量trace十阶段/verify、15TCPdata原生/固定输入Z3及101连接回归。241 Git源码绑定、787原文件及只读原Git复核在artifacts/byte-access-local-b959876b（不执行归档Python/ELF/solver）。初次冻结审查因执行后symbolic注释改动被hash正确拒绝，原包/拒绝保留；从最终提交完整重跑flow后验收，未放宽hash。现有服务器SCP连接192.168.71.74:22超时255，新包仅准备、未部署，不宣称新Linux验收；旧Linux udp-transmit-1b13a36f证据不变。新草稿PR12叠仍开PR11，不合main；PR11十CI已全部success，b959876b新读取/发送/算术/流程/原生/部署/精确查询七CI已success，四其余运行中，不能外推后续头。下一轮先复核最新CI/SSH可达性；可达再部署byte-access固定profile，补raw IPv4/UDP接收IR（读取能力不等接收模型），不重启旧agent/不付费重试。预算仍12请求83412已知token，零新增。
+
+
+2026-11-02：PR12头d5eeca9f十CI通过但Linux TCP receive项失败（handshake/syn-loss成功）。已下载原artifact13120317376/run41399161597/job125126976381，ZIP SHA d9faceef540dfa35bcf3b6e61f5a4be18a477953064a13da3e835d446651c07d；原包/日志/诊断保留artifacts/linux-capture-deadline-d5eeca9f。完整抓包解码得到origin1793600452886596000，quiet marker mtime1793600457906512460，即5019.91646ms，小于5020ms83540ns；原失败仍无效，不追认为通过/TCP bug。修复驱动以实际首selected PCAP时间+原settle等待且要求capture/socket存活，记录真实stop-request epoch/monotonic与deadline；最终解码须同origin，独立verify重算完整最小窗口。不改模型/oracle/0ms容忍/packetdrill容忍/上游/抓包范围，仍先停止capture再释放socket；16本地driver正反检查通过，新增CI门禁。新Linux运行待CI实际结果，旧archive须原Git checker。服务器本轮一次只读SSH仍超时，只阻塞项目服务器发布；API零新增，12上限不重置。
