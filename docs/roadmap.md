@@ -284,3 +284,6 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 
 
 2026-11-03：新接收源码79d6879f本地111专项+6部署全部通过。260 Git源码绑定/369原文件在artifacts/udp-receive-local-79d6879f；原Git只读audit核新flow27例/13literaltrace、重渲染/重比较12实际原生接收以及12固定输入Z3报告/查询hash，不运行归档Python/ELF/solver。探索在64prefix预算内覆盖8规则，非全域穷举；全输入depth2 safety/overlap UNSAT仅payload/dropempty合同。独立12原始字节oracle/官方源/解释仍固定不变，无通用protocol_lab改动。f266e4ac修正专用CI的测试文件selector（79d初稿误留旧byte_access名字，release111已有正确8项），PR13叠仍开PR12；f266当前native/deploy/exact三CI success，receive/flow/Linux三项仍运行，不能先当Linux验收。server SSH仍timeout，本轮零API，原12上限不动；下一步等本次隔离Linux新接收release实际结果/原始证据，再推进独立UDP peer与跨层，不自动合main。
+
+
+2026-11-03：f266e4ac专用receive CI双job（8新专项/27例flow和immutable-release）已实际success；tested merge040addc0与head整Git tree相同。隔离Ubuntu新发布实际111专项、八完整task/verify、15TCPdata原生固定Z3+101连接以及9UDP TX/六oracle全部通过。260源码/2161原ZIP文件在artifacts/udp-receive-linux-ci-f266e4ac，artifact13184583736/run41538066860 SHA85bda7d5固定；可达原Git只读audit核260blob/八job/116TCP/9UDP与15TCP查询hash，不运行归档Python/ELF/solver。新receive27例/13literaltrace与depth2范围/dropempty/overlap双UNSAT保持；12固定接收Z3在Linux单测实际重放，分开的12原SMT/result/native保存在本地79d包，不改标Linux查询证据。父PR12头716十一CI已实际全success；873ff808新证据头当前四CI success、receive/Linux仍运行，最后提交亦需单独查，不外推。此为有限raw UDP RX entry模型/C平台里程碑，不是网络peer/UDP新抓包/跨层/完整栈；项目server仍SSH超时。下一步先核最终头/CI，按官方规范扩展必要IR接收域并打通独立UDP peer/观测，再ARP/ICMP/TCP组合。保持RFC版本/范围/未知结果与旧差异，不自动main合并，原12付费上限不重置。
