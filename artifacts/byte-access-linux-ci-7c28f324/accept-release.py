@@ -12,7 +12,8 @@ import zipfile
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
-SOURCE='a3de424c057d14a28d69bb46a7055ac43560e4cb'
+SOURCE='7c28f324b9da4d79e6003ee403260dcf4c7541ec'
+TESTED='a3de424c057d14a28d69bb46a7055ac43560e4cb'
 SERVER='/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/byte-access-release/'
 TOOLS='/tmp/byte-access-immutable-release/tools/'
 RUN='run'
@@ -33,6 +34,7 @@ def export(bindings,out):
 def accept():
     summary=read(HERE/'provenance.json');archive=HERE/'release.zip'
     assert sha(archive)==summary['hashes']['release.zip']
+    assert subprocess.check_output(['git','rev-parse',SOURCE+'^{tree}'],cwd=ROOT,text=True).strip()==summary['tested_tree_sha1']
     with tempfile.TemporaryDirectory(prefix='byte-access-linux-original-audit-')as temporary:
         tmp=Path(temporary);data=tmp/'data';seen=set();total=0
         with zipfile.ZipFile(archive)as z:
@@ -42,7 +44,7 @@ def accept():
                 assert p.parts[0]in ('bundle','run','bootstrap-result.json')and m.file_size<=16*1024*1024 and total<=100*1024*1024
                 target=data/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(z.read(m));seen.add(m.filename)
         assert len(seen)==summary['archive_members']==1896
-        manifest=read(data/'bundle/release.json');assert manifest['source_commit']==summary['source_commit']==SOURCE
+        manifest=read(data/'bundle/release.json');assert manifest['source_commit']==summary['source_commit']==TESTED
         build=read(data/'bundle/build.json');package=data/'bundle/spec-flow-server.tar.gz'
         assert build['archive_sha256']==sha(package)and build['archive_bytes']==package.stat().st_size
         package_seen=set()
@@ -56,7 +58,7 @@ def accept():
         builder=subprocess.check_output(['git','show',SOURCE+':deploy/package.py'],cwd=ROOT)
         assert hashlib.sha256(builder).hexdigest()==manifest['builder_sha256']
         source=tmp/'source';export(manifest['files'],source)
-        run=data/RUN;bootstrap=read(run/'bootstrap.json');assert bootstrap['status']=='pass'and bootstrap['source_commit']==SOURCE
+        run=data/RUN;bootstrap=read(run/'bootstrap.json');assert bootstrap['status']=='pass'and bootstrap['source_commit']==TESTED
         log=(run/'bootstrap.log').read_text()
         assert all('Ran '+str(n)+' tests'in log for n in (20,9,8,4,13,12,14))and 'FAILED'not in log and 'skipped'not in log
         env=dict(os.environ,PYTHONPATH=str(source),PYTHONDONTWRITEBYTECODE='1')
@@ -159,7 +161,7 @@ def accept():
         assert len(byteflow['stages']['tests']['data']['cases'])==9 and byteflow['stages']['reference']['data']['trace_contract_steps_checked']==8
         byteformal=read(run/'task-6/job/stages/formal/queries/result.json')
         assert byteformal['safety_query']==byteformal['overlap_query']=='unsat'and byteformal['status']=='bounded_pass'
-        result=dict(byte_access_cases=9,byte_access_literal_steps=8,native_udp_packets=9,fixed_packet_oracle_cases=6,unchanged_unrestricted_safety_and_overlap_queries=True,udp_receive_implemented=False,linux_network_evidence=False,arithmetic_cases=12,arithmetic_trace_contract_steps=11,whole_checksum_equivalence_proved=False,status='retained_byte_access_linux_ci_release_evidence_accepted',project_server_deployed=False,source_commit=SOURCE,git_files_checked=len(manifest['files']),archive_members=len(seen),specialized_test_methods=103,flow_jobs_reverified=7,native_cases_recompared=counts,fixed_input_symbolic_reports_integrity_checked=15,archive_code_executed=False,fresh_native_or_solver_execution=False,compiler_correctness_proved=False,whole_ipv4_endpoint_complete=False)
+        result=dict(byte_access_cases=9,byte_access_literal_steps=8,native_udp_packets=9,fixed_packet_oracle_cases=6,unchanged_unrestricted_safety_and_overlap_queries=True,udp_receive_implemented=False,linux_network_evidence=False,arithmetic_cases=12,arithmetic_trace_contract_steps=11,whole_checksum_equivalence_proved=False,status='retained_byte_access_linux_ci_release_evidence_accepted',project_server_deployed=False,source_commit=TESTED,audit_git_commit=SOURCE,git_files_checked=len(manifest['files']),archive_members=len(seen),specialized_test_methods=103,flow_jobs_reverified=7,native_cases_recompared=counts,fixed_input_symbolic_reports_integrity_checked=15,archive_code_executed=False,fresh_native_or_solver_execution=False,compiler_correctness_proved=False,whole_ipv4_endpoint_complete=False)
     (HERE/'acceptance.json').write_text(json.dumps(result,indent=2)+'\n');return result
 
 

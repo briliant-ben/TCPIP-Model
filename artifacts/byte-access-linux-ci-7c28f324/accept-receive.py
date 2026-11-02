@@ -3,12 +3,14 @@ import hashlib,io,json,os,re,subprocess,sys,tarfile,tempfile,zipfile
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
-SOURCE='a3de424c057d14a28d69bb46a7055ac43560e4cb'
+SOURCE='7c28f324b9da4d79e6003ee403260dcf4c7541ec'
+TESTED='a3de424c057d14a28d69bb46a7055ac43560e4cb'
 sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 read=lambda p:json.loads(Path(p).read_text())
 
 def audit():
     provenance=read(HERE/'provenance.json');assert sha(HERE/'receive.zip')==provenance['hashes']['receive.zip']
+    assert subprocess.check_output(['git','rev-parse',SOURCE+'^{tree}'],cwd=ROOT,text=True).strip()==provenance['tested_tree_sha1']
     with tempfile.TemporaryDirectory(prefix='kernel-capture-original-audit-')as temporary:
         tmp=Path(temporary);source=tmp/'source';out=tmp/'observed';total=0;names=set()
         # Export trusted immutable Git code, never Python shipped inside a CI artifact.
@@ -75,6 +77,6 @@ def audit():
         assert difference==read(out/'difference.json')and report['status']=='linux_execution_with_projection_'+difference['status']
         assert difference['status']=='mismatch' # Valid evidence retains strict mismatches.
         ack=observed[-1];assert ack['time_ms']==20.055 and ack['window']==64236
-        result=dict(status='valid_retained_linux_receive_snapshot',source_commit=SOURCE,original_ci_runtime_gate='valid_linux_runtime_evidence',observed_window_ms=window,minimum_window_ms=5020,difference=difference['status'],expected_last_ack_ms=expected[-1]['time_ms'],observed_last_ack_ms=ack['time_ms'],expected_last_window=expected[-1]['window'],observed_last_window=ack['window'],raw_files=len(names),source_bindings_checked=len(report['input_hashes']),archive_code_executed=False,fresh_native_or_solver_execution=False,new_linux_execution=False,project_server_deployed=False,offline_provenance_requires_trusted_ci=True,whole_tcp_complete=False)
+        result=dict(status='valid_retained_linux_receive_snapshot',source_commit=TESTED,audit_git_commit=SOURCE,original_ci_runtime_gate='valid_linux_runtime_evidence',observed_window_ms=window,minimum_window_ms=5020,difference=difference['status'],expected_last_ack_ms=expected[-1]['time_ms'],observed_last_ack_ms=ack['time_ms'],expected_last_window=expected[-1]['window'],observed_last_window=ack['window'],raw_files=len(names),source_bindings_checked=len(report['input_hashes']),archive_code_executed=False,fresh_native_or_solver_execution=False,new_linux_execution=False,project_server_deployed=False,offline_provenance_requires_trusted_ci=True,whole_tcp_complete=False)
     (HERE/'receive-acceptance.json').write_text(json.dumps(result,indent=2)+'\n');return result
 if __name__=='__main__':print(json.dumps(audit()))

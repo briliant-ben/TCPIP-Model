@@ -40,3 +40,9 @@ This validates an ephemeral GitHub Linux release. Deployment on project server
 192.168.71.74 remains blocked by SSH timeout. Virtual-link generated UDP PCAP and
 actual captured Linux TCP are separate channels; neither is a complete endpoint.
 No API calls, model/oracle/tolerance changes, upstream edits or credentials.
+
+Portable audit source is the reachable PR head7c28f324. Its full Git tree equals
+the tested merge a3de424c; the tree hash is retained in provenance.json and
+rechecked. All241 release/86 receive input blobs remain checked against original
+artifact hashes. Reports keep the actual tested merge source_commit and separately
+name audit_git_commit; no fetch of an obsolete PR merge object is required.
