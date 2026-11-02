@@ -266,3 +266,6 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 
 
 2026-11-02：codex/byte-read接PR11头1e4be0cc（十CI实际success）。IR0.5新增唯一纯算子bytes_at_or_zero(bytes,int)->int：有效索引返回octet，负数/越界明确返回0，协议必须另写长度guard；非Python负索引、非隐式packet acceptance。参考显式边界、独立Z3 Seq(BV8)/Int/ITE、C先sign/length检查，三个后端同步；旧版本及length投影拒绝。IR0.4算术可在0.5使用，native signed64/4096域及clock/post/rational限制不变；新backend v4，旧证据用原Git。七新专项实际通过，含任意序列/索引range和越界Z3义务、全部256字节种子、signed64两端、4096边界、错误有效索引C翻译被精确内容oracle抓获；非通用编译器等价证明。八字面量种子+一规则见证共九例/八trace，十阶段/verify本地通过，depth2 safety/overlap UNSAT仅range合同。103专项/七任务新Linux发布待完成。尚未实现UDP接收；本阶段只补显式读取前置语义，后续raw IPv4/UDP receive guard/action/policy仍须全在IR。API原12次83412已知token预算已尽，本轮零API，旧UNKNOWN/2750ms差异和用户目录保留。
+
+
+2026-11-02：b959876b的IR0.5读取前置里程碑已实际通过本地103专项+6部署测试、9例/8字面量trace十阶段/verify、15TCPdata原生/固定输入Z3及101连接回归。241 Git源码绑定、787原文件及只读原Git复核在artifacts/byte-access-local-b959876b（不执行归档Python/ELF/solver）。初次冻结审查因执行后symbolic注释改动被hash正确拒绝，原包/拒绝保留；从最终提交完整重跑flow后验收，未放宽hash。现有服务器SCP连接192.168.71.74:22超时255，新包仅准备、未部署，不宣称新Linux验收；旧Linux udp-transmit-1b13a36f证据不变。新草稿PR12叠仍开PR11，不合main；PR11十CI已全部success，b959876b新读取/发送/算术/流程/原生/部署/精确查询七CI已success，四其余运行中，不能外推后续头。下一轮先复核最新CI/SSH可达性；可达再部署byte-access固定profile，补raw IPv4/UDP接收IR（读取能力不等接收模型），不重启旧agent/不付费重试。预算仍12请求83412已知token，零新增。
