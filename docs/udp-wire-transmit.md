@@ -47,3 +47,17 @@ This is generated-native virtual-link evidence, not Linux UDP/TCP/physical captu
 The PCAP carrier is written locally from actual C output, not sniffed on a wire.
 The wrapper may retain a passing PCAP channel while a formal channel is unknown,
 but never upgrades the overall flow or counterexample to success.
+
+## Linux nonvacuity diagnostic
+
+Initial Linux f9472593 all-input length/MTU safety and conflict queries both
+returned UNSAT, but its separate existential witness search timed out. That
+UNKNOWN/failing release remains retained. No model/guard/invariant/byte limit or
+checksum oracle is changed to get a pass. IR0.4 now first seeks a one-event witness using its existing exact fixed-choice
+encoding (all guards retained, only the chosen rule actions encoded), then any
+one-event witness, then the original unrestricted search. A one-event prefix
+can be extended with the encoding's legal idle suffix. These are existential SAT
+witness subqueries only, never restrictions on full-depth safety/overlap. An actual SAT witness is
+reference-replayed. All sample queries/results/hashes are saved. Any all-input
+UNKNOWN remains UNKNOWN; any unresolved last sample remains UNKNOWN/vacuous.
+This does not turn fixed-case matches into all-input safety or checksum proof.

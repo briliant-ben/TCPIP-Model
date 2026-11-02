@@ -15,6 +15,7 @@ def bootstrap(release,out):
     if sys.version_info<(3,12):raise ValueError('This release uses Python3.12+; no system Python changes are performed')
     if not shutil.which('cc'):raise ValueError('C99 compiler unavailable; install via the host administrator')
     out.mkdir(parents=True,exist_ok=False);env=dict(os.environ);env['PYTHONDONTWRITEBYTECODE']='1';env['PIP_DISABLE_PIP_VERSION_CHECK']='1'
+    env['PROTOCOL_TEST_FAILURES']=str(out/'test-failures')
     bootstrap_source=Path(__file__).read_bytes();(out/'bootstrap-source.py').write_bytes(bootstrap_source)
     python=release/'venv/bin/python'
     with (out/'bootstrap.log').open('w')as log:

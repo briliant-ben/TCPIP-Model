@@ -155,3 +155,6 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-02：新codex/udp-wire-transmit接71b23357（PR10九CI已全部success）。无需新opcode/协议codec回调，从IR0.4显式拼完整IPv4/UDP发送字节：固定文档地址/40000→8080、TTL64、DF1/ID0、MTU1500/data1472，所有长度、pseudoheader、checksum默认/配置及0→FFFF映射均为guard/action/表达式。RFC6864§4/4.1官方源SHA e00ff443固定，ID0只限原子数据报。新增独立观测解码器和provider-neutral后置门禁：先普通十阶段flow，再把实际C emission原字节封入PCAP，独立解码/校验并对固定rawhex/字段/时间oracle，绝不从参考输出造PCAP。六固定种子、2规则见证、1超MTU拒绝共9例，10literaltrace步骤、9实际native packets，本地全部通过/verify，depth2长度/MTU双UNSAT不等checksum/协议完整证明。7新测试及旧20流程/6部署分别通过，含zero-map故障、合法checksum但payload旋转、PCAP/校验和/长度/fragment故障、stdout/oracle篡改拒绝。仍为发送虚拟链路，无UDP接收/ARP/ICMP/Linuxpeer/物理抓包/完整栈。新95测试/六flow+PCAP Linux发布待实际完成；保留旧UNKNOWN/2750ms。最后一次有界DeepSeek独立IR审查已启动，原12上限不重置，结果另计，不执行模型输出。
+
+
+2026-11-02 Linux首次f9472593未验收：九native packet/PCAP固定oracle通过，但总体formal UNKNOWN使新测试失败，原log/source和原源码独立诊断在artifacts/udp-transmit-f9472593-failed。诊断明确全depth2 safety及overlap均UNSAT，仅后续存在性sample SAT搜索canceled；旧版未导出sample查询、unittest临时job已清理，不能冒称恢复。改进只在IR0.4非空样本阶段：用已有exact fixed-choice后端构造单实际事件样本（全部guards保留，仅选中动作），再any单事件，再原 unrestricted，真实SAT+参考重放才满足nonvacuity；原全深度/全输入安全与冲突查询不收窄，不改模型/不变量/oracle/资源。采样子查询/结果/哈希全保存，all-input UNKNOWN不得被替代。新8项（含强制all-input solver异常仍UNKNOWN）通过、旧13数据/8算术通过；新增bootstrap失败作业保留，修订96专项/六任务Linux发布待实际验证，旧失败不覆盖。

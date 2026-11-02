@@ -1,5 +1,7 @@
 import copy
 import json
+import os
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
@@ -20,6 +22,9 @@ class UdpTransmitTests(unittest.TestCase):
         cls.out=Path(cls.temporary.name)/'flow'
         cls.oracle=ROOT/'spec/udp-wire-transmit-oracle.json'
         cls.result=run(ROOT,'flows/udp-wire-transmit.json',sha(ROOT/'flows/udp-wire-transmit.json'),'spec/udp-wire-transmit-oracle.json',sha(cls.oracle),cls.out)
+        if cls.result['status']!='pass'and os.environ.get('PROTOCOL_TEST_FAILURES'):
+            target=Path(os.environ['PROTOCOL_TEST_FAILURES'])/('udp-transmit-'+cls.result['run_id'])
+            target.parent.mkdir(parents=True,exist_ok=True);shutil.copytree(cls.out,target)
 
     @classmethod
     def tearDownClass(cls):cls.temporary.cleanup()
@@ -73,3 +78,16 @@ class UdpTransmitTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'artifact changed'):observe(job,self.oracle,sha(self.oracle),Path(self.temporary.name)/'bad-base')
         finally:stdout.write_bytes(original)
         with self.assertRaisesRegex(ValueError,'approved digest'):observe(job,self.oracle,'0'*64,Path(self.temporary.name)/'bad-oracle')
+
+    def test_nonvacuity_sample_does_not_replace_all_input_safety(self):
+        from protocol_lab.symbolic import check
+        from unittest.mock import patch
+        import z3
+        model=load(ROOT/'model/udp-wire-transmit.json')
+        with patch('z3.Solver.check',side_effect=z3.Z3Exception('forced resource exception')):
+            report=check(model,depth=2,symbolic_initials=())
+        self.assertEqual(report['status'],'unknown');self.assertEqual(report['safety_query'],'unknown')
+        self.assertNotIn('sample_witness',report)
+        actual=json.loads((self.out/'job/stages/formal/result.json').read_text())['data']
+        self.assertEqual(actual['safety_query'],'unsat');self.assertEqual(actual['overlap_query'],'unsat')
+        self.assertEqual(actual['sample_queries'][0]['scope'],'existential_nonvacuity_only')
