@@ -275,3 +275,6 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 
 
 2026-11-02：为项目服务器SSH不可达增加替代的隔离GitHub Ubuntu24.04 byte-access immutable-release CI job：从当前Git HEAD导出固定241源码包、hash核验解包至/tmp独立release/venv，执行既有bootstrap的103专项/七task+verify/15TCPdata固定Z3+101连接/9UDP native-PCAP门禁；保留bundle/source/hash及原run，不打包venv/私有目录、不调用模型API/不改项目服务器或全局网络。CI已安排但结果未到，不能先宣布通过；该runner发布验证不等192.168.71.74部署或物理网络抓包。
+
+
+2026-11-03：7c28f324（GitHub实际merge a3de424c，与head同tree）十一CI实际全部success。新增隔离Linux immutable-release实际103专项/七完整task+verify/15TCPdata原生固定Z3+101连接/9UDP native-PCAP六固定oracle全部通过；241 Git源码/1896原ZIP文件。原Linux receive重新执行runtime verifier有效，实际完整窗口5028.700806ms>=5020、零抓包drops；原83.54us短窗口失败仍无效/保留。严格Difference继续mismatch：最后ACK模型60ms vsLinux20.055ms，窗口12 vs64236，不改oracle/0ms容忍/模型配置、不称RFC bug。release及实际Linux TCP raw ZIP、provenance和原Git只读复核在artifacts/byte-access-linux-ci-7c28f324；核七job/116TCP/9UDP及86Linux源码binding/原runtime-queryhash，不执行归档Python/ELF/solver，离线需信任CI provenance。此为GitHub临时Linux发布验收，不是192.168.71.74项目服务器部署（本轮SSH仍timeout）；也不是UDP接收/跨层/完整栈，后续raw IPv4/UDP receive仍下一模型里程碑。PR12叠PR11继续draft、不自动merge；本次证据文档新头需单独查CI，不外推7c28f324。无新付费API，原12请求83412token上限仍耗尽；旧TCPdepth6 UNKNOWN/lwIP2750ms差异及用户两目录不动。
