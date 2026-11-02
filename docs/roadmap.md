@@ -260,3 +260,6 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 
 
 2026-11-02 Linux首次f9472593未验收：九native packet/PCAP固定oracle通过，但总体formal UNKNOWN使新测试失败，原log/source和原源码独立诊断在artifacts/udp-transmit-f9472593-failed。诊断明确全depth2 safety及overlap均UNSAT，仅后续存在性sample SAT搜索canceled；旧版未导出sample查询、unittest临时job已清理，不能冒称恢复。改进只在IR0.4非空样本阶段：用已有exact fixed-choice后端构造单实际事件样本（全部guards保留，仅选中动作），再any单事件，再原 unrestricted，真实SAT+参考重放才满足nonvacuity；原全深度/全输入安全与冲突查询不收窄，不改模型/不变量/oracle/资源。采样子查询/结果/哈希全保存，all-input UNKNOWN不得被替代。新8项（含强制all-input solver异常仍UNKNOWN）通过、旧13数据/8算术通过；新增bootstrap失败作业保留，修订96专项/六任务Linux发布待实际验证，旧失败不覆盖。
+
+
+2026-11-02：修订1b13a36f在Linux独立发布实际通过96专项、六完整任务/verify、15TCPdata原生/固定输入Z3和101连接回归。新发送task9例/10literaltrace、9个实际C生成IPv4/UDP包，其PCAP由原字节封装、独立解码/校验/对六固定oracle全部匹配；模型IR中明示全部layout/checksum/default/zero policy，无新opcode或UDP Ccodec。228不可变源码/约374KB包、1746原文件及原Git只读验收在artifacts/udp-transmit-server-1b13a36f。特别逐字节确认两份全depth2/全输入safety与overlap SMT和原f947诊断完全一致；只为存在性非空样本增加exact固定choice单事件SAT+重放（样本查询/哈希另存），不把未知全输入性质变为固定例证明。原失败/UNKNOWN保持、未来失败test job保留。独立agent静态协议审查无findings但非证明、未审后续采样优化；累计12调用83412已知token，原12上限已达，不自重置；只付费agent通道受限，本地继续。功能仍固定tuple/TTL64/DF1ID0/MTU1500发送虚拟链路，不是UDP接收/ARP/ICMP/Linuxpeer/物理抓包/完整栈。后续补原始包字节读取/接收及独立peer渠道，再跨层组合。新PR/CI按实际状态更新，不自动merge。
