@@ -63,3 +63,9 @@ native-egress PCAP/oracle gate, plus eight transmit methods (96 total). Raw pack
 layout/checksum policy comes from IR, and the recorder does not encode packets.
 It also reruns the15/101 existing native TCP suites. No real UDP peer/network
 claim is made; the bootstrap source itself is retained and hash-bound.
+
+The fixed `byte-access` profile extends `udp-transmit` with seven byte-read
+methods (103 total) and a seventh complete task. It retains the nine actual
+transmit PCAP packets and15/101 TCP regressions; byte lookup is not UDP receive.
+New generated evidence uses backend `direct-c99-byte-access-v4`; old archives
+remain bound to their original checkers. No new paid API calls are made.

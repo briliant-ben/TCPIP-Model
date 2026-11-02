@@ -1,0 +1,119 @@
+{
+  "ir_version": "0.5",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "byte-access-contract",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "Protocol header admission and parsing policy",
+      "IPv4/UDP receive, network and PCAP evidence",
+      "Universal native compiler correctness"
+    ]
+  },
+  "states": [
+    "READY"
+  ],
+  "initial_state": "READY",
+  "variables": {
+    "octet": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "events": {
+    "peek": {
+      "origin": "application",
+      "fields": {
+        "data": "bytes",
+        "offset": "int"
+      }
+    }
+  },
+  "messages": {
+    "byte.result": {
+      "fields": {
+        "octet": "int"
+      }
+    }
+  },
+  "timers": {},
+  "requirements": {
+    "BYTE-ACCESS": {
+      "source": "docs/byte-access.md",
+      "kind": "modeling_choice",
+      "strength": "exact total value",
+      "interpretation": "bytes_at_or_zero returns data[offset] for0<=offset<len(data), otherwise0; negative offsets never address the tail. Protocol length guards are separate."
+    }
+  },
+  "transitions": [
+    {
+      "id": "PEEK",
+      "from": "READY",
+      "to": "READY",
+      "event": "peek",
+      "guard": true,
+      "requirements": [
+        "BYTE-ACCESS"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "octet",
+            "value": {
+              "op": "bytes_at_or_zero",
+              "args": [
+                {
+                  "event": "data"
+                },
+                {
+                  "event": "offset"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "byte.result",
+            "fields": {
+              "octet": {
+                "var": "octet"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "OCTET-RANGE",
+      "requirements": [
+        "BYTE-ACCESS"
+      ],
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "octet"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "octet"
+              },
+              255
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

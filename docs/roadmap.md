@@ -263,3 +263,6 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 
 
 2026-11-02：修订1b13a36f在Linux独立发布实际通过96专项、六完整任务/verify、15TCPdata原生/固定输入Z3和101连接回归。新发送task9例/10literaltrace、9个实际C生成IPv4/UDP包，其PCAP由原字节封装、独立解码/校验/对六固定oracle全部匹配；模型IR中明示全部layout/checksum/default/zero policy，无新opcode或UDP Ccodec。228不可变源码/约374KB包、1746原文件及原Git只读验收在artifacts/udp-transmit-server-1b13a36f。特别逐字节确认两份全depth2/全输入safety与overlap SMT和原f947诊断完全一致；只为存在性非空样本增加exact固定choice单事件SAT+重放（样本查询/哈希另存），不把未知全输入性质变为固定例证明。原失败/UNKNOWN保持、未来失败test job保留。独立agent静态协议审查无findings但非证明、未审后续采样优化；累计12调用83412已知token，原12上限已达，不自重置；只付费agent通道受限，本地继续。功能仍固定tuple/TTL64/DF1ID0/MTU1500发送虚拟链路，不是UDP接收/ARP/ICMP/Linuxpeer/物理抓包/完整栈。后续补原始包字节读取/接收及独立peer渠道，再跨层组合。新PR/CI按实际状态更新，不自动merge。
+
+
+2026-11-02：codex/byte-read接PR11头1e4be0cc（十CI实际success）。IR0.5新增唯一纯算子bytes_at_or_zero(bytes,int)->int：有效索引返回octet，负数/越界明确返回0，协议必须另写长度guard；非Python负索引、非隐式packet acceptance。参考显式边界、独立Z3 Seq(BV8)/Int/ITE、C先sign/length检查，三个后端同步；旧版本及length投影拒绝。IR0.4算术可在0.5使用，native signed64/4096域及clock/post/rational限制不变；新backend v4，旧证据用原Git。七新专项实际通过，含任意序列/索引range和越界Z3义务、全部256字节种子、signed64两端、4096边界、错误有效索引C翻译被精确内容oracle抓获；非通用编译器等价证明。八字面量种子+一规则见证共九例/八trace，十阶段/verify本地通过，depth2 safety/overlap UNSAT仅range合同。103专项/七任务新Linux发布待完成。尚未实现UDP接收；本阶段只补显式读取前置语义，后续raw IPv4/UDP receive guard/action/policy仍须全在IR。API原12次83412已知token预算已尽，本轮零API，旧UNKNOWN/2750ms差异和用户目录保留。

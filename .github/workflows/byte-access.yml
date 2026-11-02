@@ -1,0 +1,35 @@
+name: IR total byte access
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['protocol_lab/**', 'model/byte-access*.json', 'scenarios/byte-access/**', 'flows/byte-access.json', 'tests/test_byte_access.py', 'docs/byte-access.md', '.github/workflows/byte-access.yml']
+  pull_request:
+    paths: ['protocol_lab/**', 'model/byte-access*.json', 'scenarios/byte-access/**', 'flows/byte-access.json', 'tests/test_byte_access.py', 'docs/byte-access.md', '.github/workflows/byte-access.yml']
+permissions:
+  contents: read
+jobs:
+  native-packets-and-oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare pinned tools
+        run: |
+          python3 -m venv /tmp/byte-access-venv
+          /tmp/byte-access-venv/bin/python -m pip install -r requirements-formal.txt
+          mkdir -p artifacts/byte-access-ci
+      - name: Check byte boundaries independent Z3 and C faults
+        run: /tmp/byte-access-venv/bin/python -m unittest discover -s tests -p test_byte_access.py -v > artifacts/byte-access-ci/tests.log 2>&1
+      - name: Execute and verify ten stages
+        run: |
+          BYTE_ACCESS_TASK_SHA=$(sha256sum flows/byte-access.json | cut -d ' ' -f 1)
+          /tmp/byte-access-venv/bin/python examples/run_spec_candidate.py --workspace . --task flows/byte-access.json --task-sha256 "$BYTE_ACCESS_TASK_SHA" --out artifacts/byte-access-ci/run > artifacts/byte-access-ci/result.json
+      - name: Retain generated C ELF stdout SMT and Difference
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: byte-access-${{ github.sha }}
+          path: artifacts/byte-access-ci/
+          if-no-files-found: error

@@ -77,6 +77,11 @@ Bytes byte_slice(Bytes a,int64_t offset,int64_t count) {
     out.len=n;if(n)memcpy(out.data,a.data+start,n);return out;
 }
 int byte_equal(Bytes a,Bytes b) {return a.len==b.len&&memcmp(a.data,b.data,a.len)==0;}
+int64_t byte_at_or_zero(Bytes a,int64_t offset) {
+    if(a.len>BYTE_CAP){failure="byte_capacity";return 0;}
+    if(offset<0||(uint64_t)offset>=a.len)return 0;
+    return a.data[(size_t)offset];
+}
 Bytes byte_pack8(int64_t n) {
     unsigned char b[1]={(uint8_t)n};return byte_literal(b,1);
 }
