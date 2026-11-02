@@ -33,3 +33,24 @@ jobs:
           name: byte-access-${{ github.sha }}
           path: artifacts/byte-access-ci/
           if-no-files-found: error
+  immutable-release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Export and hash-check the fixed byte-access release
+        run: |
+          python3 deploy/package.py --source HEAD --profile byte-access --out artifacts/byte-access-release/bundle
+          BYTE_RELEASE_SHA=$(python3 -c 'import json; print(json.load(open("artifacts/byte-access-release/bundle/build.json"))["archive_sha256"])')
+          python3 deploy/unpack.py artifacts/byte-access-release/bundle/spec-flow-server.tar.gz --sha256 "$BYTE_RELEASE_SHA" --out /tmp/byte-access-immutable-release
+      - name: Execute 103 specialized methods seven tasks UDP observations and TCP suites
+        run: python3 deploy/bootstrap.py /tmp/byte-access-immutable-release --out artifacts/byte-access-release/run > artifacts/byte-access-release/bootstrap-result.json
+      - name: Retain Linux release sources hashes original executions and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: byte-access-release-${{ github.sha }}
+          path: artifacts/byte-access-release/
+          if-no-files-found: error

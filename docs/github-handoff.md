@@ -170,3 +170,6 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-02：PR12头d5eeca9f十CI通过但Linux TCP receive项失败（handshake/syn-loss成功）。已下载原artifact13120317376/run41399161597/job125126976381，ZIP SHA d9faceef540dfa35bcf3b6e61f5a4be18a477953064a13da3e835d446651c07d；原包/日志/诊断保留artifacts/linux-capture-deadline-d5eeca9f。完整抓包解码得到origin1793600452886596000，quiet marker mtime1793600457906512460，即5019.91646ms，小于5020ms83540ns；原失败仍无效，不追认为通过/TCP bug。修复驱动以实际首selected PCAP时间+原settle等待且要求capture/socket存活，记录真实stop-request epoch/monotonic与deadline；最终解码须同origin，独立verify重算完整最小窗口。不改模型/oracle/0ms容忍/packetdrill容忍/上游/抓包范围，仍先停止capture再释放socket；16本地driver正反检查通过，新增CI门禁。新Linux运行待CI实际结果，旧archive须原Git checker。服务器本轮一次只读SSH仍超时，只阻塞项目服务器发布；API零新增，12上限不重置。
+
+
+2026-11-02：为项目服务器SSH不可达增加替代的隔离GitHub Ubuntu24.04 byte-access immutable-release CI job：从当前Git HEAD导出固定241源码包、hash核验解包至/tmp独立release/venv，执行既有bootstrap的103专项/七task+verify/15TCPdata固定Z3+101连接/9UDP native-PCAP门禁；保留bundle/source/hash及原run，不打包venv/私有目录、不调用模型API/不改项目服务器或全局网络。CI已安排但结果未到，不能先宣布通过；该runner发布验证不等192.168.71.74部署或物理网络抓包。
