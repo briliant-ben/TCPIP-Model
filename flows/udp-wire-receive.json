@@ -1,0 +1,248 @@
+{
+  "schema": "spec-flow-task-v2",
+  "id": "udp-ipv4-wire-receive",
+  "model": "model/udp-wire-receive.json",
+  "sources": [
+    {
+      "id": "source-0",
+      "path": "docs/udp-wire-receive.md",
+      "sha256": "aca9ce7cb7cc1f9e324a823b15033ce39e6925a562cdbed3eefd45bdaac4956b",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "docs/udp-wire-receive.md"
+      ]
+    },
+    {
+      "id": "source-1",
+      "path": "spec/sources/rfc768.txt",
+      "sha256": "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "spec/sources/rfc768.txt",
+        "https://www.rfc-editor.org/rfc/rfc768"
+      ]
+    },
+    {
+      "id": "source-2",
+      "path": "spec/sources/rfc791.txt",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "spec/sources/rfc791.txt",
+        "https://www.rfc-editor.org/rfc/rfc791"
+      ]
+    },
+    {
+      "id": "source-3",
+      "path": "spec/sources/rfc1122.txt",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "spec/sources/rfc1122.txt",
+        "https://www.rfc-editor.org/rfc/rfc1122"
+      ]
+    },
+    {
+      "id": "source-4",
+      "path": "spec/udp-wire-receive-oracle.json",
+      "sha256": "faa346c05a8381b4c11cdb51558c09d684b34519e6bf2db4b0a149048ed70680",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "spec/udp-wire-receive-oracle.json"
+      ]
+    },
+    {
+      "id": "source-5",
+      "path": "spec/fixtures/udp_wire_receive_v1.py",
+      "sha256": "aa831ecac10bbac21476762320e5a70220e61b316afcd09fdfecc5d220ccd4ec",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "spec/fixtures/udp_wire_receive_v1.py"
+      ]
+    },
+    {
+      "id": "source-6",
+      "path": "model/udp-wire-receive-exploration.json",
+      "sha256": "677fa99575d6d08903e4e3225aca870212199e6e977610120d5da038e86dbf0a",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "model/udp-wire-receive-exploration.json"
+      ]
+    },
+    {
+      "id": "source-7",
+      "path": "scenarios/udp-wire-receive/empty.json",
+      "sha256": "bfc149b3516715ffbedf3ca27be739fd2a2824708ab0bdd688c82132bb8a43d7",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/empty.json"
+      ]
+    },
+    {
+      "id": "source-8",
+      "path": "scenarios/udp-wire-receive/odd-NUL.json",
+      "sha256": "a0c0f71c8ceaea812ef72ed07d85878f5950c9c9a23bac48bc75acb960cceb36",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/odd-NUL.json"
+      ]
+    },
+    {
+      "id": "source-9",
+      "path": "scenarios/udp-wire-receive/zero-mapped.json",
+      "sha256": "ba1be94f82d89eff0c50ec93e8e4611414a31a318c84bac181cf1cb63f6bb3e1",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/zero-mapped.json"
+      ]
+    },
+    {
+      "id": "source-10",
+      "path": "scenarios/udp-wire-receive/absent-allowed.json",
+      "sha256": "6d51c8d4fe719a2549f5ba8a2188836c35bfbefda46ea527d8372d8a2653a51f",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/absent-allowed.json"
+      ]
+    },
+    {
+      "id": "source-11",
+      "path": "scenarios/udp-wire-receive/absent-required.json",
+      "sha256": "689b8a8bea16d3497b6bf14cdfcfc7a56abf789a66bd2e5a2a9c3260d5d65a42",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/absent-required.json"
+      ]
+    },
+    {
+      "id": "source-12",
+      "path": "scenarios/udp-wire-receive/bad-udp-checksum.json",
+      "sha256": "64f1a969105069d0a919c5c6d3f73b9e3de3353aca75fe3851c98305f72f52e5",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/bad-udp-checksum.json"
+      ]
+    },
+    {
+      "id": "source-13",
+      "path": "scenarios/udp-wire-receive/bad-ip-checksum.json",
+      "sha256": "ada999fe2596776f09565f8542cf0675fca0ebfd67f3ad94e8cae534219bfb8a",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/bad-ip-checksum.json"
+      ]
+    },
+    {
+      "id": "source-14",
+      "path": "scenarios/udp-wire-receive/bad-ip-length.json",
+      "sha256": "19fab29def6a8122676624e75f778a113b871bf6f83e89531111bda6d01f9b09",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/bad-ip-length.json"
+      ]
+    },
+    {
+      "id": "source-15",
+      "path": "scenarios/udp-wire-receive/udp-short-length.json",
+      "sha256": "fd87028c5c413592c6ea1aa1fd29be4c1768c6a5380c40af0e5151d4141a4983",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/udp-short-length.json"
+      ]
+    },
+    {
+      "id": "source-16",
+      "path": "scenarios/udp-wire-receive/udp-over-length.json",
+      "sha256": "4c2b6f59853e81062fec85475af70a6e13577285587ae3a48cfad89dd3625a73",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/udp-over-length.json"
+      ]
+    },
+    {
+      "id": "source-17",
+      "path": "scenarios/udp-wire-receive/short-packet.json",
+      "sha256": "01d6d05cc85dd9e5a7837789f1ca39b27e8ba7e2c9fd615c648b9b15976be6c3",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/short-packet.json"
+      ]
+    },
+    {
+      "id": "source-18",
+      "path": "scenarios/udp-wire-receive/mtu.json",
+      "sha256": "26b4f944c8f58af6bf2feba1121866e466b1a092c51416b78948d1eff985d893",
+      "version": "finite receive v1; RFC768/791/1122 pinned editions",
+      "uri_aliases": [
+        "scenarios/udp-wire-receive/mtu.json"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "RX-PROFILE": {
+      "source": "source-0",
+      "clause": "Finite raw IPv4/UDP receive IR",
+      "reference": "docs/udp-wire-receive.md"
+    },
+    "IP-LENGTH": {
+      "source": "source-2",
+      "clause": "3.1 Total Length",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791#section-3.1"
+    },
+    "IP-CHECKSUM": {
+      "source": "source-3",
+      "clause": "3.2.1.2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.1.2"
+    },
+    "UDP-LENGTH": {
+      "source": "source-1",
+      "clause": "Fields pp1-2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768"
+    },
+    "UDP-CHECKSUM": {
+      "source": "source-3",
+      "clause": "4.1.3.4",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-4.1.3.4"
+    },
+    "UDP-PSEUDO": {
+      "source": "source-1",
+      "clause": "Fields p2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768"
+    }
+  },
+  "exploration": "model/udp-wire-receive-exploration.json",
+  "seeds": [
+    "scenarios/udp-wire-receive/empty.json",
+    "scenarios/udp-wire-receive/odd-NUL.json",
+    "scenarios/udp-wire-receive/zero-mapped.json",
+    "scenarios/udp-wire-receive/absent-allowed.json",
+    "scenarios/udp-wire-receive/absent-required.json",
+    "scenarios/udp-wire-receive/bad-udp-checksum.json",
+    "scenarios/udp-wire-receive/bad-ip-checksum.json",
+    "scenarios/udp-wire-receive/bad-ip-length.json",
+    "scenarios/udp-wire-receive/udp-short-length.json",
+    "scenarios/udp-wire-receive/udp-over-length.json",
+    "scenarios/udp-wire-receive/short-packet.json",
+    "scenarios/udp-wire-receive/mtu.json"
+  ],
+  "formal": {
+    "depth": 2,
+    "symbolic_initials": []
+  },
+  "limits": {
+    "stage_seconds": 180,
+    "max_prefixes": 64,
+    "max_cases": 64
+  },
+  "scope": {
+    "purpose": "Fixed raw IPv4/UDP receive into IR-generated native delivery",
+    "assumptions": [
+      "Exact raw IPv4 datagram, fixed peer/local tuple and header profile",
+      "Native4096/signed64 domain, optional checksum policy default allow"
+    ],
+    "excluded": [
+      "UDP surplus/options and general IPv4 endpoint",
+      "Physical/Linux UDP peer and unbounded correctness proof"
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+name: IR raw IPv4 UDP receive
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['protocol_lab/**', 'spec/udp-wire-receive-oracle.json', 'spec/fixtures/udp_wire_receive_v1.py', 'model/udp-wire-receive*.json', 'scenarios/udp-wire-receive/**', 'flows/udp-wire-receive.json', 'tests/test_udp_receive.py', 'docs/udp-wire-receive.md', '.github/workflows/udp-receive.yml']
+  pull_request:
+    paths: ['protocol_lab/**', 'spec/udp-wire-receive-oracle.json', 'spec/fixtures/udp_wire_receive_v1.py', 'model/udp-wire-receive*.json', 'scenarios/udp-wire-receive/**', 'flows/udp-wire-receive.json', 'tests/test_udp_receive.py', 'docs/udp-wire-receive.md', '.github/workflows/udp-receive.yml']
+permissions:
+  contents: read
+jobs:
+  native-packets-and-oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare pinned tools
+        run: |
+          python3 -m venv /tmp/udp-receive-venv
+          /tmp/udp-receive-venv/bin/python -m pip install -r requirements-formal.txt
+          mkdir -p artifacts/udp-receive-ci
+      - name: Check literal raw packets independent Z3 and native delivery faults
+        run: /tmp/udp-receive-venv/bin/python -m unittest discover -s tests -p test_byte_access.py -v > artifacts/udp-receive-ci/tests.log 2>&1
+      - name: Execute and verify ten stages
+        run: |
+          UDP_RECEIVE_TASK_SHA=$(sha256sum flows/udp-wire-receive.json | cut -d ' ' -f 1)
+          /tmp/udp-receive-venv/bin/python examples/run_spec_candidate.py --workspace . --task flows/udp-wire-receive.json --task-sha256 "$UDP_RECEIVE_TASK_SHA" --out artifacts/udp-receive-ci/run > artifacts/udp-receive-ci/result.json
+      - name: Retain generated C ELF stdout SMT and Difference
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: udp-receive-${{ github.sha }}
+          path: artifacts/udp-receive-ci/
+          if-no-files-found: error
+  immutable-release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Export and hash-check the fixed udp-receive release
+        run: |
+          python3 deploy/package.py --source HEAD --profile udp-receive --out artifacts/udp-receive-release/bundle
+          BYTE_RELEASE_SHA=$(python3 -c 'import json; print(json.load(open("artifacts/udp-receive-release/bundle/build.json"))["archive_sha256"])')
+          python3 deploy/unpack.py artifacts/udp-receive-release/bundle/spec-flow-server.tar.gz --sha256 "$BYTE_RELEASE_SHA" --out /tmp/udp-receive-immutable-release
+      - name: Execute 111 specialized methods eight tasks UDP observations and TCP suites
+        run: python3 deploy/bootstrap.py /tmp/udp-receive-immutable-release --out artifacts/udp-receive-release/run > artifacts/udp-receive-release/bootstrap-result.json
+      - name: Retain Linux release sources hashes original executions and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: udp-receive-release-${{ github.sha }}
+          path: artifacts/udp-receive-release/
+          if-no-files-found: error
