@@ -59,7 +59,7 @@ existing tasks,88 specialized methods and the15-data/101-connection native suite
 It retains the old profiles and accepted releases separately.
 
 The fixed `udp-transmit` profile adds the sixth complete task and a post-flow
-native-egress PCAP/oracle gate, plus seven transmit methods (95 total). Raw packet
+native-egress PCAP/oracle gate, plus eight transmit methods (96 total). Raw packet
 layout/checksum policy comes from IR, and the recorder does not encode packets.
 It also reruns the15/101 existing native TCP suites. No real UDP peer/network
 claim is made; the bootstrap source itself is retained and hash-bound.
