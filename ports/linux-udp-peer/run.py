@@ -33,6 +33,7 @@ def inputs():
         paths.add(ROOT/task)
         for source in json.loads((ROOT/task).read_text())['sources']:
             path=ROOT/source['path'];require(sha(path)==source['sha256'],'Pinned source changed');paths.add(path)
+    require(all(p.resolve().is_relative_to(ROOT)for p in paths),'Source input escapes trusted checkout')
     return {str(p.relative_to(ROOT)):sha(p)for p in sorted(paths)}
 
 

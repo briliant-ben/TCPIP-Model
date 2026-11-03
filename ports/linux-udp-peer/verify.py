@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import shutil
 import subprocess
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parent))
@@ -27,6 +28,7 @@ def verify(out,runtime=True):
         if n.startswith(report['execution_source_root']+'/'):p=driver.ROOT/n[len(report['execution_source_root'])+1:]
         elif n.startswith(report['execution_output_dir']+'/'):p=out/n[len(report['execution_output_dir'])+1:]
         else:raise ValueError('Generation binding outside approved roots')
+        require(p.resolve().is_relative_to(driver.ROOT)or p.resolve().is_relative_to(out),'Native binding escapes approved roots')
         require(sha(p)==h,'Native generation binding changed')
     config=json.loads((driver.PORT/'cases.json').read_text())
     for kind in ('tx','rx'):
@@ -41,6 +43,10 @@ def verify(out,runtime=True):
         require(os.readlink('/proc/self/ns/net')==namespace['parent_netns'],'Original namespace parent required')
         require(str(out)==report['execution_output_dir'],'Runtime path changed')
         require(subprocess.check_output(['git','rev-parse','HEAD'],cwd=driver.ROOT,text=True).strip()==report['source_commit'],'Runtime source checkout changed')
+        tools=[shutil.which(n)for n in ('ip','unshare','tcpdump','ethtool','sysctl','cc')]
+        require(all(tools),'Original runtime tools unavailable')
+        approved={str(Path(n).resolve())for n in [sys.executable,*tools]}
+        require(set(report['tool_hashes'])==approved,'Tool binding set changed')
         for n,h in report['tool_hashes'].items():require(sha(n)==h,'Original tool binary changed')
     else:
         saved=json.loads((out/'runtime-verification.json').read_text())
