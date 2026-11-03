@@ -42,7 +42,7 @@ def verify(out,runtime=True):
         require(platform.system()=='Linux'and platform.release()==report['kernel']==namespace['kernel'],'Original Linux runtime required')
         require(os.readlink('/proc/self/ns/net')==namespace['parent_netns'],'Original namespace parent required')
         require(str(out)==report['execution_output_dir'],'Runtime path changed')
-        require(subprocess.check_output(['git','rev-parse','HEAD'],cwd=driver.ROOT,text=True).strip()==report['source_commit'],'Runtime source checkout changed')
+        require(subprocess.check_output(['git','-c','safe.directory='+str(driver.ROOT),'rev-parse','HEAD'],cwd=driver.ROOT,text=True).strip()==report['source_commit'],'Runtime source checkout changed')
         tools=[shutil.which(n)for n in ('ip','unshare','tcpdump','ethtool','sysctl','cc')]
         require(all(tools),'Original runtime tools unavailable')
         approved={str(Path(n).resolve())for n in [sys.executable,*tools]}

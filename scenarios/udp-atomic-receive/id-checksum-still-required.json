@@ -1,0 +1,57 @@
+{
+  "scenario_version": "0.2",
+  "id": "id-checksum-still-required",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "net.packet",
+      "fields": {
+        "packet": [
+          69,
+          0,
+          0,
+          28,
+          18,
+          52,
+          64,
+          0,
+          64,
+          17,
+          182,
+          204,
+          192,
+          0,
+          2,
+          2,
+          192,
+          0,
+          2,
+          1,
+          31,
+          144,
+          156,
+          64,
+          0,
+          8,
+          192,
+          9
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": []
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "payload": [],
+      "disposition": "drop_ip_checksum"
+    },
+    "timers": {}
+  }
+}

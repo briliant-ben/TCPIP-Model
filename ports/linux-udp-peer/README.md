@@ -6,8 +6,9 @@ no Linux stack, handwritten UDP codec or Python protocol callback implements the
 subject. The two modules are paired through raw bytes by a test harness, not
 claimed as a composed single-stack IR. Cases are the existing literal empty,
 odd/NUL and1472-octet transmit inputs. All header/length/checksum/admission and
-receive policy remain the existing model's guards/actions. Fixed ID0/TTL64 domain
-is retained; an actual peer reply outside it is model_gap, not silently rewritten.
+receive policy remain the existing model's guards/actions. RX uses the explicit RFC6864 atomic-ID overlay: DF1/MF0/offset0 admits any ID
+while the original ID0 model stays unchanged. TTL64 and other finite boundaries
+remain; actual peer replies outside them are model_gap, never rewritten.
 
 A dedicated ephemeral Ubuntu CI VM enters a new network namespace and verifies
 its identity against the real parent before setup. A nonpersistent TUN device
@@ -59,3 +60,12 @@ and ephemeral device lifetime (https://www.kernel.org/doc/html/latest/networking
 Linux udp(7) documents datagram socket send/receive semantics
 (https://man7.org/linux/man-pages/man7/udp.7.html). Protocol interpretations stay in
 the pinned existing IR sources; this adapter adds no protocol behavior.
+
+The first43f4e3d7 run is retained as failed in
+artifacts/linux-udp-peer-failed-43f4e3d7. Socket transfer completed, but all three
+nonzero-ID replies were model gaps, and tcpdump saved0 packets despite6 filter
+receipts. That capture is invalid and is never promoted. The explicit atomic-ID
+IR overlay has independent literals/checksum/repeated-ID/non-atomic negatives;
+no special case names a kernel-observed ID. Capture now requires immediate mode
+to deliver buffers before the unchanged100ms quiet boundary. This changes no
+packet bytes, timing tolerance, drop accounting or count oracle.

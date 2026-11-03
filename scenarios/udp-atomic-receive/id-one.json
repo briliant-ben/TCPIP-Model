@@ -1,0 +1,64 @@
+{
+  "scenario_version": "0.2",
+  "id": "id-one",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "net.packet",
+      "fields": {
+        "packet": [
+          69,
+          0,
+          0,
+          28,
+          0,
+          1,
+          64,
+          0,
+          64,
+          17,
+          182,
+          204,
+          192,
+          0,
+          2,
+          2,
+          192,
+          0,
+          2,
+          1,
+          31,
+          144,
+          156,
+          64,
+          0,
+          8,
+          192,
+          9
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "udp.rx",
+              "fields": {
+                "data": []
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "payload": [],
+      "disposition": "deliver"
+    },
+    "timers": {}
+  }
+}

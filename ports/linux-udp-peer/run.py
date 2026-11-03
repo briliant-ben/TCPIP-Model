@@ -18,7 +18,7 @@ ROOT=Path(__file__).resolve().parents[2];PORT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT));sys.path.insert(0,str(PORT))
 from protocol_lab.codegen import generate,sha
 from protocol_lab.codegen.execute import build,commands,compare,write
-from protocol_lab.ir import load,require,Uncovered,Conflict,ModelError
+from protocol_lab.ir import load,require,Uncovered,Conflict,ModelError,model_files
 from protocol_lab.udp_observe import decode_packet
 from capture import records
 
@@ -28,8 +28,8 @@ def inputs():
     paths|={p for p in PORT.rglob('*')if p.is_file()and '__pycache__'not in p.parts}
     paths|={p for p in (ROOT/'protocol_lab').rglob('*')if p.suffix in ('.py','.c')}
     config=json.loads((PORT/'cases.json').read_text())
-    paths|={ROOT/config['tx_model'],ROOT/config['rx_model'],*(ROOT/n for n in config['scenarios'])}
-    for task in ('flows/udp-wire-transmit.json','flows/udp-wire-receive.json'):
+    paths|={*model_files(ROOT/config['tx_model']),*model_files(ROOT/config['rx_model']),*(ROOT/n for n in config['scenarios'])}
+    for task in ('flows/udp-wire-transmit.json','flows/udp-atomic-receive.json'):
         paths.add(ROOT/task)
         for source in json.loads((ROOT/task).read_text())['sources']:
             path=ROOT/source['path'];require(sha(path)==source['sha256'],'Pinned source changed');paths.add(path)
@@ -95,7 +95,7 @@ def inside(out,parent):
             logs.append(command(args,out,'setup-'+str(i)+'.log'))
         peer=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);peer.settimeout(3)
         peer.bind((cfg['peer']['ip'],cfg['peer']['port']))
-        capture_command=['tcpdump','-Z','root','-U','-n','-s','65535','-i','irudp0','-y','RAW','-w',str(out/'capture.pcap'),'udp']
+        capture_command=['tcpdump','--immediate-mode','-Z','root','-U','-n','-s','65535','-i','irudp0','-y','RAW','-w',str(out/'capture.pcap'),'udp']
         namespace['capture_command']=capture_command;namespace['capture_packet_limit']=None
         with(out/'capture.log').open('w')as log:
             capture=subprocess.Popen(capture_command,stdout=log,stderr=log)
@@ -151,7 +151,7 @@ def assess(out,save=True):
     isolation(namespace['parent_netns'],namespace['execution_netns'])
     require(namespace['actual_parent_netns']==namespace['parent_netns']and not namespace['host_network_mutations']
         and not namespace['generated_subject_uses_host_stack']and not namespace['packet_bytes_rewritten'],'Isolation/provenance changed')
-    require(namespace['capture_packet_limit']is None and '-c'not in namespace['capture_command'],'Capture limited')
+    require(namespace['capture_packet_limit']is None and '-c'not in namespace['capture_command']and '--immediate-mode'in namespace['capture_command'],'Capture limited or buffered')
     require(namespace['capture_ready_monotonic_ns']<=namespace['last_inject_monotonic_ns']<=namespace['last_reply_read_monotonic_ns']
         <=namespace['capture_stop_request_monotonic_ns']<=namespace['capture_exit_monotonic_ns']<=namespace['socket_and_tun_closed_monotonic_ns'],'Capture lifecycle invalid')
     require(namespace['capture_returncode']==0,'Capture did not finish')
@@ -209,7 +209,7 @@ def run(out):
     require(before==inputs(),'Inputs changed during peer execution')
     files={str(p.relative_to(out)):sha(p)for p in out.rglob('*')if p.is_file()and p.name!='report.json'}
     report=dict(schema='linux-ir-udp-peer-v1',**assessment,linux_peer_evidence=True,kernel=preflight['kernel'],input_hashes=before,file_hashes=files,
-        namespace_invocation=invocation,execution_source_root=str(ROOT),execution_output_dir=str(out),source_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),tool_hashes={str(Path(p).resolve()):sha(Path(p).resolve())for p in [sys.executable,*preflight['tools'].values()]},upstream_modified=False,packet_bytes_rewritten=False,api_calls=0,integrity_is_not_authenticity=True)
+        namespace_invocation=invocation,execution_source_root=str(ROOT),execution_output_dir=str(out),source_commit=subprocess.check_output(['git','-c','safe.directory='+str(ROOT),'rev-parse','HEAD'],cwd=ROOT,text=True).strip(),tool_hashes={str(Path(p).resolve()):sha(Path(p).resolve())for p in [sys.executable,*preflight['tools'].values()]},upstream_modified=False,packet_bytes_rewritten=False,api_calls=0,integrity_is_not_authenticity=True)
     write(out/'report.json',report);return report
 
 

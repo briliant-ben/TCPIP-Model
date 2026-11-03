@@ -56,7 +56,7 @@ class PeerAdapterTests(unittest.TestCase):
             with patch.object(driver,'PORT',port):driver.native(out,'rx','case-0',rxscene)
             write_raw_pcap(out/'capture.pcap',[(0,tx),(1,rx)])
             (out/'capture.log').write_text('0 packets dropped by kernel\n')
-            namespace=dict(parent_netns='net:[1]',execution_netns='net:[2]',actual_parent_netns='net:[1]',host_network_mutations=False,generated_subject_uses_host_stack=False,packet_bytes_rewritten=False,capture_packet_limit=None,capture_command=['fixture'],capture_ready_monotonic_ns=1,last_inject_monotonic_ns=2,last_reply_read_monotonic_ns=3,capture_stop_request_monotonic_ns=100000003,capture_exit_monotonic_ns=100000004,socket_and_tun_closed_monotonic_ns=100000005,capture_returncode=0,quiet_ms=100)
+            namespace=dict(parent_netns='net:[1]',execution_netns='net:[2]',actual_parent_netns='net:[1]',host_network_mutations=False,generated_subject_uses_host_stack=False,packet_bytes_rewritten=False,capture_packet_limit=None,capture_command=['fixture','--immediate-mode'],capture_ready_monotonic_ns=1,last_inject_monotonic_ns=2,last_reply_read_monotonic_ns=3,capture_stop_request_monotonic_ns=100000003,capture_exit_monotonic_ns=100000004,socket_and_tun_closed_monotonic_ns=100000005,capture_returncode=0,quiet_ms=100)
             (out/'namespace.json').write_text(json.dumps(namespace));trial=dict(case='case-0',scenario=cfg['scenarios'][0],peer_received_hex='',peer_source=['192.0.2.1',40000],peer_send_bytes=0)
             (out/'trials.json').write_text(json.dumps([trial]))
             with patch.object(driver,'PORT',port):self.assertEqual(driver.assess(out)['status'],'pass')
