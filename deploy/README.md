@@ -75,3 +75,9 @@ and eight complete tasks, retaining the old15/101 TCP and nine UDP transmit
 observations. New receive inputs are frozen raw-byte fixtures, not real peer
 capture. The offline controller oracle constructor is pinned data, never invoked
 as protocol runtime or to supply expected outputs during validation.
+
+The fixed `arp-endpoint` profile extends `udp-receive` with119 specialized
+methods and nine tasks. It also retains all13 ARP native/fixed-input Z3 queries
+via a third native suite, alongside15/101 TCP and9 UDP transmit observations.
+This release validates logical-time ARP/cache/timer/frame contracts, not an ARP
+network peer or Ethernet capture. No new protocol opcode/backend is introduced.
