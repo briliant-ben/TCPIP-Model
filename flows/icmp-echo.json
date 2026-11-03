@@ -1,0 +1,273 @@
+{
+  "schema": "spec-flow-task-v2",
+  "id": "icmp-ipv4-echo-responder",
+  "model": "model/icmp-echo.json",
+  "sources": [
+    {
+      "id": "source-0",
+      "path": "docs/icmp-echo.md",
+      "sha256": "c818484ce22ddf2f43919ce244f2dc3696ada35246b7235a7add1cb1ebe3e861",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "docs/icmp-echo.md"
+      ]
+    },
+    {
+      "id": "source-1",
+      "path": "spec/sources/rfc792.txt",
+      "sha256": "58714393ded142bacf188d7e8977eef98f4110c4c87ac94595f750df5664c2c6",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "spec/sources/rfc792.txt",
+        "https://www.rfc-editor.org/rfc/rfc792"
+      ]
+    },
+    {
+      "id": "source-2",
+      "path": "spec/sources/rfc1122.txt",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "spec/sources/rfc1122.txt",
+        "https://www.rfc-editor.org/rfc/rfc1122"
+      ]
+    },
+    {
+      "id": "source-3",
+      "path": "spec/sources/rfc791.txt",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "spec/sources/rfc791.txt",
+        "https://www.rfc-editor.org/rfc/rfc791"
+      ]
+    },
+    {
+      "id": "source-4",
+      "path": "spec/sources/rfc6864.txt",
+      "sha256": "e00ff443857166e5b26deecfdc77a0a1c5ff17fc87a6a8c50b020ce7f4d516d9",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "spec/sources/rfc6864.txt",
+        "https://www.rfc-editor.org/rfc/rfc6864"
+      ]
+    },
+    {
+      "id": "source-5",
+      "path": "spec/icmp-echo-oracle.json",
+      "sha256": "b8e8c21f47aa3988b79b93dfff29b81343f74368b6068e73d56c66ea2491e30a",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "spec/icmp-echo-oracle.json"
+      ]
+    },
+    {
+      "id": "source-6",
+      "path": "spec/fixtures/icmp_echo_v1.py",
+      "sha256": "7bbd4433c83a93e9fd26a6aced68db4dd3669f5940b4337086ebd56f1eef0239",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "spec/fixtures/icmp_echo_v1.py"
+      ]
+    },
+    {
+      "id": "source-7",
+      "path": "model/icmp-echo-exploration.json",
+      "sha256": "c4bb546e255530c1ccc1e77e12be8ecd475569dd9a2b49afad9c93c452795f1a",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "model/icmp-echo-exploration.json"
+      ]
+    },
+    {
+      "id": "source-8",
+      "path": "scenarios/icmp-echo/empty.json",
+      "sha256": "de1d35c1eec0e8c1a707463c76a9b53ea8cfe7561118c053e29ffcc6590f77fd",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/empty.json"
+      ]
+    },
+    {
+      "id": "source-9",
+      "path": "scenarios/icmp-echo/odd-NUL.json",
+      "sha256": "d3734602bf784f0afe77ef71d57d136a9a1f1926f285f393779155e3762ef82f",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/odd-NUL.json"
+      ]
+    },
+    {
+      "id": "source-10",
+      "path": "scenarios/icmp-echo/identifier-sequence-zero.json",
+      "sha256": "b0f30e0a92b3b00a59186058061eaa6d4c2b60a7c3386b63cfd2e937b5ac989d",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/identifier-sequence-zero.json"
+      ]
+    },
+    {
+      "id": "source-11",
+      "path": "scenarios/icmp-echo/request-checksum-zero.json",
+      "sha256": "aff758990cbe781c52690124070f0bf0683a342afb4bd99a2fd02c2830479c6a",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/request-checksum-zero.json"
+      ]
+    },
+    {
+      "id": "source-12",
+      "path": "scenarios/icmp-echo/reply-checksum-zero.json",
+      "sha256": "24851a0f3ca06986b2be06fee7f048226bab72413ddc9671dd463241d062727e",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/reply-checksum-zero.json"
+      ]
+    },
+    {
+      "id": "source-13",
+      "path": "scenarios/icmp-echo/atomic-id-ffff.json",
+      "sha256": "4a80917c0ca0dcc2bc257278962eca51de1a871c6a5feb95bac757b29f872c40",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/atomic-id-ffff.json"
+      ]
+    },
+    {
+      "id": "source-14",
+      "path": "scenarios/icmp-echo/ttl-one.json",
+      "sha256": "e7efa42d71c27fe4a41ccd965a333fe8e0fab78d201f341ec46e4acc33189c81",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/ttl-one.json"
+      ]
+    },
+    {
+      "id": "source-15",
+      "path": "scenarios/icmp-echo/ttl-255.json",
+      "sha256": "963b0d90fc9eda39e794b75fd16259470d077fbd96fdcc68995071d04772722a",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/ttl-255.json"
+      ]
+    },
+    {
+      "id": "source-16",
+      "path": "scenarios/icmp-echo/mtu.json",
+      "sha256": "5734c174446c19d7d493e7677c682e67f9cf481dcd7ccc7376276e585b0a7418",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/mtu.json"
+      ]
+    },
+    {
+      "id": "source-17",
+      "path": "scenarios/icmp-echo/bad-icmp-checksum.json",
+      "sha256": "bdbe4bd9ea53c8660224aea47b52788dba373379245afb9f2c255a4ab37a07af",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/bad-icmp-checksum.json"
+      ]
+    },
+    {
+      "id": "source-18",
+      "path": "scenarios/icmp-echo/bad-ip-checksum.json",
+      "sha256": "a8b68a12e0b6f30912403b6d58b5abfc4ae3a2a106be410fc9161458577aacae",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/bad-ip-checksum.json"
+      ]
+    },
+    {
+      "id": "source-19",
+      "path": "scenarios/icmp-echo/bad-ip-length.json",
+      "sha256": "1446a663866cb87ba3234720df550eafc2a0bfcbc1cc4081350b5b5b90ccc790",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/bad-ip-length.json"
+      ]
+    },
+    {
+      "id": "source-20",
+      "path": "scenarios/icmp-echo/short.json",
+      "sha256": "49bcde200602f6b25d3b25b4e8ea8649948d706483d0d4d0da5d1b4058f518cd",
+      "version": "Echo finite v1 pinned RFC792/1122/791/6864",
+      "uri_aliases": [
+        "scenarios/icmp-echo/short.json"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "ECHO-PROFILE": {
+      "source": "source-0",
+      "clause": "Admission and failure contract",
+      "reference": "docs/icmp-echo.md"
+    },
+    "ECHO-REPLY": {
+      "source": "source-1",
+      "clause": "Echo or Echo Reply pp14-15",
+      "reference": "https://www.rfc-editor.org/rfc/rfc792"
+    },
+    "ECHO-HOST": {
+      "source": "source-2",
+      "clause": "3.2.2.6",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.2.6"
+    },
+    "IP-LENGTH": {
+      "source": "source-3",
+      "clause": "3.1 Total Length",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791#section-3.1"
+    },
+    "IP-CHECKSUM": {
+      "source": "source-2",
+      "clause": "3.2.1.2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.1.2"
+    },
+    "ICMP-CHECKSUM": {
+      "source": "source-1",
+      "clause": "Echo Checksum p14",
+      "reference": "https://www.rfc-editor.org/rfc/rfc792"
+    },
+    "IP-ATOMIC": {
+      "source": "source-4",
+      "clause": "4/4.1 Atomic datagrams",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6864#section-4.1"
+    }
+  },
+  "exploration": "model/icmp-echo-exploration.json",
+  "seeds": [
+    "scenarios/icmp-echo/empty.json",
+    "scenarios/icmp-echo/odd-NUL.json",
+    "scenarios/icmp-echo/identifier-sequence-zero.json",
+    "scenarios/icmp-echo/request-checksum-zero.json",
+    "scenarios/icmp-echo/reply-checksum-zero.json",
+    "scenarios/icmp-echo/atomic-id-ffff.json",
+    "scenarios/icmp-echo/ttl-one.json",
+    "scenarios/icmp-echo/ttl-255.json",
+    "scenarios/icmp-echo/mtu.json",
+    "scenarios/icmp-echo/bad-icmp-checksum.json",
+    "scenarios/icmp-echo/bad-ip-checksum.json",
+    "scenarios/icmp-echo/bad-ip-length.json",
+    "scenarios/icmp-echo/short.json"
+  ],
+  "formal": {
+    "depth": 2,
+    "symbolic_initials": []
+  },
+  "limits": {
+    "stage_seconds": 180,
+    "max_prefixes": 48,
+    "max_cases": 48
+  },
+  "scope": {
+    "purpose": "IR-generated raw IPv4 finite ICMP Echo responder",
+    "assumptions": [
+      "Exact unicast fixed-address raw datagram; atomic DF1; IHL5/TOS0/positiveTTL; MTU1500",
+      "Native atomic-v1 signed64/4096"
+    ],
+    "excluded": [
+      "Other ICMP/types/options/fragments/dynamic route/ARP",
+      "Real peer/physical capture/full host/unbounded or compiler proof"
+    ]
+  }
+}

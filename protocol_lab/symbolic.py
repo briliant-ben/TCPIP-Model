@@ -424,8 +424,23 @@ class Encoding:
         if self.z.is_string_value(result):
             return result.as_string()
         if self.byte_encoding == "sequence" and result.sort() == self.byte_sort:
-            length = solution.eval(self.z.Length(value), model_completion=True).as_long()
-            return [solution.eval(value[i], model_completion=True).as_long() for i in range(length)]
+            # Materialize the already evaluated sequence once. Indexing the
+            # original expression repeats nested checksum evaluation per octet.
+            # Only concrete Unit/Concat/Empty ASTs use this exact fast path;
+            # other model representations retain the generic evaluator below.
+            pending = [result];octets = []
+            while pending:
+                node = pending.pop();kind = node.decl().kind()
+                if kind == self.z.Z3_OP_SEQ_EMPTY:
+                    continue
+                if kind == self.z.Z3_OP_SEQ_UNIT and self.z.is_bv_value(node.arg(0)):
+                    octets.append(node.arg(0).as_long())
+                elif kind == self.z.Z3_OP_SEQ_CONCAT:
+                    pending.extend(reversed(node.children()))
+                else:
+                    length = solution.eval(self.z.Length(result), model_completion=True).as_long()
+                    return [solution.eval(result[i], model_completion=True).as_long() for i in range(length)]
+            return octets
         return result.as_long()
 
     def witness(self, solution):
