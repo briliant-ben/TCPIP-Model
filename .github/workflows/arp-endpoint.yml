@@ -2,9 +2,9 @@ name: IR finite ARP endpoint
 on:
   push:
     branches: ['codex/**', main]
-    paths: ['protocol_lab/**', 'spec/arp-endpoint-oracle.json', 'spec/fixtures/arp_endpoint_v1.py', 'model/arp-endpoint*.json', 'scenarios/arp-endpoint/**', 'flows/arp-endpoint.json', 'tests/test_arp_endpoint.py', 'docs/arp-endpoint.md', '.github/workflows/arp-endpoint.yml']
+    paths: ['protocol_lab/**', 'examples/arp_observe.py', 'spec/sources/rfc826.txt', 'spec/sources/rfc1122.txt', 'spec/arp-endpoint-oracle.json', 'spec/fixtures/arp_endpoint_v1.py', 'model/arp-endpoint*.json', 'scenarios/arp-endpoint/**', 'flows/arp-endpoint.json', 'tests/test_arp_endpoint.py', 'docs/arp-endpoint.md', '.github/workflows/arp-endpoint.yml']
   pull_request:
-    paths: ['protocol_lab/**', 'spec/arp-endpoint-oracle.json', 'spec/fixtures/arp_endpoint_v1.py', 'model/arp-endpoint*.json', 'scenarios/arp-endpoint/**', 'flows/arp-endpoint.json', 'tests/test_arp_endpoint.py', 'docs/arp-endpoint.md', '.github/workflows/arp-endpoint.yml']
+    paths: ['protocol_lab/**', 'examples/arp_observe.py', 'spec/sources/rfc826.txt', 'spec/sources/rfc1122.txt', 'spec/arp-endpoint-oracle.json', 'spec/fixtures/arp_endpoint_v1.py', 'model/arp-endpoint*.json', 'scenarios/arp-endpoint/**', 'flows/arp-endpoint.json', 'tests/test_arp_endpoint.py', 'docs/arp-endpoint.md', '.github/workflows/arp-endpoint.yml']
 permissions:
   contents: read
 jobs:
