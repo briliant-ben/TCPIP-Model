@@ -1,0 +1,12 @@
+{
+  "schema": "linux-udp-peer-cases-v1",
+  "tx_model": "model/udp-wire-transmit.json",
+  "rx_model": "model/udp-wire-receive.json",
+  "scenarios": ["scenarios/udp-wire-transmit/empty.json", "scenarios/udp-wire-transmit/odd-NUL.json", "scenarios/udp-wire-transmit/mtu.json"],
+  "peer": {"ip": "192.0.2.2", "port": 8080},
+  "subject": {"ip": "192.0.2.1", "port": 40000},
+  "mtu": 1500,
+  "quiet_ms": 100,
+  "logical_event_time_ms": 0,
+  "wire_timing_contract": "none; actual PCAP timestamps retained separately"
+}
