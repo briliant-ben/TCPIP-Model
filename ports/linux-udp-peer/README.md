@@ -1,7 +1,8 @@
 # Generated IR C with an independent Linux UDP peer
 
 This experimental channel is separate from fixture PCAP/trace validation. Both
-subject executables are generated from the unchanged authoritative TX and RX IR;
+subject executables are generated from authoritative TX IR and the explicit
+atomic-ID RX overlay; the original TX/ID0 RX models remain unchanged;
 no Linux stack, handwritten UDP codec or Python protocol callback implements the
 subject. The two modules are paired through raw bytes by a test harness, not
 claimed as a composed single-stack IR. Cases are the existing literal empty,
@@ -69,3 +70,9 @@ IR overlay has independent literals/checksum/repeated-ID/non-atomic negatives;
 no special case names a kernel-observed ID. Capture now requires immediate mode
 to deliver buffers before the unchanged100ms quiet boundary. This changes no
 packet bytes, timing tolerance, drop accounting or count oracle.
+
+Checkpoint b10fca8d subsequently passed the real Linux peer/runtime gate: three
+roundtrips, six independently captured packets and zero drops, plus atomic flow
+and five fixed native/Z3 cases. Original370 files/82 Git bindings and read-only
+audit are retained in artifacts/linux-udp-peer-b10fca8d. This is finite TUN-backed
+Linux interoperability, not physical networking or completion of the stack.
