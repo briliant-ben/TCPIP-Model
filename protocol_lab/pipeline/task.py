@@ -56,7 +56,9 @@ def load_task(filename,workspace):
     for b in t['requirement_bindings'].values():
         if set(b)!={'source','clause','reference'}or b['source']not in ids or any(not isinstance(b[k],str)or not b[k]for k in b):raise ValueError('Incomplete requirement binding')
     f=t['formal'];limits=t['limits']
-    if set(f)!={'depth','symbolic_initials'}or type(f['depth'])is not int or not 1<=f['depth']<=30 or not isinstance(f['symbolic_initials'],list):raise ValueError('Unsupported formal configuration')
+    if set(f)not in ({'depth','symbolic_initials'},{'depth','symbolic_initials','solver_timeout_ms'})or type(f['depth'])is not int or not 1<=f['depth']<=30 or not isinstance(f['symbolic_initials'],list):raise ValueError('Unsupported formal configuration')
+    budget=f.get('solver_timeout_ms',10000)
+    if type(budget)is not int or not 100<=budget<=60000:raise ValueError('Invalid solver time budget')
     if set(limits)!={'stage_seconds','max_prefixes','max_cases'}or any(type(n)is not int for n in limits.values()):raise ValueError('Invalid resource limits')
     if not 1<=limits['stage_seconds']<=600 or not 1<=limits['max_prefixes']<=10000 or not 1<=limits['max_cases']<=1000:raise ValueError('Resource budget outside admitted range')
     if not isinstance(t['scope'],dict)or set(t['scope'])!={'purpose','assumptions','excluded'}:raise ValueError('Explicit task scope required')

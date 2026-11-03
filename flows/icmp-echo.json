@@ -6,7 +6,7 @@
     {
       "id": "source-0",
       "path": "docs/icmp-echo.md",
-      "sha256": "c818484ce22ddf2f43919ce244f2dc3696ada35246b7235a7add1cb1ebe3e861",
+      "sha256": "20c8e899e0c7d88c1aa21b91085f9eee34c2d701218a2fd8f959afbbc9293b59",
       "version": "Echo finite v1 pinned RFC792/1122/791/6864",
       "uri_aliases": [
         "docs/icmp-echo.md"
@@ -252,7 +252,8 @@
   ],
   "formal": {
     "depth": 2,
-    "symbolic_initials": []
+    "symbolic_initials": [],
+    "solver_timeout_ms": 60000
   },
   "limits": {
     "stage_seconds": 180,

@@ -52,3 +52,14 @@ actual standalone C and wrong-byte fault must agree with literal trace contracts
 Ten-stage flow coverage/depth bounds must be reported from actual results; its
 bounded state/output-size contracts are not a universal checksum/translation or
 compiler correctness proof. No Linux peer/capture evidence is claimed by fixtures.
+
+## Explicit solver resource budget
+
+This task sets formal.solver_timeout_ms=60000 per solver query (admitted range
+100..60000), within stage_seconds=180. Omitted budgets retain10000ms for older
+tasks. The report records the actual budget and verifier binds it to the task.
+The initial depth2 Linux safety query timed out at10000ms while overlap was
+UNSAT; original ZIPs/UNKNOWN remain retained. Larger budget changes no input,
+depth, model, invariant, query assertion or oracle. Only a new actual solver
+answer can pass the new task; UNKNOWN is never relabelled. This optional generic
+flow resource field is not an IR/protocol semantic operation.

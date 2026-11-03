@@ -25,3 +25,18 @@ class SymbolicWitnessTests(unittest.TestCase):
         enc=self.encoding();solver=z3.Solver();self.assertEqual(solver.check(),z3.sat);model=solver.model()
         for parts,expected in [([[],[]],[]),([[255],[0,128],[],[1,254]],[255,0,128,1,254])]:
             sequence=z3.Concat(*[enc.literal(p,'bytes')for p in parts]);self.assertEqual(enc.concrete(model,sequence),expected)
+
+    def test_formal_task_budget_is_explicit_bounded_and_rejects_unknown_fields(self):
+        import json,tempfile
+        from protocol_lab.pipeline.task import load_task
+        task=json.loads((ROOT/'flows/icmp-echo.json').read_text())
+        with tempfile.NamedTemporaryFile(mode='w+',suffix='.json',dir=ROOT)as file:
+            def admit(value):
+                file.seek(0);file.truncate();json.dump(value,file);file.flush();return load_task(file.name,ROOT)
+            self.assertEqual(admit(task)['formal']['solver_timeout_ms'],60000)
+            for budget in (True,0,99,60001,'60000'):
+                task['formal']['solver_timeout_ms']=budget
+                with self.assertRaises(ValueError):admit(task)
+            task['formal'].pop('solver_timeout_ms');self.assertNotIn('solver_timeout_ms',admit(task)['formal'])
+            task['formal']['unbounded']=True
+            with self.assertRaises(ValueError):admit(task)

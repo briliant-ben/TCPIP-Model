@@ -47,7 +47,7 @@ jobs:
           python3 deploy/package.py --source HEAD --profile icmp-echo --out artifacts/icmp-echo-release/bundle
           BYTE_RELEASE_SHA=$(python3 -c 'import json; print(json.load(open("artifacts/icmp-echo-release/bundle/build.json"))["archive_sha256"])')
           python3 deploy/unpack.py artifacts/icmp-echo-release/bundle/spec-flow-server.tar.gz --sha256 "$BYTE_RELEASE_SHA" --out /tmp/icmp-echo-immutable-release
-      - name: Execute 129 methods ten tasks ICMP ARP fixed Z3 and old TCP UDP regressions
+      - name: Execute 130 methods ten tasks ICMP ARP fixed Z3 and old TCP UDP regressions
         run: python3 deploy/bootstrap.py /tmp/icmp-echo-immutable-release --out artifacts/icmp-echo-release/run > artifacts/icmp-echo-release/bootstrap-result.json
       - name: Retain Linux release sources hashes original executions and failures
         if: always()

@@ -476,8 +476,10 @@ class Encoding:
         return {"initial": initial, "steps": steps}
 
 
-def check(model, depth=6, symbolic_initials=("iss",), out=None):
+def check(model, depth=6, symbolic_initials=("iss",), out=None, solver_timeout_ms=10000):
+    require(type(solver_timeout_ms) is int and 100 <= solver_timeout_ms <= 60000, "Solver budget must be integer 100..60000ms")
     enc = Encoding(model, depth, symbolic_initials)
+    enc.solver.set(timeout=solver_timeout_ms)
     z = enc.z
     invariants = [enc.expr(inv["assert"], frame) for frame in enc.frames for inv in model["invariants"]]
     # Save an executable SMT-LIB query, including the exact property being queried.
@@ -486,7 +488,7 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     smt = enc.solver.to_smt2()
     answer = enc.solve()
     report = {"backend": "z3-bmc", "solver_version": z.get_version_string(), "depth": depth,
-              "model_semantic_sha256": model_hash(model), "symbolic_initials": list(symbolic_initials),
+              "model_semantic_sha256": model_hash(model), "symbolic_initials": list(symbolic_initials), "solver_timeout_ms": solver_timeout_ms,
               "sequence_width": 32, "event_fields": "all_typed_values", "time": "unbounded_integer_ms",
               "scope": "defined_transitions_and_clock_progress" if enc.clock_progress else "defined_transitions_only",
               "clock_progress": "monotonic_integer_before_next_due" if enc.clock_progress else "not_applicable", "liveness": "not_checked", "unbounded_proof": False,
@@ -527,6 +529,7 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
         attempts=[]
         for strategy in strategies:
             sample_enc=Encoding(model,1,symbolic_initials,fixed_choices=[0])if strategy=='first-rule-one-event'else Encoding(model,1,symbolic_initials)if strategy=='any-rule-one-event'else enc
+            sample_enc.solver.set(timeout=solver_timeout_ms)
             sample_enc.solver.push();sample_enc.solver.add(z.Int('choice_0')>=0)
             sample_smt=sample_enc.solver.to_smt2();answer=sample_enc.solve()
             record=dict(strategy=strategy,depth=sample_enc.depth,scope='existential_nonvacuity_only',query=str(answer),file='sample-'+strategy+'.smt2',smt2_sha256=hashlib.sha256(sample_smt.encode()).hexdigest())
