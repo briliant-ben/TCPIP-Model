@@ -41,9 +41,13 @@ def groups(model):
 
 def prove(model,out=None,solver_timeout_ms=10000):
     admitted(model);require(type(solver_timeout_ms)is int and 100<=solver_timeout_ms<=60000,'Invalid solver time budget')
+    if out is not None:
+        out=Path(out);require(not out.exists()or not any(out.iterdir()),'Fresh induction output directory required');out.mkdir(parents=True,exist_ok=True)
     files={}
     def record(enc,name):
         enc.solver.set(timeout=solver_timeout_ms);text=enc.solver.to_smt2();files[name]=text
+        # Persist the exact query before solving so interruption keeps evidence.
+        if out is not None:(out/name).write_text(text)
         answer=str(enc.solve());row=dict(file=name,query=answer,smt2_sha256=digest(text.encode()))
         if answer=='unknown':row['reason']=enc.reason_unknown()
         if answer=='sat'and not name.startswith(('enabled-','initial-enabled')):row['counterexample_model_sexpr']=enc.solver.model().sexpr()

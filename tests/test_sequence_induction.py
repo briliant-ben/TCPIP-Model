@@ -59,6 +59,13 @@ class SequenceInductionTests(unittest.TestCase):
             report=prove(self.model(),out=temporary);report['wire_content_proved']=True;(Path(temporary)/'result.json').write_text(json.dumps(report))
             with self.assertRaisesRegex(ValueError,'broadened'):verify(self.model(),temporary)
 
+    def test_interruption_retains_query_without_completed_proof_and_rejects_reuse(self):
+        with tempfile.TemporaryDirectory()as temporary:
+            with patch('protocol_lab.symbolic.Encoding.solve',side_effect=KeyboardInterrupt):
+                with self.assertRaises(KeyboardInterrupt):prove(self.model(),out=temporary)
+            self.assertTrue((Path(temporary)/'initial.smt2').is_file());self.assertFalse((Path(temporary)/'result.json').exists())
+            with self.assertRaisesRegex(ValueError,'Fresh induction'):prove(self.model(),out=temporary)
+
     def test_v4_is_explicit_and_legacy_depth_config_is_unchanged(self):
         task=read(ROOT/'flows/arp-udp-transmit.json')
         with tempfile.NamedTemporaryFile(mode='w+',suffix='.json',dir=ROOT)as file:

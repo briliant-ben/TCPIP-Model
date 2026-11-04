@@ -47,3 +47,8 @@ event-domain coverage, compiler/native correspondence, liveness or wire timing
 proof. Literal and fault scenarios/native/independent observations remain separate
 acceptance channels. An invariant-preserving wrong-MAC emission can still pass
 this checker and must fail independent wire oracle checks.
+
+Each exact SMT query is persisted before solver execution. Interrupted work
+without a complete result is unaccepted; nonempty output directories cannot be
+reused, preventing stale passed reports from masquerading as a new run. The
+interruption/fresh-directory gate is tested separately from solver verdicts.
