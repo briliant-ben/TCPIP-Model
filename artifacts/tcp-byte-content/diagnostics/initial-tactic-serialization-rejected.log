@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/tactic_recheck.py", line 121, in <module>
+    result=produce(args.source,args.out)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/tactic_recheck.py", line 87, in produce
+    script=out/'query.smt2';script.write_text(script_for(terms));count=check_script(source,script)
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/tactic_recheck.py", line 55, in check_script
+    raise ValueError('Original assertion changed or omitted')
+ValueError: Original assertion changed or omitted

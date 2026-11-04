@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/rocq-bytes/verify.py", line 90, in <module>
+    args=parser.parse_args();print(verify(args.out)['status'])
+                                   ^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/rocq-bytes/verify.py", line 44, in verify
+    binding=generator.verify_text(model,(out/'Compiled.v').read_text())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/formal/rocq-bytes/compile.py", line 167, in verify_text
+    raise ValueError('Generated AST does not match complete ordered source IR')
+ValueError: Generated AST does not match complete ordered source IR

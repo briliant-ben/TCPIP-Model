@@ -1,0 +1,163 @@
+{
+  "ir_version": "0.2",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "ir-bytes-contract",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "TCP transitions, network execution, output and timing semantics",
+      "universal Python interpreter or Z3 translator correspondence"
+    ]
+  },
+  "states": [
+    "READY"
+  ],
+  "initial_state": "READY",
+  "variables": {
+    "buffer": {
+      "type": "bytes",
+      "initial": []
+    },
+    "whole": {
+      "type": "bytes",
+      "initial": []
+    },
+    "prefix": {
+      "type": "bytes",
+      "initial": []
+    },
+    "suffix": {
+      "type": "bytes",
+      "initial": []
+    },
+    "restored": {
+      "type": "bytes",
+      "initial": []
+    }
+  },
+  "events": {
+    "probe": {
+      "origin": "application",
+      "fields": {
+        "data": "bytes",
+        "offset": "int"
+      }
+    }
+  },
+  "timers": {},
+  "messages": {},
+  "requirements": {
+    "BYTE-CONTENT": {
+      "source": "docs/semantics.md",
+      "interpretation": "IR 0.2 bytes_concat and independently clamped bytes_slice preserve full content under prefix/suffix recombination for every integer offset. Ordered assignments observe preceding writes. This is a generic buffer contract, not a TCP theorem.",
+      "kind": "modeling_choice",
+      "strength": "full byte content contract"
+    }
+  },
+  "transitions": [
+    {
+      "id": "PROBE",
+      "from": "READY",
+      "to": "READY",
+      "event": "probe",
+      "guard": true,
+      "requirements": [
+        "BYTE-CONTENT"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "whole",
+            "value": {
+              "op": "bytes_concat",
+              "args": [
+                {
+                  "var": "buffer"
+                },
+                {
+                  "event": "data"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "prefix",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "var": "whole"
+                },
+                0,
+                {
+                  "event": "offset"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "suffix",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "var": "whole"
+                },
+                {
+                  "event": "offset"
+                },
+                {
+                  "op": "bytes_len",
+                  "args": [
+                    {
+                      "var": "whole"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "restored",
+            "value": {
+              "op": "bytes_concat",
+              "args": [
+                {
+                  "var": "prefix"
+                },
+                {
+                  "var": "suffix"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "BYTE-RECOMBINE",
+      "requirements": [
+        "BYTE-CONTENT"
+      ],
+      "assert": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "restored"
+          },
+          {
+            "var": "whole"
+          }
+        ]
+      }
+    }
+  ]
+}

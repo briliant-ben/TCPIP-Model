@@ -1,0 +1,58 @@
+{
+  "status": "six_offline_binding_faults_rejected",
+  "tests": [
+    {
+      "fault": "object",
+      "status": "rejected",
+      "semantic_metadata_rehashed": false,
+      "expected_failure": "Artifact changed",
+      "log": "object-rejected.log",
+      "log_sha256": "996c6bb9c2ee4f610c6dcdc799ad12b682eb3d316f6fa49bf1ea50c568f6caee"
+    },
+    {
+      "fault": "lookup",
+      "status": "rejected",
+      "semantic_metadata_rehashed": true,
+      "expected_failure": "does not match complete ordered source IR",
+      "log": "lookup-rejected.log",
+      "log_sha256": "7584aeacecf08e380cf029df13cf4c680a7274472d1ff5b24feeb64789f0aefb"
+    },
+    {
+      "fault": "narrowed-domain",
+      "status": "rejected",
+      "semantic_metadata_rehashed": true,
+      "expected_failure": "does not match complete ordered source IR",
+      "log": "narrowed-domain-rejected.log",
+      "log_sha256": "7584aeacecf08e380cf029df13cf4c680a7274472d1ff5b24feeb64789f0aefb"
+    },
+    {
+      "fault": "statement",
+      "status": "rejected",
+      "semantic_metadata_rehashed": true,
+      "expected_failure": "Reviewed formal semantics/statement changed",
+      "log": "statement-rejected.log",
+      "log_sha256": "cd64881271a0db0e3f695500b3bca47b17df9c6e038f9a9536ff521602907cbb"
+    },
+    {
+      "fault": "negative-source",
+      "status": "rejected",
+      "semantic_metadata_rehashed": true,
+      "expected_failure": "Negative IR differs",
+      "log": "negative-source-rejected.log",
+      "log_sha256": "f648ca0307910b7e246d66a4e495ba0c61c50311b1d319a9cad64844b0a5b418"
+    },
+    {
+      "fault": "scope",
+      "status": "rejected",
+      "semantic_metadata_rehashed": true,
+      "expected_failure": "Generated fragment claim broadened",
+      "log": "scope-rejected.log",
+      "log_sha256": "10d9f56b4e3771a91934a2219efc2ea143a26480b43c714af56dc5488231da64"
+    }
+  ],
+  "original_evidence_unchanged": true,
+  "new_kernel_execution": false,
+  "source_report_sha256": "f3e2242fac42956f525b00ec9f23311f60d9aee971e09a0b850fbadce845f573",
+  "checker_sha256": "fbbd151e2513594ecf5f7d3447a4715ea2dd540dc86a5b8001de33dd655b19b1",
+  "object_rehash_requires_original_zip_provenance_or_real_kernel_recheck": true
+}

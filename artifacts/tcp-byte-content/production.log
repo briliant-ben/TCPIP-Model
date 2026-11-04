@@ -1,0 +1,42 @@
+Encoding D-QUEUE
+D-QUEUE [('BC-QUEUE', 'unsat')]
+D-QUEUE selected_content_steps_verified
+Encoding D-SEND-EMPTY
+D-SEND-EMPTY [('BC-RETRANSMIT', 'unsat')]
+D-SEND-EMPTY selected_content_steps_verified
+Encoding D-SEND-FULL
+D-SEND-FULL [('BC-RETRANSMIT', 'unsat')]
+D-SEND-FULL selected_content_steps_verified
+Encoding CHOICE-D-FLUSH-MORE
+CHOICE-D-FLUSH-MORE [('BC-PARTITION', 'unsat'), ('BC-FLUSH-WIRE', 'unsat')]
+CHOICE-D-FLUSH-MORE selected_content_steps_verified
+Encoding S-ACK-VALID
+S-ACK-VALID [('BC-PARTITION', 'unknown')]
+S-ACK-VALID unknown
+Encoding S-RETRANSMIT-WINDOW
+S-RETRANSMIT-WINDOW [('BC-RETRANSMIT', 'unsat')]
+S-RETRANSMIT-WINDOW selected_content_steps_verified
+Encoding S-RETRANSMIT-ZERO-WINDOW
+S-RETRANSMIT-ZERO-WINDOW [('BC-RETRANSMIT', 'unsat')]
+S-RETRANSMIT-ZERO-WINDOW selected_content_steps_verified
+Encoding CHOICE-D-FLUSH-FIRST
+CHOICE-D-FLUSH-FIRST [('BC-PARTITION', 'unsat'), ('BC-FLUSH-WIRE', 'unsat')]
+CHOICE-D-FLUSH-FIRST selected_content_steps_verified
+Encoding CHOICE-CL-D-FLUSH-FIRST-CLOSE-WAIT
+CHOICE-CL-D-FLUSH-FIRST-CLOSE-WAIT [('BC-PARTITION', 'unsat'), ('BC-FLUSH-WIRE', 'unsat')]
+CHOICE-CL-D-FLUSH-FIRST-CLOSE-WAIT selected_content_steps_verified
+Encoding CHOICE-CL-D-FLUSH-MORE-CLOSE-WAIT
+CHOICE-CL-D-FLUSH-MORE-CLOSE-WAIT [('BC-PARTITION', 'unsat'), ('BC-FLUSH-WIRE', 'unsat')]
+CHOICE-CL-D-FLUSH-MORE-CLOSE-WAIT selected_content_steps_verified
+Encoding CHOICE-CL-D-FLUSH-FIRST-FIN-WAIT-1
+CHOICE-CL-D-FLUSH-FIRST-FIN-WAIT-1 [('BC-PARTITION', 'unsat'), ('BC-FLUSH-WIRE', 'unsat')]
+CHOICE-CL-D-FLUSH-FIRST-FIN-WAIT-1 selected_content_steps_verified
+Encoding CHOICE-CL-D-FLUSH-MORE-FIN-WAIT-1
+CHOICE-CL-D-FLUSH-MORE-FIN-WAIT-1 [('BC-PARTITION', 'unsat'), ('BC-FLUSH-WIRE', 'unsat')]
+CHOICE-CL-D-FLUSH-MORE-FIN-WAIT-1 selected_content_steps_verified
+Encoding CHOICE-CL-D-FLUSH-FIRST-CLOSING
+CHOICE-CL-D-FLUSH-FIRST-CLOSING [('BC-PARTITION', 'unsat'), ('BC-FLUSH-WIRE', 'unsat')]
+CHOICE-CL-D-FLUSH-FIRST-CLOSING selected_content_steps_verified
+Encoding CHOICE-CL-D-FLUSH-MORE-CLOSING
+CHOICE-CL-D-FLUSH-MORE-CLOSING [('BC-PARTITION', 'unsat'), ('BC-FLUSH-WIRE', 'unsat')]
+CHOICE-CL-D-FLUSH-MORE-CLOSING selected_content_steps_verified

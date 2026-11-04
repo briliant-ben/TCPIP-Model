@@ -1,0 +1,27 @@
+test_all_inherited_rules_erased_and_every_selected_wire_site_bound (test_tcp_byte_content.TCPByteContentTests.test_all_inherited_rules_erased_and_every_selected_wire_site_bound) ... ok
+test_changed_guard_or_snapshot_is_rejected (test_tcp_byte_content.TCPByteContentTests.test_changed_guard_or_snapshot_is_rejected) ... ok
+test_generic_full_byte_query_reconstructs_and_rehashed_fault_rejects (test_tcp_byte_content.TCPByteContentTests.test_generic_full_byte_query_reconstructs_and_rehashed_fault_rejects) ... Encoding PROBE
+PROBE [('BYTE-RECOMBINE', 'unknown')]
+FAIL
+test_payload_observer_cannot_hide_changed_wire_content (test_tcp_byte_content.TCPByteContentTests.test_payload_observer_cannot_hide_changed_wire_content) ... ok
+test_reference_queue_send_partial_ack_and_retransmission_content (test_tcp_byte_content.TCPByteContentTests.test_reference_queue_send_partial_ack_and_retransmission_content) ... ok
+test_unknown_selection_and_false_source_property_never_pass (test_tcp_byte_content.TCPByteContentTests.test_unknown_selection_and_false_source_property_never_pass) ... Encoding PROBE
+PROBE [('BYTE-RECOMBINE', 'sat')]
+ok
+test_wrong_byte_order_is_detected_beyond_length_properties (test_tcp_byte_content.TCPByteContentTests.test_wrong_byte_order_is_detected_beyond_length_properties) ... ok
+
+======================================================================
+FAIL: test_generic_full_byte_query_reconstructs_and_rehashed_fault_rejects (test_tcp_byte_content.TCPByteContentTests.test_generic_full_byte_query_reconstructs_and_rehashed_fault_rejects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_tcp_byte_content.py", line 73, in test_generic_full_byte_query_reconstructs_and_rehashed_fault_rejects
+    self.assertEqual(r['status'],'selected_content_steps_verified')
+AssertionError: 'unknown' != 'selected_content_steps_verified'
+- unknown
++ selected_content_steps_verified
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 45.785s
+
+FAILED (failures=1)

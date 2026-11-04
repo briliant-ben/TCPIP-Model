@@ -1,0 +1,33 @@
+{
+  "status": "valid_retained_generated_bytes_execution_bindings",
+  "source_model_sha256": "1be2157e14d1279c13236f99c1d5994930e9faba5bfc99c157ff739d92a650cd",
+  "original_report_sha256": "f3e2242fac42956f525b00ec9f23311f60d9aee971e09a0b850fbadce845f573",
+  "checker_sha256": "fbbd151e2513594ecf5f7d3447a4715ea2dd540dc86a5b8001de33dd655b19b1",
+  "source_constructor_binding": {
+    "status": "source_ir_and_generated_ast_structurally_equal",
+    "variables": [
+      "buffer",
+      "whole",
+      "prefix",
+      "suffix",
+      "restored"
+    ],
+    "fields": [
+      "data",
+      "offset"
+    ],
+    "actions": 4,
+    "invariants": 1,
+    "model_semantic_sha256": "8568dd54ca84eec72248fb1a820b5438f6b58d2f278a676a155d900f513a4227",
+    "scope": "restricted full-byte constructor binding; Python bridge trusted, not a compiler proof"
+  },
+  "kernel_rechecked_locally": false,
+  "new_kernel_execution": false,
+  "provenance_and_original_zip_required": true,
+  "integrity_is_not_authenticity": true,
+  "source_binding_is_kernel_proof": false,
+  "python_interpreter_proved": false,
+  "z3_translator_proved": false,
+  "tcp_protocol_proved": false,
+  "scope": "source/constructor, reviewed statements, existing compiler/kernel/audit logs and immutable object hash bindings"
+}
