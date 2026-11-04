@@ -67,3 +67,16 @@ checksum/compiler correctness. Tests use literal frame/time/queue expectations,
 positive/reference/independent fixed-input Z3/actual C and deliberate queue/MAC/
 ordering/policy faults. A virtual generated-frame trace or PCAP is not live Linux
 Ethernet-peer evidence; that channel needs separate isolated execution/capture.
+
+## Separate invariant induction acceptance
+
+The current task explicitly uses schema v4/sequence-invariant-induction; see
+sequence-invariant-induction.md for assumptions and trusted components. One
+initial-validity UNSAT, one initialization SAT,30 full-Seq preservation UNSAT,
+30 rule nonvacuity SAT and4 overlap UNSAT obligations are required (66query files).
+This is not a changed answer to the original depth3 BMC: its safety UNKNOWN and
+overlap UNSAT remain in arp-udp-bmc-linux-f4417ab1. No protocol guard/action, input
+domain, invariant or frozen byte expectation is weakened. The distinct induction
+claim only concerns listed contracts on defined legal transitions. It does not
+prove output-byte correctness, event coverage, compiler/scheduler correspondence
+or a complete protocol. Independent literal/native/peer checks remain necessary.

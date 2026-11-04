@@ -1,12 +1,12 @@
 {
-  "schema": "spec-flow-task-v2",
+  "schema": "spec-flow-task-v4",
   "id": "arp-ipv4-udp-transmit-composition",
   "model": "model/arp-udp-transmit.json",
   "sources": [
     {
       "id": "source-0",
       "path": "docs/arp-udp-transmit.md",
-      "sha256": "af36a46614d3a03e2b56c29b0b602dd7bf0b8d0f41e16a7c6068201b85daab1f",
+      "sha256": "e4f3e0ac4adb50493081cb4264afe85ccef1920d9dfe67278389a92e9427c09c",
       "version": "finite ARP+UDP transmit composition v1; pinned component RFC editions plus RFC894/erratum570",
       "uri_aliases": [
         "docs/arp-udp-transmit.md"
@@ -506,6 +506,15 @@
       "uri_aliases": [
         "scenarios/arp-udp-transmit/nonlocal-does-not-flush.json"
       ]
+    },
+    {
+      "id": "source-sequence-induction",
+      "path": "docs/sequence-invariant-induction.md",
+      "sha256": "46b5a6dac7596131961d2dce74c512831552f15e484270eab5fcc4c98e483d1e",
+      "version": "explicit full-sequence invariant induction v1",
+      "uri_aliases": [
+        "docs/sequence-invariant-induction.md"
+      ]
     }
   ],
   "requirement_bindings": {
@@ -604,8 +613,7 @@
     "scenarios/arp-endpoint/simultaneous-request.json"
   ],
   "formal": {
-    "depth": 3,
-    "symbolic_initials": []
+    "strategy": "sequence-invariant-induction"
   },
   "limits": {
     "stage_seconds": 180,

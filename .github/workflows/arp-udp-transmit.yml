@@ -2,9 +2,9 @@ name: Single IR ARP IPv4 UDP transmit composition
 on:
   push:
     branches: ['codex/**', main]
-    paths: ['protocol_lab/**', 'model/arp-udp-transmit*.json', 'model/arp-endpoint.json', 'model/udp-wire-transmit.json', 'flows/arp-udp-transmit.json', 'scenarios/arp-udp-transmit/**', 'scenarios/arp-endpoint/**', 'examples/ethernet_udp_observe.py', 'spec/arp-udp-transmit-oracle.json', 'spec/fixtures/arp_udp_transmit_v1.py', 'spec/sources/rfc894*', 'tests/test_arp_udp_transmit.py', 'docs/arp-udp-transmit.md', '.github/workflows/arp-udp-transmit.yml']
+    paths: ['protocol_lab/**', 'model/arp-udp-transmit*.json', 'model/arp-endpoint.json', 'model/udp-wire-transmit.json', 'flows/arp-udp-transmit.json', 'scenarios/arp-udp-transmit/**', 'scenarios/arp-endpoint/**', 'examples/ethernet_udp_observe.py', 'spec/arp-udp-transmit-oracle.json', 'spec/fixtures/arp_udp_transmit_v1.py', 'spec/sources/rfc894*', 'tests/test_arp_udp_transmit.py', 'tests/test_sequence_induction.py', 'docs/sequence-invariant-induction.md', 'docs/arp-udp-transmit.md', '.github/workflows/arp-udp-transmit.yml']
   pull_request:
-    paths: ['protocol_lab/**', 'model/arp-udp-transmit*.json', 'model/arp-endpoint.json', 'model/udp-wire-transmit.json', 'flows/arp-udp-transmit.json', 'scenarios/arp-udp-transmit/**', 'scenarios/arp-endpoint/**', 'examples/ethernet_udp_observe.py', 'spec/arp-udp-transmit-oracle.json', 'spec/fixtures/arp_udp_transmit_v1.py', 'spec/sources/rfc894*', 'tests/test_arp_udp_transmit.py', 'docs/arp-udp-transmit.md', '.github/workflows/arp-udp-transmit.yml']
+    paths: ['protocol_lab/**', 'model/arp-udp-transmit*.json', 'model/arp-endpoint.json', 'model/udp-wire-transmit.json', 'flows/arp-udp-transmit.json', 'scenarios/arp-udp-transmit/**', 'scenarios/arp-endpoint/**', 'examples/ethernet_udp_observe.py', 'spec/arp-udp-transmit-oracle.json', 'spec/fixtures/arp_udp_transmit_v1.py', 'spec/sources/rfc894*', 'tests/test_arp_udp_transmit.py', 'tests/test_sequence_induction.py', 'docs/sequence-invariant-induction.md', 'docs/arp-udp-transmit.md', '.github/workflows/arp-udp-transmit.yml']
 permissions:
   contents: read
 jobs:
@@ -23,6 +23,7 @@ jobs:
       - name: Check combined queue wire and unchanged component contracts
         run: |
           .venv/bin/python -m unittest discover -s tests -p test_arp_udp_transmit.py -v > artifacts/arp-udp-native/composed-tests.log 2>&1
+          .venv/bin/python -m unittest discover -s tests -p test_sequence_induction.py -v > artifacts/arp-udp-native/induction-tests.log 2>&1
           .venv/bin/python -m unittest discover -s tests -p test_arp_endpoint.py -v > artifacts/arp-udp-native/arp-tests.log 2>&1
           .venv/bin/python -m unittest discover -s tests -p test_udp_transmit.py -v > artifacts/arp-udp-native/udp-tests.log 2>&1
       - name: Retain actual C and independent exact fixed-input Z3 for both scenario sets
