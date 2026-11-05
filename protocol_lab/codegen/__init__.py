@@ -195,11 +195,14 @@ def render(m,wire=None):
     for i,n in enumerate(timers):
         emit('if(m->active['+str(i)+']) { if(!first)text(out,",");first=0;');literal('out',json.dumps(n)+':');emit('number(out,m->due['+str(i)+']);}')
     emit('(void)first;');literal('out','}}');emit('}')
-    emit('int fire(Machine *m,int event,int64_t *f,Bytes *bf,int expiring,Buffer *log) { int match=-1,count=0; Buffer messages={{0},0}; int emitted=0; (void)f; (void)bf; (void)emitted;')
-    for i,r in enumerate(m['transitions']):emit('if(m->state=='+str(states.index(r['from']))+'&&event=='+str(events.index(r['event']))+'&&('+exp(r['guard'],r['event'])+')) {match='+str(i)+';count++;}')
-    emit('if(failure)return 0;\nif(count!=1){failure=count?"rule_conflict":"uncovered_event";return 0;} if(expiring>=0)m->active[expiring]=0; switch(match) {')
+    # Keep each rule's value-type byte temporaries in its own C stack frame.
+    # The dispatcher still evaluates every eligible guard in declaration order
+    # before choosing any action, so conflict/error/atomic commit semantics stay
+    # in the unchanged command harness. No optimization flags are required.
     for i,r in enumerate(m['transitions']):
-        ev=r['event'];emit('case '+str(i)+': {')
+        emit('static int rule_guard_'+str(i)+'(Machine *m,int64_t *f,Bytes *bf) { (void)m; (void)f; (void)bf; return '+exp(r['guard'],r['event'])+'; }')
+    for i,r in enumerate(m['transitions']):
+        ev=r['event'];emit('static int rule_action_'+str(i)+'(Machine *m,int64_t *f,Bytes *bf,Buffer *log) { Buffer messages={{0},0}; int emitted=0; (void)f; (void)bf; (void)emitted;')
         for a in r['actions']:
             k,p=next(iter(a.items()))
             if k=='set':
@@ -228,8 +231,13 @@ def render(m,wire=None):
         literal('log',',"event":{"name":'+json.dumps(ev)+',"fields":{')
         for j,(name,kind)in enumerate(m['events'][ev]['fields'].items()):
             literal('log',(','if j else'')+json.dumps(name)+':');value('log',{'event':name},kind,ev)
-        literal('log','}},"after":');emit('snapshot(log,m);');literal('log',',"emitted":[');emit('text(log,messages.data);');literal('log',']}\n');emit('break; }')
-    emit('default:failure="invalid_rule";return 0;} return failure==NULL; }')
+        literal('log','}},"after":');emit('snapshot(log,m);');literal('log',',"emitted":[');emit('text(log,messages.data);');literal('log',']}\n');emit('return failure==NULL; }')
+    emit('int fire(Machine *m,int event,int64_t *f,Bytes *bf,int expiring,Buffer *log) { int match=-1,count=0;')
+    for i,r in enumerate(m['transitions']):
+        emit('if(m->state=='+str(states.index(r['from']))+'&&event=='+str(events.index(r['event']))+'&&rule_guard_'+str(i)+'(m,f,bf)) {match='+str(i)+';count++;}')
+    emit('if(failure)return 0;\nif(count!=1){failure=count?"rule_conflict":"uncovered_event";return 0;} if(expiring>=0)m->active[expiring]=0; switch(match) {')
+    for i in range(len(m['transitions'])):emit('case '+str(i)+':return rule_action_'+str(i)+'(m,f,bf,log);')
+    emit('default:failure="invalid_rule";return 0;} }')
     lines.append((HERE/'harness.c').read_text())
     return '\n'.join(lines)+'\n'
 
