@@ -11,7 +11,7 @@ KINDS={'int':0,'bool':1,'seq32':2,'bytes':3,'string':4}
 BYTE_CAP=4096
 OPS={'eq','ne','and','or','not','implies','add','sub','mul','le','ge','min','ite',
      'seq_add','seq_distance','seq_lt','seq_le','seq_comparable','bytes_len','bytes_concat','bytes_slice',
-     'bytes_pack8_mod','bytes_pack16be_mod','bytes_internet_checksum16','bytes_at_or_zero'}
+     'bytes_pack8_mod','bytes_pack16be_mod','bytes_pack32be_mod','bytes_internet_checksum16','bytes_at_or_zero'}
 
 class Unsupported(ValueError): pass
 
@@ -53,8 +53,8 @@ def admit(m):
     if any(not re.fullmatch(r'[A-Za-z0-9_.:-]+',n)for n in m['events']):raise Unsupported('Event name cannot be represented in line interface')
     if set(m)!={'ir_version','protocol','semantics','scope','states','initial_state','variables','events','timers','messages','requirements','transitions','invariants'}:
         raise Unsupported('Unknown model fields')
-    if m['ir_version']not in ('0.1','0.2','0.4','0.5')or m['semantics']!='flat-efsm-atomic-ordered-v1':
-        raise Unsupported('Backend requires IR0.1/0.2/0.4/0.5 atomic ordered v1; clock-v3/rational unsupported')
+    if m['ir_version']not in ('0.1','0.2','0.4','0.5','0.6')or m['semantics']!='flat-efsm-atomic-ordered-v1':
+        raise Unsupported('Backend requires IR0.1/0.2/0.4/0.5/0.6 atomic ordered v1; clock-v3/rational unsupported')
     for v in m['variables'].values():
         if set(v)!={'type','initial'}or v['type']not in KINDS:raise Unsupported('Only int/bool/seq32/bytes/closed-string state supported in native-v2')
         if v['type']=='bytes':
@@ -138,8 +138,8 @@ def render(m,wire=None):
         if op in ('eq','ne')and infer(e['args'][0],m,event)=='bytes':return ('(!'if op=='ne'else'(')+'byte_equal('+','.join(a)+'))'
         if op=='bytes_len':return '((int64_t)('+a[0]+').len)'
         if op in ('bytes_concat','bytes_slice'):return {'bytes_concat':'byte_concat','bytes_slice':'byte_slice'}[op]+'('+','.join(a)+')'
-        if op in ('bytes_pack8_mod','bytes_pack16be_mod','bytes_internet_checksum16'):
-            return {'bytes_pack8_mod':'byte_pack8','bytes_pack16be_mod':'byte_pack16be','bytes_internet_checksum16':'byte_checksum16'}[op]+'('+','.join(a)+')'
+        if op in ('bytes_pack8_mod','bytes_pack16be_mod','bytes_pack32be_mod','bytes_internet_checksum16'):
+            return {'bytes_pack8_mod':'byte_pack8','bytes_pack16be_mod':'byte_pack16be','bytes_pack32be_mod':'byte_pack32be','bytes_internet_checksum16':'byte_checksum16'}[op]+'('+','.join(a)+')'
         if op=='bytes_at_or_zero':return 'byte_at_or_zero('+','.join(a)+')'
         binary={'eq':'==','ne':'!=','le':'<=','ge':'>=','and':'&&','or':'||'}
         if op in binary:return '('+a[0]+binary[op]+a[1]+')'

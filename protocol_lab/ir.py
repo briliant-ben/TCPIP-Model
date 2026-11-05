@@ -10,9 +10,10 @@ HALF = MOD // 2
 POST_SEMANTICS = "flat-efsm-atomic-ordered-post-target-v2"
 CLOCK_SEMANTICS = "flat-efsm-atomic-ordered-clock-v3"
 POST_SEMANTICS_VERSIONS = (POST_SEMANTICS, CLOCK_SEMANTICS)
-DATA_VERSIONS = ("0.2", "0.3", "0.4", "0.5")
+DATA_VERSIONS = ("0.2", "0.3", "0.4", "0.5", "0.6")
 WIRE_OPS = {"bytes_pack8_mod", "bytes_pack16be_mod", "bytes_internet_checksum16"}
 READ_OPS = {"bytes_at_or_zero"}
+WORD32_OPS = {"bytes_pack32be_mod"}
 TYPES = ("bool", "int", "seq32", "string", "bytes", "rational")
 RAT_OPS = {"rat_from_int", "rat_add", "rat_sub", "rat_scale", "rat_abs", "rat_le", "rat_ceil"}
 DATA_OPS = {"sub", "min", "ite", "bytes_len", "bytes_concat", "bytes_slice",
@@ -96,8 +97,9 @@ def infer(expr, model, event=None):
     require(set(expr) == {"op", "args"} and type(expr["args"]) is list,
             "Unsupported expression shape")
     op, args = expr["op"], expr["args"]
-    require(op not in WIRE_OPS or model.get("ir_version") in ("0.4","0.5"), "Wire arithmetic requires IR 0.4/0.5")
-    require(op not in READ_OPS or model.get("ir_version") == "0.5", "Byte access requires IR 0.5")
+    require(op not in WIRE_OPS or model.get("ir_version") in ("0.4","0.5","0.6"), "Wire arithmetic requires IR 0.4/0.5/0.6")
+    require(op not in READ_OPS or model.get("ir_version") in ("0.5","0.6"), "Byte access requires IR 0.5/0.6")
+    require(op not in WORD32_OPS or model.get("ir_version") == "0.6", "Word32 packing requires IR 0.6")
     require(op not in DATA_OPS or model.get("ir_version") in DATA_VERSIONS, "Data operators require IR 0.2")
     require(op not in RAT_OPS or model.get("ir_version") == "0.3", "Rational operators require IR 0.3")
     types = [infer(x, model, event) for x in args]
@@ -133,6 +135,7 @@ def infer(expr, model, event=None):
         "bytes_slice": (["bytes", "int", "int"], "bytes"),
         "bytes_pack8_mod": (["int"], "bytes"),
         "bytes_pack16be_mod": (["int"], "bytes"),
+        "bytes_pack32be_mod": (["int"], "bytes"),
         "bytes_internet_checksum16": (["bytes"], "int"),
         "bytes_at_or_zero": (["bytes", "int"], "int"),
         "seq_distance": (["seq32", "seq32"], "int"),
@@ -203,6 +206,7 @@ def evaluate(expr, machine, event=None):
         "bytes_concat": lambda a, b: a + b,
         "bytes_pack8_mod": lambda n: [n%256],
         "bytes_pack16be_mod": lambda n: [(n%65536)//256,n%256],
+        "bytes_pack32be_mod": lambda n: [(n%MOD)//(1<<shift)%256 for shift in (24,16,8,0)],
         "bytes_internet_checksum16": internet_checksum16,
         "bytes_at_or_zero": lambda a, i: a[i] if 0 <= i < len(a) else 0,
         # Total truncating slice: offset and count are clamped independently.
@@ -216,8 +220,8 @@ def evaluate(expr, machine, event=None):
 
 def validate(model):
     require("extends" not in model, "Resolve model extension with load() before validation")
-    require(model.get("ir_version") in ("0.1", "0.2", "0.3", "0.4", "0.5"), "Unsupported IR version")
-    require(model.get("ir_version") not in ("0.4","0.5") or model.get("semantics") == "flat-efsm-atomic-ordered-v1", "IR 0.4/0.5 currently requires atomic ordered v1")
+    require(model.get("ir_version") in ("0.1", "0.2", "0.3", "0.4", "0.5", "0.6"), "Unsupported IR version")
+    require(model.get("ir_version") not in ("0.4","0.5","0.6") or model.get("semantics") == "flat-efsm-atomic-ordered-v1", "IR 0.4/0.5/0.6 currently requires atomic ordered v1")
     require(model.get("semantics") in ("flat-efsm-atomic-ordered-v1", *POST_SEMANTICS_VERSIONS), "Unsupported semantics")
     require(model.get("semantics") != CLOCK_SEMANTICS or model["ir_version"] == "0.3", "Clock-v3 requires IR 0.3")
     states = model["states"]

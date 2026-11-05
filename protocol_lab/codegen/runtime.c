@@ -89,6 +89,10 @@ Bytes byte_pack16be(int64_t n) {
     uint16_t v=(uint16_t)n;unsigned char b[2]={(unsigned char)(v>>8),(unsigned char)(v&255)};
     return byte_literal(b,2);
 }
+Bytes byte_pack32be(int64_t n) {
+    uint32_t v=(uint32_t)n;unsigned char b[4]={(unsigned char)(v>>24),(unsigned char)(v>>16),(unsigned char)(v>>8),(unsigned char)(v&255)};
+    return byte_literal(b,4);
+}
 int64_t byte_checksum16(Bytes a) {
     size_t i;uint32_t sum=0;
     if(a.len>BYTE_CAP){failure="byte_capacity";return 0;}

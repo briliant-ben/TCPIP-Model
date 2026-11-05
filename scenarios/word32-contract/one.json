@@ -1,0 +1,44 @@
+{
+  "scenario_version": "0.2",
+  "id": "one",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "pack",
+      "fields": {
+        "value": 1
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "word32.result",
+              "fields": {
+                "packed": [
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "packed": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "timers": {}
+  }
+}
