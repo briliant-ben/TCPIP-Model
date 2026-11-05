@@ -1,0 +1,45 @@
+test_caller_task_pin_rejects_weakened_configuration_before_execution (test_pipeline.PipelineTaskTests.test_caller_task_pin_rejects_weakened_configuration_before_execution) ... ok
+test_task_cannot_inject_shell_or_python_commands (test_pipeline.PipelineTaskTests.test_task_cannot_inject_shell_or_python_commands) ... ok
+test_task_cannot_reference_files_outside_its_workspace (test_pipeline.PipelineTaskTests.test_task_cannot_reference_files_outside_its_workspace) ... ok
+test_task_v2_requires_acceptance_input_pins (test_pipeline.PipelineTaskTests.test_task_v2_requires_acceptance_input_pins) ... ok
+test_actual_pipeline_has_all_stages_generated_cases_and_independent_native_results (test_pipeline.PipelineTests.test_actual_pipeline_has_all_stages_generated_cases_and_independent_native_results) ... ok
+test_actual_worker_timeout_is_classified_and_process_group_is_cleaned (test_pipeline.PipelineTests.test_actual_worker_timeout_is_classified_and_process_group_is_cleaned) ... ok
+test_changed_native_observation_is_not_accepted (test_pipeline.PipelineTests.test_changed_native_observation_is_not_accepted) ... ok
+test_changing_ir_and_its_oracle_together_cannot_hide_pinned_contract_violation (test_pipeline.PipelineTests.test_changing_ir_and_its_oracle_together_cannot_hide_pinned_contract_violation) ... ok
+test_corrupted_spec_fails_provenance_without_falsifying_native_comparison (test_pipeline.PipelineTests.test_corrupted_spec_fails_provenance_without_falsifying_native_comparison) ... ok
+test_independent_concurrent_jobs_keep_outputs_and_run_ids_separate (test_pipeline.PipelineTests.test_independent_concurrent_jobs_keep_outputs_and_run_ids_separate) ... {"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "sources", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "sources", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "ir", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "ir", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "formal", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "formal", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "tests", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "tests", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "reference", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "reference", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "generate", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "generate", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "build", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "build", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "execute", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "execute", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "compare", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "compare", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "traceability", "run_id": "d44dfbeb-d534-413c-aeae-d70d371fbc38"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "traceability", "run_id": "931a75a6-81d0-4784-a768-a9a99e340761"}
+ok
+test_live_candidate_edit_cannot_mix_versions_between_stages (test_pipeline.PipelineTests.test_live_candidate_edit_cannot_mix_versions_between_stages) ... ok
+test_missing_compiler_blocks_only_dependent_execution_channel (test_pipeline.PipelineTests.test_missing_compiler_blocks_only_dependent_execution_channel) ... ok
+test_model_conflict_is_not_a_successful_negative_test (test_pipeline.PipelineTests.test_model_conflict_is_not_a_successful_negative_test) ... ok
+test_native_integer_domain_limit_is_not_reported_as_an_rfc_difference (test_pipeline.PipelineTests.test_native_integer_domain_limit_is_not_reported_as_an_rfc_difference) ... ok
+test_rehashed_unknown_formal_result_cannot_be_promoted (test_pipeline.PipelineTests.test_rehashed_unknown_formal_result_cannot_be_promoted) ... ok
+test_scope_promotion_is_rejected (test_pipeline.PipelineTests.test_scope_promotion_is_rejected) ... ok
+test_wire_task_must_pin_binding_source (test_pipeline.PipelineTests.test_wire_task_must_pin_binding_source) ... ok
+test_wire_task_runs_generated_ipv4_implementation_and_checks_coverage (test_pipeline.PipelineTests.test_wire_task_runs_generated_ipv4_implementation_and_checks_coverage) ... ok
+test_workers_use_frozen_inputs_and_tool_source (test_pipeline.PipelineTests.test_workers_use_frozen_inputs_and_tool_source) ... ok
+test_wrong_ir_message_is_caught_by_independent_trace_contract (test_pipeline.PipelineTests.test_wrong_ir_message_is_caught_by_independent_trace_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 8.716s
+
+OK

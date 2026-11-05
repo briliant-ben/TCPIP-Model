@@ -1,0 +1,34 @@
+name: Native IR code generation
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['protocol_lab/codegen/**', 'tests/test_codegen_native.py', 'model/tcp.json', 'model/seq32-contract.json', 'protocol_lab/ir.py', 'protocol_lab/flow.py', '.github/workflows/native-codegen.yml']
+  pull_request:
+    paths: ['protocol_lab/codegen/**', 'tests/test_codegen_native.py', 'model/tcp.json', 'model/seq32-contract.json', 'protocol_lab/ir.py', 'protocol_lab/flow.py', '.github/workflows/native-codegen.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  generated-native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Build execute and fault-check independently generated C99
+        run: |
+          mkdir -p artifacts/native-codegen-ci
+          python3 -m unittest discover -s tests -p test_codegen_native.py -v > artifacts/native-codegen-ci/tests.log 2>&1
+      - name: Generate build execute and compare the active-open slice
+        run: |
+          python3 -m protocol_lab.codegen model/tcp.json --out artifacts/native-codegen-ci/generated > artifacts/native-codegen-ci/generation-stage.json
+          python3 -m protocol_lab.codegen.execute build artifacts/native-codegen-ci/generated --out artifacts/native-codegen-ci/build > artifacts/native-codegen-ci/build-stage.json
+          python3 -m protocol_lab.codegen.execute run artifacts/native-codegen-ci/generated --compiled artifacts/native-codegen-ci/build --scenario scenarios/syn-loss.json --out artifacts/native-codegen-ci/syn-loss > artifacts/native-codegen-ci/execute-stage.json
+      - name: Retain actual compiler execution traces and hashes
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-ir-codegen-${{ github.sha }}
+          path: artifacts/native-codegen-ci/
+          if-no-files-found: error

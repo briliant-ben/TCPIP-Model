@@ -1,0 +1,24 @@
+{
+  "schema": "spec-flow-stage-v1",
+  "stage": "compile",
+  "status": "pass",
+  "classification": null,
+  "generation_sha256": "985db29e60d18e6f526645ae5a030f5eb91077b373c1bf5b91f676bd296e12a1",
+  "generated_source_sha256": "0ad50c2788b79279b73ccbd7657bbf22efdcfb2609776b2e90c23c7106cfd5e8",
+  "command": [
+    "/usr/bin/cc",
+    "-std=c99",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "/private/tmp/spec-flow-c99-release/generation/protocol.c",
+    "-o",
+    "/private/tmp/spec-flow-c99-release/build/protocol-native"
+  ],
+  "returncode": 0,
+  "compiler": "/usr/bin/cc",
+  "compiler_sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2",
+  "compiler_version": "Apple clang version 21.0.0 (clang-2100.4.1.1)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n",
+  "checker_sha256": "4ca03e1a52662a83430f1ffeb6d667f455abf879a30087291520f116ffda5ad0",
+  "executable_sha256": "f9f8a7163a11d6d60fdfd687d3091e93cebe39868a21118e24765ef395d3640d"
+}

@@ -2,6 +2,8 @@
 
 目标是建立可复用、可审查的协议建模流程。TCP 是第一个样例；通用执行器放在 `protocol_lab/ir.py`，TCP 的规则和适配器分别放在 `model/` 与 `protocol_lab/packets.py`。
 
+当前实施重点是供应商／框架无关的 [spec flow](docs/spec-flow.md)：最小 TCP/IPv4 原生字节切片与 UDP 头部／服务描述符迁移案例复用十阶段工具链，覆盖规范绑定、IR、参考执行／Z3、测试、独立 C 生成、执行观察、差异与追溯。服务器及单／多调用方接入见 [运行交接](docs/spec-flow-server.md)，不要求 MCP、Skill 或模型 SDK。UDP 案例的字节内容、校验和算术和线端尚未建模；各切片通过不代表完整 TCP/IP 或无界证明。
+
 GitHub 仓库：[briliant-ben/TCPIP-Model](https://github.com/briliant-ben/TCPIP-Model)。在新机器上的克隆、环境重建和验证步骤见 [迁移与复现说明](docs/github-handoff.md)。
 
 **v0.2 已接入独立 Z3 有界检查、PCAP 归一化和统一证据验收。真实 Linux 内核已验收主动打开、首次SYN不获响应及单段4零字节接收，严格差异保留；一般数据／恢复与完整TCP验证仍待推进，尚无 Ivy 或无界证明。**

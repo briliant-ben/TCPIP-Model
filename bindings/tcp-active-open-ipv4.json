@@ -1,0 +1,9 @@
+{
+  "schema": "native-ipv4-tcp-binding-v1",
+  "local": {"ip": "192.0.2.1", "port": 40000},
+  "peer": {"ip": "192.0.2.2", "port": 8080},
+  "input_event": "net.synack",
+  "message": "tcp",
+  "ttl": 64,
+  "scope": "Selected four-tuple, 20-byte IPv4 plus 20-byte TCP headers, ingress SYN+ACK only; no payload/options/fragments, routing, ARP or physical network. Codec rejection means outside profile or invalid encoding, not an RFC drop/reset claim. Egress DF=1, identification=0, TTL=64 are fixture choices; TCP state/ACK/timers come solely from IR."
+}

@@ -1,0 +1,80 @@
+{
+  "schema": "spec-flow-stage-v1",
+  "stage": "generate",
+  "status": "pass",
+  "backend": "direct-c99-scalar-v1",
+  "model_file": "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp.json",
+  "model_semantic_sha256": "3be892210acfc335bd0dd42fdeae7b6be9231f6ab0f72e72186f4dc9abd85b10",
+  "inputs": {
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/model/tcp.json": "119322775578a6ed366379b3434c1656e6812cb21d980016340ef22ecfaffd8b",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/codegen/__init__.py": "bcc60681ae01c8c9fecd9b86064cdd2f3d7bcef008f9006bd1a6629ea742e0df",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/codegen/__main__.py": "e2ab90d71c57af92ae4aae67ac3ba3dc804c13454f8ecc46f86f671e4470a069",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/codegen/runtime.c": "7684d39c2b2813133e7dc05d37c6c12f9e1721824658d5a45559b90ec3c446e6",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/codegen/harness.c": "3c2738a24f411f257133d80e97f37d90e13cf9fe6d696de0dfde6495847bb4af",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py": "ce61d07bcc12f9a0724c9c9f0e146907837e07e42c2894e0301da4e2fab2de2b",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/symbolic.py": "bfb748e52d25334de0b48b04353b7eb378f80478da2e2b4e5e519f28efd25974"
+  },
+  "outputs": {
+    "protocol.c": "0ad50c2788b79279b73ccbd7657bbf22efdcfb2609776b2e90c23c7106cfd5e8"
+  },
+  "runtime_python_required": false,
+  "external_protocol_stack_used": false,
+  "compiler_correctness_proved": false,
+  "limits": {
+    "integer": "signed64; checked overflow",
+    "command_log_bytes": 131072,
+    "fields_per_event": 64,
+    "variables": 256,
+    "name_bytes": 256,
+    "timer_steps_per_command": 4096
+  },
+  "unsupported": [
+    "byte buffers",
+    "rational",
+    "clock-v3",
+    "post-action target cases",
+    "dynamic strings"
+  ],
+  "rules": [
+    {
+      "id": "T-ACTIVE-OPEN",
+      "requirements": [
+        "TCP-ACTIVE-OPEN",
+        "RTO-INITIAL",
+        "PROFILE-SCOPE"
+      ]
+    },
+    {
+      "id": "T-SYN-RETRY",
+      "requirements": [
+        "TCP-RETRANSMIT",
+        "RTO-BACKOFF"
+      ]
+    },
+    {
+      "id": "T-ACCEPT-SYNACK",
+      "requirements": [
+        "TCP-ACCEPT-SYNACK",
+        "RTO-CANCEL",
+        "PROFILE-SCOPE"
+      ]
+    }
+  ],
+  "scope": {
+    "terminal_states": [
+      "ESTABLISHED"
+    ],
+    "excluded": [
+      "passive open",
+      "simultaneous open",
+      "FIN/RST",
+      "payload",
+      "TCP options",
+      "RTT estimation",
+      "post-handshake RTO including RFC6298 5.7",
+      "retry exhaustion",
+      "congestion control",
+      "IP behavior"
+    ]
+  }
+}
