@@ -1,0 +1,2350 @@
+{
+  "ir_version": "0.5",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "udp-ipv4-wire-receive",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "Anything beyond the fixed raw-datagram receive profile; see pinned profile source",
+      "UDP surplus/options, dynamic peer/port, fragments, routing, ARP/ICMP and socket service",
+      "UDP peer/physical capture, whole-stack or universal compiler proof"
+    ]
+  },
+  "states": [
+    "READY"
+  ],
+  "initial_state": "READY",
+  "variables": {
+    "require_checksum": {
+      "type": "bool",
+      "initial": false
+    },
+    "payload": {
+      "type": "bytes",
+      "initial": []
+    },
+    "disposition": {
+      "type": "string",
+      "initial": "none"
+    }
+  },
+  "events": {
+    "net.packet": {
+      "origin": "network",
+      "fields": {
+        "packet": "bytes"
+      }
+    },
+    "app.require_checksum": {
+      "origin": "application",
+      "fields": {
+        "required": "bool"
+      }
+    }
+  },
+  "timers": {},
+  "messages": {
+    "udp.rx": {
+      "fields": {
+        "data": "bytes"
+      }
+    }
+  },
+  "requirements": {
+    "RX-PROFILE": {
+      "source": "docs/udp-wire-receive.md",
+      "section": "Finite raw IPv4/UDP receive IR",
+      "interpretation": "Explicit fixed raw-entry domain, length equality, surplus exclusion and rejection classes; not full protocol conformance."
+    },
+    "IP-LENGTH": {
+      "source": "https://www.rfc-editor.org/rfc/rfc791#section-3.1",
+      "section": "3.1 Total Length",
+      "interpretation": "IPv4 Total Length includes header and data; this raw-entry profile requires exact datagram bytes."
+    },
+    "IP-CHECKSUM": {
+      "source": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.1.2",
+      "section": "3.2.1.2",
+      "interpretation": "Verify each admitted fixed IPv4 header; invalid checksum silently discards."
+    },
+    "UDP-LENGTH": {
+      "source": "https://www.rfc-editor.org/rfc/rfc768",
+      "section": "Fields pp1-2",
+      "interpretation": "UDP length includes eight-byte header and data; surplus beyond UDP length remains out of scope."
+    },
+    "UDP-CHECKSUM": {
+      "source": "https://www.rfc-editor.org/rfc/rfc1122#section-4.1.3.4",
+      "section": "4.1.3.4",
+      "interpretation": "Discard invalid nonzero checksum; optionally discard absent checksum. This profile defaults to allowing absent checksums."
+    },
+    "UDP-PSEUDO": {
+      "source": "https://www.rfc-editor.org/rfc/rfc768",
+      "section": "Fields p2",
+      "interpretation": "Checksum covers pseudoheader with IP addresses/protocol/UDP length plus UDP header/data. Zero means absent; FFFF validates normally."
+    }
+  },
+  "transitions": [
+    {
+      "id": "SHORT",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.packet",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "event": "packet"
+              }
+            ]
+          },
+          27
+        ]
+      },
+      "requirements": [
+        "RX-PROFILE"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "payload",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "disposition",
+            "value": "drop_short"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IP_LENGTH",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.packet",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "ge",
+                            "args": [
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  }
+                                ]
+                              },
+                              28
+                            ]
+                          },
+                          {
+                            "op": "le",
+                            "args": [
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  }
+                                ]
+                              },
+                              1500
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              0,
+                              2
+                            ]
+                          },
+                          {
+                            "bytes": [
+                              69,
+                              0
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "packet"
+                          },
+                          4,
+                          6
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          0,
+                          0,
+                          64,
+                          0,
+                          64,
+                          17
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "packet"
+                      },
+                      12,
+                      12
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      2,
+                      192,
+                      0,
+                      2,
+                      1,
+                      31,
+                      144,
+                      156,
+                      64
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              2
+                            ]
+                          },
+                          256
+                        ]
+                      },
+                      {
+                        "op": "bytes_at_or_zero",
+                        "args": [
+                          {
+                            "event": "packet"
+                          },
+                          3
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "packet"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "RX-PROFILE",
+        "IP-LENGTH"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "payload",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "disposition",
+            "value": "drop_ip_length"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IP_CHECKSUM",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.packet",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "ge",
+                                "args": [
+                                  {
+                                    "op": "bytes_len",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      }
+                                    ]
+                                  },
+                                  28
+                                ]
+                              },
+                              {
+                                "op": "le",
+                                "args": [
+                                  {
+                                    "op": "bytes_len",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      }
+                                    ]
+                                  },
+                                  1500
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  0,
+                                  2
+                                ]
+                              },
+                              {
+                                "bytes": [
+                                  69,
+                                  0
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              4,
+                              6
+                            ]
+                          },
+                          {
+                            "bytes": [
+                              0,
+                              0,
+                              64,
+                              0,
+                              64,
+                              17
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "packet"
+                          },
+                          12,
+                          12
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2,
+                          192,
+                          0,
+                          2,
+                          1,
+                          31,
+                          144,
+                          156,
+                          64
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              2
+                            ]
+                          },
+                          256
+                        ]
+                      },
+                      {
+                        "op": "bytes_at_or_zero",
+                        "args": [
+                          {
+                            "event": "packet"
+                          },
+                          3
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "packet"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_internet_checksum16",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "packet"
+                          },
+                          0,
+                          20
+                        ]
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "RX-PROFILE",
+        "IP-CHECKSUM"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "payload",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "disposition",
+            "value": "drop_ip_checksum"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UDP_LENGTH",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.packet",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "ge",
+                                    "args": [
+                                      {
+                                        "op": "bytes_len",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          }
+                                        ]
+                                      },
+                                      28
+                                    ]
+                                  },
+                                  {
+                                    "op": "le",
+                                    "args": [
+                                      {
+                                        "op": "bytes_len",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          }
+                                        ]
+                                      },
+                                      1500
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      0,
+                                      2
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      69,
+                                      0
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  4,
+                                  6
+                                ]
+                              },
+                              {
+                                "bytes": [
+                                  0,
+                                  0,
+                                  64,
+                                  0,
+                                  64,
+                                  17
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              12,
+                              12
+                            ]
+                          },
+                          {
+                            "bytes": [
+                              192,
+                              0,
+                              2,
+                              2,
+                              192,
+                              0,
+                              2,
+                              1,
+                              31,
+                              144,
+                              156,
+                              64
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  2
+                                ]
+                              },
+                              256
+                            ]
+                          },
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              3
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "packet"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_internet_checksum16",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "packet"
+                          },
+                          0,
+                          20
+                        ]
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "le",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              24
+                            ]
+                          },
+                          256
+                        ]
+                      },
+                      {
+                        "op": "bytes_at_or_zero",
+                        "args": [
+                          {
+                            "event": "packet"
+                          },
+                          25
+                        ]
+                      }
+                    ]
+                  },
+                  7
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              24
+                            ]
+                          },
+                          256
+                        ]
+                      },
+                      {
+                        "op": "bytes_at_or_zero",
+                        "args": [
+                          {
+                            "event": "packet"
+                          },
+                          25
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "event": "packet"
+                              }
+                            ]
+                          },
+                          20
+                        ]
+                      },
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "RX-PROFILE",
+        "UDP-LENGTH"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "payload",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "disposition",
+            "value": "drop_udp_length"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABSENT_REQUIRED",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.packet",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "packet"
+                                                  }
+                                                ]
+                                              },
+                                              28
+                                            ]
+                                          },
+                                          {
+                                            "op": "le",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "packet"
+                                                  }
+                                                ]
+                                              },
+                                              1500
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "op": "bytes_slice",
+                                            "args": [
+                                              {
+                                                "event": "packet"
+                                              },
+                                              0,
+                                              2
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              69,
+                                              0
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          },
+                                          4,
+                                          6
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          0,
+                                          64,
+                                          0,
+                                          64,
+                                          17
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      12,
+                                      12
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      192,
+                                      0,
+                                      2,
+                                      2,
+                                      192,
+                                      0,
+                                      2,
+                                      1,
+                                      31,
+                                      144,
+                                      156,
+                                      64
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "op": "mul",
+                                    "args": [
+                                      {
+                                        "op": "bytes_at_or_zero",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          },
+                                          2
+                                        ]
+                                      },
+                                      256
+                                    ]
+                                  },
+                                  {
+                                    "op": "bytes_at_or_zero",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      3
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_internet_checksum16",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  0,
+                                  20
+                                ]
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "mul",
+                                "args": [
+                                  {
+                                    "op": "bytes_at_or_zero",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      24
+                                    ]
+                                  },
+                                  256
+                                ]
+                              },
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  25
+                                ]
+                              }
+                            ]
+                          },
+                          8
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "mul",
+                                "args": [
+                                  {
+                                    "op": "bytes_at_or_zero",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      24
+                                    ]
+                                  },
+                                  256
+                                ]
+                              },
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  25
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  }
+                                ]
+                              },
+                              20
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              26
+                            ]
+                          },
+                          256
+                        ]
+                      },
+                      {
+                        "op": "bytes_at_or_zero",
+                        "args": [
+                          {
+                            "event": "packet"
+                          },
+                          27
+                        ]
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "var": "require_checksum"
+          }
+        ]
+      },
+      "requirements": [
+        "RX-PROFILE",
+        "UDP-CHECKSUM"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "payload",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "disposition",
+            "value": "drop_absent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UDP_CHECKSUM",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.packet",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "packet"
+                                                  }
+                                                ]
+                                              },
+                                              28
+                                            ]
+                                          },
+                                          {
+                                            "op": "le",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "packet"
+                                                  }
+                                                ]
+                                              },
+                                              1500
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "op": "bytes_slice",
+                                            "args": [
+                                              {
+                                                "event": "packet"
+                                              },
+                                              0,
+                                              2
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              69,
+                                              0
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          },
+                                          4,
+                                          6
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          0,
+                                          64,
+                                          0,
+                                          64,
+                                          17
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      12,
+                                      12
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      192,
+                                      0,
+                                      2,
+                                      2,
+                                      192,
+                                      0,
+                                      2,
+                                      1,
+                                      31,
+                                      144,
+                                      156,
+                                      64
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "op": "mul",
+                                    "args": [
+                                      {
+                                        "op": "bytes_at_or_zero",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          },
+                                          2
+                                        ]
+                                      },
+                                      256
+                                    ]
+                                  },
+                                  {
+                                    "op": "bytes_at_or_zero",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      3
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_internet_checksum16",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  0,
+                                  20
+                                ]
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "ge",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "mul",
+                                "args": [
+                                  {
+                                    "op": "bytes_at_or_zero",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      24
+                                    ]
+                                  },
+                                  256
+                                ]
+                              },
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  25
+                                ]
+                              }
+                            ]
+                          },
+                          8
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "mul",
+                                "args": [
+                                  {
+                                    "op": "bytes_at_or_zero",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      24
+                                    ]
+                                  },
+                                  256
+                                ]
+                              },
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  25
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "op": "bytes_len",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  }
+                                ]
+                              },
+                              20
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  26
+                                ]
+                              },
+                              256
+                            ]
+                          },
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              27
+                            ]
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_internet_checksum16",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  12,
+                                  8
+                                ]
+                              },
+                              {
+                                "op": "bytes_concat",
+                                "args": [
+                                  {
+                                    "bytes": [
+                                      0,
+                                      17
+                                    ]
+                                  },
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      24,
+                                      2
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              20,
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "op": "mul",
+                                    "args": [
+                                      {
+                                        "op": "bytes_at_or_zero",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          },
+                                          24
+                                        ]
+                                      },
+                                      256
+                                    ]
+                                  },
+                                  {
+                                    "op": "bytes_at_or_zero",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      25
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "RX-PROFILE",
+        "UDP-CHECKSUM",
+        "UDP-PSEUDO"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "payload",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "disposition",
+            "value": "drop_udp_checksum"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELIVER",
+      "from": "READY",
+      "to": "READY",
+      "event": "net.packet",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          {
+                                            "op": "bytes_len",
+                                            "args": [
+                                              {
+                                                "event": "packet"
+                                              }
+                                            ]
+                                          },
+                                          28
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "op": "bytes_len",
+                                            "args": [
+                                              {
+                                                "event": "packet"
+                                              }
+                                            ]
+                                          },
+                                          1500
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          },
+                                          0,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          69,
+                                          0
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      4,
+                                      6
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      0,
+                                      0,
+                                      64,
+                                      0,
+                                      64,
+                                      17
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  12,
+                                  12
+                                ]
+                              },
+                              {
+                                "bytes": [
+                                  192,
+                                  0,
+                                  2,
+                                  2,
+                                  192,
+                                  0,
+                                  2,
+                                  1,
+                                  31,
+                                  144,
+                                  156,
+                                  64
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "mul",
+                                "args": [
+                                  {
+                                    "op": "bytes_at_or_zero",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      2
+                                    ]
+                                  },
+                                  256
+                                ]
+                              },
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  3
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "event": "packet"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_internet_checksum16",
+                        "args": [
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              0,
+                              20
+                            ]
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  24
+                                ]
+                              },
+                              256
+                            ]
+                          },
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              25
+                            ]
+                          }
+                        ]
+                      },
+                      8
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  24
+                                ]
+                              },
+                              256
+                            ]
+                          },
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              25
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "op": "bytes_len",
+                            "args": [
+                              {
+                                "event": "packet"
+                              }
+                            ]
+                          },
+                          20
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  26
+                                ]
+                              },
+                              256
+                            ]
+                          },
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "packet"
+                              },
+                              27
+                            ]
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "var": "require_checksum"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "mul",
+                                "args": [
+                                  {
+                                    "op": "bytes_at_or_zero",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      26
+                                    ]
+                                  },
+                                  256
+                                ]
+                              },
+                              {
+                                "op": "bytes_at_or_zero",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  27
+                                ]
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_internet_checksum16",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_concat",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "packet"
+                                      },
+                                      12,
+                                      8
+                                    ]
+                                  },
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "bytes": [
+                                          0,
+                                          17
+                                        ]
+                                      },
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          },
+                                          24,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "packet"
+                                  },
+                                  20,
+                                  {
+                                    "op": "add",
+                                    "args": [
+                                      {
+                                        "op": "mul",
+                                        "args": [
+                                          {
+                                            "op": "bytes_at_or_zero",
+                                            "args": [
+                                              {
+                                                "event": "packet"
+                                              },
+                                              24
+                                            ]
+                                          },
+                                          256
+                                        ]
+                                      },
+                                      {
+                                        "op": "bytes_at_or_zero",
+                                        "args": [
+                                          {
+                                            "event": "packet"
+                                          },
+                                          25
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "RX-PROFILE",
+        "UDP-LENGTH",
+        "UDP-CHECKSUM",
+        "UDP-PSEUDO"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "payload",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "packet"
+                },
+                28,
+                {
+                  "op": "sub",
+                  "args": [
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "op": "mul",
+                          "args": [
+                            {
+                              "op": "bytes_at_or_zero",
+                              "args": [
+                                {
+                                  "event": "packet"
+                                },
+                                24
+                              ]
+                            },
+                            256
+                          ]
+                        },
+                        {
+                          "op": "bytes_at_or_zero",
+                          "args": [
+                            {
+                              "event": "packet"
+                            },
+                            25
+                          ]
+                        }
+                      ]
+                    },
+                    8
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "disposition",
+            "value": "deliver"
+          }
+        },
+        {
+          "emit": {
+            "message": "udp.rx",
+            "fields": {
+              "data": {
+                "var": "payload"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "POLICY",
+      "from": "READY",
+      "to": "READY",
+      "event": "app.require_checksum",
+      "guard": true,
+      "requirements": [
+        "UDP-CHECKSUM",
+        "RX-PROFILE"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "require_checksum",
+            "value": {
+              "event": "required"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "RX-PAYLOAD-BOUND",
+      "requirements": [
+        "RX-PROFILE",
+        "UDP-LENGTH"
+      ],
+      "assert": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "var": "payload"
+              }
+            ]
+          },
+          1472
+        ]
+      }
+    },
+    {
+      "id": "RX-DROP-EMPTY",
+      "requirements": [
+        "RX-PROFILE"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "op": "ne",
+            "args": [
+              {
+                "var": "disposition"
+              },
+              "deliver"
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "payload"
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

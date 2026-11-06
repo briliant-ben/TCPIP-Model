@@ -21,14 +21,15 @@ def blob(commit,name):
 
 
 def build(out,source='HEAD',profile='flow'):
-    if profile not in ('flow','native-bytes','udp-payload','wire-arithmetic','udp-transmit','byte-access'):raise ValueError('Unknown fixed release profile')
+    if profile not in ('flow','native-bytes','udp-payload','wire-arithmetic','udp-transmit','byte-access','udp-receive'):raise ValueError('Unknown fixed release profile')
     commit=subprocess.check_output(['git','rev-parse','--verify',source+'^{commit}'],cwd=ROOT,text=True).strip()
     paths=set(TESTS)|{'examples/run_spec_candidate.py','requirements-formal.txt','docs/spec-flow-server.md','docs/spec-flow-acceptance.md'}
     tasks=[]
-    additional=('flows/udp-payload.json',)if profile in ('udp-payload','wire-arithmetic','udp-transmit','byte-access')else()
-    if profile in ('wire-arithmetic','udp-transmit','byte-access'):additional+=('flows/wire-arithmetic.json',)
-    if profile in ('udp-transmit','byte-access'):additional+=('flows/udp-wire-transmit.json',)
-    if profile=='byte-access':additional+=('flows/byte-access.json',)
+    additional=('flows/udp-payload.json',)if profile in ('udp-payload','wire-arithmetic','udp-transmit','byte-access','udp-receive')else()
+    if profile in ('wire-arithmetic','udp-transmit','byte-access','udp-receive'):additional+=('flows/wire-arithmetic.json',)
+    if profile in ('udp-transmit','byte-access','udp-receive'):additional+=('flows/udp-wire-transmit.json',)
+    if profile in ('byte-access','udp-receive'):additional+=('flows/byte-access.json',)
+    if profile=='udp-receive':additional+=('flows/udp-wire-receive.json',)
     for task_path in TASKS+additional:
         raw=blob(commit,task_path);task=json.loads(raw);paths.add(task_path)
         paths|={task['model'],task['exploration'],*task['seeds'],*(s['path']for s in task['sources'])}
@@ -38,15 +39,17 @@ def build(out,source='HEAD',profile='flow'):
         if 'extends'in model or 'base'in model:raise ValueError('Deployment builder needs explicit inherited-model closure')
         tasks.append(dict(path=task_path,sha256=hashlib.sha256(raw).hexdigest(),id=task['id']))
     tests=list(TESTS);native_suites=[]
-    if profile in ('udp-payload','wire-arithmetic','udp-transmit','byte-access'):
+    if profile in ('udp-payload','wire-arithmetic','udp-transmit','byte-access','udp-receive'):
         tests.append('tests/test_udp_payload.py');paths.add('tests/test_udp_payload.py')
-    if profile in ('wire-arithmetic','udp-transmit','byte-access'):
+    if profile in ('wire-arithmetic','udp-transmit','byte-access','udp-receive'):
         tests+=['tests/test_wire_arithmetic.py','tests/test_data_semantics.py'];paths|=set(tests)
-    if profile in ('udp-transmit','byte-access'):
+    if profile in ('udp-transmit','byte-access','udp-receive'):
         tests.append('tests/test_udp_transmit.py');paths|={'tests/test_udp_transmit.py','examples/run_udp_transmit.py'}
-    if profile=='byte-access':
+    if profile in ('byte-access','udp-receive'):
         tests.append('tests/test_byte_access.py');paths.add('tests/test_byte_access.py')
-    if profile in ('native-bytes','wire-arithmetic','udp-transmit','byte-access'):
+    if profile=='udp-receive':
+        tests.append('tests/test_udp_receive.py');paths.add('tests/test_udp_receive.py')
+    if profile in ('native-bytes','wire-arithmetic','udp-transmit','byte-access','udp-receive'):
         tests += ['tests/test_codegen_native.py','tests/test_codegen_bytes.py']
         paths |= set(tests)|{'examples/run_native_suite.py','model/bytes-contract.json','model/seq32-contract.json'}
         def model_chain(name,seen=()):
@@ -67,7 +70,7 @@ def build(out,source='HEAD',profile='flow'):
     paths|={p for p in files if Path(p).suffix in ('.py','.c')}
     content={name:blob(commit,name)for name in sorted(paths)}
     observations=[]
-    if profile in ('udp-transmit','byte-access'):
+    if profile in ('udp-transmit','byte-access','udp-receive'):
         oracle='spec/udp-wire-transmit-oracle.json'
         observations=[dict(kind='ipv4-udp-transmit-v1',task_index=5,oracle=oracle,oracle_sha256=hashlib.sha256(blob(commit,oracle)).hexdigest())]
     manifest=dict(schema='spec-flow-server-release-v1',source_commit=commit,repository='https://github.com/briliant-ben/TCPIP-Model',packet_observations=observations,
@@ -88,7 +91,7 @@ def build(out,source='HEAD',profile='flow'):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',required=True,type=Path);parser.add_argument('--source',default='HEAD');parser.add_argument('--profile',choices=('flow','native-bytes','udp-payload','wire-arithmetic','udp-transmit','byte-access'),default='flow');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',required=True,type=Path);parser.add_argument('--source',default='HEAD');parser.add_argument('--profile',choices=('flow','native-bytes','udp-payload','wire-arithmetic','udp-transmit','byte-access','udp-receive'),default='flow');args=parser.parse_args()
     try:report=build(args.out,args.source,args.profile)
     except (ValueError,OSError,subprocess.CalledProcessError)as error:report=dict(status='rejected',reason=str(error));print(json.dumps(report));raise SystemExit(1)
     print(json.dumps(report))

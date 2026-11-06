@@ -1,0 +1,32 @@
+{
+  "receive_cases": 27,
+  "receive_literal_steps": 13,
+  "receive_model_gaps": 7,
+  "byte_access_cases": 9,
+  "byte_access_literal_steps": 8,
+  "native_udp_packets": 9,
+  "fixed_packet_oracle_cases": 6,
+  "unchanged_unrestricted_safety_and_overlap_queries": true,
+  "udp_receive_scope": "fixed raw byte profile, no peer/composition",
+  "linux_network_evidence": false,
+  "arithmetic_cases": 12,
+  "arithmetic_trace_contract_steps": 11,
+  "whole_checksum_equivalence_proved": false,
+  "status": "retained_finite_udp_receive_linux_ci_release_evidence_accepted",
+  "project_server_deployed": false,
+  "source_commit": "040addc0ce03ce7078c9cd16a2a06bc6a056cd86",
+  "audit_git_commit": "f266e4ac0cd26ab22389081a432986350ac4c53d",
+  "git_files_checked": 260,
+  "archive_members": 2161,
+  "specialized_test_methods": 111,
+  "flow_jobs_reverified": 8,
+  "native_cases_recompared": [
+    15,
+    101
+  ],
+  "fixed_input_symbolic_reports_integrity_checked": 15,
+  "archive_code_executed": false,
+  "fresh_native_or_solver_execution": false,
+  "compiler_correctness_proved": false,
+  "whole_ipv4_endpoint_complete": false
+}

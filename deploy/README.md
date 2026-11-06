@@ -69,3 +69,9 @@ methods (103 total) and a seventh complete task. It retains the nine actual
 transmit PCAP packets and15/101 TCP regressions; byte lookup is not UDP receive.
 New generated evidence uses backend `direct-c99-byte-access-v4`; old archives
 remain bound to their original checkers. No new paid API calls are made.
+
+The fixed `udp-receive` profile extends `byte-access`:111 specialized methods
+and eight complete tasks, retaining the old15/101 TCP and nine UDP transmit
+observations. New receive inputs are frozen raw-byte fixtures, not real peer
+capture. The offline controller oracle constructor is pinned data, never invoked
+as protocol runtime or to supply expected outputs during validation.
