@@ -1,5 +1,24 @@
 # Stacked PR integration review — 2026-11-05
 
+## Correction on 2026-11-06
+
+The earlier workflow helper returned only pull-request event runs and omitted
+push check runs. Its returned green list was incomplete and is **not approval
+to merge #8–#16**. The complete #8 check list includes failed Linux receive
+job124784462166: `Quiet observation shorter than source scenario` (invalid
+capture). PR#7 is now merged. Leave #8 and dependent PRs held until that gate
+and the retargeted integration checks are resolved. #17/#19 still have ICMP
+formal failures; UNKNOWN is not a protocol counterexample or a pass.
+
+At #20 heada0915d79, job127213432338 passes9 endpoint,17 composed and13 ARP
+cases, then rejects the TCP data suite because `scenarios/tcp-data` does not
+exist. Correct associations are `scenarios/data` (15) and
+`scenarios/connection` (101); do not substitute the new wire scenarios under
+the old logical TCP model. A server DeepSeek proposer/reviewer job is preparing
+the exact two path corrections and running all intended native cases. No merge
+has been performed. The historical snapshot below is retained as incomplete
+evidence, not a current all-green claim.
+
 There are thirteen open development PRs, #7 through #19. PRs #1–#6 are
 already merged. Remote main is 939ff487b72557983757d3f6a98bcc89673c165d
 (merge of #6); the local `main` branch was stale and is not the integration

@@ -30,8 +30,8 @@ jobs:
           .venv/bin/python examples/run_native_suite.py model/ipv4-udp-icmp-endpoint.json --scenario-dir scenarios/ipv4-udp-icmp-endpoint --formal-replay --out artifacts/ipv4-endpoint-native/endpoint > artifacts/ipv4-endpoint-native/endpoint-result.json
           .venv/bin/python examples/run_native_suite.py model/ipv4-udp-icmp-endpoint.json --scenario-dir scenarios/arp-udp-transmit --formal-replay --out artifacts/ipv4-endpoint-native/legacy-compose > artifacts/ipv4-endpoint-native/legacy-compose-result.json
           .venv/bin/python examples/run_native_suite.py model/ipv4-udp-icmp-endpoint.json --scenario-dir scenarios/arp-endpoint --formal-replay --out artifacts/ipv4-endpoint-native/legacy-arp > artifacts/ipv4-endpoint-native/legacy-arp-result.json
-          .venv/bin/python examples/run_native_suite.py model/tcp-data.json --scenario-dir scenarios/tcp-data --formal-replay --out artifacts/ipv4-endpoint-native/tcp-data > artifacts/ipv4-endpoint-native/tcp-data-result.json
-          .venv/bin/python examples/run_native_suite.py model/tcp-connection.json --scenario-dir scenarios/tcp-connection --out artifacts/ipv4-endpoint-native/tcp-connection > artifacts/ipv4-endpoint-native/tcp-connection-result.json
+          .venv/bin/python examples/run_native_suite.py model/tcp-data.json --scenario-dir scenarios/data --formal-replay --out artifacts/ipv4-endpoint-native/tcp-data > artifacts/ipv4-endpoint-native/tcp-data-result.json
+          .venv/bin/python examples/run_native_suite.py model/tcp-connection.json --scenario-dir scenarios/connection --out artifacts/ipv4-endpoint-native/tcp-connection > artifacts/ipv4-endpoint-native/tcp-connection-result.json
       - name: Observe compiler frames without changing execution flags
         run: cc -std=c99 -Wall -Wextra -Werror -fstack-usage -c artifacts/ipv4-endpoint-native/endpoint/generated/protocol.c -o artifacts/ipv4-endpoint-native/frame-observation.o
       - name: Retain original C ELF raw outputs differences queries and failures
