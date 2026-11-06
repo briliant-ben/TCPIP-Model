@@ -163,6 +163,21 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 2026-11-02：修订1b13a36f在Linux独立发布实际通过96专项、六完整任务/verify、15TCPdata原生/固定输入Z3和101连接回归。新发送task9例/10literaltrace、9个实际C生成IPv4/UDP包，其PCAP由原字节封装、独立解码/校验/对六固定oracle全部匹配；模型IR中明示全部layout/checksum/default/zero policy，无新opcode或UDP Ccodec。228不可变源码/约374KB包、1746原文件及原Git只读验收在artifacts/udp-transmit-server-1b13a36f。特别逐字节确认两份全depth2/全输入safety与overlap SMT和原f947诊断完全一致；只为存在性非空样本增加exact固定choice单事件SAT+重放（样本查询/哈希另存），不把未知全输入性质变为固定例证明。原失败/UNKNOWN保持、未来失败test job保留。独立agent静态协议审查无findings但非证明、未审后续采样优化；累计12调用83412已知token，原12上限已达，不自重置；只付费agent通道受限，本地继续。功能仍固定tuple/TTL64/DF1ID0/MTU1500发送虚拟链路，不是UDP接收/ARP/ICMP/Linuxpeer/物理抓包/完整栈。后续补原始包字节读取/接收及独立peer渠道，再跨层组合。新PR/CI按实际状态更新，不自动merge。
 
 
+2026-11-02：codex/byte-read接PR11头1e4be0cc（十CI实际success）。IR0.5新增唯一纯算子bytes_at_or_zero(bytes,int)->int：有效索引返回octet，负数/越界明确返回0，协议必须另写长度guard；非Python负索引、非隐式packet acceptance。参考显式边界、独立Z3 Seq(BV8)/Int/ITE、C先sign/length检查，三个后端同步；旧版本及length投影拒绝。IR0.4算术可在0.5使用，native signed64/4096域及clock/post/rational限制不变；新backend v4，旧证据用原Git。七新专项实际通过，含任意序列/索引range和越界Z3义务、全部256字节种子、signed64两端、4096边界、错误有效索引C翻译被精确内容oracle抓获；非通用编译器等价证明。八字面量种子+一规则见证共九例/八trace，十阶段/verify本地通过，depth2 safety/overlap UNSAT仅range合同。103专项/七任务新Linux发布待完成。尚未实现UDP接收；本阶段只补显式读取前置语义，后续raw IPv4/UDP receive guard/action/policy仍须全在IR。API原12次83412已知token预算已尽，本轮零API，旧UNKNOWN/2750ms差异和用户目录保留。
+
+
+2026-11-02：b959876b的IR0.5读取前置里程碑已实际通过本地103专项+6部署测试、9例/8字面量trace十阶段/verify、15TCPdata原生/固定输入Z3及101连接回归。241 Git源码绑定、787原文件及只读原Git复核在artifacts/byte-access-local-b959876b（不执行归档Python/ELF/solver）。初次冻结审查因执行后symbolic注释改动被hash正确拒绝，原包/拒绝保留；从最终提交完整重跑flow后验收，未放宽hash。现有服务器SCP连接192.168.71.74:22超时255，新包仅准备、未部署，不宣称新Linux验收；旧Linux udp-transmit-1b13a36f证据不变。新草稿PR12叠仍开PR11，不合main；PR11十CI已全部success，b959876b新读取/发送/算术/流程/原生/部署/精确查询七CI已success，四其余运行中，不能外推后续头。下一轮先复核最新CI/SSH可达性；可达再部署byte-access固定profile，补raw IPv4/UDP接收IR（读取能力不等接收模型），不重启旧agent/不付费重试。预算仍12请求83412已知token，零新增。
+
+
+2026-11-02：PR12头d5eeca9f十CI通过但Linux TCP receive项失败（handshake/syn-loss成功）。已下载原artifact13120317376/run41399161597/job125126976381，ZIP SHA d9faceef540dfa35bcf3b6e61f5a4be18a477953064a13da3e835d446651c07d；原包/日志/诊断保留artifacts/linux-capture-deadline-d5eeca9f。完整抓包解码得到origin1793600452886596000，quiet marker mtime1793600457906512460，即5019.91646ms，小于5020ms83540ns；原失败仍无效，不追认为通过/TCP bug。修复驱动以实际首selected PCAP时间+原settle等待且要求capture/socket存活，记录真实stop-request epoch/monotonic与deadline；最终解码须同origin，独立verify重算完整最小窗口。不改模型/oracle/0ms容忍/packetdrill容忍/上游/抓包范围，仍先停止capture再释放socket；16本地driver正反检查通过，新增CI门禁。新Linux运行待CI实际结果，旧archive须原Git checker。服务器本轮一次只读SSH仍超时，只阻塞项目服务器发布；API零新增，12上限不重置。
+
+
+2026-11-02：为项目服务器SSH不可达增加替代的隔离GitHub Ubuntu24.04 byte-access immutable-release CI job：从当前Git HEAD导出固定241源码包、hash核验解包至/tmp独立release/venv，执行既有bootstrap的103专项/七task+verify/15TCPdata固定Z3+101连接/9UDP native-PCAP门禁；保留bundle/source/hash及原run，不打包venv/私有目录、不调用模型API/不改项目服务器或全局网络。CI已安排但结果未到，不能先宣布通过；该runner发布验证不等192.168.71.74部署或物理网络抓包。
+
+
+2026-11-03：7c28f324（GitHub实际merge a3de424c，与head同tree）十一CI实际全部success。新增隔离Linux immutable-release实际103专项/七完整task+verify/15TCPdata原生固定Z3+101连接/9UDP native-PCAP六固定oracle全部通过；241 Git源码/1896原ZIP文件。原Linux receive重新执行runtime verifier有效，实际完整窗口5028.700806ms>=5020、零抓包drops；原83.54us短窗口失败仍无效/保留。严格Difference继续mismatch：最后ACK模型60ms vsLinux20.055ms，窗口12 vs64236，不改oracle/0ms容忍/模型配置、不称RFC bug。release及实际Linux TCP raw ZIP、provenance和原Git只读复核在artifacts/byte-access-linux-ci-7c28f324；核七job/116TCP/9UDP及86Linux源码binding/原runtime-queryhash，不执行归档Python/ELF/solver，离线需信任CI provenance。此为GitHub临时Linux发布验收，不是192.168.71.74项目服务器部署（本轮SSH仍timeout）；也不是UDP接收/跨层/完整栈，后续raw IPv4/UDP receive仍下一模型里程碑。PR12叠PR11继续draft、不自动merge；本次证据文档新头需单独查CI，不外推7c28f324。无新付费API，原12请求83412token上限仍耗尽；旧TCPdepth6 UNKNOWN/lwIP2750ms差异及用户两目录不动。
+
+
 2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
 and16 actual local boundary tests to original cc70a74d. Preserve original failed
 job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later

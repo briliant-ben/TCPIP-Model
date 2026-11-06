@@ -1,4 +1,4 @@
-"""Independent bounded symbolic semantics for IR 0.1/0.2/0.3/0.4 (Z3 optional).
+"""Independent bounded symbolic semantics for IR 0.1/0.2/0.3/0.4/0.5 (Z3 optional).
 
 No call to runtime evaluate/dispatch is used to construct the transition system.
 The runtime is invoked only afterwards to cross-check solver witnesses.
@@ -7,7 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from .ir import CLOCK_SEMANTICS, MOD, WIRE_OPS, Machine, ModelError, infer, require, validate
+from .ir import CLOCK_SEMANTICS, MOD, WIRE_OPS, READ_OPS, Machine, ModelError, infer, require, validate
 
 
 def model_hash(model):
@@ -197,7 +197,7 @@ class Encoding:
         def visit(expr, event=None):
             if type(expr) is not dict or "op" not in expr:
                 return
-            require(expr['op']not in WIRE_OPS,"Length projection does not support wire arithmetic")
+            require(expr['op']not in WIRE_OPS|READ_OPS,"Length projection does not support wire arithmetic/byte access")
             if expr["op"] in ("eq", "ne"):
                 require(infer(expr["args"][0], self.model, event) != "bytes",
                         "Length projection does not support byte-content equality")
@@ -280,6 +280,7 @@ class Encoding:
                 "bytes_pack8_mod": lambda n: z.Unit(z.Int2BV(n,8)),
                 "bytes_pack16be_mod": lambda n: z.Concat(z.Unit(z.Extract(15,8,z.Int2BV(n,16))),z.Unit(z.Extract(7,0,z.Int2BV(n,16)))),
                 "bytes_internet_checksum16": self.checksum_expr,
+                "bytes_at_or_zero": lambda a,i: z.If(z.And(i>=0,i<z.Length(a)),z.BV2Int(a[i],is_signed=False),0),
                 "bytes_slice": lambda a, offset, count: z.SubSeq(a, z.If(offset < 0, 0, offset), z.If(count < 0, 0, count)),
                 "seq_distance": lambda a, b: z.BV2Int(b - a, is_signed=False),
                 "seq_comparable": lambda a, b: b - a != z.BitVecVal(1 << 31, 32),
@@ -476,7 +477,7 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
               "clock_progress": "monotonic_integer_before_next_due" if enc.clock_progress else "not_applicable", "liveness": "not_checked", "unbounded_proof": False,
               "invariants": [i["id"] for i in model["invariants"]], "safety_query": str(answer)}
     report["runtime_properties"] = ["positive_timer_duration"]
-    if model["ir_version"] in ("0.2", "0.3", "0.4"):
+    if model["ir_version"] in ("0.2", "0.3", "0.4", "0.5"):
         report["byte_semantics"] = "finite_sequence_bv8_truncating_slice"
         report["sequence_order"] = "strict_half_space_partial_order"
     if answer == z.sat:
@@ -501,12 +502,12 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     sample_queries={}
     # A satisfying path is cross-checked against independent runtime semantics.
     if report["status"] == "bounded_pass":
-        # Nonvacuity is existential. For IR0.4 first seek an actual one-event
+        # Nonvacuity is existential. For IR0.4/0.5 first seek an actual one-event
         # witness with an idle suffix. These SAT subsets never constrain the
         # all-input safety/overlap queries above. Fall back to the original
         # unrestricted witness query if the subsets do not produce a witness.
         strategies=['any-path']
-        if model['ir_version']=='0.4'and model['transitions']:
+        if model['ir_version']in ('0.4','0.5')and model['transitions']:
             strategies=['first-rule-one-event','any-rule-one-event',*strategies]
         attempts=[]
         for strategy in strategies:
