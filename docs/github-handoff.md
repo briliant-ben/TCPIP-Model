@@ -230,3 +230,11 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-04: f14fdac1/tested mergeb3465ea0 exact complete Git tree matches; Linux run41748821541 BOTH new jobs pass:126308497001 native25+7=32 methods/30 fixed native-Z3 cases and126308497801 ten-stage v4flow/verify.97Git bindings/762flow+260native originals in artifacts/arp-udp-v4-linux-f14fdac1 (artifact13284987284 SHAc3fa49f8,13285790868 SHA0d455522). Original-Git read-only audit validates93cases/80literal-contract inputs (83expected rows)/30rules/33gaps/600prefix cutoff,30native fullDiff/30SMT reports/18IPv4 Ethernet frames and66 full-sequence invariant obligations. Initial validity+30preservation+4overlap UNSAT; initial and30rule nonvacuity SAT. No length projection/concrete payload safety restriction/reference callback/assumed poststate. Distinct v4 induction claim covers ONLY listed legal-transition invariants, not wire/coverage/compiler/full protocol. Old depth3 BMC UNKNOWN remains unchanged; modelsemantic hash and generated C byte-identical across strategies (C SHAe2f7f2ea...). No archive code/ELF/solver execution/new Linux claim in audit; CI provenance separately trusted. Local f14 passed flow retained in arp-udp-v4-local-f14fdac1. Afterward generic checker persists query BEFORE solve and refuses nonempty output reuse;8 targeted methods including interrupted-no-passed-report pass,146 broader regression methods had passed before this I/O-only change. Later head must get its own CI; do not extrapolate f14 greens. Next real composed TAP peer and IPv4/UDP/ICMP ingress, then TCP native/timing work; no composed network/complete endpoint proof. Server sole SSH refused, no paid calls (12/83412 exhausted), no main merge/upstream/oracle/hash weakening/user-artifact changes.
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.
