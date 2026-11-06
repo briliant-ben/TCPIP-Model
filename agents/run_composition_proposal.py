@@ -3,6 +3,8 @@ import argparse
 import json
 from pathlib import Path
 import time
+import subprocess
+import resource
 from deepseek_gateway import request
 
 def write(p,v):
@@ -20,6 +22,11 @@ def run(a):
         write(out/(name+'-response.json'),proposal);write(out/(name+'-usage.json'),{k:r.get(k)for k in ('usage','cached','request_sha256')});return proposal
     try:
         context=json.loads(Path(a.task).read_text())
+        for name,count in context.get('required_fixture_counts',{}).items():
+            if len(list((root/'scenarios'/name).glob('*.json')))!=count:raise FileNotFoundError('Required frozen fixtures missing: '+name)
+        success_status=context.get('validation_success_status','validated_namespace_component')
+        if success_status not in ('validated_namespace_component','validated_state_lowering'):raise ValueError('Unsupported validation contract')
+        review={};validation=None
         # Only completed proposals with concrete reviewer findings receive a new
         # repair prompt. A failed/uncertain API request still stops immediately.
         feedback=context.pop('prior_completed_proposal_feedback',None)
@@ -33,14 +40,39 @@ def run(a):
                 path=Path(file['path'])
                 if path.is_absolute()or '..'in path.parts or path.suffix!='.py':raise ValueError('Proposal path rejected')
                 dest=out/('round-'+str(round_index))/'proposals'/path;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_text(file['content'])
+            validation=None
+            if a.validation_script:
+                status(stage='trusted_actual_validation')
+                def limits():
+                    resource.setrlimit(resource.RLIMIT_CPU,(180,180))
+                    resource.setrlimit(resource.RLIMIT_AS,(2*1024**3,2*1024**3))
+                validation_out=out/('validation-'+str(round_index))
+                command=[a.python,a.validation_script,'--workspace',str(root),'--proposals',str(out/('round-'+str(round_index))/'proposals'),'--out',str(validation_out)]
+                try:
+                    with (out/('validation-'+str(round_index)+'.log')).open('w')as log:
+                        p=subprocess.run(command,cwd=root,stdout=log,stderr=subprocess.STDOUT,timeout=300,preexec_fn=limits,env={'PATH':'/usr/bin:/bin','PYTHONPATH':str(root),'PYTHONDONTWRITEBYTECODE':'1'})
+                    validation=json.loads((validation_out/'result.json').read_text())if(validation_out/'result.json').exists()else dict(status='validation_failed',returncode=p.returncode)
+                except subprocess.TimeoutExpired:validation=dict(status='resource_timeout')
+                write(out/('validation-'+str(round_index)+'-summary.json'),validation)
+                status(code_executed=validation.get('proposal_executed',False))
+                if validation.get('classification')=='environment_or_checker'or validation.get('status')=='resource_timeout':
+                    status(status='blocked_environment_or_resources',stage='stopped',validation=validation,automatic_retry=False);return
+                if validation.get('status')!=success_status:
+                    feedback=dict(implementation=implementation,trusted_validation=validation,review=dict(blocking=['Actual trusted gate failed; no paid reviewer called']))
+                    continue
             status(stage='independent_review')
-            review=call('reviewer-'+str(round_index),[dict(role='system',content='Independently review the proposed offline IR composition implementation against the supplied scope. Return JSON {findings,blocking,validation_required,limitations}. Check state/namespace/event remapping, timer ordering, packet queue kind/ARP failure, Ethernet framing and raw ingress bounds. Do not execute code, relax oracle or call passing scenarios a full proof. A reviewer approval is advisory; controller must inspect before executing provider Python.'),dict(role='user',content=json.dumps(dict(task=context,implementation=implementation)))],4096)
-            if not review.get('blocking'):break
-            feedback=dict(implementation=implementation,review=review)
-        status(status='code_proposal_controller_review_required',stage='finished',finished_at=time.time(),blocking=review.get('blocking'),prototype_complete=False)
+            focus=context.get('review_focus','Review only the declared bounded scope, without requiring omitted future protocol features.')
+            try:
+                review=call('reviewer-'+str(round_index),[dict(role='system',content='Independently review this implementation and actual gate results. Return strictly valid JSON {findings,blocking,validation_required,limitations}; do not quote code verbatim in string values. '+focus+' Do not execute code, relax oracle or claim whole-protocol/compiler proof. Approval remains advisory.'),dict(role='user',content=json.dumps(dict(task=context,implementation=implementation,trusted_validation=validation)))],4096)
+            except ValueError:
+                status(status='validated_component_pending_review'if validation and validation.get('status')==success_status else'failed_or_uncertain',stage='stopped',validation=validation,reviewer_response_failed=True,automatic_retry=False);return
+            if not review.get('blocking')and (not a.validation_script or validation.get('status')==success_status):break
+            feedback=dict(implementation=implementation,review=review,trusted_validation=validation)
+        status(status='validated_component_candidate'if a.validation_script and validation.get('status')==success_status and not review.get('blocking')else'code_proposal_controller_review_required',stage='finished',finished_at=time.time(),blocking=review.get('blocking'),validation=validation,prototype_complete=False)
     except Exception as error:status(status='failed_or_uncertain',stage='stopped',error_type=type(error).__name__,finished_at=time.time(),automatic_retry=False);raise
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('workspace','out','task','ledger','credential-file'):p.add_argument('--'+name,required=True)
+    p.add_argument('--validation-script');p.add_argument('--python',default='/usr/bin/python3')
     run(p.parse_args())

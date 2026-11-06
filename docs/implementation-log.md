@@ -812,3 +812,26 @@ PR review correction: workflow helper omitted push checks. #7 now merged; #8 has
 
 
 2026-11-06 continuation on server only: DeepSeek composition job0003 completed code proposal and independent review; reviewer found six blocking defects (unmaintained ARP state, invalid flat state mapping, incomplete raw ingress mapping/bounds, missing queue kind, wrong failure path and Ethernet addresses). Rejected; no provider code executed or integrated. New server job /home/blxu/protocol-flow/candidates/ipv4-compose-20261106-0004 PID85459 uses completed-proposal findings for at most3 implementer/reviewer repair rounds (same ledger, no failed/uncertain API retry, no code execution/main merge). Status/logs remain server-side. CI path repair2c4514a9 is pushed; new GitHub result pending, old red evidence unchanged. Do not say full prototype finished or re-enable scheduling.
+
+
+2026-11-06 server progress correction: bounded jobs stop at failed/review gates;
+they are not continuously running between checks. Actual latest pre-change PR20
+43c9dec check-runs:28success/1failure (ICMP immutable-release127817430850;
+direct ICMP127817430999 and repaired endpoint regression succeeded). No merge.
+DeepSeek pure namespace source from ir-namespace-actual-20261106-0007 is now
+integrated under protocol_lab/compose, SHAa691671c. Its reviewer invalidJSON/job
+failure is retained separately from zero-API controller acceptance: exact1/63/172
+rule transforms,32frozen scenarios and3native cases. OriginalTAR SHA02b7c15e
+and result in artifacts/server-namespace-20261106. Only a preexisting unaccepted
+TCP draft was used in the third gate, not live TCP or completed prototype.
+Six namespace/source-gate plus three prior controller tests pass locally; new
+small CI pending. Fixed source gate executes precisely its parsed AST, forbids
+IO/introspection; it is a restricted capability gate, not a general Python sandbox.
+0006 initially lacked fixtures (controller environment error), then rejected a
+real arm.delay_ms bug after zero-API fixture correction. Fixture counts now checked
+before billing. state-lowering0008 failed three actual code gates (cancel string
+misread as dict); new0009 repairs that completed proposal with exact cancel/state
+examples, same ledger/DeepSeek only, maximum3bounded rounds and actual gate before
+review. No failed/uncertain API retry, GPT child agents, automatic main merge or
+scheduler restart. Next integrate accepted state lowering then explicit TCP/ARP
+queue/framing composition; privileged server networking remains unavailable.

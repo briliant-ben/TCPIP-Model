@@ -1,0 +1,29 @@
+{
+  "status": "validated_namespace_component",
+  "source_sha256": "a691671cf202b5b55e62027b82ce5f1b0d3838942e76fbddefe92d0b2dab04fb",
+  "models": [
+    {
+      "model": "word32-contract",
+      "exact_rules": 1,
+      "frozen_scenarios": 10,
+      "native_cases": 1
+    },
+    {
+      "model": "ipv4-udp-icmp-tap",
+      "exact_rules": 63,
+      "frozen_scenarios": 11,
+      "native_cases": 1
+    },
+    {
+      "model": "tcp-wire-endpoint",
+      "exact_rules": 172,
+      "frozen_scenarios": 11,
+      "native_cases": 1
+    }
+  ],
+  "protocol_complete": false,
+  "compiler_correctness_proved": false,
+  "proposal_executed": true,
+  "phase": "native",
+  "model": "tcp-wire-endpoint"
+}

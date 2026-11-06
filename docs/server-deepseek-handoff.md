@@ -7,7 +7,7 @@ The project directory and original private credential/ledger already exist.
 Credentials are used only inside the existing gateway and never enter prompts,
 Git or reports. The user explicitly authorized further paid requests; the
 original12 entries/83412 known tokens remain intact. An operational lifetime
-limit64 is passed to the existing gateway, with at most2 calls per current job,
+limit64 is passed to the existing gateway, with bounded implementation/review rounds per job,
 cache reuse and no automatic failed/uncertain request retry.
 
 ## Actual first job
@@ -64,3 +64,26 @@ UNKNOWN and2750ms lwIP differences remain separate.
 
 
 2026-11-06 latest server state: whole-composition repair0004 stopped on a provider-completed but truncated8192-token output (invalid_response, counted as paid request19); no automatic identical/uncertain retry and no proposed code executed. Preserve its raw ledger/provider record. Controller decomposed scope into new independent ir-namespace-20261106-0005: pure offline component namespace transform only, <=160source lines, implementer/reviewer max3completed-proposal rounds; other state/queue/Ethernet coupling remains future work. Same server/shared ledger, DeepSeek only. No claim of complete prototype or successful composition.
+
+
+2026-11-06 server progress correction: bounded jobs stop at failed/review gates;
+they are not continuously running between checks. Actual latest pre-change PR20
+43c9dec check-runs:28success/1failure (ICMP immutable-release127817430850;
+direct ICMP127817430999 and repaired endpoint regression succeeded). No merge.
+DeepSeek pure namespace source from ir-namespace-actual-20261106-0007 is now
+integrated under protocol_lab/compose, SHAa691671c. Its reviewer invalidJSON/job
+failure is retained separately from zero-API controller acceptance: exact1/63/172
+rule transforms,32frozen scenarios and3native cases. OriginalTAR SHA02b7c15e
+and result in artifacts/server-namespace-20261106. Only a preexisting unaccepted
+TCP draft was used in the third gate, not live TCP or completed prototype.
+Six namespace/source-gate plus three prior controller tests pass locally; new
+small CI pending. Fixed source gate executes precisely its parsed AST, forbids
+IO/introspection; it is a restricted capability gate, not a general Python sandbox.
+0006 initially lacked fixtures (controller environment error), then rejected a
+real arm.delay_ms bug after zero-API fixture correction. Fixture counts now checked
+before billing. state-lowering0008 failed three actual code gates (cancel string
+misread as dict); new0009 repairs that completed proposal with exact cancel/state
+examples, same ledger/DeepSeek only, maximum3bounded rounds and actual gate before
+review. No failed/uncertain API retry, GPT child agents, automatic main merge or
+scheduler restart. Next integrate accepted state lowering then explicit TCP/ARP
+queue/framing composition; privileged server networking remains unavailable.
