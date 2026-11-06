@@ -378,3 +378,44 @@ job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
 d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
 Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
 requested new capture evidence; their invented numeric/stray-file claims rejected.
+
+
+2026-11-07 milestone: finite raw IPv4/TCP IR0.6 (172rules,117 inheritedTCP
+protocolrules/55wire drops) and11 independent literal scenarios/oracle/fixture are
+now integrated into Git, previously a local draft. Source hashes exactly match
+server-passed7test baseline;11 scenarioJSON equal frozen oracle. It predates
+DeepSeek; do not falsely attribute IR authorship. NewCI tcp-wire-endpoint.yml
+checks7reference/exactfixedZ3/actualC methods plus native suite retaining11queries
+and source/C/compile/ELF/traces. This is finite rawIP TCP, not combinedTCP/ARP or
+liveTCP/completeprototype; inherited16byte buffers/SMSS4/fixedRTO and ACK-on-data
+limitations remain documented in docs/tcp-wire-endpoint.md. Oldall-input UNKNOWN
+and lwIP2750ms/LinuxTCP differences unchanged.
+DeepSeek driver16 frozenSHAaa5f174a integrated exchange.py;0020 SECOND test round
+validation-1 actually passes1synthetic test/1instrumented driver call; round0
+failed link-number assumption and staysfailed in originalTAR61a4ccf1. Local
+integration first selected wrong round0 and reproduced failure, then selected
+actual acceptedround1 via per-round receipts; no expectedpacket/oracle weakened.
+Only repository importpath setup changed in acceptedtest, local1passes. Four rawIR
+reference/scope tests plus two strict independent codec/checksum/syntheticPCAP
+methods pass locally; all7rawIR tests previouslyserverpassed on hash-identical
+files, NEWGitCI must be checked independently. No synthetic test is Linuxevidence.
+ServerDeepSeek jobs: tcp-driver-hardening-20261107-0021/PID112304 adds exactcount/
+cleanup and3actual negative driver invocations, gatebeforepaidreview;
+tcp-linux-harness-20261107-0022/PID112305 authors isolatedactualLinux outerharness
+source+review ONLY (no privilegedexecution or peer forcing beforecontrollerreview).
+Originaldaemon/status isnotprocessproof. Userunlimitedspend authorization still
+sameledger/max_callsNone, no failedoruncertain APIretry/GPT childagents.
+LatestPR17dc0/PR20a576 ICMP immutable/direct failures inspected from originalZIP
+artifact13508887680/SHA d4285939: originaldepth2safety UNKNOWN(canceled60000ms),
+overlapUNSAT, exact safetySMT412b9d51/overlap37f97de7. Stored read-only in
+artifacts/icmp-query-diagnostic-a576; archivedcode/ELF/solver never executed.
+Newservericmp-exact-query-20261107-0023/PID112627 chooses one explicitbuiltinZ3
+exact/equisatisfiable preprocessing and runs one frozen-query diagnostic under
+TOTAL60000ms, savingoriginal/transformedquery/hash/answer/review. Neverchanges
+production, assumptions, domain, depth, oracle, oldUNKNOWN or labels wholeproof.
+SAT wouldrequireoriginalvariable modelconversion and replay beforeintegration.
+Heartbeatautomation 'automation' updated ACTIVE every3hours at user'sexplicit
+request (sameexistingthread, no duplicate); this supersedes earlierstoppedstate.
+Maintain entirebasicIPv4TCP/UDP+ARP/ICMP endstate, not just helperacceptance.
+Serverprivilegednetworkingsudo limitation remains isolated; hostedLinux usable.
+Keep bothuseruntrackedartifacts directories. Noautomatedmainmerge/forcepush.
