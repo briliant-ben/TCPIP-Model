@@ -176,3 +176,11 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-03：7c28f324（GitHub实际merge a3de424c，与head同tree）十一CI实际全部success。新增隔离Linux immutable-release实际103专项/七完整task+verify/15TCPdata原生固定Z3+101连接/9UDP native-PCAP六固定oracle全部通过；241 Git源码/1896原ZIP文件。原Linux receive重新执行runtime verifier有效，实际完整窗口5028.700806ms>=5020、零抓包drops；原83.54us短窗口失败仍无效/保留。严格Difference继续mismatch：最后ACK模型60ms vsLinux20.055ms，窗口12 vs64236，不改oracle/0ms容忍/模型配置、不称RFC bug。release及实际Linux TCP raw ZIP、provenance和原Git只读复核在artifacts/byte-access-linux-ci-7c28f324；核七job/116TCP/9UDP及86Linux源码binding/原runtime-queryhash，不执行归档Python/ELF/solver，离线需信任CI provenance。此为GitHub临时Linux发布验收，不是192.168.71.74项目服务器部署（本轮SSH仍timeout）；也不是UDP接收/跨层/完整栈，后续raw IPv4/UDP receive仍下一模型里程碑。PR12叠PR11继续draft、不自动merge；本次证据文档新头需单独查CI，不外推7c28f324。无新付费API，原12请求83412token上限仍耗尽；旧TCPdepth6 UNKNOWN/lwIP2750ms差异及用户两目录不动。
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.
