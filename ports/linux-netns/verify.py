@@ -45,7 +45,10 @@ def verify(out, runtime=True):
         and namespace['capture_packet_limit']is None and namespace['quiet_interval_complete'], 'Quiet capture scope changed')
     require('-c' not in namespace['capture_command'],'Capture was silently packet-count limited')
     require(namespace['capture_ready_monotonic_ns']<=namespace['packetdrill_start_monotonic_ns']
-        <=namespace['quiet_barrier_monotonic_ns']<=namespace['capture_exit_monotonic_ns'],'Capture lifecycle order changed')
+        <=namespace['quiet_barrier_monotonic_ns']<=namespace['capture_stop_request_monotonic_ns']
+        <=namespace['capture_exit_monotonic_ns'],'Capture lifecycle order changed')
+    require(namespace['observation_boundary_policy']=='first_selected_capture_timestamp_plus_declared_settle_v1',
+        'Capture deadline policy changed')
     dropped=re.findall(r'(\d+) packets dropped by kernel',(out/'capture.log').read_text())
     require(dropped and int(dropped[-1])==0,'Capture drops invalidate complete observation')
     tool=read(out/'tool-build.json'); pin=read(driver.PORT/'upstream.json')
@@ -82,7 +85,11 @@ def verify(out, runtime=True):
     require(observed==read(out/'observed.json') and metadata==read(out/'metadata.json'),
         'Independent raw-capture normalization changed')
     require(namespace['declared_settle_ms']==scene['settle_ms'],'Scenario settle scope changed')
-    window_ms=(namespace['quiet_barrier_epoch_ns']-metadata['time_origin_ns'])/1000000
+    require(namespace['capture_time_origin_ns']==metadata['time_origin_ns']
+        and namespace['observation_deadline_epoch_ns']==metadata['time_origin_ns']+scene['settle_ms']*1000000
+        and namespace['quiet_barrier_epoch_ns']<=namespace['capture_stop_request_epoch_ns'],
+        'Capture deadline/origin changed')
+    window_ms=(namespace['capture_stop_request_epoch_ns']-metadata['time_origin_ns'])/1000000
     require(window_ms==result['observed_window_ms'] and window_ms>=namespace['declared_settle_ms'],
         'Quiet observation window shortened or relabelled')
     difference=compare(expected,observed,tolerance_ms=0,projection=driver.projection(scenario))
