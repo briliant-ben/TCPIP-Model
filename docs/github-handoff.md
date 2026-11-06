@@ -302,3 +302,26 @@ proposal, bounded3rounds; it does not implement packet dispatch or queue/framing
 and source remains unexecuted pending external acceptance. Original UNKNOWN/
 Differences remain. Namespace milestone d6ba0a92 pushed toPR20; its new CI must
 be checked independently. No main merge or scheduler restart.
+
+
+2026-11-06 PR8 actually repaired: original cc70a74d failed job124784462166 now
+has fast-forward backport d5863163 on codex/server-deployment.16 boundary checks
+pass and NEW head9CI checks all success incl handshake/loss/receive Linux jobs.
+Original invalid ZIP SHAaa24089f retained in the separate PR8 branch, not promoted;
+no model/oracle/hash relaxation. PR8 still targets codex/spec-flow-c99, not main;
+GitHub main versusPR8 is diverged(14ahead/1behind at check). No bulk/main merge.
+PR20 source3d04899b had53/55success, both failures ICMP immutable-release; direct
+native/formal passed. Neither old UNKNOWN nor this failure is silently removed.
+Server blxu@192.168.71.78 reachable, sudo-n still requires password; privileged
+server netns lane blocked, generated/reference/C/Z3 and hosted Linux continue.
+DeepSeek0013 pure disjoint union accepted under actual32frozen/3native/7negative
+and legal-string counterexample gates, advisory reviewer empty. Source SHAf1a3b780
+integrated protocol_lab/compose/disjoint_union.py; rawTAR809261ba includes previous
+0011 rejected broad string scanner and actual executedchecker. Two new independent
+literal/native and rejection tests pass. This is offline interleaving, NOT TCP/ARP
+packet/queue composition or completed prototype. No GPT child agents used.
+TCPexchange0014 source failed artificial237line/220gate, completed API unchanged;
+root found real ABI/timer/sending/drain defects (never executed). New0015 asks
+DeepSeek implementer+reviewer to repair those concrete errors, without a paid API
+retry, packet mutation or forced peer policy; no live TCP success yet. Both user
+untracked artifact directories remain untouched. Scheduling remains stopped.
