@@ -200,3 +200,11 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-03：ARP修正fixture后最终本地flow0002全部通过，119专项+6部署/13固定原生Z3均通过；282源码/599原文件与原Git只读复核在artifacts/arp-endpoint-local-5fce7f74。c39494a9六CI已实际全success（tested merge101701df与head同tree），新固定Linux release实际119方法/九task+verify/15TCPdata+101连接+13ARP原生固定Z3及9UDP TX观察全部通过。282源码/2761原文件在artifacts/arp-endpoint-linux-ci-c39494a9，artifact13210871706/run41592514105 SHA9df93dd0固定；只读原Git核282blob/九job/129原生diff/28原SMT-report及9旧UDP观测，不执行归档Python/ELF/solver。ARP64例/32literal/30gap/21规则/160prefix资源上限及depth3双UNSAT只为声明合同；无真实ARP peer/新Ethernet抓包/完整ARP或跨层。旧真实UDP里程碑保持。新PR15叠仍开PR14，本次证据提交后头须单独查CI不外推c394绿；server一次SSH仍timeout、原12API预算未重置零新增。下一步优先隔离TAP/Ethernet真实ARP peer，必须保持单个有状态生成C进程，禁止重放prefix冒充持续执行；当前C stdout在pipe下缓冲，建议stdin PIPE/stdout raw PTY通用I/O（或有源hash/回归的generic flush），时钟仅按公开native timers和monotonic机械推进，不藏ARP决策。随后ICMP与IR跨层组合；仍不自动main merge/不弱化oracle/hash/不改上游。
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.
