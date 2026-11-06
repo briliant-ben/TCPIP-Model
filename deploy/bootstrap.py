@@ -29,7 +29,18 @@ def bootstrap(release,out):
         row=json.loads(p.stdout)
         if not row['accepted']:raise ValueError('Release task not accepted')
         rows.append(dict(id=task['id'],run_id=row['run_id'],client=str(folder/'client-result.json')))
-    result=dict(schema='spec-flow-server-bootstrap-v1',status='pass',source_commit=manifest['source_commit'],tasks=rows,python=sys.version.split()[0],compiler=shutil.which('cc'),network_configuration_changed=False,api_calls_made=0,completed_at=time.time())
+    native_rows=[]
+    for i,case in enumerate(manifest.get('native_suites',[])):
+        folder=out/('native-suite-'+str(i))
+        command=[str(python),str(tools/'examples/run_native_suite.py'),case['model'],'--scenario-dir',case['scenario_dir'],'--out',str(folder)]
+        if case['formal_replay']:command.append('--formal-replay')
+        p=subprocess.run(command,cwd=tools,env=env,capture_output=True,text=True)
+        (out/('native-suite-'+str(i)+'.stdout')).write_text(p.stdout);(out/('native-suite-'+str(i)+'.stderr')).write_text(p.stderr)
+        if p.returncode!=0:raise ValueError('Native fixed-input suite did not pass')
+        report=json.loads(p.stdout)
+        if report['status']!='pass':raise ValueError('Native suite not accepted')
+        native_rows.append(dict(model=case['model'],cases=len(report['cases']),status=report['status'],formal_replay_requested=case['formal_replay']))
+    result=dict(schema='spec-flow-server-bootstrap-v1',status='pass',source_commit=manifest['source_commit'],tasks=rows,native_suites=native_rows,python=sys.version.split()[0],compiler=shutil.which('cc'),network_configuration_changed=False,api_calls_made=0,completed_at=time.time())
     (out/'bootstrap.json').write_text(json.dumps(result,indent=2)+'\n');return result
 
 

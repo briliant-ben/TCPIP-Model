@@ -1,0 +1,387 @@
+{
+  "depth": 1,
+  "initials": [
+    {}
+  ],
+  "cases": [
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "app.send",
+      "fields": {
+        "source_port": 4242,
+        "destination_port": 8080,
+        "data": {
+          "bytes": [
+            0,
+            255,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 4242,
+        "destination_port": 8080,
+        "length": 11,
+        "checksum": 51234,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            0,
+            255,
+            10,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "app.send",
+      "fields": {
+        "source_port": 0,
+        "destination_port": 8080,
+        "data": {
+          "bytes": []
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 5020,
+        "destination_port": 8080,
+        "length": 8,
+        "checksum": 0,
+        "sum_valid": false,
+        "data": {
+          "bytes": []
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 7000,
+        "destination_port": 8080,
+        "length": 10,
+        "checksum": 65535,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            7,
+            8,
+            99,
+            100
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 7000,
+        "destination_port": 8080,
+        "length": 14,
+        "checksum": 1234,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 7000,
+        "destination_port": 8080,
+        "length": 5,
+        "checksum": 1234,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            1
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1111,
+        "destination_port": 8080,
+        "length": 9,
+        "checksum": 4242,
+        "sum_valid": false,
+        "data": {
+          "bytes": [
+            65
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1111,
+        "destination_port": 8080,
+        "length": 9,
+        "checksum": 0,
+        "sum_valid": false,
+        "data": {
+          "bytes": [
+            65
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1234,
+        "destination_port": 9090,
+        "length": 10,
+        "checksum": 999,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            1,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "app.configure_checksum",
+      "fields": {
+        "enabled": false
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "app.send",
+      "fields": {
+        "source_port": 65535,
+        "destination_port": 8080,
+        "data": {
+          "bytes": [
+            1,
+            2,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": -1,
+        "destination_port": 8080,
+        "length": 10,
+        "checksum": 1,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            0,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 65536,
+        "destination_port": 8080,
+        "length": 10,
+        "checksum": 1,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            0,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1,
+        "destination_port": -1,
+        "length": 10,
+        "checksum": 1,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            0,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1,
+        "destination_port": 65536,
+        "length": 10,
+        "checksum": 1,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            0,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1,
+        "destination_port": 8080,
+        "length": -1,
+        "checksum": 1,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            0,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1,
+        "destination_port": 8080,
+        "length": 65536,
+        "checksum": 1,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            0,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1,
+        "destination_port": 8080,
+        "length": 10,
+        "checksum": -1,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            0,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1,
+        "destination_port": 8080,
+        "length": 10,
+        "checksum": 65536,
+        "sum_valid": true,
+        "data": {
+          "bytes": [
+            0,
+            255
+          ]
+        }
+      }
+    },
+    {
+      "states": [
+        "READY"
+      ],
+      "event": "app.send",
+      "fields": {
+        "source_port": -1,
+        "destination_port": 8080,
+        "data": {
+          "bytes": [
+            255,
+            0
+          ]
+        }
+      }
+    }
+  ]
+}

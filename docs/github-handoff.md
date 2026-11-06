@@ -121,6 +121,33 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 2026-11-01：按用户授权定位此前常用本地免密服务器，独立目录部署59源码/约276KB包，Python3.12.3/C99。首次58文件包遗漏旧事件任务，测试失败保留；修订包实际通过37专项及TCP事件/TCP-wire/UDP三个运行与verify。凭据仅服务器私有0600文件，不入Git/提示/日志。新增受限DeepSeek JSON网关（共享上限12、输出/字节限制、写前台账、完成去重、失败不自动付费重试），实际4请求30519token含失败；一次显式格式修正命中7808输入缓存token。首次model JSON失败原内容未保存，仅状态/usage，已修复后续原响应留存；独立critic也有计数错误，控制器先核对修订，不直接信任多agent输出。新IPv4输入头部IR经审查移除伪model-gap空操作、补字段域/坏IHL，修正四次discard计数；4规则/9例/7独立契约、depth6 safety/overlap UNSAT、本地与服务器原生执行通过。6部署/网关离线故障测试及5IPv4专项通过。696文件原服务器证据、模型建议、显式修订及脱敏用量见artifacts/server-deployment-20261101。完整IPv4+TCP/UDP+ARP/ICMP实现仍未完成；后续先原生字节语义和跨层组合，范围矩阵见docs/ipv4-endpoint-roadmap.md。
 
 
+2026-11-01：新增direct-c99-bytes-v2，从IR显式生成字节状态／事件／输出、长度、拼接、offset/count切片、完整内容比较及条件值；tx_flags等字符串状态按源字面量封闭集合生成，保留NUL/Unicode完整身份。每值／中间值4096字节、signed64、输出容量等执行域显式拒绝，整操作含先行timer与输出原子回滚。14字节专项实际通过（含ASan/UBSan、非零内容、极端切片、timer/输出容量失败、同长度内容故障及false-return注入）；此前12标量、9wire、20流程、8迁移、5IPv4专项分别通过，非整仓完整回归。15现有TCPdata原生场景与独立固定输入Z3重放匹配，101连接原生回归通过；当前最终源码的Linux独立发布验证待完成。旧IR／参考／Z3后端未改，TCP depth6 UNKNOWN不提升。一次DeepSeek独立审查因1536输出限额截断，计5092token，保留原响应且不记审查通过、不自动付费重试。代码生成器正确性、TCP payload PCAP、完整IPv4/UDP/ARP/ICMP端点仍开放，见docs/native-bytes.md。
+
+
+2026-11-01：原生字节里程碑2a2fed2c已在既有Linux服务器独立发布目录实际通过63专项（20流程/9wire/8迁移/12标量/14字节，含ASan/UBSan）、三基线任务/verify、15TCPdata原生及独立固定输入Z3匹配、101连接原生回归。184具名Git文件及1188原始服务器证据在artifacts/native-bytes-server-2a2fed2c；只读验收导出原Git工具复核三任务、重渲染C、重比较116原始观测，核对15SMT/result但不执行归档Python/ELF/solver。两种归档/重哈希观测故障均拒绝。源包约314KB，旧发布不变，无网络/SSH变更、测试零API调用。字节后端有限域可用，完整IPv4端点与payload线端组合仍开放，不标记总体完成；旧depth6 UNKNOWN和2750ms差异保持。
+
+
+2026-11-01：用户授权agent后台运行、偶尔检查并节省token。新增固定JSON双角色建模作业控制器、UDP payload字节服务描述契约及3项离线正反门禁测试；最多两初始请求/两修正，共享原12请求台账，零自动失败重试，240秒验证/两小时作业界限。独立reviewer先产literal oracle并冻结，候选只能改IR，自动跑参考/生成C/固定输入Z3及depth3检查；UNKNOWN/超时保持unresolved，candidate_ready仍需控制器复核，不自动集成/合并。范围为payload跨层的前置描述切片，不冒称UDP线端。PR#9五条CI已实际success。后台进程实际启动与结果另按status/服务器回执记录，见docs/unattended-model-jobs.md。
+
+
+2026-11-01：已实际启动服务器nohup受限双agent。首次udp-payload-0001因reviewer缺scenario版本/step时间元数据停止，原两请求成功共12591token，未丢原literal输出；审查器元数据规范化仅补0.2并从原单条trace拷贝时间、逐项记账、不改expected内容。修订d1b19c9d在新0002工作区复用两缓存响应（零重复付费），初始错误IR由工具诊断触发有界修正。已核实进程586075运行中，状态/日志及四小时稀疏本聊天巡检位置见docs/unattended-model-jobs.md。4离线门禁通过并加入离线CI；不宣称作业已验收或完整栈完成。
+
+
+2026-11-01后台巡检：0002作业终态unresolved，六个原生场景和固定输入Z3匹配，但depth3 safety UNKNOWN/canceled、overlap UNSAT。控制器发现真实合同缺陷：接收规则缺uint16及bytes<=4096域条件，负端口被接收，超容量输入未排除；六个场景通过不足以验收。原始候选/ELF/SMT/UNKNOWN及拒绝审查在artifacts/udp-payload-agent-0002，未集成。共享台账八请求56821已知token（本轮三调用21210，修正输入缓存4224）。在原12上限内仅安排一次新修正，固定oracle不变，并新增九个恶意域探针。最新后台作业/home/blxu/protocol-flow/candidates/udp-payload-0003/status.json，控制器/home/blxu/protocol-flow/controllers/6efcc2e7/agents/repair_model_job.py，日志同控制器目录job.log，初始PID593317；以实际进程及状态为准，不自动重启。原UNKNOWN不改写，不为solver期限付费重试。
+
+
+续：0003一次付费修正完成后因两处三元and被严格IR拒绝（Boolean type mismatch）；原候选保留，不自动付费重试。累计九调用66113已知token，预算仍12。控制器在新0004工作区仅把两处and(a,b,c)显式结合为and(and(a,b),c)，操作数/顺序不变，normalization.json绑定原模型SHA及两处路径；无API调用，不改原六场景。最新状态/home/blxu/protocol-flow/candidates/udp-payload-0004/status.json，日志controller.log，初始PID593635，原固定九域探针及参考/C/固定输入Z3/depth3门禁重新实际运行。此结构规范化不构成批准，仍待实际结果；0002 UNKNOWN保持。
+
+
+巡检结果：0004固定验证实际通过，六原生场景/13字面量trace步骤、六独立固定输入Z3匹配、九非法接收域探针、depth3 safety及overlap均UNSAT。控制器已逐完整模型JSON核对仅两处and结构规范化、原场景SHA不变，重渲染C/重比较六原观测、六生成器输入对2a2fed2c不可变Git及SMT哈希一致；76原始文件在artifacts/udp-payload-agent-0004。零API本地核验，不执行归档Python/ELF/solver；旧0002 UNKNOWN单独保留。累计九调用66113已知token，原12上限不重置。候选有限切片门槛通过但尚未集成model/与十阶段flow，也不是UDP线端/PCAP或完整IPv4栈。下一检查点先固定源/场景/探索域/task并串行集成，再推进wire/跨层。0004进程已自然结束，不应重启已完成作业。
+
+
+2026-11-02：0004候选串行集成model/udp-payload.json、六原字节不变场景、单步21输入探索及flows/udp-payload.json，新增profile requirement明确4096/端口8080/暂未ICMP/校验和假设，修正agent页码/内容抽象说明，guard/action等协议逻辑不改。首轮flow探索错误使用原始list而非IR bytes字面量，失败保留；修正探索表达形式并重绑定task后，本地十阶段+只读verify全部通过：4规则见证+6固定种子+9域拒绝共19例，13独立trace步骤，depth3 safety/overlap UNSAT；非UDP wire/PCAP。新增4内容/默认checksum/域故障专项、旧8迁移与6部署方法分别通过，无通用protocol_lab代码改动。udp-payload独立release profile将跑41专项及四完整任务；实际Linux新发布待完成。API台账仍九请求66113已知token，本轮零API。
+
+
+2026-11-02：34e47060集成UDP字节flow已在独立Linux发布实际通过41专项及四完整任务/verify（原三基线全部回归）。UDP任务4见证+6原字面量种子+9model-gap拒绝共19例、13独立trace、depth3双UNSAT；70源码/约285KB包。751原服务器文件及原本地探索编码失败在artifacts/udp-payload-flow-34e47060，只读验收逐70不可变Git blob/原Git校验器核验四job，不运行归档Python/ELF/solver。通用protocol_lab源码未改，独立数据模块经相同flow成立；未宣称UDP wire/PCAP/完整IPv4端点。另一有界agent已返回UDP线编码IR语义设计提案，尚未实现或批准，保留artifacts/udp-wire-design-0001；累计10调用75605已知token，原12上限不重置；本轮集成/部署/验收零API，仅此新设计调用9492token。旧2e67601e五CI实际通过，新集成提交CI需单独等终态。下一步审查新字节/packing/checksum显式IR语义并同步参考/独立Z3/C后端；禁止将提案当实现或绕过formal拒绝。
+
+
 2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
 and16 actual local boundary tests to original cc70a74d. Preserve original failed
 job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later

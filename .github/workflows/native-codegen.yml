@@ -2,9 +2,9 @@ name: Native IR code generation
 on:
   push:
     branches: ['codex/**', main]
-    paths: ['protocol_lab/codegen/**', 'tests/test_codegen_native.py', 'model/tcp.json', 'model/seq32-contract.json', 'protocol_lab/ir.py', 'protocol_lab/flow.py', '.github/workflows/native-codegen.yml']
+    paths: ['protocol_lab/codegen/**', 'tests/test_codegen_native.py', 'tests/test_codegen_bytes.py', 'examples/run_native_suite.py', 'model/**', 'scenarios/**', 'protocol_lab/ir.py', 'protocol_lab/flow.py', '.github/workflows/native-codegen.yml']
   pull_request:
-    paths: ['protocol_lab/codegen/**', 'tests/test_codegen_native.py', 'model/tcp.json', 'model/seq32-contract.json', 'protocol_lab/ir.py', 'protocol_lab/flow.py', '.github/workflows/native-codegen.yml']
+    paths: ['protocol_lab/codegen/**', 'tests/test_codegen_native.py', 'tests/test_codegen_bytes.py', 'examples/run_native_suite.py', 'model/**', 'scenarios/**', 'protocol_lab/ir.py', 'protocol_lab/flow.py', '.github/workflows/native-codegen.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -16,15 +16,25 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
+      - name: Prepare pinned formal dependency
+        run: |
+          python3 -m venv /tmp/native-codegen-venv
+          /tmp/native-codegen-venv/bin/python -m pip install -r requirements-formal.txt
       - name: Build execute and fault-check independently generated C99
         run: |
           mkdir -p artifacts/native-codegen-ci
-          python3 -m unittest discover -s tests -p test_codegen_native.py -v > artifacts/native-codegen-ci/tests.log 2>&1
+          /tmp/native-codegen-venv/bin/python -m unittest discover -s tests -p test_codegen_native.py -v > artifacts/native-codegen-ci/tests.log 2>&1
+      - name: Verify native byte content capacities and rollback
+        run: /tmp/native-codegen-venv/bin/python -m unittest discover -s tests -p test_codegen_bytes.py -v > artifacts/native-codegen-ci/bytes-tests.log 2>&1
+      - name: Execute TCP data through generated C and independent fixed-input Z3
+        run: /tmp/native-codegen-venv/bin/python examples/run_native_suite.py model/tcp-data.json --scenario-dir scenarios/data --formal-replay --out artifacts/native-codegen-ci/tcp-data > artifacts/native-codegen-ci/tcp-data-stage.json
+      - name: Regress closed-string connection states with actual native control scenarios
+        run: /tmp/native-codegen-venv/bin/python examples/run_native_suite.py model/tcp-connection.json --scenario-dir scenarios/connection --out artifacts/native-codegen-ci/tcp-connection > artifacts/native-codegen-ci/tcp-connection-stage.json
       - name: Generate build execute and compare the active-open slice
         run: |
-          python3 -m protocol_lab.codegen model/tcp.json --out artifacts/native-codegen-ci/generated > artifacts/native-codegen-ci/generation-stage.json
-          python3 -m protocol_lab.codegen.execute build artifacts/native-codegen-ci/generated --out artifacts/native-codegen-ci/build > artifacts/native-codegen-ci/build-stage.json
-          python3 -m protocol_lab.codegen.execute run artifacts/native-codegen-ci/generated --compiled artifacts/native-codegen-ci/build --scenario scenarios/syn-loss.json --out artifacts/native-codegen-ci/syn-loss > artifacts/native-codegen-ci/execute-stage.json
+          /tmp/native-codegen-venv/bin/python -m protocol_lab.codegen model/tcp.json --out artifacts/native-codegen-ci/generated > artifacts/native-codegen-ci/generation-stage.json
+          /tmp/native-codegen-venv/bin/python -m protocol_lab.codegen.execute build artifacts/native-codegen-ci/generated --out artifacts/native-codegen-ci/build > artifacts/native-codegen-ci/build-stage.json
+          /tmp/native-codegen-venv/bin/python -m protocol_lab.codegen.execute run artifacts/native-codegen-ci/generated --compiled artifacts/native-codegen-ci/build --scenario scenarios/syn-loss.json --out artifacts/native-codegen-ci/syn-loss > artifacts/native-codegen-ci/execute-stage.json
       - name: Retain actual compiler execution traces and hashes
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

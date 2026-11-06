@@ -236,3 +236,15 @@ IR 0.3 增加规范有理值、精确常系数运算、ceil 和显式事件时�
 
 
 2026-11-01：按用户授权定位此前常用本地免密服务器，独立目录部署59源码/约276KB包，Python3.12.3/C99。首次58文件包遗漏旧事件任务，测试失败保留；修订包实际通过37专项及TCP事件/TCP-wire/UDP三个运行与verify。凭据仅服务器私有0600文件，不入Git/提示/日志。新增受限DeepSeek JSON网关（共享上限12、输出/字节限制、写前台账、完成去重、失败不自动付费重试），实际4请求30519token含失败；一次显式格式修正命中7808输入缓存token。首次model JSON失败原内容未保存，仅状态/usage，已修复后续原响应留存；独立critic也有计数错误，控制器先核对修订，不直接信任多agent输出。新IPv4输入头部IR经审查移除伪model-gap空操作、补字段域/坏IHL，修正四次discard计数；4规则/9例/7独立契约、depth6 safety/overlap UNSAT、本地与服务器原生执行通过。6部署/网关离线故障测试及5IPv4专项通过。696文件原服务器证据、模型建议、显式修订及脱敏用量见artifacts/server-deployment-20261101。完整IPv4+TCP/UDP+ARP/ICMP实现仍未完成；后续先原生字节语义和跨层组合，范围矩阵见docs/ipv4-endpoint-roadmap.md。
+
+
+2026-11-01：新增direct-c99-bytes-v2，从IR显式生成字节状态／事件／输出、长度、拼接、offset/count切片、完整内容比较及条件值；tx_flags等字符串状态按源字面量封闭集合生成，保留NUL/Unicode完整身份。每值／中间值4096字节、signed64、输出容量等执行域显式拒绝，整操作含先行timer与输出原子回滚。14字节专项实际通过（含ASan/UBSan、非零内容、极端切片、timer/输出容量失败、同长度内容故障及false-return注入）；此前12标量、9wire、20流程、8迁移、5IPv4专项分别通过，非整仓完整回归。15现有TCPdata原生场景与独立固定输入Z3重放匹配，101连接原生回归通过；当前最终源码的Linux独立发布验证待完成。旧IR／参考／Z3后端未改，TCP depth6 UNKNOWN不提升。一次DeepSeek独立审查因1536输出限额截断，计5092token，保留原响应且不记审查通过、不自动付费重试。代码生成器正确性、TCP payload PCAP、完整IPv4/UDP/ARP/ICMP端点仍开放，见docs/native-bytes.md。
+
+
+2026-11-01：原生字节里程碑2a2fed2c已在既有Linux服务器独立发布目录实际通过63专项（20流程/9wire/8迁移/12标量/14字节，含ASan/UBSan）、三基线任务/verify、15TCPdata原生及独立固定输入Z3匹配、101连接原生回归。184具名Git文件及1188原始服务器证据在artifacts/native-bytes-server-2a2fed2c；只读验收导出原Git工具复核三任务、重渲染C、重比较116原始观测，核对15SMT/result但不执行归档Python/ELF/solver。两种归档/重哈希观测故障均拒绝。源包约314KB，旧发布不变，无网络/SSH变更、测试零API调用。字节后端有限域可用，完整IPv4端点与payload线端组合仍开放，不标记总体完成；旧depth6 UNKNOWN和2750ms差异保持。
+
+
+2026-11-02：0004候选串行集成model/udp-payload.json、六原字节不变场景、单步21输入探索及flows/udp-payload.json，新增profile requirement明确4096/端口8080/暂未ICMP/校验和假设，修正agent页码/内容抽象说明，guard/action等协议逻辑不改。首轮flow探索错误使用原始list而非IR bytes字面量，失败保留；修正探索表达形式并重绑定task后，本地十阶段+只读verify全部通过：4规则见证+6固定种子+9域拒绝共19例，13独立trace步骤，depth3 safety/overlap UNSAT；非UDP wire/PCAP。新增4内容/默认checksum/域故障专项、旧8迁移与6部署方法分别通过，无通用protocol_lab代码改动。udp-payload独立release profile将跑41专项及四完整任务；实际Linux新发布待完成。API台账仍九请求66113已知token，本轮零API。
+
+
+2026-11-02：34e47060集成UDP字节flow已在独立Linux发布实际通过41专项及四完整任务/verify（原三基线全部回归）。UDP任务4见证+6原字面量种子+9model-gap拒绝共19例、13独立trace、depth3双UNSAT；70源码/约285KB包。751原服务器文件及原本地探索编码失败在artifacts/udp-payload-flow-34e47060，只读验收逐70不可变Git blob/原Git校验器核验四job，不运行归档Python/ELF/solver。通用protocol_lab源码未改，独立数据模块经相同flow成立；未宣称UDP wire/PCAP/完整IPv4端点。另一有界agent已返回UDP线编码IR语义设计提案，尚未实现或批准，保留artifacts/udp-wire-design-0001；累计10调用75605已知token，原12上限不重置；本轮集成/部署/验收零API，仅此新设计调用9492token。旧2e67601e五CI实际通过，新集成提交CI需单独等终态。下一步审查新字节/packing/checksum显式IR语义并同步参考/独立Z3/C后端；禁止将提案当实现或绕过formal拒绝。

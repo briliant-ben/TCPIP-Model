@@ -1,0 +1,65 @@
+{
+  "id": "s2-zero-length-empty",
+  "note": "empty app.send emits length 8; received length==8 with no padding delivers empty payload",
+  "steps": [
+    {
+      "event": "app.send",
+      "fields": {
+        "source_port": 0,
+        "destination_port": 8080,
+        "data": []
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "udp.send",
+              "fields": {
+                "source_port": 0,
+                "destination_port": 8080,
+                "length": 8,
+                "checksum_enabled": true,
+                "data": []
+              }
+            }
+          ]
+        }
+      ],
+      "at_ms": 0
+    },
+    {
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 5020,
+        "destination_port": 8080,
+        "length": 8,
+        "checksum": 0,
+        "sum_valid": false,
+        "data": []
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "udp.delivery",
+              "fields": {
+                "source_port": 5020,
+                "destination_port": 8080,
+                "data": []
+              }
+            }
+          ]
+        }
+      ],
+      "at_ms": 0
+    }
+  ],
+  "initial": {},
+  "expect": {
+    "state": "READY",
+    "timers": {}
+  },
+  "scenario_version": "0.2"
+}

@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 import shutil
 import subprocess
-from . import generate,render,sha
+from . import generate,render,sha,string_literals
 from ..ir import load,value_ok,ModelError
 from ..symbolic import model_hash
 from ..flow import run_scenario
@@ -20,7 +20,7 @@ def build(generation,out):
     generation=Path(generation).resolve();out=Path(out).resolve()
     if out.exists():raise ValueError('Fresh build directory required')
     r=json.loads((generation/'generation.json').read_text())
-    if r['stage']!='generate'or r['status']!='pass'or r['backend']!='direct-c99-scalar-v1':raise ValueError('Unsupported generation evidence')
+    if r['stage']!='generate'or r['status']!='pass'or r['backend']!='direct-c99-bytes-v2':raise ValueError('Unsupported generation evidence')
     for name,digest in r['inputs'].items():
         if sha(name)!=digest:raise ValueError('Generation input changed: '+name)
     if sha(generation/'protocol.c')!=r['outputs']['protocol.c']:raise ValueError('Generated source hash changed')
@@ -48,18 +48,25 @@ def build(generation,out):
     write(out/'compile.json',result);return result
 
 
+def token(value,kind):return 'b:'+bytes(value).hex()if kind=='bytes'else str(int(value))
+
+
 def commands(model,scenario):
     variables=list(model['variables']);rows=[]
     for name,v in scenario.get('initial',{}).items():
         if name not in variables or not value_ok(v,model['variables'][name]['type']):raise ValueError('Invalid initial override')
-        rows.append('I '+str(variables.index(name))+' '+str(int(v)))
+        if model['variables'][name]['type']=='string':
+            if v not in string_literals(model):raise ValueError('Initial string outside source-literal backend domain')
+            value=str(string_literals(model).index(v))
+        else:value=token(v,model['variables'][name]['type'])
+        rows.append('I '+str(variables.index(name))+' '+value)
     rows.append('B')
     for step in scenario['steps']:
         if type(step['at_ms'])is not int:raise ValueError('Integer milliseconds required')
         if step.get('tick'):rows.append('T '+str(step['at_ms']));continue
         event=step['event'];schema=model['events'][event]['fields'];fields=step.get('fields',{})
         if set(fields)!=set(schema)or any(not value_ok(fields[n],kind)for n,kind in schema.items()):raise ValueError('Invalid event fields')
-        rows.append('D '+str(step['at_ms'])+' '+event+''.join(' '+str(int(fields[n]))for n in schema))
+        rows.append('D '+str(step['at_ms'])+' '+event+''.join(' '+token(fields[n],schema[n])for n in schema))
     if 'settle_ms'in scenario:rows.append('T '+str(scenario['settle_ms']))
     return '\n'.join(rows)+'\n'
 
