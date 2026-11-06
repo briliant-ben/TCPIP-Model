@@ -185,3 +185,11 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-03：f266e4ac专用receive CI双job（8新专项/27例flow和immutable-release）已实际success；tested merge040addc0与head整Git tree相同。隔离Ubuntu新发布实际111专项、八完整task/verify、15TCPdata原生固定Z3+101连接以及9UDP TX/六oracle全部通过。260源码/2161原ZIP文件在artifacts/udp-receive-linux-ci-f266e4ac，artifact13184583736/run41538066860 SHA85bda7d5固定；可达原Git只读audit核260blob/八job/116TCP/9UDP与15TCP查询hash，不运行归档Python/ELF/solver。新receive27例/13literaltrace与depth2范围/dropempty/overlap双UNSAT保持；12固定接收Z3在Linux单测实际重放，分开的12原SMT/result/native保存在本地79d包，不改标Linux查询证据。父PR12头716十一CI已实际全success；873ff808新证据头当前四CI success、receive/Linux仍运行，最后提交亦需单独查，不外推。此为有限raw UDP RX entry模型/C平台里程碑，不是网络peer/UDP新抓包/跨层/完整栈；项目server仍SSH超时。下一步先核最终头/CI，按官方规范扩展必要IR接收域并打通独立UDP peer/观测，再ARP/ICMP/TCP组合。保持RFC版本/范围/未知结果与旧差异，不自动main合并，原12付费上限不重置。
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.
