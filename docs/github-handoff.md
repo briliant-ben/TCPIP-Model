@@ -161,3 +161,11 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-02：修订1b13a36f在Linux独立发布实际通过96专项、六完整任务/verify、15TCPdata原生/固定输入Z3和101连接回归。新发送task9例/10literaltrace、9个实际C生成IPv4/UDP包，其PCAP由原字节封装、独立解码/校验/对六固定oracle全部匹配；模型IR中明示全部layout/checksum/default/zero policy，无新opcode或UDP Ccodec。228不可变源码/约374KB包、1746原文件及原Git只读验收在artifacts/udp-transmit-server-1b13a36f。特别逐字节确认两份全depth2/全输入safety与overlap SMT和原f947诊断完全一致；只为存在性非空样本增加exact固定choice单事件SAT+重放（样本查询/哈希另存），不把未知全输入性质变为固定例证明。原失败/UNKNOWN保持、未来失败test job保留。独立agent静态协议审查无findings但非证明、未审后续采样优化；累计12调用83412已知token，原12上限已达，不自重置；只付费agent通道受限，本地继续。功能仍固定tuple/TTL64/DF1ID0/MTU1500发送虚拟链路，不是UDP接收/ARP/ICMP/Linuxpeer/物理抓包/完整栈。后续补原始包字节读取/接收及独立peer渠道，再跨层组合。新PR/CI按实际状态更新，不自动merge。
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.

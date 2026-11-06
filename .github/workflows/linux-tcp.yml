@@ -28,6 +28,8 @@ jobs:
           .venv/bin/python -m pip install -r requirements-formal.txt
       - name: Build exact unmodified official packetdrill source
         run: bash ports/linux-netns/build.sh
+      - name: Check capture lifecycle boundaries and unchanged packet oracle
+        run: .venv/bin/python ports/linux-netns/tests.py > artifacts/linux-netns/driver-tests.log 2>&1
       - name: Run isolated kernel active-open and independent capture
         run: sudo .venv/bin/python ports/linux-netns/run.py --execute --scenario ${{ matrix.scenario }}
       - name: Independently reconstruct and verify actual Linux evidence
