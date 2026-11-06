@@ -194,3 +194,11 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-03：b10fca8d修订真实Linux UDP peer/runtime gate已实际success（run41568756821/job125696495591，tested merged2d9fa03与head整tree一致）。生成C TX→原字节TUN→独立Linux UDP socket→原始TUN回包→生成C atomic RX三往返（空/oddNUL/1472）精确投递，独立tcpdump6 captured/6 filter/0drop；未改Linux默认ID/TTL/PMTU、未改写header/checksum/payload。370原文件/82 Git source bindings及原Git只读audit在artifacts/linux-udp-peer-b10fca8d，artifact13199869218 SHA0b2fb5da固定；核真实capture/native/peer所有字节及runtime原proof，另核atomic flow22例/6literal/9gap、depth2双UNSAT声明合同及5原生/固定Z3原SMT/result。审查不执行归档Python/ELF/solver，不称新Linux执行；CI provenance需单独信任。首次43失败仍capture无效/modelgap未追认；旧ID0/RTO2750/unknown证据保持。b10其它flow/native/exact/receive CI已success，LinuxTCP上次仍运行；本次证据新头须单独核CI，不外推。此为真实隔离TUN Linux UDP互通，仍两IR模块由byte harness配对，不是单一组合IR/完整TCPIP/ARPICMP/真实Ethernet/线时序合规；server本轮connection refused未部署，付费API零新增。下一步按范围/规范/独立oracle先推进ARP/ICMP与跨层组合，不引入hoststack替代IR subject，不自动main合并。
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.
