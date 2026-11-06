@@ -67,6 +67,18 @@ class BoundedGatewayTests(unittest.TestCase):
             with self.assertRaises(ValueError):request(self.messages(),target,'unused',thinking='disabled',reasoning_effort='high')
             self.assertFalse(target.exists());make.assert_not_called()
 
+    def test_explicit_unlimited_budget_preserves_existing_rows_and_failed_retry_gate(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            root=Path(tmp);key=root/'key';key.write_text('fake-unlimited-test-key');key.chmod(0o600)
+            ledger=root/'ledger';ledger.mkdir();old={'historical-failed':{'status':'failed','usage':None}}
+            (ledger/'ledger.json').write_text(json.dumps(old))
+            data={'choices':[{'finish_reason':'stop','message':{'content':'{"ready":true}'}}]}
+            with patch('agents.deepseek_gateway.urllib.request.build_opener')as make:
+                make.return_value.open.return_value=io.BytesIO(json.dumps(data).encode())
+                result=request(self.messages(),ledger,key,max_tokens=32768,max_calls=None)
+                rows=json.loads((ledger/'ledger.json').read_text());self.assertEqual(rows['historical-failed'],old['historical-failed'])
+                self.assertIn(result['request_sha256'],rows);self.assertEqual(make.return_value.open.call_count,1)
+
     def test_success_is_cached_and_global_count_budget_prevents_new_request(self):
         with tempfile.TemporaryDirectory()as tmp:
             root=Path(tmp);key=root/'key';key.write_text('fake-local-test-credential');key.chmod(0o600)

@@ -111,3 +111,24 @@ PR8 d5863163 fresh9checks success, still stackedbasefeaturebranch, no mainmerge.
 PR20 acceptedunion head3ae6dd3b pushed; its CI needs own check. Userdirectories
 and scheduler stoppedstate preserved. Server sudo-n still unavailable; only that
 privileged networking lane blocked, hostedLinux remains available.
+
+
+2026-11-06 explicit user budget update: user answered the approval question with
+“不设置任何上限，随便用”. New jobs use max_calls=None in the SAME original ledger;
+no ledger reset, replacement or automatic failed/uncertain retry. Gateway optional
+uncapped cumulative mode preserves prior bounded callers/default payload/cache.
+Per-response32768 is a current technical setting, not a lifetime spend cap; it can
+be adjusted per task. The old proposed8192/64->larger deployment rejections are
+historical, not a current permission block after explicit authorization.
+Original0018 fixed TCP baseline passed, both reasoningAPI requests exhausted8192
+finish_reason=length (one blankfinal); invalid_response preserved, never promoted.
+New candidate tcp-peer-acceptance-20261106-0019 PID105373/controller
+tcp-reasoning-authorized-v2 runs independent testauthor+adversarial reviewer with
+thinking enabled/high and32768 response space, no GPT childagents. This is an
+explicitly operator-authorized NEW acceptance task with actualABI/failure context,
+not an automatic retry of old request digests. Unchanged prior baseline source
+hashes rechecked and passedreceipt reused, not falsely called a fresh test run.
+New Python proposals remain unexecuted until controller review and actual tests.
+9 gateway/deployment tests pass locally including uncapped original-ledger retention;
+old failed-request protection remains active. No mainmerge/scheduler restart or
+liveTCP/completeprototype claim. Server sudo/network lane limitation unchanged.

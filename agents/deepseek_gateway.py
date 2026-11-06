@@ -31,7 +31,7 @@ def credential(path):
 
 def request(messages,out,credential_file,model='deepseek-flash',max_tokens=4096,max_calls=12,timeout=180,thinking='disabled',reasoning_effort=None):
     if not isinstance(messages,list)or not messages or any(set(m)!={'role','content'}or m['role']not in ('system','user','assistant')or type(m['content'])is not str for m in messages):raise ValueError('Explicit text messages required')
-    if type(max_tokens)is not int or type(max_calls)is not int or not 16<=max_tokens<=8192 or not 1<=max_calls<=64:raise ValueError('Request budget outside configured bound')
+    if type(max_tokens)is not int or max_tokens<16 or (max_calls is not None and (type(max_calls)is not int or max_calls<1)):raise ValueError('Invalid request budget configuration')
     if thinking not in ('enabled','disabled')or reasoning_effort not in (None,'low','high','max')or(thinking=='disabled'and reasoning_effort is not None):raise ValueError('Invalid reasoning configuration')
     payload=dict(model=model,messages=messages,response_format={'type':'json_object'},max_tokens=max_tokens,stream=False,thinking={'type':thinking})
     if reasoning_effort is not None:payload['reasoning_effort']=reasoning_effort
@@ -45,7 +45,7 @@ def request(messages,out,credential_file,model='deepseek-flash',max_tokens=4096,
             result=fn(ledger);write(ledger_file,ledger);return result
     def admit(ledger):
         if digest in ledger:return ledger[digest]
-        if len(ledger)>=max_calls:raise ValueError('Paid request count budget exhausted')
+        if max_calls is not None and len(ledger)>=max_calls:raise ValueError('Paid request count budget exhausted')
         row=dict(status='pending',request_sha256=digest,model=model,max_tokens=max_tokens,thinking=thinking,reasoning_effort=reasoning_effort,prompt_bytes=len(body),started_at=time.time(),usage=None)
         ledger[digest]=row;return None
     prior=update(admit)
