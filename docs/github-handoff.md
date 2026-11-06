@@ -146,3 +146,11 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-02：34e47060集成UDP字节flow已在独立Linux发布实际通过41专项及四完整任务/verify（原三基线全部回归）。UDP任务4见证+6原字面量种子+9model-gap拒绝共19例、13独立trace、depth3双UNSAT；70源码/约285KB包。751原服务器文件及原本地探索编码失败在artifacts/udp-payload-flow-34e47060，只读验收逐70不可变Git blob/原Git校验器核验四job，不运行归档Python/ELF/solver。通用protocol_lab源码未改，独立数据模块经相同flow成立；未宣称UDP wire/PCAP/完整IPv4端点。另一有界agent已返回UDP线编码IR语义设计提案，尚未实现或批准，保留artifacts/udp-wire-design-0001；累计10调用75605已知token，原12上限不重置；本轮集成/部署/验收零API，仅此新设计调用9492token。旧2e67601e五CI实际通过，新集成提交CI需单独等终态。下一步审查新字节/packing/checksum显式IR语义并同步参考/独立Z3/C后端；禁止将提案当实现或绕过formal拒绝。
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.
