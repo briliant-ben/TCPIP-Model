@@ -206,3 +206,11 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-03：8fadeb00/tested merge b3b86925 整Git tree相同，PR16新隔离Linux ARP peer workflow run41621776194/job125869015485已实际success（仅该新workflow触发，不外推整仓CI）。生成C active PID2618持续解析/接收/缓存命中，passive PID2630持续接收Linux ARP请求/发回复；各初始化一次，不重启/replay。两namespace各2captured/2filter/0drop，quiet100.4107/101.299777ms>=100，内核neighbor确认、完整reference/native trace及所有TAP/PCAP字节通过。实际Linux7.0.0-1017-azure另跑5adapter+8既有ARP方法通过。原始68文件/61Git源bindings在artifacts/linux-arp-peer-8fadeb00，artifact13223608824 SHAe320b2b1固定；原Git只读audit核源码/tree/C/compile/ELF/单PID/clock/原raw帧/PCAP/neighbor/runtime证据通过，不运行归档Python/ELF/solver，CI真实性另需信任。无首次失败Linux运行需提升，本机Mac blocked证据保留。此是虚拟Ethernet有限ARP真实peer，不是physicalEthernet/live60s expiry/无界协议或编译器证明/单一组合IR/完整端点。PR16草稿叠仍开PR15，不自动merge；后续证据头CI单独查。下一步最小ICMP（固定规范、范围、独立oracle，再IR/参考/Z3/C/peer），再ARP/IPv4/UDP/TCP显式IR跨层；复杂0.3TCP native/时钟组合仍欠。付费预算原12/83412已耗尽零新增；server本轮唯一SSH connection refused不阻塞本地/临时Linux。
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.
