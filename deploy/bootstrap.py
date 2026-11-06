@@ -1,5 +1,6 @@
 """Prepare an isolated venv and execute the two already-approved release tasks."""
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -14,6 +15,8 @@ def bootstrap(release,out):
     if sys.version_info<(3,12):raise ValueError('This release uses Python3.12+; no system Python changes are performed')
     if not shutil.which('cc'):raise ValueError('C99 compiler unavailable; install via the host administrator')
     out.mkdir(parents=True,exist_ok=False);env=dict(os.environ);env['PYTHONDONTWRITEBYTECODE']='1';env['PIP_DISABLE_PIP_VERSION_CHECK']='1'
+    env['PROTOCOL_TEST_FAILURES']=str(out/'test-failures')
+    bootstrap_source=Path(__file__).read_bytes();(out/'bootstrap-source.py').write_bytes(bootstrap_source)
     python=release/'venv/bin/python'
     with (out/'bootstrap.log').open('w')as log:
         subprocess.run([sys.executable,'-m','venv',str(release/'venv')],stdout=log,stderr=log,check=True)
@@ -29,6 +32,18 @@ def bootstrap(release,out):
         row=json.loads(p.stdout)
         if not row['accepted']:raise ValueError('Release task not accepted')
         rows.append(dict(id=task['id'],run_id=row['run_id'],client=str(folder/'client-result.json')))
+    observations=[]
+    for case in manifest.get('packet_observations',[]):
+        if case['kind']!='ipv4-udp-transmit-v1':raise ValueError('Unsupported packet observation')
+        index=case['task_index']
+        if manifest['tasks'][index]['id']!='udp-ipv4-wire-transmit':raise ValueError('Wrong observation task')
+        command=[str(python),str(tools/'examples/run_udp_transmit.py'),'--job',str(out/('task-'+str(index))/'job'),'--oracle',str(tools/case['oracle']),'--oracle-sha256',case['oracle_sha256'],'--out',str(out/'udp-transmit-pcap')]
+        p=subprocess.run(command,cwd=tools,env=env,capture_output=True,text=True)
+        (out/'udp-transmit-pcap.stdout').write_text(p.stdout);(out/'udp-transmit-pcap.stderr').write_text(p.stderr)
+        if p.returncode!=0:raise ValueError('Packet observation failed')
+        report=json.loads(p.stdout)
+        if report['status']!='pass':raise ValueError('Packet observations did not match')
+        observations.append(dict(kind=case['kind'],packets=report['native_packet_count'],fixed_oracle_cases=report['fixed_packet_oracles'],linux_network_evidence=False))
     native_rows=[]
     for i,case in enumerate(manifest.get('native_suites',[])):
         folder=out/('native-suite-'+str(i))
@@ -40,7 +55,8 @@ def bootstrap(release,out):
         report=json.loads(p.stdout)
         if report['status']!='pass':raise ValueError('Native suite not accepted')
         native_rows.append(dict(model=case['model'],cases=len(report['cases']),status=report['status'],formal_replay_requested=case['formal_replay']))
-    result=dict(schema='spec-flow-server-bootstrap-v1',status='pass',source_commit=manifest['source_commit'],tasks=rows,native_suites=native_rows,python=sys.version.split()[0],compiler=shutil.which('cc'),network_configuration_changed=False,api_calls_made=0,completed_at=time.time())
+    if Path(__file__).read_bytes()!=bootstrap_source:raise ValueError('Bootstrap source changed')
+    result=dict(schema='spec-flow-server-bootstrap-v1',status='pass',source_commit=manifest['source_commit'],tasks=rows,native_suites=native_rows,packet_observations=observations,bootstrap_source_sha256=hashlib.sha256(bootstrap_source).hexdigest(),python=sys.version.split()[0],compiler=shutil.which('cc'),network_configuration_changed=False,api_calls_made=0,completed_at=time.time())
     (out/'bootstrap.json').write_text(json.dumps(result,indent=2)+'\n');return result
 
 

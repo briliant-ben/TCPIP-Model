@@ -498,24 +498,43 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     elif conflict == z.unknown and report["status"] == "bounded_pass":
         report.update(status="unknown", reason=enc.reason_unknown())
     enc.solver.pop()
+    sample_queries={}
     # A satisfying path is cross-checked against independent runtime semantics.
     if report["status"] == "bounded_pass":
-        enc.solver.add(z.Int("choice_0") >= 0)
-        answer = enc.solve()
+        # Nonvacuity is existential. For IR0.4 first seek an actual one-event
+        # witness with an idle suffix. These SAT subsets never constrain the
+        # all-input safety/overlap queries above. Fall back to the original
+        # unrestricted witness query if the subsets do not produce a witness.
+        strategies=['any-path']
+        if model['ir_version']=='0.4'and model['transitions']:
+            strategies=['first-rule-one-event','any-rule-one-event',*strategies]
+        attempts=[]
+        for strategy in strategies:
+            sample_enc=Encoding(model,1,symbolic_initials,fixed_choices=[0])if strategy=='first-rule-one-event'else Encoding(model,1,symbolic_initials)if strategy=='any-rule-one-event'else enc
+            sample_enc.solver.push();sample_enc.solver.add(z.Int('choice_0')>=0)
+            sample_smt=sample_enc.solver.to_smt2();answer=sample_enc.solve()
+            record=dict(strategy=strategy,depth=sample_enc.depth,scope='existential_nonvacuity_only',query=str(answer),file='sample-'+strategy+'.smt2',smt2_sha256=hashlib.sha256(sample_smt.encode()).hexdigest())
+            if answer==z.unknown:record['reason']=sample_enc.reason_unknown()
+            attempts.append(record);sample_queries['sample-'+strategy+'.smt2']=sample_smt
+            witness=sample_enc.witness(sample_enc.solver.model())if answer==z.sat else None
+            sample_enc.solver.pop()
+            if answer==z.sat:break
+        report['sample_queries']=attempts
         if answer == z.sat:
-            report["sample_witness"] = enc.witness(enc.solver.model())
+            report["sample_witness"] = witness
             report["replay"] = replay(model, report["sample_witness"])
             if report["replay"]["status"] != "match":
                 report["status"] = "semantic_mismatch"
         else:
             report["status"] = "unknown" if answer == z.unknown else "vacuous"
             if answer == z.unknown:
-                report["reason"] = enc.reason_unknown()
+                report["reason"] = attempts[-1]['reason']
     if out is not None:
         out = Path(out)
         out.mkdir(parents=True, exist_ok=True)
         (out / "model.smt2").write_text(smt)
         (out / "overlap.smt2").write_text(overlap_smt)
+        for name,query in sample_queries.items():(out/name).write_text(query)
         report["smt2_sha256"] = hashlib.sha256(smt.encode()).hexdigest()
         report["overlap_smt2_sha256"] = hashlib.sha256(overlap_smt.encode()).hexdigest()
         (out / "result.json").write_text(json.dumps(report, indent=2) + "\n")
