@@ -1,0 +1,4483 @@
+{
+  "ir_version": "0.5",
+  "protocol": "arp-ethernet-ipv4-endpoint",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "General cache/interfaces/ARP types, VLAN/FCS/physical Ethernet",
+      "RFC5227 ACD/gratuitous/proxy/security and pending IP-packet queue",
+      "Cross-layer stack and unbounded/compiler correctness"
+    ]
+  },
+  "states": [
+    "EMPTY",
+    "PENDING",
+    "RESOLVED"
+  ],
+  "initial_state": "EMPTY",
+  "variables": {
+    "peer_mac": {
+      "type": "bytes",
+      "initial": []
+    },
+    "retry_count": {
+      "type": "int",
+      "initial": 0
+    },
+    "cache_ttl_ms": {
+      "type": "int",
+      "initial": 60000
+    }
+  },
+  "events": {
+    "app.resolve": {
+      "origin": "application",
+      "fields": {
+        "ip": "bytes"
+      }
+    },
+    "app.cache_ttl": {
+      "origin": "application",
+      "fields": {
+        "milliseconds": "int"
+      }
+    },
+    "net.frame": {
+      "origin": "network",
+      "fields": {
+        "frame": "bytes"
+      }
+    },
+    "timer.query": {
+      "origin": "timer",
+      "fields": {}
+    },
+    "timer.cache": {
+      "origin": "timer",
+      "fields": {}
+    }
+  },
+  "timers": {
+    "query": {
+      "event": "timer.query"
+    },
+    "cache": {
+      "event": "timer.cache"
+    }
+  },
+  "messages": {
+    "ethernet.tx": {
+      "fields": {
+        "frame": "bytes"
+      }
+    },
+    "neighbor.resolved": {
+      "fields": {
+        "ip": "bytes",
+        "mac": "bytes"
+      }
+    },
+    "neighbor.failed": {
+      "fields": {
+        "ip": "bytes"
+      }
+    }
+  },
+  "requirements": {
+    "ARP-826": {
+      "source": "https://www.rfc-editor.org/rfc/rfc826",
+      "section": "Packet Generation / Packet Reception",
+      "interpretation": "Request/reply fields in network order; merge existing sender entry before target-address test, learn new sender only for local target, reply to targeted request."
+    },
+    "ARP-CACHE": {
+      "source": "https://www.rfc-editor.org/rfc/rfc1122#section-2.3.2.1",
+      "section": "2.3.2.1 Cache validation",
+      "interpretation": "Remove stale entries, prevent ARP request floods. Configurable cache TTL and1000ms one-retry policy are finite model choices."
+    },
+    "ARP-PROFILE": {
+      "source": "docs/arp-endpoint.md",
+      "section": "Finite Ethernet/IPv4 ARP endpoint",
+      "interpretation": "Explicit one-peer cache and Ethernet field/domain/short-entry/padding/service policies; not full ARP or host conformance."
+    }
+  },
+  "transitions": [
+    {
+      "id": "QUERY-START",
+      "from": "EMPTY",
+      "to": "PENDING",
+      "event": "app.resolve",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "ip"
+          },
+          {
+            "bytes": [
+              192,
+              0,
+              2,
+              2
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 0
+          }
+        },
+        {
+          "emit": {
+            "message": "ethernet.tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_concat",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "bytes": [
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              2,
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              1
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4,
+                                          0,
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      2,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "bytes": [
+                                  192,
+                                  0,
+                                  2,
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "bytes": [
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "query",
+            "delay_ms": 1000
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "QUERY-COALESCE",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "app.resolve",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "ip"
+          },
+          {
+            "bytes": [
+              192,
+              0,
+              2,
+              2
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "QUERY-CACHED",
+      "from": "RESOLVED",
+      "to": "RESOLVED",
+      "event": "app.resolve",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "event": "ip"
+          },
+          {
+            "bytes": [
+              192,
+              0,
+              2,
+              2
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "neighbor.resolved",
+            "fields": {
+              "ip": {
+                "bytes": [
+                  192,
+                  0,
+                  2,
+                  2
+                ]
+              },
+              "mac": {
+                "var": "peer_mac"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-826",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "QUERY-RETRY",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "timer.query",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "retry_count"
+          },
+          0
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 1
+          }
+        },
+        {
+          "emit": {
+            "message": "ethernet.tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_concat",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "bytes": [
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              2,
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              1
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4,
+                                          0,
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      2,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "bytes": [
+                                  192,
+                                  0,
+                                  2,
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "bytes": [
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "query",
+            "delay_ms": 1000
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "QUERY-FAIL",
+      "from": "PENDING",
+      "to": "EMPTY",
+      "event": "timer.query",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "retry_count"
+          },
+          1
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "peer_mac",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 0
+          }
+        },
+        {
+          "emit": {
+            "message": "neighbor.failed",
+            "fields": {
+              "ip": {
+                "bytes": [
+                  192,
+                  0,
+                  2,
+                  2
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "CACHE-EXPIRE",
+      "from": "RESOLVED",
+      "to": "EMPTY",
+      "event": "timer.cache",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "peer_mac",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "CONFIG-EMPTY",
+      "from": "EMPTY",
+      "to": "EMPTY",
+      "event": "app.cache_ttl",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "event": "milliseconds"
+              },
+              60000
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "milliseconds"
+              },
+              3600000
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "cache_ttl_ms",
+            "value": {
+              "event": "milliseconds"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "SHORT-EMPTY",
+      "from": "EMPTY",
+      "to": "EMPTY",
+      "event": "net.frame",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "event": "frame"
+              }
+            ]
+          },
+          41
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "LOCAL-REQUEST-EMPTY",
+      "from": "EMPTY",
+      "to": "RESOLVED",
+      "event": "net.frame",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              42
+                                            ]
+                                          },
+                                          {
+                                            "op": "le",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              60
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "or",
+                                        "args": [
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  2,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          12,
+                                          8
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "or",
+                                "args": [
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  6,
+                                  6
+                                ]
+                              },
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  22,
+                                  6
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              22
+                            ]
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "frame"
+                          },
+                          28,
+                          4
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      38,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "event": "frame"
+                  },
+                  20,
+                  2
+                ]
+              },
+              {
+                "bytes": [
+                  0,
+                  1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "peer_mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "frame"
+                },
+                22,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 0
+          }
+        },
+        {
+          "cancel": "query"
+        },
+        {
+          "arm": {
+            "timer": "cache",
+            "delay_ms": {
+              "var": "cache_ttl_ms"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "ethernet.tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_concat",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "var": "peer_mac"
+                                          },
+                                          {
+                                            "bytes": [
+                                              2,
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              1
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4,
+                                          0,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      2,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "bytes": [
+                                  192,
+                                  0,
+                                  2,
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "var": "peer_mac"
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "LOCAL-REPLY-EMPTY",
+      "from": "EMPTY",
+      "to": "RESOLVED",
+      "event": "net.frame",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              42
+                                            ]
+                                          },
+                                          {
+                                            "op": "le",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              60
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "or",
+                                        "args": [
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  2,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          12,
+                                          8
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "or",
+                                "args": [
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  6,
+                                  6
+                                ]
+                              },
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  22,
+                                  6
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              22
+                            ]
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "frame"
+                          },
+                          28,
+                          4
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      38,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      20,
+                      2
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "peer_mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "frame"
+                },
+                22,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 0
+          }
+        },
+        {
+          "cancel": "query"
+        },
+        {
+          "arm": {
+            "timer": "cache",
+            "delay_ms": {
+              "var": "cache_ttl_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "NONLOCAL-EMPTY",
+      "from": "EMPTY",
+      "to": "EMPTY",
+      "event": "net.frame",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          {
+                                            "op": "bytes_len",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              }
+                                            ]
+                                          },
+                                          42
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "op": "bytes_len",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              }
+                                            ]
+                                          },
+                                          60
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "or",
+                                    "args": [
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "op": "bytes_slice",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              },
+                                              0,
+                                              6
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              2,
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              1
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "op": "bytes_slice",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              },
+                                              0,
+                                              6
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "frame"
+                                      },
+                                      12,
+                                      8
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      8,
+                                      6,
+                                      0,
+                                      1,
+                                      8,
+                                      0,
+                                      6,
+                                      4
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "or",
+                            "args": [
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "frame"
+                                      },
+                                      20,
+                                      2
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      0,
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "frame"
+                                      },
+                                      20,
+                                      2
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      0,
+                                      2
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              6,
+                              6
+                            ]
+                          },
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              22,
+                              6
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_at_or_zero",
+                        "args": [
+                          {
+                            "event": "frame"
+                          },
+                          22
+                        ]
+                      },
+                      2
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      28,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      38,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "CONFIG-PENDING",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "app.cache_ttl",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "event": "milliseconds"
+              },
+              60000
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "milliseconds"
+              },
+              3600000
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "cache_ttl_ms",
+            "value": {
+              "event": "milliseconds"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "SHORT-PENDING",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "net.frame",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "event": "frame"
+              }
+            ]
+          },
+          41
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "LOCAL-REQUEST-PENDING",
+      "from": "PENDING",
+      "to": "RESOLVED",
+      "event": "net.frame",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              42
+                                            ]
+                                          },
+                                          {
+                                            "op": "le",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              60
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "or",
+                                        "args": [
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  2,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          12,
+                                          8
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "or",
+                                "args": [
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  6,
+                                  6
+                                ]
+                              },
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  22,
+                                  6
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              22
+                            ]
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "frame"
+                          },
+                          28,
+                          4
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      38,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "event": "frame"
+                  },
+                  20,
+                  2
+                ]
+              },
+              {
+                "bytes": [
+                  0,
+                  1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "peer_mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "frame"
+                },
+                22,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 0
+          }
+        },
+        {
+          "cancel": "query"
+        },
+        {
+          "arm": {
+            "timer": "cache",
+            "delay_ms": {
+              "var": "cache_ttl_ms"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "ethernet.tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_concat",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "var": "peer_mac"
+                                          },
+                                          {
+                                            "bytes": [
+                                              2,
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              1
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4,
+                                          0,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      2,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "bytes": [
+                                  192,
+                                  0,
+                                  2,
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "var": "peer_mac"
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "neighbor.resolved",
+            "fields": {
+              "ip": {
+                "bytes": [
+                  192,
+                  0,
+                  2,
+                  2
+                ]
+              },
+              "mac": {
+                "var": "peer_mac"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "LOCAL-REPLY-PENDING",
+      "from": "PENDING",
+      "to": "RESOLVED",
+      "event": "net.frame",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              42
+                                            ]
+                                          },
+                                          {
+                                            "op": "le",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              60
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "or",
+                                        "args": [
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  2,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          12,
+                                          8
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "or",
+                                "args": [
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  6,
+                                  6
+                                ]
+                              },
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  22,
+                                  6
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              22
+                            ]
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "frame"
+                          },
+                          28,
+                          4
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      38,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      20,
+                      2
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "peer_mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "frame"
+                },
+                22,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 0
+          }
+        },
+        {
+          "cancel": "query"
+        },
+        {
+          "arm": {
+            "timer": "cache",
+            "delay_ms": {
+              "var": "cache_ttl_ms"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "neighbor.resolved",
+            "fields": {
+              "ip": {
+                "bytes": [
+                  192,
+                  0,
+                  2,
+                  2
+                ]
+              },
+              "mac": {
+                "var": "peer_mac"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "NONLOCAL-PENDING",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "net.frame",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          {
+                                            "op": "bytes_len",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              }
+                                            ]
+                                          },
+                                          42
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "op": "bytes_len",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              }
+                                            ]
+                                          },
+                                          60
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "or",
+                                    "args": [
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "op": "bytes_slice",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              },
+                                              0,
+                                              6
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              2,
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              1
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "op": "bytes_slice",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              },
+                                              0,
+                                              6
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "frame"
+                                      },
+                                      12,
+                                      8
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      8,
+                                      6,
+                                      0,
+                                      1,
+                                      8,
+                                      0,
+                                      6,
+                                      4
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "or",
+                            "args": [
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "frame"
+                                      },
+                                      20,
+                                      2
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      0,
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "frame"
+                                      },
+                                      20,
+                                      2
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      0,
+                                      2
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              6,
+                              6
+                            ]
+                          },
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              22,
+                              6
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_at_or_zero",
+                        "args": [
+                          {
+                            "event": "frame"
+                          },
+                          22
+                        ]
+                      },
+                      2
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      28,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      38,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "CONFIG-RESOLVED",
+      "from": "RESOLVED",
+      "to": "RESOLVED",
+      "event": "app.cache_ttl",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "event": "milliseconds"
+              },
+              60000
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "milliseconds"
+              },
+              3600000
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "cache_ttl_ms",
+            "value": {
+              "event": "milliseconds"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "cache",
+            "delay_ms": {
+              "var": "cache_ttl_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "SHORT-RESOLVED",
+      "from": "RESOLVED",
+      "to": "RESOLVED",
+      "event": "net.frame",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "event": "frame"
+              }
+            ]
+          },
+          41
+        ]
+      },
+      "actions": [],
+      "requirements": [
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "LOCAL-REQUEST-RESOLVED",
+      "from": "RESOLVED",
+      "to": "RESOLVED",
+      "event": "net.frame",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              42
+                                            ]
+                                          },
+                                          {
+                                            "op": "le",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              60
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "or",
+                                        "args": [
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  2,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          12,
+                                          8
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "or",
+                                "args": [
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  6,
+                                  6
+                                ]
+                              },
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  22,
+                                  6
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              22
+                            ]
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "frame"
+                          },
+                          28,
+                          4
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      38,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "event": "frame"
+                  },
+                  20,
+                  2
+                ]
+              },
+              {
+                "bytes": [
+                  0,
+                  1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "peer_mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "frame"
+                },
+                22,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 0
+          }
+        },
+        {
+          "cancel": "query"
+        },
+        {
+          "arm": {
+            "timer": "cache",
+            "delay_ms": {
+              "var": "cache_ttl_ms"
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "ethernet.tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_concat",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "var": "peer_mac"
+                                          },
+                                          {
+                                            "bytes": [
+                                              2,
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              1
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4,
+                                          0,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      2,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "bytes": [
+                                  192,
+                                  0,
+                                  2,
+                                  1
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "var": "peer_mac"
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "LOCAL-REPLY-RESOLVED",
+      "from": "RESOLVED",
+      "to": "RESOLVED",
+      "event": "net.frame",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "and",
+                                        "args": [
+                                          {
+                                            "op": "ge",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              42
+                                            ]
+                                          },
+                                          {
+                                            "op": "le",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  }
+                                                ]
+                                              },
+                                              60
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "or",
+                                        "args": [
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  2,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "eq",
+                                            "args": [
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "event": "frame"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          12,
+                                          8
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          8,
+                                          6,
+                                          0,
+                                          1,
+                                          8,
+                                          0,
+                                          6,
+                                          4
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "or",
+                                "args": [
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "eq",
+                                    "args": [
+                                      {
+                                        "op": "bytes_slice",
+                                        "args": [
+                                          {
+                                            "event": "frame"
+                                          },
+                                          20,
+                                          2
+                                        ]
+                                      },
+                                      {
+                                        "bytes": [
+                                          0,
+                                          2
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  6,
+                                  6
+                                ]
+                              },
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "event": "frame"
+                                  },
+                                  22,
+                                  6
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_at_or_zero",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              22
+                            ]
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "event": "frame"
+                          },
+                          28,
+                          4
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          192,
+                          0,
+                          2,
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      38,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      20,
+                      2
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "peer_mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "frame"
+                },
+                22,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retry_count",
+            "value": 0
+          }
+        },
+        {
+          "cancel": "query"
+        },
+        {
+          "arm": {
+            "timer": "cache",
+            "delay_ms": {
+              "var": "cache_ttl_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    },
+    {
+      "id": "NONLOCAL-RESOLVED",
+      "from": "RESOLVED",
+      "to": "RESOLVED",
+      "event": "net.frame",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "and",
+                                "args": [
+                                  {
+                                    "op": "and",
+                                    "args": [
+                                      {
+                                        "op": "ge",
+                                        "args": [
+                                          {
+                                            "op": "bytes_len",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              }
+                                            ]
+                                          },
+                                          42
+                                        ]
+                                      },
+                                      {
+                                        "op": "le",
+                                        "args": [
+                                          {
+                                            "op": "bytes_len",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              }
+                                            ]
+                                          },
+                                          60
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "or",
+                                    "args": [
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "op": "bytes_slice",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              },
+                                              0,
+                                              6
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              2,
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              1
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "eq",
+                                        "args": [
+                                          {
+                                            "op": "bytes_slice",
+                                            "args": [
+                                              {
+                                                "event": "frame"
+                                              },
+                                              0,
+                                              6
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                              255
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "frame"
+                                      },
+                                      12,
+                                      8
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      8,
+                                      6,
+                                      0,
+                                      1,
+                                      8,
+                                      0,
+                                      6,
+                                      4
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "or",
+                            "args": [
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "frame"
+                                      },
+                                      20,
+                                      2
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      0,
+                                      1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "event": "frame"
+                                      },
+                                      20,
+                                      2
+                                    ]
+                                  },
+                                  {
+                                    "bytes": [
+                                      0,
+                                      2
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              6,
+                              6
+                            ]
+                          },
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "frame"
+                              },
+                              22,
+                              6
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_at_or_zero",
+                        "args": [
+                          {
+                            "event": "frame"
+                          },
+                          22
+                        ]
+                      },
+                      2
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      28,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "frame"
+                      },
+                      38,
+                      4
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      192,
+                      0,
+                      2,
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "peer_mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "frame"
+                },
+                22,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "cache",
+            "delay_ms": {
+              "var": "cache_ttl_ms"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARP-826",
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "STATE-EMPTY",
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "EMPTY"
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "peer_mac"
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "timer_active": "query"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "not",
+                "args": [
+                  {
+                    "timer_active": "cache"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "STATE-PENDING",
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "PENDING"
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "peer_mac"
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "timer_active": "query"
+                  }
+                ]
+              },
+              {
+                "op": "not",
+                "args": [
+                  {
+                    "timer_active": "cache"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "STATE-RESOLVED",
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ],
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "state": "RESOLVED"
+          },
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "var": "peer_mac"
+                          }
+                        ]
+                      },
+                      6
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "timer_active": "query"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "timer_active": "cache"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "RETRY-BOUND",
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ],
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "retry_count"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "retry_count"
+              },
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "TTL-DOMAIN",
+      "requirements": [
+        "ARP-CACHE",
+        "ARP-PROFILE"
+      ],
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "cache_ttl_ms"
+              },
+              60000
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "cache_ttl_ms"
+              },
+              3600000
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
