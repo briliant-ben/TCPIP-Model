@@ -1,0 +1,44 @@
+{
+  "id": "S1-TTL0-MIN-HEADER-DELIVER",
+  "scenario_version": "0.2",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "net.ipv4",
+      "fields": {
+        "version": 4,
+        "ihl": 5,
+        "total_length": 20,
+        "available_length": 20,
+        "ttl": 0,
+        "header_checksum_valid": true,
+        "protocol": 6
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "ip.delivery",
+              "fields": {
+                "protocol": 6,
+                "payload_length": 0,
+                "ttl": 0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "accepted": 1,
+      "discarded": 0,
+      "last_payload_length": 0
+    },
+    "timers": {}
+  }
+}

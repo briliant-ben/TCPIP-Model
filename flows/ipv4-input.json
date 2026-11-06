@@ -1,0 +1,133 @@
+{
+  "schema": "spec-flow-task-v2",
+  "id": "ipv4-endhost-input-header",
+  "model": "model/ipv4-input.json",
+  "sources": [
+    {
+      "id": "rfc791",
+      "path": "spec/sources/rfc791.txt",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "version": "September1981 section3.1",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc791.txt"
+      ]
+    },
+    {
+      "id": "rfc1122",
+      "path": "spec/sources/rfc1122.txt",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "version": "October1989 sections3.2.1.1/2/7",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc1122.txt"
+      ]
+    },
+    {
+      "id": "ip-profile",
+      "path": "docs/ipv4-input-slice.md",
+      "sha256": "38fbe41944442e1fa5ce89ae907a9741772f84747501bae1c2c810fdf81cbe3d",
+      "version": "controller-reviewed no-options descriptor v1",
+      "uri_aliases": [
+        "docs/ipv4-input-slice.md"
+      ]
+    },
+    {
+      "id": "exploration",
+      "path": "model/ipv4-input-exploration.json",
+      "sha256": "de23c23debeedf7658609c2ba11e595b98ff37f7b4868eaa3e1ae1b3e7de4feb",
+      "version": "finite domain v1",
+      "uri_aliases": [
+        "model/ipv4-input-exploration.json"
+      ]
+    },
+    {
+      "id": "seed-0",
+      "path": "scenarios/ipv4-input/contract-0.json",
+      "sha256": "6167b1ca400db46b3c1a5d2cda3c1f2804cc9a2cef24e49ef131f48147b87948",
+      "version": "independent reviewer plus explicit controller correction v1",
+      "uri_aliases": [
+        "scenarios/ipv4-input/contract-0.json"
+      ]
+    },
+    {
+      "id": "seed-1",
+      "path": "scenarios/ipv4-input/contract-1.json",
+      "sha256": "4eaacbf23abc5d7a4e81c16b54fd0785a1f7cf5e02eb61f92afab854b41f27b6",
+      "version": "independent reviewer plus explicit controller correction v1",
+      "uri_aliases": [
+        "scenarios/ipv4-input/contract-1.json"
+      ]
+    },
+    {
+      "id": "seed-2",
+      "path": "scenarios/ipv4-input/contract-2.json",
+      "sha256": "1acfa9b4b5a5189cf04d03f41713d96d97923e8f75b7f7237e31c154553d5d51",
+      "version": "independent reviewer plus explicit controller correction v1",
+      "uri_aliases": [
+        "scenarios/ipv4-input/contract-2.json"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "IP-VERSION": {
+      "source": "rfc1122",
+      "clause": "3.2.1.1",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122.txt"
+    },
+    "IP-CHECKSUM": {
+      "source": "rfc1122",
+      "clause": "3.2.1.2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122.txt"
+    },
+    "IP-LENGTH": {
+      "source": "rfc791",
+      "clause": "3.1",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.txt"
+    },
+    "IP-TTL-HOST": {
+      "source": "rfc1122",
+      "clause": "3.2.1.7",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122.txt"
+    },
+    "IP-PROFILE": {
+      "source": "ip-profile",
+      "clause": "Scope and controller review",
+      "reference": "docs/ipv4-input-slice.md"
+    }
+  },
+  "exploration": "model/ipv4-input-exploration.json",
+  "seeds": [
+    "scenarios/ipv4-input/contract-0.json",
+    "scenarios/ipv4-input/contract-1.json",
+    "scenarios/ipv4-input/contract-2.json"
+  ],
+  "formal": {
+    "depth": 6,
+    "symbolic_initials": []
+  },
+  "limits": {
+    "stage_seconds": 120,
+    "max_prefixes": 128,
+    "max_cases": 64
+  },
+  "scope": {
+    "purpose": "Initial IPv4 endpoint header admission descriptor, controller-reviewed multi-agent candidate",
+    "assumptions": [
+      "Already-local valid-address unfragmented input",
+      "header_checksum_valid supplied; no checksum arithmetic",
+      "No options: IHL>5 explicitly uncovered"
+    ],
+    "excluded": [
+      "IP options (IHL>5)",
+      "fragmentation and reassembly",
+      "IP addresses and routing/local delivery decisions",
+      "ICMP generation and processing",
+      "payload byte content/copying",
+      "header checksum arithmetic (header_checksum_valid is a lower-layer fact)",
+      "router forwarding and TTL decrement",
+      "TCP/UDP transport behavior",
+      "wire codec",
+      "Complete IPv4 conformance",
+      "Unbounded proof or English-to-IR/compiler proof"
+    ]
+  }
+}
