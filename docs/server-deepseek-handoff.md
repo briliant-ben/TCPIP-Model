@@ -87,3 +87,27 @@ examples, same ledger/DeepSeek only, maximum3bounded rounds and actual gate befo
 review. No failed/uncertain API retry, GPT child agents, automatic main merge or
 scheduler restart. Next integrate accepted state lowering then explicit TCP/ARP
 queue/framing composition; privileged server networking remains unavailable.
+
+
+2026-11-06 latest server handoff: tcp-peer-exchange-evidence0016 completed
+DeepSeek implementation + advisory review(blockingfalse), new source UNEXECUTED.
+Original0015 had real scene.steps/steps alias doubleappend;0016 fixes it, tickABI,
+integerdeadline checks, receipts/TUNwritecount and explicit pendingTIME-WAIT.
+Independent testauthor0017 delivered .py+LIMITATIONS.md and failed onefilegate;
+its tests never invoke run_exchange and invented ABI/packet/timer shapes, rejected
+rather than calling test-count a success. Completed API retained, no paidretry.
+New gateway supports explicit thinking+reasoning_effort while preserving DEFAULT
+payload/hash behavior and original max8192tokens/64requests/ledger/no-retry gates.
+Official thinking docs: https://api-docs.deepseek.com/guides/thinking_mode/ .
+8 deployment/gateway methods pass, including cache separation bythinking mode and
+unchanged ledger preservation. Auto-review rejected proposals to raise64->128 and
+8192->32768; both limits remain unchanged, explicit user clarification pending.
+New server controller tcp-reasoning-bounded-v1/run_tcp_driver_review.py and job
+candidates/tcp-peer-reasoning-bounded-20261106-0018 PID104649 launch DeepSeek
+independent-test-author/adversarial-reviewer withthinking enabled/low (8192/64),
+plus fixed original7TCP wire baseline in parallel. New code proposals NEVER run
+automatically. Do not call old stopped0014..17 running or claim liveTCP success.
+PR8 d5863163 fresh9checks success, still stackedbasefeaturebranch, no mainmerge.
+PR20 acceptedunion head3ae6dd3b pushed; its CI needs own check. Userdirectories
+and scheduler stoppedstate preserved. Server sudo-n still unavailable; only that
+privileged networking lane blocked, hostedLinux remains available.

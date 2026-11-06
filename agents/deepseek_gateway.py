@@ -29,10 +29,12 @@ def credential(path):
     return key
 
 
-def request(messages,out,credential_file,model='deepseek-flash',max_tokens=4096,max_calls=12,timeout=180):
+def request(messages,out,credential_file,model='deepseek-flash',max_tokens=4096,max_calls=12,timeout=180,thinking='disabled',reasoning_effort=None):
     if not isinstance(messages,list)or not messages or any(set(m)!={'role','content'}or m['role']not in ('system','user','assistant')or type(m['content'])is not str for m in messages):raise ValueError('Explicit text messages required')
-    if not 16<=max_tokens<=8192 or not 1<=max_calls<=64:raise ValueError('Request budget outside configured bound')
-    payload=dict(model=model,messages=messages,response_format={'type':'json_object'},max_tokens=max_tokens,stream=False,thinking={'type':'disabled'})
+    if type(max_tokens)is not int or type(max_calls)is not int or not 16<=max_tokens<=8192 or not 1<=max_calls<=64:raise ValueError('Request budget outside configured bound')
+    if thinking not in ('enabled','disabled')or reasoning_effort not in (None,'low','high','max')or(thinking=='disabled'and reasoning_effort is not None):raise ValueError('Invalid reasoning configuration')
+    payload=dict(model=model,messages=messages,response_format={'type':'json_object'},max_tokens=max_tokens,stream=False,thinking={'type':thinking})
+    if reasoning_effort is not None:payload['reasoning_effort']=reasoning_effort
     body=json.dumps(payload,ensure_ascii=False).encode()
     if len(body)>96000:raise ValueError('Prompt byte budget exceeded')
     digest=hashlib.sha256(body).hexdigest();out=Path(out);out.mkdir(parents=True,exist_ok=True);out.chmod(0o700)
@@ -44,13 +46,13 @@ def request(messages,out,credential_file,model='deepseek-flash',max_tokens=4096,
     def admit(ledger):
         if digest in ledger:return ledger[digest]
         if len(ledger)>=max_calls:raise ValueError('Paid request count budget exhausted')
-        row=dict(status='pending',request_sha256=digest,model=model,max_tokens=max_tokens,prompt_bytes=len(body),started_at=time.time(),usage=None)
+        row=dict(status='pending',request_sha256=digest,model=model,max_tokens=max_tokens,thinking=thinking,reasoning_effort=reasoning_effort,prompt_bytes=len(body),started_at=time.time(),usage=None)
         ledger[digest]=row;return None
     prior=update(admit)
     if prior is not None:
         if prior['status']=='completed':return dict(**prior,cached=True)
         raise ValueError('Previous identical request failed or is uncertain; no automatic paid retry')
-    record=dict(status='uncertain',provider_response_received=False,request_sha256=digest,model=model,max_tokens=max_tokens,prompt_bytes=len(body),usage=None)
+    record=dict(status='uncertain',provider_response_received=False,request_sha256=digest,model=model,max_tokens=max_tokens,thinking=thinking,reasoning_effort=reasoning_effort,prompt_bytes=len(body),usage=None)
     try:
         key=credential(credential_file)
         req=urllib.request.Request(ENDPOINT,data=body,headers={'Content-Type':'application/json','Authorization':'Bearer '+key})
