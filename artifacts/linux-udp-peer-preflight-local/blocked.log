@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-udp-peer/run.py", line 221, in <module>
+    report=run(out);print(json.dumps(report));raise SystemExit(0 if report['status']=='pass'else 1)
+           ^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-udp-peer/run.py", line 201, in run
+    require(preflight['platform']=='Linux'and preflight['euid']==0 and preflight['tun']and all(preflight['tools'].values()),'Linux root/TUN/tools unavailable; this channel alone blocked')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 36, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Linux root/TUN/tools unavailable; this channel alone blocked

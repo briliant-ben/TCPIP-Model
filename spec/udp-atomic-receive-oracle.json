@@ -1,0 +1,51 @@
+{
+  "schema": "udp-atomic-id-oracle-v1",
+  "basis": "RFC6864 4/4.1; checksum remains RFC791/1122",
+  "cases": {
+    "id-one": {
+      "hex": "4500001c000140004011b6ccc0000202c00002011f909c400008c009",
+      "data": [],
+      "disposition": "deliver",
+      "repeat": 1
+    },
+    "id-1234": {
+      "hex": "4500001f123440004011a496c0000202c00002011f909c40000bc0820080ff",
+      "data": [
+        0,
+        128,
+        255
+      ],
+      "disposition": "deliver",
+      "repeat": 1
+    },
+    "id-ffff": {
+      "hex": "4500001effff40004011b6cbc0000202c00002011f909c40000ac104ff00",
+      "data": [
+        255,
+        0
+      ],
+      "disposition": "deliver",
+      "repeat": 1
+    },
+    "same-id-twice": {
+      "hex": "4500001f123440004011a496c0000202c00002011f909c40000bc0820080ff",
+      "data": [
+        0,
+        128,
+        255
+      ],
+      "disposition": "deliver",
+      "repeat": 2
+    },
+    "id-checksum-still-required": {
+      "hex": "4500001c123440004011b6ccc0000202c00002011f909c400008c009",
+      "data": [],
+      "disposition": "drop_ip_checksum",
+      "repeat": 1
+    }
+  },
+  "model_gaps": {
+    "fragment": "4500001f1234600040118496c0000202c00002011f909c40000bc0820080ff",
+    "non-atomic": "4500001f123400004011e496c0000202c00002011f909c40000bc0820080ff"
+  }
+}
