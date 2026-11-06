@@ -370,3 +370,11 @@ New Python proposals remain unexecuted until controller review and actual tests.
 9 gateway/deployment tests pass locally including uncapped original-ledger retention;
 old failed-request protection remains active. No mainmerge/scheduler restart or
 liveTCP/completeprototype claim. Server sudo/network lane limitation unchanged.
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.
