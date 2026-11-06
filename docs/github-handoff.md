@@ -215,3 +215,11 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-03：b7ad7874/tested merge bd618fde整Git tree相同，新ICMP PRrun41656635390结果必须分开：immutable-release job125988583175实际success（130专项、十task+verify、15TCPdata+101连接+13ARP+13ICMP原生/41固定Z3、9UDP TX/六oracle）；direct job125988583447仍depth2 safety UNKNOWN(canceled/60000ms)、overlapUNSAT。两边SMT逐字相同，成功release的UNSAT不提升direct或旧10s UNKNOWN；不继续加时盲试。305Git源码/3147原release文件及271原direct文件在artifacts/icmp-echo-linux-budget-b7ad7874，artifact13240975612 SHA5920b1ef与13240366470 SHA2325ebcd。原Git只读audit核tree/源码/包/bootstrap/十job/142完整nativeDiff/41SMT原报告/旧UDP及pass-vs-unknown查询相同，不执行归档Python/ELF/solver。ICMP28例（5见证+13种子+10gap）、13literal/five规则，depth2 UNSAT仅output-size/dropempty合同，无全checksum/翻译/编译器证明。另本地130专项31.5s/新flow271原文件305source只读audit在artifacts/icmp-echo-budget-b7ad7874；profile ../icmp-echo-release-b7ad7874 已准备，server不可达未部署。PR17草稿叠仍开PR16，最终证据头CI需独立查，不把整体CI称绿。下一步精确查询简化/资源可重复性（不改oracle/模型/深度/域），同时可推进不依赖该UNKNOWN的有限真实ICMP peer，然后IR跨层；当前无ICMPpeer。原12/83412预算耗尽零新增、上游/旧证据/用户目录保留。
+
+
+2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
+and16 actual local boundary tests to original cc70a74d. Preserve original failed
+job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
+d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
+Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
+requested new capture evidence; their invented numeric/stray-file claims rejected.
