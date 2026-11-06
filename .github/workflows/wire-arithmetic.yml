@@ -1,0 +1,37 @@
+name: IR wire arithmetic
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['protocol_lab/**', 'model/wire-arithmetic*.json', 'scenarios/wire-arithmetic/**', 'flows/wire-arithmetic.json', 'tests/test_wire_arithmetic.py', 'docs/wire-arithmetic.md', 'spec/sources/rfc1071.txt', '.github/workflows/wire-arithmetic.yml']
+  pull_request:
+    paths: ['protocol_lab/**', 'model/wire-arithmetic*.json', 'scenarios/wire-arithmetic/**', 'flows/wire-arithmetic.json', 'tests/test_wire_arithmetic.py', 'docs/wire-arithmetic.md', 'spec/sources/rfc1071.txt', '.github/workflows/wire-arithmetic.yml']
+permissions:
+  contents: read
+jobs:
+  independent-arithmetic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare pinned dependency
+        run: |
+          python3 -m venv /tmp/wire-arithmetic-venv
+          /tmp/wire-arithmetic-venv/bin/python -m pip install -r requirements-formal.txt
+          mkdir -p artifacts/wire-arithmetic-ci
+      - name: Check exact arithmetic content domains and translation faults
+        run: /tmp/wire-arithmetic-venv/bin/python -m unittest discover -s tests -p test_wire_arithmetic.py -v > artifacts/wire-arithmetic-ci/tests.log 2>&1
+      - name: Retain actual native and independent fixed-input symbolic execution
+        run: /tmp/wire-arithmetic-venv/bin/python examples/run_native_suite.py model/wire-arithmetic.json --scenario-dir scenarios/wire-arithmetic --formal-replay --out artifacts/wire-arithmetic-ci/native > artifacts/wire-arithmetic-ci/native.json
+      - name: Run all ten stages and verify the arithmetic contract
+        run: |
+          WIRE_ARITHMETIC_SHA=$(sha256sum flows/wire-arithmetic.json | cut -d ' ' -f 1)
+          /tmp/wire-arithmetic-venv/bin/python examples/run_spec_candidate.py --workspace . --task flows/wire-arithmetic.json --task-sha256 "$WIRE_ARITHMETIC_SHA" --out artifacts/wire-arithmetic-ci/flow > artifacts/wire-arithmetic-ci/flow.json
+      - name: Retain actual source compiler SMT and observations
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: wire-arithmetic-${{ github.sha }}
+          path: artifacts/wire-arithmetic-ci/
+          if-no-files-found: error

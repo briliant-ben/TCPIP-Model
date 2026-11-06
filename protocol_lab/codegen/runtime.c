@@ -77,6 +77,22 @@ Bytes byte_slice(Bytes a,int64_t offset,int64_t count) {
     out.len=n;if(n)memcpy(out.data,a.data+start,n);return out;
 }
 int byte_equal(Bytes a,Bytes b) {return a.len==b.len&&memcmp(a.data,b.data,a.len)==0;}
+Bytes byte_pack8(int64_t n) {
+    unsigned char b[1]={(uint8_t)n};return byte_literal(b,1);
+}
+Bytes byte_pack16be(int64_t n) {
+    uint16_t v=(uint16_t)n;unsigned char b[2]={(unsigned char)(v>>8),(unsigned char)(v&255)};
+    return byte_literal(b,2);
+}
+int64_t byte_checksum16(Bytes a) {
+    size_t i;uint32_t sum=0;
+    if(a.len>BYTE_CAP){failure="byte_capacity";return 0;}
+    for(i=0;i<a.len;i+=2){
+        uint32_t word=((uint32_t)a.data[i]<<8)+(i+1<a.len?a.data[i+1]:0);
+        sum+=word;sum=(sum&UINT32_C(65535))+(sum>>16);
+    }
+    return (int64_t)(UINT32_C(65535)-sum);
+}
 void byte_json(Buffer *out,Bytes a) {
     size_t i;text(out,"[");for(i=0;i<a.len;i++){if(i)text(out,",");number(out,a.data[i]);}text(out,"]");
 }

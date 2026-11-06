@@ -78,3 +78,6 @@ service or authority to bypass the shared budget/acceptance review.
 
 
 2026-11-02：34e47060集成UDP字节flow已在独立Linux发布实际通过41专项及四完整任务/verify（原三基线全部回归）。UDP任务4见证+6原字面量种子+9model-gap拒绝共19例、13独立trace、depth3双UNSAT；70源码/约285KB包。751原服务器文件及原本地探索编码失败在artifacts/udp-payload-flow-34e47060，只读验收逐70不可变Git blob/原Git校验器核验四job，不运行归档Python/ELF/solver。通用protocol_lab源码未改，独立数据模块经相同flow成立；未宣称UDP wire/PCAP/完整IPv4端点。另一有界agent已返回UDP线编码IR语义设计提案，尚未实现或批准，保留artifacts/udp-wire-design-0001；累计10调用75605已知token，原12上限不重置；本轮集成/部署/验收零API，仅此新设计调用9492token。旧2e67601e五CI实际通过，新集成提交CI需单独等终态。下一步审查新字节/packing/checksum显式IR语义并同步参考/独立Z3/C后端；禁止将提案当实现或绕过formal拒绝。
+
+
+2026-11-02：3180159b的IR0.4纯算术已在Linux独立发布实际通过88专项、五完整任务/verify、15TCPdata原生+固定输入Z3及101连接原生回归；213源码/约349KB包，1562原始文件在artifacts/wire-arithmetic-server-3180159b。原Git只读验收核213输入、五job、重渲染/重比较116原始TCP观测，检查15SMT/result，不执行归档Python/ELF/solver。算术任务12例/11literaltrace，depth2双UNSAT只为长度/range；另外固定odd-carry查询在全新Z3 context重载后UNSAT，单独保存查询/哈希，不扩称全checksum等价。独立DeepSeek源码审查2245token，无具体findings且列出限制，不算证明；台账累计11调用77850已知token，原12上限未重置。服务器新版本所有门禁通过，本轮新CI待新分支PR终态。后续优先补显式字节读取/原始IPv4-UDP线编码IR与PCAP，不能把纯算术当UDP实现。旧UNKNOWN、2750ms差异及用户未提交目录保持。

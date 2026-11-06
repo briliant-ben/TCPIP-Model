@@ -1,0 +1,50 @@
+{
+  "scenario_version": "0.2",
+  "id": "signed-max",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "probe",
+      "fields": {
+        "byte_value": 9223372036854775807,
+        "word_value": 9223372036854775807,
+        "data": [
+          255,
+          0,
+          255
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "arithmetic.result",
+              "fields": {
+                "packed": [
+                  255,
+                  255,
+                  255
+                ],
+                "checksum": 510
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "packed": [
+        255,
+        255,
+        255
+      ],
+      "checksum": 510
+    },
+    "timers": {}
+  }
+}

@@ -10,7 +10,8 @@ HALF = MOD // 2
 POST_SEMANTICS = "flat-efsm-atomic-ordered-post-target-v2"
 CLOCK_SEMANTICS = "flat-efsm-atomic-ordered-clock-v3"
 POST_SEMANTICS_VERSIONS = (POST_SEMANTICS, CLOCK_SEMANTICS)
-DATA_VERSIONS = ("0.2", "0.3")
+DATA_VERSIONS = ("0.2", "0.3", "0.4")
+WIRE_OPS = {"bytes_pack8_mod", "bytes_pack16be_mod", "bytes_internet_checksum16"}
 TYPES = ("bool", "int", "seq32", "string", "bytes", "rational")
 RAT_OPS = {"rat_from_int", "rat_add", "rat_sub", "rat_scale", "rat_abs", "rat_le", "rat_ceil"}
 DATA_OPS = {"sub", "min", "ite", "bytes_len", "bytes_concat", "bytes_slice",
@@ -94,6 +95,7 @@ def infer(expr, model, event=None):
     require(set(expr) == {"op", "args"} and type(expr["args"]) is list,
             "Unsupported expression shape")
     op, args = expr["op"], expr["args"]
+    require(op not in WIRE_OPS or model.get("ir_version") == "0.4", "Wire arithmetic requires IR 0.4")
     require(op not in DATA_OPS or model.get("ir_version") in DATA_VERSIONS, "Data operators require IR 0.2")
     require(op not in RAT_OPS or model.get("ir_version") == "0.3", "Rational operators require IR 0.3")
     types = [infer(x, model, event) for x in args]
@@ -127,6 +129,9 @@ def infer(expr, model, event=None):
         "bytes_len": (["bytes"], "int"),
         "bytes_concat": (["bytes", "bytes"], "bytes"),
         "bytes_slice": (["bytes", "int", "int"], "bytes"),
+        "bytes_pack8_mod": (["int"], "bytes"),
+        "bytes_pack16be_mod": (["int"], "bytes"),
+        "bytes_internet_checksum16": (["bytes"], "int"),
         "seq_distance": (["seq32", "seq32"], "int"),
         "seq_comparable": (["seq32", "seq32"], "bool"),
         "seq_lt": (["seq32", "seq32"], "bool"),
@@ -136,6 +141,17 @@ def infer(expr, model, event=None):
     inputs, output = signatures[op]
     require(types == inputs, f"{op} expects {inputs}, got {types}")
     return output
+
+
+def internet_checksum16(data):
+    """Pure arithmetic: RFC1071 section1, big-endian pairs, final odd-byte zero.
+
+    This never applies UDP absent-checksum or zero-to-FFFF transmit policy.
+    """
+    words=[(data[i]<<8)+(data[i+1]if i+1<len(data)else 0)for i in range(0,len(data),2)]
+    total=sum(words)
+    while total>>16:total=(total&65535)+(total>>16)
+    return 65535-total
 
 
 def evaluate(expr, machine, event=None):
@@ -182,6 +198,9 @@ def evaluate(expr, machine, event=None):
         "ite": lambda condition, yes, no: yes if condition else no,
         "bytes_len": len,
         "bytes_concat": lambda a, b: a + b,
+        "bytes_pack8_mod": lambda n: [n%256],
+        "bytes_pack16be_mod": lambda n: [(n%65536)//256,n%256],
+        "bytes_internet_checksum16": internet_checksum16,
         # Total truncating slice: offset and count are clamped independently.
         "bytes_slice": lambda a, offset, count: a[max(0, offset):max(0, offset) + max(0, count)],
         "seq_distance": lambda a, b: (b - a) % MOD,
@@ -193,7 +212,8 @@ def evaluate(expr, machine, event=None):
 
 def validate(model):
     require("extends" not in model, "Resolve model extension with load() before validation")
-    require(model.get("ir_version") in ("0.1", "0.2", "0.3"), "Unsupported IR version")
+    require(model.get("ir_version") in ("0.1", "0.2", "0.3", "0.4"), "Unsupported IR version")
+    require(model.get("ir_version") != "0.4" or model.get("semantics") == "flat-efsm-atomic-ordered-v1", "IR 0.4 currently requires atomic ordered v1")
     require(model.get("semantics") in ("flat-efsm-atomic-ordered-v1", *POST_SEMANTICS_VERSIONS), "Unsupported semantics")
     require(model.get("semantics") != CLOCK_SEMANTICS or model["ir_version"] == "0.3", "Clock-v3 requires IR 0.3")
     states = model["states"]
@@ -294,7 +314,7 @@ def load(path):
     model = json.loads(files[-1].read_text())
     for source in reversed(files[:-1]):
         overlay = json.loads(source.read_text())
-        require(overlay.get("ir_version") in DATA_VERSIONS, "Model extension requires IR 0.2 or 0.3")
+        require(overlay.get("ir_version") in DATA_VERSIONS, "Model extension requires IR 0.2/0.3/0.4")
         for group in ("transitions", "invariants"):
             removals = overlay.get("remove_" + group, [])
             require(type(removals) is list and len(removals) == len(set(removals)), "Invalid removal IDs")

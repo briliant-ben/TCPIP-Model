@@ -1,0 +1,182 @@
+{
+  "ir_version": "0.4",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "wire-arithmetic-contract",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "UDP/IP packet layout and protocol policy",
+      "network/PCAP execution",
+      "unbounded checksum correctness and compiler proof"
+    ]
+  },
+  "states": [
+    "READY"
+  ],
+  "initial_state": "READY",
+  "variables": {
+    "packed": {
+      "type": "bytes",
+      "initial": [
+        0,
+        0,
+        0
+      ]
+    },
+    "checksum": {
+      "type": "int",
+      "initial": 65535
+    }
+  },
+  "events": {
+    "probe": {
+      "origin": "application",
+      "fields": {
+        "byte_value": "int",
+        "word_value": "int",
+        "data": "bytes"
+      }
+    }
+  },
+  "timers": {},
+  "messages": {
+    "arithmetic.result": {
+      "fields": {
+        "packed": "bytes",
+        "checksum": "int"
+      }
+    }
+  },
+  "requirements": {
+    "PACK-MOD": {
+      "source": "docs/wire-arithmetic.md",
+      "kind": "modeling_choice",
+      "strength": "exact total arithmetic",
+      "interpretation": "Explicit modulo256/65536 packing. Not a checked network-field admission: protocol guards must reject invalid fields separately."
+    },
+    "CHECKSUM": {
+      "source": "https://www.rfc-editor.org/rfc/rfc1071.txt",
+      "kind": "protocol_interpretation",
+      "strength": "arithmetic definition",
+      "interpretation": "RFC1071 section1 equations1/2: big-endian adjacent octets, final odd octet followed by zero, end-around sum then16-bit complement. No UDP absent/zero transmit policy."
+    }
+  },
+  "transitions": [
+    {
+      "id": "PROBE",
+      "from": "READY",
+      "to": "READY",
+      "event": "probe",
+      "guard": true,
+      "requirements": [
+        "PACK-MOD",
+        "CHECKSUM"
+      ],
+      "actions": [
+        {
+          "set": {
+            "var": "packed",
+            "value": {
+              "op": "bytes_concat",
+              "args": [
+                {
+                  "op": "bytes_pack8_mod",
+                  "args": [
+                    {
+                      "event": "byte_value"
+                    }
+                  ]
+                },
+                {
+                  "op": "bytes_pack16be_mod",
+                  "args": [
+                    {
+                      "event": "word_value"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "checksum",
+            "value": {
+              "op": "bytes_internet_checksum16",
+              "args": [
+                {
+                  "event": "data"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "emit": {
+            "message": "arithmetic.result",
+            "fields": {
+              "packed": {
+                "var": "packed"
+              },
+              "checksum": {
+                "var": "checksum"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "PACK-LENGTH",
+      "requirements": [
+        "PACK-MOD"
+      ],
+      "assert": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "var": "packed"
+              }
+            ]
+          },
+          3
+        ]
+      }
+    },
+    {
+      "id": "CHECKSUM-RANGE",
+      "requirements": [
+        "CHECKSUM"
+      ],
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "checksum"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "checksum"
+              },
+              65535
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
