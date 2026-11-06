@@ -835,3 +835,15 @@ examples, same ledger/DeepSeek only, maximum3bounded rounds and actual gate befo
 review. No failed/uncertain API retry, GPT child agents, automatic main merge or
 scheduler restart. Next integrate accepted state lowering then explicit TCP/ARP
 queue/framing composition; privileged server networking remains unavailable.
+
+
+2026-11-06: server DeepSeek state-lowering-repair0009/PID95698 completed first
+round: exact1/63/172rule AST,32frozen scenarios,3actualC and independent advisory
+review passed. Accepted source SHA b5f51892 in protocol_lab/compose; raw archive
+SHAc7d00f4d in artifacts/server-state-lowering-20261106. Two new local rejection/
+state-predicate/cancel/timer-delay tests pass. No whole-stack/compiler proof.
+Next server component-union0010/PID96065 started a pure disjoint union builder
+proposal, bounded3rounds; it does not implement packet dispatch or queue/framing,
+and source remains unexecuted pending external acceptance. Original UNKNOWN/
+Differences remain. Namespace milestone d6ba0a92 pushed toPR20; its new CI must
+be checked independently. No main merge or scheduler restart.
