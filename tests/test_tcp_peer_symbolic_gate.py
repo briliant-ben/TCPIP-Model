@@ -156,6 +156,9 @@ class SymbolicGateTests(unittest.TestCase):
                   'clock': {'final_snapshot': snapshot,
                             'pending_timers': [['time_wait', 60001]]}}
         mod['verify_final_snapshot'](result, snapshot)
+        in_memory = copy.deepcopy(result)
+        in_memory['clock']['pending_timers'] = [('time_wait', 60001)]
+        mod['verify_final_snapshot'](in_memory, snapshot)
         for bad in ({**snapshot, 'state': 'ESTABLISHED'},
                     {**snapshot, 'timers': {'time_wait': 60002}},
                     {**snapshot, 'variables': {'snd_nxt': 8}}):

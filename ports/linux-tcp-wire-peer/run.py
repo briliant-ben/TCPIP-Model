@@ -495,7 +495,7 @@ def verify_final_snapshot(result, snapshot):
     clock = result.get('clock', {})
     require(clock.get('final_snapshot') == snapshot, 'final native snapshot differs')
     timers = sorted(snapshot.get('timers', {}).items(), key=lambda item: (item[1], item[0]))
-    require(clock.get('pending_timers') == [list(item) for item in timers],
+    require(clock.get('pending_timers') in (timers, [list(item) for item in timers]),
             'pending timers differ from native snapshot')
     require(any(name == 'time_wait' for name, _ in timers), 'native time_wait missing')
     require(result.get('time_wait_awaited') is False, 'time_wait incorrectly claimed elapsed')
