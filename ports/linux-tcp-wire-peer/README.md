@@ -38,3 +38,10 @@ Candidate 0059 was reviewed manually after independent API reviews failed
 actual C/IR/Z3 checks but do not establish live Linux TCP success. The dedicated
 `linux-tcp-wire-peer.yml` workflow retains both success and failure evidence.
 Existing finite model gaps must be reported, not bypassed in the adapter.
+
+Live checkpoint137ad5c3 now passed both runtime and independent reconstruction
+on isolated Linux (run42352256817): single PID, four-byte echo, close to pending
+TIME-WAIT,11 captured packets/zero drops,9 actual transitions SAT/replay. Original
+archive and readonly Git-source audit are under
+`artifacts/linux-tcp-wire-peer-137ad5c3`. This establishes only the finite TUN
+experiment above; prior failed archives remain failures.

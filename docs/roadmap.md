@@ -1,3 +1,5 @@
+2026-11-07有限TCP真实互通验收：137ad5c3/run42352256817/job128342702870全runtime+独立verify success；生成C单PID2656完成active open/0080ff07回显/active close至TIME-WAIT，9实际transition固定Z3 SAT/replay，11包0drop/quiet>=100ms。53原文件ZIP SHA4640aace、86具名Git源码和只读audit在artifacts/linux-tcp-wire-peer-137ad5c3，核50输出hash/C/ELF/source/raw/capture/lifecycle，不执行归档Python/ELF/solver，CI provenance仍需信任。原2690/5839验收失败不追认。虚拟TUN有限TCP，不是物理Ethernet/全TCP或完整组合端点；下一步显式IR跨层整合。0061三审查HTTP500均终态，不能报agents运行；新任务必须独立限定、沿用原账本，不自动失败重试。
+
 ## 2026-11-07 TCP live runtime checkpoint
 
 PR17/18/19/20各自最新头5b7981d0/a8598005/da1fc1e2/1a6418fc已实际核对42/22/44/31项全部success，仍草稿、不自动合main。新codex/tcp-live-runtime基于PR20；候选0059服务器13方法通过，仍非网络证据。0060审查输出截断、0061三独立小审查HTTP500均终态，无有效审查结果、不自动重试。控制器人工复核修复时间类型、actual scene重放/绑定、操作数与transition数区别、最终C快照/timer绑定；本机12gate+4preflight通过，原候选/archive及失败元数据在artifacts/tcp-runtime-candidate-0059。新增隔离Linux TCP workflow，真实结果待验收；不得先称互通成功。DeepSeek当前无活跃审查，不改变原台账。下一步验收首个真实TCP运行，再按原始model_gap扩展IR与跨层组合，保留旧UNKNOWN和Difference。
