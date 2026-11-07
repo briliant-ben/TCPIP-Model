@@ -1,0 +1,116 @@
+{
+  "scenario_version": "0.2",
+  "id": "abort-before-resolution",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "T.app.connect",
+      "fields": {},
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "L.ethernet.tx",
+              "fields": {
+                "frame": [
+                  255,
+                  255,
+                  255,
+                  255,
+                  255,
+                  255,
+                  2,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  8,
+                  6,
+                  0,
+                  1,
+                  8,
+                  0,
+                  6,
+                  4,
+                  0,
+                  1,
+                  2,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  192,
+                  0,
+                  2,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  192,
+                  0,
+                  2,
+                  2,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at_ms": 5,
+      "event": "T.app.abort",
+      "fields": {},
+      "expect_trace": [
+        {
+          "at_ms": 5,
+          "emitted": [
+            {
+              "message": "T.application",
+              "fields": {
+                "code": "aborted"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "COMPOSED",
+    "variables": {
+      "T.control": "CLOSED",
+      "L.control": "PENDING",
+      "ip_pending_owner": "none",
+      "L.pending_packet": []
+    },
+    "timers": {
+      "L.query": 1000
+    }
+  }
+}

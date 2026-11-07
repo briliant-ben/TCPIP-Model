@@ -1,0 +1,38 @@
+name: Finite composed TCP IPv4 IR and generated C
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['protocol_lab/**', 'model/**', 'tools/build_tcp_ipv4_endpoint.py', 'tests/test_tcp_ipv4_coupling.py', 'tests/test_guard_memo.py', 'scenarios/tcp-ipv4-endpoint/**', 'spec/tcp-ipv4-endpoint-oracle.json', '.github/workflows/tcp-ipv4-endpoint.yml']
+  pull_request:
+    paths: ['protocol_lab/**', 'model/**', 'tools/build_tcp_ipv4_endpoint.py', 'tests/test_tcp_ipv4_coupling.py', 'tests/test_guard_memo.py', 'scenarios/tcp-ipv4-endpoint/**', 'spec/tcp-ipv4-endpoint-oracle.json', '.github/workflows/tcp-ipv4-endpoint.yml']
+permissions:
+  contents: read
+jobs:
+  finite-coupling:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare tools
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -r requirements-formal.txt
+          mkdir -p artifacts/tcp-ipv4-ci
+      - name: Exact model regeneration and bounded regression contracts
+        run: |
+          .venv/bin/python tools/build_tcp_ipv4_endpoint.py --out "$RUNNER_TEMP/tcp-ipv4-rebuilt.json"
+          cmp model/tcp-ipv4-endpoint.json "$RUNNER_TEMP/tcp-ipv4-rebuilt.json"
+          .venv/bin/python -m unittest discover -s tests -p test_tcp_ipv4_coupling.py -v > artifacts/tcp-ipv4-ci/coupling-tests.log 2>&1
+          .venv/bin/python -m unittest discover -s tests -p test_guard_memo.py -v > artifacts/tcp-ipv4-ci/guard-tests.log 2>&1
+      - name: Actual generated C and positive fixed-input Z3 replay
+        run: |
+          .venv/bin/python examples/run_native_suite.py model/tcp-ipv4-endpoint.json --scenario-dir scenarios/tcp-ipv4-endpoint --formal-replay --out artifacts/tcp-ipv4-ci/native > artifacts/tcp-ipv4-ci/native-result.json
+      - name: Retain original compile traces SMT and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: finite-tcp-ipv4-${{ github.sha }}
+          path: artifacts/tcp-ipv4-ci/
+          if-no-files-found: error
