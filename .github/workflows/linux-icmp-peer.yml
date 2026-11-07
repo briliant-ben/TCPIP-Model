@@ -1,0 +1,42 @@
+name: Generated IR ICMP with independent Linux peer
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['ports/linux-icmp-peer/**', 'ports/native_session.py', '.github/workflows/linux-icmp-peer.yml', 'protocol_lab/**', 'model/icmp-echo.json', 'flows/icmp-echo.json', 'examples/icmp_observe.py', 'tests/test_icmp_echo.py', 'requirements-formal.txt']
+  pull_request:
+    paths: ['ports/linux-icmp-peer/**', 'ports/native_session.py', '.github/workflows/linux-icmp-peer.yml', 'protocol_lab/**', 'model/icmp-echo.json', 'flows/icmp-echo.json', 'examples/icmp_observe.py', 'tests/test_icmp_echo.py', 'requirements-formal.txt']
+permissions:
+  contents: read
+jobs:
+  kernel-peer:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare isolated Linux tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y iproute2 tcpdump ethtool iputils-ping python3-venv
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -r requirements-formal.txt
+          mkdir -p artifacts
+      - name: Check live session faults and existing ICMP contracts
+        run: |
+          .venv/bin/python ports/linux-icmp-peer/tests.py > artifacts/linux-icmp-peer-tests.log 2>&1
+          .venv/bin/python -m unittest discover -s tests -p test_icmp_echo.py -v > artifacts/linux-icmp-contract-tests.log 2>&1
+      - name: Run continuous generated C against iputils/Linux ICMP in separate namespaces
+        run: sudo .venv/bin/python ports/linux-icmp-peer/run.py --out artifacts/linux-icmp-peer
+      - name: Reconstruct and verify original runtime evidence
+        run: sudo .venv/bin/python ports/linux-icmp-peer/verify.py --out artifacts/linux-icmp-peer
+      - name: Retain raw source-bound sessions PCAP and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: linux-ir-icmp-peer-${{ github.sha }}
+          path: |
+            artifacts/linux-icmp-peer/
+            artifacts/linux-icmp-peer-tests.log
+            artifacts/linux-icmp-contract-tests.log
+          if-no-files-found: error
