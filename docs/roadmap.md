@@ -1,5 +1,7 @@
 # 里程碑与验收门槛
 
+2026-11-07：exact-v1隔离候选已实际11专项/3真实flow+verify通过且保留完整原件（artifacts/exact-backend-retained-0036），不等生产修复。后续0040实际7项求解前SMT/中断留证+11预处理测试通过，递归同义反复断言已替换；0041正在冻结副本跑12模块相关回归，下一门禁为实际回归终态、生产集成与新头不可变CI。TCP真实kernel peer外层尚未验收；有限IR原生/固定Z3通过不可替代。继续清理、只读verify与非空输出防混用修复，随后实际TCP交换及必要ACK/data/window IR扩展。辅助工具候选不能替代基本IPv4 TCP/UDP+ARP/ICMP组合端点目标。
+
 当前活动 flow 原型的逐项验收与范围见 [spec-flow-acceptance.md](spec-flow-acceptance.md)，服务器／外部调用方入口见 [spec-flow-server.md](spec-flow-server.md)。下文保留此前更大 TCP 平台路线和历史检查点，不表示这些扩展已完成。
 
 ## M0：本地流程切片（本次交付）

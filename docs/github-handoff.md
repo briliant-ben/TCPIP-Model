@@ -7,7 +7,9 @@
 - 实际分支 `codex/arp-udp-peer` / PR20；PR17–20仍开放，PR8–16已关闭，不能据此推断全部进入main。先看git/PR实际状态，不按下文历史分支回退。严禁自动main合并/force，保留两处用户未提交sent-ledger artifacts。
 - 已验收代码点533cee1f：有限rawIPv4/TCP IR0.6共172规则/11冻结场景；隔离LinuxCI实际7专项、11生成C/固定输入Z3通过。99原件/23Git源码/327hash绑定、相同C重渲染、11完整Difference和11见证参考重放只读复核通过，见artifacts/tcp-wire-linux-ci-533cee1f。这不是liveTCP peer、全输入安全或完整TCP/IP。
 - DeepSeek冻结Python驱动aa5f174a，0021实际4测试/4真实驱动调用通过，原正例、model_gap留证、坏timer及倒退clock；本机4项复核通过。仅合成AF_UNIX/mock调度验收，详见artifacts/server-tcp-driver-0021，不是网络证据。
-- 服务器 `blxu@192.168.71.78:/home/blxu/protocol-flow`。最新实施任务 `tcp-linux-harness-anchored-20261107-0026`（启动PID134904）和 `exact-backend-policy-repair-20261107-0027`（PID134905），分别LinuxTCP真实通道、精确solver策略端到端补丁。查各status.json、原件和真实PID；终态不叫运行中。提案未执行/未批准，不按模型自评合入。
+- 服务器 `blxu@192.168.71.78:/home/blxu/protocol-flow`。最新任务 `exact-backend-regression-20261107-0041`（启动PID150501），冻结0040候选跑12模块相关回归，逐模块日志/结果，无付费调用。0039求解前SMT补丁原solver义务AST保持，首次测试因错误API失败；0040零API纠正后7中断/留证+11预处理测试全部通过，TAR及源在artifacts/exact-backend-journal-0040。查status、日志与真实PID；终态不叫运行中，不自动重试failed/uncertain。旧0026–0040作业已终态，不能沿用旧启动记录。
+- 新候选0034/0036实际11项全过，三次真实十阶段flow/verify通过、三个全量rehash策略/tactics/source篡改反例被正确拒绝。589原文件/138源绑定及只读audit在artifacts/exact-backend-retained-0036；三次完整job/原SMT/生成C/ELF/原stdout保留。0037独立DeepSeekreview无blocking但发现递归函数测试有真实同义反复，仍需修；未合入生产，不提升旧UNKNOWN。0028/0029失败原包也保留，环境遗漏场景修正零API，不冒称原测试通过。
+- TCP真实通道尚未通过：0030/0032只读verify与非空目录/异常清理问题需验收；0032附加reason元数据引发严格schema拒绝，零API保留before/after后发现清理无界。0035候选while-else使完成标记不可达，被拒；0038小型FD helper仅因测试sys导入被白名单拦截，尚未执行，且原始bytes元数据不可JSON序列化等需修。旧候选/响应保留，不因模型自评或语法通过当网络证据。
 - ICMP旧depth2/60s UNKNOWN永久保留。0023在同域/同深度/总60s下内置Z3精确预处理诊断UNSAT13.8s；递归定义逐token相同，新context重读UNSAT6s；小型SAT模型转换检查通过。生产SAT协议见证/重放及任务策略绑定仍待0027实际验证，不提升旧UNKNOWN。详见artifacts/icmp-exact-query-0023和icmp-query-diagnostic-a576。
 - 用户明确不设DeepSeek费用/累计请求上限；新控制器max_calls=None，仍共用原private/api-ledger、不重置/换账本，不自动重试失败/不确定请求。凭据只网关使用，不读取/输出/提交。实现/独立测试/审查都优先服务器DeepSeek，不启动GPT子agent。
 - 本聊天每3小时巡检（automation id=automation, ACTIVE），用户本轮重新授权，优先读本段+最新implementation-log，而非老暂停/预算摘要。无变化安静；新里程碑/失败/需操作才通知。当前sudo限制只阻塞服务器特权网络通道，继续隔离GitHubLinux及普通模型/C/Z3工作，不改服务器全局网络/SSH。

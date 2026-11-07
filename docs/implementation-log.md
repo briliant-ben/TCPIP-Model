@@ -1,5 +1,15 @@
 # 持续实施记录
 
+## 2026-11-07：精确求解候选的实际测试与完整留证
+
+e0629985实际33项CI中31通过、2项ICMP失败；有限TCP检查通过，不外推为liveTCP。0028/0029九测试失败原包保留（TAR7df10aef）；控制器补原场景文件零API后仍有6error/1failure，不能追认原候选通过。0031响应截断停止，不自动重试。
+
+0033 DeepSeek缩小任务后仍暴露测试schema/报表键/未持久化stage错误。0034零API纠正实际接口/元数据，复用已合法fixture、要求真实flow达到verified_event_slice；11项零失败/错误/跳过。0036再次真实执行并保留三次完整flow/verify、三个完整rehash策略/tactics/source反例、原SMT/C/ELF/stdout/源工作区。589文件/138源绑定、TAR093fccca和只读audit见artifacts/exact-backend-retained-0036。ICMP同模型depth2/60000 exact-v1双UNSAT，但旧UNKNOWN未提升、生产后端未修改。
+
+0037独立DeepSeek审查无blocking，但递归定义断言存在同义反复。0039新DeepSeek任务只补求解前SMT/中断留证，原solver义务AST不变；首次实际测试因猜测Solver.solve等接口失败。0040零API复核使用实际Encoding.solve与显式空symbolic_initials，增加第三次sample求解中断留证和真实递归校验和断言，实际7项journal+11项preprocessing全部通过，TARf5cbaa8b保留原失败和新日志/源。0041冻结副本启动12模块相关回归（PID150501）；以实际终态为准，未完成广回归/生产集成/新头CI，不称PR已修好。
+
+TCP0032额外reason字段被严格schema拦下；其before/after可零API规范化，但清理无界。0035 while-else完成分支不可达，拒绝；0038独立小helper仅因测试sys导入被白名单拦截，尚未执行，原始bytes元数据还不适合JSON。旧提案、失败和原始响应保留，无新liveTCP证据。所有任务仍用原ledger、无费用上限/失败自动重试/GPT子agent，不自动main合并或force。保留用户两处未提交artifacts与原UNKNOWN/Difference，整体目标保持active。
+
 ## 2026-10-24：本地基线恢复
 
 当前仓库 HEAD 为 `bb921b5`，克隆时工作区干净，仓库和父目录未发现 AGENTS.md。未回退或覆盖已有改动。
