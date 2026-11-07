@@ -1,3 +1,5 @@
+2026-11-07最新接续：分支codex/tcp-ipv4-compose基于PR21头15e5cfd0（该头三个workflow均success），尚无新实现PR。0062 reviewer正文唯一字符串集合括号错误已零API恢复，原invalid_response/账本不改，内容未批准为规范/oracle。0063因namespace_component返回(model,tables)元组在API前失败，原件保留；修正取[0]后本地真实准备235规则/57变量，但仅disjoint union。新0064 tcp-ir-coupling-code-20261107-0064由两个服务器DeepSeek Pro代码角色实施：纯离线couple_tcp(model)、独立冻结fixture，PID171930已实查存活（快照时）。合同明确TCP自动ARP/shared latest IP队列owner/abort清理/单IR Ethernet入口/原timer排序；不改旧组件/后端/oracle，输出未执行/验收。快照SHA6eaf6cc3在artifacts/tcp-ir-coupling-start-0064。下轮先检查该真实PID/status，活任务不重启；终态先审纯源码、冻结独立fixture，再实际参考/C/固定Z3及故障门禁。不得把启动/235规则准备/语法修复当完成组合或证明。
+
 最新核对：0062两个角色均终态，PID169750已不存在，无活跃agent。实现角色HTTP503/usage未知；oracle角色JSONDecodeError/invalid_response，已知14912输入+6332输出=21244token，原账本共106请求；无有效提案、不自动重试，公开原件7文件和脱敏结果在artifacts/tcp-composition-agents-0062。服务器current-work.json与3h交接已纠正。有限TCP137里程碑仍通过；证据头e727ca39之后查实际新CI，整体组合原型未完成。
 
 当前服务器新任务tcp-endpoint-composition-20261107-0062，控制器PID169750已实查存活，两个DeepSeek角色分别提出单IR跨层实现切片和独立规范/字面量验收合同；仅提案、不自动执行/集成。用137ad5c3可信源码包，thinking disabled/8192技术输出预算、无累计调用上限、原账本、不自动失败重试。0061 HTTP500不重启，此为不同的新跨层任务。后续先查真实终态和进程，再审提案/限定实施，不把此启动回执当完成。
