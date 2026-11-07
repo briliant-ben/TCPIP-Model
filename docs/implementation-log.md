@@ -1,5 +1,43 @@
 # 持续实施记录
 
+2026-11-07 stacked integration: pushed PR17 minimal fix5b7981d0, PR18 merge
+a8598005 (local7 adapter methods), PR19 merge da1fc1e2 (local8 induction+13 policy
+methods). PR19 task/worker conflicts retain v4 strategy and enable preprocessing
+only for BMC. PR20 merges parent history while retaining byte-identical current
+symbolic/task/worker/runner/CLI, flow, workflow and policy tests from3087e0e6;
+the old minimal backport does not replace newer journal/IR0.6/v4 support. New-head
+CI required independently, no main merge/force and user artifacts untouched.
+
+TCP Pro0058 fixes contract-vs-observed-input replay via generic IR Machine and
+actual reference_case/compare_case; frozen oracle retains full expect contracts.
+One UNKNOWN test injected into a runpy dictionary rather than actual function
+globals;0059 zero-API corrects negative injection and adds real generated C
+single-session execution/stream_check to the previous compile-only smoke.
+Actual9 gate+4 preflight methods pass. Independent Pro0060 review receives full
+actual dependencies before first isolated Linux run. This is not live TCP,
+PCAP, full handshake/data acceptance or compiler/unbounded proof. All original
+failed candidates and old UNKNOWN remain unchanged.
+
+2026-11-07 PR19 stacked sync: merged repaired PR18/PR17 and resolved task/worker
+conflicts by keeping the explicit v4 induction branch and adding preprocessing
+only to legacy BMC tasks. V4 still rejects BMC-only fields. Eight induction
+methods and thirteen exact policy methods passed on the resolved tree; fresh CI
+is checked separately. Protocol/seed/source pins and old UNKNOWN remain unchanged.
+
+2026-11-07 PR18 stacked sync: merged the tested minimal PR17 exact-policy fix,
+without any descendant protocol changes. Seven existing ICMP adapter methods
+passed locally on the merged tree; these fixtures/preflight checks are not a
+new live network run. Fresh merged-head CI remains required. No main merge.
+
+2026-11-07 PR17 minimal correction: DeepSeek 0048/0049 candidate on original
+dc0be249 keeps schema1..3, models/oracles/pins/depth2/60000/native unchanged.
+Explicit exact-v1 policy is forwarded and bound by task/worker/checker; default
+none and old formal CLI behavior remain. Server and local13 methods passed,
+five related server modules and complete ICMP flow+verify passed. TAR242a371d
+contains308 original files and265 flow output hash bindings. Original rejected
+anchors and UNKNOWN retained; no descendant features or main merge. New CI
+must verify the actual pushed head; see docs/icmp-exact-backport.md.
+
 ## 2026-11-07：精确预处理集成与真实 CLI 回归
 
 b81f747e集成头实际CI终态59项，55success；四个kernel-peer failure均为两个workflow的push/PR副本，在进入网络前被旧ICMP formal配置精确字典断言拦下，其他三个inductive/flow/fault测试通过。原ZIP13559985003（b4bdb557）仅三份测试日志，无PCAP/live执行，不冒称网络失败/证据。本机复现同4测1失败，仅将严格期望配置加上已声明exact-v1字段后4测全过，保留supplement完整protocol/source/seed比较。此修正须新头CI验证。

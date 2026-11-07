@@ -1,10 +1,19 @@
 # GitHub 迁移与复现
 
+2026-11-07 PR17 correction: minimal exact-v1 solver-policy backport on dc0be249,
+without descendant protocol/IR/schema changes. Thirteen frozen tests passed on
+server and locally; five related modules and one full ICMP ten-stage flow with
+verify passed. Original source, failures, review and full raw job are retained in
+artifacts/pr17-exact-backport-0051. New-head CI pending; old UNKNOWN immutable.
+See docs/icmp-exact-backport.md. No main merge or forced history update.
+
 当前活动 flow 原型的逐项验收与范围见 [spec-flow-acceptance.md](spec-flow-acceptance.md)，服务器／外部调用方入口见 [spec-flow-server.md](spec-flow-server.md)。下文保留此前更大 TCP 平台路线和历史检查点，不表示这些扩展已完成。
 
 ## 当前实施检查点（2026-11-07）
 
 - 实际分支 `codex/arp-udp-peer` / PR20；PR17–20仍开放，PR8–16已关闭，不能据此推断全部进入main。先看git/PR实际状态，不按下文历史分支回退。严禁自动main合并/force，保留两处用户未提交sent-ledger artifacts。
+- PR17最小修复已推5b7981d0，PR18父同步a8598005，PR19父同步da1fc1e2；后三者新头CI各自核对，不外推旧绿。PR18本机7adapter、PR19本机8归纳+13策略通过。PR19冲突保留v4独立路径，预处理仅用于legacy BMC。PR20当前同步这些父提交时，保留其已在3087e0e6通过34检查的全部实现与新测试，五个协议工具模块/flow/workflow均逐字保留，未将旧backport覆盖新journal/IR0.6/v4支持；只合入父历史、原始证据和说明。
+- 服务器TCP最新通过候选 `tcp-replay-gate-validation-20261107-0059`：9门禁+4预检通过，含实际单进程生成C执行及无expect输入的完整native/reference比较。通用回放仅调IR Machine，冻结oracle完整expect/expect_trace仍检查；UNKNOWN负例修正为实际函数globals注入而非runpy返回字典。原0056/0057/0058失败全部留存，不追认。新独立Pro审查 `tcp-live-harness-review-20261107-0060`（启动PID159056）提供完整Session/peer/driver/capture实际源码，须查真实PID/status，审后才进入隔离Linux。尚无新liveTCP/PCAP证据，不将drop短包C测试冒充握手或实机。
 - b81f747e新CI终态59项：55success、4failure（两个网络workflow的push/PR副本），实际失败在网络执行前的test_icmp_echo_inductive旧formal配置字典断言；原ZIP13559985003/SHA b4bdb557保留于artifacts/icmp-policy-ci-b81f747e。控制器本机复现4测1失败，严格加入已声明exact-v1字段后4测全过；原supplement与模型/seed/source完整比较保留，无oracle放宽。本条后续修正Git头CI需再核，不能外推b81结果。
 - 服务器新任务 `pr17-exact-backport-validation-20261107-0049`（启动PID154730）复用0048完成的DeepSeek代码，仅零API纠正两个纯格式锚点，实际冻结13测试后独立审查；原PR17 Git dc0be249完整输入已固定，不把PR20新协议/IR0.6/v4回移。`tcp-linux-peer-source-20261107-0050`（启动PID155082）由DeepSeek修原peer bytes来源绑定与真实非特权CLI正反测试。查实际status/log/PID，不把启动当持续运行或验收。两任务都未自动改Git/PR，旧API失败不重试。
 - 已验收代码点533cee1f：有限rawIPv4/TCP IR0.6共172规则/11冻结场景；隔离LinuxCI实际7专项、11生成C/固定输入Z3通过。99原件/23Git源码/327hash绑定、相同C重渲染、11完整Difference和11见证参考重放只读复核通过，见artifacts/tcp-wire-linux-ci-533cee1f。这不是liveTCP peer、全输入安全或完整TCP/IP。
