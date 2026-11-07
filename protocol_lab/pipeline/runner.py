@@ -9,7 +9,7 @@ import subprocess
 import sys
 import time
 import uuid
-from .task import TOOL,load_task,inputs,check_inputs,freeze_inputs,read,write,sha
+from .task import TOOL,load_task,inputs,check_inputs,freeze_inputs,read,write,sha,resolve
 
 STAGES=('sources','ir','formal','tests','reference','generate','build','execute','compare','traceability')
 DEPENDENCIES={'sources':(),'ir':(),'formal':('ir',),'tests':('ir',),'reference':('ir','tests'),
@@ -145,7 +145,12 @@ def verify(out,workspace,expected_task_sha256=None):
         if stage!=read(out/'stages'/name/'result.json'):raise ValueError('Stage/report disagreement')
         if stage['stage']!=name or stage['schema']!='spec-flow-stage-v1':raise ValueError('Stage identity changed')
         if stage['status']=='pass'and any(r['stages'][d]['status']not in ('pass','unknown')for d in DEPENDENCIES[name]):raise ValueError('Dependency falsely promoted')
-        if name=='formal'and stage['status']=='pass'and stage['data'].get('status')!='bounded_pass':raise ValueError('Unknown/failed formal result falsely promoted')
+        expected_formal='inductive_invariants_pass'if canonical['schema']=='spec-flow-task-v4'else'bounded_pass'
+        if name=='formal'and stage['status']=='pass'and stage['data'].get('status')!=expected_formal:raise ValueError('Unknown/failed formal result falsely promoted')
+        if name=='formal'and canonical['schema']=='spec-flow-task-v4'and stage['status']in ('pass','unknown'):
+            from ..sequence_induction import verify as verify_induction
+            from ..ir import load
+            verify_induction(load(resolve(workspace,canonical['model'])),out/'stages/formal/queries',require_pass=stage['status']=='pass')
         if name=='formal'and stage['status']in ('pass','unknown')and stage['data']!=read(out/'stages/formal/queries/result.json'):
             raise ValueError('Underlying formal report changed')
         if name=='formal'and stage['status']in ('pass','unknown')and stage['data'].get('solver_timeout_ms',10000)!=canonical['formal'].get('solver_timeout_ms',10000):raise ValueError('Formal solver budget differs from task')

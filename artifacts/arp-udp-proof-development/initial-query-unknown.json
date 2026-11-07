@@ -1,0 +1,631 @@
+{
+  "schema": "full-sequence-invariant-induction-v1",
+  "backend": "z3-full-sequence-invariant-induction",
+  "status": "unknown",
+  "model_semantic_sha256": "a23ffb0e17f837d58c6b3f8626a249426481f207da8121500ac4cb68e2fd64d8",
+  "checker_sha256": "38846dccbb3dcca4dad55d05b086ffa516695db2346e62bc09b3c3ccb22e724a",
+  "solver_version": "4.15.4",
+  "solver_timeout_ms": 10000,
+  "byte_encoding": "full_finite_sequence_bv8",
+  "prestate_variables": "all_typed_values_subject_to_listed_invariants",
+  "prestate_timers": "active_due_not_before_now",
+  "strategy": "exact_selected_rule_source_target_constant_substitution_fresh_solver",
+  "scope": "listed_initial_and_defined_transition_invariants_only",
+  "time_advance": "time_event_free_invariants_unchanged_between_expiries_atomic_v1_scheduler_trusted",
+  "runtime_properties": [
+    "positive_timer_duration",
+    "active_timer_not_in_past"
+  ],
+  "invariants": [
+    "STATE-EMPTY",
+    "STATE-PENDING",
+    "STATE-RESOLVED",
+    "RETRY-BOUND",
+    "TTL-DOMAIN",
+    "PACKET-MTU",
+    "PACKET-LENGTH",
+    "QUEUE-BOUND",
+    "QUEUE-ONLY-PENDING",
+    "QUEUE-PACKET-OR-EMPTY"
+  ],
+  "initial_query": {
+    "file": "initial.smt2",
+    "query": "unsat",
+    "smt2_sha256": "ab50d8557a96c725383fba2382b3a39d4a0b7a4618328b65c76af2d8aa55d39c"
+  },
+  "initial_nonvacuity": {
+    "file": "initial-enabled.smt2",
+    "query": "unknown",
+    "smt2_sha256": "14f0597d13efacbd892e6b4b16f6b58d0504014c18e7af7ef6858882328504e3",
+    "reason": "timeout"
+  },
+  "preservation": [
+    {
+      "rule": "QUERY-START",
+      "source": "EMPTY",
+      "target": "PENDING",
+      "obligation": {
+        "file": "preserve-0000.smt2",
+        "query": "unsat",
+        "smt2_sha256": "882440be6b9dbfedb86fb36750daafedccc707c4da1d59f0a86ba93dfcb3a466"
+      },
+      "nonvacuity": {
+        "file": "enabled-0000.smt2",
+        "query": "sat",
+        "smt2_sha256": "cc8f317de8568f943333ce2dc809813e8f9c04af52de5bda0210b56e1a2e53bd"
+      }
+    },
+    {
+      "rule": "QUERY-COALESCE",
+      "source": "PENDING",
+      "target": "PENDING",
+      "obligation": {
+        "file": "preserve-0001.smt2",
+        "query": "unsat",
+        "smt2_sha256": "a798b87f35b5d31ea15f1ab9a01614491b06030e3278eddbc00153759892125e"
+      },
+      "nonvacuity": {
+        "file": "enabled-0001.smt2",
+        "query": "sat",
+        "smt2_sha256": "c68ca4aba42ee82c74e79b65b0f7fedb4d80e1d43a4fba425c5f9f3324d34b4c"
+      }
+    },
+    {
+      "rule": "QUERY-CACHED",
+      "source": "RESOLVED",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0002.smt2",
+        "query": "unsat",
+        "smt2_sha256": "d9490c9b3d9a7f55010b19a76686719e87d2afe37e2fb71184033a1ad9a26c2d"
+      },
+      "nonvacuity": {
+        "file": "enabled-0002.smt2",
+        "query": "sat",
+        "smt2_sha256": "4d50b14f5b09fbe3ee236818d34397bcdeef5664b328cdaa7efb7a3f7ca0326c"
+      }
+    },
+    {
+      "rule": "QUERY-RETRY",
+      "source": "PENDING",
+      "target": "PENDING",
+      "obligation": {
+        "file": "preserve-0003.smt2",
+        "query": "unsat",
+        "smt2_sha256": "6e294bb3a70282123532a2ee2c469078fb2dc12b59837d505ba3e8e1be17fd47"
+      },
+      "nonvacuity": {
+        "file": "enabled-0003.smt2",
+        "query": "sat",
+        "smt2_sha256": "2437a40d8437ee98e8abb22ed07ff5c9713310475c870341c81d045b34c8582d"
+      }
+    },
+    {
+      "rule": "CACHE-EXPIRE",
+      "source": "RESOLVED",
+      "target": "EMPTY",
+      "obligation": {
+        "file": "preserve-0004.smt2",
+        "query": "unsat",
+        "smt2_sha256": "0a50ecbc137d33daa3d78c4f1b99236bbfda9581ff220a76cb6b7db28494b4f2"
+      },
+      "nonvacuity": {
+        "file": "enabled-0004.smt2",
+        "query": "sat",
+        "smt2_sha256": "476255a9803f8dee4cdfa8adf8f727e482b9251d79446d9be11b4365e60aaf67"
+      }
+    },
+    {
+      "rule": "CONFIG-EMPTY",
+      "source": "EMPTY",
+      "target": "EMPTY",
+      "obligation": {
+        "file": "preserve-0005.smt2",
+        "query": "unsat",
+        "smt2_sha256": "6d9cdf8944403b0b79e82aacd11d934e085ca4ef1125e51f5cfa872e1b62d56d"
+      },
+      "nonvacuity": {
+        "file": "enabled-0005.smt2",
+        "query": "sat",
+        "smt2_sha256": "3e15b888c7f50135155873965e0dee93eda9aa70e8aed630dcd869be3f9f8e29"
+      }
+    },
+    {
+      "rule": "SHORT-EMPTY",
+      "source": "EMPTY",
+      "target": "EMPTY",
+      "obligation": {
+        "file": "preserve-0006.smt2",
+        "query": "unsat",
+        "smt2_sha256": "993b9c621fc8fa24a9fc31798d264a52ed0d7a4b7210c85932f1de4b1d7c6b8f"
+      },
+      "nonvacuity": {
+        "file": "enabled-0006.smt2",
+        "query": "sat",
+        "smt2_sha256": "e4ec7528b5aadc10a11a16b2cd558a088ca874d5c2abf9bd3c24c92326a31115"
+      }
+    },
+    {
+      "rule": "LOCAL-REQUEST-EMPTY",
+      "source": "EMPTY",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0007.smt2",
+        "query": "unsat",
+        "smt2_sha256": "4b59cfc9f245c3921ec5539186edf5c3ab76413183a080d36ad279cb401e3ab9"
+      },
+      "nonvacuity": {
+        "file": "enabled-0007.smt2",
+        "query": "sat",
+        "smt2_sha256": "a0147045cf524af3488baeffeab5359efb3a1783509d2aed452139c2b232f4b1"
+      }
+    },
+    {
+      "rule": "LOCAL-REPLY-EMPTY",
+      "source": "EMPTY",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0008.smt2",
+        "query": "unsat",
+        "smt2_sha256": "f5a56ca1e1d103dab00166fd4bde7f8c19458d691baeae23b6e711524f8a92c1"
+      },
+      "nonvacuity": {
+        "file": "enabled-0008.smt2",
+        "query": "sat",
+        "smt2_sha256": "00a270fcd5d21d0b3c48d4dd3e7d581c4261f63c89c4c40443e09d20d36b26d8"
+      }
+    },
+    {
+      "rule": "NONLOCAL-EMPTY",
+      "source": "EMPTY",
+      "target": "EMPTY",
+      "obligation": {
+        "file": "preserve-0009.smt2",
+        "query": "unsat",
+        "smt2_sha256": "a9f57c6f76419b390ea463bdcadc2ff5e50819df5686af7c8d3129d4b06da4dd"
+      },
+      "nonvacuity": {
+        "file": "enabled-0009.smt2",
+        "query": "sat",
+        "smt2_sha256": "1039cb10a8bb73c665f6b7c4fcff3207c2c6f10231289b5ad6a0a2f3483ce964"
+      }
+    },
+    {
+      "rule": "CONFIG-PENDING",
+      "source": "PENDING",
+      "target": "PENDING",
+      "obligation": {
+        "file": "preserve-0010.smt2",
+        "query": "unsat",
+        "smt2_sha256": "da5587948910256d97f2387b0211827df85a10ea632d0bc9e4ba903174e51eb4"
+      },
+      "nonvacuity": {
+        "file": "enabled-0010.smt2",
+        "query": "sat",
+        "smt2_sha256": "d2cc573f3e5ba19bdb6834f7dcaa534878f876d72b50a29ebac56caae9de397d"
+      }
+    },
+    {
+      "rule": "SHORT-PENDING",
+      "source": "PENDING",
+      "target": "PENDING",
+      "obligation": {
+        "file": "preserve-0011.smt2",
+        "query": "unsat",
+        "smt2_sha256": "a33cca0ee1c57027c9db3c8217f08fc6a4c6ab7650c81e63f806082de348d329"
+      },
+      "nonvacuity": {
+        "file": "enabled-0011.smt2",
+        "query": "sat",
+        "smt2_sha256": "a630e268258034aa09803b106199b8faa8abcc45ff14721d4a5745a486e19293"
+      }
+    },
+    {
+      "rule": "NONLOCAL-PENDING",
+      "source": "PENDING",
+      "target": "PENDING",
+      "obligation": {
+        "file": "preserve-0012.smt2",
+        "query": "unsat",
+        "smt2_sha256": "d5595ad07dfaf92ad0f290df44d27f9aeb981b738eb0034a0843aafd603b7b09"
+      },
+      "nonvacuity": {
+        "file": "enabled-0012.smt2",
+        "query": "sat",
+        "smt2_sha256": "3aedb47accb37ca41f1b47c8f34846db20cf5e241ef6afe4e635a82fc3e01b06"
+      }
+    },
+    {
+      "rule": "CONFIG-RESOLVED",
+      "source": "RESOLVED",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0013.smt2",
+        "query": "unsat",
+        "smt2_sha256": "4ea07293eb1444da3706163ec7663ffaeb9b766fa779d6e0240d1439802f5abc"
+      },
+      "nonvacuity": {
+        "file": "enabled-0013.smt2",
+        "query": "sat",
+        "smt2_sha256": "ba13d83fb535946540540f15489f0d32ce714bdabb592fe203836636caf83bc1"
+      }
+    },
+    {
+      "rule": "SHORT-RESOLVED",
+      "source": "RESOLVED",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0014.smt2",
+        "query": "unsat",
+        "smt2_sha256": "74c87da9ecbb820b3011bf562d2718309de44ba3014b714c9ffad06460908604"
+      },
+      "nonvacuity": {
+        "file": "enabled-0014.smt2",
+        "query": "sat",
+        "smt2_sha256": "96d10ba7c6ac2628984fb5e318d626d1a36b70feeb653e82878b7e28299b0e04"
+      }
+    },
+    {
+      "rule": "LOCAL-REQUEST-RESOLVED",
+      "source": "RESOLVED",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0015.smt2",
+        "query": "unsat",
+        "smt2_sha256": "8a4dbf324a84a785731dfebd852e20bf7baba0c85179b321f188610bf12a9e02"
+      },
+      "nonvacuity": {
+        "file": "enabled-0015.smt2",
+        "query": "sat",
+        "smt2_sha256": "26b84a6f455dd2689a65a269ca350dc7c2ad18892be4ce19f0489e0e669e3540"
+      }
+    },
+    {
+      "rule": "LOCAL-REPLY-RESOLVED",
+      "source": "RESOLVED",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0016.smt2",
+        "query": "unsat",
+        "smt2_sha256": "160c690d2e04fb2edce2d9d45d807fd2ac799885c9b2bda37a8e6e5d611cf8d0"
+      },
+      "nonvacuity": {
+        "file": "enabled-0016.smt2",
+        "query": "sat",
+        "smt2_sha256": "63bdf9da3862db4d5f39971a6a04c1dea3858ec8bab9f0c5f3744374285a2070"
+      }
+    },
+    {
+      "rule": "NONLOCAL-RESOLVED",
+      "source": "RESOLVED",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0017.smt2",
+        "query": "unsat",
+        "smt2_sha256": "c9126523f92a5a24cd356e7fcbf46cb9a86a79ee72bea4e460e5ae99a7615c3c"
+      },
+      "nonvacuity": {
+        "file": "enabled-0017.smt2",
+        "query": "sat",
+        "smt2_sha256": "910f6640e73d3082ee8e04a1aaba6b7e47d87f60f0e919c74ca21ada60acc761"
+      }
+    },
+    {
+      "rule": "UDP-SEND-EMPTY",
+      "source": "EMPTY",
+      "target": "PENDING",
+      "obligation": {
+        "file": "preserve-0018.smt2",
+        "query": "unsat",
+        "smt2_sha256": "da400db4ca645742ea82248a1b8a333bb8092322a05f626ccfad838391ca2d24"
+      },
+      "nonvacuity": {
+        "file": "enabled-0018.smt2",
+        "query": "sat",
+        "smt2_sha256": "61071d2bf894330133f66d725e32f28c3724d7a46d985ef318d562ef6f8cbe2c"
+      }
+    },
+    {
+      "rule": "UDP-CHECKSUM-EMPTY",
+      "source": "EMPTY",
+      "target": "EMPTY",
+      "obligation": {
+        "file": "preserve-0019.smt2",
+        "query": "unsat",
+        "smt2_sha256": "46bab51f7ff1c173cbbf71904bb8ed49ae28699539745942bd2fa3be5a9daa59"
+      },
+      "nonvacuity": {
+        "file": "enabled-0019.smt2",
+        "query": "sat",
+        "smt2_sha256": "06c265cab098b93237ecb011340e7862c2a0afd1308abf3c35fb84f215913f4c"
+      }
+    },
+    {
+      "rule": "UDP-SEND-PENDING",
+      "source": "PENDING",
+      "target": "PENDING",
+      "obligation": {
+        "file": "preserve-0020.smt2",
+        "query": "unsat",
+        "smt2_sha256": "7a055c8b6bcc21220cc4f9462b91d467dd6b5af5dbcb5e560e29080da38cf395"
+      },
+      "nonvacuity": {
+        "file": "enabled-0020.smt2",
+        "query": "sat",
+        "smt2_sha256": "dbe612907cfdfc6096da1de32e3af2df0d6b0fc4256dc5ad254c06a11c07fe6d"
+      }
+    },
+    {
+      "rule": "UDP-CHECKSUM-PENDING",
+      "source": "PENDING",
+      "target": "PENDING",
+      "obligation": {
+        "file": "preserve-0021.smt2",
+        "query": "unsat",
+        "smt2_sha256": "46ce6348c0437da3364b593dac97bbb1c4fc33bde5913a0f322a4c2b296d55a0"
+      },
+      "nonvacuity": {
+        "file": "enabled-0021.smt2",
+        "query": "sat",
+        "smt2_sha256": "e3f2f1a7dfaca1bcd992a5d497bdc17731d75bc7b8a07fd51bbadec939e12bac"
+      }
+    },
+    {
+      "rule": "UDP-SEND-RESOLVED",
+      "source": "RESOLVED",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0022.smt2",
+        "query": "unsat",
+        "smt2_sha256": "e5cf6189d46117f40c48b3fec6bf96b927a65d7dc323db0245a871f97200b14e"
+      },
+      "nonvacuity": {
+        "file": "enabled-0022.smt2",
+        "query": "sat",
+        "smt2_sha256": "4ff48122953b2cd2d546e33db7cef7b5932b9121e5038d2774ac6b2f6ff1d125"
+      }
+    },
+    {
+      "rule": "UDP-CHECKSUM-RESOLVED",
+      "source": "RESOLVED",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0023.smt2",
+        "query": "unsat",
+        "smt2_sha256": "b084ed67ec7fe6a6769e433350448614abe58c1e4813c2e2448c6ab431706b96"
+      },
+      "nonvacuity": {
+        "file": "enabled-0023.smt2",
+        "query": "sat",
+        "smt2_sha256": "db2ebf8fd9565ad8638d624cfbc477043a1bd2b2e5ed7db8be7f428b8095427b"
+      }
+    },
+    {
+      "rule": "QUERY-FAIL-QUEUED",
+      "source": "PENDING",
+      "target": "EMPTY",
+      "obligation": {
+        "file": "preserve-0024.smt2",
+        "query": "unsat",
+        "smt2_sha256": "c13d33bb7e66f6efeaa2878be0dd1a76c2ae30a2263ff380099278e9657fa3c2"
+      },
+      "nonvacuity": {
+        "file": "enabled-0024.smt2",
+        "query": "sat",
+        "smt2_sha256": "81fc331e0786d99620a313d2e13b8b1f2fae10daf430c7dc8ac71cd45c56f3bb"
+      }
+    },
+    {
+      "rule": "QUERY-FAIL-UNQUEUED",
+      "source": "PENDING",
+      "target": "EMPTY",
+      "obligation": {
+        "file": "preserve-0025.smt2",
+        "query": "unsat",
+        "smt2_sha256": "6c1c2b257e6831dd72f9124c82cd121975638c4812037310048c7954c34bcb38"
+      },
+      "nonvacuity": {
+        "file": "enabled-0025.smt2",
+        "query": "sat",
+        "smt2_sha256": "0f216fa2739575f27f18a3a046150f5841a2515d495d036ffe847b4739e19bd9"
+      }
+    },
+    {
+      "rule": "LOCAL-REQUEST-PENDING-QUEUED",
+      "source": "PENDING",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0026.smt2",
+        "query": "unsat",
+        "smt2_sha256": "7adb6934d0a4feb8dd66cc7789ca4ab4cccbd1e04427b6c39d036a56276e8613"
+      },
+      "nonvacuity": {
+        "file": "enabled-0026.smt2",
+        "query": "sat",
+        "smt2_sha256": "5ec36334df07256d80e32c08d417d785136f4944def3e8fb32ce5f76f541450f"
+      }
+    },
+    {
+      "rule": "LOCAL-REQUEST-PENDING-UNQUEUED",
+      "source": "PENDING",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0027.smt2",
+        "query": "unsat",
+        "smt2_sha256": "0849ab3d210e4fdc8da8dc43478f6249f95f64ecea858fbf58638c6051a8526b"
+      },
+      "nonvacuity": {
+        "file": "enabled-0027.smt2",
+        "query": "sat",
+        "smt2_sha256": "30285466dd8bbc10cb361c4f2915ec4a73bbb9ae3cce2c9969d05bf759d2247b"
+      }
+    },
+    {
+      "rule": "LOCAL-REPLY-PENDING-QUEUED",
+      "source": "PENDING",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0028.smt2",
+        "query": "unsat",
+        "smt2_sha256": "f5f3d6a0577113fa4351c5f300e1780ddd26f1c32ea45a16aced2675e53fd243"
+      },
+      "nonvacuity": {
+        "file": "enabled-0028.smt2",
+        "query": "sat",
+        "smt2_sha256": "0fe94d76f73c8119b9d1271cd784bbbc7afb76bee3e9e0072cba3eac9c694442"
+      }
+    },
+    {
+      "rule": "LOCAL-REPLY-PENDING-UNQUEUED",
+      "source": "PENDING",
+      "target": "RESOLVED",
+      "obligation": {
+        "file": "preserve-0029.smt2",
+        "query": "unsat",
+        "smt2_sha256": "744cc0fb91d4e4a4e9bb142fe84063f5d85ae6f88814ee85eedf139363620319"
+      },
+      "nonvacuity": {
+        "file": "enabled-0029.smt2",
+        "query": "sat",
+        "smt2_sha256": "0c591a927d4d62ec5138dc601d8b426523296f3a4c36599ed55d8dac0df78856"
+      }
+    }
+  ],
+  "overlap": [
+    {
+      "state": "EMPTY",
+      "event": "net.frame",
+      "rules": [
+        "SHORT-EMPTY",
+        "LOCAL-REQUEST-EMPTY",
+        "LOCAL-REPLY-EMPTY",
+        "NONLOCAL-EMPTY"
+      ],
+      "obligation": {
+        "file": "overlap-0000.smt2",
+        "query": "unsat",
+        "smt2_sha256": "8fccc8936fce1dc1ed5e26dbb8835bee3441162c2f9aa53c15e71ff10c5cab96"
+      }
+    },
+    {
+      "state": "PENDING",
+      "event": "net.frame",
+      "rules": [
+        "SHORT-PENDING",
+        "NONLOCAL-PENDING",
+        "LOCAL-REQUEST-PENDING-QUEUED",
+        "LOCAL-REQUEST-PENDING-UNQUEUED",
+        "LOCAL-REPLY-PENDING-QUEUED",
+        "LOCAL-REPLY-PENDING-UNQUEUED"
+      ],
+      "obligation": {
+        "file": "overlap-0001.smt2",
+        "query": "unsat",
+        "smt2_sha256": "93fe176eb27e4f113492c995d1d686d807ff9499eed266e95db4677716cdfea4"
+      }
+    },
+    {
+      "state": "PENDING",
+      "event": "timer.query",
+      "rules": [
+        "QUERY-RETRY",
+        "QUERY-FAIL-QUEUED",
+        "QUERY-FAIL-UNQUEUED"
+      ],
+      "obligation": {
+        "file": "overlap-0002.smt2",
+        "query": "unsat",
+        "smt2_sha256": "de6458b8ed9e984783456f80335001e60683b6434285bc8d65d78160c9ed9f05"
+      }
+    },
+    {
+      "state": "RESOLVED",
+      "event": "net.frame",
+      "rules": [
+        "SHORT-RESOLVED",
+        "LOCAL-REQUEST-RESOLVED",
+        "LOCAL-REPLY-RESOLVED",
+        "NONLOCAL-RESOLVED"
+      ],
+      "obligation": {
+        "file": "overlap-0003.smt2",
+        "query": "unsat",
+        "smt2_sha256": "97f98b182173a9f1a53c970f87531a7dcbd7607f46e7dbf12cf22e45128e5eee"
+      }
+    }
+  ],
+  "query_hashes": {
+    "initial.smt2": "ab50d8557a96c725383fba2382b3a39d4a0b7a4618328b65c76af2d8aa55d39c",
+    "initial-enabled.smt2": "14f0597d13efacbd892e6b4b16f6b58d0504014c18e7af7ef6858882328504e3",
+    "preserve-0000.smt2": "882440be6b9dbfedb86fb36750daafedccc707c4da1d59f0a86ba93dfcb3a466",
+    "enabled-0000.smt2": "cc8f317de8568f943333ce2dc809813e8f9c04af52de5bda0210b56e1a2e53bd",
+    "preserve-0001.smt2": "a798b87f35b5d31ea15f1ab9a01614491b06030e3278eddbc00153759892125e",
+    "enabled-0001.smt2": "c68ca4aba42ee82c74e79b65b0f7fedb4d80e1d43a4fba425c5f9f3324d34b4c",
+    "preserve-0002.smt2": "d9490c9b3d9a7f55010b19a76686719e87d2afe37e2fb71184033a1ad9a26c2d",
+    "enabled-0002.smt2": "4d50b14f5b09fbe3ee236818d34397bcdeef5664b328cdaa7efb7a3f7ca0326c",
+    "preserve-0003.smt2": "6e294bb3a70282123532a2ee2c469078fb2dc12b59837d505ba3e8e1be17fd47",
+    "enabled-0003.smt2": "2437a40d8437ee98e8abb22ed07ff5c9713310475c870341c81d045b34c8582d",
+    "preserve-0004.smt2": "0a50ecbc137d33daa3d78c4f1b99236bbfda9581ff220a76cb6b7db28494b4f2",
+    "enabled-0004.smt2": "476255a9803f8dee4cdfa8adf8f727e482b9251d79446d9be11b4365e60aaf67",
+    "preserve-0005.smt2": "6d9cdf8944403b0b79e82aacd11d934e085ca4ef1125e51f5cfa872e1b62d56d",
+    "enabled-0005.smt2": "3e15b888c7f50135155873965e0dee93eda9aa70e8aed630dcd869be3f9f8e29",
+    "preserve-0006.smt2": "993b9c621fc8fa24a9fc31798d264a52ed0d7a4b7210c85932f1de4b1d7c6b8f",
+    "enabled-0006.smt2": "e4ec7528b5aadc10a11a16b2cd558a088ca874d5c2abf9bd3c24c92326a31115",
+    "preserve-0007.smt2": "4b59cfc9f245c3921ec5539186edf5c3ab76413183a080d36ad279cb401e3ab9",
+    "enabled-0007.smt2": "a0147045cf524af3488baeffeab5359efb3a1783509d2aed452139c2b232f4b1",
+    "preserve-0008.smt2": "f5a56ca1e1d103dab00166fd4bde7f8c19458d691baeae23b6e711524f8a92c1",
+    "enabled-0008.smt2": "00a270fcd5d21d0b3c48d4dd3e7d581c4261f63c89c4c40443e09d20d36b26d8",
+    "preserve-0009.smt2": "a9f57c6f76419b390ea463bdcadc2ff5e50819df5686af7c8d3129d4b06da4dd",
+    "enabled-0009.smt2": "1039cb10a8bb73c665f6b7c4fcff3207c2c6f10231289b5ad6a0a2f3483ce964",
+    "preserve-0010.smt2": "da5587948910256d97f2387b0211827df85a10ea632d0bc9e4ba903174e51eb4",
+    "enabled-0010.smt2": "d2cc573f3e5ba19bdb6834f7dcaa534878f876d72b50a29ebac56caae9de397d",
+    "preserve-0011.smt2": "a33cca0ee1c57027c9db3c8217f08fc6a4c6ab7650c81e63f806082de348d329",
+    "enabled-0011.smt2": "a630e268258034aa09803b106199b8faa8abcc45ff14721d4a5745a486e19293",
+    "preserve-0012.smt2": "d5595ad07dfaf92ad0f290df44d27f9aeb981b738eb0034a0843aafd603b7b09",
+    "enabled-0012.smt2": "3aedb47accb37ca41f1b47c8f34846db20cf5e241ef6afe4e635a82fc3e01b06",
+    "preserve-0013.smt2": "4ea07293eb1444da3706163ec7663ffaeb9b766fa779d6e0240d1439802f5abc",
+    "enabled-0013.smt2": "ba13d83fb535946540540f15489f0d32ce714bdabb592fe203836636caf83bc1",
+    "preserve-0014.smt2": "74c87da9ecbb820b3011bf562d2718309de44ba3014b714c9ffad06460908604",
+    "enabled-0014.smt2": "96d10ba7c6ac2628984fb5e318d626d1a36b70feeb653e82878b7e28299b0e04",
+    "preserve-0015.smt2": "8a4dbf324a84a785731dfebd852e20bf7baba0c85179b321f188610bf12a9e02",
+    "enabled-0015.smt2": "26b84a6f455dd2689a65a269ca350dc7c2ad18892be4ce19f0489e0e669e3540",
+    "preserve-0016.smt2": "160c690d2e04fb2edce2d9d45d807fd2ac799885c9b2bda37a8e6e5d611cf8d0",
+    "enabled-0016.smt2": "63bdf9da3862db4d5f39971a6a04c1dea3858ec8bab9f0c5f3744374285a2070",
+    "preserve-0017.smt2": "c9126523f92a5a24cd356e7fcbf46cb9a86a79ee72bea4e460e5ae99a7615c3c",
+    "enabled-0017.smt2": "910f6640e73d3082ee8e04a1aaba6b7e47d87f60f0e919c74ca21ada60acc761",
+    "preserve-0018.smt2": "da400db4ca645742ea82248a1b8a333bb8092322a05f626ccfad838391ca2d24",
+    "enabled-0018.smt2": "61071d2bf894330133f66d725e32f28c3724d7a46d985ef318d562ef6f8cbe2c",
+    "preserve-0019.smt2": "46bab51f7ff1c173cbbf71904bb8ed49ae28699539745942bd2fa3be5a9daa59",
+    "enabled-0019.smt2": "06c265cab098b93237ecb011340e7862c2a0afd1308abf3c35fb84f215913f4c",
+    "preserve-0020.smt2": "7a055c8b6bcc21220cc4f9462b91d467dd6b5af5dbcb5e560e29080da38cf395",
+    "enabled-0020.smt2": "dbe612907cfdfc6096da1de32e3af2df0d6b0fc4256dc5ad254c06a11c07fe6d",
+    "preserve-0021.smt2": "46ce6348c0437da3364b593dac97bbb1c4fc33bde5913a0f322a4c2b296d55a0",
+    "enabled-0021.smt2": "e3f2f1a7dfaca1bcd992a5d497bdc17731d75bc7b8a07fd51bbadec939e12bac",
+    "preserve-0022.smt2": "e5cf6189d46117f40c48b3fec6bf96b927a65d7dc323db0245a871f97200b14e",
+    "enabled-0022.smt2": "4ff48122953b2cd2d546e33db7cef7b5932b9121e5038d2774ac6b2f6ff1d125",
+    "preserve-0023.smt2": "b084ed67ec7fe6a6769e433350448614abe58c1e4813c2e2448c6ab431706b96",
+    "enabled-0023.smt2": "db2ebf8fd9565ad8638d624cfbc477043a1bd2b2e5ed7db8be7f428b8095427b",
+    "preserve-0024.smt2": "c13d33bb7e66f6efeaa2878be0dd1a76c2ae30a2263ff380099278e9657fa3c2",
+    "enabled-0024.smt2": "81fc331e0786d99620a313d2e13b8b1f2fae10daf430c7dc8ac71cd45c56f3bb",
+    "preserve-0025.smt2": "6c1c2b257e6831dd72f9124c82cd121975638c4812037310048c7954c34bcb38",
+    "enabled-0025.smt2": "0f216fa2739575f27f18a3a046150f5841a2515d495d036ffe847b4739e19bd9",
+    "preserve-0026.smt2": "7adb6934d0a4feb8dd66cc7789ca4ab4cccbd1e04427b6c39d036a56276e8613",
+    "enabled-0026.smt2": "5ec36334df07256d80e32c08d417d785136f4944def3e8fb32ce5f76f541450f",
+    "preserve-0027.smt2": "0849ab3d210e4fdc8da8dc43478f6249f95f64ecea858fbf58638c6051a8526b",
+    "enabled-0027.smt2": "30285466dd8bbc10cb361c4f2915ec4a73bbb9ae3cce2c9969d05bf759d2247b",
+    "preserve-0028.smt2": "f5f3d6a0577113fa4351c5f300e1780ddd26f1c32ea45a16aced2675e53fd243",
+    "enabled-0028.smt2": "0fe94d76f73c8119b9d1271cd784bbbc7afb76bee3e9e0072cba3eac9c694442",
+    "preserve-0029.smt2": "744cc0fb91d4e4a4e9bb142fe84063f5d85ae6f88814ee85eedf139363620319",
+    "enabled-0029.smt2": "0c591a927d4d62ec5138dc601d8b426523296f3a4c36599ed55d8dac0df78856",
+    "overlap-0000.smt2": "8fccc8936fce1dc1ed5e26dbb8835bee3441162c2f9aa53c15e71ff10c5cab96",
+    "overlap-0001.smt2": "93fe176eb27e4f113492c995d1d686d807ff9499eed266e95db4677716cdfea4",
+    "overlap-0002.smt2": "de6458b8ed9e984783456f80335001e60683b6434285bc8d65d78160c9ed9f05",
+    "overlap-0003.smt2": "97f98b182173a9f1a53c970f87531a7dcbd7607f46e7dbf12cf22e45128e5eee"
+  },
+  "reference_interpreter_called": false,
+  "wire_content_proved": false,
+  "event_coverage_proved": false,
+  "compiler_correctness_proved": false,
+  "unbounded_protocol_proof": false,
+  "failed_prestate_reachability": "not_claimed"
+}
