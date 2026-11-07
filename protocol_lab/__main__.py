@@ -111,10 +111,10 @@ def main():
         elif args.command == "formal":
             from .evidence import ensure_snapshot
             from .symbolic import check
-            ensure_snapshot(args.artifacts)
             target = args.artifacts / "formal"
-            target.mkdir(exist_ok=True)
-            write(target / "result.json", {"status": "incomplete"})
+            if target.exists() and (not target.is_dir() or any(target.iterdir())):
+                raise ModelError("Formal output must be empty; build and check a fresh --artifacts directory")
+            ensure_snapshot(args.artifacts)
             result = check(load(ROOT / "model/tcp.json"), depth=args.depth, out=target)
             result["build_sha256"] = digest(args.artifacts / "report.json")
             write(target / "result.json", result)

@@ -1,0 +1,135 @@
+test_caller_task_pin_rejects_weakened_configuration_before_execution (test_pipeline.PipelineTaskTests.test_caller_task_pin_rejects_weakened_configuration_before_execution) ... ok
+test_task_cannot_inject_shell_or_python_commands (test_pipeline.PipelineTaskTests.test_task_cannot_inject_shell_or_python_commands) ... ok
+test_task_cannot_reference_files_outside_its_workspace (test_pipeline.PipelineTaskTests.test_task_cannot_reference_files_outside_its_workspace) ... ok
+test_task_v2_requires_acceptance_input_pins (test_pipeline.PipelineTaskTests.test_task_v2_requires_acceptance_input_pins) ... ok
+test_actual_pipeline_has_all_stages_generated_cases_and_independent_native_results (test_pipeline.PipelineTests.test_actual_pipeline_has_all_stages_generated_cases_and_independent_native_results) ... ok
+test_actual_worker_timeout_is_classified_and_process_group_is_cleaned (test_pipeline.PipelineTests.test_actual_worker_timeout_is_classified_and_process_group_is_cleaned) ... ok
+test_changed_native_observation_is_not_accepted (test_pipeline.PipelineTests.test_changed_native_observation_is_not_accepted) ... ok
+test_changing_ir_and_its_oracle_together_cannot_hide_pinned_contract_violation (test_pipeline.PipelineTests.test_changing_ir_and_its_oracle_together_cannot_hide_pinned_contract_violation) ... ok
+test_corrupted_spec_fails_provenance_without_falsifying_native_comparison (test_pipeline.PipelineTests.test_corrupted_spec_fails_provenance_without_falsifying_native_comparison) ... ok
+test_independent_concurrent_jobs_keep_outputs_and_run_ids_separate (test_pipeline.PipelineTests.test_independent_concurrent_jobs_keep_outputs_and_run_ids_separate) ... {"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "sources", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "sources", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "ir", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "ir", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "formal", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "formal", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "tests", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "tests", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "reference", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "reference", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "generate", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "generate", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "build", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "build", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "execute", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "execute", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "compare", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "compare", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "traceability", "run_id": "d674c556-eb16-428f-86f2-65dd6f29345a"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "traceability", "run_id": "7247626f-1f60-43d6-9883-203bd6f45c69"}
+ok
+test_live_candidate_edit_cannot_mix_versions_between_stages (test_pipeline.PipelineTests.test_live_candidate_edit_cannot_mix_versions_between_stages) ... ok
+test_missing_compiler_blocks_only_dependent_execution_channel (test_pipeline.PipelineTests.test_missing_compiler_blocks_only_dependent_execution_channel) ... ok
+test_model_conflict_is_not_a_successful_negative_test (test_pipeline.PipelineTests.test_model_conflict_is_not_a_successful_negative_test) ... ok
+test_native_integer_domain_limit_is_not_reported_as_an_rfc_difference (test_pipeline.PipelineTests.test_native_integer_domain_limit_is_not_reported_as_an_rfc_difference) ... ok
+test_rehashed_unknown_formal_result_cannot_be_promoted (test_pipeline.PipelineTests.test_rehashed_unknown_formal_result_cannot_be_promoted) ... ok
+test_scope_promotion_is_rejected (test_pipeline.PipelineTests.test_scope_promotion_is_rejected) ... ok
+test_wire_task_must_pin_binding_source (test_pipeline.PipelineTests.test_wire_task_must_pin_binding_source) ... ok
+test_wire_task_runs_generated_ipv4_implementation_and_checks_coverage (test_pipeline.PipelineTests.test_wire_task_runs_generated_ipv4_implementation_and_checks_coverage) ... ok
+test_workers_use_frozen_inputs_and_tool_source (test_pipeline.PipelineTests.test_workers_use_frozen_inputs_and_tool_source) ... ok
+test_wrong_ir_message_is_caught_by_independent_trace_contract (test_pipeline.PipelineTests.test_wrong_ir_message_is_caught_by_independent_trace_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 11.258s
+
+OK
+test_bad_checksum_is_not_accepted_as_an_event (test_codegen_wire.NativeWireTests.test_bad_checksum_is_not_accepted_as_an_event) ... ok
+test_binding_cannot_silently_hide_new_network_fields (test_codegen_wire.NativeWireTests.test_binding_cannot_silently_hide_new_network_fields) ... ok
+test_consistent_wire_sequence_shift_is_not_hidden_by_normalization (test_codegen_wire.NativeWireTests.test_consistent_wire_sequence_shift_is_not_hidden_by_normalization) ... ok
+test_faulty_native_checksum_retains_invalid_observation_evidence (test_codegen_wire.NativeWireTests.test_faulty_native_checksum_retains_invalid_observation_evidence) ... ok
+test_four_original_cases_have_actual_native_wire_packets (test_codegen_wire.NativeWireTests.test_four_original_cases_have_actual_native_wire_packets) ... ok
+test_raw_pcap_recorder_preserves_egress_bytes (test_codegen_wire.NativeWireTests.test_raw_pcap_recorder_preserves_egress_bytes) ... ok
+test_real_bytes_decode_and_native_runs_without_python_path (test_codegen_wire.NativeWireTests.test_real_bytes_decode_and_native_runs_without_python_path) ... ok
+test_unsupported_shapes_and_unrelated_endpoints_remain_explicit (test_codegen_wire.NativeWireTests.test_unsupported_shapes_and_unrelated_endpoints_remain_explicit) ... ok
+test_valid_packet_with_wrong_ack_reaches_ir_guard_and_rolls_back (test_codegen_wire.NativeWireTests.test_valid_packet_with_wrong_ack_reaches_ir_guard_and_rolls_back) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.294s
+
+OK
+test_all_sources_and_independent_oracles_are_pinned (test_flow_migration.FlowMigrationTests.test_all_sources_and_independent_oracles_are_pinned) ... ok
+test_bad_checksum_must_not_emit_a_response (test_flow_migration.FlowMigrationTests.test_bad_checksum_must_not_emit_a_response) ... ok
+test_external_client_rejects_a_task_digest_mismatch (test_flow_migration.FlowMigrationTests.test_external_client_rejects_a_task_digest_mismatch) ... ok
+test_framework_neutral_client_handles_two_isolated_protocol_candidates (test_flow_migration.FlowMigrationTests.test_framework_neutral_client_handles_two_isolated_protocol_candidates) ... ok
+test_second_native_program_executes_without_python_or_stack (test_flow_migration.FlowMigrationTests.test_second_native_program_executes_without_python_or_stack) ... ok
+test_second_rfc_runs_all_stages_with_all_declared_rules (test_flow_migration.FlowMigrationTests.test_second_rfc_runs_all_stages_with_all_declared_rules) ... ok
+test_wrong_default_checksum_policy_fails_independent_contract (test_flow_migration.FlowMigrationTests.test_wrong_default_checksum_policy_fails_independent_contract) ... ok
+test_wrong_udp_header_length_fails_even_with_matching_native_and_ir (test_flow_migration.FlowMigrationTests.test_wrong_udp_header_length_fails_even_with_matching_native_and_ir) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 5.154s
+
+OK
+test_controller_reviewed_literal_byte_contracts (test_udp_payload.UdpPayloadTests.test_controller_reviewed_literal_byte_contracts) ... ok
+test_disabled_default_checksum_fails_independent_literal_oracle (test_udp_payload.UdpPayloadTests.test_disabled_default_checksum_fails_independent_literal_oracle) ... ok
+test_invalid_receive_metadata_is_uncovered_and_atomic (test_udp_payload.UdpPayloadTests.test_invalid_receive_metadata_is_uncovered_and_atomic) ... ok
+test_same_length_content_shift_fails_independent_literal_oracle (test_udp_payload.UdpPayloadTests.test_same_length_content_shift_fails_independent_literal_oracle) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.027s
+
+OK
+test_actual_native_literals_and_capacity_boundary (test_wire_arithmetic.WireArithmeticTests.test_actual_native_literals_and_capacity_boundary) ... ok
+test_fixed_input_symbolic_replay_matches_all_literal_contracts (test_wire_arithmetic.WireArithmeticTests.test_fixed_input_symbolic_replay_matches_all_literal_contracts) ... ok
+test_literal_contracts_and_dual_zero (test_wire_arithmetic.WireArithmeticTests.test_literal_contracts_and_dual_zero) ... ok
+test_old_versions_unknown_protocol_ops_and_length_projection_reject (test_wire_arithmetic.WireArithmeticTests.test_old_versions_unknown_protocol_ops_and_length_projection_reject) ... ok
+test_recursive_checksum_definition_survives_smt_export (test_wire_arithmetic.WireArithmeticTests.test_recursive_checksum_definition_survives_smt_export) ... ok
+test_same_length_packing_translation_fault_is_detected (test_wire_arithmetic.WireArithmeticTests.test_same_length_packing_translation_fault_is_detected) ... ok
+test_symbolic_checksum_does_not_call_reference_and_covers_small_vectors (test_wire_arithmetic.WireArithmeticTests.test_symbolic_checksum_does_not_call_reference_and_covers_small_vectors) ... ok
+test_symbolic_packing_for_arbitrary_integers (test_wire_arithmetic.WireArithmeticTests.test_symbolic_packing_for_arbitrary_integers) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.346s
+
+OK
+test_buffers_and_trace_snapshots_have_value_semantics (test_data_semantics.DataSemanticsTests.test_buffers_and_trace_snapshots_have_value_semantics) ... ok
+test_half_space_order_and_forward_distance (test_data_semantics.DataSemanticsTests.test_half_space_order_and_forward_distance) ... ok
+test_invalid_types_unknown_operators_and_old_version_are_rejected (test_data_semantics.DataSemanticsTests.test_invalid_types_unknown_operators_and_old_version_are_rejected) ... ok
+test_invariant_failure_rolls_back_buffer_and_emits (test_data_semantics.DataSemanticsTests.test_invariant_failure_rolls_back_buffer_and_emits) ... ok
+test_slice_and_bytes_are_octets_with_total_truncating_semantics (test_data_semantics.DataSemanticsTests.test_slice_and_bytes_are_octets_with_total_truncating_semantics) ... ok
+test_typed_conditionals_select_values_without_type_coercion (test_data_semantics.DataSemanticsTests.test_typed_conditionals_select_values_without_type_coercion) ... ok
+test_all_symbolic_sequence_pairs_follow_half_space_contract (test_data_semantics.SymbolicDataTests.test_all_symbolic_sequence_pairs_follow_half_space_contract) ... ok
+test_backend_explicitly_rejects_unknown_expression (test_data_semantics.SymbolicDataTests.test_backend_explicitly_rejects_unknown_expression) ... ok
+test_slices_crosscheck_reference_for_symbolic_and_concrete_data (test_data_semantics.SymbolicDataTests.test_slices_crosscheck_reference_for_symbolic_and_concrete_data) ... ok
+test_solver_resource_exception_is_reported_as_unknown (test_data_semantics.SymbolicDataTests.test_solver_resource_exception_is_reported_as_unknown) ... ok
+test_symbolic_byte_capacity_and_wrap_witness_replay (test_data_semantics.SymbolicDataTests.test_symbolic_byte_capacity_and_wrap_witness_replay) ... ok
+test_symbolic_conditional_matches_reference_in_full_and_length_modes (test_data_semantics.SymbolicDataTests.test_symbolic_conditional_matches_reference_in_full_and_length_modes) ... ok
+test_wrong_sequence_advance_produces_replayable_counterexample (test_data_semantics.SymbolicDataTests.test_wrong_sequence_advance_produces_replayable_counterexample) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.160s
+
+OK
+test_actual_native_full_flow_and_pcap_gate (test_udp_transmit.UdpTransmitTests.test_actual_native_full_flow_and_pcap_gate) ... FAIL
+test_independent_decoder_matches_all_fixed_packet_fields (test_udp_transmit.UdpTransmitTests.test_independent_decoder_matches_all_fixed_packet_fields) ... ok
+test_literal_packet_contracts_cover_reference_policy (test_udp_transmit.UdpTransmitTests.test_literal_packet_contracts_cover_reference_policy) ... ok
+test_malformed_checksums_lengths_fragments_and_pcap_reject (test_udp_transmit.UdpTransmitTests.test_malformed_checksums_lengths_fragments_and_pcap_reject) ... ok
+test_missing_zero_to_ffff_mapping_fails_literal_oracle (test_udp_transmit.UdpTransmitTests.test_missing_zero_to_ffff_mapping_fails_literal_oracle) ... ok
+test_rotated_payload_with_valid_checksums_still_differs (test_udp_transmit.UdpTransmitTests.test_rotated_payload_with_valid_checksums_still_differs) ... ok
+test_tampered_base_stdout_and_wrong_oracle_digest_reject (test_udp_transmit.UdpTransmitTests.test_tampered_base_stdout_and_wrong_oracle_digest_reject) ... ok
+
+======================================================================
+FAIL: test_actual_native_full_flow_and_pcap_gate (test_udp_transmit.UdpTransmitTests.test_actual_native_full_flow_and_pcap_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/blxu/protocol-flow/releases/udp-transmit-f9472593/tools/tests/test_udp_transmit.py", line 28, in test_actual_native_full_flow_and_pcap_gate
+    self.assertEqual(self.result['status'],'pass',self.result)
+AssertionError: 'unresolved' != 'pass'
+- unresolved
++ pass
+ : {'status': 'unresolved', 'run_id': '8c4cc7dd-5657-4e72-9cf4-97ce3ff19e25', 'flow_accepted': False, 'flow_assessment': 'unresolved', 'pcap_status': 'pass', 'native_packets': 9, 'fixed_oracle_cases': 6, 'task_sha256': '477179948bd124cf96f066511b50cd7872399b0327c8baae034098550c7acf1e', 'oracle_sha256': '7cf0afc424f5423df009e01d9938a217f1a4ec5d4adcccffa9e09a11baef6129', 'whole_ipv4_stack_complete': False, 'linux_network_evidence': False}
+
+----------------------------------------------------------------------
+Ran 7 tests in 11.810s
+
+FAILED (failures=1)

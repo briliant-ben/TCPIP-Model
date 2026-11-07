@@ -1,0 +1,142 @@
+{
+  "schema": "spec-flow-task-v2",
+  "id": "udp-ipv4-header-descriptor",
+  "model": "model/udp-header.json",
+  "sources": [
+    {
+      "id": "rfc768",
+      "path": "spec/sources/rfc768.txt",
+      "sha256": "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0",
+      "version": "28 August1980",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc768.txt"
+      ]
+    },
+    {
+      "id": "rfc1122",
+      "path": "spec/sources/rfc1122.txt",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "version": "October1989; UDP section4.1.3.4",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc1122.txt"
+      ]
+    },
+    {
+      "id": "udp-profile",
+      "path": "docs/udp-header-flow.md",
+      "sha256": "36265f7a9f16704ff3b199f8d10a0f0ce14b372e387fa2355a9a295bd0a001f0",
+      "version": "UDP descriptor migration v1",
+      "uri_aliases": [
+        "docs/udp-header-flow.md"
+      ]
+    },
+    {
+      "id": "exploration",
+      "path": "model/udp-header-exploration.json",
+      "sha256": "f823b7bf49250b536150c4014345ade68e7b293aede952d98cc3501d7a2ebdfa",
+      "version": "bounded input domain v1",
+      "uri_aliases": [
+        "model/udp-header-exploration.json"
+      ]
+    },
+    {
+      "id": "seed-0",
+      "path": "scenarios/udp-header/send-default-and-config.json",
+      "sha256": "e3a8208b47a79047f8a374dba0fcb43b7abcabcae393cf95cdcea00e06b2861b",
+      "version": "independent scenario0.2 contract v1",
+      "uri_aliases": [
+        "scenarios/udp-header/send-default-and-config.json"
+      ]
+    },
+    {
+      "id": "seed-1",
+      "path": "scenarios/udp-header/checksum-and-length-discard.json",
+      "sha256": "adb1de15bf91a581bf80e7d4c3f4ea95c18d5ff9fbf4efb79880f7df7c4379b5",
+      "version": "independent scenario0.2 contract v1",
+      "uri_aliases": [
+        "scenarios/udp-header/checksum-and-length-discard.json"
+      ]
+    },
+    {
+      "id": "seed-2",
+      "path": "scenarios/udp-header/padding-and-duplicates.json",
+      "sha256": "508a6bc01cd18044ab4bf75ba5e5aa1ce317aaaee8e7d4f8e4155ec551e9d01d",
+      "version": "independent scenario0.2 contract v1",
+      "uri_aliases": [
+        "scenarios/udp-header/padding-and-duplicates.json"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "UDP-LENGTH": {
+      "source": "rfc768",
+      "clause": "Fields page2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.txt"
+    },
+    "UDP-SOURCE-PORT": {
+      "source": "rfc768",
+      "clause": "Fields page1",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.txt"
+    },
+    "UDP-CHECKSUM-ZERO": {
+      "source": "rfc768",
+      "clause": "Fields page2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.txt"
+    },
+    "UDP-CHECKSUM-RECEIVE": {
+      "source": "rfc1122",
+      "clause": "4.1.3.4 page78",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122.txt"
+    },
+    "UDP-CHECKSUM-DEFAULT": {
+      "source": "rfc1122",
+      "clause": "4.1.3.4 page78",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122.txt"
+    },
+    "UDP-INTERFACE": {
+      "source": "rfc768",
+      "clause": "User Interface page2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.txt"
+    },
+    "UDP-PROFILE": {
+      "source": "udp-profile",
+      "clause": "Scope and input contract",
+      "reference": "docs/udp-header-flow.md"
+    }
+  },
+  "exploration": "model/udp-header-exploration.json",
+  "seeds": [
+    "scenarios/udp-header/send-default-and-config.json",
+    "scenarios/udp-header/checksum-and-length-discard.json",
+    "scenarios/udp-header/padding-and-duplicates.json"
+  ],
+  "formal": {
+    "depth": 6,
+    "symbolic_initials": []
+  },
+  "limits": {
+    "stage_seconds": 120,
+    "max_prefixes": 128,
+    "max_cases": 64
+  },
+  "scope": {
+    "purpose": "Second actual RFC migration through unchanged generic tools; UDP header/service descriptor slice",
+    "assumptions": [
+      "Prebound receive port8080; fixed validated IPv4 address context",
+      "Payload data represented only by length; sum_valid supplied by assumed lower-layer checksum validation",
+      "Pinned independent fixture and task controlled by acceptance caller, separate from candidate modeler"
+    ],
+    "excluded": [
+      "payload byte content/copying",
+      "UDP/IP wire codec and checksum arithmetic",
+      "IPv6 checksum rules",
+      "IP address/route/fragmentation/options behavior",
+      "port binding lifecycle and ICMP port unreachable",
+      "queue/socket API and resource exhaustion",
+      "reliability or delivery/duplicate guarantees",
+      "UDP PCAP/physical-network evidence",
+      "Full UDP compliance",
+      "Unbounded proof or English-to-IR/generator correctness proof"
+    ]
+  }
+}

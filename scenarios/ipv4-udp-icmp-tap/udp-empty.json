@@ -1,0 +1,78 @@
+{
+  "scenario_version": "0.2",
+  "id": "udp-empty",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "net.frame",
+      "fields": {
+        "frame": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0,
+          2,
+          8,
+          0,
+          69,
+          0,
+          0,
+          28,
+          4,
+          210,
+          64,
+          0,
+          64,
+          17,
+          177,
+          251,
+          192,
+          0,
+          2,
+          2,
+          192,
+          0,
+          2,
+          1,
+          31,
+          144,
+          156,
+          64,
+          0,
+          8,
+          192,
+          9
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "udp.rx",
+              "fields": {
+                "data": []
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "EMPTY",
+    "variables": {
+      "rxudp_payload": [],
+      "rxudp_disposition": "deliver"
+    },
+    "timers": {}
+  }
+}

@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT))
 from protocol_lab.flow import read, write, digest, run_scenario, verify_sources
 from protocol_lab.ir import load, model_files, require
 from protocol_lab.packets import normalize_trace, packetdrill, compare
-from protocol_lab.capture import normalize
+from protocol_lab.capture import normalize, decode
 from protocol_lab.symbolic import crosscheck_trace, model_hash
 from protocol_lab.profiles import control_packets
 import receive
@@ -155,6 +155,34 @@ def command(args, log, timeout=10, required=True):
 def stage(out, name): write(out/'phase.json',dict(phase=name))
 
 
+def capture_origin(path, profile):
+    """Read only the stable first selected record; the final full decode stays strict."""
+    local,peer=profile['local'],profile['peer']
+    endpoints={(local['ip'],local['port'],peer['ip'],peer['port']),
+               (peer['ip'],peer['port'],local['ip'],local['port'])}
+    for record in decode(path):
+        if 'ignored'not in record and (record['src'],record['sport'],record['dst'],record['dport'])in endpoints:
+            return record['timestamp_ns']
+    raise ValueError('No selected packet for capture deadline')
+
+
+def wait_capture_deadline(capture, executed, origin_ns, settle_ms):
+    """Keep both processes alive until the actual PCAP-origin deadline, not file mtime."""
+    require(type(origin_ns)is int and type(settle_ms)is int and 0<=settle_ms<=10000,
+        'Invalid capture observation deadline')
+    deadline=origin_ns+settle_ms*1000000
+    limit=time.monotonic_ns()+(settle_ms+5000)*1000000
+    while True:
+        require(capture.poll()is None,'Independent capture ended before observation deadline')
+        require(executed.poll()is None,'Socket driver ended before observation deadline')
+        now=time.time_ns()
+        if now>=deadline:
+            return dict(capture_time_origin_ns=origin_ns,observation_deadline_epoch_ns=deadline,
+                capture_stop_request_epoch_ns=now,capture_stop_request_monotonic_ns=time.monotonic_ns())
+        require(time.monotonic_ns()<limit,'Capture clock deadline did not advance')
+        time.sleep(min(0.01,(deadline-now)/1000000000))
+
+
 def failure_kind(phase, error):
     if phase=='observation':
         unsupported=['TCP control flags outside this active-open slice',
@@ -198,6 +226,7 @@ def inside(out, parent, scenario='handshake'):
         packetdrill_command=packet_command,capture_command=capture_command,
         capture_scope='all_selected_packets_through_scenario_settle_before_socket_cleanup',
         capture_packet_limit=None,scenario_id=scenario,declared_settle_ms=scenario_config(scenario)['settle_ms'],
+        observation_boundary_policy='first_selected_capture_timestamp_plus_declared_settle_v1',
         packetdrill_tolerance_us=50000,packetdrill_tolerance_percent=12.5,oracle_tolerance_ms=0,host_network_mutations=False)
     executed=None
     with (out/'capture.log').open('w') as capture_log:
@@ -223,6 +252,9 @@ def inside(out, parent, scenario='handshake'):
                 if complete:
                     context['quiet_barrier_epoch_ns']=marker.stat().st_mtime_ns
                     context['quiet_barrier_monotonic_ns']=time.monotonic_ns()
+                    stage(out,'capture_validation')
+                    origin=capture_origin(out/'capture.pcap',profile)
+                    context.update(wait_capture_deadline(capture,executed,origin,context['declared_settle_ms']))
                 capture.send_signal(2); code=capture.wait(timeout=5)
                 context['capture_exit_monotonic_ns']=time.monotonic_ns()
                 # Release only after capture is closed, so socket cleanup cannot race it.
@@ -277,7 +309,8 @@ def run(out, scenario='handshake'):
     observed, metadata = normalize(out/'capture.pcap',read(ROOT/'packet-profile.json'),expected,
         origin='external_capture',checksum_policy='strict',projection=projection(scenario))
     validate_observation(expected,observed,scenario)
-    window_ms=(namespace['quiet_barrier_epoch_ns']-metadata['time_origin_ns'])/1000000
+    require(namespace['capture_time_origin_ns']==metadata['time_origin_ns'],'Live/final capture origins differ')
+    window_ms=(namespace['capture_stop_request_epoch_ns']-metadata['time_origin_ns'])/1000000
     require(window_ms>=namespace['declared_settle_ms'],'Quiet observation shorter than source scenario')
     difference = compare(expected,observed,tolerance_ms=0,projection=projection(scenario))
     write(out/'observed.json',observed); write(out/'metadata.json',metadata); write(out/'difference.json',difference)

@@ -1,0 +1,20 @@
+{
+  "status": "controller_rejected_for_missing_receive_domain",
+  "agent_status": "unresolved",
+  "native_cases_passed": 6,
+  "fixed_input_z3_matches": 6,
+  "depth": 3,
+  "safety": "unknown",
+  "overlap": "unsat",
+  "reason": "NET-DELIVER/NET-DISCARD lack uint16 and bytes<=4096 receive-domain guard required by pinned contract. Negative source port is incorrectly accepted; 4097-byte input is not excluded. Do not integrate or count as accepted protocol model.",
+  "archive_sha256": "ca972e6cb11b643f66e6a991fb4df601636f11ba709485d4ef51458fc87e00ce",
+  "archive_bytes": 56677,
+  "archive_members": 83,
+  "api_requests_total": 8,
+  "known_tokens_total": 56821,
+  "new_job_calls": 3,
+  "new_job_tokens": 21210,
+  "controller_repair_new_job": "udp-payload-0003",
+  "oracles_unchanged": true,
+  "whole_protocol_complete": false
+}

@@ -1,4 +1,4 @@
-"""Independent bounded symbolic semantics for IR 0.1/0.2/0.3 (Z3 optional).
+"""Independent bounded symbolic semantics for IR 0.1/0.2/0.3/0.4/0.5/0.6 (Z3 optional).
 
 No call to runtime evaluate/dispatch is used to construct the transition system.
 The runtime is invoked only afterwards to cross-check solver witnesses.
@@ -7,7 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from .ir import CLOCK_SEMANTICS, MOD, Machine, ModelError, infer, require, validate
+from .ir import CLOCK_SEMANTICS, MOD, WIRE_OPS, READ_OPS, WORD32_OPS, Machine, ModelError, infer, require, validate
 
 
 def model_hash(model):
@@ -132,7 +132,7 @@ class Encoding:
     def reason_unknown(self):
         return self.solver_error or self.solver.reason_unknown()
 
-    def __init__(self, model, depth, symbolic_initials, byte_encoding="sequence", sequence_encoding="bitvector", arbitrary_state=False, fixed_choices=None):
+    def __init__(self, model, depth, symbolic_initials, byte_encoding="sequence", sequence_encoding="bitvector", arbitrary_state=False, fixed_choices=None, solver_preprocess="none"):
         try:
             import z3
         except ImportError as exc:
@@ -140,10 +140,17 @@ class Encoding:
         self.z = z3
         self.model = validate(model)
         require(byte_encoding in ("sequence", "length"), "Unsupported symbolic byte encoding")
+        require(solver_preprocess in ("none", "exact-v1"), "Unsupported solver preprocessing plan")
         self.byte_encoding = byte_encoding
+        self.solver_preprocess = solver_preprocess
+        self.solver_tactics = ("propagate-values", "solve-eqs", "simplify", "smt") if solver_preprocess == "exact-v1" else ()
+        self.solver_preprocess_source = "z3.Then(" + ",".join(self.solver_tactics) + ").solver()" if self.solver_tactics else "z3.Solver()"
+        if solver_preprocess == "exact-v1":
+            require(byte_encoding != "length", "exact-v1 does not support length projection")
         require(sequence_encoding in ("bitvector", "modular-int"), "Unsupported sequence encoding")
         self.sequence_encoding = sequence_encoding
         if byte_encoding == "length":
+            require(model["ir_version"] != "0.6", "Length projection does not support IR 0.6")
             self.validate_length_projection()
         require(fixed_choices is None or (type(fixed_choices) is list and len(fixed_choices) == depth
                 and all(type(j) is int and 0 <= j < len(model["transitions"]) for j in fixed_choices)),
@@ -155,12 +162,13 @@ class Encoding:
         require(type(depth) is int and 1 <= depth <= 30, "Symbolic depth must be 1..30")
         require(all(n in model["variables"] for n in symbolic_initials), "Unknown symbolic initial variable")
         self.byte_sort = z3.SeqSort(z3.BitVecSort(8)) if byte_encoding == "sequence" else z3.IntSort()
+        self.checksum_sum = None
         self.sorts = {"bool": z3.BoolSort(), "int": z3.IntSort(),
                       "seq32": z3.BitVecSort(32) if sequence_encoding == "bitvector" else z3.IntSort(),
                       "string": z3.StringSort(), "bytes": self.byte_sort, "rational": z3.RealSort()}
         self.frames = []
         self.events, self.branches, self.conflicts, self.action_faults, self.enabled = [], [], [], [], []
-        self.solver = z3.Solver()
+        self.solver = z3.Then(*self.solver_tactics).solver() if self.solver_tactics else z3.Solver()
         self.solver.set(timeout=10000)
         for i in range(depth + 1):
             self.frames.append({"state": z3.Int(f"state_{i}"), "now": z3.Int(f"now_{i}"),
@@ -196,6 +204,7 @@ class Encoding:
         def visit(expr, event=None):
             if type(expr) is not dict or "op" not in expr:
                 return
+            require(expr['op']not in WIRE_OPS|READ_OPS|WORD32_OPS,"Length projection does not support wire arithmetic/byte access")
             if expr["op"] in ("eq", "ne"):
                 require(infer(expr["args"][0], self.model, event) != "bytes",
                         "Length projection does not support byte-content equality")
@@ -275,6 +284,11 @@ class Encoding:
                 "ite": z.If,
                 "bytes_len": z.Length,
                 "bytes_concat": z.Concat,
+                "bytes_pack8_mod": lambda n: z.Unit(z.Int2BV(n,8)),
+                "bytes_pack16be_mod": lambda n: z.Concat(z.Unit(z.Extract(15,8,z.Int2BV(n,16))),z.Unit(z.Extract(7,0,z.Int2BV(n,16)))),
+                "bytes_pack32be_mod": lambda n: z.Concat(*[z.Unit(z.Extract(shift+7,shift,z.Int2BV(n,32)))for shift in (24,16,8,0)]),
+                "bytes_internet_checksum16": self.checksum_expr,
+                "bytes_at_or_zero": lambda a,i: z.If(z.And(i>=0,i<z.Length(a)),z.BV2Int(a[i],is_signed=False),0),
                 "bytes_slice": lambda a, offset, count: z.SubSeq(a, z.If(offset < 0, 0, offset), z.If(count < 0, 0, count)),
                 "seq_distance": lambda a, b: z.BV2Int(b - a, is_signed=False),
                 "seq_comparable": lambda a, b: b - a != z.BitVecVal(1 << 31, 32),
@@ -296,6 +310,26 @@ class Encoding:
                              seq_le=lambda a, b: (b-a) % MOD < MOD//2)
         require(value["op"] in operators, f"Unsupported symbolic operator: {value['op']}")
         return operators[value["op"]](*args)
+
+    def checksum_expr(self, sequence):
+        """Exact recursive BV sequence fold, independent of runtime arithmetic.
+
+        No byte-length cut-off or concrete reference evaluation is substituted.
+        The solver may return UNKNOWN for general recursive obligations.
+        """
+        z=self.z
+        require(self.byte_encoding=='sequence','Checksum needs exact byte content')
+        if self.checksum_sum is None:
+            name='ir4_ones_sum16_'+str(z.FreshInt('checksum_instance'))
+            f=z.RecFunction(name,self.byte_sort,z.BitVecSort(16))
+            s=z.Const(name+'_input',self.byte_sort);length=z.Length(s)
+            word=z.Concat(s[0],z.If(length>1,s[1],z.BitVecVal(0,8)))
+            rest=f(z.SubSeq(s,2,z.If(length>2,length-2,0)))
+            wide=z.ZeroExt(1,word)+z.ZeroExt(1,rest)
+            folded=z.Extract(15,0,wide)+z.ZeroExt(15,z.Extract(16,16,wide))
+            z.RecAddDefinition(f,s,z.If(length==0,z.BitVecVal(0,16),folded))
+            self.checksum_sum=f
+        return z.BV2Int(~self.checksum_sum(sequence),is_signed=False)
 
     def encode_step(self, index):
         z, m = self.z, self.model
@@ -398,8 +432,23 @@ class Encoding:
         if self.z.is_string_value(result):
             return result.as_string()
         if self.byte_encoding == "sequence" and result.sort() == self.byte_sort:
-            length = solution.eval(self.z.Length(value), model_completion=True).as_long()
-            return [solution.eval(value[i], model_completion=True).as_long() for i in range(length)]
+            # Materialize the already evaluated sequence once. Indexing the
+            # original expression repeats nested checksum evaluation per octet.
+            # Only concrete Unit/Concat/Empty ASTs use this exact fast path;
+            # other model representations retain the generic evaluator below.
+            pending = [result];octets = []
+            while pending:
+                node = pending.pop();kind = node.decl().kind()
+                if kind == self.z.Z3_OP_SEQ_EMPTY:
+                    continue
+                if kind == self.z.Z3_OP_SEQ_UNIT and self.z.is_bv_value(node.arg(0)):
+                    octets.append(node.arg(0).as_long())
+                elif kind == self.z.Z3_OP_SEQ_CONCAT:
+                    pending.extend(reversed(node.children()))
+                else:
+                    length = solution.eval(self.z.Length(result), model_completion=True).as_long()
+                    return [solution.eval(result[i], model_completion=True).as_long() for i in range(length)]
+            return octets
         return result.as_long()
 
     def witness(self, solution):
@@ -435,23 +484,41 @@ class Encoding:
         return {"initial": initial, "steps": steps}
 
 
-def check(model, depth=6, symbolic_initials=("iss",), out=None):
-    enc = Encoding(model, depth, symbolic_initials)
+def check(model, depth=6, symbolic_initials=("iss",), out=None, solver_timeout_ms=10000, solver_preprocess="none"):
+    require(type(solver_timeout_ms) is int and 100 <= solver_timeout_ms <= 60000, "Solver budget must be integer 100..60000ms")
+    # Validate/prepare journal directory before any solver mutation.
+    journal = None
+    if out is not None:
+        journal = Path(out)
+        if journal.exists():
+            if not journal.is_dir():
+                require(False, "Journal out path exists and is not a directory")
+            if any(journal.iterdir()):
+                require(False, "Journal out directory must be empty (stale outputs would be reused)")
+        else:
+            journal.mkdir(parents=True, exist_ok=True)
+    enc = Encoding(model, depth, symbolic_initials, solver_preprocess=solver_preprocess)
+    enc.solver.set(timeout=solver_timeout_ms)
     z = enc.z
     invariants = [enc.expr(inv["assert"], frame) for frame in enc.frames for inv in model["invariants"]]
     # Save an executable SMT-LIB query, including the exact property being queried.
     enc.solver.push()
     enc.solver.add(z.Or(z.Not(z.And(*invariants)), *enc.action_faults))
     smt = enc.solver.to_smt2()
+    # Journal the original safety SMT before the first solve so an interruption
+    # leaves the exact query on disk (no result.json until completion).
+    if journal is not None:
+        (journal / "model.smt2").write_text(smt)
     answer = enc.solve()
     report = {"backend": "z3-bmc", "solver_version": z.get_version_string(), "depth": depth,
-              "model_semantic_sha256": model_hash(model), "symbolic_initials": list(symbolic_initials),
+              "model_semantic_sha256": model_hash(model), "symbolic_initials": list(symbolic_initials), "solver_timeout_ms": solver_timeout_ms,
+              "solver_preprocess": solver_preprocess, "solver_tactics": list(enc.solver_tactics), "solver_preprocess_source": enc.solver_preprocess_source,
               "sequence_width": 32, "event_fields": "all_typed_values", "time": "unbounded_integer_ms",
               "scope": "defined_transitions_and_clock_progress" if enc.clock_progress else "defined_transitions_only",
               "clock_progress": "monotonic_integer_before_next_due" if enc.clock_progress else "not_applicable", "liveness": "not_checked", "unbounded_proof": False,
               "invariants": [i["id"] for i in model["invariants"]], "safety_query": str(answer)}
     report["runtime_properties"] = ["positive_timer_duration"]
-    if model["ir_version"] in ("0.2", "0.3"):
+    if model["ir_version"] in ("0.2", "0.3", "0.4", "0.5", "0.6"):
         report["byte_semantics"] = "finite_sequence_bv8_truncating_slice"
         report["sequence_order"] = "strict_half_space_partial_order"
     if answer == z.sat:
@@ -466,6 +533,9 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     enc.solver.push()
     enc.solver.add(z.Or(*enc.conflicts))
     overlap_smt = enc.solver.to_smt2()
+    # Journal the original overlap SMT before the overlap solve.
+    if journal is not None:
+        (journal / "overlap.smt2").write_text(overlap_smt)
     conflict = enc.solve()
     report["overlap_query"] = str(conflict)
     if conflict == z.sat:
@@ -473,25 +543,44 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     elif conflict == z.unknown and report["status"] == "bounded_pass":
         report.update(status="unknown", reason=enc.reason_unknown())
     enc.solver.pop()
+    sample_queries={}
     # A satisfying path is cross-checked against independent runtime semantics.
     if report["status"] == "bounded_pass":
-        enc.solver.add(z.Int("choice_0") >= 0)
-        answer = enc.solve()
+        # Nonvacuity is existential. For IR0.4/0.5/0.6 first seek an actual one-event
+        # witness with an idle suffix. These SAT subsets never constrain the
+        # all-input safety/overlap queries above. Fall back to the original
+        # unrestricted witness query if the subsets do not produce a witness.
+        strategies=['any-path']
+        if model['ir_version']in ('0.4','0.5','0.6')and model['transitions']:
+            strategies=['first-rule-one-event','any-rule-one-event',*strategies]
+        attempts=[]
+        for strategy in strategies:
+            sample_enc=Encoding(model,1,symbolic_initials,fixed_choices=[0],solver_preprocess=solver_preprocess)if strategy=='first-rule-one-event'else Encoding(model,1,symbolic_initials,solver_preprocess=solver_preprocess)if strategy=='any-rule-one-event'else enc
+            sample_enc.solver.set(timeout=solver_timeout_ms)
+            sample_enc.solver.push();sample_enc.solver.add(z.Int('choice_0')>=0)
+            sample_smt=sample_enc.solver.to_smt2()
+            if journal is not None:
+                (journal/("sample-"+strategy+".smt2")).write_text(sample_smt)
+            answer=sample_enc.solve()
+            record=dict(strategy=strategy,depth=sample_enc.depth,scope='existential_nonvacuity_only',query=str(answer),file='sample-'+strategy+'.smt2',smt2_sha256=hashlib.sha256(sample_smt.encode()).hexdigest())
+            if answer==z.unknown:record['reason']=sample_enc.reason_unknown()
+            attempts.append(record);sample_queries['sample-'+strategy+'.smt2']=sample_smt
+            witness=sample_enc.witness(sample_enc.solver.model())if answer==z.sat else None
+            sample_enc.solver.pop()
+            if answer==z.sat:break
+        report['sample_queries']=attempts
         if answer == z.sat:
-            report["sample_witness"] = enc.witness(enc.solver.model())
+            report["sample_witness"] = witness
             report["replay"] = replay(model, report["sample_witness"])
             if report["replay"]["status"] != "match":
                 report["status"] = "semantic_mismatch"
         else:
             report["status"] = "unknown" if answer == z.unknown else "vacuous"
             if answer == z.unknown:
-                report["reason"] = enc.reason_unknown()
-    if out is not None:
-        out = Path(out)
-        out.mkdir(parents=True, exist_ok=True)
-        (out / "model.smt2").write_text(smt)
-        (out / "overlap.smt2").write_text(overlap_smt)
+                report["reason"] = attempts[-1]['reason']
+    if journal is not None:
+        for name,query in sample_queries.items():(journal/name).write_text(query)
         report["smt2_sha256"] = hashlib.sha256(smt.encode()).hexdigest()
         report["overlap_smt2_sha256"] = hashlib.sha256(overlap_smt.encode()).hexdigest()
-        (out / "result.json").write_text(json.dumps(report, indent=2) + "\n")
+        (journal / "result.json").write_text(json.dumps(report, indent=2) + "\n")
     return report

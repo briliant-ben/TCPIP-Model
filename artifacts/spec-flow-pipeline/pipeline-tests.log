@@ -1,0 +1,37 @@
+test_task_cannot_inject_shell_or_python_commands (test_pipeline.PipelineTaskTests.test_task_cannot_inject_shell_or_python_commands) ... ok
+test_task_cannot_reference_files_outside_its_workspace (test_pipeline.PipelineTaskTests.test_task_cannot_reference_files_outside_its_workspace) ... ok
+test_actual_pipeline_has_all_stages_generated_cases_and_independent_native_results (test_pipeline.PipelineTests.test_actual_pipeline_has_all_stages_generated_cases_and_independent_native_results) ... ok
+test_actual_worker_timeout_is_classified_and_process_group_is_cleaned (test_pipeline.PipelineTests.test_actual_worker_timeout_is_classified_and_process_group_is_cleaned) ... ok
+test_changed_native_observation_is_not_accepted (test_pipeline.PipelineTests.test_changed_native_observation_is_not_accepted) ... ok
+test_corrupted_spec_fails_provenance_without_falsifying_native_comparison (test_pipeline.PipelineTests.test_corrupted_spec_fails_provenance_without_falsifying_native_comparison) ... ok
+test_independent_concurrent_jobs_keep_outputs_and_run_ids_separate (test_pipeline.PipelineTests.test_independent_concurrent_jobs_keep_outputs_and_run_ids_separate) ... {"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "sources", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "sources", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "ir", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "ir", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "formal", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "formal", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "tests", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "tests", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "reference", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "reference", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "generate", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "generate", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "build", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "build", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "execute", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "execute", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "compare", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "compare", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "traceability", "run_id": "6d6f1ab3-5a89-44a8-846c-49f6d4d080b0"}
+{"schema": "spec-flow-event-v1", "event": "stage_started", "stage": "traceability", "run_id": "9f3b895c-06d5-474a-89b9-5e071aeb378f"}
+ok
+test_missing_compiler_blocks_only_dependent_execution_channel (test_pipeline.PipelineTests.test_missing_compiler_blocks_only_dependent_execution_channel) ... ok
+test_model_conflict_is_not_a_successful_negative_test (test_pipeline.PipelineTests.test_model_conflict_is_not_a_successful_negative_test) ... ok
+test_native_integer_domain_limit_is_not_reported_as_an_rfc_difference (test_pipeline.PipelineTests.test_native_integer_domain_limit_is_not_reported_as_an_rfc_difference) ... ok
+test_rehashed_unknown_formal_result_cannot_be_promoted (test_pipeline.PipelineTests.test_rehashed_unknown_formal_result_cannot_be_promoted) ... ok
+test_scope_promotion_is_rejected (test_pipeline.PipelineTests.test_scope_promotion_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 4.782s
+
+OK

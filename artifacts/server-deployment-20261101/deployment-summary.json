@@ -1,0 +1,79 @@
+{
+  "schema": "spec-flow-deployment-evidence-v1",
+  "source_commit": "5bddadf89b37f9836fec1837f691fd134ce3cc75",
+  "archive_bytes": 1044447,
+  "archive_sha256": "981d2c9b577a4212ac05c398744633c89cef4591238100b149e11c5cf61e6ac0",
+  "archive_members": 696,
+  "requests": [
+    {
+      "status": "completed",
+      "request_sha256": "e57c38a1eaaa69f0ed695f7c3b399ec48fdfd44c9d60c78b294419d45335d3de",
+      "model": "deepseek-flash",
+      "max_tokens": 32,
+      "prompt_bytes": 318,
+      "usage": {
+        "prompt_tokens": 49,
+        "completion_tokens": 5,
+        "total_tokens": 54,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 49
+      }
+    },
+    {
+      "status": "completed",
+      "request_sha256": "ee5ce364f44f0227b4c666ba384aef1bc0448072dfe372b345126ae886345533",
+      "model": "deepseek-flash",
+      "max_tokens": 4096,
+      "prompt_bytes": 34605,
+      "usage": {
+        "prompt_tokens": 7958,
+        "completion_tokens": 1282,
+        "total_tokens": 9240,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 7958
+      }
+    },
+    {
+      "status": "uncertain",
+      "request_sha256": "e4d06ce451be66cb7c0860e2b3f509ea23538b4c5abcd31127f1ffa519ecaf00",
+      "model": "deepseek-flash",
+      "max_tokens": 6144,
+      "prompt_bytes": 34622,
+      "usage": {
+        "prompt_tokens": 7940,
+        "completion_tokens": 3130,
+        "total_tokens": 11070,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 7940
+      },
+      "error": "JSONDecodeError"
+    },
+    {
+      "status": "completed",
+      "provider_response_received": true,
+      "request_sha256": "9dec6a09d7b9ab96a7f8b41a8856459d88e8cd1fdeb0b6de3773f09108358202",
+      "model": "deepseek-flash",
+      "max_tokens": 4096,
+      "prompt_bytes": 35157,
+      "usage": {
+        "prompt_tokens": 8041,
+        "completion_tokens": 2114,
+        "total_tokens": 10155,
+        "prompt_tokens_details": {
+          "cached_tokens": 7808
+        },
+        "prompt_cache_hit_tokens": 7808,
+        "prompt_cache_miss_tokens": 233
+      }
+    }
+  ]
+}

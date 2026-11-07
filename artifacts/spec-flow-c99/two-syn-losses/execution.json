@@ -1,0 +1,28 @@
+{
+  "schema": "spec-flow-stage-v1",
+  "stage": "execute_compare",
+  "status": "pass",
+  "model_semantic_sha256": "3be892210acfc335bd0dd42fdeae7b6be9231f6ab0f72e72186f4dc9abd85b10",
+  "scenario": "two-syn-losses",
+  "inputs": {
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/scenarios/two-syn-losses.json": "b74d2d486c4adb506aec8c09b1424380eb71e64b36119cb2b780f8f34e2d2bb5",
+    "/private/tmp/spec-flow-c99-release/generation/generation.json": "985db29e60d18e6f526645ae5a030f5eb91077b373c1bf5b91f676bd296e12a1",
+    "/private/tmp/spec-flow-c99-release/build/compile.json": "a222279204fbcc3f9666d791fe3dc813317bd8c0b1e0ff6595b87f20940d1db0",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/codegen/execute.py": "4ca03e1a52662a83430f1ffeb6d667f455abf879a30087291520f116ffda5ad0",
+    "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py": "6d1e4e654049767063b72a256adcd158e5c63a0a4250d0919d101da4d3dd1759"
+  },
+  "executable_sha256": "f9f8a7163a11d6d60fdfd687d3091e93cebe39868a21118e24765ef395d3640d",
+  "native_returncode": 0,
+  "observation_origin": "generated_native_execution",
+  "python_interpreter_in_native_process": false,
+  "linux_network_evidence": false,
+  "pcap_evidence": false,
+  "whole_protocol_proved": false,
+  "classification": null,
+  "outputs": {
+    "native.stdout": "f008c4f5f2cc957e79c0f1801f4c90c2afd81633e417683b51ae0ee9831796e9",
+    "native-input.txt": "49cbb533140f655c676adf1597949f2a5ef2fa894964f5bdbb1adad4719d64ab",
+    "difference.json": "796919284db5d4d2b605a881b150ba0caf224729b3c6ec9e576a0add03399652",
+    "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -4,10 +4,53 @@ import copy
 from pathlib import Path
 import unittest
 from unittest.mock import patch
+from unittest.mock import Mock
 import run as driver
 
 
 class LinuxPlanTests(unittest.TestCase):
+    def test_capture_deadline_covers_the_failed_submillisecond_boundary(self):
+        # Original failed capture: marker-origin=5019.91646ms, below required5020.
+        origin=1793600452886596000;marker=1793600457906512460
+        self.assertLess((marker-origin)/1000000,5020)
+        target=origin+5020*1000000
+        capture=Mock();capture.poll.return_value=None
+        socket=Mock();socket.poll.return_value=None
+        with patch.object(driver.time,'time_ns',side_effect=[marker,target]),\
+             patch.object(driver.time,'monotonic_ns',return_value=1000000),\
+             patch.object(driver.time,'sleep')as sleep:
+            result=driver.wait_capture_deadline(capture,socket,origin,5020)
+        self.assertGreaterEqual(result['capture_stop_request_epoch_ns']-origin,5020000000)
+        self.assertEqual(result['observation_deadline_epoch_ns'],target)
+        self.assertGreater(sleep.call_args.args[0],0)
+        self.assertEqual(capture.poll.call_count,2)
+        self.assertEqual(socket.poll.call_count,2)
+
+    def test_early_capture_or_socket_exit_cannot_satisfy_deadline(self):
+        for capture_code,socket_code in ((0,None),(None,0)):
+            capture=Mock();capture.poll.return_value=capture_code
+            socket=Mock();socket.poll.return_value=socket_code
+            with self.subTest(capture=capture_code,socket=socket_code),\
+                 self.assertRaisesRegex(ValueError,'ended before observation deadline'):
+                driver.wait_capture_deadline(capture,socket,0,5020)
+
+    def test_backward_realtime_does_not_hang_deadline_wait(self):
+        process=Mock();process.poll.return_value=None
+        with patch.object(driver.time,'time_ns',return_value=0),\
+             patch.object(driver.time,'monotonic_ns',side_effect=[0,11000000000]),\
+             self.assertRaisesRegex(ValueError,'clock deadline did not advance'):
+            driver.wait_capture_deadline(process,process,10000000000,5020)
+
+    def test_origin_filters_unrelated_frames_without_reading_unstable_tail(self):
+        profile={'local':{'ip':'192.0.2.1','port':40000},'peer':{'ip':'192.0.2.2','port':8080}}
+        def records():
+            yield {'ignored':'non_ipv4'}
+            yield dict(src='192.0.2.9',sport=40000,dst='192.0.2.2',dport=8080,timestamp_ns=1)
+            yield dict(src='192.0.2.1',sport=40000,dst='192.0.2.2',dport=8080,timestamp_ns=2)
+            raise AssertionError('Live tail must wait for final strict decode')
+        with patch.object(driver,'decode',side_effect=lambda _:records()):
+            self.assertEqual(driver.capture_origin('/unused',profile),2)
+
     def test_model_generated_expectations_are_preserved_exactly(self):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp)

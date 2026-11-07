@@ -1,0 +1,44 @@
+{
+  "scenario_version": "0.2",
+  "id": "asymmetric",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "pack",
+      "fields": {
+        "value": 305419896
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "word32.result",
+              "fields": {
+                "packed": [
+                  18,
+                  52,
+                  86,
+                  120
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "packed": [
+        18,
+        52,
+        86,
+        120
+      ]
+    },
+    "timers": {}
+  }
+}

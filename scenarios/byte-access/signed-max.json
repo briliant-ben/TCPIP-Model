@@ -1,0 +1,37 @@
+{
+  "scenario_version": "0.2",
+  "id": "signed-max",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "peek",
+      "fields": {
+        "data": [
+          17
+        ],
+        "offset": 9223372036854775807
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "byte.result",
+              "fields": {
+                "octet": 0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "octet": 0
+    },
+    "timers": {}
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "scenario_version": "0.2",
+  "id": "empty",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "peek",
+      "fields": {
+        "data": [],
+        "offset": 0
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "byte.result",
+              "fields": {
+                "octet": 0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "octet": 0
+    },
+    "timers": {}
+  }
+}

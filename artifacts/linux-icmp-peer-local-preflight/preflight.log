@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-icmp-peer/run.py", line 176, in <module>
+    else:print(json.dumps(run(out)))
+                          ^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-icmp-peer/run.py", line 158, in run
+    require(pre['platform']=='Linux'and pre['euid']==0 and pre['tun']and all(tools.values()),'Linux root/TUN/ping/tools unavailable; only this channel blocked')
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/ir.py", line 36, in require
+    raise ModelError(message)
+protocol_lab.ir.ModelError: Linux root/TUN/ping/tools unavailable; only this channel blocked

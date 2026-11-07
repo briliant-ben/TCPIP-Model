@@ -1,0 +1,90 @@
+{
+  "id": "s3-padding-overlong-declared",
+  "note": "padding: length declares 10, data 12 bytes -> delivers first 2 bytes; overlong declared length 14 > 8+4 silently discards with no emission",
+  "steps": [
+    {
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 7000,
+        "destination_port": 8080,
+        "length": 10,
+        "checksum": 65535,
+        "sum_valid": true,
+        "data": [
+          7,
+          8,
+          99,
+          100
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "udp.delivery",
+              "fields": {
+                "source_port": 7000,
+                "destination_port": 8080,
+                "data": [
+                  7,
+                  8
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "at_ms": 0
+    },
+    {
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 7000,
+        "destination_port": 8080,
+        "length": 14,
+        "checksum": 1234,
+        "sum_valid": true,
+        "data": [
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": []
+        }
+      ],
+      "at_ms": 0
+    },
+    {
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 7000,
+        "destination_port": 8080,
+        "length": 5,
+        "checksum": 1234,
+        "sum_valid": true,
+        "data": [
+          1
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": []
+        }
+      ],
+      "at_ms": 0
+    }
+  ],
+  "initial": {},
+  "expect": {
+    "state": "READY",
+    "timers": {}
+  },
+  "scenario_version": "0.2"
+}

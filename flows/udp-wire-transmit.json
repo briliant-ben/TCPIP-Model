@@ -1,0 +1,182 @@
+{
+  "schema": "spec-flow-task-v2",
+  "id": "udp-ipv4-wire-transmit",
+  "model": "model/udp-wire-transmit.json",
+  "sources": [
+    {
+      "id": "rfc768",
+      "path": "spec/sources/rfc768.txt",
+      "sha256": "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0",
+      "version": "28 August1980",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc768.txt"
+      ]
+    },
+    {
+      "id": "rfc1122",
+      "path": "spec/sources/rfc1122.txt",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "version": "October1989",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc1122.txt"
+      ]
+    },
+    {
+      "id": "rfc791",
+      "path": "spec/sources/rfc791.txt",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "version": "September1981",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc791.txt"
+      ]
+    },
+    {
+      "id": "rfc6864",
+      "path": "spec/sources/rfc6864.txt",
+      "sha256": "e00ff443857166e5b26deecfdc77a0a1c5ff17fc87a6a8c50b020ce7f4d516d9",
+      "version": "February2013",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc6864.txt"
+      ]
+    },
+    {
+      "id": "profile",
+      "path": "docs/udp-wire-transmit.md",
+      "sha256": "2833f8dd296157a30520292156268ccb4d0f48f13f8c5026f57807cddd7a7304",
+      "version": "fixed transmit profile v2; exact nonvacuity strategy",
+      "uri_aliases": [
+        "docs/udp-wire-transmit.md"
+      ]
+    },
+    {
+      "id": "oracle",
+      "path": "spec/udp-wire-transmit-oracle.json",
+      "sha256": "7cf0afc424f5423df009e01d9938a217f1a4ec5d4adcccffa9e09a11baef6129",
+      "version": "fixed RFC/profile/oracle v1",
+      "uri_aliases": [
+        "spec/udp-wire-transmit-oracle.json"
+      ]
+    },
+    {
+      "id": "exploration",
+      "path": "model/udp-wire-transmit-exploration.json",
+      "sha256": "9c571daa2c9955188ebc35c99721385a48e22e8fb847e5a79c408e1ba01a9602",
+      "version": "fixed RFC/profile/oracle v1",
+      "uri_aliases": [
+        "model/udp-wire-transmit-exploration.json"
+      ]
+    },
+    {
+      "id": "seed-0",
+      "path": "scenarios/udp-wire-transmit/disable-restore.json",
+      "sha256": "f2cf82f97554844e3a6a4dc74c785449c46dcc1a636b51794a9067a1d507c643",
+      "version": "fixed RFC/profile/oracle v1",
+      "uri_aliases": [
+        "scenarios/udp-wire-transmit/disable-restore.json"
+      ]
+    },
+    {
+      "id": "seed-1",
+      "path": "scenarios/udp-wire-transmit/empty.json",
+      "sha256": "4886482212c211d60d64a141eb2a04c7b5a9aa0f9ab2d11de5c1a92f80c122a6",
+      "version": "fixed RFC/profile/oracle v1",
+      "uri_aliases": [
+        "scenarios/udp-wire-transmit/empty.json"
+      ]
+    },
+    {
+      "id": "seed-2",
+      "path": "scenarios/udp-wire-transmit/mtu.json",
+      "sha256": "fe3cc5c55f537e78a8b822afcc25774fffc53c6c1e75bd55184f78f1e3e6c4a6",
+      "version": "fixed RFC/profile/oracle v1",
+      "uri_aliases": [
+        "scenarios/udp-wire-transmit/mtu.json"
+      ]
+    },
+    {
+      "id": "seed-3",
+      "path": "scenarios/udp-wire-transmit/odd-NUL.json",
+      "sha256": "d1ec1433df77c9d345255b057202896b2736b0c8b267ef06a6ac9cea5d723c23",
+      "version": "fixed RFC/profile/oracle v1",
+      "uri_aliases": [
+        "scenarios/udp-wire-transmit/odd-NUL.json"
+      ]
+    },
+    {
+      "id": "seed-4",
+      "path": "scenarios/udp-wire-transmit/repeated.json",
+      "sha256": "978f50e6537c4050b724dadec77ae0c73735791dbd41100315a7e665b350fe82",
+      "version": "fixed RFC/profile/oracle v1",
+      "uri_aliases": [
+        "scenarios/udp-wire-transmit/repeated.json"
+      ]
+    },
+    {
+      "id": "seed-5",
+      "path": "scenarios/udp-wire-transmit/zero-mapping.json",
+      "sha256": "186af97f926aa0ba3f50506f9975ff9a347e6f14cc613ea3a8bd0972e4082618",
+      "version": "fixed RFC/profile/oracle v1",
+      "uri_aliases": [
+        "scenarios/udp-wire-transmit/zero-mapping.json"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "UDP-WIRE": {
+      "source": "rfc768",
+      "clause": "Fields pages1/2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.txt"
+    },
+    "UDP-DEFAULT": {
+      "source": "rfc1122",
+      "clause": "4.1.3.4",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122.txt"
+    },
+    "IP-WIRE": {
+      "source": "rfc791",
+      "clause": "3.1",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.txt"
+    },
+    "ATOMIC-ID": {
+      "source": "rfc6864",
+      "clause": "4/4.1",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6864.txt"
+    },
+    "PROFILE": {
+      "source": "profile",
+      "clause": "Scope and interpretation",
+      "reference": "docs/udp-wire-transmit.md"
+    }
+  },
+  "exploration": "model/udp-wire-transmit-exploration.json",
+  "seeds": [
+    "scenarios/udp-wire-transmit/disable-restore.json",
+    "scenarios/udp-wire-transmit/empty.json",
+    "scenarios/udp-wire-transmit/mtu.json",
+    "scenarios/udp-wire-transmit/odd-NUL.json",
+    "scenarios/udp-wire-transmit/repeated.json",
+    "scenarios/udp-wire-transmit/zero-mapping.json"
+  ],
+  "formal": {
+    "depth": 2,
+    "symbolic_initials": []
+  },
+  "limits": {
+    "stage_seconds": 120,
+    "max_prefixes": 64,
+    "max_cases": 64
+  },
+  "scope": {
+    "purpose": "IR-generated actual IPv4/UDP egress bytes; no handwritten protocol codec",
+    "assumptions": [
+      "Fixed tuple/TTL/atomic ID/MTU profile",
+      "PCAP frames actual C bytes on a virtual link; not physical/Linux peer evidence"
+    ],
+    "excluded": [
+      "receive/decode, ARP, ICMP and socket binding",
+      "routing/PMTU discovery/options/fragmentation",
+      "Linux UDP peer/physical capture",
+      "full UDP/IPv4 stack or unbounded correctness proof"
+    ]
+  }
+}

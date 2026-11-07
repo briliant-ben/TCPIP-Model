@@ -1,0 +1,26 @@
+test_all_thirteen_live_ingresses_one_pid_no_reference_drives_subject (__main__.IcmpPeerTests.test_all_thirteen_live_ingresses_one_pid_no_reference_drives_subject) ... ERROR
+test_frozen_independent_oracle_all_thirteen_inputs (__main__.IcmpPeerTests.test_frozen_independent_oracle_all_thirteen_inputs) ... ok
+test_reset_ingress_and_pid_tampering_rejected (__main__.IcmpPeerTests.test_reset_ingress_and_pid_tampering_rejected) ... ok
+test_shared_namespace_rejected_before_network_setup (__main__.IcmpPeerTests.test_shared_namespace_rejected_before_network_setup) ... ok
+test_synthetic_raw_pcap_exact_bytes_and_truncation (__main__.IcmpPeerTests.test_synthetic_raw_pcap_exact_bytes_and_truncation) ... ok
+test_wrong_identifier_with_valid_checksum_is_not_an_echo_match (__main__.IcmpPeerTests.test_wrong_identifier_with_valid_checksum_is_not_an_echo_match) ... ok
+
+======================================================================
+ERROR: test_all_thirteen_live_ingresses_one_pid_no_reference_drives_subject (__main__.IcmpPeerTests.test_all_thirteen_live_ingresses_one_pid_no_reference_drives_subject)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/ports/linux-icmp-peer/tests.py", line 48, in test_all_thirteen_live_ingresses_one_pid_no_reference_drives_subject
+    rows,session=driver.stream_check(out/'native',model,scene);self.assertEqual(compare(model,scene,rows)['status'],'match');self.assertEqual(session['process_starts'],1)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/codegen/execute.py", line 76, in compare
+    reference=run_scenario(model,scenario)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/protocol_lab/flow.py", line 91, in run_scenario
+    expected = scenario["expect"]
+               ~~~~~~~~^^^^^^^^^^
+KeyError: 'expect'
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.137s
+
+FAILED (errors=1)

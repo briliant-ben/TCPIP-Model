@@ -1,0 +1,44 @@
+{
+  "scenario_version": "0.2",
+  "id": "wrap",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "pack",
+      "fields": {
+        "value": 4294967296
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "word32.result",
+              "fields": {
+                "packed": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "packed": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "timers": {}
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "schema": "spec-flow-task-v3",
+  "id": "tcp-active-open-ipv4-wire",
+  "model": "model/tcp.json",
+  "sources": [
+    {
+      "id": "rfc9293",
+      "path": "spec/sources/rfc9293.txt",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "version": "August 2022",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc9293.html",
+        "https://www.rfc-editor.org/rfc/rfc9293.txt"
+      ]
+    },
+    {
+      "id": "rfc6298",
+      "path": "spec/sources/rfc6298.txt",
+      "sha256": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+      "version": "June 2011",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc6298.html",
+        "https://www.rfc-editor.org/rfc/rfc6298.txt"
+      ]
+    },
+    {
+      "id": "ir-semantics",
+      "path": "docs/semantics.md",
+      "sha256": "3d66f69a0c97f72290362ad75d2872e52c02b58a2ec31a082c04d42ac557d57b",
+      "version": "repository named semantic contract",
+      "uri_aliases": [
+        "docs/semantics.md"
+      ]
+    },
+    {
+      "id": "acceptance-input-0",
+      "path": "model/exploration.json",
+      "sha256": "254b489d4fd9e0e733c11661632e940e1069f1971bbab2545542acad53699978",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "model/exploration.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-1",
+      "path": "scenarios/handshake.json",
+      "sha256": "638341941b59c740ec8ec2927e9e6cf252bdaebf538218fb38bac5d6a848f3d2",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/handshake.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-2",
+      "path": "scenarios/sequence-wrap.json",
+      "sha256": "fd66c07cb206670ecb6f4cd8378d6a8c06dd901cbb5b78595d7695b42eee8177",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/sequence-wrap.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-3",
+      "path": "scenarios/syn-loss.json",
+      "sha256": "0e6602d76c241dcf23dfd55e9465c9dfe2c0e5e7f47ab9cf5deeda368772f6ff",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/syn-loss.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-4",
+      "path": "scenarios/two-syn-losses.json",
+      "sha256": "b74d2d486c4adb506aec8c09b1424380eb71e64b36119cb2b780f8f34e2d2bb5",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/two-syn-losses.json"
+      ]
+    },
+    {
+      "id": "acceptance-input-5",
+      "path": "scenarios/flow-contracts/active-open.json",
+      "sha256": "fbb3fc87988ccb451e2b1d7db652813400bea553d8060436d0915ed81283b55b",
+      "version": "owner-pinned acceptance input v1",
+      "uri_aliases": [
+        "scenarios/flow-contracts/active-open.json"
+      ]
+    },
+    {
+      "id": "rfc791",
+      "path": "spec/sources/rfc791.txt",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "version": "September 1981; section3.1 header representation only",
+      "uri_aliases": [
+        "https://www.rfc-editor.org/rfc/rfc791.txt",
+        "https://www.rfc-editor.org/rfc/rfc791.html"
+      ]
+    },
+    {
+      "id": "wire-binding",
+      "path": "bindings/tcp-active-open-ipv4.json",
+      "sha256": "3502ea10413643b3c3625dc02d5a124946054742ee2b5c60251a48f6f1ac9401",
+      "version": "native-ipv4-tcp-binding-v1",
+      "uri_aliases": [
+        "bindings/tcp-active-open-ipv4.json"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "TCP-ACTIVE-OPEN": {
+      "source": "rfc9293",
+      "clause": "3.10.1",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.1"
+    },
+    "TCP-ACCEPT-SYNACK": {
+      "source": "rfc9293",
+      "clause": "3.10.7.3",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.3"
+    },
+    "TCP-RETRANSMIT": {
+      "source": "rfc9293",
+      "clause": "3.10.8",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.8"
+    },
+    "RTO-INITIAL": {
+      "source": "rfc6298",
+      "clause": "2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-2"
+    },
+    "RTO-CANCEL": {
+      "source": "rfc6298",
+      "clause": "5",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5"
+    },
+    "RTO-BACKOFF": {
+      "source": "rfc6298",
+      "clause": "5",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5"
+    },
+    "PROFILE-SCOPE": {
+      "source": "ir-semantics",
+      "clause": "scope assumptions",
+      "reference": "docs/semantics.md"
+    }
+  },
+  "exploration": "model/exploration.json",
+  "seeds": [
+    "scenarios/handshake.json",
+    "scenarios/sequence-wrap.json",
+    "scenarios/syn-loss.json",
+    "scenarios/two-syn-losses.json",
+    "scenarios/flow-contracts/active-open.json"
+  ],
+  "formal": {
+    "depth": 6,
+    "symbolic_initials": [
+      "iss"
+    ]
+  },
+  "limits": {
+    "stage_seconds": 120,
+    "max_prefixes": 256,
+    "max_cases": 64
+  },
+  "scope": {
+    "purpose": "Repeatable selected TCP active-open flow through native IPv4/TCP byte input/output and virtual-link PCAP; event safety remains bounded",
+    "assumptions": [
+      "Typed validated SYN+ACK input events",
+      "Reference-derived finite test domains; source interpretation remains trusted",
+      "The controller pins the approved task; modelers change candidate IR, not acceptance sources or seed oracles",
+      "RFC791 section3.1 and RFC9293 section3.1 fixed-header representation; one four-tuple, no options/payload/fragments. Codec rejects unsupported shapes without claiming modeled RFC response behavior."
+    ],
+    "excluded": [
+      "payload and general TCP",
+      "second-spec migration",
+      "unbounded proof or proof of English-to-IR interpretation",
+      "General IPv4 host/router behavior, options, fragmentation, physical network and Linux TCP implementation"
+    ]
+  },
+  "wire": {
+    "binding": "bindings/tcp-active-open-ipv4.json",
+    "scenarios": [
+      "scenarios/handshake.json",
+      "scenarios/sequence-wrap.json",
+      "scenarios/syn-loss.json",
+      "scenarios/two-syn-losses.json",
+      "scenarios/flow-contracts/active-open.json"
+    ]
+  }
+}

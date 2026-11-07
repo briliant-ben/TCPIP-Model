@@ -74,3 +74,27 @@ stimuli are rejected. No PSH, outbound data, read/socket-buffer-content, general
 segmentation or recovery claim follows. Independent PCAP still checks every byte.
 The command now explicitly binds the existing12.5% dynamic tool tolerance as well
 as its50000us minimum. The independent oracle remains0ms.
+
+## Capture deadline correction
+
+The d5eeca9f receive CI artifact failed its minimum observation gate: source
+settle5020ms versus quiet-marker file mtime5019.91646ms after the first selected
+PCAP packet (83540ns short). This is retained as invalid capture evidence, not
+a TCP bug or a passing observation. File mtime is not capture-stop time.
+
+The driver now reads the first selected, already flushed PCAP record after the
+script barrier. Both tcpdump and the socket driver must stay alive until the
+actual PCAP-origin plus declared settle deadline, using realtime for the PCAP
+epoch and a monotonic timeout to reject a stuck/backward clock. The full capture
+then undergoes the unchanged strict decoder/checksum/oracle gates. Final origin
+must equal the live origin. Capture-stop request realtime/monotonic timestamps
+and the exact deadline are bound into namespace.json. Independent verification
+reconstructs the origin and minimum interval; the quiet-marker mtime is retained
+for provenance and is never silently rewritten. Socket release still follows
+capture exit. No packet limit, ignored ACKs, tolerance change or early cleanup.
+
+The original failed ZIP/log and numeric diagnostic are retained in
+artifacts/linux-capture-deadline-d5eeca9f. Sixteen local preparation/lifecycle
+checks pass, including the real83540ns boundary, early process exits, backward
+clock timeout and unrelated-frame filtering. Fixtures are not Linux evidence.
+Fresh CI execution is required; old archives use their original Git checker.

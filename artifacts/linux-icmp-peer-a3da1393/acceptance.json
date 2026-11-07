@@ -1,0 +1,39 @@
+{
+  "status": "valid_retained_real_linux_icmp_peer_evidence",
+  "source_commit": "7435b620964dca9f80c33e66ab49a71f9be785a0",
+  "audit_git_commit": "a3da139342a93b530cfaa662620ba17c4a7e6813",
+  "source_blobs_checked": 64,
+  "raw_files": 52,
+  "cases": [
+    {
+      "case": "empty",
+      "status": "pass",
+      "data_bytes": 0,
+      "peer_confirmed": true
+    },
+    {
+      "case": "odd-NUL",
+      "status": "pass",
+      "data_bytes": 5,
+      "peer_confirmed": true
+    },
+    {
+      "case": "mtu",
+      "status": "pass",
+      "data_bytes": 1472,
+      "peer_confirmed": true
+    }
+  ],
+  "real_captured_packets": 6,
+  "native_process_starts": 1,
+  "actual_fixed_input_z3_trace_steps": 3,
+  "actual_fixed_input_z3_query_count": 1,
+  "archive_code_executed": false,
+  "fresh_native_or_solver_execution": false,
+  "new_linux_execution": false,
+  "physical_ethernet_capture": false,
+  "project_server_deployed": false,
+  "compiler_correctness_proved": false,
+  "whole_ipv4_endpoint_complete": false,
+  "offline_provenance_requires_trusted_ci": true
+}

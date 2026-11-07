@@ -1,0 +1,18 @@
+{
+  "status": "rejected_truncated_review_not_accepted",
+  "finish_reason": "length",
+  "usage": {
+    "prompt_tokens": 3556,
+    "completion_tokens": 1536,
+    "total_tokens": 5092,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 3556
+  },
+  "messages_sha256": "99e89934f18c7ab78cf57f74162cd8003ed1b1c49a796d630042bbf54f521f26",
+  "raw_response_sha256": "c1390abb9d1e05fa91212713350c2dcffb67e9c8b3bbbe5044f9f04b05cd8189",
+  "automatic_paid_retry": false,
+  "controller_assessment": "The supplied excerpt omitted generated fire/invariants, so claims that their false returns lack failure state are unsubstantiated for this generator. Generated callers are defensively hardened and tested with an injected false-only return. seq_add argument typing and initial-override invariant timing remain authoritative IR behavior. No independent review pass is claimed."
+}

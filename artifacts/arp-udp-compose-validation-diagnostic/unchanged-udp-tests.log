@@ -1,0 +1,13 @@
+test_actual_native_full_flow_and_pcap_gate (test_udp_transmit.UdpTransmitTests.test_actual_native_full_flow_and_pcap_gate) ... ok
+test_independent_decoder_matches_all_fixed_packet_fields (test_udp_transmit.UdpTransmitTests.test_independent_decoder_matches_all_fixed_packet_fields) ... ok
+test_literal_packet_contracts_cover_reference_policy (test_udp_transmit.UdpTransmitTests.test_literal_packet_contracts_cover_reference_policy) ... ok
+test_malformed_checksums_lengths_fragments_and_pcap_reject (test_udp_transmit.UdpTransmitTests.test_malformed_checksums_lengths_fragments_and_pcap_reject) ... ok
+test_missing_zero_to_ffff_mapping_fails_literal_oracle (test_udp_transmit.UdpTransmitTests.test_missing_zero_to_ffff_mapping_fails_literal_oracle) ... ok
+test_nonvacuity_sample_does_not_replace_all_input_safety (test_udp_transmit.UdpTransmitTests.test_nonvacuity_sample_does_not_replace_all_input_safety) ... ok
+test_rotated_payload_with_valid_checksums_still_differs (test_udp_transmit.UdpTransmitTests.test_rotated_payload_with_valid_checksums_still_differs) ... ok
+test_tampered_base_stdout_and_wrong_oracle_digest_reject (test_udp_transmit.UdpTransmitTests.test_tampered_base_stdout_and_wrong_oracle_digest_reject) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.649s
+
+OK

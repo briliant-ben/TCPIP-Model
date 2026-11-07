@@ -1,0 +1,36 @@
+{
+  "archive_files": 159,
+  "artifacts": 153,
+  "assessment": "verified_event_slice",
+  "cases": 12,
+  "formal_depth": 6,
+  "inputs": 38,
+  "pcap_evidence": false,
+  "rules_covered": [
+    "U-CONFIGURE",
+    "U-DELIVER-CHECKSUM",
+    "U-DELIVER-NO-CHECKSUM",
+    "U-DISCARD-CHECKSUM",
+    "U-DISCARD-LENGTH",
+    "U-SEND",
+    "U-SEND-SIZE-ERROR"
+  ],
+  "run_id": "27818c03-885c-4de0-b37a-651b40903de6",
+  "source_commit": "d72b7f3d4f0832a876ca87967916b47fbb6cb51c",
+  "stages": {
+    "build": "pass",
+    "compare": "pass",
+    "execute": "pass",
+    "formal": "pass",
+    "generate": "pass",
+    "ir": "pass",
+    "reference": "pass",
+    "sources": "pass",
+    "tests": "pass",
+    "traceability": "pass"
+  },
+  "task_pin_matched": true,
+  "task_sha256": "641ac385b1445749caf127569111c8537b7d28663fa46ba9a622c786ea4f5a66",
+  "trace_contract_steps": 14,
+  "whole_protocol_proved": false
+}

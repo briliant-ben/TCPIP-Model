@@ -1,5 +1,7 @@
 # 独立形式检查与后端接入契约
 
+任务可显式选择[精确预处理](../docs/solver-preprocessing.md)：默认 `none` 不变，`exact-v1` 使用带模型转换的 Z3 tactic solver；不缩减 IR、输入域或检查深度，不提升旧 UNKNOWN。安全、冲突和样本 SMT 在各自求解前落盘；输出目录必须新建或为空，旧产物用原 Git checker 校验。CLI 复现先在新目录 build，再用相同 `--artifacts` 路径运行 formal，不能覆盖仓库快照。
+
 当前 `protocol_lab.explore` 是共享参考语义的有界显式探索器。它只检查 `model/exploration.json` 给出的初值、事件域、深度以及 IR 中列出的状态不变量，输出可重放路径。不检查一般时序逻辑、进展性、公平性或无限重传。它没有独立实现一套形式语义，不能作为参考执行器本身正确性的证明。
 
 v0.2 增加独立的 `protocol_lab.symbolic` Z3 后端。它不调用参考执行器的表达式求值或状态转移来构造约束；求解完成后才调用参考执行器重放见证。静态类型校验仍共享，翻译器本身尚未得到形式证明。

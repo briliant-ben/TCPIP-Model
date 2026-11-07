@@ -1,0 +1,33 @@
+{
+  "id": "s5-unbound-port",
+  "note": "unbound destination port 9090 silently discards; no ICMP modeled",
+  "steps": [
+    {
+      "event": "net.datagram",
+      "fields": {
+        "source_port": 1234,
+        "destination_port": 9090,
+        "length": 10,
+        "checksum": 999,
+        "sum_valid": true,
+        "data": [
+          1,
+          2
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": []
+        }
+      ],
+      "at_ms": 0
+    }
+  ],
+  "initial": {},
+  "expect": {
+    "state": "READY",
+    "timers": {}
+  },
+  "scenario_version": "0.2"
+}

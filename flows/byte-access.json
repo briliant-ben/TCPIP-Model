@@ -1,0 +1,134 @@
+{
+  "schema": "spec-flow-task-v2",
+  "id": "byte-access-contract",
+  "model": "model/byte-access.json",
+  "sources": [
+    {
+      "id": "profile",
+      "path": "docs/byte-access.md",
+      "sha256": "0ddc6ae6cc19c80a56d92dbf33b3134510de626a766bd95407f06240ec0b62f7",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "docs/byte-access.md"
+      ]
+    },
+    {
+      "id": "exploration",
+      "path": "model/byte-access-exploration.json",
+      "sha256": "39270d4a0563ce565fea927a2ed09696c227b0bdde13a4431650345695441ebc",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "model/byte-access-exploration.json"
+      ]
+    },
+    {
+      "id": "seed-0",
+      "path": "scenarios/byte-access/all-octets.json",
+      "sha256": "33cc24f5c54a071ec8b860713794557ebd0252047df3379d2c1e31dff3c5c0e4",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "scenarios/byte-access/all-octets.json"
+      ]
+    },
+    {
+      "id": "seed-1",
+      "path": "scenarios/byte-access/empty.json",
+      "sha256": "dc632915bb4f6f9ee7817d5a77b972513972caa0919f07355d4f6ec81a5f689e",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "scenarios/byte-access/empty.json"
+      ]
+    },
+    {
+      "id": "seed-2",
+      "path": "scenarios/byte-access/first.json",
+      "sha256": "088a687404df2066af0681f2b6dc62d0d6975f38ab8e566767e4f82a0679b8c8",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "scenarios/byte-access/first.json"
+      ]
+    },
+    {
+      "id": "seed-3",
+      "path": "scenarios/byte-access/last.json",
+      "sha256": "349932b2c2cedf308a5654aae61a66a957b0dbbae354c0809d8c92e4e74b9bb4",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "scenarios/byte-access/last.json"
+      ]
+    },
+    {
+      "id": "seed-4",
+      "path": "scenarios/byte-access/negative.json",
+      "sha256": "c1aac84556a89340509339ff326b98ff5b0bc9d706c5b7892f6786911a39cab1",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "scenarios/byte-access/negative.json"
+      ]
+    },
+    {
+      "id": "seed-5",
+      "path": "scenarios/byte-access/past-end.json",
+      "sha256": "472c323cd9f9ba90ffd26ee0c3898f4a6bc13c91c90404e81342a82e38928f02",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "scenarios/byte-access/past-end.json"
+      ]
+    },
+    {
+      "id": "seed-6",
+      "path": "scenarios/byte-access/signed-max.json",
+      "sha256": "50d8cb96bc83deccef0e1fe4d7dbbb99d6b97e02831d755c22cbaa48138db9fd",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "scenarios/byte-access/signed-max.json"
+      ]
+    },
+    {
+      "id": "seed-7",
+      "path": "scenarios/byte-access/signed-min.json",
+      "sha256": "8dc4868bb32ba4fc11e7aea6071ff039f231748fe99c852cf89f0f601d7610ee",
+      "version": "IR0.5 total byte access v1",
+      "uri_aliases": [
+        "scenarios/byte-access/signed-min.json"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "BYTE-ACCESS": {
+      "source": "profile",
+      "clause": "exact total byte access",
+      "reference": "docs/byte-access.md"
+    }
+  },
+  "exploration": "model/byte-access-exploration.json",
+  "seeds": [
+    "scenarios/byte-access/all-octets.json",
+    "scenarios/byte-access/empty.json",
+    "scenarios/byte-access/first.json",
+    "scenarios/byte-access/last.json",
+    "scenarios/byte-access/negative.json",
+    "scenarios/byte-access/past-end.json",
+    "scenarios/byte-access/signed-max.json",
+    "scenarios/byte-access/signed-min.json"
+  ],
+  "formal": {
+    "depth": 2,
+    "symbolic_initials": []
+  },
+  "limits": {
+    "stage_seconds": 120,
+    "max_prefixes": 64,
+    "max_cases": 64
+  },
+  "scope": {
+    "purpose": "Versioned byte access prerequisite, not a packet parser",
+    "assumptions": [
+      "Native signed64 offsets and4096 byte domain explicit"
+    ],
+    "excluded": [
+      "UDP receive/network integration",
+      "Universal compiler proof"
+    ]
+  }
+}

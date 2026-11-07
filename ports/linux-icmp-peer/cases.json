@@ -1,0 +1,18 @@
+{
+  "schema": "linux-icmp-peer-cases-v1",
+  "model": "model/icmp-echo.json",
+  "peer_ip": "192.0.2.2",
+  "subject_ip": "192.0.2.1",
+  "interface": "iricmp0",
+  "mtu": 1500,
+  "quiet_ms": 100,
+  "peer_interval_seconds": 3600,
+  "pattern": "0080ff0700",
+  "cases": [
+    {"id": "empty", "data_bytes": 0},
+    {"id": "odd-NUL", "data_bytes": 5},
+    {"id": "mtu", "data_bytes": 1472}
+  ],
+  "peer_policy": "iputils ping -4 -M do explicitly requests atomic probes within MTU; no default PMTU/general ping claim or sysctl tuning",
+  "wire_timing_contract": "none; actual capture timestamps and monotonic logical dispatch retained separately"
+}
