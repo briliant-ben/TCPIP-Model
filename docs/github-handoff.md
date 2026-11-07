@@ -1,3 +1,5 @@
+最新核对：0062两个角色均终态，PID169750已不存在，无活跃agent。实现角色HTTP503/usage未知；oracle角色JSONDecodeError/invalid_response，已知14912输入+6332输出=21244token，原账本共106请求；无有效提案、不自动重试，公开原件7文件和脱敏结果在artifacts/tcp-composition-agents-0062。服务器current-work.json与3h交接已纠正。有限TCP137里程碑仍通过；证据头e727ca39之后查实际新CI，整体组合原型未完成。
+
 当前服务器新任务tcp-endpoint-composition-20261107-0062，控制器PID169750已实查存活，两个DeepSeek角色分别提出单IR跨层实现切片和独立规范/字面量验收合同；仅提案、不自动执行/集成。用137ad5c3可信源码包，thinking disabled/8192技术输出预算、无累计调用上限、原账本、不自动失败重试。0061 HTTP500不重启，此为不同的新跨层任务。后续先查真实终态和进程，再审提案/限定实施，不把此启动回执当完成。
 
 2026-11-07有限TCP真实互通验收：137ad5c3/run42352256817/job128342702870全runtime+独立verify success；生成C单PID2656完成active open/0080ff07回显/active close至TIME-WAIT，9实际transition固定Z3 SAT/replay，11包0drop/quiet>=100ms。53原文件ZIP SHA4640aace、86具名Git源码和只读audit在artifacts/linux-tcp-wire-peer-137ad5c3，核50输出hash/C/ELF/source/raw/capture/lifecycle，不执行归档Python/ELF/solver，CI provenance仍需信任。原2690/5839验收失败不追认。虚拟TUN有限TCP，不是物理Ethernet/全TCP或完整组合端点；下一步显式IR跨层整合。0061三审查HTTP500均终态，不能报agents运行；新任务必须独立限定、沿用原账本，不自动失败重试。
