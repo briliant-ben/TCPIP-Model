@@ -1,3 +1,7 @@
+## 2026-11-07 TCP live runtime checkpoint
+
+PR17/18/19/20各自最新头5b7981d0/a8598005/da1fc1e2/1a6418fc已实际核对42/22/44/31项全部success，仍草稿、不自动合main。新codex/tcp-live-runtime基于PR20；候选0059服务器13方法通过，仍非网络证据。0060审查输出截断、0061三独立小审查HTTP500均终态，无有效审查结果、不自动重试。控制器人工复核修复时间类型、actual scene重放/绑定、操作数与transition数区别、最终C快照/timer绑定；本机12gate+4preflight通过，原候选/archive及失败元数据在artifacts/tcp-runtime-candidate-0059。新增隔离Linux TCP workflow，真实结果待验收；不得先称互通成功。DeepSeek当前无活跃审查，不改变原台账。下一步验收首个真实TCP运行，再按原始model_gap扩展IR与跨层组合，保留旧UNKNOWN和Difference。
+
 # 持续实施记录
 
 2026-11-07 stacked integration: pushed PR17 minimal fix5b7981d0, PR18 merge
