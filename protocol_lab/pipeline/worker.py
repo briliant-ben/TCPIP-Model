@@ -86,7 +86,7 @@ def stage(name,t,workspace,job,out):
             good='inductive_invariants_pass'
         else:
             from ..symbolic import check
-            r=check(model,t['formal']['depth'],t['formal']['symbolic_initials'],out/'queries',solver_timeout_ms=t['formal'].get('solver_timeout_ms',10000))
+            r=check(model,t['formal']['depth'],t['formal']['symbolic_initials'],out/'queries',solver_timeout_ms=t['formal'].get('solver_timeout_ms',10000),solver_preprocess=t['formal'].get('solver_preprocess','none'))
             good='bounded_pass'
         status='pass'if r['status']==good else'unknown'if r['status']in ('unknown','vacuous')else'fail'
         kind=None if status=='pass'else r['status']

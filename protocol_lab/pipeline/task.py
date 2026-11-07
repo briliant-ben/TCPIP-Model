@@ -58,7 +58,11 @@ def load_task(filename,workspace):
     f=t['formal'];limits=t['limits']
     if t['schema']=='spec-flow-task-v4':
         if set(f)not in ({'strategy'},{'strategy','solver_timeout_ms'})or f.get('strategy')!='sequence-invariant-induction':raise ValueError('Unsupported v4 formal strategy/configuration')
-    elif set(f)not in ({'depth','symbolic_initials'},{'depth','symbolic_initials','solver_timeout_ms'})or type(f['depth'])is not int or not 1<=f['depth']<=30 or not isinstance(f['symbolic_initials'],list):raise ValueError('Unsupported formal configuration')
+    else:
+        allowed={'depth','symbolic_initials','solver_timeout_ms','solver_preprocess'}
+        required={'depth','symbolic_initials'}
+        if set(f)-allowed or not required<=set(f) or type(f['depth'])is not int or not 1<=f['depth']<=30 or not isinstance(f['symbolic_initials'],list):raise ValueError('Unsupported formal configuration')
+        if f.get('solver_preprocess','none')not in ('none','exact-v1'):raise ValueError('Unsupported solver preprocessing policy')
     budget=f.get('solver_timeout_ms',10000)
     if type(budget)is not int or not 100<=budget<=60000:raise ValueError('Invalid solver time budget')
     if set(limits)!={'stage_seconds','max_prefixes','max_cases'}or any(type(n)is not int for n in limits.values()):raise ValueError('Invalid resource limits')
