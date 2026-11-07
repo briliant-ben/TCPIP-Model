@@ -22,7 +22,8 @@ class IcmpEchoInductiveTests(unittest.TestCase):
         original = read(ROOT / 'flows/icmp-echo.json')
         supplement = read(ROOT / 'flows/icmp-echo-inductive.json')
         self.assertEqual(original['formal'], {
-            'depth': 2, 'symbolic_initials': [], 'solver_timeout_ms': 60000})
+            'depth': 2, 'symbolic_initials': [], 'solver_timeout_ms': 60000,
+            'solver_preprocess': 'exact-v1'})
         expected = copy.deepcopy(original)
         expected.update(schema='spec-flow-task-v4', id='icmp-ipv4-echo-inductive',
                         formal={'strategy': 'sequence-invariant-induction'})

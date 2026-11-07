@@ -5,6 +5,8 @@
 ## 当前实施检查点（2026-11-07）
 
 - 实际分支 `codex/arp-udp-peer` / PR20；PR17–20仍开放，PR8–16已关闭，不能据此推断全部进入main。先看git/PR实际状态，不按下文历史分支回退。严禁自动main合并/force，保留两处用户未提交sent-ledger artifacts。
+- b81f747e新CI终态59项：55success、4failure（两个网络workflow的push/PR副本），实际失败在网络执行前的test_icmp_echo_inductive旧formal配置字典断言；原ZIP13559985003/SHA b4bdb557保留于artifacts/icmp-policy-ci-b81f747e。控制器本机复现4测1失败，严格加入已声明exact-v1字段后4测全过；原supplement与模型/seed/source完整比较保留，无oracle放宽。本条后续修正Git头CI需再核，不能外推b81结果。
+- 服务器新任务 `pr17-exact-backport-validation-20261107-0049`（启动PID154730）复用0048完成的DeepSeek代码，仅零API纠正两个纯格式锚点，实际冻结13测试后独立审查；原PR17 Git dc0be249完整输入已固定，不把PR20新协议/IR0.6/v4回移。`tcp-linux-peer-source-20261107-0050`（启动PID155082）由DeepSeek修原peer bytes来源绑定与真实非特权CLI正反测试。查实际status/log/PID，不把启动当持续运行或验收。两任务都未自动改Git/PR，旧API失败不重试。
 - 已验收代码点533cee1f：有限rawIPv4/TCP IR0.6共172规则/11冻结场景；隔离LinuxCI实际7专项、11生成C/固定输入Z3通过。99原件/23Git源码/327hash绑定、相同C重渲染、11完整Difference和11见证参考重放只读复核通过，见artifacts/tcp-wire-linux-ci-533cee1f。这不是liveTCP peer、全输入安全或完整TCP/IP。
 - DeepSeek冻结Python驱动aa5f174a，0021实际4测试/4真实驱动调用通过，原正例、model_gap留证、坏timer及倒退clock；本机4项复核通过。仅合成AF_UNIX/mock调度验收，详见artifacts/server-tcp-driver-0021，不是网络证据。
 - 本条集成提交已接入explicit exact-v1与求解前SMT留证，默认none不变；ICMP仍同模型/深度2/60000ms，仅task显式选择策略。12模块/115独立方法在server通过，原0041失败由导出遗漏bindings/formal引起，0042/0043在新副本补原Git文件后通过，旧失败保留于artifacts/exact-backend-regression-0043。0043另修exact-v1缺失tactics/source字段被默认接受，两个完整rehash删除反例通过。本机13预处理+7journal+2真实build/formal CLI也通过；CLI修正不再预写incomplete而自阻塞，已有产物一律拒绝覆盖。新Git头CI待实际核对，不能沿用f8f08d46或候选结果。详见docs/solver-preprocessing.md。

@@ -2,6 +2,10 @@
 
 ## 2026-11-07：精确预处理集成与真实 CLI 回归
 
+b81f747e集成头实际CI终态59项，55success；四个kernel-peer failure均为两个workflow的push/PR副本，在进入网络前被旧ICMP formal配置精确字典断言拦下，其他三个inductive/flow/fault测试通过。原ZIP13559985003（b4bdb557）仅三份测试日志，无PCAP/live执行，不冒称网络失败/证据。本机复现同4测1失败，仅将严格期望配置加上已声明exact-v1字段后4测全过，保留supplement完整protocol/source/seed比较。此修正须新头CI验证。
+
+服务器PR17旧Git dc0be249最小回移0048已完成提案，但两个格式锚点不符被拒；0049零API只修set(f)空白和JSON缩进，复用原代码、冻结13测试并独立审查，禁止后代协议/v4/IR0.6一起回移。0050新DeepSeek任务继续TCP原peer字节来源绑定与实际只读/非空目录CLI测试，未改server.py策略，未有新网络证据。任务须查真实PID/status，非自动main合并。
+
 0041十二模块发现导出环境遗漏原bindings/formal；原失败保留，0042/0043在独立新副本补回e0629985原Git文件后，相应20流水线/15时钟测试通过。按每模块最新适用成功结果去重，合计12模块115独立方法，非整仓回归，TAR226843d6。0043另修真实的缺失exact-v1策略元数据被默认接受问题，新增两个完整重算哈希的字段删除反例。集成七个逐字相同候选源文件，默认none不变，不改模型/输入域/深度/invariants/oracle。
 
 集成复核发现既有CLI在check前预写incomplete报告，必然触发新目录拒绝；0045 DeepSeek请求未完成而停止，不自动重试。控制器修正该调用点，保持ensure_snapshot验证、先拒绝已有产物，再由check求解前留证。本机实际build/formal与重复执行不改旧字节的两测试通过，原日志/33源码hash在artifacts/exact-backend-cli-local；本机13预处理+7中断留证也通过。ICMP CI新增这些实际测试；当前Git头新CI须独立确认，原UNKNOWN及旧来源checker/hash不改。
