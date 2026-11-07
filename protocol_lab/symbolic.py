@@ -132,7 +132,7 @@ class Encoding:
     def reason_unknown(self):
         return self.solver_error or self.solver.reason_unknown()
 
-    def __init__(self, model, depth, symbolic_initials, byte_encoding="sequence", sequence_encoding="bitvector", arbitrary_state=False, fixed_choices=None):
+    def __init__(self, model, depth, symbolic_initials, byte_encoding="sequence", sequence_encoding="bitvector", arbitrary_state=False, fixed_choices=None, solver_preprocess="none"):
         try:
             import z3
         except ImportError as exc:
@@ -140,7 +140,13 @@ class Encoding:
         self.z = z3
         self.model = validate(model)
         require(byte_encoding in ("sequence", "length"), "Unsupported symbolic byte encoding")
+        require(solver_preprocess in ("none", "exact-v1"), "Unsupported solver preprocessing plan")
         self.byte_encoding = byte_encoding
+        self.solver_preprocess = solver_preprocess
+        self.solver_tactics = ("propagate-values", "solve-eqs", "simplify", "smt") if solver_preprocess == "exact-v1" else ()
+        self.solver_preprocess_source = "z3.Then(" + ",".join(self.solver_tactics) + ").solver()" if self.solver_tactics else "z3.Solver()"
+        if solver_preprocess == "exact-v1":
+            require(byte_encoding != "length", "exact-v1 does not support length projection")
         require(sequence_encoding in ("bitvector", "modular-int"), "Unsupported sequence encoding")
         self.sequence_encoding = sequence_encoding
         if byte_encoding == "length":
@@ -162,7 +168,7 @@ class Encoding:
                       "string": z3.StringSort(), "bytes": self.byte_sort, "rational": z3.RealSort()}
         self.frames = []
         self.events, self.branches, self.conflicts, self.action_faults, self.enabled = [], [], [], [], []
-        self.solver = z3.Solver()
+        self.solver = z3.Then(*self.solver_tactics).solver() if self.solver_tactics else z3.Solver()
         self.solver.set(timeout=10000)
         for i in range(depth + 1):
             self.frames.append({"state": z3.Int(f"state_{i}"), "now": z3.Int(f"now_{i}"),
@@ -478,9 +484,20 @@ class Encoding:
         return {"initial": initial, "steps": steps}
 
 
-def check(model, depth=6, symbolic_initials=("iss",), out=None, solver_timeout_ms=10000):
+def check(model, depth=6, symbolic_initials=("iss",), out=None, solver_timeout_ms=10000, solver_preprocess="none"):
     require(type(solver_timeout_ms) is int and 100 <= solver_timeout_ms <= 60000, "Solver budget must be integer 100..60000ms")
-    enc = Encoding(model, depth, symbolic_initials)
+    # Validate/prepare journal directory before any solver mutation.
+    journal = None
+    if out is not None:
+        journal = Path(out)
+        if journal.exists():
+            if not journal.is_dir():
+                require(False, "Journal out path exists and is not a directory")
+            if any(journal.iterdir()):
+                require(False, "Journal out directory must be empty (stale outputs would be reused)")
+        else:
+            journal.mkdir(parents=True, exist_ok=True)
+    enc = Encoding(model, depth, symbolic_initials, solver_preprocess=solver_preprocess)
     enc.solver.set(timeout=solver_timeout_ms)
     z = enc.z
     invariants = [enc.expr(inv["assert"], frame) for frame in enc.frames for inv in model["invariants"]]
@@ -488,9 +505,14 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None, solver_timeout_m
     enc.solver.push()
     enc.solver.add(z.Or(z.Not(z.And(*invariants)), *enc.action_faults))
     smt = enc.solver.to_smt2()
+    # Journal the original safety SMT before the first solve so an interruption
+    # leaves the exact query on disk (no result.json until completion).
+    if journal is not None:
+        (journal / "model.smt2").write_text(smt)
     answer = enc.solve()
     report = {"backend": "z3-bmc", "solver_version": z.get_version_string(), "depth": depth,
               "model_semantic_sha256": model_hash(model), "symbolic_initials": list(symbolic_initials), "solver_timeout_ms": solver_timeout_ms,
+              "solver_preprocess": solver_preprocess, "solver_tactics": list(enc.solver_tactics), "solver_preprocess_source": enc.solver_preprocess_source,
               "sequence_width": 32, "event_fields": "all_typed_values", "time": "unbounded_integer_ms",
               "scope": "defined_transitions_and_clock_progress" if enc.clock_progress else "defined_transitions_only",
               "clock_progress": "monotonic_integer_before_next_due" if enc.clock_progress else "not_applicable", "liveness": "not_checked", "unbounded_proof": False,
@@ -511,6 +533,9 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None, solver_timeout_m
     enc.solver.push()
     enc.solver.add(z.Or(*enc.conflicts))
     overlap_smt = enc.solver.to_smt2()
+    # Journal the original overlap SMT before the overlap solve.
+    if journal is not None:
+        (journal / "overlap.smt2").write_text(overlap_smt)
     conflict = enc.solve()
     report["overlap_query"] = str(conflict)
     if conflict == z.sat:
@@ -530,10 +555,13 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None, solver_timeout_m
             strategies=['first-rule-one-event','any-rule-one-event',*strategies]
         attempts=[]
         for strategy in strategies:
-            sample_enc=Encoding(model,1,symbolic_initials,fixed_choices=[0])if strategy=='first-rule-one-event'else Encoding(model,1,symbolic_initials)if strategy=='any-rule-one-event'else enc
+            sample_enc=Encoding(model,1,symbolic_initials,fixed_choices=[0],solver_preprocess=solver_preprocess)if strategy=='first-rule-one-event'else Encoding(model,1,symbolic_initials,solver_preprocess=solver_preprocess)if strategy=='any-rule-one-event'else enc
             sample_enc.solver.set(timeout=solver_timeout_ms)
             sample_enc.solver.push();sample_enc.solver.add(z.Int('choice_0')>=0)
-            sample_smt=sample_enc.solver.to_smt2();answer=sample_enc.solve()
+            sample_smt=sample_enc.solver.to_smt2()
+            if journal is not None:
+                (journal/("sample-"+strategy+".smt2")).write_text(sample_smt)
+            answer=sample_enc.solve()
             record=dict(strategy=strategy,depth=sample_enc.depth,scope='existential_nonvacuity_only',query=str(answer),file='sample-'+strategy+'.smt2',smt2_sha256=hashlib.sha256(sample_smt.encode()).hexdigest())
             if answer==z.unknown:record['reason']=sample_enc.reason_unknown()
             attempts.append(record);sample_queries['sample-'+strategy+'.smt2']=sample_smt
@@ -550,13 +578,9 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None, solver_timeout_m
             report["status"] = "unknown" if answer == z.unknown else "vacuous"
             if answer == z.unknown:
                 report["reason"] = attempts[-1]['reason']
-    if out is not None:
-        out = Path(out)
-        out.mkdir(parents=True, exist_ok=True)
-        (out / "model.smt2").write_text(smt)
-        (out / "overlap.smt2").write_text(overlap_smt)
-        for name,query in sample_queries.items():(out/name).write_text(query)
+    if journal is not None:
+        for name,query in sample_queries.items():(journal/name).write_text(query)
         report["smt2_sha256"] = hashlib.sha256(smt.encode()).hexdigest()
         report["overlap_smt2_sha256"] = hashlib.sha256(overlap_smt.encode()).hexdigest()
-        (out / "result.json").write_text(json.dumps(report, indent=2) + "\n")
+        (journal / "result.json").write_text(json.dumps(report, indent=2) + "\n")
     return report

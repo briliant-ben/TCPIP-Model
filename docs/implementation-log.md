@@ -1,5 +1,13 @@
 # 持续实施记录
 
+## 2026-11-07：精确预处理集成与真实 CLI 回归
+
+0041十二模块发现导出环境遗漏原bindings/formal；原失败保留，0042/0043在独立新副本补回e0629985原Git文件后，相应20流水线/15时钟测试通过。按每模块最新适用成功结果去重，合计12模块115独立方法，非整仓回归，TAR226843d6。0043另修真实的缺失exact-v1策略元数据被默认接受问题，新增两个完整重算哈希的字段删除反例。集成七个逐字相同候选源文件，默认none不变，不改模型/输入域/深度/invariants/oracle。
+
+集成复核发现既有CLI在check前预写incomplete报告，必然触发新目录拒绝；0045 DeepSeek请求未完成而停止，不自动重试。控制器修正该调用点，保持ensure_snapshot验证、先拒绝已有产物，再由check求解前留证。本机实际build/formal与重复执行不改旧字节的两测试通过，原日志/33源码hash在artifacts/exact-backend-cli-local；本机13预处理+7中断留证也通过。ICMP CI新增这些实际测试；当前Git头新CI须独立确认，原UNKNOWN及旧来源checker/hash不改。
+
+TCP0044候选误删inside定义，语法检查不足以发现，被独立审查抓获。0046零API修正入口及raw保存错误诊断，六真实AF_UNIX FD测试通过；0047审查仍需按真实依赖复核，不能自评通过。原Session确有started_monotonic_ns，外层hash构造晚于内层结束；严格race失败不是容忍理由。已额外确认内嵌peer文本与现有server.py不等，下一步直接使用原peer文件并绑定源码，不改peer策略/原始包。尚无新liveTCP证据，PR17–19需各自backport与验收，不自动main合并。
+
 ## 2026-11-07：精确求解候选的实际测试与完整留证
 
 e0629985实际33项CI中31通过、2项ICMP失败；有限TCP检查通过，不外推为liveTCP。0028/0029九测试失败原包保留（TAR7df10aef）；控制器补原场景文件零API后仍有6error/1failure，不能追认原候选通过。0031响应截断停止，不自动重试。
