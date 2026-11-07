@@ -1,0 +1,40 @@
+{
+  "original_files": 53,
+  "source_bindings": 86,
+  "source_commit": "137ad5c3c7d2b3798cc08661f82341b1266536a6",
+  "audit": {
+    "status": "verified",
+    "capture_packets": 11,
+    "source_hashes_match": true,
+    "file_hashes": 50
+  },
+  "exchange": {
+    "final_state": "TIME-WAIT",
+    "steps": 9,
+    "pending_timers": [
+      [
+        "time_wait",
+        120003
+      ]
+    ]
+  },
+  "symbolic": {
+    "query": "sat",
+    "status": "match",
+    "steps": 9,
+    "scope": "fixed_inputs_and_rule_choices",
+    "smt2_sha256": "6a4138b0a12412267e59be6aa661f448982174fbf712e40066bc370b6732c447"
+  },
+  "runtime": {
+    "kernel": "7.0.0-1017-azure",
+    "pid": 2656,
+    "drops": 0,
+    "quiet_ms": 100
+  },
+  "artifact_id": 13565579689,
+  "run_id": 42352256817,
+  "job_id": 128342702870,
+  "zip_sha256": "4640aace8480f8b76e8f72b10fc3d8afb71fc7804d51328b8553b3bcd218fea0",
+  "audit_executed_archived_python_or_elf_or_solver": false,
+  "CI_provenance_trust_required": true
+}
