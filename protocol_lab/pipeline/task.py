@@ -56,7 +56,8 @@ def load_task(filename,workspace):
     for b in t['requirement_bindings'].values():
         if set(b)!={'source','clause','reference'}or b['source']not in ids or any(not isinstance(b[k],str)or not b[k]for k in b):raise ValueError('Incomplete requirement binding')
     f=t['formal'];limits=t['limits']
-    if set(f)not in ({'depth','symbolic_initials'},{'depth','symbolic_initials','solver_timeout_ms'})or type(f['depth'])is not int or not 1<=f['depth']<=30 or not isinstance(f['symbolic_initials'],list):raise ValueError('Unsupported formal configuration')
+    if set(f) not in ({'depth','symbolic_initials'},{'depth','symbolic_initials','solver_timeout_ms'},{'depth','symbolic_initials','solver_preprocess'},{'depth','symbolic_initials','solver_timeout_ms','solver_preprocess'})or type(f['depth'])is not int or not 1<=f['depth']<=30 or not isinstance(f['symbolic_initials'],list):raise ValueError('Unsupported formal configuration')
+    if 'solver_preprocess'in f and f['solver_preprocess']not in ('none','exact-v1'):raise ValueError('Unsupported solver preprocessing policy')
     budget=f.get('solver_timeout_ms',10000)
     if type(budget)is not int or not 100<=budget<=60000:raise ValueError('Invalid solver time budget')
     if set(limits)!={'stage_seconds','max_prefixes','max_cases'}or any(type(n)is not int for n in limits.values()):raise ValueError('Invalid resource limits')

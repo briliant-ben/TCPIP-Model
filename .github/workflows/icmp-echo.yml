@@ -2,9 +2,9 @@ name: IR finite ICMP Echo responder
 on:
   push:
     branches: ['codex/**', main]
-    paths: ['protocol_lab/**', 'deploy/**', 'examples/icmp_observe.py', 'spec/sources/rfc792.txt', 'spec/sources/rfc1122.txt', 'spec/icmp-echo-oracle.json', 'spec/fixtures/icmp_echo_v1.py', 'model/icmp-echo*.json', 'scenarios/icmp-echo/**', 'flows/icmp-echo.json', 'tests/test_icmp_echo.py', 'tests/test_symbolic_witness.py', 'docs/icmp-echo.md', '.github/workflows/icmp-echo.yml']
+    paths: ['protocol_lab/**', 'deploy/**', 'examples/icmp_observe.py', 'spec/sources/rfc792.txt', 'spec/sources/rfc1122.txt', 'spec/icmp-echo-oracle.json', 'spec/fixtures/icmp_echo_v1.py', 'model/icmp-echo*.json', 'scenarios/icmp-echo/**', 'flows/icmp-echo.json', 'tests/test_icmp_echo.py', 'tests/test_symbolic_witness.py', 'tests/test_solver_preprocessing.py', 'docs/icmp-echo.md', '.github/workflows/icmp-echo.yml']
   pull_request:
-    paths: ['protocol_lab/**', 'deploy/**', 'examples/icmp_observe.py', 'spec/sources/rfc792.txt', 'spec/sources/rfc1122.txt', 'spec/icmp-echo-oracle.json', 'spec/fixtures/icmp_echo_v1.py', 'model/icmp-echo*.json', 'scenarios/icmp-echo/**', 'flows/icmp-echo.json', 'tests/test_icmp_echo.py', 'tests/test_symbolic_witness.py', 'docs/icmp-echo.md', '.github/workflows/icmp-echo.yml']
+    paths: ['protocol_lab/**', 'deploy/**', 'examples/icmp_observe.py', 'spec/sources/rfc792.txt', 'spec/sources/rfc1122.txt', 'spec/icmp-echo-oracle.json', 'spec/fixtures/icmp_echo_v1.py', 'model/icmp-echo*.json', 'scenarios/icmp-echo/**', 'flows/icmp-echo.json', 'tests/test_icmp_echo.py', 'tests/test_symbolic_witness.py', 'tests/test_solver_preprocessing.py', 'docs/icmp-echo.md', '.github/workflows/icmp-echo.yml']
 permissions:
   contents: read
 jobs:
@@ -24,6 +24,8 @@ jobs:
         run: |
           /tmp/icmp-echo-venv/bin/python -m unittest discover -s tests -p test_icmp_echo.py -v > artifacts/icmp-echo-ci/tests.log 2>&1
           /tmp/icmp-echo-venv/bin/python -m unittest discover -s tests -p test_symbolic_witness.py -v > artifacts/icmp-echo-ci/witness-tests.log 2>&1
+      - name: Check exact solver policy SAT replay and metadata tamper rejection
+        run: /tmp/icmp-echo-venv/bin/python -m unittest discover -s tests -p test_solver_preprocessing.py -v > artifacts/icmp-echo-ci/preprocessing-tests.log 2>&1
       - name: Execute and verify ten stages
         run: |
           ARP_ENDPOINT_TASK_SHA=$(sha256sum flows/icmp-echo.json | cut -d ' ' -f 1)

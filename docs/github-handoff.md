@@ -1,5 +1,12 @@
 # GitHub 迁移与复现
 
+2026-11-07 PR17 correction: minimal exact-v1 solver-policy backport on dc0be249,
+without descendant protocol/IR/schema changes. Thirteen frozen tests passed on
+server and locally; five related modules and one full ICMP ten-stage flow with
+verify passed. Original source, failures, review and full raw job are retained in
+artifacts/pr17-exact-backport-0051. New-head CI pending; old UNKNOWN immutable.
+See docs/icmp-exact-backport.md. No main merge or forced history update.
+
 当前活动 flow 原型的逐项验收与范围见 [spec-flow-acceptance.md](spec-flow-acceptance.md)，服务器／外部调用方入口见 [spec-flow-server.md](spec-flow-server.md)。下文保留此前更大 TCP 平台路线和历史检查点，不表示这些扩展已完成。
 
 ## 当前恢复点（2026-10-30）

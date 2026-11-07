@@ -1,5 +1,14 @@
 # 持续实施记录
 
+2026-11-07 PR17 minimal correction: DeepSeek 0048/0049 candidate on original
+dc0be249 keeps schema1..3, models/oracles/pins/depth2/60000/native unchanged.
+Explicit exact-v1 policy is forwarded and bound by task/worker/checker; default
+none and old formal CLI behavior remain. Server and local13 methods passed,
+five related server modules and complete ICMP flow+verify passed. TAR242a371d
+contains308 original files and265 flow output hash bindings. Original rejected
+anchors and UNKNOWN retained; no descendant features or main merge. New CI
+must verify the actual pushed head; see docs/icmp-exact-backport.md.
+
 ## 2026-10-24：本地基线恢复
 
 当前仓库 HEAD 为 `bb921b5`，克隆时工作区干净，仓库和父目录未发现 AGENTS.md。未回退或覆盖已有改动。
