@@ -1,3 +1,5 @@
+2026-11-07：58390dbe/run42352031515真实runtime gate（包括实际输入Z3）已成功，但独立verify时间顺序失败：finally在Z3之后覆写已记录peer_exit，错误后移至native_close之后。53原文件ZIP SHAe897c03b保留artifacts/tcp-live-timeline-58390dbe，不追认通过；修复仅保留原exit receipt，不减弱时间排序要求，等待新真实执行。2690失败输入的本地固定九转换Z3 SAT/replay另存offline-fixed-reanalysis，不等新Linux运行、不提升原失败。
+
 2026-11-07：PR21首次真实Linux运行2690a3af/run42351785157完成有限握手/4byte回显/关闭，C-reference九transition pass，但最终timer元组/JSON列表表示差异导致验收失败、尚无网络symbolic结果。47原文件ZIP SHA9de4b319在artifacts/tcp-live-first-2690a3af，失败不追认。仅修复严格同值pair表示、补live-memory正例，12本地方法重新通过；模型/peer/包/checksum/timer数值均不改，等待新头实际CI。
 
 ## 2026-11-07 TCP live runtime checkpoint

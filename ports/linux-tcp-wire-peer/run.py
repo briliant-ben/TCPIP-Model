@@ -456,7 +456,7 @@ def inside(out,parent):
                     peer.terminate()
                     peer.wait(timeout=5)
             meta['peer_returncode']=peer.returncode
-            meta['peer_exit_monotonic_ns']=time.monotonic_ns()
+            meta.setdefault('peer_exit_monotonic_ns',time.monotonic_ns())
         if actor is not None:
             try:
                 meta['native_returncode']=actor.close()
