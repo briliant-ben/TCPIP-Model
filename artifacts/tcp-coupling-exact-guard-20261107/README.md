@@ -1,0 +1,11 @@
+# Exact guard encoding proposal: isolated validation checkpoint
+
+277 original public candidate/controller/fixture files, TAR SHA `bb248fd6e7e8664bee184217c30a1d56cc683c0603cc6a64b8412c523857ebeb`. Manifest binds every file; read-only audit checks hashes and three old/new raw SMT pairs, without executing archived code/ELF/solver. Live startup snapshots are observations, not completed gates or enduring liveness.
+
+DeepSeek0072 implements generic recursive guard-only memoization, step/event scoped, disabled before actions/targets. Checksum expressions remain uncached; every rule guard/conflict/constraint and original expression semantic body remain. Query is saved before solve/witness. Independent source review found no blocking issue, with performance/concurrency limitations. Proposal is not integrated.
+
+0077 controller static review + isolated old/new fresh processes actually pass three byte-identical query pairs and mutable sequential assignments, same-named event fields with different types, bool/int keys, unknown-operator rejection and interrupted-solve pre-save. Encode-only benchmark CPU11.804646 vs3.591617 seconds; same SHA5adcc8b9, no solver call for that diagnostic. Smaller hazard trace has SAT/reference replay match. This is finite regression evidence, not universal backend/compiler equivalence or protocol proof.
+
+Original0075 baseline rejected an invalid controller-written semantics name;0076 baseline rejected missing Encoding symbolic_initials argument. They are controller defects, not agent/backend counterexamples, and remain in the TAR.
+
+0073 actual frozen wrong-port policy rejection preserved.0074 completed source repair passed22 reference/C cases but original fixed-Z3 child ended-9 without a final result; no cause/solver conclusion asserted. Original outcomes remain incomplete.0079 starts a new isolated overlay with same resource limits and unchanged model/oracle/C bytes, new checker/hash bindings, full4+18 gate, five frozen generic test modules and45 legacy literal cases.0080 calls DeepSeek independent review only after actual complete0079 pass; neither startup proves acceptance or live composed networking. See current server status and docs, not snapshots, for later outcomes.
