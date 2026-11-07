@@ -2,7 +2,18 @@
 
 当前活动 flow 原型的逐项验收与范围见 [spec-flow-acceptance.md](spec-flow-acceptance.md)，服务器／外部调用方入口见 [spec-flow-server.md](spec-flow-server.md)。下文保留此前更大 TCP 平台路线和历史检查点，不表示这些扩展已完成。
 
-## 当前恢复点（2026-10-30）
+## 当前实施检查点（2026-11-07）
+
+- 实际分支 `codex/arp-udp-peer` / PR20；PR17–20仍开放，PR8–16已关闭，不能据此推断全部进入main。先看git/PR实际状态，不按下文历史分支回退。严禁自动main合并/force，保留两处用户未提交sent-ledger artifacts。
+- 已验收代码点533cee1f：有限rawIPv4/TCP IR0.6共172规则/11冻结场景；隔离LinuxCI实际7专项、11生成C/固定输入Z3通过。99原件/23Git源码/327hash绑定、相同C重渲染、11完整Difference和11见证参考重放只读复核通过，见artifacts/tcp-wire-linux-ci-533cee1f。这不是liveTCP peer、全输入安全或完整TCP/IP。
+- DeepSeek冻结Python驱动aa5f174a，0021实际4测试/4真实驱动调用通过，原正例、model_gap留证、坏timer及倒退clock；本机4项复核通过。仅合成AF_UNIX/mock调度验收，详见artifacts/server-tcp-driver-0021，不是网络证据。
+- 服务器 `blxu@192.168.71.78:/home/blxu/protocol-flow`。最新实施任务 `tcp-linux-harness-anchored-20261107-0026`（启动PID134904）和 `exact-backend-policy-repair-20261107-0027`（PID134905），分别LinuxTCP真实通道、精确solver策略端到端补丁。查各status.json、原件和真实PID；终态不叫运行中。提案未执行/未批准，不按模型自评合入。
+- ICMP旧depth2/60s UNKNOWN永久保留。0023在同域/同深度/总60s下内置Z3精确预处理诊断UNSAT13.8s；递归定义逐token相同，新context重读UNSAT6s；小型SAT模型转换检查通过。生产SAT协议见证/重放及任务策略绑定仍待0027实际验证，不提升旧UNKNOWN。详见artifacts/icmp-exact-query-0023和icmp-query-diagnostic-a576。
+- 用户明确不设DeepSeek费用/累计请求上限；新控制器max_calls=None，仍共用原private/api-ledger、不重置/换账本，不自动重试失败/不确定请求。凭据只网关使用，不读取/输出/提交。实现/独立测试/审查都优先服务器DeepSeek，不启动GPT子agent。
+- 本聊天每3小时巡检（automation id=automation, ACTIVE），用户本轮重新授权，优先读本段+最新implementation-log，而非老暂停/预算摘要。无变化安静；新里程碑/失败/需操作才通知。当前sudo限制只阻塞服务器特权网络通道，继续隔离GitHubLinux及普通模型/C/Z3工作，不改服务器全局网络/SSH。
+- 目标仍为基本IPv4端点TCP/UDP+ARP/ICMP（无上层）和可迁移spec→唯一IR→参考/独立Z3→测试→IR生成独立C→独立peer/PCAP→Difference/规范追溯。TCP跨层、ACK/data/window组合等仍欠；完整范围实际验收前不complete。旧lwIP2750ms和其他Difference/UNKNOWN不得放宽或改写。
+
+## 历史恢复点（2026-10-30）
 
 PR#3已合入main的ab9f75ba。当前开发分支是codex/tcp-modular，包含71a3e1a8的精确模查询证书／标量IR契约及main纯历史合并；以实际分支和源码为准。不要回退到早期codex/tcp-data。旧未提交refinement目录保留。
 

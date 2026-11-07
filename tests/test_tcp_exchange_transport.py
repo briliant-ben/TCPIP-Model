@@ -7,13 +7,15 @@ import threading
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest import mock
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "ports" / "linux-tcp-wire-peer"))
+import exchange
 from exchange import run_exchange
 
 
-def pkt(flags, payload=b""):
+def pkt(flags, payload=b''):
     b = bytearray(20)
     b[0] = 0x45
     b[9] = 6
@@ -28,49 +30,49 @@ FIN = pkt(0x01)
 FINACK = pkt(0x11)
 
 MODEL = {
-    "variables": {
-        "iss": {"type": "seq32", "initial": 1000},
-        "irs": {"type": "seq32", "initial": 0},
-        "snd_una": {"type": "seq32", "initial": 1000},
-        "snd_nxt": {"type": "seq32", "initial": 1000},
-        "rcv_nxt": {"type": "seq32", "initial": 0},
-        "snd_buf": {"type": "bytes", "initial": []},
-        "rcv_buf": {"type": "bytes", "initial": []},
-        "local_window": {"type": "int", "initial": 16},
-        "rto_ms": {"type": "int", "initial": 1000},
+    'variables': {
+        'iss': {'type': 'seq32', 'initial': 1000},
+        'irs': {'type': 'seq32', 'initial': 0},
+        'snd_una': {'type': 'seq32', 'initial': 1000},
+        'snd_nxt': {'type': 'seq32', 'initial': 1000},
+        'rcv_nxt': {'type': 'seq32', 'initial': 0},
+        'snd_buf': {'type': 'bytes', 'initial': []},
+        'rcv_buf': {'type': 'bytes', 'initial': []},
+        'local_window': {'type': 'int', 'initial': 16},
+        'rto_ms': {'type': 'int', 'initial': 1000},
     },
-    "initial": {},
-    "steps": [],
-    "events": {
-        "app.connect": {"origin": "application", "fields": {}},
-        "app.send": {"origin": "application", "fields": {"data": "bytes"}},
-        "app.transmit": {"origin": "application", "fields": {}},
-        "app.receive": {"origin": "application", "fields": {"count": "int"}},
-        "app.close": {"origin": "application", "fields": {}},
-        "net.packet": {"origin": "network", "fields": {"packet": "bytes"}},
+    'initial': {},
+    'steps': [],
+    'events': {
+        'app.connect': {'origin': 'application', 'fields': {}},
+        'app.send': {'origin': 'application', 'fields': {'data': 'bytes'}},
+        'app.transmit': {'origin': 'application', 'fields': {}},
+        'app.receive': {'origin': 'application', 'fields': {'count': 'int'}},
+        'app.close': {'origin': 'application', 'fields': {}},
+        'net.packet': {'origin': 'network', 'fields': {'packet': 'bytes'}},
     },
 }
 
-CONFIG = {"phase_timeout_seconds": 2.0, "payload_hex": "0080ff07"}
+CONFIG = {'phase_timeout_seconds': 2.0, 'payload_hex': '0080ff07'}
 EXPECTED_PAYLOAD = bytes([0x00, 0x80, 0xFF, 0x07])
 EXPECTED_DATA = pkt(0x18, EXPECTED_PAYLOAD)
 
 
 def make_actor():
     snap = {
-        "state": "CLOSED",
-        "variables": {
-            "iss": 1000,
-            "irs": 0,
-            "snd_una": 1000,
-            "snd_nxt": 1000,
-            "rcv_nxt": 0,
-            "snd_buf": [],
-            "rcv_buf": [],
-            "local_window": 16,
-            "rto_ms": 1000,
+        'state': 'CLOSED',
+        'variables': {
+            'iss': 1000,
+            'irs': 0,
+            'snd_una': 1000,
+            'snd_nxt': 1000,
+            'rcv_nxt': 0,
+            'snd_buf': [],
+            'rcv_buf': [],
+            'local_window': 16,
+            'rto_ms': 1000,
         },
-        "timers": {},
+        'timers': {},
     }
     rows = []
 
@@ -78,74 +80,125 @@ def make_actor():
         rows.append(line)
         parts = line.split()
         out = []
-        head = parts[0] if parts else ""
-        if head == "T":
-            out.append({"status": "transition", "emitted": []})
-            out.append({"status": "ok", "snapshot": snap})
+        head = parts[0] if parts else ''
+        if head == 'T':
+            out.append({'status': 'transition', 'emitted': []})
+            out.append({'status': 'ok', 'snapshot': snap})
             return out
-        event = parts[2] if len(parts) >= 3 else ""
+        event = parts[2] if len(parts) >= 3 else ''
         toks = parts[3:]
-        if event == "app.connect":
-            if snap["state"] == "CLOSED":
-                snap["state"] = "SYN-SENT"
-                out.append({"status": "transition", "emitted": [
-                    {"message": "ipv4.tx", "fields": {"packet": list(SYN)}}]})
+        if event == 'app.connect':
+            if snap['state'] == 'CLOSED':
+                snap['state'] = 'SYN-SENT'
+                out.append({'status': 'transition', 'emitted': [
+                    {'message': 'ipv4.tx', 'fields': {'packet': list(SYN)}}]})
             else:
-                out.append({"status": "transition", "emitted": []})
-        elif event == "app.send":
-            data = bytes.fromhex(toks[0][2:]) if toks else b""
-            snap["variables"]["snd_buf"] = list(snap["variables"]["snd_buf"]) + list(data)
-            out.append({"status": "transition", "emitted": []})
-        elif event == "app.transmit":
-            payload = bytes(snap["variables"]["snd_buf"])
-            snap["variables"]["snd_nxt"] = int(snap["variables"]["snd_nxt"]) + len(payload)
-            snap["variables"]["snd_buf"] = []
-            out.append({"status": "transition", "emitted": [
-                {"message": "ipv4.tx", "fields": {"packet": list(pkt(0x18, payload))}}]})
-        elif event == "app.receive":
+                out.append({'status': 'transition', 'emitted': []})
+        elif event == 'app.send':
+            data = bytes.fromhex(toks[0][2:]) if toks else b''
+            snap['variables']['snd_buf'] = list(snap['variables']['snd_buf']) + list(data)
+            out.append({'status': 'transition', 'emitted': []})
+        elif event == 'app.transmit':
+            payload = bytes(snap['variables']['snd_buf'])
+            snap['variables']['snd_nxt'] = int(snap['variables']['snd_nxt']) + len(payload)
+            snap['variables']['snd_buf'] = []
+            out.append({'status': 'transition', 'emitted': [
+                {'message': 'ipv4.tx', 'fields': {'packet': list(pkt(0x18, payload))}}]})
+        elif event == 'app.receive':
             count = int(toks[0]) if toks else 0
-            buf = list(snap["variables"]["rcv_buf"])
+            buf = list(snap['variables']['rcv_buf'])
             chunk = buf[:count]
-            snap["variables"]["rcv_buf"] = buf[count:]
-            out.append({"status": "transition", "emitted": [
-                {"message": "application_data", "fields": {"data": chunk}}]})
-        elif event == "app.close":
-            if snap["state"] == "ESTABLISHED":
-                snap["state"] = "FIN-WAIT-1"
-                out.append({"status": "transition", "emitted": [
-                    {"message": "ipv4.tx", "fields": {"packet": list(FIN)}}]})
+            snap['variables']['rcv_buf'] = buf[count:]
+            out.append({'status': 'transition', 'emitted': [
+                {'message': 'application_data', 'fields': {'data': chunk}}]})
+        elif event == 'app.close':
+            if snap['state'] == 'ESTABLISHED':
+                snap['state'] = 'FIN-WAIT-1'
+                out.append({'status': 'transition', 'emitted': [
+                    {'message': 'ipv4.tx', 'fields': {'packet': list(FIN)}}]})
             else:
-                out.append({"status": "transition", "emitted": []})
-        elif event == "net.packet":
-            raw = bytes.fromhex(toks[0][2:]) if toks else b""
+                out.append({'status': 'transition', 'emitted': []})
+        elif event == 'net.packet':
+            raw = bytes.fromhex(toks[0][2:]) if toks else b''
             flags = raw[13] if len(raw) >= 20 else 0
-            if snap["state"] == "SYN-SENT" and flags == 0x12:
-                snap["state"] = "ESTABLISHED"
-                snap["variables"]["snd_una"] = snap["variables"]["snd_nxt"]
-            elif snap["state"] == "FIN-WAIT-1" and flags == 0x11:
-                snap["state"] = "TIME-WAIT"
-                snap["timers"] = {"time_wait": 120000}
-            elif snap["state"] == "ESTABLISHED" and (flags & 0x10) and (flags & 0x08):
-                snap["variables"]["rcv_buf"] = list(snap["variables"]["rcv_buf"]) + list(raw[20:])
-                snap["variables"]["snd_buf"] = []
-                snap["variables"]["snd_una"] = snap["variables"]["snd_nxt"]
-            elif snap["state"] == "ESTABLISHED" and flags == 0x10:
-                snap["variables"]["snd_buf"] = []
-                snap["variables"]["snd_una"] = snap["variables"]["snd_nxt"]
-            out.append({"status": "transition", "emitted": []})
+            if snap['state'] == 'SYN-SENT' and flags == 0x12:
+                snap['state'] = 'ESTABLISHED'
+                snap['variables']['snd_una'] = snap['variables']['snd_nxt']
+            elif snap['state'] == 'FIN-WAIT-1' and flags == 0x11:
+                snap['state'] = 'TIME-WAIT'
+                snap['timers'] = {'time_wait': 120000}
+            elif snap['state'] == 'ESTABLISHED' and (flags & 0x10) and (flags & 0x08):
+                snap['variables']['rcv_buf'] = list(snap['variables']['rcv_buf']) + list(raw[20:])
+                snap['variables']['snd_buf'] = []
+                snap['variables']['snd_una'] = snap['variables']['snd_nxt']
+            elif snap['state'] == 'ESTABLISHED' and flags == 0x10:
+                snap['variables']['snd_buf'] = []
+                snap['variables']['snd_una'] = snap['variables']['snd_nxt']
+            out.append({'status': 'transition', 'emitted': []})
         else:
-            return [{"status": "error", "failure": "uncovered:" + event, "snapshot": snap}]
-        out.append({"status": "ok", "snapshot": snap})
+            return [{'status': 'error', 'failure': 'uncovered:' + event, 'snapshot': snap}]
+        out.append({'status': 'ok', 'snapshot': snap})
         return out
 
-    actor = SimpleNamespace(
+    return SimpleNamespace(
         snapshot=snap,
         rows=rows,
         operations=[],
         operation=op,
         process=SimpleNamespace(pid=os.getpid(), poll=lambda: None),
     )
-    return actor
+
+
+def make_minimal_actor(timers=None, net_failure=None):
+    snap = {
+        'state': 'CLOSED',
+        'variables': {
+            'iss': 1000,
+            'irs': 0,
+            'snd_una': 1000,
+            'snd_nxt': 1000,
+            'rcv_nxt': 0,
+            'snd_buf': [],
+            'rcv_buf': [],
+            'local_window': 16,
+            'rto_ms': 1000,
+        },
+        'timers': {} if timers is None else timers,
+    }
+    rows = []
+
+    def op(line):
+        rows.append(line)
+        parts = line.split()
+        head = parts[0] if parts else ''
+        if head == 'T':
+            return [
+                {'status': 'transition', 'emitted': []},
+                {'status': 'ok', 'snapshot': snap},
+            ]
+        event = parts[2] if len(parts) >= 3 else ''
+        if event == 'app.connect':
+            snap['state'] = 'SYN-SENT'
+            return [
+                {'status': 'transition', 'emitted': [
+                    {'message': 'ipv4.tx', 'fields': {'packet': list(SYN)}}]},
+                {'status': 'ok', 'snapshot': snap},
+            ]
+        if event == 'net.packet':
+            if net_failure is not None:
+                return [{'status': 'error', 'failure': net_failure, 'snapshot': snap}]
+            return [
+                {'status': 'transition', 'emitted': []},
+                {'status': 'ok', 'snapshot': snap},
+            ]
+        return [{'status': 'error', 'failure': 'unexpected:' + event, 'snapshot': snap}]
+
+    return SimpleNamespace(
+        snapshot=snap,
+        rows=rows,
+        operation=op,
+        process=SimpleNamespace(pid=os.getpid(), poll=lambda: None),
+    )
 
 
 def peer_loop(psock, stop, seen):
@@ -180,80 +233,66 @@ def peer_loop(psock, stop, seen):
             break
 
 
+def start_peer(peer_sock):
+    stop = [False]
+    seen = []
+    errors = []
+
+    def runner():
+        try:
+            peer_loop(peer_sock, stop, seen)
+        except BaseException as exc:
+            errors.append(exc)
+
+    thread = threading.Thread(target=runner, daemon=True)
+    thread.start()
+    return stop, seen, errors, thread
+
+
 class TestSyntheticAfUnix(unittest.TestCase):
     def test_echo_and_close_roundtrip(self):
         actor = make_actor()
         native, peer_sock = socket.socketpair(socket.AF_UNIX, socket.SOCK_DGRAM)
-        peer = SimpleNamespace(poll=lambda: None)
-        stop = [False]
-        seen = []
-        errors = []
-
-        def runner():
-            try:
-                peer_loop(peer_sock, stop, seen)
-            except BaseException as exc:  # pragma: no cover - guard
-                errors.append(exc)
-
-        thread = threading.Thread(target=runner, daemon=True)
-        thread.start()
+        peer = SimpleNamespace(poll=lambda: None)  # synthetic liveness stub for frozen driver
+        stop, seen, errors, thread = start_peer(peer_sock)
         try:
             with tempfile.TemporaryDirectory() as td:
-                out = Path(td) / "evidence"
+                out = Path(td) / 'evidence'
                 result = run_exchange(MODEL, actor, native.fileno(), peer, out, CONFIG)
 
-                self.assertEqual(result["phase"], "complete")
-                self.assertEqual(result["final_state"], "TIME-WAIT")
+                self.assertEqual(result['phase'], 'complete')
+                self.assertEqual(result['final_state'], 'TIME-WAIT')
 
-                # Every native operation dispatch produced exactly one step
-                # and one ABI line, with no B/reset rows observed.
                 self.assertTrue(actor.rows)
-                self.assertTrue(all(r.startswith(("D ", "T ")) for r in actor.rows))
-                self.assertFalse(any(r.startswith("B ") or r.strip() == "B" for r in actor.rows))
-                self.assertEqual(len(actor.rows), len(result["steps"]))
-                self.assertEqual(result["step_count"], len(result["steps"]))
+                self.assertTrue(all(r.startswith(('D ', 'T ')) for r in actor.rows))
+                self.assertFalse(any(r.startswith('B ') or r.strip() == 'B' for r in actor.rows))
+                self.assertEqual(len(actor.rows), len(result['steps']))
+                self.assertEqual(result['step_count'], len(result['steps']))
 
-                # Echo service emitted exactly once with the expected payload.
-                app_data = [s for s in result["services"]
-                            if s.get("message") == "application_data"]
+                app_data = [s for s in result['services'] if s.get('message') == 'application_data']
                 self.assertEqual(len(app_data), 1)
-                self.assertEqual(bytes(app_data[0]["data"]), EXPECTED_PAYLOAD)
+                self.assertEqual(bytes(app_data[0]['data']), EXPECTED_PAYLOAD)
 
-                # Subject-originated raw transmissions recorded as literal
-                # SYN, DATA(payload), FIN in that order.
-                subject_tx = [e for e in result["links"]
-                              if e.get("direction") == "subject_tx"]
+                subject_tx = [e for e in result['links'] if e.get('direction') == 'subject_tx']
                 self.assertEqual(len(subject_tx), 3)
-                raw_tx = [(out / e["file"]).read_bytes() for e in subject_tx]
+                raw_tx = [(out / e['file']).read_bytes() for e in subject_tx]
                 self.assertEqual(raw_tx[0], SYN)
                 self.assertEqual(raw_tx[1], EXPECTED_DATA)
                 self.assertEqual(raw_tx[2], FIN)
-                self.assertEqual(subject_tx[0]["intended_bytes"], len(SYN))
-                self.assertEqual(subject_tx[1]["intended_bytes"], len(EXPECTED_DATA))
-                self.assertEqual(subject_tx[2]["intended_bytes"], len(FIN))
+                self.assertEqual(subject_tx[0]['intended_bytes'], len(SYN))
+                self.assertEqual(subject_tx[1]['intended_bytes'], len(EXPECTED_DATA))
+                self.assertEqual(subject_tx[2]['intended_bytes'], len(FIN))
                 for e in subject_tx:
-                    self.assertEqual(e["written_bytes"], e["intended_bytes"])
+                    self.assertEqual(e['written_bytes'], e['intended_bytes'])
 
-                # Peer actually received the scripted literal segments over
-                # the AF_UNIX datagram channel.
-                self.assertIn(SYN, seen)
-                self.assertIn(EXPECTED_DATA, seen)
-                self.assertIn(FIN, seen)
+                self.assertEqual(seen, [SYN, EXPECTED_DATA, FIN])
 
-                # Time-WAIT is pending, not awaited; integer due_ms order-only.
-                self.assertFalse(result["time_wait_awaited"])
-                self.assertIs(result["clock"]["time_wait_awaited"], False)
-                pending = dict(result["clock"]["pending_timers"])
-                self.assertEqual(pending.get("time_wait"), 120000)
-                self.assertIsInstance(pending.get("time_wait"), int)
+                self.assertFalse(result['time_wait_awaited'])
+                self.assertIs(result['clock']['time_wait_awaited'], False)
+                pending = dict(result['clock']['pending_timers'])
+                self.assertEqual(pending.get('time_wait'), 120000)
+                self.assertIsInstance(pending.get('time_wait'), int)
 
-                # Driver must not close our handles or claim the process died.
-                self.assertGreaterEqual(native.fileno(), 0)
-                self.assertGreaterEqual(peer_sock.fileno(), 0)
-                self.assertIsNone(actor.process.poll())
-                self.assertIsNone(peer.poll())
-
-                # Evidence record is JSON-serialisable.
                 json.dumps(result)
         finally:
             stop[0] = True
@@ -261,8 +300,100 @@ class TestSyntheticAfUnix(unittest.TestCase):
             native.close()
             peer_sock.close()
 
+        self.assertFalse(thread.is_alive())
         self.assertFalse(errors, errors)
 
+    def test_net_packet_model_gap_preserves_evidence(self):
+        actor = make_minimal_actor(net_failure='uncovered_event')
+        native, peer_sock = socket.socketpair(socket.AF_UNIX, socket.SOCK_DGRAM)
+        peer = SimpleNamespace(poll=lambda: None)  # synthetic liveness stub for frozen driver
+        stop, seen, errors, thread = start_peer(peer_sock)
+        try:
+            with tempfile.TemporaryDirectory() as td:
+                out = Path(td) / 'evidence'
+                with self.assertRaises(RuntimeError) as cm:
+                    run_exchange(MODEL, actor, native.fileno(), peer, out, CONFIG)
+                msg = str(cm.exception)
+                self.assertIn('model_gap', msg)
+                self.assertIn('uncovered_event', msg)
 
-if __name__ == "__main__":  # pragma: no cover
+                evidence = json.loads((out / 'evidence.json').read_text())
+                self.assertEqual(evidence['kind'], 'model_gap')
+                self.assertEqual(evidence['reason'], 'uncovered_event')
+
+                net_steps = [s for s in evidence['scene']['steps'] if s.get('event') == 'net.packet']
+                self.assertEqual(len(net_steps), 1)
+                self.assertEqual(net_steps[0]['fields']['packet'], list(SYNACK))
+
+                peer_links = [e for e in evidence['links'] if e.get('direction') == 'peer_tx']
+                self.assertEqual(len(peer_links), 1)
+                self.assertEqual((out / peer_links[0]['file']).read_bytes(), SYNACK)
+
+                net_disp = [d for d in evidence['receipts']['dispatches']
+                            if d.get('step', {}).get('event') == 'net.packet']
+                self.assertEqual(len(net_disp), 1)
+                self.assertEqual(net_disp[0]['line'], actor.rows[-1])
+                self.assertEqual(net_disp[0]['row_end'], net_disp[0]['row_start'] + 1)
+                self.assertEqual(net_disp[0]['step']['fields']['packet'], list(SYNACK))
+
+                self.assertFalse((out / 'exchange.json').exists())
+                self.assertEqual(seen, [SYN])
+        finally:
+            stop[0] = True
+            thread.join(2.0)
+            native.close()
+            peer_sock.close()
+
+        self.assertFalse(thread.is_alive())
+        self.assertFalse(errors, errors)
+
+    def test_malformed_timer_fails_backend_input(self):
+        actor = make_minimal_actor(timers={'bogus': {'due_ms': 5}})
+        native, peer_sock = socket.socketpair(socket.AF_UNIX, socket.SOCK_DGRAM)
+        peer = SimpleNamespace(poll=lambda: None)  # synthetic liveness stub for frozen driver
+        try:
+            with tempfile.TemporaryDirectory() as td:
+                out = Path(td) / 'evidence'
+                with self.assertRaises(RuntimeError) as cm:
+                    run_exchange(MODEL, actor, native.fileno(), peer, out, CONFIG)
+                msg = str(cm.exception)
+                self.assertIn('backend_or_input_failure', msg)
+                self.assertIn('timer value not int: bogus', msg)
+
+                evidence = json.loads((out / 'evidence.json').read_text())
+                self.assertEqual(evidence['kind'], 'backend_or_input_failure')
+                self.assertIn('timer value not int: bogus', evidence['reason'])
+                self.assertFalse((out / 'exchange.json').exists())
+                self.assertTrue(actor.rows)
+                self.assertTrue(actor.rows[0].startswith('D '))
+        finally:
+            native.close()
+            peer_sock.close()
+
+    def test_backwards_monotonic_clock_saves_evidence(self):
+        actor = make_minimal_actor()
+        native, peer_sock = socket.socketpair(socket.AF_UNIX, socket.SOCK_DGRAM)
+        peer = SimpleNamespace(poll=lambda: None)  # synthetic liveness stub for frozen driver
+        try:
+            with tempfile.TemporaryDirectory() as td:
+                out = Path(td) / 'evidence'
+                with mock.patch('exchange.time.monotonic_ns',
+                                side_effect=[1000000000, 500000000]):
+                    with self.assertRaises(RuntimeError) as cm:
+                        run_exchange(MODEL, actor, native.fileno(), peer, out, CONFIG)
+                msg = str(cm.exception)
+                self.assertIn('backend_or_input_failure', msg)
+                self.assertIn('monotonic clock reversed', msg)
+
+                evidence = json.loads((out / 'evidence.json').read_text())
+                self.assertEqual(evidence['kind'], 'backend_or_input_failure')
+                self.assertEqual(evidence['reason'], 'monotonic clock reversed')
+                self.assertEqual(evidence['scene']['steps'], [])
+                self.assertFalse((out / 'exchange.json').exists())
+        finally:
+            native.close()
+            peer_sock.close()
+
+
+if __name__ == '__main__':
     unittest.main()
