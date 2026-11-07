@@ -1,5 +1,12 @@
 # GitHub 迁移与复现
 
+2026-11-07 PR17 correction: minimal exact-v1 solver-policy backport on dc0be249,
+without descendant protocol/IR/schema changes. Thirteen frozen tests passed on
+server and locally; five related modules and one full ICMP ten-stage flow with
+verify passed. Original source, failures, review and full raw job are retained in
+artifacts/pr17-exact-backport-0051. New-head CI pending; old UNKNOWN immutable.
+See docs/icmp-exact-backport.md. No main merge or forced history update.
+
 当前活动 flow 原型的逐项验收与范围见 [spec-flow-acceptance.md](spec-flow-acceptance.md)，服务器／外部调用方入口见 [spec-flow-server.md](spec-flow-server.md)。下文保留此前更大 TCP 平台路线和历史检查点，不表示这些扩展已完成。
 
 ## 当前恢复点（2026-10-30）
@@ -206,6 +213,15 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 
 
 2026-11-03：8fadeb00/tested merge b3b86925 整Git tree相同，PR16新隔离Linux ARP peer workflow run41621776194/job125869015485已实际success（仅该新workflow触发，不外推整仓CI）。生成C active PID2618持续解析/接收/缓存命中，passive PID2630持续接收Linux ARP请求/发回复；各初始化一次，不重启/replay。两namespace各2captured/2filter/0drop，quiet100.4107/101.299777ms>=100，内核neighbor确认、完整reference/native trace及所有TAP/PCAP字节通过。实际Linux7.0.0-1017-azure另跑5adapter+8既有ARP方法通过。原始68文件/61Git源bindings在artifacts/linux-arp-peer-8fadeb00，artifact13223608824 SHAe320b2b1固定；原Git只读audit核源码/tree/C/compile/ELF/单PID/clock/原raw帧/PCAP/neighbor/runtime证据通过，不运行归档Python/ELF/solver，CI真实性另需信任。无首次失败Linux运行需提升，本机Mac blocked证据保留。此是虚拟Ethernet有限ARP真实peer，不是physicalEthernet/live60s expiry/无界协议或编译器证明/单一组合IR/完整端点。PR16草稿叠仍开PR15，不自动merge；后续证据头CI单独查。下一步最小ICMP（固定规范、范围、独立oracle，再IR/参考/Z3/C/peer），再ARP/IPv4/UDP/TCP显式IR跨层；复杂0.3TCP native/时钟组合仍欠。付费预算原12/83412已耗尽零新增；server本轮唯一SSH connection refused不阻塞本地/临时Linux。
+
+
+2026-11-03：64f89bbc ARP证据头新peer CI run41622291928已实际success，server本轮唯一SSH connection refused。新codex/icmp-echo有限raw IPv4 Echo responder（尚非完整ICMP）：固定.2→.1/IHL5/TOS0/DF1/MF0off0/TTL1..255/任意atomicID/MTU1500，type8/code0→type0/code0，输出TTL64/ID0，identifier/seq/全部data保留，IP/ICMP长度/checksum/drop策略全IR0.5。5规则/1状态，无新opcode/回调；RFC792官方原文已pin，1122§3.2.2.6/3.2.1.2与791/6864解释固定。13独立struct冻结literal含checksum0000（不套UDP映射）、FFFF/oddNUL/MTU/TTL/ID及四drop，10域gap；8新专项13参考/actualC/exact固定Z3通过，错误identifier但checksum/invariant仍过及错误zero映射均被oracle抓获，6部署检查通过。发现并修复Z3见证读取逐byte重复evaluate原序列的性能问题：只读已求值的Empty/Unit/Concat，无solver/约束修改，2新4096/empty/order检查通过；原中断堆栈/source/model保留artifacts/icmp-echo-witness-diagnostic，不追认重放/恢复丢失查询。icmp-echo immutable profile新增129方法/十task+verify/ICMP13+ARP13固定Z3及旧TCP/UDP回归，待实际flow/Linux执行，不先称通过；无ICMPpeer/capture/完整端点，下一步先实际验收再真实ICMP peer与IR跨层。原付费12/83412预算耗尽零新增、用户artifacts/旧UNKNOWN/Difference不变。
+
+
+2026-11-03：d511f44f本地129专项+6部署、13actualC/固定Z3与28例/13literal十阶段verify通过，305Git源码/384原文件及原Git只读audit在artifacts/icmp-echo-local-d511f44f。原见证优化前后MTU固定输入SMT逐字相同/均SAT，新读取完成旧未完成，不称恢复旧query。首次Linux push run41655244028双job失败，flow271/release2253原文件及immutable305源保留artifacts/icmp-echo-linux-failed-d511f44f，artifact13240300193 SHA18636599与13239461318 SHA3a9b752e。Linux129方法与旧九task均过，但ICMPdepth2 safety UNKNOWN(canceled/10s)、overlapUNSAT；PRrun41655307938双job亦fail只保留元数据。原Mac与Linux all-input safety SMT已逐字相同比较，不能提升UNKNOWN。后续generic task formal可选solver_timeout_ms100..60000（旧默认10000），checker/report绑定，直接API同样严格校验；本ICMP显式60000/stage180，不改模型/深度/输入/不变量/oracle/SMT约束，非paid重试。新3见证/预算+8ICMP专项通过；更新后130方法/十task/Linux结果待实际，旧失败永久保留。原RFC792空白原样保留，后续优先实际Linux长预算结果，再真实ICMPpeer/IR跨层。
+
+
+2026-11-03：b7ad7874/tested merge bd618fde整Git tree相同，新ICMP PRrun41656635390结果必须分开：immutable-release job125988583175实际success（130专项、十task+verify、15TCPdata+101连接+13ARP+13ICMP原生/41固定Z3、9UDP TX/六oracle）；direct job125988583447仍depth2 safety UNKNOWN(canceled/60000ms)、overlapUNSAT。两边SMT逐字相同，成功release的UNSAT不提升direct或旧10s UNKNOWN；不继续加时盲试。305Git源码/3147原release文件及271原direct文件在artifacts/icmp-echo-linux-budget-b7ad7874，artifact13240975612 SHA5920b1ef与13240366470 SHA2325ebcd。原Git只读audit核tree/源码/包/bootstrap/十job/142完整nativeDiff/41SMT原报告/旧UDP及pass-vs-unknown查询相同，不执行归档Python/ELF/solver。ICMP28例（5见证+13种子+10gap）、13literal/five规则，depth2 UNSAT仅output-size/dropempty合同，无全checksum/翻译/编译器证明。另本地130专项31.5s/新flow271原文件305source只读audit在artifacts/icmp-echo-budget-b7ad7874；profile ../icmp-echo-release-b7ad7874 已准备，server不可达未部署。PR17草稿叠仍开PR16，最终证据头CI需独立查，不把整体CI称绿。下一步精确查询简化/资源可重复性（不改oracle/模型/深度/域），同时可推进不依赖该UNKNOWN的有限真实ICMP peer，然后IR跨层；当前无ICMPpeer。原12/83412预算耗尽零新增、上游/旧证据/用户目录保留。
 
 
 2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier

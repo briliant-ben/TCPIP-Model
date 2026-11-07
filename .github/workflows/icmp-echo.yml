@@ -1,0 +1,60 @@
+name: IR finite ICMP Echo responder
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['protocol_lab/**', 'deploy/**', 'examples/icmp_observe.py', 'spec/sources/rfc792.txt', 'spec/sources/rfc1122.txt', 'spec/icmp-echo-oracle.json', 'spec/fixtures/icmp_echo_v1.py', 'model/icmp-echo*.json', 'scenarios/icmp-echo/**', 'flows/icmp-echo.json', 'tests/test_icmp_echo.py', 'tests/test_symbolic_witness.py', 'tests/test_solver_preprocessing.py', 'docs/icmp-echo.md', '.github/workflows/icmp-echo.yml']
+  pull_request:
+    paths: ['protocol_lab/**', 'deploy/**', 'examples/icmp_observe.py', 'spec/sources/rfc792.txt', 'spec/sources/rfc1122.txt', 'spec/icmp-echo-oracle.json', 'spec/fixtures/icmp_echo_v1.py', 'model/icmp-echo*.json', 'scenarios/icmp-echo/**', 'flows/icmp-echo.json', 'tests/test_icmp_echo.py', 'tests/test_symbolic_witness.py', 'tests/test_solver_preprocessing.py', 'docs/icmp-echo.md', '.github/workflows/icmp-echo.yml']
+permissions:
+  contents: read
+jobs:
+  native-packets-and-oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare pinned tools
+        run: |
+          python3 -m venv /tmp/icmp-echo-venv
+          /tmp/icmp-echo-venv/bin/python -m pip install -r requirements-formal.txt
+          mkdir -p artifacts/icmp-echo-ci
+      - name: Check ICMP literal checksum content and native fault contracts
+        run: |
+          /tmp/icmp-echo-venv/bin/python -m unittest discover -s tests -p test_icmp_echo.py -v > artifacts/icmp-echo-ci/tests.log 2>&1
+          /tmp/icmp-echo-venv/bin/python -m unittest discover -s tests -p test_symbolic_witness.py -v > artifacts/icmp-echo-ci/witness-tests.log 2>&1
+      - name: Check exact solver policy SAT replay and metadata tamper rejection
+        run: /tmp/icmp-echo-venv/bin/python -m unittest discover -s tests -p test_solver_preprocessing.py -v > artifacts/icmp-echo-ci/preprocessing-tests.log 2>&1
+      - name: Execute and verify ten stages
+        run: |
+          ARP_ENDPOINT_TASK_SHA=$(sha256sum flows/icmp-echo.json | cut -d ' ' -f 1)
+          /tmp/icmp-echo-venv/bin/python examples/run_spec_candidate.py --workspace . --task flows/icmp-echo.json --task-sha256 "$ARP_ENDPOINT_TASK_SHA" --out artifacts/icmp-echo-ci/run > artifacts/icmp-echo-ci/result.json
+      - name: Retain generated C ELF stdout SMT and Difference
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: icmp-echo-${{ github.sha }}
+          path: artifacts/icmp-echo-ci/
+          if-no-files-found: error
+  immutable-release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Export and hash-check the fixed icmp-echo release
+        run: |
+          python3 deploy/package.py --source HEAD --profile icmp-echo --out artifacts/icmp-echo-release/bundle
+          BYTE_RELEASE_SHA=$(python3 -c 'import json; print(json.load(open("artifacts/icmp-echo-release/bundle/build.json"))["archive_sha256"])')
+          python3 deploy/unpack.py artifacts/icmp-echo-release/bundle/spec-flow-server.tar.gz --sha256 "$BYTE_RELEASE_SHA" --out /tmp/icmp-echo-immutable-release
+      - name: Execute 130 methods ten tasks ICMP ARP fixed Z3 and old TCP UDP regressions
+        run: python3 deploy/bootstrap.py /tmp/icmp-echo-immutable-release --out artifacts/icmp-echo-release/run > artifacts/icmp-echo-release/bootstrap-result.json
+      - name: Retain Linux release sources hashes original executions and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: icmp-echo-release-${{ github.sha }}
+          path: artifacts/icmp-echo-release/
+          if-no-files-found: error

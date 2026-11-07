@@ -132,7 +132,7 @@ class Encoding:
     def reason_unknown(self):
         return self.solver_error or self.solver.reason_unknown()
 
-    def __init__(self, model, depth, symbolic_initials, byte_encoding="sequence", sequence_encoding="bitvector", arbitrary_state=False, fixed_choices=None):
+    def __init__(self, model, depth, symbolic_initials, byte_encoding="sequence", sequence_encoding="bitvector", arbitrary_state=False, fixed_choices=None, solver_preprocess="none"):
         try:
             import z3
         except ImportError as exc:
@@ -159,9 +159,20 @@ class Encoding:
         self.sorts = {"bool": z3.BoolSort(), "int": z3.IntSort(),
                       "seq32": z3.BitVecSort(32) if sequence_encoding == "bitvector" else z3.IntSort(),
                       "string": z3.StringSort(), "bytes": self.byte_sort, "rational": z3.RealSort()}
+        require(solver_preprocess in ("none", "exact-v1"), "Unsupported solver preprocessing policy")
+        if solver_preprocess == "exact-v1" and byte_encoding == "length":
+            raise ModelError("exact-v1 preprocessing rejects the length byte encoding")
+        self.solver_preprocess = solver_preprocess
         self.frames = []
         self.events, self.branches, self.conflicts, self.action_faults, self.enabled = [], [], [], [], []
-        self.solver = z3.Solver()
+        if solver_preprocess == "exact-v1":
+            self.solver_tactics = ("propagate-values", "solve-eqs", "simplify", "smt")
+            self.solver_preprocess_source = "z3.Then('propagate-values','solve-eqs','simplify','smt').solver()"
+            self.solver = z3.Then(*self.solver_tactics).solver()
+        else:
+            self.solver_tactics = ()
+            self.solver_preprocess_source = "z3.Solver()"
+            self.solver = z3.Solver()
         self.solver.set(timeout=10000)
         for i in range(depth + 1):
             self.frames.append({"state": z3.Int(f"state_{i}"), "now": z3.Int(f"now_{i}"),
@@ -424,8 +435,23 @@ class Encoding:
         if self.z.is_string_value(result):
             return result.as_string()
         if self.byte_encoding == "sequence" and result.sort() == self.byte_sort:
-            length = solution.eval(self.z.Length(value), model_completion=True).as_long()
-            return [solution.eval(value[i], model_completion=True).as_long() for i in range(length)]
+            # Materialize the already evaluated sequence once. Indexing the
+            # original expression repeats nested checksum evaluation per octet.
+            # Only concrete Unit/Concat/Empty ASTs use this exact fast path;
+            # other model representations retain the generic evaluator below.
+            pending = [result];octets = []
+            while pending:
+                node = pending.pop();kind = node.decl().kind()
+                if kind == self.z.Z3_OP_SEQ_EMPTY:
+                    continue
+                if kind == self.z.Z3_OP_SEQ_UNIT and self.z.is_bv_value(node.arg(0)):
+                    octets.append(node.arg(0).as_long())
+                elif kind == self.z.Z3_OP_SEQ_CONCAT:
+                    pending.extend(reversed(node.children()))
+                else:
+                    length = solution.eval(self.z.Length(result), model_completion=True).as_long()
+                    return [solution.eval(result[i], model_completion=True).as_long() for i in range(length)]
+            return octets
         return result.as_long()
 
     def witness(self, solution):
@@ -461,8 +487,10 @@ class Encoding:
         return {"initial": initial, "steps": steps}
 
 
-def check(model, depth=6, symbolic_initials=("iss",), out=None):
-    enc = Encoding(model, depth, symbolic_initials)
+def check(model, depth=6, symbolic_initials=("iss",), out=None, solver_timeout_ms=10000, solver_preprocess="none"):
+    require(type(solver_timeout_ms) is int and 100 <= solver_timeout_ms <= 60000, "Solver budget must be integer 100..60000ms")
+    enc = Encoding(model, depth, symbolic_initials, solver_preprocess=solver_preprocess)
+    enc.solver.set(timeout=solver_timeout_ms)
     z = enc.z
     invariants = [enc.expr(inv["assert"], frame) for frame in enc.frames for inv in model["invariants"]]
     # Save an executable SMT-LIB query, including the exact property being queried.
@@ -471,7 +499,9 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
     smt = enc.solver.to_smt2()
     answer = enc.solve()
     report = {"backend": "z3-bmc", "solver_version": z.get_version_string(), "depth": depth,
-              "model_semantic_sha256": model_hash(model), "symbolic_initials": list(symbolic_initials),
+              "model_semantic_sha256": model_hash(model), "symbolic_initials": list(symbolic_initials), "solver_timeout_ms": solver_timeout_ms,
+              "solver_preprocess": enc.solver_preprocess, "solver_tactics": list(enc.solver_tactics),
+              "solver_preprocess_source": enc.solver_preprocess_source,
               "sequence_width": 32, "event_fields": "all_typed_values", "time": "unbounded_integer_ms",
               "scope": "defined_transitions_and_clock_progress" if enc.clock_progress else "defined_transitions_only",
               "clock_progress": "monotonic_integer_before_next_due" if enc.clock_progress else "not_applicable", "liveness": "not_checked", "unbounded_proof": False,
@@ -511,7 +541,8 @@ def check(model, depth=6, symbolic_initials=("iss",), out=None):
             strategies=['first-rule-one-event','any-rule-one-event',*strategies]
         attempts=[]
         for strategy in strategies:
-            sample_enc=Encoding(model,1,symbolic_initials,fixed_choices=[0])if strategy=='first-rule-one-event'else Encoding(model,1,symbolic_initials)if strategy=='any-rule-one-event'else enc
+            sample_enc=Encoding(model,1,symbolic_initials,fixed_choices=[0],solver_preprocess=solver_preprocess)if strategy=='first-rule-one-event'else Encoding(model,1,symbolic_initials,solver_preprocess=solver_preprocess)if strategy=='any-rule-one-event'else enc
+            sample_enc.solver.set(timeout=solver_timeout_ms)
             sample_enc.solver.push();sample_enc.solver.add(z.Int('choice_0')>=0)
             sample_smt=sample_enc.solver.to_smt2();answer=sample_enc.solve()
             record=dict(strategy=strategy,depth=sample_enc.depth,scope='existential_nonvacuity_only',query=str(answer),file='sample-'+strategy+'.smt2',smt2_sha256=hashlib.sha256(sample_smt.encode()).hexdigest())
