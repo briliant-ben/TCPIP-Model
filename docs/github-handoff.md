@@ -9,7 +9,25 @@ See docs/icmp-exact-backport.md. No main merge or forced history update.
 
 当前活动 flow 原型的逐项验收与范围见 [spec-flow-acceptance.md](spec-flow-acceptance.md)，服务器／外部调用方入口见 [spec-flow-server.md](spec-flow-server.md)。下文保留此前更大 TCP 平台路线和历史检查点，不表示这些扩展已完成。
 
-## 当前恢复点（2026-10-30）
+## 当前实施检查点（2026-11-07）
+
+- 实际分支 `codex/arp-udp-peer` / PR20；PR17–20仍开放，PR8–16已关闭，不能据此推断全部进入main。先看git/PR实际状态，不按下文历史分支回退。严禁自动main合并/force，保留两处用户未提交sent-ledger artifacts。
+- PR17最小修复已推5b7981d0，PR18父同步a8598005，PR19父同步da1fc1e2；后三者新头CI各自核对，不外推旧绿。PR18本机7adapter、PR19本机8归纳+13策略通过。PR19冲突保留v4独立路径，预处理仅用于legacy BMC。PR20当前同步这些父提交时，保留其已在3087e0e6通过34检查的全部实现与新测试，五个协议工具模块/flow/workflow均逐字保留，未将旧backport覆盖新journal/IR0.6/v4支持；只合入父历史、原始证据和说明。
+- 服务器TCP最新通过候选 `tcp-replay-gate-validation-20261107-0059`：9门禁+4预检通过，含实际单进程生成C执行及无expect输入的完整native/reference比较。通用回放仅调IR Machine，冻结oracle完整expect/expect_trace仍检查；UNKNOWN负例修正为实际函数globals注入而非runpy返回字典。原0056/0057/0058失败全部留存，不追认。新独立Pro审查 `tcp-live-harness-review-20261107-0060`（启动PID159056）提供完整Session/peer/driver/capture实际源码，须查真实PID/status，审后才进入隔离Linux。尚无新liveTCP/PCAP证据，不将drop短包C测试冒充握手或实机。
+- b81f747e新CI终态59项：55success、4failure（两个网络workflow的push/PR副本），实际失败在网络执行前的test_icmp_echo_inductive旧formal配置字典断言；原ZIP13559985003/SHA b4bdb557保留于artifacts/icmp-policy-ci-b81f747e。控制器本机复现4测1失败，严格加入已声明exact-v1字段后4测全过；原supplement与模型/seed/source完整比较保留，无oracle放宽。本条后续修正Git头CI需再核，不能外推b81结果。
+- 服务器新任务 `pr17-exact-backport-validation-20261107-0049`（启动PID154730）复用0048完成的DeepSeek代码，仅零API纠正两个纯格式锚点，实际冻结13测试后独立审查；原PR17 Git dc0be249完整输入已固定，不把PR20新协议/IR0.6/v4回移。`tcp-linux-peer-source-20261107-0050`（启动PID155082）由DeepSeek修原peer bytes来源绑定与真实非特权CLI正反测试。查实际status/log/PID，不把启动当持续运行或验收。两任务都未自动改Git/PR，旧API失败不重试。
+- 已验收代码点533cee1f：有限rawIPv4/TCP IR0.6共172规则/11冻结场景；隔离LinuxCI实际7专项、11生成C/固定输入Z3通过。99原件/23Git源码/327hash绑定、相同C重渲染、11完整Difference和11见证参考重放只读复核通过，见artifacts/tcp-wire-linux-ci-533cee1f。这不是liveTCP peer、全输入安全或完整TCP/IP。
+- DeepSeek冻结Python驱动aa5f174a，0021实际4测试/4真实驱动调用通过，原正例、model_gap留证、坏timer及倒退clock；本机4项复核通过。仅合成AF_UNIX/mock调度验收，详见artifacts/server-tcp-driver-0021，不是网络证据。
+- 本条集成提交已接入explicit exact-v1与求解前SMT留证，默认none不变；ICMP仍同模型/深度2/60000ms，仅task显式选择策略。12模块/115独立方法在server通过，原0041失败由导出遗漏bindings/formal引起，0042/0043在新副本补原Git文件后通过，旧失败保留于artifacts/exact-backend-regression-0043。0043另修exact-v1缺失tactics/source字段被默认接受，两个完整rehash删除反例通过。本机13预处理+7journal+2真实build/formal CLI也通过；CLI修正不再预写incomplete而自阻塞，已有产物一律拒绝覆盖。新Git头CI待实际核对，不能沿用f8f08d46或候选结果。详见docs/solver-preprocessing.md。
+- 服务器 `blxu@192.168.71.78:/home/blxu/protocol-flow`。0041–0043形式回归均已终态，不沿用旧PID。最新TCP候选0044被独立审查发现helper插入误删inside入口；0046零API恢复入口/原包保存错误留证，六实际FD正反测试通过，非liveTCP。0047独立审查终态有blocking，需控制器按真实API复核：native Session实际有started_monotonic_ns；outer hash在inner进程结束后构造，相关时序批评未证实；race后严格失败是预期，不能容忍绕过。另已确认真实问题：候选内嵌PEER_SOURCE与现有server.py文本不等，必须直接使用并hash绑定原server.py，不能调整peer策略强行匹配。0045 CLI API调用失败停止，未自动重试；CLI接口修复及实际测试由控制器完成。所有候选仍需实际外层/隔离Linux验收。
+- 原候选0034/0036实际11项全过，三次真实十阶段flow/verify通过、三个全量rehash策略/tactics/source篡改反例被正确拒绝。589原文件/138源绑定及只读audit在artifacts/exact-backend-retained-0036；三次完整job/原SMT/生成C/ELF/原stdout保留。0037指出的同义反复断言已于0040修正，后续0043通过，但原0036归档不追改。0028/0029失败原包也保留，不冒称原测试通过。
+- TCP真实通道尚未通过：0030/0032只读verify与非空目录/异常清理问题需验收；0032附加reason元数据引发严格schema拒绝，零API保留before/after后发现清理无界。0035候选while-else使完成标记不可达，被拒；0038小型FD helper仅因测试sys导入被白名单拦截，尚未执行，且原始bytes元数据不可JSON序列化等需修。旧候选/响应保留，不因模型自评或语法通过当网络证据。
+- ICMP旧depth2/60s UNKNOWN永久保留。0023在同域/同深度/总60s下内置Z3精确预处理诊断UNSAT13.8s；递归定义逐token相同，新context重读UNSAT6s。当前策略保持模型转换，SAT见证/重放与canonical策略绑定已有实际测试；新CI仍需实际验收，旧UNKNOWN不提升。PR17–19旧头仍需单独backport/验证，不能因PR20修复就视为全PR通过，不可反向把整条子分支合入祖先来掩盖失败。
+- 用户明确不设DeepSeek费用/累计请求上限；新控制器max_calls=None，仍共用原private/api-ledger、不重置/换账本，不自动重试失败/不确定请求。凭据只网关使用，不读取/输出/提交。实现/独立测试/审查都优先服务器DeepSeek，不启动GPT子agent。
+- 本聊天每3小时巡检（automation id=automation, ACTIVE），用户本轮重新授权，优先读本段+最新implementation-log，而非老暂停/预算摘要。无变化安静；新里程碑/失败/需操作才通知。当前sudo限制只阻塞服务器特权网络通道，继续隔离GitHubLinux及普通模型/C/Z3工作，不改服务器全局网络/SSH。
+- 目标仍为基本IPv4端点TCP/UDP+ARP/ICMP（无上层）和可迁移spec→唯一IR→参考/独立Z3→测试→IR生成独立C→独立peer/PCAP→Difference/规范追溯。TCP跨层、ACK/data/window组合等仍欠；完整范围实际验收前不complete。旧lwIP2750ms和其他Difference/UNKNOWN不得放宽或改写。
+
+## 历史恢复点（2026-10-30）
 
 PR#3已合入main的ab9f75ba。当前开发分支是codex/tcp-modular，包含71a3e1a8的精确模查询证书／标量IR契约及main纯历史合并；以实际分支和源码为准。不要回退到早期codex/tcp-data。旧未提交refinement目录保留。
 
@@ -239,9 +257,190 @@ Python 虚拟环境、缓存、上游 `.git` 元数据和编译出的 `lwip-harn
 2026-11-04: f14fdac1/tested mergeb3465ea0 exact complete Git tree matches; Linux run41748821541 BOTH new jobs pass:126308497001 native25+7=32 methods/30 fixed native-Z3 cases and126308497801 ten-stage v4flow/verify.97Git bindings/762flow+260native originals in artifacts/arp-udp-v4-linux-f14fdac1 (artifact13284987284 SHAc3fa49f8,13285790868 SHA0d455522). Original-Git read-only audit validates93cases/80literal-contract inputs (83expected rows)/30rules/33gaps/600prefix cutoff,30native fullDiff/30SMT reports/18IPv4 Ethernet frames and66 full-sequence invariant obligations. Initial validity+30preservation+4overlap UNSAT; initial and30rule nonvacuity SAT. No length projection/concrete payload safety restriction/reference callback/assumed poststate. Distinct v4 induction claim covers ONLY listed legal-transition invariants, not wire/coverage/compiler/full protocol. Old depth3 BMC UNKNOWN remains unchanged; modelsemantic hash and generated C byte-identical across strategies (C SHAe2f7f2ea...). No archive code/ELF/solver execution/new Linux claim in audit; CI provenance separately trusted. Local f14 passed flow retained in arp-udp-v4-local-f14fdac1. Afterward generic checker persists query BEFORE solve and refuses nonempty output reuse;8 targeted methods including interrupted-no-passed-report pass,146 broader regression methods had passed before this I/O-only change. Later head must get its own CI; do not extrapolate f14 greens. Next real composed TAP peer and IPv4/UDP/ICMP ingress, then TCP native/timing work; no composed network/complete endpoint proof. Server sole SSH refused, no paid calls (12/83412 exhausted), no main merge/upstream/oracle/hash weakening/user-artifact changes.
 
 
+2026-11-05: User stopped scheduled polling; leave it stopped. Reviewed open stacked PRs #7–#19 and fetched remote main939ff487 (#1–#6 already merged). Latest-head returned checks on #7–#16 all succeed; recommend staged bottom-up integration with each base retargeted/rechecked, no automatic merge. #17–#19 remain held: d2abad5c composition workflow41749928742 succeeds, but inherited ICMP workflow41749928642 splits passing immutable-release126312207870 and failed direct126312208220. Snapshot and bounded review in artifacts/pr-review-2026-11-05 and docs/pr-integration-review.md; no exhaustive audit or fresh full regression claimed.
+
+New codex/arp-udp-peer prepares one continuous generated-C process for cold app.send→IR ARP→unchanged kernel reply→IR pending UDP Ethernet flush→recv-only independent Linux socket, followed by cached empty/oddNUL/1472 sends. Adapter is only raw TAP transport/public-clock advancement, no host subject stack/packet rewriting/queue/MAC protocol decisions. New local5 adapter checks exercise actual live C plus synthetic mixed PCAP and negative controls; these are NOT Linux evidence. Real isolated Linux workflow pending. Supplementary flows/icmp-echo-inductive.json uses unchanged model/oracle/seeds/exploration with explicit v4 strategy, default10s/query; local4 methods and fresh ten-stage/verify pass,13 obligations (initial2,5preserve+5nonvacuity,1overlap). Only two listed reply-bound/drop-empty invariants; old60s BMC UNKNOWN/report/task remain unchanged. No core/backend/model edits in this milestone. Paid DeepSeek budget remains exhausted12 requests/83412 known tokens; only local child agents were used. Sole server SSH check timed out; no server deployment/global network changes. No automatic main merge, no upstream/oracle/hash changes; both user artifact directories preserved.
+
+
+2026-11-05 accepted composed-network checkpoint: source5755f715/tested merge224a394a complete trees match. PR20 run42014504643/job127201517338 actual isolated Linux7.0.0-1017-azure succeeds: one generated-C PID2960 cold app.send→ARP request→unchanged kernel reply→IR pending queue flush→Linux recv-only UDP socket; cached empty/oddNUL/1472 follow, four exact deliveries and6captured/6filter/0drop, quiet100.0847ms>=100. Capture stops before C/peer/TAP close. Actual5-input-step fixed Z3 query SAT+reference replay; not five all-input proofs. Supplementary ICMP13 obligations/ten-stage also pass. Original330 files/121 immutable Git bindings in artifacts/linux-arp-udp-peer-5755f715, artifact13407873966 SHA05d5000a; original-Git read-only audit reconstructs peer/runtime and ICMP full flow without executing archive Python/ELF/solver. CI provenance separately trusted. This is FIRST real single-IR composed outbound ARP+IPv4/UDP, still not ingress/TCP/physicalEthernet/full endpoint. No server deployment or paid requests. Related42 local methods passed75.095s; final lifecycle change separately rechecked five methods1.667s.
+
+
+2026-11-05 finite ingress composition: new model/ipv4-udp-icmp-endpoint.json is ONE63-rule IR0.5 EFSM extending the unchanged30-rule ARP/UDP TX model. Namespaced UDP RX and ICMP Echo guards/actions own all Ethernet bounds, IP/UDP/ICMP lengths/checksums/policy/output; EMPTY/PENDING/RESOLVED receive without changing unrelated pending TX/cache. Independent struct oracle SHA5c05de68 was frozen first and stayed unchanged; model SHA68e3da05 also unchanged across failed/successful native lowering. Ten new methods passed12.554s: nine literal reference/fixed-input Z3/actual C scenarios,30 atomic gaps,17 previous scenarios and native/reference byte faults. No new full-input theorem/ten-stage flow or live ingress peer yet. Canonical input Ethernet frame max(60,14+IPtotal), arbitrary ignored padding, output zero padding; fixedlink/tuple/UDP TTL64, EchoTTL1..255, no TCP/generalhost.
+
+The first native executable SIGSEGV was a real generator resource failure (fire static frame12986128 bytes), not accepted as a model Difference. Original failure and smaller-AST failed trial retain121 files in artifacts/ipv4-endpoint-native-stack-diagnostic. Generic per-rule guard/action helper lowering fixes cumulative stack use without changing IR/ABI/runtime/buildflags/ulimit: local fire96/maxguard482272/maxaction382336/main1038736 bytes. Five new generic fault/atomicity/frame methods and50 old related methods pass; nine frozen native cases pass.119 raw local files in artifacts/ipv4-endpoint-local-helpers, not Linux evidence. New dedicated Linux native workflow retains9endpoint/17legacycompose/13ARP/15fixedZ3TCPdata/101connection cases and stack observations; actual CI pending new source commit. Backend v4 byte semantics remain, changed generator hashes bind new C and old evidence still uses original Git. Upcoming TAP entry profile will explicitly distinguish prephysical-padding frames; no adapter byte rewriting, canonical model/oracle unchanged.
+
+
+2026-11-05 explicit virtual-TAP ingress profile: model/ipv4-udp-icmp-tap.json derives from unchanged canonical63-rule model. Only30 ingress Ethernet envelopes admit exact14+IPtotal OR canonical max(60,14+IPtotal); partial padding remains gap, no adapter padding/stripping/repair. Official Linuxv6.12 tuntap.rst source is pinned for virtual interface role, not a claim the document mandates padding behavior or matches the runner kernel. Six profile methods pass9.739s:11reference/native/fixedZ3 cases,18native+18reference atomic gaps, exact envelope-only amendment, originalcanonical4unpadded gaps/9cases unchanged.199 original local files in artifacts/ipv4-tap-local-profile; original test harness reason/failure KeyError retained separately from actual protocol failures.
+
+New ports/linux-ipv4-endpoint-peer runs ONE generated-C PID for ARP,4UDP echo roundtrips(empty/odd/MTU included) and3iputils Echo;16selected frames/12continuous inputs are strict acceptance, not yet actual Linux results. Peer socket uses ordinary sendto; model policies remain IR; all original frames including42-byte UDP packets enter unchanged. Linux interface checksum offloads explicitly configured only inside proven newnamespace; no TTL/ID/PMTU policy rewrite. Six adapter methods using real C/synthetic captures and one actual fixed12-input Z3 query pass, plus strong pinned-source checks. New workflow will execute isolated Linux and retain failures/raw capture/runtime hashes; live ingress success is PENDING at this source checkpoint. Paid budget still12/83412 exhausted, automation stopped, no main merge/server deployment.
+
+
+2026-11-05 TCP wire prerequisite: IR0.6 adds pure bytes_pack32be_mod(int)->4big-endian octets of n mod2^32. Reference arbitraryInt modulo, independent Z3 Int2BV32/Extract/Unit/Concat and C uint32_t unsigned shifts agree on frozen vectors; no protocol callback or uint32 field validation is hidden in packing. Old IR versions/unknown operators reject;0.6 length projection and unextended sequence induction explicitly reject. Same native v4 ABI, new source/model/hash epoch; per-rule helpers preserved, old evidence never rehashed. Eight new methods plus old8wire/7read pass,1024 octet-position and signed64 endpoints actually execute C. Ordinary new word32 ten-stage+verify passes (10literal seeds+1witness), not TCP implementation. New dedicated Linux workflow pending.
+
+Original arbitraryInt monolithic div/mod query UNKNOWN/10s stays in artifacts/word32-arithmetic-diagnostics. Separate exact positions/Int2BV-modulo/weighted-concat obligations are UNSAT and freshcontext reloaded UNSAT with no fixed inputs/prestate assumptions; original7source/query hashes were actually checked. This is an arithmetic representation bridge, not compiler/protocol proof or promotion of old UNKNOWN. Native clock/rational/post-target support still unimplemented. Next TCP raw wire model reuses original tcp-data seq/timer rules with explicit IPv4/TCP bytes, not host stack; candidate validation ongoing, not yet completed.
+
+
+2026-11-06 user steering: stop using GPT child agents for implementation; use server DeepSeek agents on blxu@192.168.71.78. Server reachable with existing project/key/ledger, no old model controller running. User explicitly lifted original paid-call budget restriction; preserve all12/83412 old entries and use bounded jobs against SAME ledger, operational cap64/no failed-or-uncertain auto retries. First server job tcp-handoff-20261106-0001 PID83162 actually passed7 TCP wire draft tests/11 native-fixedZ3 paths72.971s; two DeepSeek roles consumed8401 reported tokens, ledger14/91813. Draft provenance remains previous local work, not falsely DeepSeek-authored. Suggestions remain unapproved: wrong old-model fixture association and MSS direction misunderstanding require correction. Second server CI repair job ci-paths-20261106-0002 PID84164 launched: exact two approved workflow path associations only, then actual15data fixedZ3+101connection native suites. No provider Python/shell execution, no Git merge, no automation restart; credentials stay private. See docs/server-deepseek-handoff.md.
+
+PR review correction: workflow helper omitted push checks. #7 now merged; #8 has failed receive job124784462166 (quiet observation too short; invalid capture). Do NOT follow earlier incomplete-green recommendation to bulk merge#8–#16; their dependency/base checks must resolve. #17/#19 ICMP formal failures remain. #20 latest a091 job127213432338 passes9endpoint/17compose/13ARP then rejects missing scenarios/tcp-data (0TCP cases); scenarios/data15 andscenarios/connection101 are intended. No merge performed. Server no sudo-n/network-userns at check, only privileged live-network channel blocked; native/reference/Z3 continues. Both user untracked artifact directories preserved.
+
+
+2026-11-06 actual DeepSeek server CI repair: ci-paths-20261106-0002 PID84164 completed proposal+independent review, exact two workflow path fixes and ALL15data native/fixedZ3+101connection native gates. Originalrun/launch/controller/source/ELF/trace/query/APIusage receipts in artifacts/server-deepseek-ci-20261106, TAR SHA f68dc2b5; local control checked archiveSHA/exact two YAML changes/suitecounts without archive execution. First real CI failure remains artifacts/pr20-missing-scenarios-a0915d79 ZIP SHA80777329 (0TCP cases). Applied only scenarios/tcp-data→scenarios/data andtcp-connection→connection locally; newGitHubCI pending commit, no merge. Shared ledger now16requests/95053 known tokens; no reset. Next server DeepSeek implementer/reviewer job ipv4-compose-20261106-0003 PID85116 started to produce offline singleIR composition builder proposals forTCP+existingARP/UDP/ICMP. Provider Python remains unexecuted pending controller review; no completion claim, no GPT child agents, no scheduling restart.
+
+
+2026-11-06 continuation on server only: DeepSeek composition job0003 completed code proposal and independent review; reviewer found six blocking defects (unmaintained ARP state, invalid flat state mapping, incomplete raw ingress mapping/bounds, missing queue kind, wrong failure path and Ethernet addresses). Rejected; no provider code executed or integrated. New server job /home/blxu/protocol-flow/candidates/ipv4-compose-20261106-0004 PID85459 uses completed-proposal findings for at most3 implementer/reviewer repair rounds (same ledger, no failed/uncertain API retry, no code execution/main merge). Status/logs remain server-side. CI path repair2c4514a9 is pushed; new GitHub result pending, old red evidence unchanged. Do not say full prototype finished or re-enable scheduling.
+
+
+2026-11-06 latest server state: whole-composition repair0004 stopped on a provider-completed but truncated8192-token output (invalid_response, counted as paid request19); no automatic identical/uncertain retry and no proposed code executed. Preserve its raw ledger/provider record. Controller decomposed scope into new independent ir-namespace-20261106-0005: pure offline component namespace transform only, <=160source lines, implementer/reviewer max3completed-proposal rounds; other state/queue/Ethernet coupling remains future work. Same server/shared ledger, DeepSeek only. No claim of complete prototype or successful composition.
+
+
+2026-11-06 server progress correction: bounded jobs stop at failed/review gates;
+they are not continuously running between checks. Actual latest pre-change PR20
+43c9dec check-runs:28success/1failure (ICMP immutable-release127817430850;
+direct ICMP127817430999 and repaired endpoint regression succeeded). No merge.
+DeepSeek pure namespace source from ir-namespace-actual-20261106-0007 is now
+integrated under protocol_lab/compose, SHAa691671c. Its reviewer invalidJSON/job
+failure is retained separately from zero-API controller acceptance: exact1/63/172
+rule transforms,32frozen scenarios and3native cases. OriginalTAR SHA02b7c15e
+and result in artifacts/server-namespace-20261106. Only a preexisting unaccepted
+TCP draft was used in the third gate, not live TCP or completed prototype.
+Six namespace/source-gate plus three prior controller tests pass locally; new
+small CI pending. Fixed source gate executes precisely its parsed AST, forbids
+IO/introspection; it is a restricted capability gate, not a general Python sandbox.
+0006 initially lacked fixtures (controller environment error), then rejected a
+real arm.delay_ms bug after zero-API fixture correction. Fixture counts now checked
+before billing. state-lowering0008 failed three actual code gates (cancel string
+misread as dict); new0009 repairs that completed proposal with exact cancel/state
+examples, same ledger/DeepSeek only, maximum3bounded rounds and actual gate before
+review. No failed/uncertain API retry, GPT child agents, automatic main merge or
+scheduler restart. Next integrate accepted state lowering then explicit TCP/ARP
+queue/framing composition; privileged server networking remains unavailable.
+
+
+2026-11-06: server DeepSeek state-lowering-repair0009/PID95698 completed first
+round: exact1/63/172rule AST,32frozen scenarios,3actualC and independent advisory
+review passed. Accepted source SHA b5f51892 in protocol_lab/compose; raw archive
+SHAc7d00f4d in artifacts/server-state-lowering-20261106. Two new local rejection/
+state-predicate/cancel/timer-delay tests pass. No whole-stack/compiler proof.
+Next server component-union0010/PID96065 started a pure disjoint union builder
+proposal, bounded3rounds; it does not implement packet dispatch or queue/framing,
+and source remains unexecuted pending external acceptance. Original UNKNOWN/
+Differences remain. Namespace milestone d6ba0a92 pushed toPR20; its new CI must
+be checked independently. No main merge or scheduler restart.
+
+
+2026-11-06 PR8 actually repaired: original cc70a74d failed job124784462166 now
+has fast-forward backport d5863163 on codex/server-deployment.16 boundary checks
+pass and NEW head9CI checks all success incl handshake/loss/receive Linux jobs.
+Original invalid ZIP SHAaa24089f retained in the separate PR8 branch, not promoted;
+no model/oracle/hash relaxation. PR8 still targets codex/spec-flow-c99, not main;
+GitHub main versusPR8 is diverged(14ahead/1behind at check). No bulk/main merge.
+PR20 source3d04899b had53/55success, both failures ICMP immutable-release; direct
+native/formal passed. Neither old UNKNOWN nor this failure is silently removed.
+Server blxu@192.168.71.78 reachable, sudo-n still requires password; privileged
+server netns lane blocked, generated/reference/C/Z3 and hosted Linux continue.
+DeepSeek0013 pure disjoint union accepted under actual32frozen/3native/7negative
+and legal-string counterexample gates, advisory reviewer empty. Source SHAf1a3b780
+integrated protocol_lab/compose/disjoint_union.py; rawTAR809261ba includes previous
+0011 rejected broad string scanner and actual executedchecker. Two new independent
+literal/native and rejection tests pass. This is offline interleaving, NOT TCP/ARP
+packet/queue composition or completed prototype. No GPT child agents used.
+TCPexchange0014 source failed artificial237line/220gate, completed API unchanged;
+root found real ABI/timer/sending/drain defects (never executed). New0015 asks
+DeepSeek implementer+reviewer to repair those concrete errors, without a paid API
+retry, packet mutation or forced peer policy; no live TCP success yet. Both user
+untracked artifact directories remain untouched. Scheduling remains stopped.
+
+
+2026-11-06 latest server handoff: tcp-peer-exchange-evidence0016 completed
+DeepSeek implementation + advisory review(blockingfalse), new source UNEXECUTED.
+Original0015 had real scene.steps/steps alias doubleappend;0016 fixes it, tickABI,
+integerdeadline checks, receipts/TUNwritecount and explicit pendingTIME-WAIT.
+Independent testauthor0017 delivered .py+LIMITATIONS.md and failed onefilegate;
+its tests never invoke run_exchange and invented ABI/packet/timer shapes, rejected
+rather than calling test-count a success. Completed API retained, no paidretry.
+New gateway supports explicit thinking+reasoning_effort while preserving DEFAULT
+payload/hash behavior and original max8192tokens/64requests/ledger/no-retry gates.
+Official thinking docs: https://api-docs.deepseek.com/guides/thinking_mode/ .
+8 deployment/gateway methods pass, including cache separation bythinking mode and
+unchanged ledger preservation. Auto-review rejected proposals to raise64->128 and
+8192->32768; both limits remain unchanged, explicit user clarification pending.
+New server controller tcp-reasoning-bounded-v1/run_tcp_driver_review.py and job
+candidates/tcp-peer-reasoning-bounded-20261106-0018 PID104649 launch DeepSeek
+independent-test-author/adversarial-reviewer withthinking enabled/low (8192/64),
+plus fixed original7TCP wire baseline in parallel. New code proposals NEVER run
+automatically. Do not call old stopped0014..17 running or claim liveTCP success.
+PR8 d5863163 fresh9checks success, still stackedbasefeaturebranch, no mainmerge.
+PR20 acceptedunion head3ae6dd3b pushed; its CI needs own check. Userdirectories
+and scheduler stoppedstate preserved. Server sudo-n still unavailable; only that
+privileged networking lane blocked, hostedLinux remains available.
+
+
+2026-11-06 explicit user budget update: user answered the approval question with
+“不设置任何上限，随便用”. New jobs use max_calls=None in the SAME original ledger;
+no ledger reset, replacement or automatic failed/uncertain retry. Gateway optional
+uncapped cumulative mode preserves prior bounded callers/default payload/cache.
+Per-response32768 is a current technical setting, not a lifetime spend cap; it can
+be adjusted per task. The old proposed8192/64->larger deployment rejections are
+historical, not a current permission block after explicit authorization.
+Original0018 fixed TCP baseline passed, both reasoningAPI requests exhausted8192
+finish_reason=length (one blankfinal); invalid_response preserved, never promoted.
+New candidate tcp-peer-acceptance-20261106-0019 PID105373/controller
+tcp-reasoning-authorized-v2 runs independent testauthor+adversarial reviewer with
+thinking enabled/high and32768 response space, no GPT childagents. This is an
+explicitly operator-authorized NEW acceptance task with actualABI/failure context,
+not an automatic retry of old request digests. Unchanged prior baseline source
+hashes rechecked and passedreceipt reused, not falsely called a fresh test run.
+New Python proposals remain unexecuted until controller review and actual tests.
+9 gateway/deployment tests pass locally including uncapped original-ledger retention;
+old failed-request protection remains active. No mainmerge/scheduler restart or
+liveTCP/completeprototype claim. Server sudo/network lane limitation unchanged.
+
+
 2026-11-06 PR8 repair: backport cdb8bbec capture-origin deadline driver/verifier
 and16 actual local boundary tests to original cc70a74d. Preserve original failed
 job124784462166 and artifact13075035408 (ZIP SHAaa24089f) separately from later
 d5 failure; do not transplant d5 numbers. Source/model/oracle unchanged. Fresh
 Linux CI required on this PR8 branch; no main merge. DeepSeek static reviews
 requested new capture evidence; their invented numeric/stray-file claims rejected.
+
+
+2026-11-07 milestone: finite raw IPv4/TCP IR0.6 (172rules,117 inheritedTCP
+protocolrules/55wire drops) and11 independent literal scenarios/oracle/fixture are
+now integrated into Git, previously a local draft. Source hashes exactly match
+server-passed7test baseline;11 scenarioJSON equal frozen oracle. It predates
+DeepSeek; do not falsely attribute IR authorship. NewCI tcp-wire-endpoint.yml
+checks7reference/exactfixedZ3/actualC methods plus native suite retaining11queries
+and source/C/compile/ELF/traces. This is finite rawIP TCP, not combinedTCP/ARP or
+liveTCP/completeprototype; inherited16byte buffers/SMSS4/fixedRTO and ACK-on-data
+limitations remain documented in docs/tcp-wire-endpoint.md. Oldall-input UNKNOWN
+and lwIP2750ms/LinuxTCP differences unchanged.
+DeepSeek driver16 frozenSHAaa5f174a integrated exchange.py;0020 SECOND test round
+validation-1 actually passes1synthetic test/1instrumented driver call; round0
+failed link-number assumption and staysfailed in originalTAR61a4ccf1. Local
+integration first selected wrong round0 and reproduced failure, then selected
+actual acceptedround1 via per-round receipts; no expectedpacket/oracle weakened.
+Only repository importpath setup changed in acceptedtest, local1passes. Four rawIR
+reference/scope tests plus two strict independent codec/checksum/syntheticPCAP
+methods pass locally; all7rawIR tests previouslyserverpassed on hash-identical
+files, NEWGitCI must be checked independently. No synthetic test is Linuxevidence.
+ServerDeepSeek jobs: tcp-driver-hardening-20261107-0021/PID112304 adds exactcount/
+cleanup and3actual negative driver invocations, gatebeforepaidreview;
+tcp-linux-harness-20261107-0022/PID112305 authors isolatedactualLinux outerharness
+source+review ONLY (no privilegedexecution or peer forcing beforecontrollerreview).
+Originaldaemon/status isnotprocessproof. Userunlimitedspend authorization still
+sameledger/max_callsNone, no failedoruncertain APIretry/GPT childagents.
+LatestPR17dc0/PR20a576 ICMP immutable/direct failures inspected from originalZIP
+artifact13508887680/SHA d4285939: originaldepth2safety UNKNOWN(canceled60000ms),
+overlapUNSAT, exact safetySMT412b9d51/overlap37f97de7. Stored read-only in
+artifacts/icmp-query-diagnostic-a576; archivedcode/ELF/solver never executed.
+Newservericmp-exact-query-20261107-0023/PID112627 chooses one explicitbuiltinZ3
+exact/equisatisfiable preprocessing and runs one frozen-query diagnostic under
+TOTAL60000ms, savingoriginal/transformedquery/hash/answer/review. Neverchanges
+production, assumptions, domain, depth, oracle, oldUNKNOWN or labels wholeproof.
+SAT wouldrequireoriginalvariable modelconversion and replay beforeintegration.
+Heartbeatautomation 'automation' updated ACTIVE every3hours at user'sexplicit
+request (sameexistingthread, no duplicate); this supersedes earlierstoppedstate.
+Maintain entirebasicIPv4TCP/UDP+ARP/ICMP endstate, not just helperacceptance.
+Serverprivilegednetworkingsudo limitation remains isolated; hostedLinux usable.
+Keep bothuseruntrackedartifacts directories. Noautomatedmainmerge/forcepush.

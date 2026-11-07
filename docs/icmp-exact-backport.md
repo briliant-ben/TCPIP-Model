@@ -1,6 +1,9 @@
 # PR17 exact solver policy backport
 
-This branch keeps its existing v1/v2/v3 task schemas, protocol models, input
+This historical note describes PR17 commit 5b7981d0, not later descendant branches.
+For the current PR20 implementation see solver-preprocessing.md.
+
+At that checkpoint the branch kept its existing v1/v2/v3 task schemas, protocol models, input
 domains, depth and native backend. It does not import later IR0.6, sequence
 induction, TCP wire or peer work from descendant PRs.
 

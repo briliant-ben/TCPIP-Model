@@ -11,7 +11,7 @@ KINDS={'int':0,'bool':1,'seq32':2,'bytes':3,'string':4}
 BYTE_CAP=4096
 OPS={'eq','ne','and','or','not','implies','add','sub','mul','le','ge','min','ite',
      'seq_add','seq_distance','seq_lt','seq_le','seq_comparable','bytes_len','bytes_concat','bytes_slice',
-     'bytes_pack8_mod','bytes_pack16be_mod','bytes_internet_checksum16','bytes_at_or_zero'}
+     'bytes_pack8_mod','bytes_pack16be_mod','bytes_pack32be_mod','bytes_internet_checksum16','bytes_at_or_zero'}
 
 class Unsupported(ValueError): pass
 
@@ -53,8 +53,8 @@ def admit(m):
     if any(not re.fullmatch(r'[A-Za-z0-9_.:-]+',n)for n in m['events']):raise Unsupported('Event name cannot be represented in line interface')
     if set(m)!={'ir_version','protocol','semantics','scope','states','initial_state','variables','events','timers','messages','requirements','transitions','invariants'}:
         raise Unsupported('Unknown model fields')
-    if m['ir_version']not in ('0.1','0.2','0.4','0.5')or m['semantics']!='flat-efsm-atomic-ordered-v1':
-        raise Unsupported('Backend requires IR0.1/0.2/0.4/0.5 atomic ordered v1; clock-v3/rational unsupported')
+    if m['ir_version']not in ('0.1','0.2','0.4','0.5','0.6')or m['semantics']!='flat-efsm-atomic-ordered-v1':
+        raise Unsupported('Backend requires IR0.1/0.2/0.4/0.5/0.6 atomic ordered v1; clock-v3/rational unsupported')
     for v in m['variables'].values():
         if set(v)!={'type','initial'}or v['type']not in KINDS:raise Unsupported('Only int/bool/seq32/bytes/closed-string state supported in native-v2')
         if v['type']=='bytes':
@@ -138,8 +138,8 @@ def render(m,wire=None):
         if op in ('eq','ne')and infer(e['args'][0],m,event)=='bytes':return ('(!'if op=='ne'else'(')+'byte_equal('+','.join(a)+'))'
         if op=='bytes_len':return '((int64_t)('+a[0]+').len)'
         if op in ('bytes_concat','bytes_slice'):return {'bytes_concat':'byte_concat','bytes_slice':'byte_slice'}[op]+'('+','.join(a)+')'
-        if op in ('bytes_pack8_mod','bytes_pack16be_mod','bytes_internet_checksum16'):
-            return {'bytes_pack8_mod':'byte_pack8','bytes_pack16be_mod':'byte_pack16be','bytes_internet_checksum16':'byte_checksum16'}[op]+'('+','.join(a)+')'
+        if op in ('bytes_pack8_mod','bytes_pack16be_mod','bytes_pack32be_mod','bytes_internet_checksum16'):
+            return {'bytes_pack8_mod':'byte_pack8','bytes_pack16be_mod':'byte_pack16be','bytes_pack32be_mod':'byte_pack32be','bytes_internet_checksum16':'byte_checksum16'}[op]+'('+','.join(a)+')'
         if op=='bytes_at_or_zero':return 'byte_at_or_zero('+','.join(a)+')'
         binary={'eq':'==','ne':'!=','le':'<=','ge':'>=','and':'&&','or':'||'}
         if op in binary:return '('+a[0]+binary[op]+a[1]+')'
@@ -195,11 +195,14 @@ def render(m,wire=None):
     for i,n in enumerate(timers):
         emit('if(m->active['+str(i)+']) { if(!first)text(out,",");first=0;');literal('out',json.dumps(n)+':');emit('number(out,m->due['+str(i)+']);}')
     emit('(void)first;');literal('out','}}');emit('}')
-    emit('int fire(Machine *m,int event,int64_t *f,Bytes *bf,int expiring,Buffer *log) { int match=-1,count=0; Buffer messages={{0},0}; int emitted=0; (void)f; (void)bf; (void)emitted;')
-    for i,r in enumerate(m['transitions']):emit('if(m->state=='+str(states.index(r['from']))+'&&event=='+str(events.index(r['event']))+'&&('+exp(r['guard'],r['event'])+')) {match='+str(i)+';count++;}')
-    emit('if(failure)return 0;\nif(count!=1){failure=count?"rule_conflict":"uncovered_event";return 0;} if(expiring>=0)m->active[expiring]=0; switch(match) {')
+    # Keep each rule's value-type byte temporaries in its own C stack frame.
+    # The dispatcher still evaluates every eligible guard in declaration order
+    # before choosing any action, so conflict/error/atomic commit semantics stay
+    # in the unchanged command harness. No optimization flags are required.
     for i,r in enumerate(m['transitions']):
-        ev=r['event'];emit('case '+str(i)+': {')
+        emit('static int rule_guard_'+str(i)+'(Machine *m,int64_t *f,Bytes *bf) { (void)m; (void)f; (void)bf; return '+exp(r['guard'],r['event'])+'; }')
+    for i,r in enumerate(m['transitions']):
+        ev=r['event'];emit('static int rule_action_'+str(i)+'(Machine *m,int64_t *f,Bytes *bf,Buffer *log) { Buffer messages={{0},0}; int emitted=0; (void)f; (void)bf; (void)emitted;')
         for a in r['actions']:
             k,p=next(iter(a.items()))
             if k=='set':
@@ -228,8 +231,13 @@ def render(m,wire=None):
         literal('log',',"event":{"name":'+json.dumps(ev)+',"fields":{')
         for j,(name,kind)in enumerate(m['events'][ev]['fields'].items()):
             literal('log',(','if j else'')+json.dumps(name)+':');value('log',{'event':name},kind,ev)
-        literal('log','}},"after":');emit('snapshot(log,m);');literal('log',',"emitted":[');emit('text(log,messages.data);');literal('log',']}\n');emit('break; }')
-    emit('default:failure="invalid_rule";return 0;} return failure==NULL; }')
+        literal('log','}},"after":');emit('snapshot(log,m);');literal('log',',"emitted":[');emit('text(log,messages.data);');literal('log',']}\n');emit('return failure==NULL; }')
+    emit('int fire(Machine *m,int event,int64_t *f,Bytes *bf,int expiring,Buffer *log) { int match=-1,count=0;')
+    for i,r in enumerate(m['transitions']):
+        emit('if(m->state=='+str(states.index(r['from']))+'&&event=='+str(events.index(r['event']))+'&&rule_guard_'+str(i)+'(m,f,bf)) {match='+str(i)+';count++;}')
+    emit('if(failure)return 0;\nif(count!=1){failure=count?"rule_conflict":"uncovered_event";return 0;} if(expiring>=0)m->active[expiring]=0; switch(match) {')
+    for i in range(len(m['transitions'])):emit('case '+str(i)+':return rule_action_'+str(i)+'(m,f,bf,log);')
+    emit('default:failure="invalid_rule";return 0;} }')
     lines.append((HERE/'harness.c').read_text())
     return '\n'.join(lines)+'\n'
 

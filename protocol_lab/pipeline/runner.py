@@ -154,12 +154,17 @@ def verify(out,workspace,expected_task_sha256=None):
         if name=='formal'and stage['status']in ('pass','unknown')and stage['data']!=read(out/'stages/formal/queries/result.json'):
             raise ValueError('Underlying formal report changed')
         if name=='formal'and stage['status']in ('pass','unknown')and stage['data'].get('solver_timeout_ms',10000)!=canonical['formal'].get('solver_timeout_ms',10000):raise ValueError('Formal solver budget differs from task')
-        if name=='formal'and stage['status']in ('pass','unknown'):
-            expected_policy=canonical['formal'].get('solver_preprocess','none')
-            if stage['data'].get('solver_preprocess', 'none')!=expected_policy:raise ValueError('Formal solver preprocessing policy differs from task')
-            if expected_policy=='exact-v1':
-                if stage['data'].get('solver_tactics')!=['propagate-values','solve-eqs','simplify','smt']:raise ValueError('Formal solver tactics metadata differs')
-                if stage['data'].get('solver_preprocess_source')!="z3.Then('propagate-values','solve-eqs','simplify','smt').solver()":raise ValueError('Formal solver preprocessing source differs')
+        if name=='formal'and canonical['schema']!='spec-flow-task-v4'and stage['status']in ('pass','unknown')and stage['data'].get('solver_preprocess','none')!=canonical['formal'].get('solver_preprocess','none'):raise ValueError('Formal solver preprocessing policy differs from task')
+        if name=='formal'and canonical['schema']!='spec-flow-task-v4'and stage['status']in ('pass','unknown'):
+            _policy=canonical['formal'].get('solver_preprocess','none')
+            if _policy=='exact-v1'and not {'solver_preprocess','solver_tactics','solver_preprocess_source'}<=set(stage['data']):raise ValueError('Formal solver preprocessing metadata missing')
+            _canon_tactics=['propagate-values','solve-eqs','simplify','smt']if _policy=='exact-v1'else([]if _policy=='none'else None)
+            if _canon_tactics is None:raise ValueError('Unknown solver preprocessing policy in task')
+            if stage['data'].get('solver_tactics',[]if _policy=='none'else _canon_tactics)!=_canon_tactics:raise ValueError('Formal solver tactics differ from canonical preprocessing policy')
+            _expected_source='z3.Then(propagate-values,solve-eqs,simplify,smt).solver()'if _policy=='exact-v1'else'z3.Solver()'
+            _reported_source=stage['data'].get('solver_preprocess_source',_expected_source)
+            if _reported_source!=_expected_source:raise ValueError('Formal solver preprocessing source differs from canonical policy')
+        if name=='formal'and canonical['schema']=='spec-flow-task-v4'and stage['status']in ('pass','unknown')and 'solver_preprocess'in stage['data']:raise ValueError('BMC solver preprocessing must not be reported for sequence induction')
         if name=='sources'and stage['status']=='pass'and any(s['observed']!=s['expected']for s in stage['data']['sources']):
             raise ValueError('Failed source integrity falsely promoted')
     if r['assessment']!=assess(r['stages']):raise ValueError('Assessment differs from actual stage verdicts')

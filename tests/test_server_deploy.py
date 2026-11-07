@@ -45,6 +45,40 @@ class BoundedGatewayTests(unittest.TestCase):
     def messages(self,text='Return JSON'):
         return [{'role':'user','content':text}]
 
+    def test_reasoning_configuration_is_sent_and_bound_to_cache_and_same_ledger(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            root=Path(tmp);key=root/'key';key.write_text('fake-local-reasoning-key');key.chmod(0o600)
+            data={'usage':{'total_tokens':9},'choices':[{'finish_reason':'stop','message':{'content':'{"ready":true}'}}]}
+            with patch('agents.deepseek_gateway.urllib.request.build_opener')as make:
+                make.return_value.open.side_effect=lambda *a,**kw:io.BytesIO(json.dumps(data).encode())
+                old=request(self.messages(),root/'ledger',key,max_tokens=32,max_calls=64)
+                new=request(self.messages(),root/'ledger',key,max_tokens=8192,max_calls=64,thinking='enabled',reasoning_effort='high')
+                cached=request(self.messages(),root/'ledger',key,max_tokens=8192,max_calls=64,thinking='enabled',reasoning_effort='high')
+                self.assertNotEqual(old['request_sha256'],new['request_sha256']);self.assertTrue(cached['cached'])
+                payload=json.loads(make.return_value.open.call_args_list[-1].args[0].data)
+                self.assertEqual(payload['thinking'],{'type':'enabled'});self.assertEqual(payload['reasoning_effort'],'high')
+                self.assertEqual(payload['max_tokens'],8192);self.assertEqual(make.return_value.open.call_count,2)
+                ledger=json.loads((root/'ledger/ledger.json').read_text());self.assertEqual(len(ledger),2)
+                self.assertIn(old['request_sha256'],ledger)
+
+    def test_invalid_reasoning_does_not_create_ledger_or_send_request(self):
+        with tempfile.TemporaryDirectory()as tmp,patch('agents.deepseek_gateway.urllib.request.build_opener')as make:
+            target=Path(tmp)/'ledger'
+            with self.assertRaises(ValueError):request(self.messages(),target,'unused',thinking='disabled',reasoning_effort='high')
+            self.assertFalse(target.exists());make.assert_not_called()
+
+    def test_explicit_unlimited_budget_preserves_existing_rows_and_failed_retry_gate(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            root=Path(tmp);key=root/'key';key.write_text('fake-unlimited-test-key');key.chmod(0o600)
+            ledger=root/'ledger';ledger.mkdir();old={'historical-failed':{'status':'failed','usage':None}}
+            (ledger/'ledger.json').write_text(json.dumps(old))
+            data={'choices':[{'finish_reason':'stop','message':{'content':'{"ready":true}'}}]}
+            with patch('agents.deepseek_gateway.urllib.request.build_opener')as make:
+                make.return_value.open.return_value=io.BytesIO(json.dumps(data).encode())
+                result=request(self.messages(),ledger,key,max_tokens=32768,max_calls=None)
+                rows=json.loads((ledger/'ledger.json').read_text());self.assertEqual(rows['historical-failed'],old['historical-failed'])
+                self.assertIn(result['request_sha256'],rows);self.assertEqual(make.return_value.open.call_count,1)
+
     def test_success_is_cached_and_global_count_budget_prevents_new_request(self):
         with tempfile.TemporaryDirectory()as tmp:
             root=Path(tmp);key=root/'key';key.write_text('fake-local-test-credential');key.chmod(0o600)

@@ -1,0 +1,43 @@
+name: Single IR Ethernet IPv4 UDP ICMP generated endpoint
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['protocol_lab/**', 'model/ipv4-udp-icmp-endpoint.json', 'model/arp-udp-transmit.json', 'model/arp-endpoint.json', 'scenarios/ipv4-udp-icmp-endpoint/**', 'spec/ipv4-udp-icmp-endpoint-oracle.json', 'spec/fixtures/ipv4_udp_icmp_endpoint_v1.py', 'docs/ipv4-udp-icmp-endpoint.md', 'tests/test_ipv4_udp_icmp_endpoint.py', 'tests/test_native_rule_helpers.py', '.github/workflows/ipv4-udp-icmp-endpoint.yml']
+  pull_request:
+    paths: ['protocol_lab/**', 'model/ipv4-udp-icmp-endpoint.json', 'model/arp-udp-transmit.json', 'model/arp-endpoint.json', 'scenarios/ipv4-udp-icmp-endpoint/**', 'spec/ipv4-udp-icmp-endpoint-oracle.json', 'spec/fixtures/ipv4_udp_icmp_endpoint_v1.py', 'docs/ipv4-udp-icmp-endpoint.md', 'tests/test_ipv4_udp_icmp_endpoint.py', 'tests/test_native_rule_helpers.py', '.github/workflows/ipv4-udp-icmp-endpoint.yml']
+permissions:
+  contents: read
+jobs:
+  literal-native-symbolic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare pinned tools
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -r requirements-formal.txt
+          mkdir -p artifacts/ipv4-endpoint-native
+      - name: Check generic lowering and finite endpoint literal fault contracts
+        run: |
+          .venv/bin/python -m unittest discover -s tests -p test_native_rule_helpers.py -v > artifacts/ipv4-endpoint-native/helpers.log 2>&1
+          .venv/bin/python -m unittest discover -s tests -p test_ipv4_udp_icmp_endpoint.py -v > artifacts/ipv4-endpoint-native/contracts.log 2>&1
+          .venv/bin/python -m unittest discover -s tests -p 'test_codegen_*.py' -v > artifacts/ipv4-endpoint-native/codegen-regression.log 2>&1
+      - name: Execute actual generated C and retain exact fixed input Z3
+        run: |
+          .venv/bin/python examples/run_native_suite.py model/ipv4-udp-icmp-endpoint.json --scenario-dir scenarios/ipv4-udp-icmp-endpoint --formal-replay --out artifacts/ipv4-endpoint-native/endpoint > artifacts/ipv4-endpoint-native/endpoint-result.json
+          .venv/bin/python examples/run_native_suite.py model/ipv4-udp-icmp-endpoint.json --scenario-dir scenarios/arp-udp-transmit --formal-replay --out artifacts/ipv4-endpoint-native/legacy-compose > artifacts/ipv4-endpoint-native/legacy-compose-result.json
+          .venv/bin/python examples/run_native_suite.py model/ipv4-udp-icmp-endpoint.json --scenario-dir scenarios/arp-endpoint --formal-replay --out artifacts/ipv4-endpoint-native/legacy-arp > artifacts/ipv4-endpoint-native/legacy-arp-result.json
+          .venv/bin/python examples/run_native_suite.py model/tcp-data.json --scenario-dir scenarios/data --formal-replay --out artifacts/ipv4-endpoint-native/tcp-data > artifacts/ipv4-endpoint-native/tcp-data-result.json
+          .venv/bin/python examples/run_native_suite.py model/tcp-connection.json --scenario-dir scenarios/connection --out artifacts/ipv4-endpoint-native/tcp-connection > artifacts/ipv4-endpoint-native/tcp-connection-result.json
+      - name: Observe compiler frames without changing execution flags
+        run: cc -std=c99 -Wall -Wextra -Werror -fstack-usage -c artifacts/ipv4-endpoint-native/endpoint/generated/protocol.c -o artifacts/ipv4-endpoint-native/frame-observation.o
+      - name: Retain original C ELF raw outputs differences queries and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ipv4-udp-icmp-native-${{ github.sha }}
+          path: artifacts/ipv4-endpoint-native/
+          if-no-files-found: error

@@ -1,0 +1,44 @@
+{
+  "scenario_version": "0.2",
+  "id": "word-max",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "pack",
+      "fields": {
+        "value": 4294967295
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": [
+            {
+              "message": "word32.result",
+              "fields": {
+                "packed": [
+                  255,
+                  255,
+                  255,
+                  255
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "READY",
+    "variables": {
+      "packed": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    "timers": {}
+  }
+}
