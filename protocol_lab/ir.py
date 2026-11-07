@@ -435,12 +435,29 @@ class Machine:
         self.trace.append(record)
         self.check_invariants()
 
+    def _fire_next_timer(self, time_ms):
+        require(type(time_ms) is int and time_ms >= self.now_ms, "Time must be monotonic integer milliseconds")
+        require(bool(self.timers), "No active timer")
+        timer = min(self.timers, key=lambda x: (self.timers[x], x))
+        require(self.timers[timer] == time_ms, "Must fire the next timer at its exact deadline")
+        self.now_ms = time_ms
+        self._fire(self.model["timers"][timer]["event"], {}, timer)
+
+    def step_timer(self, time_ms):
+        """Commit one scheduled transition, including a prefix of a tied batch.
+
+        The caller supplies only time; the scheduler chooses the actual earliest
+        timer. Public dispatch still forbids injecting timer event names.
+        """
+        candidate = copy.deepcopy(self)
+        candidate._fire_next_timer(time_ms)
+        candidate.check_invariants()
+        self.__dict__.update(candidate.__dict__)
+
     def _advance(self, time_ms):
         require(type(time_ms) is int and time_ms >= self.now_ms, "Time must be monotonic integer milliseconds")
         while self.timers and min(self.timers.values()) <= time_ms:
-            timer = min(self.timers, key=lambda x: (self.timers[x], x))
-            self.now_ms = self.timers[timer]
-            self._fire(self.model["timers"][timer]["event"], {}, timer)
+            self._fire_next_timer(min(self.timers.values()))
         self.now_ms = time_ms
 
     def dispatch(self, name, fields=None, time_ms=None):
