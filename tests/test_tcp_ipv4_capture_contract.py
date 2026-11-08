@@ -41,3 +41,17 @@ class ControllerContracts(unittest.TestCase):
   with tempfile.TemporaryDirectory()as folder,patch('probe.os.write',return_value=1):
    with self.assertRaisesRegex(RuntimeError,'Incomplete TAP write'):
     probe.process_model_operation(rows,123,0,Path(folder),[],[],[])
+
+ def test_real_IR_and_frozen_scenarios_declare_driver_IO(self):
+  import json
+  root=Path(__file__).resolve().parents[1]
+  model=json.loads((root/'model/tcp-ipv4-endpoint.json').read_text())
+  self.assertEqual(model['messages'][probe.WIRE_MESSAGE],{'fields':{'frame':'bytes'}})
+  self.assertEqual(model['events'][probe.INGRESS_EVENT],{'origin':'network','fields':{'frame':'bytes'}})
+  network=set()
+  from protocol_lab.codegen.execute import commands
+  for f in sorted((root/'scenarios/tcp-ipv4-endpoint').glob('*.json')):
+   scenario=json.loads(f.read_text())
+   commands(model,scenario)
+   network.update(step['event']for step in scenario['steps']if 'event'in step and model['events'][step['event']]['origin']=='network')
+  self.assertIn(probe.INGRESS_EVENT,network)

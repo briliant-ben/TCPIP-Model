@@ -1,0 +1,24 @@
+{
+  "status": "failure_preserved",
+  "files": 37,
+  "source_commit": "0ac1b5f48ef416eb6a174bcd3a9fa8aa66a8ce1c",
+  "all_source_hashes_verified": true,
+  "native_pid": 2801,
+  "native_commands": [
+    "B",
+    "D 0 T.app.connect"
+  ],
+  "pcap_packets": 2,
+  "pcap_lengths": [
+    60,
+    42
+  ],
+  "raw_pcap_link_bytes_equal": true,
+  "dropped": 0,
+  "quiet_ms": 0.469068,
+  "capture_runtime_gate_accepted": false,
+  "reason": "guessed net.frame not declared; actual shared event L.net.frame; raw reply not submitted to native C",
+  "old_fed_flag_not_accepted_as_actual_ingress": true,
+  "new_TCP_ingress_or_peer_accepted": false,
+  "archived_code_ELF_or_solver_executed": false
+}

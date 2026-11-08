@@ -25,6 +25,7 @@ from protocol_lab.codegen.execute import commands
 
 TAP_NAME = 'tap0'
 WIRE_MESSAGE = 'L.ethernet.tx'
+INGRESS_EVENT = 'L.net.frame'
 SUBJECT_IP = '192.0.2.1'
 PEER_IP = '192.0.2.2'
 PEER_MAC = '02:00:00:00:00:02'
@@ -261,7 +262,7 @@ def main():
             return None
         raw = info['raw']
         links.append(dict(direction='ingress', file=info['file'], raw=raw.hex(),
-                          monotonic_ns=stamp, fed=processing))
+                          monotonic_ns=stamp, fed=False, processing_requested=processing))
         return raw
 
     def operation(step):
@@ -317,6 +318,8 @@ def main():
         model = load(args.model)
         if model['messages'].get(WIRE_MESSAGE) != {'fields': {'frame': 'bytes'}}:
             raise RuntimeError('Model does not declare the selected Ethernet wire ABI')
+        if model['events'].get(INGRESS_EVENT) != {'origin': 'network', 'fields': {'frame': 'bytes'}}:
+            raise RuntimeError('Model does not declare the selected Ethernet ingress ABI')
         preflight_complete = True
         fd = os.open('/dev/net/tun', os.O_RDWR)
         fcntl.ioctl(fd, 0x400454CA, struct.pack('16sH22x', TAP_NAME.encode(), 0x1002))
@@ -344,7 +347,10 @@ def main():
             if fd in select.select([fd], [], [], timeout)[0]:
                 raw = receive(True)
                 if raw is not None:
-                    result = operation(dict(event='net.frame', fields=dict(frame=list(raw))))
+                    incoming_link = links[-1]
+                    result = operation(dict(event=INGRESS_EVENT, fields=dict(frame=list(raw))))
+                    incoming_link['fed'] = True
+                    incoming_link['committed'] = result['status'] == 'ok'
                     if result['status'] == 'ok' and is_tcp_ipv4(raw):
                         report['first_ingress_admitted'] = True
         # A model rejection still receives a complete, independently validated
