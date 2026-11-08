@@ -1,0 +1,31 @@
+{
+  "status": "raw_hashes_and_actual_source_gates_match",
+  "files": 1135,
+  "archive_sha256": "273fc159d14dd90d2f1479a2f11ae7a9f152b952e499cfcf4376325613a3733a",
+  "source0089_actual_modules_passed": 2,
+  "direct_CLI_exact_JSON_match": true,
+  "review0087_contract_valid": false,
+  "review0087_original_ready_label_rejected": true,
+  "request0090_exact_metadata": {
+    "request_sha256": "791093738a38e3ff476f81c04f2ba05a3616e5ea3bb425da7c490b57ade8657d",
+    "status": "invalid_response",
+    "model": "deepseek-v4-pro",
+    "max_tokens": 32768,
+    "prompt_bytes": 69461,
+    "finished_at": 1794063058.0897408,
+    "usage": {
+      "prompt_tokens": 24110,
+      "completion_tokens": 32768,
+      "total_tokens": 56878,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 16605
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 24110
+    }
+  },
+  "archived_code_ELF_solver_executed": false
+}

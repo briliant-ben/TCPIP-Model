@@ -1,0 +1,11 @@
+# Integration source and review-contract gates
+
+1135 original public files, TAR SHA `273fc159d14dd90d2f1479a2f11ae7a9f152b952e499cfcf4376325613a3733a`. Manifest binds all original files. Read-only audit verifies hashes and receipts without executing archived code/ELF/solver. Startup snapshots are historical observations.
+
+0083 source review missed inherited-loading/fixture/API/doc errors; actual0085 tests rejected both modules.0086 input-size preflight stopped before API.0088 corrects inherited loading and most tests; component tests pass, conflict fixture uses unsupported gt/lt.0089 zero-API test-only exact Int normalization and stronger explicit conflict SAT/reference Conflict then passes both modules, arbitrary-CWD CLI reproduces approved IR bytes; strict independent review has blocking/findings/limitations lists and no blocking. Local integration further strengthens guards/independent literal/safe-output tests and corrects remaining doc facts; those local edits are not attributed to this original gate.
+
+0084 completed response omits required tests and is rejected.0087 source review returns files instead of required review lists: its controller's ready label is WRONG and rejected by root; no independent approval or execution/network evidence. Root also rejects unsafe/vacuous synthetic tests. Future review gates require explicit typed lists; missing blocking is never an empty successful review.
+
+0090 original API metadata is bound to its exact public request body in the separate sanitized receipt. It is invalid_response at32768 completion-token cap, no accepted parsed source, not a successful harness. Original job is not retried; no raw provider reasoning/credentials are archived.0091 oversized input stopped before any API.0092 trims independent-source excerpts and corrects the controller's timeout constant from frozen profile30000ms;0093 is a different small first-ingress diagnostic deliverable, not a retry/full-peer claim.
+
+Controller corrections: T.app.send(data) queues; T.app.transmit has no fields; T.app.receive(count) reads. T.application_data is valid. codegen.execute.compare returns match, execute.run/build wrappers pass. T.user default is connect+30000, not20000. Original wrong controller notes remain historical evidence, not normative truth. Old failed/unknown outcomes and source/oracle hashes remain unchanged.

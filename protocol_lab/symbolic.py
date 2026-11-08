@@ -16,31 +16,48 @@ def model_hash(model):
 
 def replay(model, witness):
     try:
+        require(type(witness) is dict and type(witness.get("initial")) is dict
+                and type(witness.get("steps")) is list, "Malformed witness")
         machine = Machine(model, witness["initial"])
     except ModelError as exc:
         return {"status": "runtime_rejected", "step": "initial", "error": str(exc)}
     compared = 0
     for step in witness["steps"]:
-        if step.get("origin") == "clock":
-            trace_size = len(machine.trace)
-            try:
-                machine.tick(step["at_ms"])
-            except ModelError as exc:
-                return {"status": "runtime_rejected", "step": compared, "error": str(exc)}
-            if (len(machine.trace) != trace_size or machine.now_ms != step["at_ms"]
-                    or machine.snapshot() != step["after"] or step["emitted"] != []):
-                return {"status": "semantic_mismatch", "step": compared, "runtime": machine.snapshot(), "symbolic": step["after"]}
-            compared += 1
-            continue
         try:
-            if step["origin"] == "timer":
+            require(type(step) is dict and {"at_ms", "event", "origin", "transition", "fields", "after", "emitted"} <= set(step), "Malformed witness step")
+            require(type(step["at_ms"]) is int and type(step["fields"]) is dict
+                    and type(step["after"]) is dict and type(step["emitted"]) is list,
+                    "Malformed witness step values")
+            trace_size = len(machine.trace)
+            if step["origin"] == "clock":
+                require(model["semantics"] == CLOCK_SEMANTICS and step["event"] is None
+                        and step["transition"] == "@clock_advance" and step["fields"] == {},
+                        "Invalid clock witness metadata")
                 machine.tick(step["at_ms"])
+                if (len(machine.trace) != trace_size or machine.now_ms != step["at_ms"]
+                        or machine.snapshot() != step["after"] or step["emitted"] != []):
+                    return {"status": "semantic_mismatch", "step": compared, "runtime": machine.snapshot(), "symbolic": step["after"]}
+                compared += 1
+                continue
+            require(type(step["event"]) is str and type(step["transition"]) is str,
+                    "Malformed witness event metadata")
+            schema = model["events"].get(step["event"])
+            require(schema is not None and schema["origin"] == step["origin"],
+                    "Witness event origin mismatch")
+            if step["origin"] == "timer":
+                require(step["fields"] == {}, "Timer witness fields must be empty")
+                machine.step_timer(step["at_ms"])
             else:
                 machine.dispatch(step["event"], step["fields"], step["at_ms"])
         except ModelError as exc:
             return {"status": "runtime_rejected", "step": compared, "error": str(exc)}
+        if len(machine.trace) != trace_size + 1:
+            return {"status": "semantic_mismatch", "step": compared, "reason": "Witness omitted scheduled transitions"}
         row = machine.trace[-1]
-        if machine.snapshot() != step["after"] or row["emitted"] != step["emitted"]:
+        if (row["time_ms"] != step["at_ms"]
+                or row["event"] != {"name": step["event"], "fields": step["fields"]}
+                or row["transition"] != step["transition"]
+                or machine.snapshot() != step["after"] or row["emitted"] != step["emitted"]):
             return {"status": "semantic_mismatch", "step": compared,
                     "runtime": machine.snapshot(), "symbolic": step["after"]}
         compared += 1
@@ -90,6 +107,10 @@ def encode_trace(model, trace, **encoding_options):
 def crosscheck_trace(model, trace, out=None):
     enc = encode_trace(model, trace)
     query = enc.solver.to_smt2()
+    if out is not None:
+        out = Path(out)
+        out.mkdir(parents=True, exist_ok=True)
+        (out / "path.smt2").write_text(query)
     answer = enc.solve()
     result = {"backend": "z3-constrained-trace", "scope": "fixed_inputs_and_rule_choices",
               "all_input_safety": "not_claimed", "query_strategy": "exact_fixed_choice_encoding_and_fixed_input_substitution", "steps": len(trace), "query": str(answer),
@@ -114,7 +135,6 @@ def crosscheck_trace(model, trace, out=None):
     if out is not None:
         out = Path(out)
         out.mkdir(parents=True, exist_ok=True)
-        (out / "path.smt2").write_text(query)
         (out / "result.json").write_text(json.dumps(result, indent=2) + "\n")
     return result
 
@@ -163,6 +183,9 @@ class Encoding:
         require(all(n in model["variables"] for n in symbolic_initials), "Unknown symbolic initial variable")
         self.byte_sort = z3.SeqSort(z3.BitVecSort(8)) if byte_encoding == "sequence" else z3.IntSort()
         self.checksum_sum = None
+        self._expr_cache = {}
+        self._cache_enabled = False
+        self._cache_event_name = None
         self.sorts = {"bool": z3.BoolSort(), "int": z3.IntSort(),
                       "seq32": z3.BitVecSort(32) if sequence_encoding == "bitvector" else z3.IntSort(),
                       "string": z3.StringSort(), "bytes": self.byte_sort, "rational": z3.RealSort()}
@@ -250,6 +273,26 @@ class Encoding:
         return z.StringVal(value)
 
     def expr(self, value, frame, fields=None):
+        if not self._cache_enabled:
+            return self._expr_uncached(value, frame, fields)
+        if self._contains_checksum(value):
+            return self._expr_uncached(value, frame, fields)
+        key = (self._cache_event_name, json.dumps(value, sort_keys=True, separators=(",", ":")))
+        if key not in self._expr_cache:
+            self._expr_cache[key] = self._expr_uncached(value, frame, fields)
+        return self._expr_cache[key]
+
+    def _contains_checksum(self, value):
+        if type(value) is not dict:
+            return False
+        if value.get("op") == "bytes_internet_checksum16":
+            return True
+        for arg in value.get("args", []):
+            if self._contains_checksum(arg):
+                return True
+        return False
+
+    def _expr_uncached(self, value, frame, fields=None):
         z = self.z
         if type(value) is not dict:
             return self.literal(value)
@@ -349,13 +392,18 @@ class Encoding:
         if self.fixed_choices is not None:
             self.solver.add(choice == self.fixed_choices[index])
         branches, enabled = [], []
+        self._cache_enabled = True
+        self._expr_cache = {}
         not_terminal = z.And(*[old["state"] != m["states"].index(s) for s in m["scope"]["terminal_states"]])
         for j, rule in enumerate(m["transitions"]):
             name = rule["event"]
             origin = m["events"][name]["origin"]
             guard_frame = {**old, "now": new["now"]} if m["semantics"] == CLOCK_SEMANTICS else old
+            self._cache_enabled = True
+            self._cache_event_name = name
             conditions = [not_terminal, old["state"] == m["states"].index(rule["from"]),
                           new["now"] >= old["now"], self.expr(rule["guard"], guard_frame, fields[name])]
+            self._cache_enabled = False
             expiring = None
             if origin == "timer":
                 matches = [n for n, spec in m["timers"].items() if spec["event"] == name]
@@ -404,6 +452,8 @@ class Encoding:
                 conditions += [new[group][n] == work[group][n] for n in work[group]]
             branches.append(z.And(*conditions))
             self.branches.append((index, j, emitted))
+        self._cache_enabled = False
+        self._expr_cache = {}
         # Suffix padding covers every prefix <= depth, including dead-end states.
         unchanged = [new["state"] == old["state"], new["now"] == old["now"]]
         for group in ("values", "active", "due"):

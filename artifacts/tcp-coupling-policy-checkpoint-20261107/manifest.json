@@ -1,0 +1,2309 @@
+{
+  "created_at": 1794057093.2291155,
+  "files": [
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-configure-ttl/native/difference.json",
+      "size": 11433,
+      "sha256": "b8bb2752f53e53a51c3f90ce8f179661ac781da2ce1e6ceecf8dd3ac091b8bf5"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-configure-ttl/native/execution.json",
+      "size": 1909,
+      "sha256": "1e4a8cc231e1f44573beaf8a53c3eff21ec3edfb930d2633651986746bf0f829"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-configure-ttl/native/native-input.txt",
+      "size": 168,
+      "sha256": "9c7a55183ff6b14ff0cb0963ac07b65320233184a476351ad7ccf63493829f0b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-configure-ttl/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-configure-ttl/native/native.stdout",
+      "size": 11218,
+      "sha256": "3c658c570f122a0af9d19cbd4014e0581d83c34f344914e24767b03eb88f2de2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-configure-ttl/reference-trace.json",
+      "size": 16184,
+      "sha256": "c982fce4f6c5252f94eb2059803ade9af42598219de4ab6b2cfc6138626b056f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-configure-ttl/scenario.json",
+      "size": 1696,
+      "sha256": "0655f17a35f4c962297ded021ba3663042e7ca98780fe32e27c583340a94098e"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-configure-ttl/symbolic/path.smt2",
+      "size": 42297,
+      "sha256": "3bd9566bffae46b9b47015ab93df86c5df81a89660b1c98f1dfcab0d8676f275"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-configure-ttl/symbolic/result.json",
+      "size": 11982,
+      "sha256": "478c66f907e4d0ba783898e55f7f9de38c8b7edc3343e875dfd731bcf1ed6569"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-expire-before-query/native/difference.json",
+      "size": 10434,
+      "sha256": "6e3fe5d280cda2db265d2a628e2e620ed76464f5b26a4262386085b04a2aec98"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-expire-before-query/native/execution.json",
+      "size": 1921,
+      "sha256": "1674ef5101778eea168a43d574175ca875ce64615888a1d35c3159c8b659d96f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-expire-before-query/native/native-input.txt",
+      "size": 138,
+      "sha256": "ab417c449ba7ca175be13ffe675df1d429e84c25f189c15214bfd54dd24057ea"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-expire-before-query/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-expire-before-query/native/native.stdout",
+      "size": 7763,
+      "sha256": "88daa327603b705cc50e84d7bd5996783b2fe0bed20b88229110cd6fd5ad92fb"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-expire-before-query/reference-trace.json",
+      "size": 13280,
+      "sha256": "3954b6422ce9b964ead08afb0a8a8d376724ba5fcb78988b4ab97e8710ff911b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-expire-before-query/scenario.json",
+      "size": 2919,
+      "sha256": "8d69b4e7dcf6fb6bacf21fb542682130e9494df5ad190816248bcbf66be9c88b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-expire-before-query/symbolic/path.smt2",
+      "size": 34158,
+      "sha256": "2422c68189db3f2d409a15375e5580772f4dd7f54a4ebcb8e1b1e21c1dd282b6"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-expire-before-query/symbolic/result.json",
+      "size": 10989,
+      "sha256": "8265d580b52ab122e4d98000bc917b6ca3da731672632e5a1c7c7171d72ed12b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-incoming-request/native/difference.json",
+      "size": 6087,
+      "sha256": "102f47163c1e6d2eb3200aef522e30d4c1fe16e376ae391facdd40298f5fef19"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-incoming-request/native/execution.json",
+      "size": 1915,
+      "sha256": "de5342c83f2727ea493fab1d63e2ca2eaa439f5b0c96d82d94fd94083b596efd"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-incoming-request/native/native-input.txt",
+      "size": 105,
+      "sha256": "b4e0b698c2d5fb0f0a9752e200b0a187bb6509fe5e55491b48fe93b7ba853e4d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-incoming-request/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-incoming-request/native/native.stdout",
+      "size": 3951,
+      "sha256": "2b218922a7456bee35be75fadf6b9cb883f71ce25af00b7b229a55282ede1fd8"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-incoming-request/reference-trace.json",
+      "size": 5517,
+      "sha256": "7baafcfe1812fd81c828170275a74eed4b803f164d58b72364a30e4b451c55bd"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-incoming-request/scenario.json",
+      "size": 2643,
+      "sha256": "9d7c5e56c87887e1a3509847b8ae2e33e7fa47fb1d1f52f51f708873305d89ba"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-incoming-request/symbolic/path.smt2",
+      "size": 17697,
+      "sha256": "982b8d58dd7926e3bf70984f271bbb58a740caf17d8e5553ba45e3d141414513"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-incoming-request/symbolic/result.json",
+      "size": 6462,
+      "sha256": "00933a89c9ebb4ec70784f494cee558b7530a119ed446e9e670312d544ca8ca4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-merge-before-target/native/difference.json",
+      "size": 11777,
+      "sha256": "246e6b2a6b087d137f1b93ec0533a73e0b31d0cd549cf87ef2c36cdeb85fdf6b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-merge-before-target/native/execution.json",
+      "size": 1921,
+      "sha256": "bab3cc8767401e2d5b94136ef8e233684b9953aa2501d707aca1a35c7bdc772f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-merge-before-target/native/native-input.txt",
+      "size": 239,
+      "sha256": "d9181ccca245be08eb3c4a4a3156a30c4c3c84756207e5383728b18fc4e9af7a"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-merge-before-target/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-merge-before-target/native/native.stdout",
+      "size": 9179,
+      "sha256": "8786d22fd8e87de140a8940d203f7845bf8366faed8d58aacdedf5b3e9892235"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-merge-before-target/reference-trace.json",
+      "size": 14509,
+      "sha256": "3773d957b9a3431cd459a9c42efd2377c1e387ea9ce9bce5f5172501c9026a02"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-merge-before-target/scenario.json",
+      "size": 4118,
+      "sha256": "510d49eb71116ccf6094ca2e17fb72cb89b60e1e9d7569497c8639af8a36c853"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-merge-before-target/symbolic/path.smt2",
+      "size": 35872,
+      "sha256": "3559e1400b1f3d04743845253d5e83440b33f4930cad6d357a7a126e69c9ff2b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-merge-before-target/symbolic/result.json",
+      "size": 12335,
+      "sha256": "dd3baf8757e33f9ac9911b93a611cd688bbc5035c2eae1704e8a197c5e61dae9"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-nonlocal-empty/native/difference.json",
+      "size": 4681,
+      "sha256": "e9fa216cbf4542a855ac7202edc1d82cbf17b26fef0bee5a67e01389b49a4f59"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-nonlocal-empty/native/execution.json",
+      "size": 1911,
+      "sha256": "0cd648972dd2851d00138f961a0d3b19e910ecae24f5e4279bb18cae616fda9a"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-nonlocal-empty/native/native-input.txt",
+      "size": 105,
+      "sha256": "78f00eb72024e1009d5ac3a3363dd387a4c03a6ffd52d5a2758cfc40bb5ae85a"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-nonlocal-empty/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-nonlocal-empty/native/native.stdout",
+      "size": 3716,
+      "sha256": "11710ac4c862fec979f7ea80714ef53072cd2380456cd0e8917c13652cc944f3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-nonlocal-empty/reference-trace.json",
+      "size": 4368,
+      "sha256": "e408a3452d4cadabca792fff7048a0f6824816e1648e17e786a771d9afe32c2a"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-nonlocal-empty/scenario.json",
+      "size": 1107,
+      "sha256": "03533b7307ad018dd2c6f540696116403e2cf512e5d1381babc8529fe24dc2eb"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-nonlocal-empty/symbolic/path.smt2",
+      "size": 17575,
+      "sha256": "95da6dbabb367bcc4276deb28028a1ed582ff6cfc5a7bf3a835f2487c310717c"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-nonlocal-empty/symbolic/result.json",
+      "size": 5005,
+      "sha256": "cd522e6256ecd13ddae3acbdeac85c22c1d5a0fc7efba7edbcf95c43ca8bc4ca"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-padding-ignored/native/difference.json",
+      "size": 6365,
+      "sha256": "5fc496465edb4044cc22ad4b4eb8465b6eb70882c0a253b114c133dd7f5b6b13"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-padding-ignored/native/execution.json",
+      "size": 1913,
+      "sha256": "15dc32ccbc7a921849fc35d8e9c16f1c8509ad12a82b2b669f9e767436503eb9"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-padding-ignored/native/native-input.txt",
+      "size": 141,
+      "sha256": "c5867d2c2d557d33a532782b79129f182a60c6ede662d5b1ca30a31815dc487e"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-padding-ignored/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-padding-ignored/native/native.stdout",
+      "size": 3995,
+      "sha256": "33c6b90b8e70249c968dcddbb2a3050b46d2132a4b2ef2121093294dba043e78"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-padding-ignored/reference-trace.json",
+      "size": 5759,
+      "sha256": "70aa6cfcf8405045829e9d86c7070265ee106f5c699ee1427d3f48d6b26726a5"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-padding-ignored/scenario.json",
+      "size": 2884,
+      "sha256": "8ceab77e3e3f82534abc514ca1c137a32d203785786c8f9aa2c29f808328f0d6"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-padding-ignored/symbolic/path.smt2",
+      "size": 18468,
+      "sha256": "0130d9a49d2b06b58962dc7326b4824e9a96e0707045e87035a2d45d7b4856c2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-padding-ignored/symbolic/result.json",
+      "size": 6740,
+      "sha256": "6b130a2f43937d2b1dafb9f94ef89c7206afb62cd061bb08d6208d937927c910"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-pending-nonlocal/native/difference.json",
+      "size": 11662,
+      "sha256": "6a2db17c7e9a3b78e841aaa60383fd023063ae7819ea56ef11c205d3ec1ee7a9"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-pending-nonlocal/native/execution.json",
+      "size": 1915,
+      "sha256": "86efdf4bc838a708d43948f881c97256217f4af0c1104ee14003db072f8b2263"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-pending-nonlocal/native/native-input.txt",
+      "size": 238,
+      "sha256": "9b15d1b2d8de86b9628f2a7a1d4cfb411e882f5acce22330932d22ca2b5e192b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-pending-nonlocal/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-pending-nonlocal/native/native.stdout",
+      "size": 9192,
+      "sha256": "762b233cebc1117dc32d30e108cee029f649348ca500c8fd3af71e6cf65a9983"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-pending-nonlocal/reference-trace.json",
+      "size": 14240,
+      "sha256": "95c3938d1c593a3db61da84e893134a006c86f4439d2ff0d240b4fe9eacc06e2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-pending-nonlocal/scenario.json",
+      "size": 4113,
+      "sha256": "a9fddc8d54e1956d172b88ec12a5ff4680a9fc3304b87cb14591391e74b6ce39"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-pending-nonlocal/symbolic/path.smt2",
+      "size": 35730,
+      "sha256": "c68ce361e0f27f91780bcba8979f013f80893fc42cf577618ac55a70ea56bc48"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-pending-nonlocal/symbolic/result.json",
+      "size": 12109,
+      "sha256": "d5bfd06fd42ad06c7651e0b4396b33d1eddbd93dfb75b0eb848aee19eb500242"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-refresh-extends/native/difference.json",
+      "size": 10613,
+      "sha256": "e78acaa2e6dd412946172526d976f62e35642c3a34068f46305007b8f3320e1f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-refresh-extends/native/execution.json",
+      "size": 1913,
+      "sha256": "2bc76408c3c6e03ad4d67a9c73be98cda967f628818212917fa62f2145f2b2da"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-refresh-extends/native/native-input.txt",
+      "size": 253,
+      "sha256": "03bf9a0c61433e631be66045f5f36e854cd088c3230fd39f2f52ba23cb875d1b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-refresh-extends/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-refresh-extends/native/native.stdout",
+      "size": 10179,
+      "sha256": "82d488eb70320ccab1a7de4d7bea5ea7e9ec5c3ce0061523aa0f3c8fefd94088"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-refresh-extends/reference-trace.json",
+      "size": 13481,
+      "sha256": "2ce66e5456f9ba92df19843d5db87b4ec1ffbb4d3caa1eab3e09567fd857c860"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-refresh-extends/scenario.json",
+      "size": 2764,
+      "sha256": "d893b37773375362d048f18bf7bac5fcb410e450e7bd6dab59fcc4f669d33c6a"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-refresh-extends/symbolic/path.smt2",
+      "size": 35990,
+      "sha256": "128f0637bd3427d94fc61be1306c8b22722819180779f4d0b4d5d255510b6cdf"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-refresh-extends/symbolic/result.json",
+      "size": 11034,
+      "sha256": "bc7d03ce79bb6488086d13f8d2b119c6feafb9d6d47226874b52affc83e7f84d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-reply-replaces/native/difference.json",
+      "size": 10594,
+      "sha256": "5b57c4faaf94f82524fcff86d2d9eb504a4bdf0fd9cd05d19d8d7a113f172961"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-reply-replaces/native/execution.json",
+      "size": 1911,
+      "sha256": "e3e5d160ed8cf87ad24a2a6789631ea3c41e9034a1b8954b8f3a0eae2081cda5"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-reply-replaces/native/native-input.txt",
+      "size": 238,
+      "sha256": "ba137106ea41385c36ec730a5754d617791dccfe89a44e5cb82c6909f2073ce1"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-reply-replaces/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-reply-replaces/native/native.stdout",
+      "size": 8983,
+      "sha256": "06258c72280bdf528eada3bf0a7f91f49341e49d1d60f165b6986e2bea9d0111"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-reply-replaces/reference-trace.json",
+      "size": 13462,
+      "sha256": "54164e0f30e8e96fa11381a58b540daa0bc01ddd6f411ae90dfccfa6b8589aa0"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-reply-replaces/scenario.json",
+      "size": 2656,
+      "sha256": "1fda6130aa2de88a2d457d885efb2897277ee714067a5a29b7e45fe61c698e0c"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-reply-replaces/symbolic/path.smt2",
+      "size": 35781,
+      "sha256": "80caafba0cad208536afa0f50d81f3c4e338f3b8c7ca0da95c486338e3dbf1f2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-reply-replaces/symbolic/result.json",
+      "size": 11016,
+      "sha256": "ccad8095d4d12f5d139fee4396cf692fd1adc3669f1def614812db727667e4a9"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-resolve-reply-hit/native/difference.json",
+      "size": 11498,
+      "sha256": "d86aee192bef6035242b10b3de2e11ba666634e47e85cc378211cfbc705405b6"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-resolve-reply-hit/native/execution.json",
+      "size": 1917,
+      "sha256": "acb93561f859bb9b455c2d5e76064dd12129035f076bac37bb85371dc0ca032b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-resolve-reply-hit/native/native-input.txt",
+      "size": 165,
+      "sha256": "133c8740defa63444294dde9fd54f3e1776565b981db85b9baf1ac25a664b712"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-resolve-reply-hit/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-resolve-reply-hit/native/native.stdout",
+      "size": 9190,
+      "sha256": "c654d2afc0caa49016e81bd77b315763ec75f12d8159c7bfc312733e2633e5fa"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-resolve-reply-hit/reference-trace.json",
+      "size": 14188,
+      "sha256": "14c86177801f72094da50e5d15d15ea0a90127d3d8bd6d91c89b3e355098b0c5"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-resolve-reply-hit/scenario.json",
+      "size": 4032,
+      "sha256": "094a203061e1555396ffcc5ca6b5d3043d411cd9101315193d70356023f99783"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-resolve-reply-hit/symbolic/path.smt2",
+      "size": 34449,
+      "sha256": "f31a142b616cbfcc4d68f56c2c1ac7974d9a2b0393f0036c6e82db77a1978708"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-resolve-reply-hit/symbolic/result.json",
+      "size": 12026,
+      "sha256": "9069c74f863abb3bb2f9edd1bce333bd696b9a926fb330227a39f9e40a3c2ac1"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-retry-failure/native/difference.json",
+      "size": 13311,
+      "sha256": "7077de118bff37274e50ada871e49efbfbf05fcc4f76474faec9bc250106af88"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-retry-failure/native/execution.json",
+      "size": 1909,
+      "sha256": "157037f730626a50af80d3b4a377ffab10326dab184a31dcc84139c26b95378d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-retry-failure/native/native-input.txt",
+      "size": 75,
+      "sha256": "810918d8cbbf655a7424f9f00b625d34da202a0f1f7935c2d3ca3b58d640b255"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-retry-failure/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-retry-failure/native/native.stdout",
+      "size": 11555,
+      "sha256": "71056822cc346d8af17beeb40ebc66c5eaecc8854301f5691df9366ddb34ea43"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-retry-failure/reference-trace.json",
+      "size": 17710,
+      "sha256": "ee9e64da4b15bc093d736efdbfb97aeba602db5e54395c03228693af4cebd0a1"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-retry-failure/scenario.json",
+      "size": 4316,
+      "sha256": "b246cde0022ef5b8d78c457b0815eddde1f0b7ed61524c3efdfdcf51357643d2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-retry-failure/symbolic/path.smt2",
+      "size": 41036,
+      "sha256": "38c4cf4ff682f2f71431055275afdb08b77b0e1fc7d04fbb4a82419219e5114e"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-retry-failure/symbolic/result.json",
+      "size": 14070,
+      "sha256": "619265b5c79709359e53765ec889efe8f9ec67d248fb7b7c5ba62033cc53d093"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-short-entry/native/difference.json",
+      "size": 4198,
+      "sha256": "023696e5fed23d4d997c8b97e61023ebcce09451f57e35aa82762bd25aa30be4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-short-entry/native/execution.json",
+      "size": 1905,
+      "sha256": "f80fddbd8971df31cf4b3712f145b3bc278a626c8ae078a307900db1cdcab2b2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-short-entry/native/native-input.txt",
+      "size": 49,
+      "sha256": "91dc23875ab0071b8483122b7e233e5235a3a601aaaaf2976c7a920f60810382"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-short-entry/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-short-entry/native/native.stdout",
+      "size": 3613,
+      "sha256": "015056d55c4a1dabd10bbaf57bce858a0594c89a108c93cb1d2f5315c10749c2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-short-entry/reference-trace.json",
+      "size": 3945,
+      "sha256": "0a7da2dab3b67e002f0098a89010563a6464f140911d297b8ef28dfe08480a0e"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-short-entry/scenario.json",
+      "size": 724,
+      "sha256": "7caf91b450408327c6567a65f613db5394c64bd48cd23bbfa7633c45aa1772d5"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-short-entry/symbolic/path.smt2",
+      "size": 16625,
+      "sha256": "c043f78d0e30d59e1925351875d39cd94e05939b124ff3129c1ed09ad96d046f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-short-entry/symbolic/result.json",
+      "size": 4566,
+      "sha256": "baf72cb686cbf1190a8f976b93a53cae9addc9684d2f8d751bae76d731b99b99"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-simultaneous-request/native/difference.json",
+      "size": 9954,
+      "sha256": "57c4c6c9bd5678cfd9488d78f36e2ed0e1caabb6abeee826812324d4a26e8079"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-simultaneous-request/native/execution.json",
+      "size": 1923,
+      "sha256": "05849bb65013536f4773102da397cc362214e2d3dcc3d2bd6f5699bf6337e776"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-simultaneous-request/native/native-input.txt",
+      "size": 135,
+      "sha256": "52a7b665a0a5d7be5dc02d32473ab922de6db0a5f5325dba6554593c33a37a3a"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-simultaneous-request/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-simultaneous-request/native/native.stdout",
+      "size": 6778,
+      "sha256": "acb1d846083668c2aa44cb198dda543e94402140eaca5b4bca1c416efdfa6d62"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-simultaneous-request/reference-trace.json",
+      "size": 10840,
+      "sha256": "8ad8cecf96039f919ef2760c7ec994fec1d976aeec867f59afc7eba632217a09"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-simultaneous-request/scenario.json",
+      "size": 4774,
+      "sha256": "ed142e217bb8f06d5b4f827e09432a493e18ed647dd44d7eb940ffff1e8a546b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-simultaneous-request/symbolic/path.smt2",
+      "size": 26125,
+      "sha256": "93933e4b42275b3cdb0a8dbee1dc6d45d0fe9142d0d13d49e747bbbb0e8c93c4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-endpoint-simultaneous-request/symbolic/result.json",
+      "size": 10491,
+      "sha256": "0336e4615b233168a09ae25dd0f2cac7512c2c93f7730063276c4cb29761bea4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cache-expiry-before-send/native/difference.json",
+      "size": 25587,
+      "sha256": "695f1dc55724073512b8386df49c0f4c914c915ea42e4a6862027455d0e19218"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cache-expiry-before-send/native/execution.json",
+      "size": 1939,
+      "sha256": "ae544d4095c3a3c03e289f96a04793d60694771358687a1bd3a7023bf8add8cd"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cache-expiry-before-send/native/native-input.txt",
+      "size": 157,
+      "sha256": "0b3ce9a0270de49d9bd22534368ec95f08367746c91af22a5bf4bcce13af507f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cache-expiry-before-send/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cache-expiry-before-send/native/native.stdout",
+      "size": 13431,
+      "sha256": "9fd6e4b99198dd79b71df055920c92055f1c65b6dca34e0d4346feb46f542c8b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cache-expiry-before-send/reference-trace.json",
+      "size": 31591,
+      "sha256": "3c372298c311a5fb914a115753acc4b4b77c7ee779cbdf52cfad704d59378c1f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cache-expiry-before-send/scenario.json",
+      "size": 6905,
+      "sha256": "9fb5923ff540582ee06e711b5e99358086eeb4e564f3671c3c06574de49b7618"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cache-expiry-before-send/symbolic/path.smt2",
+      "size": 47497,
+      "sha256": "1d7e30d945b4cff602d3d2303768815ff3f1ccf9d08cfb8234b7d8663f9931bb"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cache-expiry-before-send/symbolic/result.json",
+      "size": 25166,
+      "sha256": "f4874b22d09397d7ed87a211da55890102bea5777527fc128ae56e2e79abce48"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-checksum-policy-freezes-queued/native/difference.json",
+      "size": 26334,
+      "sha256": "39c9ecc0520200c3a91793ca8d94901a7bbd9fb0c8b448663f9668d0ddd2ad9d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-checksum-policy-freezes-queued/native/execution.json",
+      "size": 1951,
+      "sha256": "913c795744b2970375281626271062159060e7fe377abae4db668d0ed95c7e70"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-checksum-policy-freezes-queued/native/native-input.txt",
+      "size": 192,
+      "sha256": "0e5ecbeac8c12eb58988e099036ef2497eafe81e4d618c8fea7ce283c00b2401"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-checksum-policy-freezes-queued/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-checksum-policy-freezes-queued/native/native.stdout",
+      "size": 15284,
+      "sha256": "0b0267544720a87f3bcce6660133e9201d872d3357b2acc865e2c02a1510e537"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-checksum-policy-freezes-queued/reference-trace.json",
+      "size": 33793,
+      "sha256": "74d59f0099f19b0e7d481bd9c57d1febd496b32f700a0251a86907217c0e5ad4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-checksum-policy-freezes-queued/scenario.json",
+      "size": 6803,
+      "sha256": "7a61ae997f598541b7c77f2fca50bd0193f413711fbc357280bb6b7133ea6525"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-checksum-policy-freezes-queued/symbolic/path.smt2",
+      "size": 47979,
+      "sha256": "352414b6b1ef15760a0d8fd878e789790c2a7d3f831d7fb32959fa8e7746bc0f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-checksum-policy-freezes-queued/symbolic/result.json",
+      "size": 26407,
+      "sha256": "4e6675e943c9b7917cfbb15e686597becc56fcc699702537c3f60a909b3fdc68"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cold-empty-then-cached/native/difference.json",
+      "size": 20813,
+      "sha256": "cb2a0440941506c45d53006dfbd90d505f8d7b27f78b1d9149cfc8160dd53785"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cold-empty-then-cached/native/execution.json",
+      "size": 1935,
+      "sha256": "2886e1134c23085349f0cdf81a7e0985872361806ada4426652a85aec25c8358"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cold-empty-then-cached/native/native-input.txt",
+      "size": 153,
+      "sha256": "2dcb7830e5fb2d7e1e3640c980b61f5a02c9352b740bed33f2394353da64bb9c"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cold-empty-then-cached/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cold-empty-then-cached/native/native.stdout",
+      "size": 11624,
+      "sha256": "3d2825d85c34c9fd72ba63660744a64d2561adf397f815ac4f96f99990d0d40e"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cold-empty-then-cached/reference-trace.json",
+      "size": 24249,
+      "sha256": "ef46e147f8ec9eb9293434f00db5ce1ede83b6676586332b92823c9adde28acf"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cold-empty-then-cached/scenario.json",
+      "size": 6494,
+      "sha256": "d6ffddee1687fcbb2c326c963d7893c6ca717d135e3d286e79f79bf4753c47dc"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cold-empty-then-cached/symbolic/path.smt2",
+      "size": 39163,
+      "sha256": "b26833b762b0b3d5452dcedda35ca8d48e3e592d08feeedca8ea330cc0a10baf"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-cold-empty-then-cached/symbolic/result.json",
+      "size": 20435,
+      "sha256": "20ed3dc5dce5acca544bd3812d126212643f97b2cc8e79a6af1ec09f5d4b3b07"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-latest-replaces/native/difference.json",
+      "size": 20512,
+      "sha256": "0c5b16a4fdf2b1c33c77d278ceb189e9952136feb63893682c0c711a74dc5e3f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-latest-replaces/native/execution.json",
+      "size": 1921,
+      "sha256": "ebd0e3e1a7dfadac335a51113ecfd252aed5c2712e8fd219a9b799aa2776586b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-latest-replaces/native/native-input.txt",
+      "size": 153,
+      "sha256": "005d65b875d54381ed5af1acabfcfb7461b7affcac10bb78c999d9cc538fa3a7"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-latest-replaces/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-latest-replaces/native/native.stdout",
+      "size": 11742,
+      "sha256": "3d0d059debb893ef8f19e193b6d4233c6215f5e77c8678961dfc4be9ae54a76f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-latest-replaces/reference-trace.json",
+      "size": 24716,
+      "sha256": "e3ad18fd0b04dfe98c285ba0d39a6c8ea612acc42c0652df900e75abb0be7978"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-latest-replaces/scenario.json",
+      "size": 5057,
+      "sha256": "b6e09d9531cc060fcdb2cc2ba021cd4ea1f39d8eb19a1c023f2ed9c598818690"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-latest-replaces/symbolic/path.smt2",
+      "size": 39201,
+      "sha256": "6ab22868408950a9d903d00f77ee64d71292a58219522a5ae20a8469aff41dfe"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-latest-replaces/symbolic/result.json",
+      "size": 20106,
+      "sha256": "00d384372abf52e061896f4666e1479fff87c0532f5f71bc65eaf38a272ed2d5"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-mtu/native/difference.json",
+      "size": 359539,
+      "sha256": "11ea730d116cffd85a373e55a8c8185bf37d0214af9c9c11ac810162d2a0f962"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-mtu/native/execution.json",
+      "size": 1897,
+      "sha256": "c44ab19de43131bdd9928bc02733c5b91293ac607fd0ee5d654647604ee1e39c"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-mtu/native/native-input.txt",
+      "size": 3067,
+      "sha256": "3571b05f5ccbbe601db16a9538440fc2e8d3d0273c5e80cdd517ab760bcfa391"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-mtu/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-mtu/native/native.stdout",
+      "size": 112718,
+      "sha256": "488ccc54e5a9638306153837189ce60350f718084856945986bc3732e6e02527"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-mtu/reference-trace.json",
+      "size": 361389,
+      "sha256": "3d4ebb220bac1fa84ba4602c0d4b0ff44b219bb4cd259c53254d1fae68f37964"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-mtu/scenario.json",
+      "size": 58983,
+      "sha256": "c56967f0a9f115a49070fc3c9914411aee1a8b86f18391348437326983912fbc"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-mtu/symbolic/path.smt2",
+      "size": 112735,
+      "sha256": "22e60cb010a7edf4d2a423440b764e0bf9269bc05ad36d0d37d55b8b7a6443e1"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-mtu/symbolic/result.json",
+      "size": 314599,
+      "sha256": "64365f3c0f3c3f9665b49f52e1771660247cedde78cd4fb7812b076122f845db"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-one-flush-no-stale-replay/native/difference.json",
+      "size": 25856,
+      "sha256": "1dca020e6a6bd269a8acdcffde7954800a9fea2946590daa8ae47a8cb36c22b3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-one-flush-no-stale-replay/native/execution.json",
+      "size": 1941,
+      "sha256": "da3266947f5ec2481574973a60f3aa6fa90d02dc846a6e6d90a354bd471408eb"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-one-flush-no-stale-replay/native/native-input.txt",
+      "size": 254,
+      "sha256": "5f5c17e1b584fb4f921d362a4206e3fe9f93723368fdb316dca85cf9df46cc3c"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-one-flush-no-stale-replay/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-one-flush-no-stale-replay/native/native.stdout",
+      "size": 15053,
+      "sha256": "d4af88985ab09f479477bdee62c8f7435daaab484881228bc2e5f0441eb2e0de"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-one-flush-no-stale-replay/reference-trace.json",
+      "size": 33199,
+      "sha256": "c27016ea977458bae86fc4acb445a7b8481f4b872e38e2190662ef0d30c11f0a"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-one-flush-no-stale-replay/scenario.json",
+      "size": 7257,
+      "sha256": "5dc02668a5cc58a6d0bd6fe7904e042cd4a06bcf728719459c8e205f4f9d7c4f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-one-flush-no-stale-replay/symbolic/path.smt2",
+      "size": 49007,
+      "sha256": "38793191ca6ba8193f8567adbe229e0a3a075d6443100e908d8cc7531df598a7"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-one-flush-no-stale-replay/symbolic/result.json",
+      "size": 26085,
+      "sha256": "95e0a04a229053b544c19423088cb8e92fd827a116f2e8674e91973576878fb6"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-one/native/difference.json",
+      "size": 18383,
+      "sha256": "ee6c669a88a6393b2d3f4b63f1c7f0276f8d4aa36fc3f42b669730528f0acac9"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-one/native/execution.json",
+      "size": 1913,
+      "sha256": "d6fed99701192b3a217bd6f9a2759892ac7eb73c690bb72b3fb9c2f2f3c81773"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-one/native/native-input.txt",
+      "size": 157,
+      "sha256": "46ac0417acfe2187af233440201f95956d5ccc280bd7251550c69766c2bc1038"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-one/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-one/native/native.stdout",
+      "size": 8963,
+      "sha256": "c326daa9e3635913270b0a86255a147eea588c204980e8bd34ddc10d15c48827"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-one/reference-trace.json",
+      "size": 19410,
+      "sha256": "ccf43f36555d31df8e95bcdb3d6d86194aecfe96b240603c2edc51310b56da9b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-one/scenario.json",
+      "size": 4989,
+      "sha256": "7639d3c99ae697b63b9ab9d9c6864acfe710eef18687cd7c079fcd426eea06b3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-one/symbolic/path.smt2",
+      "size": 29555,
+      "sha256": "2efa8418f84b13326319137224dfe5c88ebe974116d4981fa412b5f843c4c876"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-one/symbolic/result.json",
+      "size": 17478,
+      "sha256": "fbc0eb8f752adf8d228f9e324be710ab3479874de23352674e1bc798d819bd41"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-zero/native/difference.json",
+      "size": 18592,
+      "sha256": "161dfe7803ade08e8302824ea8d1f18f715dfa9d16eeb791da110b037d72ef95"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-zero/native/execution.json",
+      "size": 1915,
+      "sha256": "9725b9e8c538fc86b6f39d70b207600371644440cc4ab39ba28d2dabc9c473af"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-zero/native/native-input.txt",
+      "size": 159,
+      "sha256": "079ea42dd1b3859f98976d62754e008b1b297cb92794b16e5704ac7a325f042a"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-zero/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-zero/native/native.stdout",
+      "size": 9021,
+      "sha256": "440ad09d2ef6bac4b34aafdbfeb4d6596447d767865a0ef25563abdff2f68835"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-zero/reference-trace.json",
+      "size": 19621,
+      "sha256": "d9c2477211af10139d7206a3bb4037d1b317c7f15d959478631b5f5b90b2ed2b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-zero/scenario.json",
+      "size": 5005,
+      "sha256": "10d5aa6cef15d82dc828f9b4a6b9a80718f4ba4a2daba8a162ff8e34dc5d9ff3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-zero/symbolic/path.smt2",
+      "size": 29694,
+      "sha256": "4bb311f41e638d87f11ce8d3551a2c15722960541744144e59b5c242ef89e569"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-padding-zero/symbolic/result.json",
+      "size": 17657,
+      "sha256": "aea49f6dab7c957e42850712bcede54143b8ee87625537437fa71f6d221bb27f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-resolve-before-queued-send/native/difference.json",
+      "size": 18229,
+      "sha256": "709a8782ea54f7b925f3ea26cf193b58e5a66eb959cd8c52cdcd299405c8f32f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-resolve-before-queued-send/native/execution.json",
+      "size": 1943,
+      "sha256": "32b9962e8a76c2677fa9f3d7131960cd9798aeedf5490b87d9a851b75ab0a58b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-resolve-before-queued-send/native/native-input.txt",
+      "size": 163,
+      "sha256": "b0ec938bfb95149b5ff0740b0a040ed6c2c492aac359abd466759c93bb0539a9"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-resolve-before-queued-send/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-resolve-before-queued-send/native/native.stdout",
+      "size": 10910,
+      "sha256": "0e3bfd71b883a7f3818094e3a978dce6f29f9b1c69eca9cc00d20d25e92d2ea9"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-resolve-before-queued-send/reference-trace.json",
+      "size": 20881,
+      "sha256": "1220f2dc01e7b8d835000806d52d6da6ad9a6b4f42669cf7a7c2c06c785eb78d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-resolve-before-queued-send/scenario.json",
+      "size": 5111,
+      "sha256": "b24fd38f83076bff2fefde3f9fea89863d21be359bbe674e1899bb6fba2ddbf3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-resolve-before-queued-send/symbolic/path.smt2",
+      "size": 37266,
+      "sha256": "ef792b9f63c8374790a26af7b86c0763de840e5571795de8bb64f5ee2cf8c568"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-resolve-before-queued-send/symbolic/result.json",
+      "size": 17765,
+      "sha256": "15769a55198c3df48819813d4e6ff24dc965cf39402977b88ebcc291c6c266c2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-retry-then-fail-clears/native/difference.json",
+      "size": 23800,
+      "sha256": "7d6406c000c6726000d2c9a18507c2452798d0bf4e87001cdc383e5657605d48"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-retry-then-fail-clears/native/execution.json",
+      "size": 1935,
+      "sha256": "a15368ee77bade0cb352ca79636271e70b0679286ec153c40a0d7473d6613bcd"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-retry-then-fail-clears/native/native-input.txt",
+      "size": 67,
+      "sha256": "29ab4b85c6b8431d01c13170fff9b24f184c918b47bb4af65574bb3163b23ba4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-retry-then-fail-clears/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-retry-then-fail-clears/native/native.stdout",
+      "size": 14753,
+      "sha256": "1c8ab8e1c57161a08448318b7354f9601b7e0cfe9b7d219675b67e376f4f2fb0"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-retry-then-fail-clears/reference-trace.json",
+      "size": 31437,
+      "sha256": "7b3e966a34120cbe2789fc3bb654e82a2e69e9cffb4213630e48d1e96d64aaaf"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-retry-then-fail-clears/scenario.json",
+      "size": 4497,
+      "sha256": "c420281211913a9c607cf6fff6cce0aac02d91ffa7c4e910250b8ed66c5490d8"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-retry-then-fail-clears/symbolic/path.smt2",
+      "size": 45877,
+      "sha256": "b2f6b0f3d742d6cb75e902d4737d9b5cf3353b849b216889c2a1686010281bcd"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-retry-then-fail-clears/symbolic/result.json",
+      "size": 23877,
+      "sha256": "d952ebcbabf4036f29010f7bb1f9ad071c0f05a6785f276072f7b2f6b83e0fb6"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-same-deadline-replace/native/difference.json",
+      "size": 25968,
+      "sha256": "3550caa5dd92d43663799fd6e208c4f93f9bf584178e511b1d1354f892944ad6"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-same-deadline-replace/native/execution.json",
+      "size": 1933,
+      "sha256": "bbe4fad0fadb4785a0e1f35282b161cf6067a862debb879a669235e626197aff"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-same-deadline-replace/native/native-input.txt",
+      "size": 159,
+      "sha256": "da715e4d0734b84afd8fb2aebcdf4ff34a82c63ef20a3eef4c3c9f1c3d04c7ee"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-same-deadline-replace/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-same-deadline-replace/native/native.stdout",
+      "size": 13596,
+      "sha256": "91abf82000237719baf28cde2dc36e6e0bfb81097d8cd93beffdaa55f3674edb"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-same-deadline-replace/reference-trace.json",
+      "size": 33250,
+      "sha256": "41db12a777fad9b1f2c210e8bab8164c5af50cd2bd003fcb331e342c85062ed6"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-same-deadline-replace/scenario.json",
+      "size": 6588,
+      "sha256": "8cf4809bf7b56f5379641ba3e803c2f405df439d46755327c54fdada6156c8dc"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-same-deadline-replace/symbolic/path.smt2",
+      "size": 47460,
+      "sha256": "ad5a2e5f2b98e0e508b97f1a15f7de9169500b36ab884b8b96e752ffba88993e"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-same-deadline-replace/symbolic/result.json",
+      "size": 26035,
+      "sha256": "55e4763101ee68553c78417e9ba2d46972c9318b8252fdb601b6476c1f1530b2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-simultaneous-request-reply-order/native/difference.json",
+      "size": 17177,
+      "sha256": "dcd9544e33e6c717864e66c6f0b4d96c4b5feae832947dd7f437fe21ef20747c"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-simultaneous-request-reply-order/native/execution.json",
+      "size": 1955,
+      "sha256": "5bd4cccbd096bca52f3e1e5cc73105c48daa0320583109ae9018a31e1f8332d8"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-simultaneous-request-reply-order/native/native-input.txt",
+      "size": 133,
+      "sha256": "f9d07b925351ece7394345457368002e05925821e9448c39400400dc84b6e4ea"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-simultaneous-request-reply-order/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-simultaneous-request-reply-order/native/native.stdout",
+      "size": 8634,
+      "sha256": "6427beddff0a74d5aad10d80e1d93e907f7befd9b23f003b10ae53b23cd31827"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-simultaneous-request-reply-order/reference-trace.json",
+      "size": 18055,
+      "sha256": "13ae8b23a8a81714c567ac2f6a77ff9d9845df92a5446823252b76efa1f3c8ee"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-simultaneous-request-reply-order/scenario.json",
+      "size": 6281,
+      "sha256": "bb40ba652fd1621c6e78d721991a9a106d8eaf1e4429c39a651eeaae4fe822ea"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-simultaneous-request-reply-order/symbolic/path.smt2",
+      "size": 28609,
+      "sha256": "44e2ba0312149ed633eb380ffddc1b1d3efd0aaf3c355e922a66d603d61eefbb"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-simultaneous-request-reply-order/symbolic/result.json",
+      "size": 16730,
+      "sha256": "544155634dce61e5ebecf9350c3794e58dcc6d2dfa6044cfc6d8c57883358879"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-udp-zero-is-ffff/native/difference.json",
+      "size": 15386,
+      "sha256": "aaf1a79b042e17b85e9361af08dc731dfa38b021c11c5953073587d329eb1a92"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-udp-zero-is-ffff/native/execution.json",
+      "size": 1923,
+      "sha256": "02f908773999724dad88c83d636807b9627815f8072f2b7151eecfaf0570a6cb"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-udp-zero-is-ffff/native/native-input.txt",
+      "size": 127,
+      "sha256": "239122d3431a5795ffc1f947e3fa13ce8454685f400c6647068af251e4436dbc"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-udp-zero-is-ffff/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-udp-zero-is-ffff/native/native.stdout",
+      "size": 8277,
+      "sha256": "1dfb79c5ac9abb4951406966c6e75f7eeafdd1db98f7a9f963bb4add0f9df78c"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-udp-zero-is-ffff/reference-trace.json",
+      "size": 16393,
+      "sha256": "c68c4a6c34807790c2f29631fbc21db922496db8c8843c2806e02b5a6d90c335"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-udp-zero-is-ffff/scenario.json",
+      "size": 4789,
+      "sha256": "f29aa5ce6c3e966bc8f98f28e367dc2a581b5ae482669c22ba84dc35bb53d0eb"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-unsolicited-learn-before-send/native/difference.json",
+      "size": 15584,
+      "sha256": "2da3f9f193a13372f1c823087a7d41f8bb73a56ddfc76de874efbb5a3f28e4c2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-unsolicited-learn-before-send/native/execution.json",
+      "size": 1949,
+      "sha256": "bb46c428db6d1fb638c13da1287e848184678cf941e0d011799861595cea57ce"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-unsolicited-learn-before-send/native/native-input.txt",
+      "size": 152,
+      "sha256": "e04d3d427588e91151990083e46b0834d4938c76a677c18179972c911d1d0d87"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-unsolicited-learn-before-send/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-unsolicited-learn-before-send/native/native.stdout",
+      "size": 10222,
+      "sha256": "fd315d965c88e1cbed0c38e9178bc587e8f47fb1d06d318aa4bc978710ed061f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-unsolicited-learn-before-send/reference-trace.json",
+      "size": 18186,
+      "sha256": "c309c354444365d860f6aa88cf9f9591c466ca29db4e609448b8288462c8fb69"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-unsolicited-learn-before-send/scenario.json",
+      "size": 3595,
+      "sha256": "da1e6d55668d76e3b4b63ad4e8588d2c2f60b61a76f72e9cbfeb0fd99cbd71dc"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-unsolicited-learn-before-send/symbolic/path.smt2",
+      "size": 36892,
+      "sha256": "85418fbec12855899158eca095b5819431f1c4257e9d67eba6bbddebb5272331"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-arp-udp-transmit-unsolicited-learn-before-send/symbolic/result.json",
+      "size": 15240,
+      "sha256": "eb5685fc50bcfcdb47d9ed39a09ab8fb8f461760eeb0363722f55552b138ab2d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-absent-policy/native/difference.json",
+      "size": 10978,
+      "sha256": "7c4450e9505d8a22e192cbf380c81466e39239f3a71553ca2b7269f3573282a4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-absent-policy/native/execution.json",
+      "size": 1929,
+      "sha256": "609225037e83a0b0ca4a21dcae7e56987350520ed9f18ee262b440e910379329"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-absent-policy/native/native-input.txt",
+      "size": 309,
+      "sha256": "69a20eda5e283166e8a2d54b014e91d6193b5a916d42ae8a8c83bf3c29e106c4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-absent-policy/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-absent-policy/native/native.stdout",
+      "size": 9225,
+      "sha256": "ccdd867d55f8a44c295197af1e5bac59dc9386f6b18bbc6614153d4acbd1c2e6"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-absent-policy/reference-trace.json",
+      "size": 13826,
+      "sha256": "5f326822785d49de1e03f7ea2e7d6127780dd1b0b20bf3246163ead968d72dbe"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-absent-policy/scenario.json",
+      "size": 2900,
+      "sha256": "c99789965947631a3057e6b9177bbfd6d3cdeb49a867832d96c3e2552e85b8c4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-absent-policy/symbolic/path.smt2",
+      "size": 37193,
+      "sha256": "913bf4ecaacd1ce9d02641999f53df7866e235dc7272c9e1c01ed8ada05c15a3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-absent-policy/symbolic/result.json",
+      "size": 11156,
+      "sha256": "565f36a29cecedd804839d65b7f4da6e771476b82c3be54f0cb4b43f2f0930a3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-checksum-drops-clear-stale/native/difference.json",
+      "size": 17658,
+      "sha256": "64dcc65dee21c00a5f3a27e443fff644b2f722a45eb45c24ad9b2c346c3d44b3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-checksum-drops-clear-stale/native/execution.json",
+      "size": 1955,
+      "sha256": "e5141e321ffe9270ccfa4e5fec65424c683f84f76edef76d19df4f38a7bf9c29"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-checksum-drops-clear-stale/native/native-input.txt",
+      "size": 558,
+      "sha256": "f97c4a0838b4f2d4b4f2355f8dcbc2a64e77227c6281e322725a9961beab1994"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-checksum-drops-clear-stale/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-checksum-drops-clear-stale/native/native.stdout",
+      "size": 12803,
+      "sha256": "c88761c4cf3a170a8048705fc0552f55c442a957f61d6176e051a955396d512f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-checksum-drops-clear-stale/reference-trace.json",
+      "size": 22617,
+      "sha256": "7f1692df09e51b5623f73177fd5a89aa381cffcd0a9f58736bf1b27de5e1440c"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-checksum-drops-clear-stale/scenario.json",
+      "size": 6231,
+      "sha256": "b3fee24d5f459745ad0fdd06d3944b124f52acfad621535ad4d91d4c489d320e"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-checksum-drops-clear-stale/symbolic/path.smt2",
+      "size": 51843,
+      "sha256": "0d07afab21214bf2dbfdf72b5223c374f976cdb848319002d06d5d13333771bf"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-checksum-drops-clear-stale/symbolic/result.json",
+      "size": 17946,
+      "sha256": "a2691243aaf0f7d9740c2a516de2a08345c26f58aa690ca0d95a2e441b57fbd9"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-cold-rx-echo/native/difference.json",
+      "size": 12277,
+      "sha256": "5dde2c1a39947b71473cadad2f47f78acc412fcbb934ae13c88efcbc0c0f21c5"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-cold-rx-echo/native/execution.json",
+      "size": 1927,
+      "sha256": "930d17a3ec78c5fe8d9c01267d6779858c6a4b93b74acfb7732fa5076c650390"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-cold-rx-echo/native/native-input.txt",
+      "size": 280,
+      "sha256": "909c54b8016ed49609b12e89b068d7f9921b15286e3791d9caa14a5dcfbdba47"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-cold-rx-echo/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-cold-rx-echo/native/native.stdout",
+      "size": 7356,
+      "sha256": "5eb5cc83e3061af3ba678b606658cb657915e0a2c509dedaa5d094937e1b2ec2"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-cold-rx-echo/reference-trace.json",
+      "size": 12113,
+      "sha256": "6211c00bdd5dde38e3f6a1f94fd825fbc03e79cbe77beb631a044a6448627c34"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-cold-rx-echo/scenario.json",
+      "size": 4187,
+      "sha256": "0cb9ff1fbeaae495b7ae1e4bdb92b7a3248b8989944fbd790383e5e7bfda4a79"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-cold-rx-echo/symbolic/path.smt2",
+      "size": 30433,
+      "sha256": "b58ded6336fd0ad454a5ff15e7f5e2c360c00a43161653d184711ba9eaf2ab9b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-cold-rx-echo/symbolic/result.json",
+      "size": 11669,
+      "sha256": "8be9db69f7d34b11dbe6b40894fe74f33845570b7f9559805511d984e41b44ce"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-mtu-rx-echo/native/difference.json",
+      "size": 309769,
+      "sha256": "21d038bcf5cb679197ee280d1072ae9b191b7ac63d9daa7ddffdc5ce5ec177b5"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-mtu-rx-echo/native/execution.json",
+      "size": 1925,
+      "sha256": "27857ba85d0252c288533640c415f969e32c72680c81d8bc06394c7de89bcaff"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-mtu-rx-echo/native/native-input.txt",
+      "size": 6096,
+      "sha256": "c9478f5b388b51d56810788b040a34ef6b1277e953df20ca9775c2410d8950fe"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-mtu-rx-echo/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-mtu-rx-echo/native/native.stdout",
+      "size": 80276,
+      "sha256": "5ab5f1518456e8d02e247c18614efa801e8d9af69ea827f5200a924f315911ef"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-mtu-rx-echo/reference-trace.json",
+      "size": 230957,
+      "sha256": "fd9a7bc06927bb67ef032a78ee6a1c00a3f36bd8aa36dccc37dca6e094d31207"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-mtu-rx-echo/scenario.json",
+      "size": 130797,
+      "sha256": "a7b79e79ce4f312a9345e8ed0b03b58e5cc844f50a583470791f972a1cddecf6"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-mtu-rx-echo/symbolic/path.smt2",
+      "size": 201188,
+      "sha256": "040494ff593c162841792bae8efe434f1c1815f0172072b46fbe61f2640d754f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-mtu-rx-echo/symbolic/result.json",
+      "size": 256002,
+      "sha256": "60c2868c93c3c21b8c81578e589b4fe3b89ea1ffa259ea33d815480c62ee9057"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-nonzero-link-padding/native/difference.json",
+      "size": 11571,
+      "sha256": "3511f191cc59f44e0eae7bd63268d4e8949b3938cc020022026882ff61cddf58"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-nonzero-link-padding/native/execution.json",
+      "size": 1943,
+      "sha256": "043d6844c943b8b51f2d449da42f22b686304460e7f1a7f4a9bac991a38445af"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-nonzero-link-padding/native/native-input.txt",
+      "size": 280,
+      "sha256": "9fbfcefa0d02fc2b6907bad66fbb5fb2979f73e77c4cbf1a942fe7fc4cdf255d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-nonzero-link-padding/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-nonzero-link-padding/native/native.stdout",
+      "size": 7259,
+      "sha256": "2730fa3bb29ce9ffbed3600b4ab47d6625c4c81b77654023387167d75939c55d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-nonzero-link-padding/reference-trace.json",
+      "size": 11638,
+      "sha256": "6fb66da272ae26cd4b99c4c8d030791aba267ccf77d3df9e20e3584cfd10750d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-nonzero-link-padding/scenario.json",
+      "size": 3961,
+      "sha256": "8da6b6a861fa276d6ee2324ad5d76a62ec11d92ccf89addd70c4605826eece50"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-nonzero-link-padding/symbolic/path.smt2",
+      "size": 30199,
+      "sha256": "f9b0a8a13a9ff8275a61afa00e889eb0665ccdf9cebc8b9d243be3c99f06e8f7"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-nonzero-link-padding/symbolic/result.json",
+      "size": 11139,
+      "sha256": "270cfd94d8d076e632500b05c514655e836daeec289bc844431c53c869a16344"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-pending-ingress-preserves-queue/native/difference.json",
+      "size": 32213,
+      "sha256": "c85836402484dcc7b94bb2d09a8319636fbb127a7069680023a7c178bbb57241"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-pending-ingress-preserves-queue/native/execution.json",
+      "size": 1965,
+      "sha256": "090d2e542fc8a863d816e9fcc7ab05cf85c21e4676b13d3fb7dcf14f31d018f4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-pending-ingress-preserves-queue/native/native-input.txt",
+      "size": 447,
+      "sha256": "8dbe4176460d90d4bf21c3c67d6d98677538679db607e9169fdb98e866dda362"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-pending-ingress-preserves-queue/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-pending-ingress-preserves-queue/native/native.stdout",
+      "size": 16664,
+      "sha256": "f569434e7375b16ca256b64b0ad5d99c3ccc7c03459e361d00294c21f3b916ba"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-pending-ingress-preserves-queue/reference-trace.json",
+      "size": 39564,
+      "sha256": "17e00da0d32a462c2d03ff10428ea8e63e55d7740ae1ff5d290d0d1922f4b35e"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-pending-ingress-preserves-queue/scenario.json",
+      "size": 8643,
+      "sha256": "edd9e44acd1bebe226dc3442c897c86ee76fd306cba54073b68b0052d485f6bb"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-pending-ingress-preserves-queue/symbolic/path.smt2",
+      "size": 50895,
+      "sha256": "84f71562eacf435c92f003b248f2a053052f76bd04b6dbebe372f99d4df0b8c0"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-pending-ingress-preserves-queue/symbolic/result.json",
+      "size": 31660,
+      "sha256": "8fe398c355f56beb31ba20b9ebdfd1f835dc5c075c87c83ac7f7ce33dc90bf34"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-resolved-mixed/native/difference.json",
+      "size": 24102,
+      "sha256": "63d38528bc8ca9d8a9024ec09f54bc22e46ba342609a4c2f50321e2e94ffde73"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-resolved-mixed/native/execution.json",
+      "size": 1931,
+      "sha256": "24a78424492c2f4f91dd99c6bf9aae01ec428d54d9ae668f0d2006828473d873"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-resolved-mixed/native/native-input.txt",
+      "size": 447,
+      "sha256": "d7162601d385d504185bf455e8c86b322acff2ae3a935b703a0f5fee69a64ba7"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-resolved-mixed/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-resolved-mixed/native/native.stdout",
+      "size": 14102,
+      "sha256": "f6e88a37daef6bb0013ab48b51cb2483697fde2c39431a9a4575a7be43fecac1"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-resolved-mixed/reference-trace.json",
+      "size": 27062,
+      "sha256": "c5144bc12eccf8939d37d686edde73eb211866b2e3f036f5a0ab532572bb6a9f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-resolved-mixed/scenario.json",
+      "size": 6648,
+      "sha256": "6da8d195906e3948c96e3ea459445b33fd9f7c6278ded7bad68a88ab91f04a77"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-resolved-mixed/symbolic/path.smt2",
+      "size": 50709,
+      "sha256": "599a73f4d1cdb1ff794545685ac078824ce6c61027ae50d28f9df787c08ad84b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-resolved-mixed/symbolic/result.json",
+      "size": 22786,
+      "sha256": "f6cb4471e725954c927840812b529bd693399e07461fbaa624fe29515ead52be"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-total-too-small/native/difference.json",
+      "size": 5018,
+      "sha256": "5b2e789ecc3b6ac6307dce54252e1289984bd5c75bc2aabbf81ec45916a3d3ee"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-total-too-small/native/execution.json",
+      "size": 1933,
+      "sha256": "4228b5b62930917b8bffcba3e9757f5f6dbbb33bb157ff95b03948661d1298fd"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-total-too-small/native/native-input.txt",
+      "size": 141,
+      "sha256": "4b661724741e1bcfcf64c0e2f29c13a21bff9df9c30b2a344e246ceeedb4326d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-total-too-small/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-total-too-small/native/native.stdout",
+      "size": 3819,
+      "sha256": "3e8b56dfef26391147dd0e81aaf4055b87adf7b8b92e9d641f26913735b151c4"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-total-too-small/reference-trace.json",
+      "size": 4659,
+      "sha256": "fa9447ea5f3a8b5bc6245388c30fc647dbc9f6b234cb81c0a06a3dade2dce120"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-total-too-small/scenario.json",
+      "size": 1364,
+      "sha256": "d7f83b0f3a70efb89df4e2abb466f5482e97c9e0e26c362360bd5fb401703b18"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-total-too-small/symbolic/path.smt2",
+      "size": 18393,
+      "sha256": "095d54841db0f3d7b68f669bde28a6cc230b8492d1163ffe3b29971de0ee9efa"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-total-too-small/symbolic/result.json",
+      "size": 5315,
+      "sha256": "bab3571a3c97c561a8570918d82ce456b2569e7ea34a51dfd598fdcca7d1a7f1"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-truncated/native/difference.json",
+      "size": 5018,
+      "sha256": "e8fdb65d3eff787d3e64a8f81d8ea4963b4daf8e9cb814305258622fd0b71034"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-truncated/native/execution.json",
+      "size": 1921,
+      "sha256": "29f27ab0584d01b06d57331b655153003e904e0aa4b09107373ecca8107dcbc3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-truncated/native/native-input.txt",
+      "size": 141,
+      "sha256": "0031513e4d65b9153b73a0720163c8eb61c2bf59205d25fc5ec07bd2da83e07f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-truncated/native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-truncated/native/native.stdout",
+      "size": 3819,
+      "sha256": "c29dfb7a4366f2179da406be6bf54d2ea589c3cdf58f98ca033d55826008bc5d"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-truncated/reference-trace.json",
+      "size": 4659,
+      "sha256": "3427ab380d613c41300102191a08735921f81f508bb12f935fd89a9ae600d0a3"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-truncated/scenario.json",
+      "size": 1358,
+      "sha256": "4a4b8e88e2712e76bcce1d3ad70cae2c8e20ba0c6a2c5e6bc4ccd8a40f9d2688"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-truncated/symbolic/path.smt2",
+      "size": 18430,
+      "sha256": "2048edf8f97ad644102d4dde4a6df1aa4ff5fb894c2f39e5b4af9d73efd0ad7f"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/L-ipv4-udp-icmp-endpoint-truncated/symbolic/result.json",
+      "size": 5315,
+      "sha256": "b61fffa7def7f4fb4fa5cb192183b08dc0c92cb788d9cabf06b1985fda68f49e"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/bindings.json",
+      "size": 1263,
+      "sha256": "0ebc8ef60f878c409232e4fe2f12d20ac9407186757be27f00c4094026be347b"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/frozen-projected-oracles.json",
+      "size": 480699,
+      "sha256": "1494d7445a0f66560232751c5f7c3a2daf604d0bb79dda6cda349157fa1053e0"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/results.json",
+      "size": 5880,
+      "sha256": "8d461214c0dfc58aa506753fed37cf4772bcd08543219a78953a74cb03304278"
+    },
+    {
+      "path": "candidates/tcp-coupling-regression-20261107-0068/status.json",
+      "size": 295,
+      "sha256": "b739ec48ea5adaac2b629f86ff9dc610118ddf8cd5dc8f8c4246e34e4f0ec6b4"
+    },
+    {
+      "path": "candidates/tcp-fixed-trace-diagnostic-20261107-0071/bindings.json",
+      "size": 370,
+      "sha256": "f5d54ed45bc49cb4ac2c45692993623ef8906252d9bf3f77f5666ce0bd2095cf"
+    },
+    {
+      "path": "candidates/tcp-fixed-trace-diagnostic-20261107-0071/exit-receipt.json",
+      "size": 86,
+      "sha256": "c7ddff9c82fd1f7df4bc5c1876a3632dd9abb4ad3acd0affc590e14c9e4013cc"
+    },
+    {
+      "path": "candidates/tcp-fixed-trace-diagnostic-20261107-0071/new-diagnostic-query.smt2",
+      "size": 28014,
+      "sha256": "5adcc8b9e3308b3ca5b565377df3ffe350f40397d0f9806cfb5540120c90ba52"
+    },
+    {
+      "path": "candidates/tcp-fixed-trace-diagnostic-20261107-0071/phase-journal.json",
+      "size": 1157,
+      "sha256": "e3dbb25b1c24d0fc116288f0c2725510fca87a8266d5a71546f8a82d7ac62410"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/controller.py",
+      "size": 8752,
+      "sha256": "3eb4c79913070e45eebc92b3ae9374e2100d24d1252816c68007268722854b5c"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/independent-review-messages.json",
+      "size": 40159,
+      "sha256": "0078249d11b1ec7b2e0c5df529076536cd54bef1735a860de8de8c206b59055d"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/independent-review-response.json",
+      "size": 4040,
+      "sha256": "6a2ad4cbef63c90d0f83a2dee329af0b36c80a8fead8f8d2dbf635f1ec011232"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/independent-review-usage.json",
+      "size": 424,
+      "sha256": "290a6870258e6e9a73c66aa88c4960e6175ea4b8de0a5195de63e517407a9352"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/operator-signatures.json",
+      "size": 2453,
+      "sha256": "2e3d53e360a92d668ad69412627fe921552cd5b78cb0dbc0d14a773b0fa850b1"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/repair-1-messages.json",
+      "size": 68736,
+      "sha256": "eb1b97e16f6d26f0c9eb992b210de0a2d3c471e9f8ddf3ec11566d1922eb45ad"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/repair-1-response.json",
+      "size": 5018,
+      "sha256": "76187c41a4f8a3a1a50d714833d9365c04cc4f33c5e25ebebdd3079eb6d42bbf"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/repair-1-usage.json",
+      "size": 429,
+      "sha256": "35587027c8a53e9247ae4f05ef5ac3c78796520c263843f7f8ebf2d1f0a15694"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/repair-2-messages.json",
+      "size": 72014,
+      "sha256": "3b3531bba49770a39502338e29566843bffbd2fbf8455366e67a8b95c61ae57e"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/repair-2-response.json",
+      "size": 900,
+      "sha256": "84dd145f669b87f916a07dbf2f0d50915ed67ec75d237b86a7485b7716cdb842"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/repair-2-usage.json",
+      "size": 431,
+      "sha256": "b3543f4aced1efb2ecc06e8ebd3b9ce2edf8732be9e64ca7307140f5a88a63cd"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/round-1/couple_tcp.py",
+      "size": 18585,
+      "sha256": "5eadad70fded4dbf14c0e19833055b87462c7f19c59e3757e38de03f15b1ae8d"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/round-1/executed-validator.py",
+      "size": 11041,
+      "sha256": "764b2c2876c31ed4a1d00d69d803f43f9290fb0272072d9a0ddededb2a5def3f"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/round-1/invocation.json",
+      "size": 346,
+      "sha256": "df6a0bf0289645991b49e45181efc432923503c6f6d8866cc795f70ef02e048e"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/round-1/validation-controller.log",
+      "size": 1199,
+      "sha256": "4df0cb81100f33b44d4491b6294c1357e18550959d4ebae4bf5e3c0d9aa8887a"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/round-2/couple_tcp.py",
+      "size": 19319,
+      "sha256": "8154a5c5417f63adc68076de12954180ab38d7099383711ed54694942ddf398b"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/round-2/executed-validator.py",
+      "size": 11041,
+      "sha256": "47ab12deda729f97927748bc0fefab438633db9e08d7286185eff0c84fa6c7d1"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/round-2/invocation.json",
+      "size": 454,
+      "sha256": "7dc77c4cd8667b8ee070945fcabbaf0928adac2016989f538b392468a8096881"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/round-2/validation-controller.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/specific-contract.txt",
+      "size": 3108,
+      "sha256": "a89c80034396455a6ce3167eabc2a4d2ae19a5d418b3e644b6fbad37acc9c92b"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/status.json",
+      "size": 4759,
+      "sha256": "8ec9d61cb543b71fd356f1f93bc8d54674f937bc8d1ee2447eed3165f0f731c7"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0001/candidate-model.json",
+      "size": 37777872,
+      "sha256": "7ba0e3d52322a3c03895d3af932543eaf23a4d40f0ff3cdfbacd30c4021ba2aa"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0001/freeze-receipt.json",
+      "size": 497,
+      "sha256": "3b98bb4359194b2da52652912dcbb6a288b6c2af3e887e45329835ab02abc8c4"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0001/frozen-independent-fixture.json",
+      "size": 15599,
+      "sha256": "0d8619f8e5d40f645ed85219b92fb4aeca135879a488fead5143866c80d8b43d"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0001/qualification-receipt.json",
+      "size": 697,
+      "sha256": "9bf4326a095ab4929103a412c8e1a6737e9ac4289db2d891688cb64070ca1ea7"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0001/qualified-independent-fixture.json",
+      "size": 40037,
+      "sha256": "8f66ce0af1f88072d2de8990dd55b584edad299abc9b5baf55bcf00e6bedb919"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0001/status.json",
+      "size": 209,
+      "sha256": "add17fcd24ac964671f2dc4d06318d1240205b3d39b2ef9ac8eaa48b5645539f"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0001/traceback.txt",
+      "size": 1199,
+      "sha256": "4df0cb81100f33b44d4491b6294c1357e18550959d4ebae4bf5e3c0d9aa8887a"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/abort-before-resolution-native/difference.json",
+      "size": 13310,
+      "sha256": "22cbb34638df5878b99eee159b097237d882439de70b63bcbca5751285aed115"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/abort-before-resolution-native/execution.json",
+      "size": 1916,
+      "sha256": "9cb2cfe63ed3e17c1e4cf89dcc1fe97ebc54bf62b81170db7fbbac3c4a70e739"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/abort-before-resolution-native/native-input.txt",
+      "size": 36,
+      "sha256": "3db535731499ba73b96713666367ce1b016b9dd80a1f5275c26b2249a025f945"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/abort-before-resolution-native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/abort-before-resolution-native/native.stdout",
+      "size": 7869,
+      "sha256": "bf7fb20f54c2accaaa252ba79ab98289fd078861aebf1941a244850e4df36e9c"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/abort-before-resolution-reference-trace.json",
+      "size": 14820,
+      "sha256": "c4bdaf03a08fef42ab4c02ffd778f212051de21a29c18d577dace005d6f852f5"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/abort-before-resolution-scenario.json",
+      "size": 2297,
+      "sha256": "10835d05195fbe8ed4266df228b052f180a7ac03639dd9814958f14d79c16252"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/abort-before-resolution-symbolic/path.smt2",
+      "size": 26567,
+      "sha256": "a99d35d87445ac7b31479d9712640bdb7020039943d63a3c74fe3521d38e5e0e"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/abort-before-resolution-symbolic/result.json",
+      "size": 12880,
+      "sha256": "c5870688aa2e88e2d7b712e22f0b01d36ba880bd51d6acf787c15bd16f9cbc18"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/build/compile.json",
+      "size": 1231,
+      "sha256": "e603c220f057a439554745a2031cb02f0414d152f15b932fed423f0ff16d9b73"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/build/compiler.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/build/compiler.stdout",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/build/protocol-native",
+      "size": 4083568,
+      "sha256": "6cfe9695f772212a276c762ac65bcb730b662c463c1f2912ec67a996265254fb"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cached-connect-native/difference.json",
+      "size": 15573,
+      "sha256": "58d7b3f3247729899dba067947ff10bf19751da193369d36ad1c6c220bbef7a2"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cached-connect-native/execution.json",
+      "size": 1898,
+      "sha256": "5fe65b65a99b20c59e1d971c3ad0de69589de5de38c06782fe0bdc59e0988e66"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cached-connect-native/native-input.txt",
+      "size": 154,
+      "sha256": "35cb60cd8bc990cdaf61a3c89783f1fcdb145de348e7c1a2237f456e66b6eca4"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cached-connect-native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cached-connect-native/native.stdout",
+      "size": 9992,
+      "sha256": "d8c575886bc48ef4a6870008c9887eedb8f9353712b48008af5e9cac7d7db3e4"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cached-connect-reference-trace.json",
+      "size": 16564,
+      "sha256": "44d17cde0263b7c923f33baa7cedec66db4e0ff0e9341c0c4ba0ca88c45d8799"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cached-connect-scenario.json",
+      "size": 4912,
+      "sha256": "547a058777c295ea8cb946f1dd58dfa55aa4499aa3ad4444e524c9d0b3aba120"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cached-connect-symbolic/path.smt2",
+      "size": 38780,
+      "sha256": "ad31e59e4ca4796ab4f69c7b18edf48a4dff8896daf0a619c53656d2fdaab730"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cached-connect-symbolic/result.json",
+      "size": 14950,
+      "sha256": "d07e9635c931af10a6eeaafe84c34589e6f6a58983178aa4a04a0c15ec7cb84e"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/candidate-model.json",
+      "size": 37778584,
+      "sha256": "4cb9493d0a9bd3c2c620cdbb7aab4d6cd00dce1f96287f226fcfd483000c6303"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cold-connect-flush-native/difference.json",
+      "size": 15697,
+      "sha256": "bd7766e477533bdb22739f1f21ff6507151b2ef71b457aa23d94c4e1f658a89b"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cold-connect-flush-native/execution.json",
+      "size": 1906,
+      "sha256": "60b2a0a9a0d4305e73d4bafeb09ff3991fefdc8cfe077d1360a43ff319205d29"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cold-connect-flush-native/native-input.txt",
+      "size": 124,
+      "sha256": "2108cceec6d0add623ef385758603f81b0e3159c52acbcd034b79d2c5902c4cc"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cold-connect-flush-native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cold-connect-flush-native/native.stdout",
+      "size": 8310,
+      "sha256": "9d1a6997a82dc97c95b4d4e3b893f919905b18026d180d43a54303a92660399c"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cold-connect-flush-reference-trace.json",
+      "size": 16817,
+      "sha256": "16ab3d4942174cfb8e8a98a74d59e48494a1be881bc982725789e7640f8a4ccf"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cold-connect-flush-scenario.json",
+      "size": 4637,
+      "sha256": "0a5a8d4c98e047caa6bef9781bbef939f2465581b5680d8b6ef576bd85438fea"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cold-connect-flush-symbolic/path.smt2",
+      "size": 27963,
+      "sha256": "f883c540ac9d4d65d8ccab322d9aeb90517cc6606b2af2c1c505bbfaee41835e"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/cold-connect-flush-symbolic/result.json",
+      "size": 15286,
+      "sha256": "383a89d710e00f3be77da1ec213a1793ee7ed1ab11295aa21b203363cda2a2c0"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/freeze-receipt.json",
+      "size": 497,
+      "sha256": "3b98bb4359194b2da52652912dcbb6a288b6c2af3e887e45329835ab02abc8c4"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/frozen-independent-fixture.json",
+      "size": 15599,
+      "sha256": "0d8619f8e5d40f645ed85219b92fb4aeca135879a488fead5143866c80d8b43d"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/generated/generation.json",
+      "size": 82193,
+      "sha256": "0cc9482d7b6c49876e5409993b805c95b6a15f13cb2a6b77ff247fa7b5a80efe"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/generated/protocol.c",
+      "size": 2827705,
+      "sha256": "23a80dc409255eefca9a79b4e0ac570e48f4c8abc7f229d519866e550875471a"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/qualification-receipt.json",
+      "size": 697,
+      "sha256": "9bf4326a095ab4929103a412c8e1a6737e9ac4289db2d891688cb64070ca1ea7"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/qualified-independent-fixture.json",
+      "size": 40037,
+      "sha256": "8f66ce0af1f88072d2de8990dd55b584edad299abc9b5baf55bcf00e6bedb919"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/resolved-bidirectional-cumulative-close-native/difference.json",
+      "size": 73133,
+      "sha256": "22b84d20af81eb07772bde2765ccbc53add049a447ab489ab1535569d097ca91"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/resolved-bidirectional-cumulative-close-native/execution.json",
+      "size": 1948,
+      "sha256": "d68c5e0884cc51a192a39595b9ba64b6c2f9b0e09770ad9eda6542d919eaa977"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/resolved-bidirectional-cumulative-close-native/native-input.txt",
+      "size": 930,
+      "sha256": "b916c42a5ad518b2b1b0ed9b67e34463df32eb60c1ce36a11cd1008007eabb8b"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/resolved-bidirectional-cumulative-close-native/native.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/resolved-bidirectional-cumulative-close-native/native.stdout",
+      "size": 43446,
+      "sha256": "332e885b4c6f0b8b0b858f0d1a039a70e78e9aa454d9a04e4fd8d3d5f96df362"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/resolved-bidirectional-cumulative-close-reference-trace.json",
+      "size": 104031,
+      "sha256": "413f7aac4cee8eefee8f019cb88797d678de9bd6cea9238c4cfdf36f4be09082"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/resolved-bidirectional-cumulative-close-scenario.json",
+      "size": 21741,
+      "sha256": "ab73a965ebee7576e5e374cb314b6726ef50088a098aeaa8ac94a35cd808a9ba"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/resolved-bidirectional-cumulative-close-symbolic/path.smt2",
+      "size": 160749,
+      "sha256": "f0ae111af303375b914bdd64836b65bd8a4698de7065b23755dda6e7d3ebed9c"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/resolved-bidirectional-cumulative-close-symbolic/result.json",
+      "size": 75628,
+      "sha256": "6b8c83b2b5cc740d050701110c48dbda7ec79bb19d2b14bc9ad8fe7e9eaaf74a"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validation-0002/status.json",
+      "size": 307,
+      "sha256": "701ee154c807e624b06a95f3bd29aa4ac74a383c46ae5c29faf78ebb86168314"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-envelope-20261107-0067/validator-template.py",
+      "size": 11041,
+      "sha256": "764b2c2876c31ed4a1d00d69d803f43f9290fb0272072d9a0ddededb2a5def3f"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/already-applied-certificate.json",
+      "size": 994,
+      "sha256": "a4900fc6649da28a19b4a11e2bfd9245995b920ad3fe552657e81c29f487a9d2"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/round-1/couple_tcp.py",
+      "size": 20834,
+      "sha256": "ae0a506bff8bd076e8a0a5b09316e79b8aaf5649466f9e3185d3573c3456bd7b"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/round-1/executed-validator.py",
+      "size": 18014,
+      "sha256": "a9669cdc865183fe4c4e50ecab94a27a66d09534b453300c2d31837cbdb9913c"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/round-1/validation-controller.log",
+      "size": 1273,
+      "sha256": "ce3e36bd290073ea1336ab07fafdd8afe45b19e249fc77d01ee39cd60bb1c0f4"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/status.json",
+      "size": 626,
+      "sha256": "856b47c7e013983a8098db5dfceab6e449ecd8f291e9572ae49d11e2adc71aa6"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/candidate-model.json",
+      "size": 37781791,
+      "sha256": "9d243f2c2d56b557324ad656c10b5a018072a57379fdc46a968e145f94fda5d3"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/coupled-source-bindings.json",
+      "size": 9595,
+      "sha256": "0df6d5c401db6d3227cb5832ddb0e4cc9d6bd17f24b5299cfc8835044641f44c"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/defensive-source-shapes.json",
+      "size": 47,
+      "sha256": "513c9e5a2ae90856bb7dbcf00366d2e61033cb0d1a37e725639b0339f4bc0713"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/freeze-receipt.json",
+      "size": 497,
+      "sha256": "3b98bb4359194b2da52652912dcbb6a288b6c2af3e887e45329835ab02abc8c4"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/frozen-independent-fixture.json",
+      "size": 15599,
+      "sha256": "0d8619f8e5d40f645ed85219b92fb4aeca135879a488fead5143866c80d8b43d"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/frozen-policy-cases.json",
+      "size": 94347,
+      "sha256": "d453eeb3c8b859af407f6751611faf2e668c66bdfca296e92b8b2445db907be7"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/metadata-only-certificate.json",
+      "size": 184,
+      "sha256": "1f7ab31a6cf4260a94f4cbfae42bdb27ce5070ec04b3632c65b9d4b5bbf0c99a"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/qualification-receipt.json",
+      "size": 697,
+      "sha256": "9bf4326a095ab4929103a412c8e1a6737e9ac4289db2d891688cb64070ca1ea7"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/qualified-independent-fixture.json",
+      "size": 40037,
+      "sha256": "8f66ce0af1f88072d2de8990dd55b584edad299abc9b5baf55bcf00e6bedb919"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/status.json",
+      "size": 350,
+      "sha256": "e5fb463794c6b5c1371cb7b49e704146aa9c7648336b22703182b264fa371028"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-metadata-20261107-0070/validation-0001/traceback.txt",
+      "size": 1273,
+      "sha256": "ce3e36bd290073ea1336ab07fafdd8afe45b19e249fc77d01ee39cd60bb1c0f4"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/repair-1-messages.json",
+      "size": 79879,
+      "sha256": "353d10281166e4259549246c8312bea9650b6474b2ab4fd499330a9ef90d70cb"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/repair-1-response.json",
+      "size": 13417,
+      "sha256": "752837d37a1d22696fb798ff9e3a11bd6a2d481a396b809333c6d9c882883566"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/repair-1-usage.json",
+      "size": 431,
+      "sha256": "b26a9d02d230d75635f95540b3dfa45fe49ef4263291f37bf38ffec5ec336d49"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/repair-2-messages.json",
+      "size": 78160,
+      "sha256": "9a402c7ea5b4d5f790e30de05e0c5076319f0d448fe9a2692340964cc17e47a1"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/repair-2-response.json",
+      "size": 1733,
+      "sha256": "6f188c17fe135d47cc303e3d68894ec0d476cafcc8e6545cfe030a789fb5785d"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/repair-2-usage.json",
+      "size": 429,
+      "sha256": "4f53909c172f27e1c57ad71df13b824e056ca2795768fa59ba73c900713af17a"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/round-1/couple_tcp.py",
+      "size": 20583,
+      "sha256": "597b330360c88481c27a7ceb287174e1f86811d730ac38ca0e28f47bcf969b5d"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/round-1/executed-validator.py",
+      "size": 17401,
+      "sha256": "a08172efe6e09d2abc07cbaa70d5fd17efa22b1d4b2d1bff17fa164ff0ba4546"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/round-1/invocation.json",
+      "size": 351,
+      "sha256": "3b12d65370393c3c1d0d0367a3b63925d56700bc5d9d03b1c0c917cd1bd6cf52"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/round-1/validation-controller.log",
+      "size": 578,
+      "sha256": "6c7e171ab5f7196959a30ec6adbc0099e8fad864daae4688241bcf73dc0f161a"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/status.json",
+      "size": 304,
+      "sha256": "5715e6610d5c7628f4a85a233c3e24d4c044cfbec0cff56815088462ae65ebfa"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/validation-0001/candidate-model.json",
+      "size": 37781716,
+      "sha256": "37ff178a4e04ffa9b359c9a69344a2ceb6345217cb8f6e84e7f54ca29c4ff78a"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/validation-0001/defensive-source-shapes.json",
+      "size": 47,
+      "sha256": "513c9e5a2ae90856bb7dbcf00366d2e61033cb0d1a37e725639b0339f4bc0713"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/validation-0001/freeze-receipt.json",
+      "size": 497,
+      "sha256": "3b98bb4359194b2da52652912dcbb6a288b6c2af3e887e45329835ab02abc8c4"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/validation-0001/frozen-independent-fixture.json",
+      "size": 15599,
+      "sha256": "0d8619f8e5d40f645ed85219b92fb4aeca135879a488fead5143866c80d8b43d"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/validation-0001/frozen-policy-cases.json",
+      "size": 94347,
+      "sha256": "d453eeb3c8b859af407f6751611faf2e668c66bdfca296e92b8b2445db907be7"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/validation-0001/qualification-receipt.json",
+      "size": 697,
+      "sha256": "9bf4326a095ab4929103a412c8e1a6737e9ac4289db2d891688cb64070ca1ea7"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/validation-0001/qualified-independent-fixture.json",
+      "size": 40037,
+      "sha256": "8f66ce0af1f88072d2de8990dd55b584edad299abc9b5baf55bcf00e6bedb919"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/validation-0001/status.json",
+      "size": 214,
+      "sha256": "9a3abc684e55269feaece9122c94a2dfda2019260337de6fc38ac47b308a1921"
+    },
+    {
+      "path": "candidates/tcp-ir-coupling-policy-20261107-0069/validation-0001/traceback.txt",
+      "size": 578,
+      "sha256": "6c7e171ab5f7196959a30ec6adbc0099e8fad864daae4688241bcf73dc0f161a"
+    },
+    {
+      "path": "incoming/tcp-coupling-metadata-recovery-0070.py",
+      "size": 3774,
+      "sha256": "c0af13b1a6c8075d08d153e05ea618aa978f62cd941a94a775643f7a1dbea6f3"
+    },
+    {
+      "path": "incoming/tcp-coupling-metadata-recovery-0073.py",
+      "size": 4051,
+      "sha256": "b1767ad569fa5c4697fd3c6997647be05862e76bee956f61a14c2010f3ad7e8a"
+    },
+    {
+      "path": "incoming/tcp-coupling-oracle-0067-prefreeze/freeze-receipt.json",
+      "size": 497,
+      "sha256": "3b98bb4359194b2da52652912dcbb6a288b6c2af3e887e45329835ab02abc8c4"
+    },
+    {
+      "path": "incoming/tcp-coupling-oracle-0067-prefreeze/frozen-independent-fixture.json",
+      "size": 15599,
+      "sha256": "0d8619f8e5d40f645ed85219b92fb4aeca135879a488fead5143866c80d8b43d"
+    },
+    {
+      "path": "incoming/tcp-coupling-oracle-0067-prefreeze/qualification-receipt.json",
+      "size": 697,
+      "sha256": "9bf4326a095ab4929103a412c8e1a6737e9ac4289db2d891688cb64070ca1ea7"
+    },
+    {
+      "path": "incoming/tcp-coupling-oracle-0067-prefreeze/qualified-independent-fixture.json",
+      "size": 40037,
+      "sha256": "8f66ce0af1f88072d2de8990dd55b584edad299abc9b5baf55bcf00e6bedb919"
+    },
+    {
+      "path": "incoming/tcp-coupling-oracle-0067-prefreeze/status.json",
+      "size": 73,
+      "sha256": "237de2307aa51b3108a08fb1d145efdef46003d5938acb810f6c759de855c76d"
+    },
+    {
+      "path": "incoming/tcp-coupling-policy-0069-prefreeze/frozen-policy-cases.json",
+      "size": 94347,
+      "sha256": "d453eeb3c8b859af407f6751611faf2e668c66bdfca296e92b8b2445db907be7"
+    },
+    {
+      "path": "incoming/tcp-coupling-policy-0069-prefreeze/original-candidate-observations.json",
+      "size": 3892,
+      "sha256": "c9559b41b6746e472011881e87f7f260706fce4677eedb1fb785a080b71c8892"
+    },
+    {
+      "path": "incoming/tcp-coupling-policy-controller-0069.py",
+      "size": 10790,
+      "sha256": "f4fd7d4e5f7d762d8897e0f4e72f2f895eef091153f7a15ec0ade3c67fc2eb49"
+    },
+    {
+      "path": "incoming/tcp-coupling-policy-regression-0069.py",
+      "size": 7541,
+      "sha256": "f5bc05eec8f24d7535285cbcc351e78d79f65c053123cae693e56a64f9cd9259"
+    },
+    {
+      "path": "incoming/tcp-coupling-regression-controller-0068.py",
+      "size": 7401,
+      "sha256": "4d73e9fe2405e9d043c55dd4d6a9216c5eb3344c39e4cf536b5d670cf88f4d27"
+    },
+    {
+      "path": "incoming/tcp-guard-memo-proposal-0072.py",
+      "size": 6406,
+      "sha256": "84c40658cb4e133560284c929f760debbae30285a182d299adae51537be80beb"
+    },
+    {
+      "path": "incoming/tcp-trace-encode-diagnostic-0071.py",
+      "size": 2073,
+      "sha256": "04044dca750fdb63d467949944719fd3f32a134068216a18cb67943d913c45f1"
+    },
+    {
+      "path": "incoming/validate-tcp-coupling-0067.py",
+      "size": 11041,
+      "sha256": "764b2c2876c31ed4a1d00d69d803f43f9290fb0272072d9a0ddededb2a5def3f"
+    },
+    {
+      "path": "incoming/validate-tcp-coupling-0069.py",
+      "size": 17401,
+      "sha256": "a08172efe6e09d2abc07cbaa70d5fd17efa22b1d4b2d1bff17fa164ff0ba4546"
+    }
+  ],
+  "original_files": 459,
+  "scope": "Public candidate/controller evidence only. No archived source/ELF/solver execution. No new network or all-input proof. 0068 original missing result not reconstructed.",
+  "jobs": [
+    "tcp-ir-coupling-envelope-20261107-0067",
+    "tcp-coupling-regression-20261107-0068",
+    "tcp-ir-coupling-policy-20261107-0069",
+    "tcp-ir-coupling-metadata-20261107-0070",
+    "tcp-fixed-trace-diagnostic-20261107-0071"
+  ]
+}

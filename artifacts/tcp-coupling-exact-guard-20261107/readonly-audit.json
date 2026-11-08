@@ -1,0 +1,33 @@
+{
+  "status": "original_hashes_and_three_SMT_pairs_match",
+  "archive_sha256": "bb248fd6e7e8664bee184217c30a1d56cc683c0603cc6a64b8412c523857ebeb",
+  "files": 277,
+  "archive_code_ELF_solver_executed": false,
+  "original_0077_result": {
+    "pid": 189117,
+    "API_calls": 0,
+    "production_modified": false,
+    "prototype_complete": false,
+    "status": "exact_queries_and_hazard_gate_pass_review_required",
+    "stage": "finished",
+    "exact_query_pairs": 3,
+    "timing": {
+      "baseline": {
+        "cpu_seconds": 11.804646087,
+        "wall_seconds": 11.80504203500459,
+        "query_sha256": "5adcc8b9e3308b3ca5b565377df3ffe350f40397d0f9806cfb5540120c90ba52",
+        "solver_called": false
+      },
+      "proposal": {
+        "cpu_seconds": 3.5916174229999998,
+        "wall_seconds": 3.591898988990579,
+        "query_sha256": "5adcc8b9e3308b3ca5b565377df3ffe350f40397d0f9806cfb5540120c90ba52",
+        "solver_called": false
+      }
+    },
+    "speedup": 3.2867214674384324,
+    "all_input_safety": "not_claimed",
+    "formal_equivalence_proof": "not_claimed",
+    "finished_at": 1794057518.3439865
+  }
+}
