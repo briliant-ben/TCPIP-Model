@@ -45,6 +45,32 @@ helper passes 31 candidate tests and five controller-authored independent tests.
 The existing pipeline suite passes 20 tests. These are targeted checks, not a
 claim that the entire repository suite was rerun. Independent DeepSeek review 0145 of the qualified final source returned empty blocking/findings/limitations arrays; that is advisory review, not a correctness proof.
 
+## Additional frozen-scenario regression
+
+Server job 0144 executed the unchanged old 45-scenario literal corpus (SHA-256
+`1494d7445a0f66560232751c5f7c3a2daf604d0bb79dda6cda349157fa1053e0`)
+against the final virtual-link model and existing immutable generated C build.
+All 45 reference/native comparisons passed: 150 transitions and 50 distinct
+rules. All six TCP scenarios additionally have original fixed-input Z3 SAT and
+reference-replay match receipts, including partial ACK, retransmission and
+sequence wrap. These finite paths do not establish general TCP behavior.
+
+The [new accounting report](../artifacts/ipv4-closeout-20261108/execution-coverage-with-legacy.json)
+combines those observations with the earlier flow/live evidence: 78 records,
+241 transition occurrences, **58/335 distinct rules**, and **277 unobserved**.
+The default-initial subset itself covers all 58; one explicit-initial scenario
+covers eight rules already present in that set. These 45 extra cases are a
+separate regression channel, not silently added to the original 32-case task.
+Original exploration coverage and the original flow verdict remain unchanged.
+
+[Read-only audit](../artifacts/ipv4-closeout-20261108/validation-readonly-audit.json)
+checks all 45 original scenarios against the unchanged frozen corpus, execution
+output hashes, exact native/reference traces, and six original SMT/report hashes.
+It parses but does not execute archived Python, ELF or solver code. The second
+original public bundle has 447 files, SHA-256
+`68bd402ca600a8d25b68b9d09b48aefcf3d36b783e8625c3cf494258974ba639`.
+No new network observation is claimed by these offline generated-C executions.
+
 ## Full-input formal diagnosis
 
 The original depth-one safety and overlap query hashes remain unchanged.

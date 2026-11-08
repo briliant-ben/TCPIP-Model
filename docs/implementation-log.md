@@ -1,3 +1,5 @@
+2026-11-08: Final virtual-link model passed45 unchanged frozen literal reference/native scenarios (150 transitions), six TCP fixed-input Z3 SAT/replay. Readonly trace union now58/335default-initial rules;277remain unobserved. Separate regression evidence, original32caseflow UNKNOWN/unresolved unchanged. See docs/ipv4-closeout.md and validation-readonly-audit.json.
+
 2026-11-08: Qualified DeepSeek pure coverage accounting helper (31 candidate + five independent tests), existing pipeline20 regression passed. Readonly accepted flow/live trace union36/335,299unobserved; exploration10/335 and UNKNOWN/unresolved unchanged. Original0140–0142 evidence bound; domain-narrowing formal proposal rejected. See docs/ipv4-closeout.md.
 
 2026-11-08 secondLinux diagnostic0ac1/run42444788352 ZIP569f3627/37originals retained in artifacts/linux-tcp-ipv4-ingress-binding-failed-0ac1: selectedARP60request/42reply, rawPCAP==links andzeroDrops, but actualnativePID2801 commands onlyB/D0connect. Driverguessednet.frame, actualsharedIR eventL.net.frame; ABIKeyError BEFOREnativeingress, noquietruntimeacceptance. Oldlinkfedflagdoesnotproveingress. NoTCPframe/modelgap/RFCbug claim.
