@@ -1,0 +1,38 @@
+{
+  "depth": 2,
+  "initials": [{}],
+  "cases": [
+    {
+      "states": ["COMPOSED"],
+      "event": "T.app.connect",
+      "fields": {},
+      "purpose": "Start TCP connection attempt in composed state"
+    },
+    {
+      "states": ["COMPOSED"],
+      "event": "L.app.resolve",
+      "fields": {
+        "ip": {
+          "bytes": [192, 0, 2, 2]
+        }
+      },
+      "purpose": "Resolve peer IPv4 address 192.0.2.2"
+    },
+    {
+      "states": ["COMPOSED"],
+      "event": "L.app.send",
+      "fields": {
+        "data": {
+          "bytes": [1, 2, 3, 4]
+        }
+      },
+      "purpose": "Send small application payload"
+    },
+    {
+      "states": ["COMPOSED"],
+      "event": "T.app.abort",
+      "fields": {},
+      "purpose": "Abort connection attempt"
+    }
+  ]
+}
