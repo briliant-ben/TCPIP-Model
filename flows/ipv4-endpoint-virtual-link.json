@@ -1,0 +1,832 @@
+{
+  "schema": "spec-flow-task-v2",
+  "id": "finite-composed-ipv4-endpoint-virtual-link",
+  "model": "model/ipv4-endpoint-virtual-link.json",
+  "sources": [
+    {
+      "id": "source-0",
+      "path": "spec/sources/rfc826.txt",
+      "sha256": "01bc62fe6a37e90f1246ac43e8e145f1322b4ed1474836145c3da93d2bd3c8a6",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc826.txt",
+        "https://www.rfc-editor.org/rfc/rfc826"
+      ]
+    },
+    {
+      "id": "source-1",
+      "path": "spec/sources/rfc1122.txt",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc1122.txt",
+        "https://www.rfc-editor.org/rfc/rfc1122#section-2.3.2.1",
+        "https://www.rfc-editor.org/rfc/rfc1122.txt",
+        "https://www.rfc-editor.org/rfc/rfc1122#section-2.3.2.2",
+        "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.1.2",
+        "https://www.rfc-editor.org/rfc/rfc1122#section-4.1.3.4",
+        "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.2.6",
+        "https://www.rfc-editor.org/rfc/rfc1122"
+      ]
+    },
+    {
+      "id": "source-2",
+      "path": "docs/arp-endpoint.md",
+      "sha256": "634ba2afedf65a1a0c51b877ea1b3633f3c2b8b4d6c08174880f59b2bffaca1c",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "docs/arp-endpoint.md"
+      ]
+    },
+    {
+      "id": "source-3",
+      "path": "spec/sources/rfc768.txt",
+      "sha256": "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc768.txt",
+        "https://www.rfc-editor.org/rfc/rfc768.txt",
+        "https://www.rfc-editor.org/rfc/rfc768"
+      ]
+    },
+    {
+      "id": "source-4",
+      "path": "spec/sources/rfc791.txt",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc791.txt",
+        "https://www.rfc-editor.org/rfc/rfc791.txt",
+        "https://www.rfc-editor.org/rfc/rfc791#section-3.1",
+        "https://www.rfc-editor.org/rfc/rfc791"
+      ]
+    },
+    {
+      "id": "source-5",
+      "path": "spec/sources/rfc6864.txt",
+      "sha256": "e00ff443857166e5b26deecfdc77a0a1c5ff17fc87a6a8c50b020ce7f4d516d9",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc6864.txt",
+        "https://www.rfc-editor.org/rfc/rfc6864.txt",
+        "https://www.rfc-editor.org/rfc/rfc6864#section-4.1",
+        "https://www.rfc-editor.org/rfc/rfc6864"
+      ]
+    },
+    {
+      "id": "source-6",
+      "path": "docs/udp-wire-transmit.md",
+      "sha256": "2833f8dd296157a30520292156268ccb4d0f48f13f8c5026f57807cddd7a7304",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "docs/udp-wire-transmit.md"
+      ]
+    },
+    {
+      "id": "source-7",
+      "path": "docs/arp-udp-transmit.md",
+      "sha256": "e4f3e0ac4adb50493081cb4264afe85ccef1920d9dfe67278389a92e9427c09c",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "docs/arp-udp-transmit.md"
+      ]
+    },
+    {
+      "id": "source-8",
+      "path": "spec/sources/rfc894.txt",
+      "sha256": "be88b9301e53f986aca3a0e55e488d1d79bae3f88fe3f257640397bc089e7035",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc894.txt",
+        "https://www.rfc-editor.org/rfc/rfc894"
+      ]
+    },
+    {
+      "id": "source-9",
+      "path": "spec/sources/rfc894-errata-570.html",
+      "sha256": "4abd98cdf601aa5691e5443760a78d42158bde771db7809b8310c18c180c0464",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc894-errata-570.html",
+        "https://www.rfc-editor.org/errata/eid570"
+      ]
+    },
+    {
+      "id": "source-10",
+      "path": "docs/ipv4-udp-icmp-endpoint.md",
+      "sha256": "abf7bae21fa0f46b3518fe42fff97c5dfdcfe7052608651503e4d5572608764e",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "docs/ipv4-udp-icmp-endpoint.md"
+      ]
+    },
+    {
+      "id": "source-11",
+      "path": "spec/sources/rfc792.txt",
+      "sha256": "58714393ded142bacf188d7e8977eef98f4110c4c87ac94595f750df5664c2c6",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc792.txt",
+        "https://www.rfc-editor.org/rfc/rfc792"
+      ]
+    },
+    {
+      "id": "source-12",
+      "path": "docs/component-state-lowering.md",
+      "sha256": "eb24b2ec69a6819ccd47ba73e46f87192b6f1052a9fe87300c1863ba26ada2d2",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "docs/component-state-lowering.md"
+      ]
+    },
+    {
+      "id": "source-13",
+      "path": "spec/sources/rfc9293.txt",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc9293.txt",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.1",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.2",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.3",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.5",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.4",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.5",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.1",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.8",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.4",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.9.1.2",
+        "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.8.1",
+        "https://www.rfc-editor.org/rfc/rfc9293#section-3.1",
+        "https://www.rfc-editor.org/rfc/rfc9293#section-3.7.1",
+        "https://www.rfc-editor.org/rfc/rfc9293#section-3.9.1.2",
+        "https://www.rfc-editor.org/rfc/rfc9293.html",
+        "https://www.rfc-editor.org/rfc/rfc9293"
+      ]
+    },
+    {
+      "id": "source-14",
+      "path": "spec/sources/rfc6298.txt",
+      "sha256": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "spec/sources/rfc6298.txt",
+        "https://www.rfc-editor.org/rfc/rfc6298.html#section-5",
+        "https://www.rfc-editor.org/rfc/rfc6298.html"
+      ]
+    },
+    {
+      "id": "source-15",
+      "path": "docs/tcp-data.md",
+      "sha256": "f3e800456870da2c22283c065e858d442d181aed377b3e8b04e39d101f27b393",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "docs/tcp-data.md"
+      ]
+    },
+    {
+      "id": "source-16",
+      "path": "docs/tcp-wire-endpoint.md",
+      "sha256": "959b7cf25ee58ec9a665d2969d2b5265bf37d1a0e7ae2c7878d27295d38fc340",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "docs/tcp-wire-endpoint.md"
+      ]
+    },
+    {
+      "id": "source-17",
+      "path": "docs/tcp-ipv4-endpoint.md",
+      "sha256": "0dff243c2d626264b3377ce2964d140a02ab918e2e23e155e5262720e1aec431",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "uri_aliases": [
+        "docs/tcp-ipv4-endpoint.md"
+      ]
+    },
+    {
+      "id": "source-18",
+      "path": "model/tcp-ipv4-endpoint-exploration.json",
+      "sha256": "bf50fb6badd8d824a167f291a3a41b4055f9678b838a1209510e027b183b218f",
+      "version": "finite TCP IPv4 prototype flow v1; immutable exact input",
+      "uri_aliases": [
+        "model/tcp-ipv4-endpoint-exploration.json"
+      ]
+    },
+    {
+      "id": "source-19",
+      "path": "docs/tcp-ipv4-flow.md",
+      "sha256": "1e0aebc9b3cdd1a3f68797f37f42eefecca863b0fc3823536a4d03b62323b03a",
+      "version": "finite TCP IPv4 prototype flow v1; immutable exact input",
+      "uri_aliases": [
+        "docs/tcp-ipv4-flow.md"
+      ]
+    },
+    {
+      "id": "source-20",
+      "path": "spec/tcp-ipv4-endpoint-oracle.json",
+      "sha256": "8f66ce0af1f88072d2de8990dd55b584edad299abc9b5baf55bcf00e6bedb919",
+      "version": "finite TCP IPv4 prototype flow v1; immutable exact input",
+      "uri_aliases": [
+        "spec/tcp-ipv4-endpoint-oracle.json"
+      ]
+    },
+    {
+      "id": "source-21",
+      "path": "scenarios/tcp-ipv4-endpoint/abort-before-resolution.json",
+      "sha256": "10835d05195fbe8ed4266df228b052f180a7ac03639dd9814958f14d79c16252",
+      "version": "finite TCP IPv4 prototype flow v1; immutable exact input",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-endpoint/abort-before-resolution.json"
+      ]
+    },
+    {
+      "id": "source-22",
+      "path": "scenarios/tcp-ipv4-endpoint/cached-connect.json",
+      "sha256": "547a058777c295ea8cb946f1dd58dfa55aa4499aa3ad4444e524c9d0b3aba120",
+      "version": "finite TCP IPv4 prototype flow v1; immutable exact input",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-endpoint/cached-connect.json"
+      ]
+    },
+    {
+      "id": "source-23",
+      "path": "scenarios/tcp-ipv4-endpoint/cold-connect-flush.json",
+      "sha256": "0a5a8d4c98e047caa6bef9781bbef939f2465581b5680d8b6ef576bd85438fea",
+      "version": "finite TCP IPv4 prototype flow v1; immutable exact input",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-endpoint/cold-connect-flush.json"
+      ]
+    },
+    {
+      "id": "source-24",
+      "path": "scenarios/tcp-ipv4-endpoint/resolved-bidirectional-cumulative-close.json",
+      "sha256": "ab73a965ebee7576e5e374cb314b6726ef50088a098aeaa8ac94a35cd808a9ba",
+      "version": "finite TCP IPv4 prototype flow v1; immutable exact input",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-endpoint/resolved-bidirectional-cumulative-close.json"
+      ]
+    },
+    {
+      "id": "virtual-rx-profile",
+      "path": "docs/tcp-ipv4-virtual-link.md",
+      "sha256": "1357f11f920d8024543852279a2dcd00b3b671247b7b1c075efdbb230a2e8152",
+      "version": "Finite virtual-link receive profile v1; exact independent frozen input",
+      "uri_aliases": [
+        "docs/tcp-ipv4-virtual-link.md"
+      ]
+    },
+    {
+      "id": "virtual-rx-oracle",
+      "path": "spec/tcp-ipv4-virtual-link-oracle.json",
+      "sha256": "fa6b2d169a8f583d6144a7369a969d730c55139fce48cc34de352f66fbdd7a1a",
+      "version": "Finite virtual-link receive profile v1; exact independent frozen input",
+      "uri_aliases": [
+        "spec/tcp-ipv4-virtual-link-oracle.json"
+      ]
+    },
+    {
+      "id": "virtual-seed-4",
+      "path": "scenarios/tcp-ipv4-virtual-link/bad-ip-checksum.json",
+      "sha256": "d56154e7f049535cd6c3636642da44b6c5c85640eeee7bb6b8121899f996fbd7",
+      "version": "Independent frozen virtual receive literal v1",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-virtual-link/bad-ip-checksum.json"
+      ]
+    },
+    {
+      "id": "virtual-seed-5",
+      "path": "scenarios/tcp-ipv4-virtual-link/bad-tcp-checksum.json",
+      "sha256": "0f6b2c59b33ef97089d97c0742ccf3dd97a8920f2e2b454a42e7e2270689165c",
+      "version": "Independent frozen virtual receive literal v1",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-virtual-link/bad-tcp-checksum.json"
+      ]
+    },
+    {
+      "id": "virtual-seed-6",
+      "path": "scenarios/tcp-ipv4-virtual-link/canonical-offline-padded-60.json",
+      "sha256": "77fe38bc9a47d4afc53de16ec5eedda7747e7a5dd8cbaebec8659cfea8299a8a",
+      "version": "Independent frozen virtual receive literal v1",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-virtual-link/canonical-offline-padded-60.json"
+      ]
+    },
+    {
+      "id": "virtual-seed-7",
+      "path": "scenarios/tcp-ipv4-virtual-link/observed-linux-synack-58.json",
+      "sha256": "d83e0fe89b0272ce4fdd09a5675eb0f12156645afd2f733ac677bb0e861830f6",
+      "version": "Independent frozen virtual receive literal v1",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-virtual-link/observed-linux-synack-58.json"
+      ]
+    },
+    {
+      "id": "virtual-seed-8",
+      "path": "scenarios/tcp-ipv4-virtual-link/synthetic-no-options-54.json",
+      "sha256": "19a55799ebfaa568fb50fa0c31d44ef1859045dc8a0035dfe9e49381abd2f150",
+      "version": "Independent frozen virtual receive literal v1",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-virtual-link/synthetic-no-options-54.json"
+      ]
+    },
+    {
+      "id": "virtual-seed-9",
+      "path": "scenarios/tcp-ipv4-virtual-link/synthetic-wrap-no-options-54.json",
+      "sha256": "eb2dabbcf74d49057a7134fd0207c45feb5417f0b48d2254c539e813d08a780c",
+      "version": "Independent frozen virtual receive literal v1",
+      "uri_aliases": [
+        "scenarios/tcp-ipv4-virtual-link/synthetic-wrap-no-options-54.json"
+      ]
+    },
+    {
+      "id": "linux-tap-service",
+      "path": "spec/sources/linux-v6.12-tuntap.rst",
+      "sha256": "5d32ead748e537c61c7db53c97fed34b9483cea3374a4721c5d99ec942219660",
+      "version": "Pinned Linuxv6.12 interface document; no currentkernel implementation proof",
+      "uri_aliases": [
+        "spec/sources/linux-v6.12-tuntap.rst",
+        "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/tuntap.rst?h=v6.12"
+      ]
+    },
+    {
+      "id": "L-tap-profile",
+      "path": "docs/ipv4-udp-icmp-tap.md",
+      "sha256": "72dc75b32b17887f099752d0b706613e66a08d8ec3535ae2fa59f7742cd387e2",
+      "version": "Existing finite UDP/ICMP TAP interface profile, unchanged",
+      "uri_aliases": [
+        "docs/ipv4-udp-icmp-tap.md"
+      ]
+    },
+    {
+      "id": "all-virtual-profile",
+      "path": "docs/ipv4-endpoint-virtual-link.md",
+      "sha256": "3159f8498be839f3257b09d354872dfec87ddbdae7f0244e32d655027950b728",
+      "version": "Finite composed virtual interface v1",
+      "uri_aliases": [
+        "docs/ipv4-endpoint-virtual-link.md"
+      ]
+    },
+    {
+      "id": "all-virtual-oracle",
+      "path": "spec/ipv4-endpoint-virtual-link-oracle.json",
+      "sha256": "4c8e8106b55327fb8dc5e72119bb93ac0a3dea89d75b770461ef02291764580c",
+      "version": "Mechanical qualification of unchanged independent TAP literals v1",
+      "uri_aliases": [
+        "spec/ipv4-endpoint-virtual-link-oracle.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-10",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-bad-echo-checksum.json",
+      "sha256": "cf70ced1aba79d9d79d4fe2a06b294c07604c955906aa5b51213f80ac8c2a008",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-bad-echo-checksum.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-11",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-bad-udp-checksum.json",
+      "sha256": "471a116a7b55b62cd528ee04437fd5e876c126a413ba3f6fe5ee6389e711e2c6",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-bad-udp-checksum.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-12",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-canonical-still-accepted.json",
+      "sha256": "5e6eb55780a068d50b2830787bde81c8899a02555d2470ebff20766da2aced36",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-canonical-still-accepted.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-13",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-echo-empty.json",
+      "sha256": "116641adf7fd7857cb3b51708111fd468360c2fc2b6abe02ef3f13db7e7959a8",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-echo-empty.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-14",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-echo-odd.json",
+      "sha256": "30fb9073b7db3b84e404e02a11ab063c1aa03564100435692394755ff7e38f23",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-echo-odd.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-15",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-mtu-mixed.json",
+      "sha256": "b9773cd2a1373452609c4620f1ecf7c6009b4a6132b6e5c7531a32fc7ff7cf62",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-mtu-mixed.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-16",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-pending-ingress-retains-queue.json",
+      "sha256": "0f618553a98cbd5befb2810c1788e8d223f902f509d93a98e5527c0418326c49",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-pending-ingress-retains-queue.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-17",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-total-too-small.json",
+      "sha256": "e42ede592bfb57330681d837ade5c76ac8cf6f2ab7396b06266dfbdb04d8b915",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-total-too-small.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-18",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-truncated.json",
+      "sha256": "a90bee652cdee1113941d0390ca72e08738dae7d50fa938f29e6891d76152a80",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-truncated.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-19",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-udp-empty.json",
+      "sha256": "27fab94a1bba09285f1949cdb37a69040a1ded895381256ad80698794f08360d",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-udp-empty.json"
+      ]
+    },
+    {
+      "id": "all-virtual-seed-20",
+      "path": "scenarios/ipv4-endpoint-virtual-link/L-udp-odd.json",
+      "sha256": "624fcd8afcb52667fb17c1e035b9d084f2b7dd3957869e483bf090c82ae17e71",
+      "version": "Independent literal seed v1",
+      "uri_aliases": [
+        "scenarios/ipv4-endpoint-virtual-link/L-udp-odd.json"
+      ]
+    }
+  ],
+  "requirement_bindings": {
+    "L.ARP-826": {
+      "source": "source-0",
+      "clause": "Packet Generation / Packet Reception",
+      "reference": "https://www.rfc-editor.org/rfc/rfc826"
+    },
+    "L.ARP-CACHE": {
+      "source": "source-1",
+      "clause": "2.3.2.1 Cache validation",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-2.3.2.1"
+    },
+    "L.ARP-PROFILE": {
+      "source": "source-2",
+      "clause": "Finite Ethernet/IPv4 ARP endpoint",
+      "reference": "docs/arp-endpoint.md"
+    },
+    "L.UDP-WIRE": {
+      "source": "source-3",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.txt"
+    },
+    "L.UDP-DEFAULT": {
+      "source": "source-1",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122.txt"
+    },
+    "L.IP-WIRE": {
+      "source": "source-4",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.txt"
+    },
+    "L.ATOMIC-ID": {
+      "source": "source-5",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6864.txt"
+    },
+    "L.PROFILE": {
+      "source": "source-6",
+      "clause": "explicit finite profile",
+      "reference": "docs/udp-wire-transmit.md"
+    },
+    "L.COMPOSED-PROFILE": {
+      "source": "source-7",
+      "clause": "Sources and scope",
+      "reference": "docs/arp-udp-transmit.md"
+    },
+    "L.ARP-PACKET-QUEUE": {
+      "source": "source-1",
+      "clause": "2.3.2.2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-2.3.2.2"
+    },
+    "L.ETH-IP": {
+      "source": "source-8",
+      "clause": "Frame Format / Address Mappings",
+      "reference": "https://www.rfc-editor.org/rfc/rfc894"
+    },
+    "L.ETH-ERRATA": {
+      "source": "source-9",
+      "clause": "Verified technical erratum570",
+      "reference": "https://www.rfc-editor.org/errata/eid570"
+    },
+    "L.ENDPOINT-INGRESS": {
+      "source": "source-10",
+      "clause": "Fixed version, sources and admission",
+      "reference": "docs/ipv4-udp-icmp-endpoint.md"
+    },
+    "L.ENDPOINT-LINK": {
+      "source": "source-8",
+      "clause": "Frame Format; verified erratum570",
+      "reference": "https://www.rfc-editor.org/rfc/rfc894"
+    },
+    "L.UDPRX-RX-PROFILE": {
+      "source": "source-10",
+      "clause": "Fixed version, sources and admission",
+      "reference": "docs/ipv4-udp-icmp-endpoint.md"
+    },
+    "L.UDPRX-IP-LENGTH": {
+      "source": "source-4",
+      "clause": "3.1 Total Length",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791#section-3.1"
+    },
+    "L.UDPRX-IP-CHECKSUM": {
+      "source": "source-1",
+      "clause": "3.2.1.2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.1.2"
+    },
+    "L.UDPRX-UDP-LENGTH": {
+      "source": "source-3",
+      "clause": "Fields pp1-2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768"
+    },
+    "L.UDPRX-UDP-CHECKSUM": {
+      "source": "source-1",
+      "clause": "4.1.3.4",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-4.1.3.4"
+    },
+    "L.UDPRX-UDP-PSEUDO": {
+      "source": "source-3",
+      "clause": "Fields p2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768"
+    },
+    "L.UDPRX-IP-ATOMIC-ID": {
+      "source": "source-5",
+      "clause": "4/4.1 Atomic datagrams",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6864#section-4.1"
+    },
+    "L.ECHO-ECHO-PROFILE": {
+      "source": "source-10",
+      "clause": "Fixed version, sources and admission",
+      "reference": "docs/ipv4-udp-icmp-endpoint.md"
+    },
+    "L.ECHO-ECHO-REPLY": {
+      "source": "source-11",
+      "clause": "Echo or Echo Reply pp14-15",
+      "reference": "https://www.rfc-editor.org/rfc/rfc792"
+    },
+    "L.ECHO-ECHO-HOST": {
+      "source": "source-1",
+      "clause": "3.2.2.6",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.2.6"
+    },
+    "L.ECHO-IP-LENGTH": {
+      "source": "source-4",
+      "clause": "3.1 Total Length",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791#section-3.1"
+    },
+    "L.ECHO-IP-CHECKSUM": {
+      "source": "source-1",
+      "clause": "3.2.1.2",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.1.2"
+    },
+    "L.ECHO-ICMP-CHECKSUM": {
+      "source": "source-11",
+      "clause": "Echo Checksum p14",
+      "reference": "https://www.rfc-editor.org/rfc/rfc792"
+    },
+    "L.ECHO-IP-ATOMIC": {
+      "source": "source-5",
+      "clause": "4/4.1 Atomic datagrams",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6864#section-4.1"
+    },
+    "L.COMPONENT-STATE-DOMAIN": {
+      "source": "source-12",
+      "clause": "explicit finite profile",
+      "reference": "docs/component-state-lowering.md"
+    },
+    "T.CONN-OPEN": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.1"
+    },
+    "T.CONN-LISTEN": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.2"
+    },
+    "T.CONN-SYN-SENT": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.3"
+    },
+    "T.CONN-SIMULTANEOUS": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.5"
+    },
+    "T.CONN-ACK": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4"
+    },
+    "T.CONN-FIN": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4"
+    },
+    "T.CONN-CLOSE": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.4"
+    },
+    "T.CONN-ABORT": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.5"
+    },
+    "T.CONN-RESET": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4"
+    },
+    "T.CONN-CLOSED-INPUT": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.1"
+    },
+    "T.CONN-TIMEOUT": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.8"
+    },
+    "T.RTO-PROFILE": {
+      "source": "source-14",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5"
+    },
+    "T.CONNECTION-PROFILE": {
+      "source": "source-15",
+      "clause": "explicit finite profile",
+      "reference": "docs/tcp-data.md"
+    },
+    "T.DATA-SEQ": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.4"
+    },
+    "T.DATA-ACK": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4"
+    },
+    "T.DATA-WINDOW": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4"
+    },
+    "T.DATA-RECEIVE": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4"
+    },
+    "T.DATA-SEND": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.9.1.2"
+    },
+    "T.DATA-RTX": {
+      "source": "source-13",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.8.1"
+    },
+    "T.DATA-RTO": {
+      "source": "source-14",
+      "clause": "explicit finite profile",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5"
+    },
+    "T.DATA-SCOPE": {
+      "source": "source-15",
+      "clause": "explicit finite profile",
+      "reference": "docs/tcp-data.md"
+    },
+    "T.WIRE-PROFILE": {
+      "source": "source-16",
+      "clause": "Admission and failure order",
+      "reference": "docs/tcp-wire-endpoint.md"
+    },
+    "T.WIRE-IP": {
+      "source": "source-4",
+      "clause": "3.1",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791#section-3.1"
+    },
+    "T.WIRE-TCP": {
+      "source": "source-13",
+      "clause": "3.1 Header Format",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293#section-3.1"
+    },
+    "T.WIRE-MSS": {
+      "source": "source-13",
+      "clause": "3.7.1",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293#section-3.7.1"
+    },
+    "T.WIRE-PUSH": {
+      "source": "source-13",
+      "clause": "3.9.1.2 MUST60/MUST61; 3.9.1.3 MAY17",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293#section-3.9.1.2"
+    },
+    "T.COMPONENT-STATE-DOMAIN": {
+      "source": "source-12",
+      "clause": "explicit finite profile",
+      "reference": "docs/component-state-lowering.md"
+    },
+    "CROSS-IP-LINK": {
+      "source": "source-17",
+      "clause": "explicit finite profile",
+      "reference": "docs/tcp-ipv4-endpoint.md"
+    },
+    "TCP-IP-FRAME-DROP": {
+      "source": "source-17",
+      "clause": "explicit finite profile",
+      "reference": "docs/tcp-ipv4-endpoint.md"
+    },
+    "VIRTUAL-ETHERNET-RX": {
+      "source": "virtual-rx-profile",
+      "clause": "Specification and observation / Acceptance boundary",
+      "reference": "docs/tcp-ipv4-virtual-link.md"
+    },
+    "L.TAP-INTERFACE": {
+      "source": "linux-tap-service",
+      "clause": "1 Description; 3 Program interface",
+      "reference": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/tuntap.rst?h=v6.12"
+    },
+    "L.TAP-EXTENT": {
+      "source": "L-tap-profile",
+      "clause": "Exact ingress extent",
+      "reference": "docs/ipv4-udp-icmp-tap.md"
+    }
+  },
+  "exploration": "model/tcp-ipv4-endpoint-exploration.json",
+  "seeds": [
+    "scenarios/tcp-ipv4-endpoint/abort-before-resolution.json",
+    "scenarios/tcp-ipv4-endpoint/cached-connect.json",
+    "scenarios/tcp-ipv4-endpoint/cold-connect-flush.json",
+    "scenarios/tcp-ipv4-endpoint/resolved-bidirectional-cumulative-close.json",
+    "scenarios/tcp-ipv4-virtual-link/bad-ip-checksum.json",
+    "scenarios/tcp-ipv4-virtual-link/bad-tcp-checksum.json",
+    "scenarios/tcp-ipv4-virtual-link/canonical-offline-padded-60.json",
+    "scenarios/tcp-ipv4-virtual-link/observed-linux-synack-58.json",
+    "scenarios/tcp-ipv4-virtual-link/synthetic-no-options-54.json",
+    "scenarios/tcp-ipv4-virtual-link/synthetic-wrap-no-options-54.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-bad-echo-checksum.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-bad-udp-checksum.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-canonical-still-accepted.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-echo-empty.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-echo-odd.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-mtu-mixed.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-pending-ingress-retains-queue.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-total-too-small.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-truncated.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-udp-empty.json",
+    "scenarios/ipv4-endpoint-virtual-link/L-udp-odd.json"
+  ],
+  "formal": {
+    "depth": 1,
+    "symbolic_initials": [],
+    "solver_timeout_ms": 10000
+  },
+  "limits": {
+    "stage_seconds": 180,
+    "max_prefixes": 24,
+    "max_cases": 40
+  },
+  "scope": {
+    "purpose": "Finite single IR IPv4 endpoint virtual link flow; ARP/TCP/UDP/ICMP, 21 independent literal seeds, no wholeprotocol proof",
+    "assumptions": [
+      "Pinned singleton endpoint/MTU/buffer/SMSS/window; explicit virtual TCP receive boundary accepts exact IP extent OR canonical padding; canonical model unchanged",
+      "Only30 L UDP/ICMP ingress guards from existing pinned TAP profile differ from TCP virtual IR; all actions/types/timers/invariants/TCPARPguards unchanged; 21 independent literal seeds",
+      "BMCdepth1 formal result and finite trace executions are separate claims"
+    ],
+    "excluded": [
+      "FullTCP/protocol/compiler/unboundedproof",
+      "LivecomposedLinuxpeer or physicalEthernet evidence",
+      "IPv6,upperapplications,generalrouting,reassembly/generalwindow/recovery beyond declaredmodel"
+    ]
+  }
+}
