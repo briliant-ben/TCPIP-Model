@@ -27,9 +27,9 @@ jobs:
           .venv/bin/python -m unittest discover -s tests -p test_linux_tcp_ipv4_probe.py -v > artifacts/tcp-ipv4-first-ingress/helper-tests.log 2>&1
           .venv/bin/python -m unittest discover -s tests -p test_tcp_ipv4_probe_lifecycle.py -v > artifacts/tcp-ipv4-first-ingress/lifecycle-tests.log 2>&1
           .venv/bin/python -m unittest discover -s tests -p test_tcp_ipv4_capture_contract.py -v > artifacts/tcp-ipv4-first-ingress/capture-contract-tests.log 2>&1
-      - name: Generate and compile the unchanged authoritative IR
+      - name: Generate and compile the explicit virtual-link IR profile
         run: |
-          .venv/bin/python -m protocol_lab.codegen model/tcp-ipv4-endpoint.json --out artifacts/tcp-ipv4-first-ingress/generation > artifacts/tcp-ipv4-first-ingress/generation-result.json
+          .venv/bin/python -m protocol_lab.codegen model/tcp-ipv4-virtual-link.json --out artifacts/tcp-ipv4-first-ingress/generation > artifacts/tcp-ipv4-first-ingress/generation-result.json
           .venv/bin/python - <<'PY'
           import hashlib,json,subprocess
           from pathlib import Path
@@ -39,14 +39,14 @@ jobs:
           (out/'build-result.json').write_text(json.dumps(r,indent=2)+'\n')
           assert r['status']=='pass'
           def git(*args):return subprocess.check_output(['git',*args],text=True).strip()
-          paths=['model/tcp-ipv4-endpoint.json','ports/linux-tcp-ipv4-peer/probe.py','ports/tcp_ipv4_probe_support.py','ports/native_session.py','ports/linux-tcp-wire-peer/server.py']
+          paths=['model/tcp-ipv4-virtual-link.json','ports/linux-tcp-ipv4-peer/probe.py','ports/tcp_ipv4_probe_support.py','ports/native_session.py','ports/linux-tcp-wire-peer/server.py']
           source={p:hashlib.sha256(Path(p).read_bytes()).hexdigest()for p in paths}
           (out/'provenance.json').write_text(json.dumps(dict(source_commit=git('rev-parse','HEAD'),source_tree=git('rev-parse','HEAD^{tree}'),sources=source,claim='first TCP ingress diagnostic only; no full exchange or whole endpoint claim'),indent=2)+'\n')
           PY
       - name: Observe original Ethernet frames in a new network namespace
         run: |
           parent_netns="$(readlink /proc/self/ns/net)"
-          sudo unshare --net .venv/bin/python ports/linux-tcp-ipv4-peer/probe.py --out artifacts/tcp-ipv4-first-ingress/live --model model/tcp-ipv4-endpoint.json --executable artifacts/tcp-ipv4-first-ingress/build/protocol-native --parent-netns "$parent_netns"
+          sudo unshare --net .venv/bin/python ports/linux-tcp-ipv4-peer/probe.py --out artifacts/tcp-ipv4-first-ingress/live --model model/tcp-ipv4-virtual-link.json --executable artifacts/tcp-ipv4-first-ingress/build/protocol-native --parent-netns "$parent_netns"
       - name: Retain original packets capture source compile and rejection
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
