@@ -95,6 +95,46 @@ Subsequent work must use actual diagnostics to choose an exact transformation,
 and add actual witnesses or explicit checked unreachable-rule findings for
 missing rules. Increasing reported coverage alone cannot close the flow.
 
+## New initialized one-step obligations
+
+A separate exact diagnostic now resolves the **original initialized depth-one
+formulas** using smaller obligations, under the same 10 s per-query budget:
+
+- Job 0149: all 225 distinct non-false initialized overlap OR-disjuncts UNSAT.
+  The original formula implies this OR goal; proving every disjunct UNSAT is
+  a sufficient stronger obligation. These are not arbitrary-state checks.
+- Job 0150: complete choice-cover remainder UNSAT, then all 337 choices UNSAT
+  (335 declared rule indices, idle and clock). Every branch retains all original
+  assertion slots, the original explicit initial bindings and its choice unit.
+  Branch selection is exhaustive case splitting, not input-domain restriction.
+- Job 0148 separately has a real one-event SAT witness and strict reference
+  replay match. This establishes limited nonvacuity, not rule coverage.
+
+The [overlap audit](../artifacts/ipv4-closeout-20261108/initialized-conflict-readonly-audit.json)
+reconstructs all 225 actual query files byte-for-byte without solving. The
+[safety audit](../artifacts/ipv4-closeout-20261108/selected-safety-readonly-audit.json)
+checks every original query hash, exact declaration/recursive-definition text,
+and complete ordered typed assertions. Z3 temporary let labels and Boolean
+AND/OR grouping depend on earlier solves; only exact Boolean associativity,
+commutativity, idempotence and identities are canonicalized for that comparison.
+No numeric bound, type, global name, function body, non-Boolean operator or
+original artifact hash is relaxed. Both audits use current trusted tooling,
+without executing archived code, ELF or Solver.check.
+
+These are **new bounded results**, not changes to an old UNKNOWN receipt. They
+have not yet been integrated as a production flow strategy. The old task and
+its unresolved verdict remain intact. They do not establish safety at greater
+depth, induction, later TCP control states, wire/compiler correctness or complete
+protocol coverage. The 277 execution-coverage gaps also remain.
+
+The 0146–0149 original bundle contains 274 files, SHA-256
+`a3dfd2ba8d0305850852a165589ffbfbf090f1659afff045b0a1e37cbae32309`.
+The 0150–0151 bundle contains 354 files, SHA-256
+`02ae10bc866c67ad24393fa2b02bdc6c822d7945c1d128c353eda31a27f25342`.
+Original bad candidate tests/API mistakes and the qualified tests are retained.
+Independent DeepSeek reviews are advisory; their limitations are checked against
+actual formulas and completeness data, rather than treated as proof certificates.
+
 ## Original evidence and repository separation
 
 The terminal 0140–0142 public original bundle contains 34 files, SHA-256

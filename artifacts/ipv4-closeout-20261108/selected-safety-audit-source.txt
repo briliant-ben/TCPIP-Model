@@ -1,0 +1,141 @@
+from pathlib import Path
+import hashlib
+import json
+import sys
+import tarfile
+import z3
+
+sys.path.insert(0, '/tmp/prestate-repair-0147-gate')
+from prestate_reduce import reduce_initial_constants
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def signature(expr):
+    cache = {}
+    true_sig = 'BooleanTrue'
+    false_sig = 'BooleanFalse'
+
+    def visit(node):
+        if z3.is_true(node):
+            return true_sig
+        if z3.is_false(node):
+            return false_sig
+        if node.get_id() in cache:
+            return cache[node.get_id()]
+        assert z3.is_app(node), 'Unexpected quantified AST'
+        decl = node.decl()
+        if z3.is_and(node) or z3.is_or(node):
+            conjunction = z3.is_and(node)
+            pending = list(node.children())
+            children = set()
+            while pending:
+                child = pending.pop()
+                if (z3.is_and(child) if conjunction else z3.is_or(child)):
+                    pending.extend(child.children())
+                else:
+                    children.add(visit(child))
+            zero = false_sig if conjunction else true_sig
+            identity = true_sig if conjunction else false_sig
+            if zero in children:
+                value = zero
+            else:
+                children.discard(identity)
+                if not children:
+                    value = identity
+                elif len(children) == 1:
+                    value = next(iter(children))
+                else:
+                    value = sha(json.dumps(['and' if conjunction else 'or',
+                                            sorted(children)]).encode())
+            cache[node.get_id()] = value
+            return value
+        data = [decl.kind(), str(decl.name()), node.sort().sexpr(),
+                [(type(p).__name__, str(p)) for p in decl.params()],
+                [visit(arg) for arg in node.children()]]
+        value = sha(json.dumps(data, separators=(',', ':')).encode())
+        cache[node.get_id()] = value
+        return value
+
+    return visit(expr)
+
+
+def assert_same_queries(rendered, original, label):
+    # Definitions and global names are exact. Only local let aliases disappear
+    # through the standard SMT parser, retaining every typed operator/parameter.
+    assert rendered.partition('(assert')[0] == original.partition('(assert')[0], label
+    fresh = list(z3.parse_smt2_string(rendered))
+    saved = list(z3.parse_smt2_string(original))
+    assert len(fresh) == len(saved), label
+    assert all(signature(a) == signature(b) for a, b in zip(fresh, saved)), label
+
+
+root = Path('artifacts/ipv4-closeout-20261108')
+archive = root / 'selected-safety-originals.tar.gz'
+digest = sha(archive.read_bytes())
+assert digest == '02ae10bc866c67ad24393fa2b02bdc6c822d7945c1d128c353eda31a27f25342'
+x = z3.Int('audit_x')
+assert signature(x > 32) != signature(x > 33)
+assert signature(x > 32) != signature(x >= 32)
+p, q = z3.Bools('audit_p audit_q')
+assert signature(z3.And(p, z3.And(q, p))) == signature(z3.And(q, p))
+assert signature(z3.And(p, q)) != signature(p)
+
+with tarfile.open(archive) as tar:
+    manifest = {}
+    for member in tar:
+        assert not member.issym() and not member.islnk()
+        assert not member.name.startswith('/') and '..' not in Path(member.name).parts
+        if member.isfile():
+            manifest[member.name] = sha(tar.extractfile(member).read())
+    base = 'candidates/ipv4-selected-safety-20261108-0150/'
+
+    def raw(name):
+        return tar.extractfile(base + name).read()
+
+    def read(name):
+        return json.loads(raw(name))
+
+    original_bytes = raw('original-safety.smt2')
+    assert sha(original_bytes) == 'd5b785c0bb5fdc11bf0c92e01fc492bafa27cb22522479f61ddae14b02182f70'
+    original = list(z3.parse_smt2_string(original_bytes.decode()))
+    values = [-2, -1, *range(335)]
+    choice = z3.Int('choice_0')
+    cover = z3.Solver()
+    cover.set(timeout=10000)
+    cover.add(*original, z3.Not(z3.Or(*[choice == i for i in values])))
+    assert_same_queries(cover.to_smt2(), raw('choice-cover.smt2').decode(), 'cover')
+    cover_result = read('choice-cover-result.json')
+    assert cover_result['answer'] == 'unsat'
+    assert sha(raw('choice-cover.smt2')) == cover_result['query_sha256']
+    reduced = reduce_initial_constants(original)
+    assert len(reduced['assertions']) == 72 and len(reduced['bindings']) == 70
+    assert [b.sexpr() for b in reduced['bindings']] == read('initial-binding-sources.json')
+    rows = read('results.json')
+    assert len(rows) == 337 and [row['choice'] for row in rows] == values
+    for offset, (index, row) in enumerate(zip(values, rows)):
+        terms = [z3.simplify(z3.substitute(term, (choice, z3.IntVal(index))))
+                 for term in reduced['assertions']]
+        solver = z3.Then('solve-eqs', 'simplify', 'smt').solver()
+        solver.set(timeout=10000)
+        solver.add(*terms, *reduced['bindings'], choice == index)
+        query = raw('branch-' + str(offset).zfill(3) + '.smt2')
+        assert sha(query) == row['actual_query_sha256']
+        assert_same_queries(solver.to_smt2(), query.decode(), offset)
+        assert row['answer'] == 'unsat' and row['timeout_ms'] == 10000
+        assert row['original_assertion_slots'] == row['retained_slots'] == 72
+
+    report = dict(
+        archive_sha256=digest, files=len(manifest), member_sha256=manifest,
+        original_safety_sha256=sha(original_bytes), choices=values,
+        choice_cover='original UNSAT receipt and complete typed assertion reconstruction',
+        actual_queries='337/337 original hashes checked; exact declarations/recursive definitions and identical ordered typed assertion graphs',
+        original_UNSAT_receipts=337, solver_checked_locally=False,
+        archived_code_ELF_solver_executed=False,
+        review_blocking=read('review-response.json')['blocking'],
+        serialization_limit='Local let aliases carry temporary Z3 AST numbers; standard SMT parsing expands them. No global identifiers, definitions, types, numerals or original hashes are normalized or relaxed.',
+        scope='Initialized full-typed-input depth1 safety only; old full-flow UNKNOWN and production backend unchanged; not deeper, all-state, protocol or compiler proof.')
+    (root / 'selected-safety-readonly-audit.json').write_text(json.dumps(report, indent=2) + '\n')
+    print('Typed assertion graphs matched:', len(rows), 'files:', len(manifest))

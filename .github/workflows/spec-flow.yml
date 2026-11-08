@@ -2,9 +2,9 @@ name: Repeatable spec flow
 on:
   push:
     branches: ['codex/**', main]
-    paths: ['protocol_lab/**', 'flows/**', 'tests/test_pipeline.py', 'model/**', 'scenarios/**', 'bindings/**', 'tests/test_codegen_wire.py', 'tests/test_flow_migration.py', 'tests/test_udp_payload.py', 'docs/udp-payload-flow.md', 'examples/run_spec_candidate.py', 'spec/sources/**', 'docs/semantics.md', 'docs/udp-header-flow.md', 'requirements-formal.txt', '.github/workflows/spec-flow.yml']
+    paths: ['protocol_lab/**', 'flows/**', 'tests/test_pipeline.py', 'tests/test_coverage_accounting*.py', 'model/**', 'scenarios/**', 'bindings/**', 'tests/test_codegen_wire.py', 'tests/test_flow_migration.py', 'tests/test_udp_payload.py', 'docs/udp-payload-flow.md', 'examples/run_spec_candidate.py', 'spec/sources/**', 'docs/semantics.md', 'docs/udp-header-flow.md', 'requirements-formal.txt', '.github/workflows/spec-flow.yml']
   pull_request:
-    paths: ['protocol_lab/**', 'flows/**', 'tests/test_pipeline.py', 'model/**', 'scenarios/**', 'bindings/**', 'tests/test_codegen_wire.py', 'tests/test_flow_migration.py', 'tests/test_udp_payload.py', 'docs/udp-payload-flow.md', 'examples/run_spec_candidate.py', 'spec/sources/**', 'docs/semantics.md', 'docs/udp-header-flow.md', 'requirements-formal.txt', '.github/workflows/spec-flow.yml']
+    paths: ['protocol_lab/**', 'flows/**', 'tests/test_pipeline.py', 'tests/test_coverage_accounting*.py', 'model/**', 'scenarios/**', 'bindings/**', 'tests/test_codegen_wire.py', 'tests/test_flow_migration.py', 'tests/test_udp_payload.py', 'docs/udp-payload-flow.md', 'examples/run_spec_candidate.py', 'spec/sources/**', 'docs/semantics.md', 'docs/udp-header-flow.md', 'requirements-formal.txt', '.github/workflows/spec-flow.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,6 +26,8 @@ jobs:
           /tmp/spec-flow-venv/bin/python -m unittest discover -s tests -p test_pipeline.py -v > artifacts/spec-flow-ci/tests.log 2>&1
       - name: Check independent native wire packets and faults
         run: /tmp/spec-flow-venv/bin/python -m unittest discover -s tests -p test_codegen_wire.py -v > artifacts/spec-flow-ci/wire-tests.log 2>&1
+      - name: Check execution coverage accounting and independent counterexamples
+        run: /tmp/spec-flow-venv/bin/python -m unittest discover -s tests -p 'test_coverage_accounting*.py' -v > artifacts/spec-flow-ci/coverage-tests.log 2>&1
       - name: Check second-spec migration contracts and concurrent clients
         run: /tmp/spec-flow-venv/bin/python -m unittest discover -s tests -p test_flow_migration.py -v > artifacts/spec-flow-ci/migration-tests.log 2>&1
       - name: Check UDP byte content and hostile input contracts
