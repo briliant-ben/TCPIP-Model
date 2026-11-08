@@ -1,0 +1,41 @@
+{
+  "status": "bounded_source_mock_gate_verified",
+  "archive_sha256": "4721c155069aad0b4d13ca564ad714dcc1657d141813f3de69f1acef40fe980a",
+  "original_files": 18,
+  "source_bindings": {
+    "ports/linux-tcp-ipv4-peer/probe.py": "12a9269566db2688fed94f536c72599b5287953f62eafae5c36d4e9fa22a3220",
+    "ports/linux-tcp-ipv4-peer/application.py": "742f0ce5fb5562bff83a7bd93d7911af1c9bdf47b09e7f6a9ff9e17553b3ad78",
+    "ports/tcp_ipv4_application_port.py": "14b52fac527995a24e70ef5f06d1af2d62f33507f106361367bc913013d2cbae",
+    "tests/test_tcp_ipv4_application.py": "15af82bedd0d11f9c3bf066f5582bbd0310095931c6e4910c8f824a7ffae3c8f",
+    "tests/test_tcp_ipv4_application_port.py": "1b80ffec9bd35d80a3ee9798813e5a0ef534a7add6c3d661637398ab90515059",
+    "tests/test_tcp_ipv4_full_lifecycle.py": "58c85a968bc238970dc6a96471e58eef1d134123cd4dcead6d9ef32f95027d25",
+    "tests/test_linux_tcp_ipv4_probe.py": "9cf1902193f7b1ebd86499af193917fc6f76614f8644223009e07d672b408188",
+    "tests/test_tcp_ipv4_probe_lifecycle.py": "227208170ebb5c202395aa50b29aaf9fab169e0c63a8f2a9120322cba5064dcb",
+    "tests/test_tcp_ipv4_capture_contract.py": "a8da27a7a413b7d676eec076d88a79c468cb06a4ee34fda0557c0a57845fe01d",
+    "ports/tcp_ipv4_probe_support.py": "6680963178910c237fdc41347c9667cd00929dcd30926e5ba857b6ba29f84e0a",
+    "ports/native_session.py": "d51efc3c612a990b7274ff5bcf8a302242c528df5afd779159c933e408da1f61",
+    "ports/linux-tcp-wire-peer/server.py": "a7ab19adba399641cd6cb076ddabc3eeacec1151d7a4def5ac64524c06ad09ce",
+    "ports/linux-tcp-ipv4-peer/verify.py": "4a234e1f9bc45a122570826205e382dae97d49c0dca77caf51a6df4694ac9693",
+    "ports/linux-tcp-ipv4-peer/services.py": "d4e644bf68ef8479810d95b60f062b57fa01d1b51edc6ce7e69b235cc2b76217",
+    "ports/linux-tcp-ipv4-peer/services.json": "1372ad0827ece6879f6cbb57fe68e1dba405b6704298e79f02452002640c45ea",
+    "ports/tcp_ipv4_service_observer.py": "7341a675b2b3b81bb105e71a6596ff67623f2854921c45f6a381c0868db258a3",
+    "ports/linux-ipv4-endpoint-peer/oracle.py": "7a3296dada4493545186b54203666f1554f0902a09bf043cf3ae7a1e0651256d",
+    "tests/test_tcp_ipv4_service_peers.py": "420e1a8f873e79af59b49a83d97d39f96f41bd4d55c60c56b912f46ad9efba4a",
+    "tests/test_tcp_ipv4_service_observer.py": "06ea845991b5a926f1c4febe56a7679778e850fef648b96764b106a4b3e04291",
+    "tests/test_tcp_ipv4_formal_trace.py": "14d4f20f10de767c69c7bc85d4e0c7bd9b175762954e94434ec58e9edde4f31f",
+    "spec/tcp-ipv4-service-wire-oracle.json": "97c2256671fca9ee37e5f0d740f7e57d6a7ff2e4ca144a27ef69aebcf52c8e8b",
+    "spec/tcp-ipv4-virtual-link-oracle.json": "fa6b2d169a8f583d6144a7369a969d730c55139fce48cc34de352f66fbdd7a1a"
+  },
+  "actual_denied_host_IO_methods": 43,
+  "independent_review": {
+    "blocking": [],
+    "findings": [],
+    "limitations": [
+      "No live Linux evidence for the new ipv4-all mode; service observer tests use frozen synthetic vectors, not captured Linux traffic.",
+      "The independent raw post-observer uses the old frozen Echo oracle and weighted checksum logic, so live ICMP/UDP byte-level validation on Linux remains unmeasured.",
+      "Root fallback after incomplete API is not retried; unmeasured Linux/runtime scope may leave the new full pass unproven outside mocked contracts."
+    ]
+  },
+  "live_network": false,
+  "archived_code_ELF_solver_executed": false
+}

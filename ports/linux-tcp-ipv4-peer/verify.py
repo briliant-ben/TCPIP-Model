@@ -15,6 +15,7 @@ from protocol_lab.codegen.execute import commands
 from protocol_lab.pipeline.worker import reference_case, compare_case, apply
 from protocol_lab.symbolic import crosscheck_trace
 from ports.tcp_ipv4_application_port import verify_tcp_peer_events
+from ports.tcp_ipv4_service_observer import service_records
 from ports.tcp_ipv4_probe_support import pcap_records, capture_stats
 from probe import verify_capture_final
 
@@ -71,13 +72,40 @@ def verify(model_file, folder, out, formal=False):
     difference = compare_case(expected, rows, 0, False)
     (out/'difference.json').write_text(json.dumps(difference, indent=2)+'\n')
     if difference['status'] != 'pass': raise ValueError('Reference/native Difference failed')
-    if report['status'] == 'full_tcp_peer_pass':
+    if report['status'] in ('full_tcp_peer_pass', 'finite_ipv4_peer_pass'):
         if not report['full_TCP_exchange_complete'] or ns['server_returncode'] != 0:
             raise ValueError('Full TCP receipt invalid')
         events = [json.loads(line) for line in (folder/'server/server-events.jsonl').read_text().splitlines()]
         verify_tcp_peer_events(events, closed=True)
     elif report['status'] != 'first_ingress_diagnostic_pass':
         raise ValueError('Unknown live assessment')
+    service_result = None
+    if report['status'] == 'finite_ipv4_peer_pass':
+        if not report['finite_ipv4_peer_complete'] or ns['service_peer_status']!='finite_service_peer_pass':
+            raise ValueError('Finite service peer runtime gate failed')
+        config=json.loads((Path(__file__).resolve().parent/'services.json').read_text())
+        if hashlib.sha256((Path(__file__).resolve().parent/'services.json').read_bytes()).hexdigest()!=report['source_hashes_before']['service_config']:
+            raise ValueError('Frozen service configuration changed')
+        peers=read('service-peers/result.json')
+        if peers['status']!='finite_service_peer_pass'or peers['errors']or peers['completed']!=[0,1,2]or len(peers['received'])!=3 or len(peers['trials'])!=3:
+            raise ValueError('Independent service receipt missing or failed')
+        stop=ns['capture_stopped_monotonic_ns']
+        if peers['capture_exit_monotonic_ns']<stop or peers['closed_monotonic_ns']<stop:
+            raise ValueError('Service sockets closed before capture')
+        from services import ping_summary
+        for i,trial in enumerate(peers['trials']):
+            if trial['index']!=i or trial['returncode']!=0 or trial['stop_request_monotonic_ns']<stop:
+                raise ValueError('Ping lifetime/exit mismatch')
+            if ping_summary((folder/'service-peers'/('ping-'+str(i)+'.stdout')).read_text())!=trial['summary']:
+                raise ValueError('Ping summary differs from original log')
+        for i,case in enumerate(config['payloads']):
+            row=peers['received'][i]
+            if row['index']!=i or row['hex']!=case['hex'] or row['source']!=['192.0.2.1',40000]or row['echo_bytes']!=len(bytes.fromhex(case['hex'])):
+                raise ValueError('Independent UDP receipt mismatch')
+        delivered=[e for e in read('services.json')if e['message']=='L.udp.rx']
+        if delivered!=[dict(message='L.udp.rx',fields=dict(data=list(bytes.fromhex(case['hex']))))for case in config['payloads']]:
+            raise ValueError('Original subject UDP services differ from independent payloads')
+        service_result=service_records(links,config)
     constrained = None
     if formal:
         constrained = crosscheck_trace(model, formal_trace_for_inputs(model, scene), out/'symbolic')
@@ -85,7 +113,7 @@ def verify(model_file, folder, out, formal=False):
             raise ValueError('Actual fixed-input Z3 correspondence did not pass')
     result = dict(status='finite_native_observation_verified', live_status=report['status'],
         native_pid=session['pid'], transitions=len(expected['trace']), capture=capture_result,
-        reference_native='pass', fixed_input_Z3='sat_match' if constrained else 'not_run',
+        service_observation=service_result, reference_native='pass', fixed_input_Z3='sat_match' if constrained else 'not_run',
         subject_binary_reexecuted=False, all_input_or_compiler_proof=False,
         whole_ipv4_endpoint_complete=False)
     (out/'result.json').write_text(json.dumps(result, indent=2)+'\n')
