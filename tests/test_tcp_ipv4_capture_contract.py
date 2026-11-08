@@ -22,3 +22,22 @@ class ControllerContracts(unittest.TestCase):
   for bad in ['-1 packet dropped by kernel','bad packet captured','-1   packet   received by filter']:
    with self.subTest(bad=bad):
     with self.assertRaises(ValueError):capture_stats(text+bad+'\n')
+
+ def test_actual_namespaced_wire_message_is_forwarded_exactly(self):
+  import tempfile
+  from unittest.mock import patch
+  frame=bytes(range(60))
+  rows=[dict(status='transition',emitted=[dict(message='L.ethernet.tx',fields=dict(frame=list(frame))),dict(message='L.udp.rx',fields=dict(data=[7]))]),dict(status='ok')]
+  with tempfile.TemporaryDirectory() as folder,patch('probe.os.write',return_value=len(frame))as write:
+   links,services=[],[]
+   r=probe.process_model_operation(rows,123,0,Path(folder),links,services,[])
+   self.assertEqual(r['status'],'ok');write.assert_called_once_with(123,frame)
+   self.assertEqual(services,[dict(message='L.udp.rx',fields=dict(data=[7]))])
+   self.assertEqual((Path(folder)/links[0]['file']).read_bytes(),frame)
+ def test_partial_injection_is_rejected(self):
+  import tempfile
+  from unittest.mock import patch
+  rows=[dict(status='transition',emitted=[dict(message='L.ethernet.tx',fields=dict(frame=[1,2,3]))]),dict(status='ok')]
+  with tempfile.TemporaryDirectory()as folder,patch('probe.os.write',return_value=1):
+   with self.assertRaisesRegex(RuntimeError,'Incomplete TAP write'):
+    probe.process_model_operation(rows,123,0,Path(folder),[],[],[])

@@ -145,7 +145,9 @@ def _deepcopy(obj):
     raise ValueError("unsupported type in emission")
 
 
-def operation_result(rows):
+def operation_result(rows, wire_message='ethernet.tx'):
+    if type(wire_message) is not str or not wire_message:
+        raise ValueError('Explicit wire message name required')
     if not isinstance(rows, list) or len(rows) == 0:
         raise ValueError("rows must be nonempty list")
     terminal = rows[-1]
@@ -186,7 +188,7 @@ def operation_result(rows):
             fields = emission['fields']
             if not isinstance(message, str) or not isinstance(fields, dict):
                 raise ValueError("message must be str and fields dict")
-            if message == 'ethernet.tx':
+            if message == wire_message:
                 if set(fields.keys()) != {'frame'}:
                     raise ValueError("ethernet.tx fields must exactly contain 'frame'")
                 frame_list = fields['frame']

@@ -24,6 +24,7 @@ from protocol_lab.ir import load
 from protocol_lab.codegen.execute import commands
 
 TAP_NAME = 'tap0'
+WIRE_MESSAGE = 'L.ethernet.tx'
 SUBJECT_IP = '192.0.2.1'
 PEER_IP = '192.0.2.2'
 PEER_MAC = '02:00:00:00:00:02'
@@ -146,7 +147,7 @@ def save_raw_frame(raw, direction, index, out_dir, subdir='links'):
 
 def process_model_operation(rows, tap_fd, origin, out_dir, links, services, logger):
     """Process operation_result and write emitted frames to TAP."""
-    result = operation_result(rows)
+    result = operation_result(rows, wire_message=WIRE_MESSAGE)
     if result['status'] == 'error':
         return result
     for frame in result['frames']:
@@ -313,13 +314,15 @@ def main():
             version_args = ['-V'] if name == 'ip' else ['--version']
             ns.setdefault('tools', {})[name] = dict(path=path, sha256=sha256_file(Path(path).resolve()),
                 result=run_command([path] + version_args, out, 'version-' + name + '.log'))
+        model = load(args.model)
+        if model['messages'].get(WIRE_MESSAGE) != {'fields': {'frame': 'bytes'}}:
+            raise RuntimeError('Model does not declare the selected Ethernet wire ABI')
         preflight_complete = True
         fd = os.open('/dev/net/tun', os.O_RDWR)
         fcntl.ioctl(fd, 0x400454CA, struct.pack('16sH22x', TAP_NAME.encode(), 0x1002))
         ns['commands'] = configure_peer(fd, out)
         server = start_server(out)
         capture, cap_log = start_capture(out)
-        model = load(args.model)
         actor = Session(args.executable.resolve(), out/'native')
         origin = time.monotonic_ns()
         ns.update(clock_origin_monotonic_ns=origin, native_pid=actor.process.pid)

@@ -46,7 +46,7 @@ class ProbeLifecycleTests(unittest.TestCase):
                 if close_failure:raise ValueError('injected close failure')
                 return 0
         records = [dict(timestamp_ns=time.time_ns()-300_000_000, raw=raw)]
-        model = dict(variables={}, events={'T.app.connect':dict(fields={}), 'net.frame':dict(fields={'frame':'bytes'})})
+        model = dict(variables={}, messages={'L.ethernet.tx':dict(fields={'frame':'bytes'})}, events={'T.app.connect':dict(fields={}), 'net.frame':dict(fields={'frame':'bytes'})})
         with tempfile.TemporaryDirectory() as folder:
             out = Path(folder)/'result'
             def start_capture(destination):
