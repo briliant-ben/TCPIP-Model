@@ -10,13 +10,24 @@ from pathlib import Path
 import sys
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT));sys.path.insert(0, str(Path(__file__).resolve().parent))
-from protocol_lab.ir import load
+from protocol_lab.ir import load, Machine
 from protocol_lab.codegen.execute import commands
-from protocol_lab.pipeline.worker import reference_case, compare_case
+from protocol_lab.pipeline.worker import reference_case, compare_case, apply
 from protocol_lab.symbolic import crosscheck_trace
 from ports.tcp_ipv4_application_port import verify_tcp_peer_events
 from ports.tcp_ipv4_probe_support import pcap_records, capture_stats
 from probe import verify_capture_final
+
+
+def formal_trace_for_inputs(model, scene):
+    # The pipeline Difference deliberately projects away `before`. Z3's public
+    # constrained-trace API needs the original reference execution, including it.
+    machine = Machine(model, scene.get('initial', {}))
+    for step in scene['steps']:
+        apply(machine, step)
+    if 'settle_ms' in scene:
+        machine.tick(scene['settle_ms'])
+    return machine.trace
 
 
 def verify(model_file, folder, out, formal=False):
@@ -69,7 +80,7 @@ def verify(model_file, folder, out, formal=False):
         raise ValueError('Unknown live assessment')
     constrained = None
     if formal:
-        constrained = crosscheck_trace(model, expected['trace'], out/'symbolic')
+        constrained = crosscheck_trace(model, formal_trace_for_inputs(model, scene), out/'symbolic')
         if constrained['query'] != 'sat' or constrained['status'] != 'match':
             raise ValueError('Actual fixed-input Z3 correspondence did not pass')
     result = dict(status='finite_native_observation_verified', live_status=report['status'],
