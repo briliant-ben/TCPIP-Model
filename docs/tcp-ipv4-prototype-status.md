@@ -1,37 +1,9 @@
-# 最小 IPv4 原型验收记录
+# IPv4 有限原型验收状态
 
-当前目标是一个支持范围明确、能从 Protocol IR 生成独立 C 实现的 IPv4 端点原型。当前仍未完成组合网络互通验收，不作为完整或生产可用 TCP/IP 协议栈交付。
+2026-11-08：有限原型已具备实际组合运行与 review 材料，见 [成果审阅](ipv4-prototype-review.md)。源码92896425的六项workflow全成功；单个IR生成C PID2802完成ARP/TCP四字节回显与关闭/三UDP往返/三ICMP Echo，25capture/filter、零drops、静默146.049162ms。参考/C实际19条转换与固定输入Z3 SAT/重放通过。完整原件和只读哈希审计在 artifacts/ipv4-prototype-final-9289。
 
-已具备：
+权威当前profile为 model/ipv4-endpoint-virtual-link.json（335规则、58变量、65不变量、61要求）；原canonical/TCP-onlyvirtual模型与58/42字节失败证据保留。所有协议guard/action/queue/timer与来源显式IR，Python只处理原始IO、机械时间和测试刺激。
 
-- 一个335条规则、58个变量的组合 IR，显式拥有 Ethernet/ARP、IPv4、UDP、ICMP Echo、有限 TCP 及共享待发包/定时器策略。
-- 固定独立种子的参考执行、生成 C 实际执行及固定输入 Z3 对应检查；既有分开的 Linux peer 证据保留。
-- 组合模型现有十阶段 flow。实际15个正负案例的参考/原生比较通过，19个固定 trace 输入步通过字面量合同检查；规范追溯覆盖全部58个声明要求的来源绑定。
-- 新组合 TAP 诊断驱动的受限 mock/纯测试：原90项及最终分类修订后92项通过。此项不是实机证据。
+服务器最终十阶段task bc771c5a实际32例比较及335规则来源绑定通过；八阶段pass，depth1全输入检查UNKNOWN、声明探索10/335覆盖缺口 → assessment unresolved。证据校验一致不提升未知性质。固定路径、合成fixture、实机和证明结论分别保存。
 
-尚未通过的门禁：
-
-- 组合模型完整真实 peer 交换：先测量原始 TAP TCP ingress，再验证连续 ARP、UDP、ICMP 和 TCP 收发/关闭。
-- flow 总结论仍为 `unresolved`：depth1全输入形式检查是 `UNKNOWN`；深度2的声明探索只覆盖10/335条规则，不能提升为完整覆盖或证明。
-
-`COMPOSED` 是扁平执行状态；组件控制状态保存在显式变量中。初值配置 `{}` 表示采用 IR 默认值，并非没有协议状态。哈希固定的 flow 设计说明是有限探索配置记录；实际覆盖与验收以本记录及原报告为准。
-
-当前模型仍是固定单 peer/端口、MTU和小 TCP 缓冲配置。一般路由、分片重组、通用乱序接收、拥塞控制和完整恢复算法不在当前原型支持范围。生成实现正确性、规范到IR解释正确性和无界协议正确性均未获证明。原TCP/ICMP UNKNOWN、lwIP2750ms及Linux TCP Difference继续保留。
-
-## 本地复现
-
-使用现有 Python3.11+虚拟环境和 C99编译器：
-
-```sh
-.venv/bin/python examples/run_native_suite.py model/tcp-ipv4-endpoint.json --scenario-dir scenarios/tcp-ipv4-endpoint --formal-replay --out /tmp/tcp-ipv4-review-native
-.venv/bin/python -m protocol_lab.pipeline run flows/tcp-ipv4-endpoint.json --workspace . --out /tmp/tcp-ipv4-review-flow
-.venv/bin/python -m protocol_lab.pipeline verify /tmp/tcp-ipv4-review-flow --workspace .
-```
-
-输出目录必须是新的。flow返回1且assessment为unresolved表示保留了未决性质，不能称整个流程验证通过。查看每阶段原始报告可区分实现差异、工具失败、覆盖缺口和形式UNKNOWN。
-
-真实网络验证通过独立 namespace 的 GitHub Linux runner 运行。服务器禁止用户 namespace 且没有sudo时，仅阻塞该服务器的特权网络通道；不修改主机网络/SSH。
-
-## 2026-11-08 虚拟链路边界
-
-原模型实际完成ARP解析并发出SYN；Linux返回58字节SYN-ACK时，原模型因60字节接收边界明确拒绝。4包、零丢包及101.1935ms静默窗口有效，原失败保留。新增独立 `tcp-ipv4-virtual-link.json` 将“精确IPv4范围或规范填充”显式写入194条TCP入口guard，发送填充和其余协议逻辑不变。9个冻结字节场景参考/C、6个新固定输入Z3及4个原种子固定输入Z3通过；这不是新实机互通或无界证明。真实完整组合交换仍待验收。
+固定单peer/端口、MTU1500及TCP16bytebuffer/SMSS4是当前边界。通用路由/分片/动态绑定/TCP一般乱序拥塞恢复/socket/IPv6/上层不在原型内；TIMEWAIT实时时间到期、完整协议/编译器/规范解释正确性未证明。旧TCP/ICMP UNKNOWN、lwIP2750ms/LinuxTCP Difference保持。后续framework工作等待共同review，PR未自动main合入。

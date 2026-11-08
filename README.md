@@ -2,7 +2,9 @@
 
 目标是建立可复用、可审查的协议建模流程。TCP 是第一个样例；通用执行器放在 `protocol_lab/ir.py`，TCP 的规则和适配器分别放在 `model/` 与 `protocol_lab/packets.py`。
 
-当前实施重点是供应商／框架无关的 [spec flow](docs/spec-flow.md)：TCP/IPv4、有限 UDP 线端、ARP 和 ICMP Echo 案例复用十阶段工具链，覆盖规范绑定、IR、参考执行／Z3、测试、独立 C 生成、执行观察、差异与追溯。UDP、ARP、ICMP 已有隔离 Linux 虚拟链路 peer 证据；有限 raw TCP 的生成 C／固定输入 Z3 已通过，新的 TCP peer 通道仍待验收。服务器及单／多调用方接入见 [运行交接](docs/spec-flow-server.md)，不要求 MCP、Skill 或模型 SDK。各切片及组合的支持边界以对应文档为准，不代表完整 TCP/IP 或无界证明。
+当前有限 IPv4 端点原型已完成一次**同生成 C 进程的 ARP／TCP／UDP／ICMP 独立 Linux 互通验收**：25包、零丢包、19步固定输入 Z3 对应检查。入口见[成果审阅](docs/ipv4-prototype-review.md)与[实际轨迹可视化](artifacts/ipv4-prototype-final-9289/review.html)。权威 IR 是 `model/ipv4-endpoint-virtual-link.json`；实际范围为固定端点、单 peer 和有限 TCP。
+
+通用 [spec flow](docs/spec-flow.md) 覆盖规范绑定、IR、参考／独立 Z3、测试、独立 C 生成、观察、差异与追溯。[最终 task](flows/ipv4-endpoint-virtual-link.json) 实际32例参考/C比较通过；全输入形式检查仍 UNKNOWN，声明探索覆盖10/335，flow 总结论保留 `unresolved`。服务器／调用方入口见[运行交接](docs/spec-flow-server.md)，无需固定采用 MCP、Skill 或特定模型 SDK。
 
 形式后端可显式选择[精确求解预处理与中断留证](docs/solver-preprocessing.md)。默认求解策略不变；ICMP flow 使用相同模型、输入域和深度的 `exact-v1`。新结果不改写旧 UNKNOWN，原始 SMT 在求解前保存，已有证据目录禁止覆盖。
 
