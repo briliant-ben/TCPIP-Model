@@ -58,3 +58,15 @@ printf 'B\nD 0 T.app.connect\n' | /tmp/ipv4-review-fresh/stages/build/build/prot
 3. 固定路径对应检查、全输入 UNKNOWN、覆盖缺口与可信组件的区别。
 
 一般动态绑定／路由、分片重组、TCP通用乱序／拥塞／恢复、完整 socket 服务、IPv6及上层应用未纳入本原型。TIME-WAIT实时时间到期、完整协议／编译器／英文规范到IR解释的正确性均未获证明。旧TCP/ICMP UNKNOWN、lwIP2750ms和 Linux TCP Difference继续保留。后续 agent 框架完善留在这次 review 之后；本轮没有自动合入 main。
+
+## 服务器发布
+
+`.78` 新发布位于 `/home/blxu/protocol-flow/releases/ipv4-prototype-963a57f8`：122个选定 Git963a57f8 的只读源码／IR／规范文件，以及在服务器重新生成编译的 C 程序。生成C哈希与上面的实机、flow通道一致；初始化／连接事件输出匹配冻结ARP字面量；保留flow校验仍为一致的 unresolved。旧发布未覆盖，没有新增API调用或网络执行。[部署原始回执](../artifacts/ipv4-server-release-963a)记录了全部源绑定。
+
+可直接查看服务器 C 程序输出：
+
+```sh
+printf 'B\nD 0 T.app.connect\n' | ssh blxu@192.168.71.78 /home/blxu/protocol-flow/releases/ipv4-prototype-963a57f8/build/protocol-native
+```
+
+这是独立 C 的启动／ARP输出检查；真实链路IO使用已验收适配器。本次部署启动检查没有计作新的抓包互通证据。
