@@ -31,3 +31,9 @@ incomplete API response; that request is not retried. DeepSeek111 source and its
 failed unit fixtures remain original evidence. This transport adaptation contains
 no TCP/ARP/UDP/ICMP state or packet construction policy: all protocol actions are
 still generated from IR. Mock fixtures are transport tests, never Linux evidence.
+
+## Finite full TCP exchange mode
+
+The separate virtual-link IR profile admits the measured58-byte TCP ingress unchanged; original canonical model and failure evidence remain intact. `--mode tcp-echo` runs one C process through ARP, active open, four-byte0080ff07 echo and active close to pending TIME-WAIT. Application test stimuli use the generic raw/timer pump; no ACK/sequence/MAC/queue policy lives in Python. Exact ordinary socket receipts are required before and after capture-first cleanup. Full success is `full_tcp_peer_pass`, not a complete endpoint claim.
+
+Root fallback replaces rejected DeepSeek0124/0129 transport proposals; source qualification0131 passed33 denied-hostIO mock methods plus independent review with runtime limitations. Fresh Linux run is still required. `verify.py` checks original commands/snapshots/rawcapture/peer receipts against the reference, with optional actual fixed-input Z3 SAT/replay. It re-executes no subject binary. This is finite correspondence, not all-input/compiler proof.

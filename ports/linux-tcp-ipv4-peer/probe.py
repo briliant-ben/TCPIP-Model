@@ -20,6 +20,8 @@ sys.path.insert(0, str(PORT))
 
 from ports.native_session import Session
 from ports.tcp_ipv4_probe_support import elapsed_ms, capture_stats, pcap_records, quiet_ok, operation_result, record_error
+from ports.tcp_ipv4_application_port import ApplicationPort, verify_tcp_peer_events
+from application import run_tcp_echo_application
 from protocol_lab.ir import load
 from protocol_lab.codegen.execute import commands
 
@@ -230,6 +232,7 @@ def main():
     parser.add_argument('--model', type=Path, required=True)
     parser.add_argument('--executable', type=Path, required=True)
     parser.add_argument('--parent-netns', required=True)
+    parser.add_argument('--mode', choices=['first-ingress', 'tcp-echo'], default='first-ingress')
     args = parser.parse_args()
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -245,7 +248,9 @@ def main():
                  helper=ROOT/'ports/tcp_ipv4_probe_support.py', probe=Path(__file__).resolve(),
                  session=ROOT/'ports/native_session.py', server=ROOT/'ports/linux-tcp-wire-peer/server.py',
                  abi=ROOT/'protocol_lab/codegen/execute.py', reference=ROOT/'protocol_lab/ir.py')
+    paths.update(application=PORT/'application.py', application_port=ROOT/'ports/tcp_ipv4_application_port.py')
     initial_hashes = {}
+    application_pass = peer_before_close = peer_after_close = False
     preflight_complete = False
     stopped = False
 
@@ -276,6 +281,29 @@ def main():
         if result['status'] == 'error':
             fail(result['category'], result['failure'])
         return result
+
+    def pump_once(deadline):
+        alive()
+        if time.monotonic() >= deadline:
+            return None
+        timers = actor.snapshot['timers']
+        now = elapsed_ms(origin, time.monotonic_ns())
+        if timers and min(timers.values()) <= now:
+            return operation(dict(tick=True))
+        timeout = max(0, min(0.05, deadline-time.monotonic()))
+        if timers:
+            timeout = min(timeout, max(0, (min(timers.values())-now)/1000))
+        if fd in select.select([fd], [], [], timeout)[0]:
+            raw = receive(True)
+            if raw is not None:
+                incoming_link = links[-1]
+                result = operation(dict(event=INGRESS_EVENT, fields=dict(frame=list(raw))))
+                incoming_link['fed'] = True
+                incoming_link['committed'] = result['status'] == 'ok'
+                if result['status'] == 'ok' and is_tcp_ipv4(raw):
+                    report['first_ingress_admitted'] = True
+                return result
+        return None
 
     def stop_capture():
         nonlocal stopped
@@ -329,30 +357,31 @@ def main():
         actor = Session(args.executable.resolve(), out/'native')
         origin = time.monotonic_ns()
         ns.update(clock_origin_monotonic_ns=origin, native_pid=actor.process.pid)
-        operation(dict(event='T.app.connect', fields={}))
-        deadline = time.monotonic() + OVERALL_TIMEOUT_S
-        while report['error'] is None and not report['first_ingress_admitted']:
-            alive()
-            if time.monotonic() >= deadline:
-                fail('driver_failure', 'Timeout before first TCP ingress')
-                break
-            timers = actor.snapshot['timers']
-            now = elapsed_ms(origin, time.monotonic_ns())
-            if timers and min(timers.values()) <= now:
-                operation(dict(tick=True))
-                continue
-            timeout = min(0.05, max(0, deadline-time.monotonic()))
-            if timers:
-                timeout = min(timeout, max(0, (min(timers.values())-now)/1000))
-            if fd in select.select([fd], [], [], timeout)[0]:
-                raw = receive(True)
-                if raw is not None:
-                    incoming_link = links[-1]
-                    result = operation(dict(event=INGRESS_EVENT, fields=dict(frame=list(raw))))
-                    incoming_link['fed'] = True
-                    incoming_link['committed'] = result['status'] == 'ok'
-                    if result['status'] == 'ok' and is_tcp_ipv4(raw):
-                        report['first_ingress_admitted'] = True
+        try:
+            if args.mode == 'tcp-echo':
+                port = ApplicationPort(operation, pump_once, lambda: actor.snapshot, alive, time.monotonic)
+                report['application_result'] = run_tcp_echo_application(port)
+                application_pass = True
+                # Allow the independent socket process to flush its receipt while
+                # continuing raw input/timer service; never infer peer data from C.
+                deadline = time.monotonic()+2
+                while True:
+                    peer_events = [json.loads(line) for line in (out/'server/server-events.jsonl').read_text().splitlines()]
+                    if len(peer_events) >= 6:
+                        peer_before_close = verify_tcp_peer_events(peer_events)
+                        break
+                    if time.monotonic() >= deadline:
+                        raise TimeoutError('Independent TCP peer receipt timeout')
+                    ApplicationPort.checked(pump_once(deadline))
+            else:
+                operation(dict(event='T.app.connect', fields={}))
+                deadline = time.monotonic()+OVERALL_TIMEOUT_S
+                while report['error'] is None and not report['first_ingress_admitted']:
+                    if time.monotonic() >= deadline:
+                        raise TimeoutError('Timeout before first TCP ingress')
+                    pump_once(deadline)
+        except Exception as error:
+            fail('driver_failure', error)
         # A model rejection still receives a complete, independently validated
         # observation window. Late frames are retained, never fed or rewritten.
         quiet_limit = time.monotonic() + QUIET_TIMEOUT_S
@@ -404,24 +433,34 @@ def main():
                 fail('cleanup_failure', 'capture log: ' + str(error))
         if server is not None:
             try:
-                # This diagnostic intentionally stops before the data exchange;
-                # terminate the waiting peer only after independent capture ends.
-                if server.poll() is None:
-                    server.terminate()
-                    try:
-                        server.wait(timeout=2)
-                    except subprocess.TimeoutExpired:
-                        server.kill(); server.wait(timeout=2)
-                if server.stdin:
+                if args.mode == 'tcp-echo' and application_pass and peer_before_close and report['error'] is None:
                     server.stdin.close()
-                ns['server_returncode'] = server.returncode
-                ns['server_termination'] = 'diagnostic-stop-after-capture'
+                    ns['server_returncode'] = server.wait(timeout=5)
+                    ns['server_termination'] = 'control-close-after-capture'
+                    if server.returncode != 0:
+                        raise RuntimeError('Independent TCP peer nonzero exit')
+                    peer_events = [json.loads(line) for line in (out/'server/server-events.jsonl').read_text().splitlines()]
+                    peer_after_close = verify_tcp_peer_events(peer_events, closed=True)
+                else:
+                    if server.poll() is None:
+                        server.terminate()
+                        try:
+                            server.wait(timeout=2)
+                        except subprocess.TimeoutExpired:
+                            server.kill(); server.wait(timeout=2)
+                    if server.stdin:
+                        server.stdin.close()
+                    ns['server_returncode'] = server.returncode
+                    ns['server_termination'] = 'diagnostic-or-failure-stop-after-capture'
             except Exception as error:
                 fail('cleanup_failure', 'server: ' + str(error))
+                if server.poll() is None:
+                    server.kill(); server.wait(timeout=5)
         if actor is not None:
             try:
                 ns['native_returncode'] = actor.close()
-                if ns['native_returncode'] != 0:
+                rejected = report['error'] is not None and report['error']['category'] in ('model_gap', 'rule_conflict', 'invariant_failure')
+                if ns['native_returncode'] != 0 and not (ns['native_returncode'] == 1 and rejected):
                     fail('driver_failure', 'Native exit was not zero')
                 session = json.loads((out/'native/session.json').read_text())
                 if session['process_starts'] != 1 or session['pid'] != actor.process.pid:
@@ -444,14 +483,18 @@ def main():
                                ('services', services), ('operations', operations),
                                ('scenario', scene), ('namespace', ns)]:
                 (out/(name+'.json')).write_text(json.dumps(data, indent=2)+'\n')
-            report['status'] = 'first_ingress_diagnostic_pass' if (report['error'] is None
-                and not report['secondary_errors'] and report['first_ingress_admitted']) else 'failed_or_blocked'
+            complete = report['error'] is None and not report['secondary_errors'] and report['first_ingress_admitted']
+            report['full_TCP_exchange_complete'] = bool(args.mode == 'tcp-echo' and complete
+                and application_pass and peer_before_close and peer_after_close
+                and ns.get('native_returncode') == 0 and ns.get('server_returncode') == 0)
+            success = report['full_TCP_exchange_complete'] if args.mode == 'tcp-echo' else complete
+            report['status'] = ('full_tcp_peer_pass' if args.mode == 'tcp-echo' else 'first_ingress_diagnostic_pass') if success else 'failed_or_blocked'
             (out/'report.json').write_text(json.dumps(report, indent=2)+'\n')
         except Exception as error:
             fail('driver_failure', 'Final evidence: '+str(error))
             report['status'] = 'failed_or_blocked'
             (out/'report.json').write_text(json.dumps(report, indent=2)+'\n')
-    return 0 if report['status'] == 'first_ingress_diagnostic_pass' else 1
+    return 0 if report['status'] in ('first_ingress_diagnostic_pass', 'full_tcp_peer_pass') else 1
 
 
 if __name__ == '__main__':

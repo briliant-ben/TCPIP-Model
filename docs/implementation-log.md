@@ -1117,3 +1117,5 @@ Keep bothuseruntrackedartifacts directories. Noautomatedmainmerge/forcepush.
 
 
 2026-11-08: Preserve valid canonical live58-byte ingress gap and introduce a separate explicit virtual-link receive IR. Server0128 passed9literalreference/C,6newfixedZ3+4unchangedseedfixedZ3,2purebuildermethods; negativecasesandfaultprobe scope explicit. Readonly163raw-file/hash audit and40fileLinuxgap audit retained. Originalmodel/proofUNKNOWN/oracles unchanged. Fresh Linuxprofile measurement required before peer acceptance.
+
+2026-11-08: Independent Linux virtual-profile first TCP ingress accepted(run42449537647),5capture0drops/quiet101.803213ms; C/ref3transitioncorrespondence readonly audit. FullTCPdriver source qualification0131 passes33denied-hostIO methods and independent review, rootfallback afterrejectedsource, newactual fullpeer workflow pending. Protocolmodel unchanged.
