@@ -1,0 +1,32 @@
+{
+  "status": "selected_Git_source_and_original_evidence_verified",
+  "source_commit": "bcf0ce252de921cbaee037ca56f91ffdeafc361f",
+  "selected_Git_files": 1093,
+  "excluded": [
+    "artifacts",
+    "third_party"
+  ],
+  "original_members": 1695,
+  "archive_sha256": "8b18482c777a62ae1d8c6eea6547abd6f431a13026388dce626c6a4fa34e576e",
+  "model_semantic_sha256": "6882e6187f029d16df5c2124a9cad0e815d2aba7ea0f0b08488de6df3a29488e",
+  "generated_C_sha256": "19ce9855194a5d8b243648f12b710d739266f4d49ff31001e378c1815975e36b",
+  "formal_counts": {
+    "negative_answers": {
+      "sat": 0,
+      "unknown": 0,
+      "unsat": 563
+    },
+    "negative_queries": 563,
+    "nonvac_answer": "sat",
+    "nonvac_replay_match": true
+  },
+  "source_checker_sha256": {
+    "initial_plan.py": "8203ee01e7df7a1b74c7960795da3bf785f9a98ab6dafe4c16d25cbe78093782",
+    "initial_step.py": "7147899be047335cdb630ec58dc89821df83ed57b2be1d7d484ed7d77105d73a",
+    "initial_units.py": "bc2ff693f79bc3b86ae9e61605e95f0ed262fc6e59c74c778f5131af67587899",
+    "ir.py": "9ad13f2218d3641eb7218a36a2edbf64f1710eee9548dde1897616e5e79bcfa7",
+    "symbolic.py": "c0a603e005ef8cb969cb62ddf2d1cc1860f38b36fa93b908793d1a48a3126d5c"
+  },
+  "archived_code_ELF_solver_executed": false,
+  "execution_provenance": "Controlled Linux server source manifest/run receipts; consistency not external attestation"
+}
