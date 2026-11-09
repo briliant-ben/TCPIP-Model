@@ -80,6 +80,11 @@ def stage(name,t,workspace,job,out):
         return result(data=dict(model_semantic_sha256=model_hash(model),model_scope=model['scope'],
                                 rules=len(model['transitions']),invariants=len(model['invariants'])))
     if name=='formal':
+        if t['schema']=='spec-flow-task-v5':
+            from ..initial_step import check, PASS, UNRESOLVED
+            r=check(model,out/'queries',solver_timeout_ms=t['formal'].get('solver_timeout_ms',10000))
+            status='pass' if r['status']==PASS else 'unknown' if r['status']==UNRESOLVED else 'fail'
+            return result(status,None if status=='pass' else r['status'],r)
         if t['schema']=='spec-flow-task-v4':
             from ..sequence_induction import prove
             r=prove(model,out/'queries',solver_timeout_ms=t['formal'].get('solver_timeout_ms',10000))

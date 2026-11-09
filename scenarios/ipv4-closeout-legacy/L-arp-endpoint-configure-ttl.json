@@ -1,0 +1,110 @@
+{
+  "scenario_version": "0.2",
+  "id": "L-arp-endpoint-configure-ttl",
+  "initial": {},
+  "steps": [
+    {
+      "at_ms": 0,
+      "event": "L.app.cache_ttl",
+      "fields": {
+        "milliseconds": 120000
+      },
+      "expect_trace": [
+        {
+          "at_ms": 0,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 10,
+      "event": "L.net.frame",
+      "fields": {
+        "frame": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0,
+          2,
+          8,
+          6,
+          0,
+          1,
+          8,
+          0,
+          6,
+          4,
+          0,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0,
+          2,
+          192,
+          0,
+          2,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          192,
+          0,
+          2,
+          1
+        ]
+      },
+      "expect_trace": [
+        {
+          "at_ms": 10,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 20,
+      "event": "L.app.cache_ttl",
+      "fields": {
+        "milliseconds": 60000
+      },
+      "expect_trace": [
+        {
+          "at_ms": 20,
+          "emitted": []
+        }
+      ]
+    },
+    {
+      "at_ms": 60020,
+      "tick": true,
+      "expect_trace": [
+        {
+          "at_ms": 60020,
+          "emitted": []
+        }
+      ]
+    }
+  ],
+  "expect": {
+    "state": "COMPOSED",
+    "variables": {
+      "L.peer_mac": [],
+      "L.retry_count": 0,
+      "L.cache_ttl_ms": 60000,
+      "L.control": "EMPTY",
+      "T.control": "CLOSED"
+    },
+    "timers": {}
+  }
+}

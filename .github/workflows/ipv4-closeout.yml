@@ -1,0 +1,51 @@
+name: Finite IPv4 closeout contracts
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['protocol_lab/**', 'flows/ipv4-prototype-closeout.json', 'scenarios/ipv4-closeout-legacy/**', 'tests/test_initial_*.py', '.github/workflows/ipv4-closeout.yml']
+  pull_request:
+    paths: ['protocol_lab/**', 'flows/ipv4-prototype-closeout.json', 'scenarios/ipv4-closeout-legacy/**', 'tests/test_initial_*.py', '.github/workflows/ipv4-closeout.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scoped-formal-and-regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare dependency
+        run: |
+          python3 -m venv /tmp/ipv4-closeout-venv
+          /tmp/ipv4-closeout-venv/bin/python -m pip install -r requirements-formal.txt
+      - name: Qualify exact derivation and adversarial evidence checks
+        run: |
+          mkdir -p artifacts/ipv4-closeout-ci
+          /tmp/ipv4-closeout-venv/bin/python -m unittest discover -s tests -p 'test_initial_*.py' -v > artifacts/ipv4-closeout-ci/initial-tests.log 2>&1
+          /tmp/ipv4-closeout-venv/bin/python -m unittest discover -s tests -p test_pipeline.py -v > artifacts/ipv4-closeout-ci/legacy-pipeline.log 2>&1
+      - name: Run actual flow and verify scoped contracts without promoting coverage
+        run: |
+          /tmp/ipv4-closeout-venv/bin/python - <<'PY' > artifacts/ipv4-closeout-ci/run.log 2>&1
+          import json
+          from pathlib import Path
+          from protocol_lab.pipeline.runner import run, verify
+          from protocol_lab.pipeline.task import sha
+          root=Path.cwd();task=root/'flows/ipv4-prototype-closeout.json';out=root/'artifacts/ipv4-closeout-ci/run'
+          result=run(task,root,out,sha(task))
+          assert result['stages']['formal']['status']=='pass', result['stages']['formal']
+          assert result['stages']['formal']['data']['status']=='initial_step_contracts_pass'
+          assert all(v['status']=='pass' for n,v in result['stages'].items() if n!='tests')
+          assert result['stages']['tests']['status'] in ('pass','unknown')
+          verified=verify(out,root,sha(task))
+          Path('artifacts/ipv4-closeout-ci/verification.json').write_text(json.dumps(verified,indent=2)+'\n')
+          print(json.dumps({'formal':result['stages']['formal']['data']['status'],'overall':result['assessment'],'complete_rule_coverage_claimed':False}))
+          PY
+      - name: Preserve original evidence including unresolved and failed results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: finite-ipv4-closeout-${{ github.sha }}
+          path: artifacts/ipv4-closeout-ci/
+          if-no-files-found: error
