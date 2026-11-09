@@ -1,0 +1,77 @@
+test_boolean_units (test_prestate_reduce.TestReduceInitialConstants.test_boolean_units) ... ok
+test_bv_binding (test_prestate_reduce.TestReduceInitialConstants.test_bv_binding) ... ok
+test_byte_input_untouched (test_prestate_reduce.TestReduceInitialConstants.test_byte_input_untouched) ... FAIL
+test_contradictory_bindings_preserved (test_prestate_reduce.TestReduceInitialConstants.test_contradictory_bindings_preserved) ... ok
+test_custom_context_bool (test_prestate_reduce.TestReduceInitialConstants.test_custom_context_bool) ... ERROR
+test_equality_with_non_bool_literal_rhs_or_expression (test_prestate_reduce.TestReduceInitialConstants.test_equality_with_non_bool_literal_rhs_or_expression) ... ok
+test_expression_rhs_not_used (test_prestate_reduce.TestReduceInitialConstants.test_expression_rhs_not_used) ... ok
+test_fake_function_name_rejected (test_prestate_reduce.TestReduceInitialConstants.test_fake_function_name_rejected) ... ok
+test_forward_literal_equality (test_prestate_reduce.TestReduceInitialConstants.test_forward_literal_equality) ... FAIL
+test_int_binding_actual_fail (test_prestate_reduce.TestReduceInitialConstants.test_int_binding_actual_fail) ... ok
+test_invalid_element_type (test_prestate_reduce.TestReduceInitialConstants.test_invalid_element_type) ... ok
+test_invalid_input_type (test_prestate_reduce.TestReduceInitialConstants.test_invalid_input_type) ... ok
+test_large_input_allowed (test_prestate_reduce.TestReduceInitialConstants.test_large_input_allowed) ... ok
+test_literal_bv8_seq_binding (test_prestate_reduce.TestReduceInitialConstants.test_literal_bv8_seq_binding) ... ok
+test_literal_bv8_seq_binding_with_concat (test_prestate_reduce.TestReduceInitialConstants.test_literal_bv8_seq_binding_with_concat) ... ok
+test_literal_bv8_seq_empty (test_prestate_reduce.TestReduceInitialConstants.test_literal_bv8_seq_empty) ... ok
+test_nonliteral_seq_rhs_rejected (test_prestate_reduce.TestReduceInitialConstants.test_nonliteral_seq_rhs_rejected) ... ok
+test_not_equality_but_or_top_level (test_prestate_reduce.TestReduceInitialConstants.test_not_equality_but_or_top_level) ... ok
+test_poststate_untouched (test_prestate_reduce.TestReduceInitialConstants.test_poststate_untouched) ... ok
+test_reverse_literal_equality (test_prestate_reduce.TestReduceInitialConstants.test_reverse_literal_equality) ... FAIL
+test_sat_preserved (test_prestate_reduce.TestReduceInitialConstants.test_sat_preserved) ... ok
+test_string_binding (test_prestate_reduce.TestReduceInitialConstants.test_string_binding) ... ok
+test_unbound_prestate_not_frozen (test_prestate_reduce.TestReduceInitialConstants.test_unbound_prestate_not_frozen) ... FAIL
+test_unsat_preserved (test_prestate_reduce.TestReduceInitialConstants.test_unsat_preserved) ... ok
+
+======================================================================
+ERROR: test_custom_context_bool (test_prestate_reduce.TestReduceInitialConstants.test_custom_context_bool)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/prestate-repair-0147-original-gate/test_prestate_reduce.py", line 295, in test_custom_context_bool
+    result = reduce_initial_constants(assertions)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/prestate-repair-0147-original-gate/prestate_reduce.py", line 229, in reduce_initial_constants
+    substituted = substitute(assertion, *substitution_pairs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/lib/python3.12/site-packages/z3/z3.py", line 9121, in substitute
+    _z3_assert(
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/.venv/lib/python3.12/site-packages/z3/z3.py", line 115, in _z3_assert
+    raise Z3Exception(msg)
+z3.z3types.Z3Exception: Z3 invalid substitution, mismatching "from" and "to" sorts.
+
+======================================================================
+FAIL: test_byte_input_untouched (test_prestate_reduce.TestReduceInitialConstants.test_byte_input_untouched)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/prestate-repair-0147-original-gate/test_prestate_reduce.py", line 140, in test_byte_input_untouched
+    self.assertTrue(result["assertions"][1].eq(assertions[1]))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_forward_literal_equality (test_prestate_reduce.TestReduceInitialConstants.test_forward_literal_equality)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/prestate-repair-0147-original-gate/test_prestate_reduce.py", line 49, in test_forward_literal_equality
+    self.assertTrue(result["assertions"][1].eq(v_0_x))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_reverse_literal_equality (test_prestate_reduce.TestReduceInitialConstants.test_reverse_literal_equality)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/prestate-repair-0147-original-gate/test_prestate_reduce.py", line 66, in test_reverse_literal_equality
+    self.assertTrue(result["assertions"][1].eq(v_0_flag))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_unbound_prestate_not_frozen (test_prestate_reduce.TestReduceInitialConstants.test_unbound_prestate_not_frozen)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/prestate-repair-0147-original-gate/test_prestate_reduce.py", line 109, in test_unbound_prestate_not_frozen
+    self.assertTrue(result["assertions"][0].eq(v_0_x))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.078s
+
+FAILED (failures=4, errors=1)
