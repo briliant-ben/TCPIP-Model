@@ -503,3 +503,5 @@ Keep bothuseruntrackedartifacts directories. Noautomatedmainmerge/forcepush.
 
 
 2026-11-10 closeout delta: accepted default-initial execution94/335 (241unobserved, notunreachable);30selected defined-transition all-declared-invariant preservation checks UNSAT withSATnonvacuity. Separate from originalflow10/335 andoldUNKNOWN. Next inspect remaining305 distinct per-rule queries and DeepSeek independent review, plus bounded primitive recipes for remaining14selected application targets. Do not mark fullflow/protocolproof complete or start Formal-Spec-Agent extraction on these partial results. See ipv4-directed-closure.md.
+
+0196delta:100/335default-executed,235unobserved;22supplemental C/reference/fixedZ3 paths. Remaining8selected recipe targets enter0198 withconcreteprior misses. Same30selected contracts; remaining305probe/current-stage independent, nofullproofclaim.

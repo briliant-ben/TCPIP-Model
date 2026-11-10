@@ -4,11 +4,13 @@
 
 ## 实际执行
 
-服务器 `.78` 的 0187、0190 两批实际验收了 **16 条默认初态路径、94 个转换**：重新从 IR 生成并编译 C，每条路径比较完整转换、输出与最终快照；16 份固定输入 Z3 查询均 SAT，见证经严格参考重放匹配。输入冻结在 [cases.json](../scenarios/ipv4-rule-coverage/cases.json)，预期快照来自模型，**不是独立 RFC／wire oracle**。
+服务器 `.78` 的 0187、0190、0196 三批实际验收了 **22 条默认初态路径、143 个转换**：重新从 IR 生成并编译 C，每条路径比较完整转换、输出与最终快照；22 份固定输入 Z3 查询均 SAT，见证经严格参考重放匹配。输入冻结在 [cases.json](../scenarios/ipv4-rule-coverage/cases.json)，预期快照来自模型，**不是独立 RFC／wire oracle**。
 
-结合先前已验收记录，默认初态实际执行规则由 **71/335 提升到 94/335**，新增23条，包括未完成 ARP 解析时的数据／关闭路径，以及 LISTEN、SYN-SENT、FIN-WAIT、TIME-WAIT 的关闭／终止转换。仍有241条未观察到；这不证明它们不可达。见[逐规则矩阵](../artifacts/ipv4-directed-coverage-20261110/rule-matrix.json)和[累计记录](../artifacts/ipv4-directed-coverage-20261110/delivery.json)。
+结合先前已验收记录，默认初态实际执行规则由 **71/335 提升到 100/335**，新增29条，包括未完成 ARP 解析时的数据／关闭路径，以及 LISTEN、SYN-SENT、FIN-WAIT、TIME-WAIT 的关闭／终止转换。仍有235条未观察到；这不证明它们不可达。见[逐规则矩阵](../artifacts/ipv4-directed-coverage-20261110/rule-matrix-100.json)和[累计记录](../artifacts/ipv4-directed-coverage-20261110/recipe-delivery.json)。
 
-原 flow 自身的探索10/335与这个跨已验收语料的累计94/335是不同统计。没有修改原探索结果，flow 总结论仍为 `unresolved`。
+原 flow 自身的探索10/335与这个跨已验收语料的累计100/335是不同统计。没有修改原探索结果，flow 总结论仍为 `unresolved`。
+
+0196 中 DeepSeek 只提交受限 JSON 配方，不能提交可执行 Python：引用原冻结输入前缀、关闭／终止事件、最早实际计时器，或复用同一种子中的原字节并显式调整新路径的逻辑时刻。参考执行器决定全部协议状态。6条命中配方实际 C／Z3 通过，新增 CLOSING／LAST-ACK、缓存过期后终止等6条规则；其余8个目标仍未命中，不能宣称不可达。原字面量场景和 oracle 未改。
 
 ## 超出默认初态一步的检查
 
@@ -20,6 +22,8 @@ DeepSeek 提供选定规则的保持查询构造器；控制器补充固定目�
 
 [原始 TAR](../artifacts/ipv4-directed-coverage-20261110/originals.tar.gz)包含303个原文件，SHA256 `4db41c595e20eacd2f8d55971b0d942585537613c661a153cb3466b35f98aafe`。[只读审计](../artifacts/ipv4-directed-coverage-20261110/fresh-readonly-audit.json)核对所有成员、当前源码／IR／C、原 ELF／输入／stdout／快照、固定查询及见证。当前受审源码在独立新进程重建的60份保持／非空性查询与原件逐字节一致；没有重跑求解器或执行归档 Python／ELF。服务器执行回执的真实性是另一个信任前提，本轮没有新网络抓包。
 
+[0196原始 TAR](../artifacts/ipv4-directed-coverage-20261110/recipe-originals.tar.gz)另保留77个原文件，SHA256 `3611d6268d142b72b869a19d7f25b331f6ca6970da8214bc297c63f8f6bed823`。[配方只读审计](../artifacts/ipv4-directed-coverage-20261110/recipe-readonly-audit.json)从冻结种子逐步重建6条输入路径，核对原字段、实际 IR 最早计时器、C原始输出及6份SAT见证。两个原始包和首次94规则交付记录均未覆盖。
+
 生成 C 仍为 `19ce9855194a5d8b243648f12b710d739266f4d49ff31001e378c1815975e36b`；IR 仍为文件哈希 `7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5`。既有规范版本、条款和范围没有改变。
 
 DeepSeek 最初的收集器源码没有通过审查：先复制解释器，后又有规则误计、跳过路径、未完成实现等问题，均未用于计数。控制器最终使用真实 `Machine` 的有限前缀收集器。原始 DeepSeek 测试中的导入／语法错误也保留；控制器独立正反例资格检查通过，不能把模型自评或坏测试当验收。
@@ -30,14 +34,14 @@ DeepSeek 最初的收集器源码没有通过审查：先复制解释器，后�
 
 ## 复现与后续
 
-运行冻结16条路径对当前 IR／新生成 C 的回归：
+运行冻结22条路径对当前 IR／新生成 C 的回归：
 
 ```sh
 .venv/bin/python -m unittest discover -s tests -p test_ipv4_rule_coverage.py -v
 ```
 
-专用 CI 为 `Finite IPv4 directed rule paths`。原16条服务器固定输入 SMT／结果在 TAR；此单元测试不声称重跑它们。
+专用 CI 为 `Finite IPv4 directed rule paths`。22条服务器固定输入 SMT／结果在两个 TAR；此单元测试不声称重跑它们。
 
-0194 正在对其余305条不同规则逐条检查，同样每查询10000ms、先保存 SMT、不重试 `UNKNOWN`，逐条保留 SAT／UNSAT／UNKNOWN／非空性结果。0195 等待真实作业完成后才调用 DeepSeek 独立审查；等待阶段零 API。预先发现其摘要可能超过网关96000字节：0197仅在0195因此被网关预检零API拒绝后，改用保留原件的精简上下文；旧审查若已成功则跳过，真实 API 失败／不确定不重试。0196 让 DeepSeek 以受限 JSON 配方描述剩余14个定向目标的测试：只能引用冻结输入、应用关闭／终止事件及真实最早计时器，后续仍需参考／C／Z3门禁，不执行生成的 Python。进行中的结果不计入本次交付。
+0194 正在对其余305条不同规则逐条检查，同样每查询10000ms、先保存 SMT、不重试 `UNKNOWN`，逐条保留 SAT／UNSAT／UNKNOWN／非空性结果。0195 等待真实作业完成后才调用 DeepSeek 独立审查；等待阶段零 API。预先发现其摘要可能超过网关96000字节：0197仅在0195因此被网关预检零API拒绝后，改用保留原件的精简上下文；旧审查若已成功则跳过，真实 API 失败／不确定不重试。0196已完成上述6条验收；0198将其具体未命中结果交回 DeepSeek，为剩余8个定向目标产生新受限配方，仍需真实参考／C／Z3门禁。进行中的结果不计入本次交付。
 
 旧 TCP／ICMP `UNKNOWN`、lwIP2750ms及 Linux TCP Difference 保留。固定端点／MTU1500／TCP16字节缓冲与 SMSS4 等范围不变；服务器没有新增特权网络操作，没有自动合入 main，也没有重开定时任务。

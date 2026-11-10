@@ -1,5 +1,7 @@
 # 2026-11-10 finite IPv4 directed closure
 
+Current cumulative supplement:22paths/143transitions; execution coverage100/335 (29new versus71,235unobserved). First16/94record below remains immutable. Separate `recipe-originals.tar.gz` has77files/SHA3611d6268d142b72b869a19d7f25b331f6ca6970da8214bc297c63f8f6bed823. `recipe-readonly-audit.json` reconstructs6DeepSeek primitive recipes against frozen inputs/currentIR, native bytes andfixedZ3 witnesses; `recipe-delivery.json` and `rule-matrix-100.json` hold new cumulative account. No new network or allprotocol proof.
+
 Accepted scoped experiments:16 default-initial paths,94 actual reference/native transitions,16 fixed-input Z3 SAT/strict replay matches. Aggregate execution coverage71→94/335 (23new rules,241unobserved—not an unreachability claim). Separate30 selected close/abort defined transitions preserve all65declared invariants:30UNSAT and30SAT nonvacuity at10000ms/query. Whole flow remains unresolved; originalUNKNOWN unchanged.
 
 - `originals.tar.gz`:303 original files, SHA256 `4db41c595e20eacd2f8d55971b0d942585537613c661a153cb3466b35f98aafe`; embedded MANIFEST binds every member. Contains proposals/rejections/reviews and actual0187/0190/0191 compiler/native/SMT/witness receipts. No private directory or credentials.
@@ -9,4 +11,4 @@ Accepted scoped experiments:16 default-initial paths,94 actual reference/native 
 - `local-qualification/`:seven independent positive/negative/no-solve/arbitrary-prestate checks and fresh integrated16-path C regression pass; original DeepSeek test failures and audit sources retained. Rejected candidate code is evidence, not a supported runtime or an instruction to execute it.
 - `audit-initial-rejected.json`, `audit-v2-rejected.json`:original audit failures retained. Mixed-process report mismatch was not exported; cause not established. Isolated new-process render is byte-identical. Strict accounting rejected extra metadata; exact required-field projection preserves independent target-hit checks, without changing raw records or oracle.
 
-See [scope and reproducibility](../../docs/ipv4-directed-closure.md). IR/C unchanged; this is offline native execution, not new peer/PCAP evidence. Ongoing0194/0195/0196/0197 results are excluded from this archive and these accepted counts.
+See [scope and reproducibility](../../docs/ipv4-directed-closure.md). IR/C unchanged; this is offline native execution, not new peer/PCAP evidence. Ongoing0194/0195/0197/0198 results are excluded from both original archives and accepted counts;0196is included only in the second77filearchive.
