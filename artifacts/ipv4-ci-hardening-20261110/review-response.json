@@ -1,0 +1,34 @@
+{
+  "blocking": [],
+  "findings": [
+    {
+      "severity": "high",
+      "location": "protocol_lab/initial_overlap.py",
+      "detail": "Base sequence identity is determined using `base_i.eq(base_j)`. In Z3Py, `ExprRef.eq` compares AST structural equality, not semantic equivalence. If the same base sequence is represented by functionally equivalent but structurally different expressions (e.g., due to simplification or alpha-renaming), the function may fail to detect overlapping constraints. This could lead to missing necessary literal clashes, weakening the overlap reduction and potentially causing the exact equivalence audit to pass incorrectly. However, the audit's byte-identical comparison may catch such discrepancies if the original goal was already contradictory. Nonetheless, relying on structural equality is a correctness risk for the optimization."
+    },
+    {
+      "severity": "medium",
+      "location": "protocol_lab/initial_plan.py",
+      "detail": "In `render_plan`, `_full_smt` creates a new `z3.Solver()` for each query. Z3 may assign fresh names to internal variables (e.g., for choice symbols) inconsistently across calls, leading to different SMT-LIB strings even for identical logical formulas. The plan warns about this, but the nondeterminism can cause false mismatches when comparing byte-identical SMT outputs across runs or between the actual run and the audit. This does not affect solving correctness, but may complicate reproducibility checks."
+    },
+    {
+      "severity": "low",
+      "location": "protocol_lab/initial_plan.py",
+      "detail": "The overlap leaf reduction uses `necessary_literal_clash` only when it finds exactly two contradictory conjuncts; otherwise the full leaf is serialized. The reduction does not attempt to find subsets of more than two conjuncts that are jointly contradictory, which may leave some UNSAT obligations unchanged. This is conservative and does not introduce unsoundness, but it limits the optimization's coverage."
+    }
+  ],
+  "limitations": [
+    {
+      "scope": "exact_audit",
+      "detail": "The audit compares byte-identical JSON or typed ASTs for equivalence. It does not evaluate semantic equivalence beyond the precise serialization, so any change in Z3's AST printing or solver output formatting would be flagged even if logically equivalent. This is intentional for the CI gate but may be overly strict for future modifications."
+    },
+    {
+      "scope": "reference_audit",
+      "detail": "The reference audit only covers the 77 cases in the provided scenario set. It does not re-run the full external oracle or the timeout tests from the original run; it relies on the unchanged source of the reference worker. Thus, regressions in the surrounding pipeline (e.g., model loading, trace capture) outside these cases are not independently verified in this particular audit."
+    },
+    {
+      "scope": "exact_equivalence",
+      "detail": "The equivalence audit cannot verify that the checker's actual solver calls were made with the same SMT2 strings; it only confirms that the planner produces identical strings and that the counts match. If the runner were to silently drop or reorder solver calls, this audit would not detect it unless the resulting JSON differed."
+    }
+  ]
+}

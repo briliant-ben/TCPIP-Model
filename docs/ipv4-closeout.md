@@ -1,5 +1,14 @@
 # Finite IPv4 prototype closeout
 
+## Final reproducibility qualification
+
+[Exact CI hardening](../artifacts/ipv4-ci-hardening-20261110/README.md) records
+46 successful implementation-source CI runs,118 targeted Linux methods and77
+actual cases. All reference JSON remains byte-identical.76 conflict obligations
+use original necessary conjunct pairs; all domains/budgets/oracles remain unchanged.
+The original resource failures and review findings/dispositions are retained.
+
+
 ## Final finite-prototype delivery (2026-11-09)
 
 The [delivery report](../artifacts/ipv4-closeout-20261109/delivery.json) passes the

@@ -1,0 +1,132 @@
+test_compatible_overlap_returns_none (test_initial_overlap.TestNecessaryLiteralClash.test_compatible_overlap_returns_none) ... ERROR
+test_custom_context_supported (test_initial_overlap.TestNecessaryLiteralClash.test_custom_context_supported) ... ERROR
+test_different_base_returns_none (test_initial_overlap.TestNecessaryLiteralClash.test_different_base_returns_none) ... ERROR
+test_length_mismatch_returns_none (test_initial_overlap.TestNecessaryLiteralClash.test_length_mismatch_returns_none) ... ERROR
+test_never_select_or_branch_even_with_clash (test_initial_overlap.TestNecessaryLiteralClash.test_never_select_or_branch_even_with_clash) ... ERROR
+test_nonliteral_offset_or_length_returns_none (test_initial_overlap.TestNecessaryLiteralClash.test_nonliteral_offset_or_length_returns_none) ... ERROR
+test_nonliteral_sequence_expr_ignored (test_initial_overlap.TestNecessaryLiteralClash.test_nonliteral_sequence_expr_ignored) ... ERROR
+test_reverse_equality_orientation (test_initial_overlap.TestNecessaryLiteralClash.test_reverse_equality_orientation) ... ERROR
+test_simple_contradiction_offset0_14_vs_offset12_8 (test_initial_overlap.TestNecessaryLiteralClash.test_simple_contradiction_offset0_14_vs_offset12_8) ... ERROR
+test_whole_base_equality_supported (test_initial_overlap.TestNecessaryLiteralClash.test_whole_base_equality_supported) ... ERROR
+
+======================================================================
+ERROR: test_compatible_overlap_returns_none (test_initial_overlap.TestNecessaryLiteralClash.test_compatible_overlap_returns_none)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 76, in test_compatible_overlap_returns_none
+    base = self._seq("b")
+           ^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 16, in _seq
+    return z3.Const(name, z3.SeqSort(z3.BitVecSort(8)), ctx=self.ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+======================================================================
+ERROR: test_custom_context_supported (test_initial_overlap.TestNecessaryLiteralClash.test_custom_context_supported)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 149, in test_custom_context_supported
+    base = z3.Const('b', z3.SeqSort(z3.BitVecSort(8)), ctx=ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+======================================================================
+ERROR: test_different_base_returns_none (test_initial_overlap.TestNecessaryLiteralClash.test_different_base_returns_none)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 87, in test_different_base_returns_none
+    base1 = self._seq("b1")
+            ^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 16, in _seq
+    return z3.Const(name, z3.SeqSort(z3.BitVecSort(8)), ctx=self.ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+======================================================================
+ERROR: test_length_mismatch_returns_none (test_initial_overlap.TestNecessaryLiteralClash.test_length_mismatch_returns_none)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 118, in test_length_mismatch_returns_none
+    base = self._seq("b")
+           ^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 16, in _seq
+    return z3.Const(name, z3.SeqSort(z3.BitVecSort(8)), ctx=self.ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+======================================================================
+ERROR: test_never_select_or_branch_even_with_clash (test_initial_overlap.TestNecessaryLiteralClash.test_never_select_or_branch_even_with_clash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 127, in test_never_select_or_branch_even_with_clash
+    base = self._seq("b")
+           ^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 16, in _seq
+    return z3.Const(name, z3.SeqSort(z3.BitVecSort(8)), ctx=self.ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+======================================================================
+ERROR: test_nonliteral_offset_or_length_returns_none (test_initial_overlap.TestNecessaryLiteralClash.test_nonliteral_offset_or_length_returns_none)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 98, in test_nonliteral_offset_or_length_returns_none
+    base = self._seq("b")
+           ^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 16, in _seq
+    return z3.Const(name, z3.SeqSort(z3.BitVecSort(8)), ctx=self.ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+======================================================================
+ERROR: test_nonliteral_sequence_expr_ignored (test_initial_overlap.TestNecessaryLiteralClash.test_nonliteral_sequence_expr_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 140, in test_nonliteral_sequence_expr_ignored
+    base = self._seq("b")
+           ^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 16, in _seq
+    return z3.Const(name, z3.SeqSort(z3.BitVecSort(8)), ctx=self.ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+======================================================================
+ERROR: test_reverse_equality_orientation (test_initial_overlap.TestNecessaryLiteralClash.test_reverse_equality_orientation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 64, in test_reverse_equality_orientation
+    base = self._seq("b")
+           ^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 16, in _seq
+    return z3.Const(name, z3.SeqSort(z3.BitVecSort(8)), ctx=self.ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+======================================================================
+ERROR: test_simple_contradiction_offset0_14_vs_offset12_8 (test_initial_overlap.TestNecessaryLiteralClash.test_simple_contradiction_offset0_14_vs_offset12_8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 32, in test_simple_contradiction_offset0_14_vs_offset12_8
+    base = self._seq("input_0_L.net.frame_frame")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 16, in _seq
+    return z3.Const(name, z3.SeqSort(z3.BitVecSort(8)), ctx=self.ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+======================================================================
+ERROR: test_whole_base_equality_supported (test_initial_overlap.TestNecessaryLiteralClash.test_whole_base_equality_supported)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 160, in test_whole_base_equality_supported
+    base = self._seq("b")
+           ^^^^^^^^^^^^^^
+  File "/Users/xubenling/Documents/ChatGPT/Protocol_Form/TCPIP-Model/tests/test_initial_overlap.py", line 16, in _seq
+    return z3.Const(name, z3.SeqSort(z3.BitVecSort(8)), ctx=self.ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Const() got an unexpected keyword argument 'ctx'
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.027s
+
+FAILED (errors=10)
