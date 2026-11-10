@@ -14,7 +14,11 @@ substituted, with their original equalities restored for safety branches. No
 unbound variable is frozen. Safety is partitioned by every rule choice, idle and
 clock; a separate query proves that this set exhausts the original choice domain.
 Each initialized conflict disjunct is checked standalone, a stronger UNSAT
-obligation. SAT on such a leaf is not an accepted reachable counterexample.
+obligation. If two original top-level conjuncts constrain overlapping literal
+bytes of the same sequence differently, the planner may instead check exactly
+that original pair. It verifies AST membership and retains the original leaf
+hash and derivation kind. The pair is a weaker query, so proving it UNSAT is a
+stronger obligation; no field, byte length, depth or budget is restricted. SAT on such a leaf is not an accepted reachable counterexample.
 The first rule's satisfiable one-step path supplies nonvacuity only; its witness
 is checked by the existing strict reference replay.
 

@@ -1,0 +1,88 @@
+{
+  "head": "6f1bb76757ef24b09b71d9bcce3cf126460d75a8",
+  "run": 42641133597,
+  "job": 129242225429,
+  "artifact": 13684754978,
+  "ZIP_sha256": "4e3980ec1caa3a54cf2a7810971aed68fd9a8ec62334ee6ee54ed00b08424180",
+  "original_files": 1687,
+  "formal_counts": {
+    "negative_answers": {
+      "sat": 0,
+      "unknown": 1,
+      "unsat": 562
+    },
+    "negative_queries": 563,
+    "nonvac_answer": "sat",
+    "nonvac_replay_match": true
+  },
+  "unknown": [
+    {
+      "id": "overlap_94",
+      "role": "overlap",
+      "answer": "unknown",
+      "reason": "timeout",
+      "sha256": "24e585e944488e1205aa592206cd89865f2c54731e544b37c991d0ae4ed7d157"
+    }
+  ],
+  "overlap94_byte_identical_to_server_pass": true,
+  "reference_worker": {
+    "command": [
+      "/tmp/ipv4-closeout-venv/bin/python",
+      "-m",
+      "protocol_lab.pipeline.worker",
+      "reference",
+      "--job",
+      "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/ipv4-closeout-ci/run"
+    ],
+    "tool_root": "/home/runner/work/TCPIP-Model/TCPIP-Model/artifacts/ipv4-closeout-ci/run/source-snapshot/tool",
+    "returncode": -9,
+    "timed_out": true,
+    "process_group_cleanup_attempted": true,
+    "seconds": 600.106323425
+  },
+  "stages": {
+    "sources": {
+      "status": "pass",
+      "classification": null
+    },
+    "ir": {
+      "status": "pass",
+      "classification": null
+    },
+    "formal": {
+      "status": "unknown",
+      "classification": "unresolved_or_counterexample_unreplayed"
+    },
+    "tests": {
+      "status": "unknown",
+      "classification": "coverage_gap"
+    },
+    "reference": {
+      "status": "fail",
+      "classification": "resource_limit"
+    },
+    "generate": {
+      "status": "pass",
+      "classification": null
+    },
+    "build": {
+      "status": "pass",
+      "classification": null
+    },
+    "execute": {
+      "status": "pass",
+      "classification": null
+    },
+    "compare": {
+      "status": "blocked",
+      "classification": "dependency"
+    },
+    "traceability": {
+      "status": "pass",
+      "classification": null
+    }
+  },
+  "classification": "formal resource UNKNOWN and reference600s deadline, not observed protocol Difference",
+  "old_UNKNOWNS_retained": true,
+  "archive_code_ELF_solver_executed": false
+}

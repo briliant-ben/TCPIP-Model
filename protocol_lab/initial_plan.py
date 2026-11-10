@@ -21,6 +21,7 @@ from typing import Any, Dict, List, Optional
 import z3
 
 from protocol_lab.initial_units import reduce_initial_constants
+from protocol_lab.initial_overlap import necessary_literal_clash
 from protocol_lab.ir import validate
 from protocol_lab.symbolic import Encoding, model_hash
 
@@ -194,12 +195,28 @@ def render_plan(model: Dict[str, Any]) -> Dict[str, Any]:
         # Each initialized leaf is a stronger obligation by itself.
         # UNSAT suffices; SAT must be confirmed against original F.
         # Do not reintroduce the whole transition relation here.
+        selected = necessary_literal_clash(leaf)
+        parts = []
+        def conjuncts(expr):
+            if z3.is_and(expr):
+                for child in expr.children():
+                    conjuncts(child)
+            else:
+                parts.append(expr)
+        conjuncts(leaf)
+        if selected is not None and (len(selected) != 2 or
+                not all(any(item.eq(part) for part in parts) for item in selected)):
+            raise ValueError('Overlap reduction invented a constraint')
+        # Dropping conjuncts weakens the query: UNSAT of this subset is a
+        # stronger obligation. Neither input bytes nor their domain is changed.
         solver = z3.Solver()
-        solver.add(leaf)
+        solver.add(*(selected if selected is not None else [leaf]))
         smt = solver.to_smt2()
         overlap_per_leaf.append({
             "index": len(overlap_per_leaf),
             "smt2": smt,
+            "derivation": "necessary_literal_conjunct_pair" if selected is not None else "original_leaf",
+            "source_leaf_sha256": hashlib.sha256(leaf.sexpr().encode()).hexdigest(),
         })
 
     # 14. Nonvacuity witness query: fresh Encoding with fixed_choices=[0],

@@ -20,7 +20,7 @@ SCHEMA = 'initial-step-contracts-v1'
 PASS = 'initial_step_contracts_pass'
 UNRESOLVED = 'unresolved_or_counterexample_unreplayed'
 SCOPE = 'default initialized depth1; full typed defined transitions; not all-state/deeper/wire/compiler/spec proof'
-SOURCE_NAMES = ('initial_step.py', 'initial_plan.py', 'initial_units.py', 'symbolic.py', 'ir.py')
+SOURCE_NAMES = ('initial_step.py', 'initial_plan.py', 'initial_units.py', 'initial_overlap.py', 'symbolic.py', 'ir.py')
 
 
 def digest(raw):
@@ -76,6 +76,10 @@ def manifest(plan, model):
     rows += [('nonvac_witness', 'nonvac', 'sample', plan['nonvac_smt2'])]
     queries = [dict(id=i, role=role, solver_policy=policy, file='queries/' + i + '.smt2',
                     sha256=digest(smt.encode()), smt2=smt) for i, role, policy, smt in rows]
+    overlap_metadata = {"overlap_" + str(r['index']): r for r in leaves}
+    for q in queries:
+        if q['role'] == 'overlap':
+            q.update({k: overlap_metadata[q['id']][k] for k in ('derivation', 'source_leaf_sha256')})
     roots = [dict(id=n, role=n, file='queries/' + n + '.smt2',
                   sha256=digest(plan[n]['smt2'].encode()), smt2=plan[n]['smt2'])
              for n in ('original_safety', 'original_overlap')]

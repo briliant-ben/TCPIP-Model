@@ -120,10 +120,20 @@ def stage(name,t,workspace,job,out):
                 # Reuse the existing, independently authored scenario0.2 gate.
                 # In particular, never reduce expect_trace to final-state checks.
                 from ..flow import run_scenario,TraceContractMismatch
-                try:run_scenario(model,case)
+                try:
+                    snapshots = []
+                    machine = run_scenario(model,case,snapshots=snapshots)
+                    r = {
+                        'initial': snapshots[0],
+                        'operations': snapshots[1:],
+                        'error': None,
+                        'trace': [{k: row[k] for k in KEYS} for row in machine.trace],
+                        'final': machine.snapshot()
+                    }
                 except TraceContractMismatch as e:
                     return result('fail','scenario_contract',dict(scenario=e.scenario,at_ms=e.at_ms,expected=e.expected,observed=e.observed))
-            r=reference_case(model,case)
+            else:
+                r=reference_case(model,case)
             if c['negative']:
                 if not r['error']or r['error']['classification']!=case['expected_rejection']:return result('fail','reference_rejection_mismatch')
             elif r['error']:return result('fail',r['error']['classification'],r)

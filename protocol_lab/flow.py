@@ -58,9 +58,12 @@ class TraceContractMismatch(ModelError):
         self.observed = copy.deepcopy(observed)
 
 
-def run_scenario(model, scenario):
+def run_scenario(model, scenario, *, snapshots=None):
     require(scenario.get("scenario_version") in ("0.1", "0.2"), "Unsupported scenario version")
     machine = Machine(model, scenario.get("initial"))
+    if snapshots is not None:
+        require(type(snapshots) is list and not snapshots, "Snapshot capture target must be empty list")
+        snapshots.append(copy.deepcopy(machine.snapshot()))
     for step in scenario["steps"]:
         if "expect_trace" in step:
             require(scenario["scenario_version"] == "0.2", "Trace contracts require scenario 0.2")
@@ -82,12 +85,16 @@ def run_scenario(model, scenario):
             machine.tick(step["at_ms"])
         else:
             machine.dispatch(step["event"], step.get("fields", {}), step["at_ms"])
+        if snapshots is not None:
+            snapshots.append(copy.deepcopy(machine.snapshot()))
         if "expect_trace" in step:
             observed = [{"at_ms": row["time_ms"], "emitted": row["emitted"]} for row in machine.trace[trace_start:]]
             if observed != step["expect_trace"]:
                 raise TraceContractMismatch(scenario["id"], step["at_ms"], step["expect_trace"], observed)
     if "settle_ms" in scenario:
         machine.tick(scenario["settle_ms"])
+        if snapshots is not None:
+            snapshots.append(copy.deepcopy(machine.snapshot()))
     expected = scenario["expect"]
     require(machine.state == expected["state"], "Scenario final state mismatch")
     for key, value in expected.get("variables", {}).items():
