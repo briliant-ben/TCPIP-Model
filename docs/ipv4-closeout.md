@@ -1,5 +1,30 @@
 # Finite IPv4 prototype closeout
 
+## Final reproducibility qualification
+
+[Exact CI hardening](../artifacts/ipv4-ci-hardening-20261110/README.md) records
+46 successful implementation-source CI runs,118 targeted Linux methods and77
+actual cases. All reference JSON remains byte-identical.76 conflict obligations
+use original necessary conjunct pairs; all domains/budgets/oracles remain unchanged.
+The original resource failures and review findings/dispositions are retained.
+
+
+## Final finite-prototype delivery (2026-11-09)
+
+The [delivery report](../artifacts/ipv4-closeout-20261109/delivery.json) passes the
+[explicit finite-prototype contract](ipv4-prototype-acceptance.md). New v5 flow:
+77 actual reference/native cases,563 UNSAT negative obligations,1 SAT strict
+replay,103 targeted Linux methods. Independent DeepSeek review has no blocking
+or findings. The [initialized strategy](initial-step-contracts.md) is now integrated;
+old schemas, task receipts and UNKNOWN are unchanged. Directed11 supplementary
+cases additionally pass reference/C/fixed-input Z3. Default-initial execution
+coverage grows to71/335, with264 open gaps recorded individually. The generic
+complete-exploration assessment remains unresolved; no verdict is softened.
+
+The sections below retain earlier checkpoint results and their historical
+not-yet-integrated descriptions; they are not the final implementation status.
+
+
 The functional prototype and its accepted Linux observations remain as described
 in [the review guide](ipv4-prototype-review.md). Closeout does not expand the
 fixed endpoint or finite TCP profile into a production protocol stack.

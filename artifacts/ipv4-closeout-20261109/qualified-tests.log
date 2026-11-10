@@ -1,0 +1,46 @@
+test_false_initial_invariant_with_normal_next_state_is_not_masked (test_initial_step.InitialStepEvidence.test_false_initial_invariant_with_normal_next_state_is_not_masked) ... ok
+test_interruption_keeps_all_queries_and_no_completed_report (test_initial_step.InitialStepEvidence.test_interruption_keeps_all_queries_and_no_completed_report) ... ok
+test_missing_derivation_root_or_changed_policy_rejected (test_initial_step.InitialStepEvidence.test_missing_derivation_root_or_changed_policy_rejected) ... ok
+test_strict_replay_recomputed_after_coherent_witness_edit (test_initial_step.InitialStepEvidence.test_strict_replay_recomputed_after_coherent_witness_edit) ... ok
+test_symlink_receipt_rejected_without_following_it (test_initial_step.InitialStepEvidence.test_symlink_receipt_rejected_without_following_it) ... ok
+test_unknown_cannot_be_promoted_even_with_consistent_counts_and_receipts (test_initial_step.InitialStepEvidence.test_unknown_cannot_be_promoted_even_with_consistent_counts_and_receipts) ... ok
+test_unknown_from_actual_solver_exception_is_retained_not_passed (test_initial_step.InitialStepEvidence.test_unknown_from_actual_solver_exception_is_retained_not_passed) ... ok
+test_absolute_filename_rejected_by_verify (test_initial_step_independent.InitialStepContractTests.test_absolute_filename_rejected_by_verify)
+Query file path that is absolute must be rejected. ... ok
+test_existing_nonempty_dir_rejected_by_check (test_initial_step_independent.InitialStepContractTests.test_existing_nonempty_dir_rejected_by_check)
+check must refuse to write into a non-empty output directory. ... ok
+test_false_initial_invariant_never_pass (test_initial_step_independent.InitialStepContractTests.test_false_initial_invariant_never_pass)
+Model with false initial invariant must not pass check. ... ok
+test_modified_sample_witness_with_stale_match_rejected (test_initial_step_independent.InitialStepContractTests.test_modified_sample_witness_with_stale_match_rejected)
+If nonvac witness replay match is altered, verify must reject. ... ok
+test_monkeypatch_solver_check_raise_during_verify (test_initial_step_independent.InitialStepContractTests.test_monkeypatch_solver_check_raise_during_verify)
+Verify must not use Solver.check; monkeypatch it to raise and verify still succeeds. ... ok
+test_mutate_query_raw_and_rehash_receipt_rejected (test_initial_step_independent.InitialStepContractTests.test_mutate_query_raw_and_rehash_receipt_rejected)
+Altering raw SMT2 file and updating receipt hash must be caught by canonical rerender. ... ok
+test_normal_toy_check_and_verify_pass (test_initial_step_independent.InitialStepContractTests.test_normal_toy_check_and_verify_pass)
+Valid toy model should pass check and verify. ... ok
+test_omit_query_report_row_rejected_by_verify (test_initial_step_independent.InitialStepContractTests.test_omit_query_report_row_rejected_by_verify)
+Removing a query row from result.json must cause verification failure. ... ok
+test_path_traversal_rejected_by_verify (test_initial_step_independent.InitialStepContractTests.test_path_traversal_rejected_by_verify)
+Query file path pointing outside output directory must be rejected by verify. ... ok
+test_result_query_fields_contract (test_initial_step_independent.InitialStepContractTests.test_result_query_fields_contract)
+All query rows in result.json must contain required keys. ... ok
+test_timeout_bool_rejected (test_initial_step_independent.InitialStepContractTests.test_timeout_bool_rejected)
+check must reject bool timeout. ... ok
+test_timeout_out_of_range_rejected (test_initial_step_independent.InitialStepContractTests.test_timeout_out_of_range_rejected)
+check must reject timeout outside 100..60000. ... ok
+test_timeout_string_rejected (test_initial_step_independent.InitialStepContractTests.test_timeout_string_rejected)
+check must reject non-int timeout. ... ok
+test_unknown_negative_row_and_receipt_rejected (test_initial_step_independent.InitialStepContractTests.test_unknown_negative_row_and_receipt_rejected)
+Changing a negative (UNSAT) query to UNKNOWN must cause verify failure. ... ok
+test_wrong_model_hash_rejected (test_initial_step_independent.InitialStepContractTests.test_wrong_model_hash_rejected)
+Wrong model_semantic_sha256 in result.json must be rejected by verify. ... ok
+test_wrong_source_hash_rejected (test_initial_step_independent.InitialStepContractTests.test_wrong_source_hash_rejected)
+Wrong source_sha256 in result.json must be rejected by verify. ... ok
+test_explicit_admission_and_legacy_unchanged (test_initial_step_pipeline.InitialStepPipeline.test_explicit_admission_and_legacy_unchanged) ... ok
+test_real_ten_stage_flow_and_rehashed_formal_attack (test_initial_step_pipeline.InitialStepPipeline.test_real_ten_stage_flow_and_rehashed_formal_attack) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 3.789s
+
+OK

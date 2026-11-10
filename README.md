@@ -4,7 +4,9 @@
 
 当前有限 IPv4 端点原型已完成一次**同生成 C 进程的 ARP／TCP／UDP／ICMP 独立 Linux 互通验收**：25包、零丢包、19步固定输入 Z3 对应检查。入口见[成果审阅](docs/ipv4-prototype-review.md)与[实际轨迹可视化](artifacts/ipv4-prototype-final-9289/review.html)。权威 IR 是 `model/ipv4-endpoint-virtual-link.json`；实际范围为固定端点、单 peer 和有限 TCP。
 
-通用 [spec flow](docs/spec-flow.md) 覆盖规范绑定、IR、参考／独立 Z3、测试、独立 C 生成、观察、差异与追溯。[最终 task](flows/ipv4-endpoint-virtual-link.json) 实际32例参考/C比较通过；全输入形式检查仍 UNKNOWN，声明探索覆盖10/335，flow 总结论保留 `unresolved`。服务器／调用方入口见[运行交接](docs/spec-flow-server.md)，无需固定采用 MCP、Skill 或特定模型 SDK。
+通用 [spec flow](docs/spec-flow.md) 覆盖规范绑定、IR、参考／独立 Z3、测试、独立 C 生成、观察、差异与追溯。[原32例任务](flows/ipv4-endpoint-virtual-link.json) 的 UNKNOWN 原件保留；[新收尾任务](flows/ipv4-prototype-closeout.json) 实际77例参考/C比较通过，初始化一步的563项否定查询全部 UNSAT，另1个 SAT 见证严格重放通过。按[有限原型交付合同](docs/ipv4-prototype-acceptance.md)已验收，见[最终证据与完整规则清单](artifacts/ipv4-closeout-20261109/README.md)。声明探索仍10/335，执行证据并集71/335，完整覆盖未完成，通用 flow 总评仍保留 `unresolved`。服务器／调用方入口见[运行交接](docs/spec-flow-server.md)，无需固定采用 MCP、Skill 或特定模型 SDK。
+
+[最终 CI 可重复性收尾](artifacts/ipv4-ci-hardening-20261110/README.md)已验收：实现提交938dfe57的46个CI通过，118项专项及77例完整回归通过；查询精确简化和被动快照消除了已定位的资源瓶颈，原超时证据继续保留。
 
 形式后端可显式选择[精确求解预处理与中断留证](docs/solver-preprocessing.md)。默认求解策略不变；ICMP flow 使用相同模型、输入域和深度的 `exact-v1`。新结果不改写旧 UNKNOWN，原始 SMT 在求解前保存，已有证据目录禁止覆盖。
 

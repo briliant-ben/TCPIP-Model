@@ -1,0 +1,19 @@
+{
+  "status": "actual_flow_contracts_pass_execution_coverage_separately_unresolved",
+  "formal_status": "initial_step_contracts_pass",
+  "counts": {
+    "negative_queries": 563,
+    "negative_answers": {
+      "sat": 0,
+      "unsat": 563,
+      "unknown": 0
+    },
+    "nonvac_answer": "sat",
+    "nonvac_replay_match": true
+  },
+  "task_sha256": "0321472ec62337f86bcafbfd628c64d563ce831eee4101dcb523acc136e3794f",
+  "old_task_unchanged": true,
+  "new_flow_assessment": "unresolved",
+  "cases": 77,
+  "scope": "Finite initialized1step; literal native/reference paths; no new network/compiler/deeper/unbounded proof"
+}
