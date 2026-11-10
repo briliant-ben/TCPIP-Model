@@ -1,0 +1,22 @@
+test_candidate_preservation_batch (unittest.loader._FailedTest.test_candidate_preservation_batch) ... ERROR
+
+======================================================================
+ERROR: test_candidate_preservation_batch (unittest.loader._FailedTest.test_candidate_preservation_batch)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_candidate_preservation_batch
+Traceback (most recent call last):
+  File "/Users/xubenling/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xubenling/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/tmp/ipv4-0186-review/test_candidate_preservation_batch.py", line 79
+    })
+     ^
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '{' on line 77
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
