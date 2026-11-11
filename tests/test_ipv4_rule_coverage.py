@@ -13,10 +13,10 @@ ROOT=Path(__file__).resolve().parents[1]
 class DirectedRuleCoverage(unittest.TestCase):
     def test_default_paths_hit_declared_targets_with_fresh_generated_c(self):
         source=ROOT/'scenarios/ipv4-rule-coverage/cases.json'
-        self.assertEqual(sha(source),'4fc689a425ca3e79d6fbc592a37fe36cf0201c0e2b7b929efc9caa0969597f20')
+        self.assertEqual(sha(source),'9f0ebae847e82ca0df3a82bee04086871ba8d8413a475252bfe386fedc64111a')
         data=json.loads(source.read_text());model_file=ROOT/'model/ipv4-endpoint-virtual-link.json'
         self.assertEqual(sha(model_file),data['model_file_sha256'])
-        self.assertFalse(data['independent_RFC_oracle']);self.assertEqual(len(data['cases']),22)
+        self.assertFalse(data['independent_RFC_oracle']);self.assertEqual(len(data['cases']),24)
         model=load(model_file);known={r['id']for r in model['transitions']}
         with tempfile.TemporaryDirectory()as temp:
             out=Path(temp);generate(model_file,out/'generation')

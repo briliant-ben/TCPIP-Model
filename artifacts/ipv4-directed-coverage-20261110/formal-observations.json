@@ -1,0 +1,1389 @@
+{
+  "schema": "selected-transition-observation-account-v1",
+  "status": "unresolved",
+  "rules": {
+    "T.C-ABORT-LISTEN": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-TIME-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-CLOSE-ESTABLISHED-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-CLOSE-ESTABLISHED-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-CLOSE-CLOSE-WAIT-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-CLOSE-CLOSE-WAIT-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-CLOSE-LISTEN": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-CLOSE-SYN-SENT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-REPEATED-CLOSE-FIN-WAIT-1": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-REPEATED-CLOSE-FIN-WAIT-2": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-REPEATED-CLOSE-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-REPEATED-CLOSE-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-REPEATED-CLOSE-TIME-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-SYN-RECEIVED-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-SYN-RECEIVED-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-SYN-RECEIVED-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-ESTABLISHED-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-ESTABLISHED-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-ESTABLISHED-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-FIN-WAIT-1-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-FIN-WAIT-1-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-FIN-WAIT-1-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-FIN-WAIT-2-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-FIN-WAIT-2-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-FIN-WAIT-2-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-CLOSE-WAIT-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-CLOSE-WAIT-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-CLOSE-WAIT-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.QUERY-START": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.QUERY-COALESCE": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.QUERY-CACHED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.QUERY-RETRY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.CACHE-EXPIRE": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.CONFIG-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.SHORT-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.LOCAL-REQUEST-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.LOCAL-REPLY-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.NONLOCAL-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.CONFIG-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.SHORT-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.NONLOCAL-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.CONFIG-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.SHORT-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.LOCAL-REQUEST-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.LOCAL-REPLY-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.NONLOCAL-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDP-SEND-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDP-CHECKSUM-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDP-SEND-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDP-CHECKSUM-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDP-SEND-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDP-CHECKSUM-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.QUERY-FAIL-QUEUED-UDP": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.QUERY-FAIL-QUEUED-TCP": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.QUERY-FAIL-UNQUEUED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.LOCAL-REQUEST-PENDING-QUEUED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.LOCAL-REQUEST-PENDING-UNQUEUED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.LOCAL-REPLY-PENDING-QUEUED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.LOCAL-REPLY-PENDING-UNQUEUED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-IP_CHECKSUM-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-UDP_LENGTH-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-ABSENT_REQUIRED-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-UDP_CHECKSUM-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-DELIVER-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-POLICY-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-FRAME-IP-LENGTH-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-IP_CHECKSUM-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-UDP_LENGTH-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-ABSENT_REQUIRED-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-UDP_CHECKSUM-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-DELIVER-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-POLICY-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-FRAME-IP-LENGTH-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-IP_CHECKSUM-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-UDP_LENGTH-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-ABSENT_REQUIRED-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-UDP_CHECKSUM-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-DELIVER-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-POLICY-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.UDPRX-FRAME-IP-LENGTH-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-IP_CHECKSUM-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-ICMP_CHECKSUM-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-ECHO-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-FRAME-IP-LENGTH-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-IP_CHECKSUM-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-ICMP_CHECKSUM-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-ECHO-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-FRAME-IP-LENGTH-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-IP_CHECKSUM-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-ICMP_CHECKSUM-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "L.ECHO-ECHO-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "L.ECHO-FRAME-IP-LENGTH-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ACTIVE-OPEN-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ACTIVE-OPEN-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ACTIVE-OPEN-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-PASSIVE-OPEN": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-LISTEN-SYN-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-LISTEN-SYN-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-LISTEN-SYN-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYN-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYN-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYN-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-SYNACK-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-SYNACK-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-SYNACK-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYNACK-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYNACK-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYNACK-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-SYNACK-AFTER-RETRY-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-SYNACK-AFTER-RETRY-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-SYNACK-AFTER-RETRY-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-ACK-AFTER-RETRY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYNACK-AFTER-RETRY-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYNACK-AFTER-RETRY-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYNACK-AFTER-RETRY-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-SYNACK-AFTER-MULTIPLE-RETRIES-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-ACCEPT-ACK-AFTER-MULTIPLE-RETRIES": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-SYNACK-AFTER-MULTIPLE-RETRIES-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-SENT-BAD-ACK-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-SENT-BAD-ACK-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-SENT-BAD-ACK-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-SENT-BAD-SYNACK-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-SENT-BAD-SYNACK-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-SENT-BAD-SYNACK-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-SENT-BARE-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-RECEIVED-BAD-ACK-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-RECEIVED-BAD-ACK-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-RECEIVED-BAD-ACK-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-CLOSE-ESTABLISHED-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-CLOSE-CLOSE-WAIT-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-DUPLICATE-ACK-CLOSE-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-ACK-FIN-WAIT-2": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-FIN-ACK-FIN-WAIT-1": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-OLD-ACK-FIN-WAIT-1": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-FIN-ACK-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-OLD-ACK-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-FIN-ACK-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-OLD-ACK-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-PEER-FIN-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-PEER-FIN-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-PEER-FIN-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-PEER-FIN-FW2-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-PEER-FIN-FW2-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-PEER-FIN-FW2-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-PEER-FIN-FW1-ACKED-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-PEER-FIN-FW1-ACKED-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-PEER-FIN-FW1-ACKED-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-FIN-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-FIN-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SIMULTANEOUS-FIN-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-CLOSE-WAIT-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-CLOSE-WAIT-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-CLOSE-WAIT-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-CLOSING-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-CLOSING-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-CLOSING-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-LAST-ACK-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-LAST-ACK-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-LAST-ACK-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-TIME-WAIT-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-TIME-WAIT-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-DUPLICATE-FIN-TIME-WAIT-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RETRANSMIT-SYN-SENT-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-SYN-SENT-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-SYN-SENT-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-SYN-RECEIVED-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-SYN-RECEIVED-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-SYN-RECEIVED-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-FIN-WAIT-1-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-FIN-WAIT-1-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-FIN-WAIT-1-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-CLOSING-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-CLOSING-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-CLOSING-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-LAST-ACK-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-LAST-ACK-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-RETRANSMIT-LAST-ACK-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-USER-TIMEOUT-SYN-SENT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-USER-TIMEOUT-SYN-RECEIVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-USER-TIMEOUT-FIN-WAIT-1": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-USER-TIMEOUT-FIN-WAIT-2": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-USER-TIMEOUT-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-USER-TIMEOUT-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-TIME-WAIT-EXPIRED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-CLOSED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-ABORT-SYN-SENT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.C-IGNORE-NET-RST-CLOSED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-IGNORE-NET-RST-LISTEN": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-SENT-NET-RST": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-RECEIVED-NET-RST-PASSIVE": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-RECEIVED-NET-RST-ACTIVE": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-ESTABLISHED-rst": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-FIN-WAIT-1-rst": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-FIN-WAIT-2-rst": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-CLOSE-WAIT-rst": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-CLOSING-rst": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-LAST-ACK-rst": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-TIME-WAIT-rst": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-IGNORE-NET-RSTACK-CLOSED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-IGNORE-NET-RSTACK-LISTEN": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-SENT-NET-RSTACK": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-RECEIVED-NET-RSTACK-PASSIVE": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-SYN-RECEIVED-NET-RSTACK-ACTIVE": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-ESTABLISHED-rstack": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-FIN-WAIT-1-rstack": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-FIN-WAIT-2-rstack": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-CLOSE-WAIT-rstack": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-CLOSING-rstack": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-LAST-ACK-rstack": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-RESET-TIME-WAIT-rstack": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-ACK-CLOSED-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-ACK-CLOSED-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-ACK-CLOSED-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-ACK-LISTEN-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-ACK-LISTEN-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-ACK-LISTEN-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-SYNACK-CLOSED-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-SYNACK-CLOSED-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-SYNACK-CLOSED-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-SYNACK-LISTEN-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-SYNACK-LISTEN-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-SYNACK-LISTEN-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-FIN-CLOSED-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-FIN-CLOSED-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-FIN-CLOSED-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-FIN-LISTEN-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-FIN-LISTEN-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-REJECT-FIN-LISTEN-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-CLOSED-SYN-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-CLOSED-SYN-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.C-CLOSED-SYN-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-QUEUE": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-SEND-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-SEND-FULL": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-FLUSH-FIRST-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-FLUSH-FIRST-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-FLUSH-FIRST-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-FLUSH-MORE-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-FLUSH-MORE-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-FLUSH-MORE-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-FLUSH-BLOCKED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-ACK-FULL-WINDOW": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-ACK-FULL-STALE-WINDOW": {
+      "preservation": "unknown",
+      "nonvacuity": "unknown"
+    },
+    "T.D-ACK-PARTIAL-WINDOW": {
+      "preservation": "unknown",
+      "nonvacuity": "unknown"
+    },
+    "T.D-ACK-PARTIAL-STALE-WINDOW": {
+      "preservation": "unknown",
+      "nonvacuity": "unknown"
+    },
+    "T.D-ACK-DUP-WINDOW": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-ACK-DUP-STALE-WINDOW": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-ACK-OLD": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-ACK-FUTURE-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-ACK-FUTURE-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-ACK-FUTURE-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RETRANSMIT-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-RETRANSMIT-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-RETRANSMIT-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-RECEIVE-IN-ORDER-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-IN-ORDER-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-IN-ORDER-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-OVERLAP-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-OVERLAP-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-OVERLAP-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-DUPLICATE-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-DUPLICATE-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-DUPLICATE-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-AHEAD-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-AHEAD-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-AHEAD-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-ZERO-WINDOW-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-ZERO-WINDOW-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-RECEIVE-ZERO-WINDOW-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.D-APPLICATION-READ-EMPTY": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-APPLICATION-READ-PENDING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.D-APPLICATION-READ-RESOLVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-SHORT-CLOSED": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-CLOSED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-CLOSED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-CLOSED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-CLOSED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-LISTEN": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-LISTEN": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-LISTEN": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-LISTEN": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-LISTEN": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-SYN-SENT": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-SYN-SENT": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-SYN-SENT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-SYN-SENT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-SYN-SENT": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-SYN-RECEIVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-SYN-RECEIVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-SYN-RECEIVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-SYN-RECEIVED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-SYN-RECEIVED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-ESTABLISHED": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-ESTABLISHED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-ESTABLISHED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-ESTABLISHED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-ESTABLISHED": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-FIN-WAIT-1": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-FIN-WAIT-1": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-FIN-WAIT-1": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-FIN-WAIT-1": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-FIN-WAIT-1": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-FIN-WAIT-2": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-FIN-WAIT-2": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-FIN-WAIT-2": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-FIN-WAIT-2": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-FIN-WAIT-2": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-CLOSE-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-CLOSE-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-CLOSE-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-CLOSE-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-CLOSE-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-CLOSING": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-LAST-ACK": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-SHORT-TIME-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "unsat"
+    },
+    "T.WIRE-DROP-IP-LENGTH-TIME-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-CHECKSUM-TIME-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-LENGTH-TIME-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    },
+    "T.WIRE-DROP-TCP-CHECKSUM-TIME-WAIT": {
+      "preservation": "unsat",
+      "nonvacuity": "unknown"
+    },
+    "T.WIRE-DROP-IP-LENGTH-MALFORMED": {
+      "preservation": "unsat",
+      "nonvacuity": "sat"
+    }
+  },
+  "counts": {
+    "preservation": {
+      "sat": 0,
+      "unsat": 332,
+      "unknown": 3
+    },
+    "nonvacuity": {
+      "sat": 161,
+      "unsat": 11,
+      "unknown": 163
+    }
+  },
+  "guard_disabled_in_composite_profile": [
+    "T.WIRE-DROP-SHORT-CLOSED",
+    "T.WIRE-DROP-SHORT-LISTEN",
+    "T.WIRE-DROP-SHORT-SYN-SENT",
+    "T.WIRE-DROP-SHORT-SYN-RECEIVED",
+    "T.WIRE-DROP-SHORT-ESTABLISHED",
+    "T.WIRE-DROP-SHORT-FIN-WAIT-1",
+    "T.WIRE-DROP-SHORT-FIN-WAIT-2",
+    "T.WIRE-DROP-SHORT-CLOSE-WAIT",
+    "T.WIRE-DROP-SHORT-CLOSING",
+    "T.WIRE-DROP-SHORT-LAST-ACK",
+    "T.WIRE-DROP-SHORT-TIME-WAIT"
+  ],
+  "negative_unknown_rules": [
+    "T.D-ACK-FULL-STALE-WINDOW",
+    "T.D-ACK-PARTIAL-WINDOW",
+    "T.D-ACK-PARTIAL-STALE-WINDOW"
+  ],
+  "old_UNKNOWN_unchanged": true,
+  "execution_coverage_not_increased_by_proofs": true,
+  "scope": "recorded full-sequence selected defined-transition checks of65declared invariants; source/receipts bound, remaining305queries not all freshly reconstructed, not wholeprotocol/compiler/wire proof",
+  "independent_review_disposition": {
+    "accepted": false,
+    "reasons": [
+      "blocking/findings were objects instead of required lists",
+      "preservation UNKNOWN rule names conflated with nonvacuity unknowns",
+      "reject timeout30s, rerun completed30, or strengthen preconditions to repair UNSAT"
+    ],
+    "correct_numeric_counts_confirmed_against_raw_receipts": true
+  },
+  "exact_diagnostic_preserves_all_three_unknown": true
+}
