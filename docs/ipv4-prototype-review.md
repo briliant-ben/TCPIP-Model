@@ -1,5 +1,7 @@
 # IPv4 有限原型：成果审阅入口
 
+2026-11-10 后续进展：[定向收尾与原始证据](ipv4-directed-closure.md)实际新增24条默认路径／157转换，累计执行102/335；30条选定已定义转换保持全部声明不变量（30UNSAT＋30非空性SAT）。原任务／网络结果按各自源码保留，flow仍unresolved，以下为原互通里程碑记录。
+
 本轮新增成果在 [PR23](https://github.com/briliant-ben/TCPIP-Model/pull/23) 审阅；PR22 已由仓库所有者先前合入，其范围止于旧源码9c7fb915。本轮交付是固定单 peer 的 IPv4 端点原型。一个 Protocol IR 显式拥有 ARP、IPv4、有限 TCP、UDP、ICMP Echo 和共享待发包／计时器；从 IR 生成的独立 C 程序已完成同进程 Linux 互通。Python 适配器负责原始链路 IO、机械计时和测试刺激。
 
 先看[实际运行可视化](../artifacts/ipv4-prototype-final-9289/review.html)：19 个实际转换可展开查看 IR guard、action、规范来源；25 个原始抓包记录可展开查看字节。页面分别显示 C 逻辑时刻与 PCAP 实测时刻。
