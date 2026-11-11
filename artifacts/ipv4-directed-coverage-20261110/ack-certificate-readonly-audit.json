@@ -1,0 +1,63 @@
+{
+  "status": "readonly_body_audit_pass",
+  "checks": [
+    {
+      "rule": "T.D-ACK-FULL-STALE-WINDOW",
+      "leaves": 18,
+      "all_original_assertions_exact": true,
+      "outside_complement_exact": true,
+      "answers": "18 UNSAT",
+      "original_unknown_retained": true
+    },
+    {
+      "rule": "T.D-ACK-PARTIAL-WINDOW",
+      "leaves": 75,
+      "complete_OR_equivalence": "UNSAT",
+      "unchanged_leaves_UNSAT": 74,
+      "leaf56": "UNSAT with universally verified exact theorem instance",
+      "all_original_base_assertions_exact": true,
+      "original_unknown_retained": true
+    },
+    {
+      "rule": "T.D-ACK-PARTIAL-STALE-WINDOW",
+      "leaves": 75,
+      "complete_OR_equivalence": "UNSAT",
+      "unchanged_leaves_UNSAT": 74,
+      "leaf56": "UNSAT with universally verified exact theorem instance",
+      "all_original_base_assertions_exact": true,
+      "original_unknown_retained": true
+    }
+  ],
+  "theorem_negative_query_fresh_render_byte_identical": true,
+  "theorem_receipt": "UNSAT10s Z3 4.15.4",
+  "scope": "all 65 declared invariants on defined selected transitions; not scheduler/reachability/wire/compiler/full protocol",
+  "coverage": "102/335 executed, unchanged",
+  "nonvacuity": "161SAT/11UNSAT/163UNKNOWN unchanged",
+  "production_backend_changed": false,
+  "model_changed": false,
+  "archived_code_executed": false,
+  "solver_rerun": false,
+  "archive_sha256": "0e852e778fa9eca6b9062204a7ddabfa8b1ba7d227a3791406da54182bea3d08",
+  "member_hashes_verified": 398,
+  "source_bindings_verified": {
+    "model/ipv4-endpoint-virtual-link.json": "7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5",
+    "protocol_lab/ir.py": "9ad13f2218d3641eb7218a36a2edbf64f1710eee9548dde1897616e5e79bcfa7",
+    "protocol_lab/symbolic.py": "c0a603e005ef8cb969cb62ddf2d1cc1860f38b36fa93b908793d1a48a3126d5c"
+  },
+  "independent_review": {
+    "blocking": [],
+    "findings": [
+      "The theorem-aided proof for the two partial ACK rules relies on a universal lemma that was proved UNSAT at a 10-second timeout. This is a conditional implication; application via an instance added to the original leaf query is sound if the solver can establish the instance follows from the lemma's proof, but the actual check for leaf56 resulted in UNSAT with the lemma instance added. The verification of the lemma itself (generic or finite certificate) passed, so this is not a blocking flaw but a finding to note reliance on a nontrivial lemma.",
+      "The reduction from the complete partition to a finite set of selector values plus an 'outside' case is logically complete by tautology; however, each leaf is solved independently with a fresh solver and may yield SAT or UNKNOWN. In the reported results, all leaves for the FULL-STALE rule were UNSAT, and for the PARTIAL rules 74 leaves were UNSAT with one leaf resolved via a lemma. This is a valid proof by cases if the OR-equivalence is established and each case is UNSAT; the OR-equivalence was checked by a solver and found UNSAT, which validates the split.",
+      "The body audit confirms that original constraints are preserved exactly, no timeout increase, and no protocol assumptions were added. The use of a previously proven universal lemma is acceptable if the lemma's proof is trusted; the lemma was verified with a 10-second UNSAT query, and a conditional implication is not a new protocol axiom because its premises are not assumed, only the instance is added to the query."
+    ],
+    "limitations": [
+      "The proof does not claim full protocol reachability or scheduler coverage; it is limited to the selected transitions and invariants under symbolic prestate and event conditions.",
+      "The proof relies on Z3's decision procedures and the correct encoding of the IR to SMT; the model hash and source bindings are provided but not independently reverified here.",
+      "The theorem instance used for leaf56 was shown to be structurally matching the IR expression by an assertion in the controller, but no independent checker was run in this review."
+    ]
+  },
+  "original_direct_preservation": "332 UNSAT / 3 UNKNOWN retained",
+  "additional_sufficient_certificates": 3,
+  "whole_flow_status": "unresolved"
+}
