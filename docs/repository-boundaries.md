@@ -1,45 +1,46 @@
-# Prototype closeout and repository boundaries
+# Repository ownership after finite-prototype extraction
 
-User decision, 2026-11-08:
+User decision: TCPIP-Model owns protocol subjects and evidence;
+Formal-Spec-Agent owns the reusable modeling/agent framework.
+The finite IPv4 prototype has passed its previously fixed finite delivery
+contract. That acceptance does not upgrade incomplete exploration or old UNKNOWN.
 
-- [TCPIP-Model](https://github.com/briliant-ben/TCPIP-Model) retains the TCP/IP
-  models, generated C reproduction inputs, simulation, tests, specification
-  bindings and original validation evidence.
-- [Formal-Spec-Agent](https://github.com/briliant-ben/Formal-Spec-Agent) is the
-  destination for the reusable formal protocol agent framework. It is separate
-  from the TCP/IP subject implementation.
+## Authoritative maintenance locations
 
-Finish and review the finite IPv4 prototype before moving common code. The
-current repository remains executable during closeout. A future extraction
-must select one authoritative implementation of the IR semantics, reference
-executor, independent formal backend and C lowering, rather than maintain
-divergent copies. TCP/IP should become a version-pinned benchmark/client of
-that framework. Whether the integration uses a dependency or a pinned Git
-submodule is deferred until the interface and extraction are reviewed.
-Historical evidence must keep its original checker and source bindings.
+- **Formal-Spec-Agent**: active generic Protocol IR semantics/reference interpreter,
+  independent Z3 backends, test generation, standalone C lowering/runtime,
+  ten-stage evidence flow, provider adapters and generic proposal-role execution.
+- **TCPIP-Model**: TCP/IP models and specification bindings, independent oracles,
+  generated implementation reproduction inputs, simulation/test scenarios,
+  Linux/lwIP/PCAP observation adapters, Difference and original experiments.
 
-## Remaining prototype acceptance work
+`framework` is a pinned one-way Git submodule; `framework.lock.json` binds its
+commit and executable-source file set. New execution uses
+`tools/run_framework_candidate.py` in a separate process. See
+[the working client commands](framework-client.md).
 
-The retained 32-case flow is **unresolved**: all-input depth-one formal queries
-are UNKNOWN at the declared solver budget, and exploration covers 10/335 rules.
-Read-only inspection of the retained successful reference/native comparisons
-finds 32 distinct executed rules; their union with the accepted live trace has
-36 distinct rules. These are different metrics. Neither is full rule coverage,
-specification coverage, a reachability proof or an unbounded correctness proof.
+The old `protocol_lab` is a **frozen historical compatibility snapshot**, not a
+second development branch for generic semantics. Its selected source hashes are
+in `frozen-legacy-framework.json` and checked by regression tests. It remains
+available so historical evidence can use its named original checker; old hash
+checks are not relaxed. Generic changes occur only in Formal-Spec-Agent, then
+explicit dependency-pin updates and new benchmark execution consume them.
+A same-named internal package is never mixed with the old snapshot in one process.
 
-Closeout must retain all original UNKNOWN results, investigate exact query
-processing without narrowing the domain or changing contracts, and distinguish
-exploration, default-initial execution and initial-override coverage. Missing
-rules require actual witnesses or explicit checked unreachable/dead-rule
-findings; report changes alone cannot resolve the acceptance gap. Existing
-fixed-peer and finite-TCP scope remains explicit. General TCP implementation,
-compiler correctness and English-specification-to-IR correctness are not
-established by the current evidence.
+Initial extraction is traceable to Git e91436f0 (owner-merged PR27), with per-file
+hashes and explicit transformations in the framework's provenance manifest.
+TCP/IP model/oracle/PCAP trees, private ledgers, credentials, venvs and compiled
+binaries were not migrated. No automatic main merge or scheduler restart occurs.
 
-Server task `ipv4-closeout-20261108-0140` starts two bounded roles: an exact-v1
-diagnostic of the unchanged retained full-input queries at the original 10 s
-per-query budget, and a pure coverage-accounting helper proposal. Both are
-candidate work until their original outputs, tests and scope are reviewed;
-neither authorizes changing the flow verdict. The shared original API ledger
-is retained, failed/uncertain paid calls are not automatically retried, and
-the paused automation stays paused.
+## Scope is not expanded by moving repositories
+
+The reusable core is executable, with a non-TCP mailbox example and external
+TCP/UDP task checks. Optional independent JSON proposal roles are an initial
+provider layer, not a complete autonomous arbitrary-spec agent implementation.
+MCP, Skill and an external multi-agent harness may call the same interface;
+none is mandatory. A model response cannot approve its own semantics or oracle.
+
+The finite prototype remains fixed-peer/MTU1500/TCP16-byte-buffer/SMSS4.
+General routing/fragmentation/TCP recovery/socket/IPv6/upper layers are excluded.
+Old UNKNOWN and Linux/lwIP implementation Differences stay visible. Future
+framework work does not retrospectively certify an old protocol or compiler.
