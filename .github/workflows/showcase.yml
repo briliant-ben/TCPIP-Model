@@ -1,0 +1,36 @@
+name: English TCPIP case study
+on:
+  push:
+    branches: [main, 'codex/**']
+    paths: ['case-study.json', 'code/**', 'demo/**', 'tests/test_showcase.py', 'spec/README.md', 'model/README.md', 'formal/README.md', 'tests/README.md', '.github/workflows/showcase.yml']
+  pull_request:
+    paths: ['case-study.json', 'code/**', 'demo/**', 'tests/test_showcase.py', 'spec/README.md', 'model/README.md', 'formal/README.md', 'tests/README.md', '.github/workflows/showcase.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regenerate-and-observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - name: Prepare dependencies
+        run: |
+          python3 -m venv /tmp/showcase-venv
+          /tmp/showcase-venv/bin/python -m pip install -r requirements-formal.txt
+      - name: Regenerate compile and execute C; rebuild original-data English demo
+        run: /tmp/showcase-venv/bin/python -m unittest discover -s tests -p test_showcase.py -v > showcase-tests.log 2>&1
+      - name: Check framework pin and historical compatibility
+        run: /tmp/showcase-venv/bin/python -m unittest discover -s tests -p test_framework_client.py -v > showcase-client-tests.log 2>&1
+      - name: Preserve actual results including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: showcase-${{ github.sha }}
+          path: |
+            showcase-tests.log
+            showcase-client-tests.log
+          if-no-files-found: error
