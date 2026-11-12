@@ -1,0 +1,115 @@
+{
+  "status": "pass",
+  "archive_sha256": "24acec4ee16ea2b09e8123c8222def49878d9b8275ddf9e0a00bd8190f9bc8b6",
+  "member_count": 106,
+  "checks": [
+    {
+      "rule": "T.C-ACCEPT-SYNACK-PENDING",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.D-ACK-FULL-WINDOW",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.D-RECEIVE-IN-ORDER-PENDING",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.C-LISTEN-SYN-PENDING",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.C-ACCEPT-ACK",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.C-PEER-FIN-PENDING",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.C-ACCEPT-SYNACK-RESOLVED",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.C-FIN-ACK-FIN-WAIT-1",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.C-PEER-FIN-FW2-RESOLVED",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.C-LISTEN-SYN-RESOLVED",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.C-SIMULTANEOUS-FIN-RESOLVED",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.C-PEER-FIN-RESOLVED",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    },
+    {
+      "rule": "T.D-RECEIVE-IN-ORDER-RESOLVED",
+      "original_assertions": 75,
+      "all_original_assertions_true_by_concrete_substitution": true,
+      "exact_observed_bindings": true,
+      "current_reference_scene_match": true
+    }
+  ],
+  "solver_check_called": false,
+  "archived_code_executed": false,
+  "old_unknown_records_unchanged": true,
+  "new_separate_SAT_witnesses": 13,
+  "remaining_without_SAT_certificate": 150,
+  "whole_flow": "unresolved",
+  "new_native_or_network_execution": false,
+  "independent_review": {
+    "blocking": [],
+    "findings": [],
+    "limitations": [
+      "Review is source-only; actual original solver receipts are separate and were not independently executed.",
+      "Old 163 UNKNOWN results remain unchanged and are not upgraded by this witness gate.",
+      "SAT new witness is only valid if all original frozen assertions kept, model.eval TRUE, and source actual ref/native matched.",
+      "This is not a complete reachability proof by itself."
+    ]
+  }
+}

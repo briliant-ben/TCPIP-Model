@@ -1,5 +1,7 @@
 # Protocol Flow Lab — TCP/IP 模型与验证流程
 
+**最小 IPv4 原型已按既定有限合同交付。** [交付入口、运行方法与明确限制](docs/ipv4-prototype-delivery.md)；[机器可读汇总](artifacts/ipv4-prototype-delivery-20261112/summary.json)。这与通用flow仍为 `unresolved` 分别记录。
+
 目标是建立可复用、可审查的协议建模流程。TCP 是第一个样例；通用执行器放在 `protocol_lab/ir.py`，TCP 的规则和适配器分别放在 `model/` 与 `protocol_lab/packets.py`。
 
 当前有限 IPv4 端点原型已完成一次**同生成 C 进程的 ARP／TCP／UDP／ICMP 独立 Linux 互通验收**：25包、零丢包、19步固定输入 Z3 对应检查。入口见[成果审阅](docs/ipv4-prototype-review.md)与[实际轨迹可视化](artifacts/ipv4-prototype-final-9289/review.html)。权威 IR 是 `model/ipv4-endpoint-virtual-link.json`；实际范围为固定端点、单 peer 和有限 TCP。
