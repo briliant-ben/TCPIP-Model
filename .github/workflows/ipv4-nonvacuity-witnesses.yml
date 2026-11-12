@@ -1,0 +1,33 @@
+name: Finite IPv4 nonvacuity witness audit
+on:
+  push:
+    branches: ['codex/**', main]
+    paths: ['tools/verify_ipv4_nonvacuity_witnesses.py', 'tools/ipv4_prototype_summary.py', 'artifacts/ipv4-prototype-delivery-20261112/**', 'artifacts/ipv4-directed-coverage-20261110/nonvacuity-*', 'artifacts/ipv4-directed-coverage-20261110/formal-originals.tar.gz', 'protocol_lab/ir.py', 'protocol_lab/symbolic.py', 'model/ipv4-endpoint-virtual-link.json', 'requirements-formal.txt', '.github/workflows/ipv4-nonvacuity-witnesses.yml']
+  pull_request:
+    paths: ['tools/verify_ipv4_nonvacuity_witnesses.py', 'tools/ipv4_prototype_summary.py', 'artifacts/ipv4-prototype-delivery-20261112/**', 'artifacts/ipv4-directed-coverage-20261110/nonvacuity-*', 'artifacts/ipv4-directed-coverage-20261110/formal-originals.tar.gz', 'protocol_lab/ir.py', 'protocol_lab/symbolic.py', 'model/ipv4-endpoint-virtual-link.json', 'requirements-formal.txt', '.github/workflows/ipv4-nonvacuity-witnesses.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  readonly-bodies:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Prepare dependency
+        run: |
+          python3 -m venv /tmp/witness-audit-venv
+          /tmp/witness-audit-venv/bin/python -m pip install -r requirements-formal.txt
+      - name: Verify exact bodies without executing archived code or solver
+        run: /tmp/witness-audit-venv/bin/python tools/verify_ipv4_nonvacuity_witnesses.py
+      - name: Check separate finite delivery summary
+        run: /tmp/witness-audit-venv/bin/python tools/ipv4_prototype_summary.py
+      - name: Preserve audit
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: finite-witness-audit-${{ github.sha }}
+          path: artifacts/ipv4-directed-coverage-20261110/nonvacuity-witness-readonly-audit.json
+          if-no-files-found: error
