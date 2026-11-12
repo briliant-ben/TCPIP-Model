@@ -1,5 +1,7 @@
 # Protocol Flow Lab — TCP/IP 模型与验证流程
 
+**仓库已分离**：后续通用框架在 [Formal-Spec-Agent](https://github.com/briliant-ben/Formal-Spec-Agent) 维护；本仓库保留TCP/IP模型、实现复现与实验。新执行使用[固定版本客户端](docs/framework-client.md)，旧执行器冻结用于历史证据。
+
 **最小 IPv4 原型已按既定有限合同交付。** [交付入口、运行方法与明确限制](docs/ipv4-prototype-delivery.md)；[机器可读汇总](artifacts/ipv4-prototype-delivery-20261112/summary.json)。这与通用flow仍为 `unresolved` 分别记录。
 
 目标是建立可复用、可审查的协议建模流程。TCP 是第一个样例；通用执行器放在 `protocol_lab/ir.py`，TCP 的规则和适配器分别放在 `model/` 与 `protocol_lab/packets.py`。
