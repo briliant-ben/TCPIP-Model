@@ -1,0 +1,41 @@
+{
+  "schema": "formal-spec-case-study-v1",
+  "title": "Finite IPv4 TCP/IP",
+  "framework_repository": "https://github.com/briliant-ben/Formal-Spec-Agent",
+  "framework_lock": "framework.lock.json",
+  "stages": [
+    {
+      "id": "spec",
+      "path": "spec/README.md"
+    },
+    {
+      "id": "model",
+      "path": "model/README.md"
+    },
+    {
+      "id": "formal",
+      "path": "formal/README.md"
+    },
+    {
+      "id": "code",
+      "path": "code/README.md"
+    },
+    {
+      "id": "tests",
+      "path": "tests/README.md"
+    },
+    {
+      "id": "demo",
+      "path": "demo/README.md"
+    }
+  ],
+  "model": "model/ipv4-endpoint-virtual-link.json",
+  "generated_code": "code/generated/protocol.c",
+  "code_manifest": "code/generated/manifest.json",
+  "recorded_demo": "demo/review.html",
+  "summary": "artifacts/ipv4-prototype-delivery-20261112/summary.json",
+  "legacy_inventory": "legacy/README.md",
+  "scope": "fixed peer/tuple; atomic IPv4 MTU1500; finite TCP buffer16/SMSS4; UDP, ARP, ICMP Echo; no upper layers",
+  "generic_flow": "unresolved",
+  "old_unknown_preserved": true
+}
