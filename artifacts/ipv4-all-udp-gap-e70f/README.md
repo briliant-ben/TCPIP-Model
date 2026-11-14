@@ -1,3 +1,0 @@
-Observed UDP42-byte gap in earlier TCP-only virtual profile
-
-Actual e70 isolatedsameC process completed TCP application, emitted empty UDP packet; ordinaryLinux UDPsocket received/echoed exactlyempty bytes. The42byteoriginal reply failed oldUDP60byteentry shape, noadapterpadding.15capture/filter0drops/fullquiet; subjectnativeexit1 rejection, servicepeersaborted, noICMPtrial. EntireoriginalrunFAIL retained. Readonlyaudit Git/tree/source/C/ELF/raw/PCAP andnegativeC/reference atomicDifference passed, noarchivedcode/ELF/solverexecute. NewLvirtualguardprofile needs separateproof/fixtures andfreshLinux; do notupgradeoriginalfailure.

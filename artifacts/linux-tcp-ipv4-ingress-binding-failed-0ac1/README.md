@@ -1,5 +1,0 @@
-# Second composed Linux diagnostic: ingress ABI rejection
-
-37 originals, ZIP SHA-256 `569f3627d232bbc8f96dbe58250208bb4f9ee6ca0555a1716693cf0ce28b7069`, run42444788352/artifact13602719737, show actual original ARP request/reply frames60/42bytes and zero kernel drops. They do NOT establish completed subject ARP resolution: the driver guessed `net.frame`, while the actual composed IR declares shared `L.net.frame`. ABI command construction raised KeyError before submitting the reply to native C. PID2801 ran only B and app.connect; its transcript overrides the old link fed flag. The independent capture window did not complete quiet validation, so no runtime acceptance is claimed.
-
-All source/ELF/C hashes and raw PCAP/link equality were checked read-only. No archived code/solver was executed. Corrected source validates BOTH exact ingress and egress declarations before link setup, tests them against the real335-rule model and unchanged frozen scenarios, and marks ingress fed only after actual native operation completion. No model, packet bytes, oracle or capture gate is changed. This is not a54/58TCP model-gap measurement or RFC bug.

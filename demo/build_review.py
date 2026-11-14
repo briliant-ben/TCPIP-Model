@@ -5,10 +5,65 @@ import hashlib
 import html
 import json
 from pathlib import Path
-import sys
 import zipfile
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from ports.tcp_ipv4_probe_support import pcap_records
+import struct
+
+def pcap_records(raw):
+    if not isinstance(raw, bytes):
+        raise ValueError("raw must be bytes")
+    if len(raw) < 24:
+        raise ValueError("incomplete pcap global header")
+    first4 = raw[:4]
+    if first4 == b'\xd4\xc3\xb2\xa1':
+        endian = '<'
+        magic_expected = 0xa1b2c3d4
+    elif first4 == b'\xa1\xb2\xc3\xd4':
+        endian = '>'
+        magic_expected = 0xa1b2c3d4
+    elif first4 == b'\x4d\x3c\xb2\xa1' or first4 == b'\xa1\xb2\x3c\x4d':
+        raise ValueError("nanosecond pcap unsupported")
+    else:
+        raise ValueError("unsupported pcap magic")
+
+    header = struct.unpack(endian + 'IHHIIII', raw[:24])
+    magic, vmaj, vmin, thiszone, sigfig, snap, link = header
+    if magic != magic_expected:
+        raise ValueError("bad magic")
+    if vmaj != 2 or vmin != 4:
+        raise ValueError("unsupported pcap version")
+    if link != 1:
+        raise ValueError("linktype must be Ethernet")
+    if not (1 <= snap <= 65535):
+        raise ValueError("snaplen out of range")
+
+    offset = 24
+    records = []
+    prev_ts = None
+    while offset < len(raw):
+        if len(raw) - offset < 16:
+            raise ValueError("incomplete packet header")
+        ts_sec, ts_frac, incl_len, orig_len = struct.unpack(endian + 'IIII', raw[offset:offset+16])
+        offset += 16
+        if ts_frac >= 1000000:
+            raise ValueError("invalid fraction")
+        if incl_len > snap:
+            raise ValueError("captured length exceeds snaplen")
+        if incl_len != orig_len:
+            raise ValueError("truncated capture")
+        if orig_len < 14:
+            raise ValueError("packet too short")
+        if len(raw) - offset < incl_len:
+            raise ValueError("incomplete packet data")
+        pkt_data = raw[offset:offset+incl_len]
+        offset += incl_len
+        ts_ns = ts_sec * 1_000_000_000 + ts_frac * 1000
+        if prev_ts is not None and ts_ns < prev_ts:
+            raise ValueError("timestamps not nondecreasing")
+        prev_ts = ts_ns
+        records.append({'timestamp_ns': ts_ns, 'raw': pkt_data})
+    if offset != len(raw):
+        raise ValueError("trailing bytes")
+    return records
 
 
 def render(model_file, archive, expected_sha256, out):
@@ -59,4 +114,4 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--out',type=Path,default=root/'demo/review.html')
     a=p.parse_args()
-    print(json.dumps(render(root/'model/ipv4-endpoint-virtual-link.json',root/'artifacts/ipv4-prototype-final-9289/linux-peer-original.zip','b47bf2a2a0f7b92c23632e2eff5c7a17cfc1d681ed5f8de84b9de02f0bfea5d6',a.out)))
+    print(json.dumps(render(root/'model/ipv4-endpoint-virtual-link.json',root/'demo/recording.zip','b47bf2a2a0f7b92c23632e2eff5c7a17cfc1d681ed5f8de84b9de02f0bfea5d6',a.out)))

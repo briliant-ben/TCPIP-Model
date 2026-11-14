@@ -1,5 +1,0 @@
-Finite virtual-link IR boundary, not new live evidence
-
-163 original files preserve 0121/0122 incorrect DeepSeek builder, 0123 incomplete API (not retried), root pure offline builder and 0125/0126 controller capability/scenario defects, plus successful 0128. Independent 0128 source review has no blocking/findings. Actual server validation:9 frozen reference/C cases (6 accepted/drop with exact fixed-input Z3 SAT/replay;3 negative model_gap atomic rejection, not negative formal proofs),4 unchanged canonical seeds C/fixedZ3,2 builder methods, reference-only typed overbroad-length fault caught by oracle.
-
-Exactly194 TCP ingress guard/requirement changes, new scope/requirement; all335 actions and other guards/types/timers/invariants unchanged. Canonical model/oracle/seeds preserved. Root fallback implemented the small builder; do not attribute it to DeepSeek. Read-only audit checks all manifest members, current source/model hashes, generated C/ELF and10 raw SMT/result bindings; no archived Python/ELF/solver execution. No universal checksum/compiler proof, full endpoint or new Linux run claim.

@@ -1,92 +1,62 @@
 # TCPIP-Model
 
-**A finite IPv4 case study for [Formal-Spec-Agent](https://github.com/briliant-ben/Formal-Spec-Agent).**
-
-This repository shows how a protocol specification becomes a declarative model,
-independently checked behavior, standalone generated C, executable tests and
-traceable observations. The reusable framework is maintained separately; this
-repository owns the TCP/IP subject and its experiments.
+A small, runnable IPv4 case study produced with
+[Formal-Spec-Agent](https://github.com/briliant-ben/Formal-Spec-Agent).
 
 ```text
-spec/ → model/ → formal/ → code/ → tests/ → demo/
-  specification   IR       checks    C       tests     observations
+spec → model → formal → code → tests → demo
 ```
 
-## Follow the case study
+| Directory | Contents |
+|---|---|
+| [spec/](spec/README.md) | Pinned RFC sources and source/interpretation references |
+| [model/](model/README.md) | One authoritative generated Protocol IR |
+| [formal/](formal/README.md) | Results, scope and links to original proof records |
+| [code/](code/README.md) | Standalone generated C; build and optional regeneration |
+| [tests/](tests/README.md) | A frozen input/output example and focused checks |
+| [demo/](demo/README.md) | Recorded execution, original capture and English viewer |
 
-| Stage | Start here | What it contains |
-|---|---|---|
-| Specification | [spec/](spec/README.md) | Pinned RFC text, modeling assumptions and independent byte oracles |
-| Model | [model/](model/README.md) | The authoritative composed IPv4 Protocol IR and earlier scoped experiments |
-| Formal checks | [formal/](formal/README.md) | Declared properties, query strategies, certificates and remaining gaps |
-| Generated code | [code/](code/README.md) | Inspectable standalone C and regeneration/build entry |
-| Tests | [tests/](tests/README.md) | Frozen scenarios, reference/C checks and independent observations |
-| Demonstration | [demo/](demo/README.md) | English recorded execution view: 19 transitions and 25 captured packets |
+For a checkout of just the current example, use `git clone --depth 1` rather
+than downloading the entire development history.
 
-**Scope:** one fixed peer/tuple, Ethernet/ARP, atomic IPv4 MTU1500, UDP, ICMP Echo,
-and finite TCP with 16-byte buffers/SMSS4. The same generated C process has
-exchanged ARP, TCP data/close, three UDP payload sizes and three ICMP Echo sizes
-with independent Linux peers. The retained capture has 25 packets and zero drops.
-This is a virtual-link prototype, not a production stack or full TCP/IP proof.
+## Build and run
 
-## Run the generated implementation
-
-Use Python3.11+, a C99 compiler and the pinned framework submodule:
+Only a C99 compiler and Python3.11+ are needed for the scripts. No API key,
+framework checkout, Python package install or network privilege is required.
 
 ```sh
-git submodule update --init --recursive
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements-formal.txt
-.venv/bin/python code/build.py --out /tmp/tcpip-example-001 --run-example
+python3 code/build.py --out /tmp/tcpip-case-001 --run-example
+printf 'B\nD 0 T.app.connect\n' | /tmp/tcpip-case-001/tcpip-reference
+python3 -m unittest discover -s tests -v
 ```
 
-This generates and compiles C, executes a frozen scenario and compares its full
-trace with the reference model. It does not generate a new network capture.
-The C executable can run independently of Python:
+The generated executable runs independently of Python. You can also compile it
+directly with `cc -std=c99 code/generated/protocol.c -o /tmp/tcpip-reference`.
+To inspect the recorded exchange, open [demo/review.html](demo/review.html) locally
+or open [demo/capture.pcap](demo/capture.pcap) in Wireshark.
 
-```sh
-printf 'B\nD 0 T.app.connect\n' | /tmp/tcpip-example-001/build/protocol-native
-```
+## What this example demonstrates
 
-Or compile the [committed generated snapshot](code/generated/protocol.c) directly:
+One declarative IR owns ARP, atomic IPv4, finite TCP, UDP and ICMP Echo behavior.
+The same generated C process completed ARP resolution, TCP data/close, three UDP
+round trips and three ICMP Echo exchanges against independent Linux peers.
+The recorded observation contains **19 transitions and25 packets, zero drops**.
+It is a retained observation, not a new network run when the viewer is rebuilt.
 
-```sh
-cc -std=c99 -Wall -Wextra -Werror code/generated/protocol.c -o /tmp/tcpip-reference
-printf 'B\nD 0 T.app.connect\n' | /tmp/tcpip-reference
-```
+The model and generated C are byte-identical to the accepted prototype.
+Scope is a fixed peer/tuple, MTU1500 and TCP16-byte buffers/SMSS4. General routing,
+fragmentation, congestion/recovery, sockets, IPv6 and upper layers are excluded.
+Finite delivery passed its stated contract; the general verification flow remains
+`unresolved`, with original UNKNOWNs and implementation Differences retained in the linked historical records.
+See [formal/results.json](formal/results.json) for the exact retained conclusions.
 
-To run the ten-stage flow on this repository's data, see the
-[pinned framework client](docs/framework-client.md). To inspect the existing
-network observation, open [demo/review.html](demo/review.html) locally. Regenerate
-that read-only English view with `.venv/bin/python demo/build_review.py`.
+## Regenerating from IR
 
-## What has been validated
+Generation and protocol-model validation belong to the separate framework, not
+this example repository. [code/regenerate.py](code/README.md) optionally uses an
+external checkout pinned by [code/framework.json](code/framework.json). Building
+the supplied C and viewing the demo do not depend on it.
 
-- The fixed finite-prototype [delivery contract](docs/ipv4-prototype-acceptance.md)
-  passes; see the [delivery guide](docs/ipv4-prototype-delivery.md).
-- The final task has 77 reference/C cases, 563 initialized one-step negative
-  queries UNSAT and one SAT witness with strict replay.
-- Supplemental frozen paths bring accepted default-initial execution coverage
-  to **102/335** rules. Unobserved rules are not asserted unreachable.
-- Original 332 direct UNSAT preservation observations plus three separately
-  audited ACK certificates cover the declared preservation obligations for
-  defined transitions, including disabled/vacuous branches.
-- Nonvacuity has 174 rules with SAT certificates, 11 excluded short-header
-  branches and 150 without SAT certificates. Original UNKNOWN receipts remain.
-
-The general flow still reports **`unresolved`** for incomplete exploration.
-Finite delivery, scenario correspondence, bounded checks and full correctness
-are different conclusions. No compiler, unbounded protocol or English-spec-to-IR
-correctness proof is claimed. Original lwIP2750ms and LinuxTCP Differences remain.
-
-## Repository map and historical material
-
-[docs/](docs/README.md) is the current reading index. [framework/](framework) is a
-pinned dependency, not another copy of protocol models. The
-[legacy inventory](legacy/README.md) explains the remaining compatibility tools,
-earlier model branches, experiment logs and raw evidence. Their paths and bytes
-are preserved where needed by historical hashes and regression contracts; they
-are not the primary showcase or active generic-framework implementation.
-
-Dynamic routing, fragmentation/reassembly, general TCP congestion/recovery,
-sockets, IPv6 and upper application protocols are outside this prototype.
+The full development tree, experiments and original proof bundles remain in
+[Git history](https://github.com/briliant-ben/TCPIP-Model/tree/351f2519c864a05e5b3d5a405ba528862d41fa7d).
+They are intentionally absent from this focused example's working tree.

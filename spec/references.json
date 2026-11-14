@@ -1,0 +1,540 @@
+{
+  "schema": "case-source-references-v1",
+  "note": "Original IR references are unchanged; resolve them here. Interpretation notes are pinned historical documents, not missing current files.",
+  "requirements": [
+    {
+      "requirement": "L.ARP-826",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc826",
+      "clause": "Packet Generation / Packet Reception",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "01bc62fe6a37e90f1246ac43e8e145f1322b4ed1474836145c3da93d2bd3c8a6",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc826.txt",
+      "local_source": "spec/sources/rfc826.txt"
+    },
+    {
+      "requirement": "L.ARP-CACHE",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc1122#section-2.3.2.1",
+      "clause": "2.3.2.1 Cache validation",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc1122.txt",
+      "local_source": "spec/sources/rfc1122.txt"
+    },
+    {
+      "requirement": "L.ARP-PROFILE",
+      "original_reference": "docs/arp-endpoint.md",
+      "clause": "Finite Ethernet/IPv4 ARP endpoint",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "634ba2afedf65a1a0c51b877ea1b3633f3c2b8b4d6c08174880f59b2bffaca1c",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/arp-endpoint.md"
+    },
+    {
+      "requirement": "L.UDP-WIRE",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc768.txt",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc768.txt",
+      "local_source": "spec/sources/rfc768.txt"
+    },
+    {
+      "requirement": "L.UDP-DEFAULT",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc1122.txt",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc1122.txt",
+      "local_source": "spec/sources/rfc1122.txt"
+    },
+    {
+      "requirement": "L.IP-WIRE",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc791.txt",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc791.txt",
+      "local_source": "spec/sources/rfc791.txt"
+    },
+    {
+      "requirement": "L.ATOMIC-ID",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc6864.txt",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "e00ff443857166e5b26deecfdc77a0a1c5ff17fc87a6a8c50b020ce7f4d516d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc6864.txt",
+      "local_source": "spec/sources/rfc6864.txt"
+    },
+    {
+      "requirement": "L.PROFILE",
+      "original_reference": "docs/udp-wire-transmit.md",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "2833f8dd296157a30520292156268ccb4d0f48f13f8c5026f57807cddd7a7304",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/udp-wire-transmit.md"
+    },
+    {
+      "requirement": "L.COMPOSED-PROFILE",
+      "original_reference": "docs/arp-udp-transmit.md",
+      "clause": "Sources and scope",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "e4f3e0ac4adb50493081cb4264afe85ccef1920d9dfe67278389a92e9427c09c",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/arp-udp-transmit.md"
+    },
+    {
+      "requirement": "L.ARP-PACKET-QUEUE",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc1122#section-2.3.2.2",
+      "clause": "2.3.2.2",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc1122.txt",
+      "local_source": "spec/sources/rfc1122.txt"
+    },
+    {
+      "requirement": "L.ETH-IP",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc894",
+      "clause": "Frame Format / Address Mappings",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "be88b9301e53f986aca3a0e55e488d1d79bae3f88fe3f257640397bc089e7035",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc894.txt",
+      "local_source": "spec/sources/rfc894.txt"
+    },
+    {
+      "requirement": "L.ETH-ERRATA",
+      "original_reference": "https://www.rfc-editor.org/errata/eid570",
+      "clause": "Verified technical erratum570",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "4abd98cdf601aa5691e5443760a78d42158bde771db7809b8310c18c180c0464",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc894-errata-570.html",
+      "local_source": "spec/sources/rfc894-errata-570.html"
+    },
+    {
+      "requirement": "L.ENDPOINT-INGRESS",
+      "original_reference": "docs/ipv4-udp-icmp-endpoint.md",
+      "clause": "Fixed version, sources and admission",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "abf7bae21fa0f46b3518fe42fff97c5dfdcfe7052608651503e4d5572608764e",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/ipv4-udp-icmp-endpoint.md"
+    },
+    {
+      "requirement": "L.ENDPOINT-LINK",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc894",
+      "clause": "Frame Format; verified erratum570",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "be88b9301e53f986aca3a0e55e488d1d79bae3f88fe3f257640397bc089e7035",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc894.txt",
+      "local_source": "spec/sources/rfc894.txt"
+    },
+    {
+      "requirement": "L.UDPRX-RX-PROFILE",
+      "original_reference": "docs/ipv4-udp-icmp-endpoint.md",
+      "clause": "Fixed version, sources and admission",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "abf7bae21fa0f46b3518fe42fff97c5dfdcfe7052608651503e4d5572608764e",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/ipv4-udp-icmp-endpoint.md"
+    },
+    {
+      "requirement": "L.UDPRX-IP-LENGTH",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc791#section-3.1",
+      "clause": "3.1 Total Length",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc791.txt",
+      "local_source": "spec/sources/rfc791.txt"
+    },
+    {
+      "requirement": "L.UDPRX-IP-CHECKSUM",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.1.2",
+      "clause": "3.2.1.2",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc1122.txt",
+      "local_source": "spec/sources/rfc1122.txt"
+    },
+    {
+      "requirement": "L.UDPRX-UDP-LENGTH",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc768",
+      "clause": "Fields pp1-2",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc768.txt",
+      "local_source": "spec/sources/rfc768.txt"
+    },
+    {
+      "requirement": "L.UDPRX-UDP-CHECKSUM",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc1122#section-4.1.3.4",
+      "clause": "4.1.3.4",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc1122.txt",
+      "local_source": "spec/sources/rfc1122.txt"
+    },
+    {
+      "requirement": "L.UDPRX-UDP-PSEUDO",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc768",
+      "clause": "Fields p2",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc768.txt",
+      "local_source": "spec/sources/rfc768.txt"
+    },
+    {
+      "requirement": "L.UDPRX-IP-ATOMIC-ID",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc6864#section-4.1",
+      "clause": "4/4.1 Atomic datagrams",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "e00ff443857166e5b26deecfdc77a0a1c5ff17fc87a6a8c50b020ce7f4d516d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc6864.txt",
+      "local_source": "spec/sources/rfc6864.txt"
+    },
+    {
+      "requirement": "L.ECHO-ECHO-PROFILE",
+      "original_reference": "docs/ipv4-udp-icmp-endpoint.md",
+      "clause": "Fixed version, sources and admission",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "abf7bae21fa0f46b3518fe42fff97c5dfdcfe7052608651503e4d5572608764e",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/ipv4-udp-icmp-endpoint.md"
+    },
+    {
+      "requirement": "L.ECHO-ECHO-REPLY",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc792",
+      "clause": "Echo or Echo Reply pp14-15",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "58714393ded142bacf188d7e8977eef98f4110c4c87ac94595f750df5664c2c6",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc792.txt",
+      "local_source": "spec/sources/rfc792.txt"
+    },
+    {
+      "requirement": "L.ECHO-ECHO-HOST",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.2.6",
+      "clause": "3.2.2.6",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc1122.txt",
+      "local_source": "spec/sources/rfc1122.txt"
+    },
+    {
+      "requirement": "L.ECHO-IP-LENGTH",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc791#section-3.1",
+      "clause": "3.1 Total Length",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc791.txt",
+      "local_source": "spec/sources/rfc791.txt"
+    },
+    {
+      "requirement": "L.ECHO-IP-CHECKSUM",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc1122#section-3.2.1.2",
+      "clause": "3.2.1.2",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "9f526e6bebc868324fedb90aebbcf6e5b15c53fd373ca5d5ce1c2cdcd264e04f",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc1122.txt",
+      "local_source": "spec/sources/rfc1122.txt"
+    },
+    {
+      "requirement": "L.ECHO-ICMP-CHECKSUM",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc792",
+      "clause": "Echo Checksum p14",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "58714393ded142bacf188d7e8977eef98f4110c4c87ac94595f750df5664c2c6",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc792.txt",
+      "local_source": "spec/sources/rfc792.txt"
+    },
+    {
+      "requirement": "L.ECHO-IP-ATOMIC",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc6864#section-4.1",
+      "clause": "4/4.1 Atomic datagrams",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "e00ff443857166e5b26deecfdc77a0a1c5ff17fc87a6a8c50b020ce7f4d516d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc6864.txt",
+      "local_source": "spec/sources/rfc6864.txt"
+    },
+    {
+      "requirement": "L.COMPONENT-STATE-DOMAIN",
+      "original_reference": "docs/component-state-lowering.md",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "eb24b2ec69a6819ccd47ba73e46f87192b6f1052a9fe87300c1863ba26ada2d2",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/component-state-lowering.md"
+    },
+    {
+      "requirement": "T.CONN-OPEN",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.1",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-LISTEN",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.2",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-SYN-SENT",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.3",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-SIMULTANEOUS",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.5",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-ACK",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-FIN",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-CLOSE",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.4",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-ABORT",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.5",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-RESET",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-CLOSED-INPUT",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.1",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.CONN-TIMEOUT",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.8",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.RTO-PROFILE",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc6298.txt",
+      "local_source": "spec/sources/rfc6298.txt"
+    },
+    {
+      "requirement": "T.CONNECTION-PROFILE",
+      "original_reference": "docs/tcp-data.md",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "f3e800456870da2c22283c065e858d442d181aed377b3e8b04e39d101f27b393",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/tcp-data.md"
+    },
+    {
+      "requirement": "T.DATA-SEQ",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.4",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.DATA-ACK",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.DATA-WINDOW",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.DATA-RECEIVE",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.10.7.4",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.DATA-SEND",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.9.1.2",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.DATA-RTX",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.8.1",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.DATA-RTO",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc6298.html#section-5",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "f3a6d937c0a7653bd431fdbbdcd7920f4e9d9cdb6134fa9db7a74b90d215edf6",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc6298.txt",
+      "local_source": "spec/sources/rfc6298.txt"
+    },
+    {
+      "requirement": "T.DATA-SCOPE",
+      "original_reference": "docs/tcp-data.md",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "f3e800456870da2c22283c065e858d442d181aed377b3e8b04e39d101f27b393",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/tcp-data.md"
+    },
+    {
+      "requirement": "T.WIRE-PROFILE",
+      "original_reference": "docs/tcp-wire-endpoint.md",
+      "clause": "Admission and failure order",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "959b7cf25ee58ec9a665d2969d2b5265bf37d1a0e7ae2c7878d27295d38fc340",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/tcp-wire-endpoint.md"
+    },
+    {
+      "requirement": "T.WIRE-IP",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc791#section-3.1",
+      "clause": "3.1",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6cfb387fcecfc1b72f2f69343c5b6951b5d263d708162e2b5c66ab8f394f6265",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc791.txt",
+      "local_source": "spec/sources/rfc791.txt"
+    },
+    {
+      "requirement": "T.WIRE-TCP",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293#section-3.1",
+      "clause": "3.1 Header Format",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.WIRE-MSS",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293#section-3.7.1",
+      "clause": "3.7.1",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.WIRE-PUSH",
+      "original_reference": "https://www.rfc-editor.org/rfc/rfc9293#section-3.9.1.2",
+      "clause": "3.9.1.2 MUST60/MUST61; 3.9.1.3 MAY17",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "6d9ac8be4b0286f8c3d337addf442b2eb6a9b14e1366594ea7fbc273f93dc2d9",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/rfc9293.txt",
+      "local_source": "spec/sources/rfc9293.txt"
+    },
+    {
+      "requirement": "T.COMPONENT-STATE-DOMAIN",
+      "original_reference": "docs/component-state-lowering.md",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "eb24b2ec69a6819ccd47ba73e46f87192b6f1052a9fe87300c1863ba26ada2d2",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/component-state-lowering.md"
+    },
+    {
+      "requirement": "CROSS-IP-LINK",
+      "original_reference": "docs/tcp-ipv4-endpoint.md",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "0dff243c2d626264b3377ce2964d140a02ab918e2e23e155e5262720e1aec431",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/tcp-ipv4-endpoint.md"
+    },
+    {
+      "requirement": "TCP-IP-FRAME-DROP",
+      "original_reference": "docs/tcp-ipv4-endpoint.md",
+      "clause": "explicit finite profile",
+      "version": "pinned Git9c7fb915 existing model requirement source, exact edition and interpretation preserved",
+      "sha256": "0dff243c2d626264b3377ce2964d140a02ab918e2e23e155e5262720e1aec431",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/tcp-ipv4-endpoint.md"
+    },
+    {
+      "requirement": "VIRTUAL-ETHERNET-RX",
+      "original_reference": "docs/tcp-ipv4-virtual-link.md",
+      "clause": "Specification and observation / Acceptance boundary",
+      "version": "Finite virtual-link receive profile v1; exact independent frozen input",
+      "sha256": "1357f11f920d8024543852279a2dcd00b3b671247b7b1c075efdbb230a2e8152",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/tcp-ipv4-virtual-link.md"
+    },
+    {
+      "requirement": "L.TAP-INTERFACE",
+      "original_reference": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/tuntap.rst?h=v6.12",
+      "clause": "1 Description; 3 Program interface",
+      "version": "Pinned Linuxv6.12 interface document; no currentkernel implementation proof",
+      "sha256": "5d32ead748e537c61c7db53c97fed34b9483cea3374a4721c5d99ec942219660",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/spec/sources/linux-v6.12-tuntap.rst",
+      "local_source": "spec/sources/linux-v6.12-tuntap.rst"
+    },
+    {
+      "requirement": "L.TAP-EXTENT",
+      "original_reference": "docs/ipv4-udp-icmp-tap.md",
+      "clause": "Exact ingress extent",
+      "version": "Existing finite UDP/ICMP TAP interface profile, unchanged",
+      "sha256": "72dc75b32b17887f099752d0b706613e66a08d8ec3535ae2fa59f7742cd387e2",
+      "historical_source": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/docs/ipv4-udp-icmp-tap.md"
+    }
+  ]
+}

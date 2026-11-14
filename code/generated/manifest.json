@@ -7,5 +7,5 @@
   "C_sha256": "19ce9855194a5d8b243648f12b710d739266f4d49ff31001e378c1815975e36b",
   "derived_not_handwritten": true,
   "compiled_binary_committed": false,
-  "regenerate": ".venv/bin/python code/build.py --out /tmp/tcpip-code-001 --run-example"
+  "regenerate": "python3 code/regenerate.py --framework /path/to/Formal-Spec-Agent --python /path/to/its/python --out /tmp/tcpip-regenerated-001"
 }
