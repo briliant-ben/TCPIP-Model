@@ -1,27 +1,18 @@
-# 2. Authoritative protocol model
+# Model
 
-Start with [ipv4-endpoint-virtual-link.json](ipv4-endpoint-virtual-link.json):
-**335 rules, 58 variables, 65 invariants and 61 specification/scope requirements**.
-One composed EFSM owns Ethernet/ARP, atomic IPv4, UDP, ICMP Echo, finite TCP,
-shared pending output and timers. Guards, ordered actions, bytes, checksums,
-sequence arithmetic and sources are explicit IR, not Python protocol callbacks.
+[ipv4-endpoint-virtual-link.json](ipv4-endpoint-virtual-link.json) is the sole
+behavioral authority:335 rules,58 variables,65 invariants and61 requirements.
+State, typed events/messages, buffers, guards, ordered actions, timers, byte
+layout/checksums and specification references are explicit Protocol IR.
 
-| File/group | Role |
-|---|---|
-| `ipv4-endpoint-virtual-link.json` | Final finite virtual-link subject |
-| `tcp-ipv4-*`, `ipv4-udp-icmp-*`, `arp-udp-*` | Earlier composition and link-profile experiments |
-| `tcp-wire-*`, `udp-wire-*`, `arp-endpoint`, `icmp-echo` | Independently scoped component models |
-| `tcp-data` through `tcp-sent-ledger` | Historical data/recovery modeling research |
-| `bytes-*`, `seq32-*`, `word32-*` | IR primitive qualification contracts |
-| `*-exploration.json` | Explicit finite test-generation domains, not protocol authority |
+For a compact view of all335 rule identifiers, use the [rule index](rules.md).
 
-The earlier models remain reproducible experiments. They are not fragments that
-an adapter silently dispatches as the final protocol implementation. Their paths
-and hashes are retained for existing evidence and regression tests.
+It is self-contained: no inherited model files, Python callbacks or external
+protocol stack is needed to describe its behavior. The generic interpreter,
+formal backend and C generator live in Formal-Spec-Agent, not in this repository.
 
-The final model SHA256 is
+The unchanged model SHA256 is
 `7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5`.
-See [the full scope](../docs/ipv4-endpoint-virtual-link.md) and
-[framework separation](../docs/repository-boundaries.md).
+[spec/references.json](../spec/references.json) resolves the original source IDs.
 
-Next: [formal checks](../formal/README.md).
+Next: [formal results](../formal/README.md).

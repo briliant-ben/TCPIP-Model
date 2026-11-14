@@ -1,5 +1,0 @@
-Published selected source slice and independently built native program
-
-Server.78 release/home/blxu/protocol-flow/releases/ipv4-prototype-963a57f8 contains122read-only publicselectedGit963a sources/model/specifications plusfreshgeneratedC/nativebuild. It is not a fullGitcheckout. ExactsourcepackageSHAaaf2e878, selectedfileSHA/Gitbindings, singleIR7d5a/C19ce verified; no credential/venv/precompiledbinary inpackage. Original fixeddeployprofiles/checkers unchanged; separateexactmembercontract permits the37MBpinnedIR with64MB/member80MBtotal resourcecaps andallhashes, nooverwrites.
-
-FreshserverCcompile+init/connectsmoke exits0 withliteral-frozenARPemissions; storedsourcehashes unchanged. Existing32caseflow retainedverify withcallerpinbc771 remainsconsistentUNRESOLVED; noformal/network/APIrerun.10originalreceipts preserved inclcompiler/source/stdio. Readonlyaudit checks allmembers and122Gitfilebindings, generationinputs/sourceC/ELFrecordedhashes; nativeELF notdownloaded/re-executed, noarchivePython/solverexecute. This is a deployment/startcheck, not a new Linuxnetworkclaim.

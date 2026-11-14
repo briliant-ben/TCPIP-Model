@@ -1,0 +1,38 @@
+{
+  "schema": "retained-finite-case-results-v1",
+  "finite_delivery": "pass",
+  "generic_flow": "unresolved",
+  "model_sha256": "7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5",
+  "C_sha256": "19ce9855194a5d8b243648f12b710d739266f4d49ff31001e378c1815975e36b",
+  "initialized_checks": {
+    "reference_native_cases": 77,
+    "initialized_depth1_negative_UNSAT": 563,
+    "initialized_witness_SAT_replay": true,
+    "delivery_rechecked_with_original_git_core": true,
+    "fresh_protocol_or_solver_run": false
+  },
+  "preservation": {
+    "original_direct_UNSAT": 332,
+    "original_UNKNOWN": 3,
+    "new_sufficient_certificates": 3,
+    "scope": "defined-transition declared invariants only, includes vacuous disabled branches; not scheduler/wire/compiler/full protocol"
+  },
+  "nonvacuity": {
+    "original_SAT": 161,
+    "original_UNSAT_disabled": 11,
+    "original_UNKNOWN": 163,
+    "new_separate_SAT_witnesses": 13,
+    "with_SAT_certificate": 174,
+    "without_SAT_certificate": 150,
+    "default_reachability_not_claimed_for_arbitrary_SAT": true
+  },
+  "execution_coverage": {
+    "default_initial_paths": 24,
+    "transitions": 157,
+    "execution_rules": 102,
+    "declared_rules": 335,
+    "unobserved_not_unreachable": 233
+  },
+  "historical_report": "https://github.com/briliant-ben/TCPIP-Model/blob/351f2519c864a05e5b3d5a405ba528862d41fa7d/artifacts/ipv4-prototype-delivery-20261112/summary.json",
+  "fresh_formal_execution": false
+}

@@ -1,39 +1,67 @@
-"""Generate and compile the case-study C implementation with the pinned framework."""
+"""Compile the generated C snapshot; optionally compare a frozen native fixture."""
 import argparse
-import importlib.util
+import hashlib
 import json
-import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 
-ROOT=Path(__file__).resolve().parents[1]
-spec=importlib.util.spec_from_file_location('framework_client',ROOT/'tools/run_framework_candidate.py')
-client=importlib.util.module_from_spec(spec);spec.loader.exec_module(client)
+ROOT = Path(__file__).resolve().parents[1]
+sha = lambda path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def build(out, run_example=False):
-    out=Path(out).resolve()
-    if out.is_relative_to(ROOT):raise ValueError('Use a fresh output directory outside the repository')
-    framework=client.verify_framework()
-    if out.exists():raise ValueError('Fresh output directory required')
-    program='''import json,sys
-from pathlib import Path
-from protocol_lab.codegen import generate,sha
-from protocol_lab.codegen.execute import build,run
-root=Path(sys.argv[1]);model=Path(sys.argv[2]);root.mkdir();g=generate(model,root/'generation');b=build(root/'generation',root/'build');r=dict(schema='tcpip-case-code-v1',status=b['status'],model_sha256=sha(model),C_sha256=sha(root/'generation/protocol.c'),framework_commit=sys.argv[4],standalone_executable=str(root/'build/protocol-native'),new_network_execution=False)
-if b['status']=='pass' and sys.argv[3]!='-':
- scene=json.loads(Path(sys.argv[3]).read_text())['cases'][0]['scenario'];(root/'scenario.json').write_text(json.dumps(scene));n=run(root/'generation',root/'build',root/'scenario.json',root/'native');r['status']=n['status'];r['reference_native_example']=n['status']
-(root/'result.json').write_text(json.dumps(r,indent=2)+'\\n');print(json.dumps(r));sys.exit(0 if r['status']=='pass'else 1)
-'''
-    lock=json.loads((ROOT/'framework.lock.json').read_text())
-    env=dict(os.environ,PYTHONPATH=str(framework),PYTHONDONTWRITEBYTECODE='1')
-    result=subprocess.run([sys.executable,'-c',program,str(out),str(ROOT/'model/ipv4-endpoint-virtual-link.json'),str(ROOT/'scenarios/ipv4-rule-coverage/cases.json')if run_example else'-',lock['commit']],cwd=framework,env=env)
-    client.verify_framework()
-    return result.returncode
+    out = Path(out).resolve()
+    if out.is_relative_to(ROOT) or out.exists():
+        raise ValueError('Use a fresh output directory outside the repository')
+    manifest = json.loads((ROOT/'code/generated/manifest.json').read_text())
+    source, model = ROOT/manifest['source'], ROOT/manifest['authority']
+    if sha(source) != manifest['C_sha256'] or sha(model) != manifest['model_sha256']:
+        raise ValueError('Model or generated C differs from the pinned snapshot')
+    compiler = shutil.which('cc')
+    if not compiler:
+        raise ValueError('A C99 compiler named cc is required')
+    out.mkdir(parents=True)
+    executable = out/'tcpip-reference'
+    command = [compiler, '-std=c99', '-Wall', '-Wextra', '-Werror', str(source), '-o', str(executable)]
+    compiled = subprocess.run(command, capture_output=True, text=True, timeout=90)
+    (out/'compiler.stdout').write_text(compiled.stdout)
+    (out/'compiler.stderr').write_text(compiled.stderr)
+    result = dict(schema='tcpip-case-build-v1', status='pass' if compiled.returncode == 0 else 'fail',
+                  command=command, returncode=compiled.returncode,
+                  C_sha256=manifest['C_sha256'], model_sha256=manifest['model_sha256'],
+                  executable=str(executable), new_network_execution=False,
+                  fresh_formal_verification=False)
+    if compiled.returncode == 0 and run_example:
+        fixture = json.loads((ROOT/'tests/fixture.json').read_text())
+        if sha(ROOT/'tests/example.in') != fixture['input_sha256'] or sha(ROOT/'tests/expected.json') != fixture['expected_sha256']:
+            raise ValueError('Frozen acceptance input or expected output changed')
+        # Only input commands are sent to the subject; expected output is read afterward.
+        native = subprocess.run([str(executable)], input=(ROOT/'tests/example.in').read_bytes(), capture_output=True, timeout=30)
+        (out/'native.stdout').write_bytes(native.stdout)
+        (out/'native.stderr').write_bytes(native.stderr)
+        observed = [json.loads(line) for line in native.stdout.splitlines()]
+        expected = json.loads((ROOT/'tests/expected.json').read_text())
+        matches = native.returncode == 0 and not native.stderr and observed == expected
+        result.update(status='pass' if matches else 'fail', frozen_fixture_match=matches,
+                      native_returncode=native.returncode,
+                      scope='Exact frozen reference/native fixture correspondence; not a new reference/formal or network execution')
+    if sha(source) != manifest['C_sha256'] or sha(model) != manifest['model_sha256']:
+        raise ValueError('Snapshot changed during compilation')
+    (out/'result.json').write_text(json.dumps(result, indent=2)+'\n')
+    return result
 
 
-if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);p.add_argument('--run-example',action='store_true');a=p.parse_args()
-    try:raise SystemExit(build(a.out,a.run_example))
-    except (ValueError,OSError)as e:print(json.dumps(dict(status='rejected',reason=str(e))),file=sys.stderr);raise SystemExit(2)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--run-example', action='store_true')
+    args = parser.parse_args()
+    try:
+        result = build(args.out, args.run_example)
+        print(json.dumps(result))
+        raise SystemExit(0 if result['status'] == 'pass' else 1)
+    except (ValueError, OSError, subprocess.TimeoutExpired) as error:
+        print(json.dumps(dict(status='rejected', reason=str(error))), file=sys.stderr)
+        raise SystemExit(2)

@@ -1,1 +1,0 @@
-Legacy connection fixtures lacked explicit ACK/SYNACK window extension; malformed oversend fault overlapped blocked rule before reaching budget invariant. Corrected fixture bridge and coherent mutation; original failures retained.

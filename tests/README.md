@@ -1,31 +1,20 @@
-# 5. Tests and observations
-
-Start with the focused case-study checks:
+# Focused example tests
 
 ```sh
-.venv/bin/python -m unittest discover -s tests -p test_showcase.py -v
-.venv/bin/python -m unittest discover -s tests -p test_framework_client.py -v
-.venv/bin/python -m unittest discover -s tests -p test_ipv4_rule_coverage.py -v
+python3 -m unittest discover -s tests -v
 ```
 
-The showcase tests compile/regenerate the actual C snapshot and run an example;
-the client tests exercise the fixed framework pin and source rejection; the
-coverage tests execute24 frozen default paths and compare complete traces.
-They do not claim a fresh live network run or a rerun of every historical proof.
+These standard-library tests compile and run the actual standalone C, compare a
+frozen full input/output fixture, check model/source integrity, rebuild the
+recorded HTML and reject changed evidence hashes. No API calls, network privilege,
+framework clone or Z3 installation is needed.
 
-| Inputs/results | Purpose |
-|---|---|
-| [scenarios/](../scenarios/) | Frozen literal and scoped model-derived regression inputs |
-| [spec/*-oracle.json](../spec/) | Independent protocol byte/output contracts |
-| `test_framework_client.py` | Cross-repository execution and frozen legacy-source checks |
-| `test_ipv4_rule_coverage.py` | Default-initial generated-C/reference path regression |
-| [retained evidence](../artifacts/) | Original query/native/PCAP/log files, including failures |
+`example.in` and `expected.json` came unchanged from a previously accepted
+reference/native run; [fixture.json](fixture.json) records the source archive,
+member and exact hashes. The expected output is model-derived, not an independent
+RFC or wire oracle. It is never fed to the subject or recomputed to make it pass.
 
-The remaining tests are still useful component, fault and historical-regression
-experiments. Protocol/domain-negative input, rule conflict, invariant failure,
-resource UNKNOWN, invalid evidence and implementation Difference stay distinct.
-Some external-channel tests need Linux permissions or optional tools and report
-that limitation explicitly. Do not treat a synthetic PCAP or lwIP observation
-as an independent Linux peer capture.
+Broader protocol/formal/network experiments are in the pinned Git history, not
+silently claimed by this focused test suite.
 
-Next: [recorded demonstration](../demo/README.md).
+Next: [demo](../demo/README.md).

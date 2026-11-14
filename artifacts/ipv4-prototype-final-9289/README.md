@@ -1,7 +1,0 @@
-Finite IPv4 prototype: real same-process TCP/UDP/ICMP with ARP
-
-Immutable source92896425, isolatedLinux7.0.0-1017-azure, singlegeneratedC PID2802/B once: ARP+TCP0080ff07 echo/activeclosependingTIMEWAIT, UDPempty/oddNUL5/1472 threeechoes, ICMP0/5/1472 threeEchoes.25capture/filter0drops/fullquiet, allC/socket/pings helduntilcapturestops thenexit0. IndependentrawMAC/IP/TCP/UDP/ICMP checksums, UDP exactpayload/ports andEcho byteoracle allpassed. Actualreference/native19transitions andoriginal19stepfixedZ3SAT/witness/replaymatch, notall-inputproof.81rawLinuxoriginals preserved; CI provenance mustseparatelytrusted.
-
-SeparateLinuxflow0138/0139:32nativecases/eightstagespass/335source-rulebindings, caller taskpinbc771c5a, formaldepth1UNKNOWN+10/335declaredexplorationcoverage→UNRESOLVED,329rawfiles inclcompletesource-snapshot.0138 incorrectlyexpectedverifyCLI0, butactualconsistentunresolved intentionallyexit1; originalcontrollerfailure retained.0139 ONLYretainedverification, no model/C/formalrerun.
-
-Readonlyaudit checks everymember/Git/tree/source/C/ELF/queryhash, fullrawcapture/quiet/socket/ping/lifecycle, currenttrustedreference/native andoriginalZ3witness replay. NoarchivedPython/ELF/solverexecution. Flow andlivechannels join by identicalIR7d5a8254/C19ce9855. OriginalTCP/UDPpaddingfailures andotheroldUNKNOWN/Differences stayunchanged. VirtualEthernet/fixedendpoint/finiteTCP only; nophysicalEthernet/generalTCPIP/unbounded/compiler/English-to-IRcorrectnessproof.
