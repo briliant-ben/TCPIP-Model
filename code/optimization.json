@@ -1,0 +1,262 @@
+{
+  "schema": "tcpip-codegen-optimization-v1",
+  "framework_commit": "5486c43f7ea0ec5e2c9c7ace246ebcd8419145d7",
+  "backend": "direct-c99-shared-expressions-v5",
+  "model_sha256": "7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5",
+  "prior_C_sha256": "19ce9855194a5d8b243648f12b710d739266f4d49ff31001e378c1815975e36b",
+  "C_sha256": "e5a3f04adbb50c3c226256f2f43c62ac7c2c8dd62fc38aa44a51ced8a520b5cf",
+  "prior_source_bytes": 2885072,
+  "source_bytes": 666457,
+  "reduction_percent": 76.9,
+  "regression_fixture": "tests/optimization-regression.json",
+  "regression_fixture_sha256": "63f5f0ca4ac9bd278cb80a0d551b866eaed20496c749e8db35e95a747d60d77a",
+  "paths_compared": 24,
+  "transitions_compared": 157,
+  "exact_old_new_and_reference_match": true,
+  "compiler_version": "Apple clang version 21.0.0 (clang-2100.4.1.1)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n",
+  "measurements": [
+    {
+      "variant": "original",
+      "flags": [
+        "-std=c99",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O0"
+      ],
+      "compile_seconds": 1.1640290000941604,
+      "C_sha256": "19ce9855194a5d8b243648f12b710d739266f4d49ff31001e378c1815975e36b",
+      "executable_bytes": 3031672,
+      "executable_sha256": "3ee1e0e699973a0409a4027eacd24eb09f3722e070ee674f5e6f232b4684c491",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "variant": "compact",
+      "flags": [
+        "-std=c99",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O0"
+      ],
+      "compile_seconds": 0.5067357919178903,
+      "C_sha256": "e5a3f04adbb50c3c226256f2f43c62ac7c2c8dd62fc38aa44a51ced8a520b5cf",
+      "executable_bytes": 709960,
+      "executable_sha256": "d3e675a88580fc104ea0c5e2581c96c94dcec38322157086c23b59da5d59fbe0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "variant": "original",
+      "flags": [
+        "-std=c99",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Os"
+      ],
+      "compile_seconds": 37.972439458128065,
+      "C_sha256": "19ce9855194a5d8b243648f12b710d739266f4d49ff31001e378c1815975e36b",
+      "executable_bytes": 3186232,
+      "executable_sha256": "6f41703e0c8ec94440ebe2b32d321d833ba81ec927350eb8761f1142eb189d1d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "variant": "compact",
+      "flags": [
+        "-std=c99",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Os"
+      ],
+      "compile_seconds": 1.3174805829767138,
+      "C_sha256": "e5a3f04adbb50c3c226256f2f43c62ac7c2c8dd62fc38aa44a51ced8a520b5cf",
+      "executable_bytes": 480296,
+      "executable_sha256": "dbf9096266932b7657aa0b24d65bc42b4722ec5302aa0cc609384223f36be61c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "regression_cases": [
+    {
+      "index": 0,
+      "id": "0187-directed-001",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 9
+    },
+    {
+      "index": 1,
+      "id": "0187-directed-002",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 6
+    },
+    {
+      "index": 2,
+      "id": "0190-directed-001",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 4
+    },
+    {
+      "index": 3,
+      "id": "0190-directed-002",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 5
+    },
+    {
+      "index": 4,
+      "id": "0190-directed-003",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 6
+    },
+    {
+      "index": 5,
+      "id": "0190-directed-004",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 6
+    },
+    {
+      "index": 6,
+      "id": "0190-directed-005",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 7
+    },
+    {
+      "index": 7,
+      "id": "0190-directed-006",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 7
+    },
+    {
+      "index": 8,
+      "id": "0190-directed-007",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 8
+    },
+    {
+      "index": 9,
+      "id": "0190-directed-008",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 8
+    },
+    {
+      "index": 10,
+      "id": "0190-directed-009",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 4
+    },
+    {
+      "index": 11,
+      "id": "0190-directed-010",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 5
+    },
+    {
+      "index": 12,
+      "id": "0190-directed-011",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 6
+    },
+    {
+      "index": 13,
+      "id": "0190-directed-012",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 4
+    },
+    {
+      "index": 14,
+      "id": "0190-directed-013",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 4
+    },
+    {
+      "index": 15,
+      "id": "0190-directed-014",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 5
+    },
+    {
+      "index": 16,
+      "id": "0196-recipe-002",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 7
+    },
+    {
+      "index": 17,
+      "id": "0196-recipe-003",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 8
+    },
+    {
+      "index": 18,
+      "id": "0196-recipe-006",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 11
+    },
+    {
+      "index": 19,
+      "id": "0196-recipe-009",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 8
+    },
+    {
+      "index": 20,
+      "id": "0196-recipe-012",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 7
+    },
+    {
+      "index": 21,
+      "id": "0196-recipe-013",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 8
+    },
+    {
+      "index": 22,
+      "id": "0200-recipe-000",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 6
+    },
+    {
+      "index": 23,
+      "id": "0200-recipe-001",
+      "baseline_equal": true,
+      "reference_equal": true,
+      "transitions": 8
+    }
+  ],
+  "generation_inputs_sha256": {
+    "model/ipv4-endpoint-virtual-link.json": "7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5",
+    "framework/protocol_lab/codegen/__init__.py": "a3c2801884732d44f8b33711fca25b56c1a9aa7bf888367d11c568aa4713f081",
+    "framework/protocol_lab/codegen/__main__.py": "f8a87acbecedefacfe74abe201c1be7a1993908720d3220674b17ad3cdb2e660",
+    "framework/protocol_lab/codegen/runtime.c": "3deee31d596e78afa35383d247597bbe95ee43cb4a736d5b1807d78887903ea4",
+    "framework/protocol_lab/codegen/harness.c": "2458df5d56d386fe086b4988f8a8efddff0d62b52009556382e3e9e6f4b02e07",
+    "framework/protocol_lab/ir.py": "9ad13f2218d3641eb7218a36a2edbf64f1710eee9548dde1897616e5e79bcfa7",
+    "framework/protocol_lab/symbolic.py": "c0a603e005ef8cb969cb62ddf2d1cc1860f38b36fa93b908793d1a48a3126d5c"
+  },
+  "fresh_pinned_regeneration": true,
+  "new_network_execution": false,
+  "compiler_correctness_proved": false,
+  "scope": "Local macOS builds and exact fixed-input regression. Binary measurements are host executables, not embedded firmware. Original recorded Linux evidence retains its original C binding."
+}

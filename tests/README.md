@@ -18,3 +18,9 @@ Broader protocol/formal/network experiments are in the pinned Git history, not
 silently claimed by this focused test suite.
 
 Next: [demo](../demo/README.md).
+
+`optimization-regression.json` freezes inputs and complete stdout/stderr digests
+from the pre-optimization generated C for 24 existing paths (157 transitions).
+The initial optimization gate also compared the new output against the reference
+interpreter. These digests must not be refreshed from changed code to make it pass.
+The standalone regression uses no framework or expected output as subject input.
