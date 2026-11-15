@@ -38,12 +38,16 @@ or open [demo/capture.pcap](demo/capture.pcap) in Wireshark.
 ## What this example demonstrates
 
 One declarative IR owns ARP, atomic IPv4, finite TCP, UDP and ICMP Echo behavior.
-The same generated C process completed ARP resolution, TCP data/close, three UDP
+The recorded prototype used one generated C process for ARP resolution, TCP data/close, three UDP
 round trips and three ICMP Echo exchanges against independent Linux peers.
 The recorded observation contains **19 transitions and25 packets, zero drops**.
 It is a retained observation, not a new network run when the viewer is rebuilt.
 
-The model and generated C are byte-identical to the accepted prototype.
+The model is byte-identical to the accepted prototype. The current C is
+regenerated with a pinned, optimized framework backend: **2.75 MiB → 651 KiB**,
+with 24 existing paths /157 transitions matching both the original executable
+output and reference. [Generation details](code/README.md) distinguish this
+regression from the recorded network run, which retains its original C binding.
 Scope is a fixed peer/tuple, MTU1500 and TCP16-byte buffers/SMSS4. General routing,
 fragmentation, congestion/recovery, sockets, IPv6 and upper layers are excluded.
 Finite delivery passed its stated contract; the general verification flow remains

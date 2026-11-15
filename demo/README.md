@@ -20,3 +20,8 @@ Logical C time and measured capture time remain separate. Regenerating the view
 is not a new network execution or proof. For a new local execution use
 [code/build.py](../code/README.md); independent live-network qualification is a
 separate workflow outside this focused repository.
+
+The recording binds the pre-optimization C hash, retained in `provenance.json`.
+The current generated C is separately qualified by the frozen regression in
+`tests/optimization-regression.json`; the old capture is not evidence of a new
+network execution of the optimized program.
