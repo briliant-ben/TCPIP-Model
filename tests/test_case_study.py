@@ -91,6 +91,21 @@ class CaseStudyTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'digest'):demo.render(ROOT/'model/ipv4-endpoint-virtual-link.json',ROOT/'demo/recording.zip','0'*64,Path(tmp)/'bad.html')
             self.assertFalse((Path(tmp)/'bad.html').exists())
 
+    def test_lean_manifest_binds_the_published_model_and_proofs(self):
+        formal = ROOT/'formal'
+        manifest_path = formal/'lean/manifest.json'
+        manifest_bytes = manifest_path.read_bytes()
+        manifest = json.loads(manifest_bytes)
+        pin = json.loads((formal/'framework.json').read_text())
+        self.assertEqual(hashlib.sha256(manifest_bytes).hexdigest(), pin['proof_manifest_sha256'])
+        model_name = 'ipv4-endpoint-virtual-link.json'
+        model_digest = hashlib.sha256((ROOT/'model'/model_name).read_bytes()).hexdigest()
+        self.assertEqual(manifest['model'], {model_name: model_digest})
+        modules = {entry['module'] + '.lean': entry['sha256'] for entry in manifest['modules']}
+        self.assertEqual(set(modules), {path.name for path in manifest_path.parent.glob('*.lean')})
+        for name, digest in modules.items():
+            self.assertEqual(hashlib.sha256((manifest_path.parent/name).read_bytes()).hexdigest(), digest)
+
     def test_no_in_repository_or_reused_output(self):
         with self.assertRaises(ValueError):self.builder.build(ROOT/'code/not-allowed')
         with self.assertRaises(ValueError):self.builder.build(self.out)

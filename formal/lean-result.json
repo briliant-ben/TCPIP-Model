@@ -1,0 +1,42 @@
+{
+  "schema": "tcpip-lean-check-receipt-v1",
+  "framework_commit": "c5ef8e35fa2ed78c824a54911ec758c7d7782054",
+  "proof_manifest_sha256": "e368262c4b18c7ddca3c992fd24c8107c6d159003424715e4153fab18ae4997b",
+  "model": {
+    "ipv4-endpoint-virtual-link.json": "7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5"
+  },
+  "formal_status": "checked_timed_dispatch_contract",
+  "raw_firings": 335,
+  "conflict_groups": 18,
+  "lean_version": "Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "axioms": {
+    "initial": [
+      "propext",
+      "Quot.sound"
+    ],
+    "timers": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "preservation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "advance": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "dispatch": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "checker_report_sha256": "ac6848f941eaf611cce9543c5c628042cd86d368f0baba544c8ec72074e110af",
+  "closeout_flow": "https://github.com/briliant-ben/Formal-Spec-Agent/tree/022a3adaefe3d8c9e64eb85a8d4430aeed0a3853/evidence/lean-timed-flow-20261121",
+  "compiler_correctness_proved": false,
+  "protocol_correctness_proved": false
+}
