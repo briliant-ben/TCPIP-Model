@@ -21,6 +21,12 @@ for the published model. The framework's linked closeout run compared 77
 reference and generated C cases. Its exploration covered 10/335 rules,
 leaving the overall flow verdict unresolved.
 
+The receive proof is compiled as separate buffer, link-phase and overlap
+lemmas to fit the existing per-module time limit. The model, raw rules and
+invariants are unchanged. The receipt links the complete fresh proof sources,
+compiler logs and read-only audit; tests reject a receipt from another
+framework or proof-manifest revision.
+
 This proof applies to the fixed endpoint profile. It establishes properties
 of the model and its Lean scheduler. The C execution and recorded packets
 have their own evidence in [tests](../tests/) and [demo](../demo/).

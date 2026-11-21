@@ -101,6 +101,10 @@ class CaseStudyTests(unittest.TestCase):
         model_name = 'ipv4-endpoint-virtual-link.json'
         model_digest = hashlib.sha256((ROOT/'model'/model_name).read_bytes()).hexdigest()
         self.assertEqual(manifest['model'], {model_name: model_digest})
+        receipt = json.loads((formal/'lean-result.json').read_text())
+        self.assertEqual(receipt['framework_commit'], pin['commit'])
+        self.assertEqual(receipt['proof_manifest_sha256'], pin['proof_manifest_sha256'])
+        self.assertEqual(receipt['model'], manifest['model'])
         modules = {entry['module'] + '.lean': entry['sha256'] for entry in manifest['modules']}
         self.assertEqual(set(modules), {path.name for path in manifest_path.parent.glob('*.lean')})
         for name, digest in modules.items():
