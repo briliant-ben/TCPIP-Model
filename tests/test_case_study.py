@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 import zipfile
@@ -105,6 +106,26 @@ class CaseStudyTests(unittest.TestCase):
         self.assertEqual(receipt['framework_commit'], pin['commit'])
         self.assertEqual(receipt['proof_manifest_sha256'], pin['proof_manifest_sha256'])
         self.assertEqual(receipt['model'], manifest['model'])
+        evidence = json.loads((formal/'proof-evidence.json').read_text())
+        archive = formal/receipt['proof_evidence']
+        self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), receipt['proof_archive_sha256'])
+        self.assertEqual(evidence['archive_sha256'], receipt['proof_archive_sha256'])
+        with tarfile.open(archive, 'r:gz') as bundle:
+            self.assertEqual(set(bundle.getnames()), set(evidence['files']))
+            for name, digest in evidence['files'].items():
+                self.assertEqual(hashlib.sha256(bundle.extractfile(name).read()).hexdigest(), digest)
+            self.assertEqual(hashlib.sha256(bundle.extractfile('result.json').read()).hexdigest(),
+                             receipt['checker_report_sha256'])
+        linux = json.loads((formal/'linux-proof-evidence.json').read_text())
+        self.assertEqual(linux['source_head'], pin['commit'])
+        linux_archive = formal/receipt['linux_evidence']
+        self.assertEqual(hashlib.sha256(linux_archive.read_bytes()).hexdigest(),
+                         receipt['linux_evidence_sha256'])
+        self.assertEqual(linux['archive_sha256'], receipt['linux_evidence_sha256'])
+        with tarfile.open(linux_archive, 'r:gz') as bundle:
+            self.assertEqual(set(bundle.getnames()), set(linux['files']))
+            for name, digest in linux['files'].items():
+                self.assertEqual(hashlib.sha256(bundle.extractfile(name).read()).hexdigest(), digest)
         modules = {entry['module'] + '.lean': entry['sha256'] for entry in manifest['modules']}
         self.assertEqual(set(modules), {path.name for path in manifest_path.parent.glob('*.lean')})
         for name, digest in modules.items():

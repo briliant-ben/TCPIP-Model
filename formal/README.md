@@ -21,11 +21,21 @@ for the published model. The framework's linked closeout run compared 77
 reference and generated C cases. Its exploration covered 10/335 rules,
 leaving the overall flow verdict unresolved.
 
-The receive proof is compiled as separate buffer, link-phase and overlap
+Receive and send proofs compile as separate buffer, link-phase and data-case
 lemmas to fit the existing per-module time limit. The model, raw rules and
-invariants are unchanged. The receipt links the complete fresh proof sources,
-compiler logs and read-only audit; tests reject a receipt from another
-framework or proof-manifest revision.
+invariants are unchanged. [proof-evidence.tar.gz](proof-evidence.tar.gz) retains
+the complete fresh proof sources, model, compiler logs and axiom audit, with
+individual hashes in [proof-evidence.json](proof-evidence.json). No compiled
+objects are included. Tests reject a receipt from another framework or
+proof-manifest revision.
+
+The same revision passed all 155 framework tests on Linux, split into 154
+general tests and one complete endpoint proof, with no skipped tests.
+[linux-proof-evidence.tar.gz](linux-proof-evidence.tar.gz) retains the raw
+proof and test receipts; [its manifest](linux-proof-evidence.json) binds the
+original GitHub artifacts and individual retained files. All 108 Lean source
+digests and axiom lists match the local recheck. The read-only audit does not
+execute retained code; CI execution provenance remains a trust assumption.
 
 This proof applies to the fixed endpoint profile. It establishes properties
 of the model and its Lean scheduler. The C execution and recorded packets
