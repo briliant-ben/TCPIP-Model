@@ -11,7 +11,7 @@ spec → model → formal → code → tests → demo
 |---|---|
 | [spec/](spec/README.md) | Pinned RFC sources and source/interpretation references |
 | [model/](model/README.md) | One authoritative generated Protocol IR |
-| [formal/](formal/README.md) | Results, scope and links to original proof records |
+| [formal/](formal/README.md) | Runnable Lean proof and historical solver records |
 | [code/](code/README.md) | Standalone generated C; build and optional regeneration |
 | [tests/](tests/README.md) | A frozen input/output example and focused checks |
 | [demo/](demo/README.md) | Recorded execution, original capture and English viewer |
@@ -35,12 +35,24 @@ directly with `cc -std=c99 code/generated/protocol.c -o /tmp/tcpip-reference`.
 To inspect the recorded exchange, open [demo/review.html](demo/review.html) locally
 or open [demo/capture.pcap](demo/capture.pcap) in Wireshark.
 
+## Check the model in Lean
+
+The optional proof uses a separate, pinned Formal-Spec-Agent checkout and
+Lean 4.35.0. It checks the declared invariants on all 335 model rule/timer
+pairings and the scheduler's dispatch and rollback behavior.
+
+```sh
+make formal FRAMEWORK=../Formal-Spec-Agent LEAN=/path/to/lean OUT=/tmp/tcpip-lean-proof
+```
+
+See [formal/](formal/README.md) for the precise scope and framework pin.
+
 ## What this example demonstrates
 
 One declarative IR owns ARP, atomic IPv4, finite TCP, UDP and ICMP Echo behavior.
 The recorded prototype used one generated C process for ARP resolution, TCP data/close, three UDP
 round trips and three ICMP Echo exchanges against independent Linux peers.
-The recorded observation contains **19 transitions and25 packets, zero drops**.
+The recorded observation contains **19 transitions and 25 packets, zero drops**.
 It is a retained observation, not a new network run when the viewer is rebuilt.
 
 The model is byte-identical to the accepted prototype. The current C is

@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 import zipfile
@@ -90,6 +91,45 @@ class CaseStudyTests(unittest.TestCase):
             self.assertEqual((r['transitions'],r['packets']),(19,25));self.assertEqual(out.read_bytes(),(ROOT/'demo/review.html').read_bytes())
             with self.assertRaisesRegex(ValueError,'digest'):demo.render(ROOT/'model/ipv4-endpoint-virtual-link.json',ROOT/'demo/recording.zip','0'*64,Path(tmp)/'bad.html')
             self.assertFalse((Path(tmp)/'bad.html').exists())
+
+    def test_lean_manifest_binds_the_published_model_and_proofs(self):
+        formal = ROOT/'formal'
+        manifest_path = formal/'lean/manifest.json'
+        manifest_bytes = manifest_path.read_bytes()
+        manifest = json.loads(manifest_bytes)
+        pin = json.loads((formal/'framework.json').read_text())
+        self.assertEqual(hashlib.sha256(manifest_bytes).hexdigest(), pin['proof_manifest_sha256'])
+        model_name = 'ipv4-endpoint-virtual-link.json'
+        model_digest = hashlib.sha256((ROOT/'model'/model_name).read_bytes()).hexdigest()
+        self.assertEqual(manifest['model'], {model_name: model_digest})
+        receipt = json.loads((formal/'lean-result.json').read_text())
+        self.assertEqual(receipt['framework_commit'], pin['commit'])
+        self.assertEqual(receipt['proof_manifest_sha256'], pin['proof_manifest_sha256'])
+        self.assertEqual(receipt['model'], manifest['model'])
+        evidence = json.loads((formal/'proof-evidence.json').read_text())
+        archive = formal/receipt['proof_evidence']
+        self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), receipt['proof_archive_sha256'])
+        self.assertEqual(evidence['archive_sha256'], receipt['proof_archive_sha256'])
+        with tarfile.open(archive, 'r:gz') as bundle:
+            self.assertEqual(set(bundle.getnames()), set(evidence['files']))
+            for name, digest in evidence['files'].items():
+                self.assertEqual(hashlib.sha256(bundle.extractfile(name).read()).hexdigest(), digest)
+            self.assertEqual(hashlib.sha256(bundle.extractfile('result.json').read()).hexdigest(),
+                             receipt['checker_report_sha256'])
+        linux = json.loads((formal/'linux-proof-evidence.json').read_text())
+        self.assertEqual(linux['source_head'], pin['commit'])
+        linux_archive = formal/receipt['linux_evidence']
+        self.assertEqual(hashlib.sha256(linux_archive.read_bytes()).hexdigest(),
+                         receipt['linux_evidence_sha256'])
+        self.assertEqual(linux['archive_sha256'], receipt['linux_evidence_sha256'])
+        with tarfile.open(linux_archive, 'r:gz') as bundle:
+            self.assertEqual(set(bundle.getnames()), set(linux['files']))
+            for name, digest in linux['files'].items():
+                self.assertEqual(hashlib.sha256(bundle.extractfile(name).read()).hexdigest(), digest)
+        modules = {entry['module'] + '.lean': entry['sha256'] for entry in manifest['modules']}
+        self.assertEqual(set(modules), {path.name for path in manifest_path.parent.glob('*.lean')})
+        for name, digest in modules.items():
+            self.assertEqual(hashlib.sha256((manifest_path.parent/name).read_bytes()).hexdigest(), digest)
 
     def test_no_in_repository_or_reused_output(self):
         with self.assertRaises(ValueError):self.builder.build(ROOT/'code/not-allowed')
