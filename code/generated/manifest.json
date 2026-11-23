@@ -2,12 +2,12 @@
   "schema": "tcpip-generated-snapshot-v1",
   "authority": "model/ipv4-endpoint-virtual-link.json",
   "model_sha256": "7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5",
-  "framework_commit": "5486c43f7ea0ec5e2c9c7ace246ebcd8419145d7",
+  "framework_commit": "500a9a3daf779c48a1678744e32521bc1fd5f2aa",
   "source": "code/generated/protocol.c",
-  "C_sha256": "e5a3f04adbb50c3c226256f2f43c62ac7c2c8dd62fc38aa44a51ced8a520b5cf",
+  "C_sha256": "42386d6a7b2c7c7081a3b189b707c5141f4967b381c2fcaebb54484ac91b64ae",
   "derived_not_handwritten": true,
   "compiled_binary_committed": false,
   "regenerate": "python3 code/regenerate.py --framework /path/to/Formal-Spec-Agent --python /path/to/its/python --out /tmp/tcpip-regenerated-001",
-  "backend": "direct-c99-shared-expressions-v5",
+  "backend": "direct-c99-typed-text-v6",
   "prior_C_sha256": "19ce9855194a5d8b243648f12b710d739266f4d49ff31001e378c1815975e36b"
 }

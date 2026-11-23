@@ -19,8 +19,8 @@ def regenerate(framework, python, out):
     if actual != pin['commit']:
         raise ValueError('Check out the framework commit specified in code/framework.json')
     def verify_sources():
-        names={str(p.relative_to(framework))for folder in ['protocol_lab','formal_spec_agent']for p in (framework/folder).rglob('*')if p.is_file()and p.suffix in ('.py','.c')}
-        names.update(['pyproject.toml','requirements-formal.txt'])
+        names={str(p.relative_to(framework))for folder in ['protocol_lab','formal_spec_agent']for p in (framework/folder).rglob('*')if p.is_file()and (p.suffix in ('.py','.c','.lean') or p.name=='lean-toolchain')}
+        names.add('pyproject.toml')
         if names != set(pin['source_files']):raise ValueError('Framework source set differs')
         for name, digest in pin['source_files'].items():
             if hashlib.sha256((framework/name).read_bytes()).hexdigest() != digest:
@@ -31,7 +31,7 @@ def regenerate(framework, python, out):
     if hashlib.sha256(model.read_bytes()).hexdigest() != manifest['model_sha256']:
         raise ValueError('Model differs from the pinned case')
     env = dict(os.environ, PYTHONPATH=str(framework), PYTHONDONTWRITEBYTECODE='1')
-    completed = subprocess.run([str(python), '-m', 'protocol_lab.codegen', str(model), '--out', str(out)], cwd=framework, env=env, capture_output=True, text=True)
+    completed = subprocess.run([str(python), '-S', '-m', 'protocol_lab.codegen', str(model), '--out', str(out)], cwd=framework, env=env, capture_output=True, text=True)
     if out.is_dir():
         (out/'generator.stdout').write_text(completed.stdout)
         (out/'generator.stderr').write_text(completed.stderr)

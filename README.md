@@ -11,7 +11,7 @@ spec → model → formal → code → tests → demo
 |---|---|
 | [spec/](spec/README.md) | Pinned RFC sources and source/interpretation references |
 | [model/](model/README.md) | One authoritative generated Protocol IR |
-| [formal/](formal/README.md) | Runnable Lean proof and historical solver records |
+| [formal/](formal/README.md) | Runnable Lean 4.35.0 proof and bound verification evidence |
 | [code/](code/README.md) | Standalone generated C; build and optional regeneration |
 | [tests/](tests/README.md) | A frozen input/output example and focused checks |
 | [demo/](demo/README.md) | Recorded execution, original capture and English viewer |
@@ -62,9 +62,11 @@ output and reference. [Generation details](code/README.md) distinguish this
 regression from the recorded network run, which retains its original C binding.
 Scope is a fixed peer/tuple, MTU1500 and TCP16-byte buffers/SMSS4. General routing,
 fragmentation, congestion/recovery, sockets, IPv6 and upper layers are excluded.
-Finite delivery passed its stated contract; the general verification flow remains
-`unresolved`, with original UNKNOWNs and implementation Differences retained in the linked historical records.
-See [formal/results.json](formal/results.json) for the exact retained conclusions.
+The optional Lean 4.35.0 proof covers declared invariants, timer bounds, guard
+conflict groups, and dispatch/rollback contracts for this fixed endpoint
+profile; see [formal/](formal/README.md) and
+[formal/lean-result.json](formal/lean-result.json). Compiler equivalence and
+unmodeled protocol layers remain outside the claim boundary.
 
 ## Regenerating from IR
 

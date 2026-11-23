@@ -1,7 +1,7 @@
 name: Minimal TCPIP case study
 on:
   push:
-    branches: [main, 'codex/**']
+    branches: [main, 'codex/**', 'gemini/**']
   pull_request:
   workflow_dispatch:
 permissions:
@@ -23,3 +23,70 @@ jobs:
           name: minimal-case-${{ github.sha }}
           path: case-tests.log
           if-no-files-found: error
+  lean-and-regen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Clone pinned Formal-Spec-Agent framework
+        run: |
+          FW_COMMIT=$(python3 -c "import json; f=json.load(open('formal/framework.json'))['commit']; c=json.load(open('code/framework.json'))['commit']; assert f==c, (f, c); print(f)")
+          git clone https://github.com/briliant-ben/Formal-Spec-Agent.git /tmp/Formal-Spec-Agent
+          git -C /tmp/Formal-Spec-Agent checkout --detach "$FW_COMMIT"
+      - name: Verify C regeneration against pinned framework
+        run: |
+          python3 code/regenerate.py --framework /tmp/Formal-Spec-Agent \
+            --python "$(command -v python3)" --out /tmp/tcpip-ci-regen
+      - name: Install checksum-pinned official Lean
+        run: |
+          curl --fail --location --connect-timeout 20 --max-time 300 \
+            https://github.com/leanprover/lean4/releases/download/v4.35.0/lean-4.35.0-linux.tar.zst \
+            --output /tmp/lean.tar.zst
+          echo '7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d  /tmp/lean.tar.zst' | sha256sum --check
+          tar --zstd -xf /tmp/lean.tar.zst -C /tmp
+          /tmp/lean-4.35.0-linux/bin/lean --version
+      - name: Run formal Lean check and verify against committed evidence
+        run: |
+          make formal PYTHON=python3 FRAMEWORK=/tmp/Formal-Spec-Agent \
+            LEAN=/tmp/lean-4.35.0-linux/bin/lean OUT=/tmp/tcpip-ci-formal > formal-check.log 2>&1
+          PYTHONPATH=/tmp/Formal-Spec-Agent python3 - <<'PY'
+          import hashlib, json, tarfile
+          from pathlib import Path
+          from formal_spec_agent import lean_timed_check
+
+          out = Path('/tmp/tcpip-ci-formal')
+          model = Path('model/ipv4-endpoint-virtual-link.json')
+          manifest = Path('formal/lean/manifest.json')
+          msha = hashlib.sha256(manifest.read_bytes()).hexdigest()
+          inspected = lean_timed_check.inspect(out, model, manifest, msha)
+          assert inspected['schema'] == 'fsa-lean-timed-check-result-v2'
+          assert inspected['status'] == 'checked_timed_dispatch_contract'
+
+          res = json.loads((out / 'result.json').read_text())
+          receipt = json.loads(Path('formal/lean-result.json').read_text())
+          assert res['schema'] == 'fsa-lean-timed-check-result-v2'
+          assert res['status'] == 'checked_timed_dispatch_contract'
+          assert res['raw_firings'] == 335
+          assert res['conflict_groups'] == 18
+          assert len(res['commands']) == 119
+          assert all(c['returncode'] == 0 for c in res['commands'])
+          assert res['axioms'] == receipt['axioms']
+          assert res['model'] == receipt['model']
+          assert res['proof_manifest_sha256'] == receipt['proof_manifest_sha256']
+
+          with tarfile.open('formal/proof-evidence.tar.gz', 'r:gz') as tf:
+              committed_res = json.loads(tf.extractfile('result.json').read())
+          assert len(committed_res['sources']) == 119
+          assert res['sources'] == committed_res['sources']
+          PY
+      - name: Upload formal verification artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: lean-formal-check-${{ github.sha }}
+          path: |
+            formal-check.log
+            /tmp/tcpip-ci-formal/result.json
+          if-no-files-found: warn

@@ -7,7 +7,7 @@ python3 -m unittest discover -s tests -v
 These standard-library tests compile and run the actual standalone C, compare a
 frozen full input/output fixture, check model/source integrity, rebuild the
 recorded HTML and reject changed evidence hashes. No API calls, network privilege,
-framework clone or Z3 installation is needed.
+framework clone or Lean installation is needed.
 
 `example.in` and `expected.json` came unchanged from a previously accepted
 reference/native run; [fixture.json](fixture.json) records the source archive,

@@ -1,12 +1,12 @@
 {
   "schema": "tcpip-codegen-optimization-v1",
-  "framework_commit": "5486c43f7ea0ec5e2c9c7ace246ebcd8419145d7",
-  "backend": "direct-c99-shared-expressions-v5",
+  "framework_commit": "500a9a3daf779c48a1678744e32521bc1fd5f2aa",
+  "backend": "direct-c99-typed-text-v6",
   "model_sha256": "7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5",
   "prior_C_sha256": "19ce9855194a5d8b243648f12b710d739266f4d49ff31001e378c1815975e36b",
-  "C_sha256": "e5a3f04adbb50c3c226256f2f43c62ac7c2c8dd62fc38aa44a51ced8a520b5cf",
+  "C_sha256": "42386d6a7b2c7c7081a3b189b707c5141f4967b381c2fcaebb54484ac91b64ae",
   "prior_source_bytes": 2885072,
-  "source_bytes": 666457,
+  "source_bytes": 667125,
   "reduction_percent": 76.9,
   "regression_fixture": "tests/optimization-regression.json",
   "regression_fixture_sha256": "63f5f0ca4ac9bd278cb80a0d551b866eaed20496c749e8db35e95a747d60d77a",
@@ -39,10 +39,10 @@
         "-Werror",
         "-O0"
       ],
-      "compile_seconds": 0.5067357919178903,
-      "C_sha256": "e5a3f04adbb50c3c226256f2f43c62ac7c2c8dd62fc38aa44a51ced8a520b5cf",
-      "executable_bytes": 709960,
-      "executable_sha256": "d3e675a88580fc104ea0c5e2581c96c94dcec38322157086c23b59da5d59fbe0",
+      "compile_seconds": 0.28390529099851847,
+      "C_sha256": "42386d6a7b2c7c7081a3b189b707c5141f4967b381c2fcaebb54484ac91b64ae",
+      "executable_bytes": 709968,
+      "executable_sha256": "1efe770ab79d75a4bdf8b3e455b107116ae361f0f951d25ea81ee5110f07e550",
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
@@ -69,10 +69,10 @@
         "-Werror",
         "-Os"
       ],
-      "compile_seconds": 1.3174805829767138,
-      "C_sha256": "e5a3f04adbb50c3c226256f2f43c62ac7c2c8dd62fc38aa44a51ced8a520b5cf",
-      "executable_bytes": 480296,
-      "executable_sha256": "dbf9096266932b7657aa0b24d65bc42b4722ec5302aa0cc609384223f36be61c",
+      "compile_seconds": 1.395642499992391,
+      "C_sha256": "42386d6a7b2c7c7081a3b189b707c5141f4967b381c2fcaebb54484ac91b64ae",
+      "executable_bytes": 480304,
+      "executable_sha256": "43ed67dcbc7d50564c2d562e0cde69fcb4a69da6323dbf37b19edb052f00738a",
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
@@ -248,12 +248,14 @@
   ],
   "generation_inputs_sha256": {
     "model/ipv4-endpoint-virtual-link.json": "7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5",
-    "framework/protocol_lab/codegen/__init__.py": "a3c2801884732d44f8b33711fca25b56c1a9aa7bf888367d11c568aa4713f081",
+    "framework/protocol_lab/codegen/__init__.py": "5a24f4cd02278175917b5656ef5f7e3ae2f9be84d46e41acee77fbf35fec7351",
     "framework/protocol_lab/codegen/__main__.py": "f8a87acbecedefacfe74abe201c1be7a1993908720d3220674b17ad3cdb2e660",
     "framework/protocol_lab/codegen/runtime.c": "3deee31d596e78afa35383d247597bbe95ee43cb4a736d5b1807d78887903ea4",
-    "framework/protocol_lab/codegen/harness.c": "2458df5d56d386fe086b4988f8a8efddff0d62b52009556382e3e9e6f4b02e07",
+    "framework/protocol_lab/codegen/harness.c": "7c81fc4b789a32ddcd8236cd8efd639029a4b38f48109183abdc2d08074a0838",
+    "framework/protocol_lab/codegen/execute.py": "28e3f31d8bf2ea090346512c24342133d035af7d14c891ea9f72e9c7e7159622",
+    "framework/protocol_lab/json_values.py": "eab6d97ef51cf87528a095200eb1e5e1ec8f0f0576fa534508884f5da5688d09",
     "framework/protocol_lab/ir.py": "9ad13f2218d3641eb7218a36a2edbf64f1710eee9548dde1897616e5e79bcfa7",
-    "framework/protocol_lab/symbolic.py": "c0a603e005ef8cb969cb62ddf2d1cc1860f38b36fa93b908793d1a48a3126d5c"
+    "framework/protocol_lab/model_identity.py": "28a3f85772436542c8497d0e15c799e67f907d756cff9f3d1c9fcacd8d43d064"
   },
   "fresh_pinned_regeneration": true,
   "new_network_execution": false,

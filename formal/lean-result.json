@@ -1,7 +1,7 @@
 {
-  "schema": "tcpip-lean-check-receipt-v1",
-  "framework_commit": "fce319fc7a37b62cf7013a0b1fea0bc2edc336b7",
-  "proof_manifest_sha256": "93f48121a6ec9cdfa98a73ec349485d4e83ac99dad9e9318f7d1117118585b35",
+  "schema": "tcpip-lean-check-receipt-v2",
+  "framework_commit": "500a9a3daf779c48a1678744e32521bc1fd5f2aa",
+  "proof_manifest_sha256": "7b902d2838507c9132b08b4c5cd80ad3bb886b090fd40af1fcb9d2e6fee3ec71",
   "model": {
     "ipv4-endpoint-virtual-link.json": "7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5"
   },
@@ -35,13 +35,10 @@
       "Quot.sound"
     ]
   },
-  "checker_report_sha256": "6b4c1be1a36f759470603d873a34798928a2caf58c088094b3aeabab18a56f7b",
-  "closeout_flow": "https://github.com/briliant-ben/Formal-Spec-Agent/tree/022a3adaefe3d8c9e64eb85a8d4430aeed0a3853/evidence/lean-timed-flow-20261121",
+  "checker_report_sha256": "50542f772a63679755105c2eed0e2a4c1c949129a42d186a0b63a487485c5834",
   "compiler_correctness_proved": false,
   "protocol_correctness_proved": false,
-  "proof_archive_sha256": "998f2ca0aeedd7c5acf297bf1020b5c13970ef332c96ed458946d8656520aea2",
+  "proof_archive_sha256": "8770f9580aa1ffb8b6faf7192171f276120e8ddd52573c2409abfd151f1af4b2",
   "proof_evidence": "proof-evidence.tar.gz",
-  "linux_evidence": "linux-proof-evidence.tar.gz",
-  "linux_evidence_sha256": "5b8c52654fc810be9e58805c4a3f939b9525f0468a44171b0a07e94c8bf08bfa",
-  "linux_workflow": "https://github.com/briliant-ben/Formal-Spec-Agent/actions/runs/44923104812"
+  "linux_workflow": "https://github.com/briliant-ben/Formal-Spec-Agent/actions/runs/45042703567"
 }

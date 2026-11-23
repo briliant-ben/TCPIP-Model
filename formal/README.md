@@ -17,9 +17,7 @@ declared external events either execute and preserve the invariants or return
 uncovered and roll back. The result directory includes the model, kernel
 sources, compiler logs and the axiom audit. Python packages are unnecessary
 for this command. The [local receipt](lean-result.json) records the result
-for the published model. The framework's linked closeout run compared 77
-reference and generated C cases. Its exploration covered 10/335 rules,
-leaving the overall flow verdict unresolved.
+for the published model.
 
 Receive, send and closing proofs compile as separate buffer, link-phase and data-case
 lemmas to fit the existing per-module time limit. The model, raw rules and
@@ -29,38 +27,19 @@ individual hashes in [proof-evidence.json](proof-evidence.json). No compiled
 objects are included. Tests reject a receipt from another framework or
 proof-manifest revision.
 
-The same revision passed all 155 framework tests on Linux, split into 154
-general tests and one complete endpoint proof, with no skipped tests.
-[linux-proof-evidence.tar.gz](linux-proof-evidence.tar.gz) retains the raw
-proof and test receipts; [its manifest](linux-proof-evidence.json) binds the
-original GitHub artifacts and individual retained files. All 119 Lean source
-digests and axiom lists match the local recheck. The read-only audit does not
-execute retained code; CI execution provenance remains a trust assumption. A separate PR timed job
-hit its total deadline without a completed report; the positive push run
-does not upgrade that cancelled attempt.
+[lean/manifest.json](lean/manifest.json) uses `fsa-lean-timed-proof-manifest-v2`
+with explicit `compile_groups` to check all 119 modules (32 core framework
+modules, 2 framework-generated/audit modules `Approved` and `TimedAudit`, and
+85 case modules) under Lean 4.35.0. On Linux CI,
+[Formal-Spec-Agent](https://github.com/briliant-ben/Formal-Spec-Agent) revision
+`500a9a3daf779c48a1678744e32521bc1fd5f2aa` passed the full framework and
+endpoint Lean suite in [CI run 45042703567](https://github.com/briliant-ben/Formal-Spec-Agent/actions/runs/45042703567),
+and this repository's `lean-and-regen` job in
+[.github/workflows/case-study.yml](../.github/workflows/case-study.yml) freshly
+runs `code/regenerate.py` and `make formal` against Lean 4.35.0 with zero third-party Python packages. All 119 Lean module digests and axiom lists match.
 
 This proof applies to the fixed endpoint profile. It establishes properties
 of the model and its Lean scheduler. The C execution and recorded packets
-have their own evidence in [tests](../tests/) and [demo](../demo/).
-
-## Historical solver results
-
-[results.json](results.json) summarizes the original qualified runs. It does not
-execute a checker or upgrade an old UNKNOWN. Full SMT queries, receipts, failed
-attempts and versioned checkers remain at the pinned historical report links.
-
-- Finite prototype delivery: pass under the explicitly limited contract.
-- Initialized one-step checks:563 negative obligations UNSAT and one SAT witness
-  with strict replay.
-- Defined-transition invariant preservation:332 direct UNSAT observations plus
-  three separately audited ACK certificates, including vacuous disabled branches.
-- Nonvacuity:174 with SAT certificates,11 excluded short-header branches and150
-  without SAT certificates. The original raw UNKNOWN records are unchanged.
-- Accepted default-initial execution coverage:102/335. Unobserved rules are not
-  thereby proved unreachable. The general flow remains `unresolved`.
-
-These are different claims: finite execution, bounded checks, retained evidence
-consistency and complete correctness must not be conflated. The historical solver receipts record their own scopes. The fresh Lean check
-above has a separate verdict and input binding.
+have their own evidence in [tests](../tests/) and [demo](../demo/). Compiler equivalence and unmodeled protocol layers remain outside the claim boundary.
 
 Next: [generated C](../code/README.md).

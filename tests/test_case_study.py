@@ -44,7 +44,7 @@ class CaseStudyTests(unittest.TestCase):
         manifest=json.loads((ROOT/'code/generated/manifest.json').read_text())
         for path,key in [('model/ipv4-endpoint-virtual-link.json','model_sha256'),('code/generated/protocol.c','C_sha256')]:
             self.assertEqual(hashlib.sha256((ROOT/path).read_bytes()).hexdigest(),manifest[key])
-        self.assertEqual(manifest['C_sha256'],'e5a3f04adbb50c3c226256f2f43c62ac7c2c8dd62fc38aa44a51ced8a520b5cf')
+        self.assertEqual(manifest['C_sha256'],'42386d6a7b2c7c7081a3b189b707c5141f4967b381c2fcaebb54484ac91b64ae')
         self.assertEqual(manifest['model_sha256'],'7d5a82541ea55cde3ff39b2e1cf883f6c9f942f5dc535a2736e69044d9e154a5')
         refs=json.loads((ROOT/'spec/references.json').read_text())['requirements']
         model=json.loads((ROOT/'model/ipv4-endpoint-virtual-link.json').read_text())
@@ -75,7 +75,11 @@ class CaseStudyTests(unittest.TestCase):
                 self.assertEqual(hashlib.sha256(p.stderr).hexdigest(),case['stderr_sha256'])
         pin=json.loads((ROOT/'code/framework.json').read_text())
         self.assertEqual(pin['commit'],manifest['framework_commit'])
-        self.assertEqual(manifest['backend'],'direct-c99-shared-expressions-v5')
+        self.assertNotIn('requirements-formal.txt',pin['source_files'])
+        self.assertNotIn('protocol_lab/symbolic.py',pin['source_files'])
+        self.assertNotIn('requirements-formal.txt',report['generation_inputs_sha256'])
+        self.assertNotIn('framework/protocol_lab/symbolic.py',report['generation_inputs_sha256'])
+        self.assertEqual(manifest['backend'],'direct-c99-typed-text-v6')
 
     def test_recorded_demo_rebuilds_exactly_and_rejects_bad_digest(self):
         demo=module('case_demo',ROOT/'demo/build_review.py');meta=json.loads((ROOT/'demo/provenance.json').read_text())
@@ -97,16 +101,35 @@ class CaseStudyTests(unittest.TestCase):
         manifest_path = formal/'lean/manifest.json'
         manifest_bytes = manifest_path.read_bytes()
         manifest = json.loads(manifest_bytes)
+        self.assertEqual(manifest['schema'], 'fsa-lean-timed-proof-manifest-v2')
+        groups = manifest['compile_groups']
+        self.assertGreater(len(groups), 0)
+        self.assertTrue(all(1 <= len(group) <= 2 for group in groups))
+        grouped = [name for group in groups for name in group]
+        self.assertEqual(len(grouped), len(set(grouped)))
+        self.assertEqual(len(grouped), len(manifest['modules']))
+        self.assertEqual(set(grouped), {entry['module'] for entry in manifest['modules']})
+        self.assertEqual(groups[-1], ['TimedProof'])
         pin = json.loads((formal/'framework.json').read_text())
+        self.assertEqual(pin['commit'], json.loads((ROOT/'code/framework.json').read_text())['commit'])
         self.assertEqual(hashlib.sha256(manifest_bytes).hexdigest(), pin['proof_manifest_sha256'])
         model_name = 'ipv4-endpoint-virtual-link.json'
         model_digest = hashlib.sha256((ROOT/'model'/model_name).read_bytes()).hexdigest()
         self.assertEqual(manifest['model'], {model_name: model_digest})
         receipt = json.loads((formal/'lean-result.json').read_text())
+        self.assertEqual(receipt['schema'], 'tcpip-lean-check-receipt-v2')
+        self.assertEqual(receipt['formal_status'], 'checked_timed_dispatch_contract')
+        self.assertEqual(receipt['raw_firings'], 335)
+        self.assertEqual(receipt['conflict_groups'], 18)
+        self.assertNotIn('linux_evidence', receipt)
+        self.assertNotIn('linux_evidence_sha256', receipt)
+        self.assertNotIn('closeout_flow', receipt)
         self.assertEqual(receipt['framework_commit'], pin['commit'])
         self.assertEqual(receipt['proof_manifest_sha256'], pin['proof_manifest_sha256'])
         self.assertEqual(receipt['model'], manifest['model'])
         evidence = json.loads((formal/'proof-evidence.json').read_text())
+        self.assertEqual(evidence['framework_commit'], pin['commit'])
+        self.assertEqual(evidence['proof_manifest_sha256'], pin['proof_manifest_sha256'])
         archive = formal/receipt['proof_evidence']
         self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), receipt['proof_archive_sha256'])
         self.assertEqual(evidence['archive_sha256'], receipt['proof_archive_sha256'])
@@ -114,18 +137,17 @@ class CaseStudyTests(unittest.TestCase):
             self.assertEqual(set(bundle.getnames()), set(evidence['files']))
             for name, digest in evidence['files'].items():
                 self.assertEqual(hashlib.sha256(bundle.extractfile(name).read()).hexdigest(), digest)
-            self.assertEqual(hashlib.sha256(bundle.extractfile('result.json').read()).hexdigest(),
+            res_bytes = bundle.extractfile('result.json').read()
+            self.assertEqual(hashlib.sha256(res_bytes).hexdigest(),
                              receipt['checker_report_sha256'])
-        linux = json.loads((formal/'linux-proof-evidence.json').read_text())
-        self.assertEqual(linux['source_head'], pin['commit'])
-        linux_archive = formal/receipt['linux_evidence']
-        self.assertEqual(hashlib.sha256(linux_archive.read_bytes()).hexdigest(),
-                         receipt['linux_evidence_sha256'])
-        self.assertEqual(linux['archive_sha256'], receipt['linux_evidence_sha256'])
-        with tarfile.open(linux_archive, 'r:gz') as bundle:
-            self.assertEqual(set(bundle.getnames()), set(linux['files']))
-            for name, digest in linux['files'].items():
-                self.assertEqual(hashlib.sha256(bundle.extractfile(name).read()).hexdigest(), digest)
+            res = json.loads(res_bytes)
+            self.assertEqual(res['schema'], 'fsa-lean-timed-check-result-v2')
+            self.assertEqual(res['status'], 'checked_timed_dispatch_contract')
+            self.assertEqual(len(res['commands']), 119)
+            self.assertTrue(all(c['returncode'] == 0 for c in res['commands']))
+            self.assertEqual(res['axioms'], receipt['axioms'])
+        for obsolete in ('results.json', 'linux-proof-evidence.json', 'linux-proof-evidence.tar.gz'):
+            self.assertFalse((formal/obsolete).exists(), obsolete)
         modules = {entry['module'] + '.lean': entry['sha256'] for entry in manifest['modules']}
         self.assertEqual(set(modules), {path.name for path in manifest_path.parent.glob('*.lean')})
         for name, digest in modules.items():

@@ -11,7 +11,7 @@ python3 demo/build_review.py
 
 The viewer reads only the original [recording.zip](recording.zip), verifies its
 fixed digest and model/packet/trace bindings, and renders HTML. It never runs
-archived Python, native binaries or solver code. [provenance.json](provenance.json)
+archived Python or native binaries. [provenance.json](provenance.json)
 records the original source, hashes and trust boundary. One compact original
 recording is retained because it supports this demo, not as a replacement for
 all historical experiments.
