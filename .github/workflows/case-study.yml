@@ -16,12 +16,23 @@ jobs:
           persist-credentials: false
       - name: Compile standalone C, compare frozen fixture, and rebuild recorded demo
         run: python3 -m unittest discover -s tests -v > case-tests.log 2>&1
+      - name: Run live communicating prototype over UDP loopback and capture PCAP
+        run: |
+          set -o pipefail
+          python3 demo/live_demo.py --mode all --transport udp --out /tmp/tcpip-ci-live 2>&1 | tee -a case-tests.log
+          if command -v tcpdump >/dev/null 2>&1; then
+            tcpdump -nn -r /tmp/tcpip-ci-live/live-capture.pcap 2>&1 | tee -a case-tests.log
+          fi
       - name: Preserve actual result
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: minimal-case-${{ github.sha }}
-          path: case-tests.log
+          path: |
+            case-tests.log
+            /tmp/tcpip-ci-live/live-capture.pcap
+            /tmp/tcpip-ci-live/summary.json
+            /tmp/tcpip-ci-live/frames.txt
           if-no-files-found: error
   lean-and-regen:
     runs-on: ubuntu-24.04

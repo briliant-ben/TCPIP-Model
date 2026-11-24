@@ -157,5 +157,38 @@ class CaseStudyTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.builder.build(ROOT/'code/not-allowed')
         with self.assertRaises(ValueError):self.builder.build(self.out)
 
+    def test_live_communicating_demo_produces_valid_pcap_and_real_exchange(self):
+        live = module('case_live_demo', ROOT / 'demo/live_demo.py')
+        demo = module('case_demo', ROOT / 'demo/build_review.py')
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / 'live'
+            res = live.run_demo(out=out, mode='all', transport='auto')
+            self.assertEqual(res['status'], 'pass')
+            self.assertIn(res['transport_used'], ('udp_loopback', 'unix_socketpair'))
+
+            client = res['scenarios']['client']
+            self.assertEqual(client['tcp_echo_received'], 'echo:hello')
+            self.assertEqual(client['udp_echo_received'], 'echo:udp-ping')
+            self.assertEqual(client['icmp_echo_received'], 'icmp-ping')
+            self.assertEqual(client['final_T_control'], 'TIME-WAIT')
+
+            server = res['scenarios']['server']
+            self.assertEqual(server['server_received'], 'ping')
+            self.assertEqual(server['peer_received_echo'], 'echo:ping')
+            self.assertEqual(server['final_T_control'], 'CLOSED')
+
+            records = demo.pcap_records((out / 'live-capture.pcap').read_bytes())
+            self.assertGreaterEqual(len(records), 20)
+            kinds = set()
+            for rec in records:
+                parsed = live.verify_frame_checksums(rec['raw'])
+                kinds.add(parsed['kind'])
+            self.assertEqual(kinds, {'ARP', 'TCP', 'UDP', 'ICMP'})
+
+            with self.assertRaises(ValueError):
+                live.run_demo(ROOT / 'demo/not-allowed')
+            with self.assertRaises(ValueError):
+                live.run_demo(out)
+
 
 if __name__=='__main__':unittest.main()
