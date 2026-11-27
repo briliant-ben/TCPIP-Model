@@ -307,7 +307,7 @@ static void process_ack_and_data(struct tcp_pcb *pcb, struct pbuf *p, uint16_t h
                 if (step_ack >= 1) {
                     fsa_val_t args[5] = {
                         fsa_val_int(step_ack),
-                        fsa_val_int((int64_t)(wnd <= 65535U ? wnd : 65535U)),
+                        fsa_val_int((int64_t)wnd),
                         fsa_val_int((int64_t)(pcb->cwnd < 1460U ? 1460U : (pcb->cwnd > 65535U ? 65535U : pcb->cwnd))),
                         fsa_val_int((int64_t)(pcb->ssthresh < 2920U ? 2920U : (pcb->ssthresh > 65535U ? 65535U : pcb->ssthresh))),
                         fsa_val_int((int64_t)(pcb->rto_ms < 200U ? 200U : (pcb->rto_ms > 60000U ? 60000U : pcb->rto_ms)))
