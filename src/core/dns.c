@@ -77,6 +77,14 @@ static uint16_t dns_encode_qname(uint8_t *dst, uint16_t cap, const char *name) {
     return out;
 }
 
+static void dns_copy_name(char *dst, size_t cap, const char *src) {
+    size_t len = src ? strlen(src) : 0U;
+    if (cap == 0U) return;
+    if (len >= cap) len = cap - 1U;
+    if (len > 0U) memcpy(dst, src, len);
+    dst[len] = '\0';
+}
+
 static void dns_cache_insert(const char *name, const ip4_addr_t *ip, uint32_t ttl_s, uint32_t now_ms) {
     int slot = -1;
     for (int i = 0; i < TCPIP_DNS_CACHE_SIZE; i++) {
@@ -88,8 +96,7 @@ static void dns_cache_insert(const char *name, const ip4_addr_t *ip, uint32_t tt
     }
     if (slot < 0) slot = 0;
     dns_cache[slot].valid = 1;
-    strncpy(dns_cache[slot].name, name, sizeof(dns_cache[slot].name) - 1U);
-    dns_cache[slot].name[sizeof(dns_cache[slot].name) - 1U] = '\0';
+    dns_copy_name(dns_cache[slot].name, sizeof(dns_cache[slot].name), name);
     dns_cache[slot].ip = *ip;
     dns_cache[slot].expires_ms = now_ms + (ttl_s > 0U ? ttl_s * 1000U : 60000U);
 }
@@ -173,8 +180,7 @@ static void dns_recv_cb(void *arg, struct udp_pcb *upcb, struct pbuf *p,
 
     uint32_t now_ms = sys_now();
     char name_copy[128];
-    strncpy(name_copy, match->name, sizeof(name_copy) - 1U);
-    name_copy[sizeof(name_copy) - 1U] = '\0';
+    dns_copy_name(name_copy, sizeof(name_copy), match->name);
     dns_found_callback cb = match->cb;
     void *cb_arg = match->arg;
 
@@ -246,7 +252,7 @@ err_t dns_gethostbyname(const char *hostname, ip4_addr_t *addr,
             memset(&dns_pending[i], 0, sizeof(dns_pending[i]));
             dns_pending[i].active = 1;
             dns_pending[i].txid = dns_txid_seq++;
-            strncpy(dns_pending[i].name, hostname, sizeof(dns_pending[i].name) - 1U);
+            dns_copy_name(dns_pending[i].name, sizeof(dns_pending[i].name), hostname);
             dns_pending[i].cb = found;
             dns_pending[i].arg = callback_arg;
             dns_pending[i].sent_ms = now_ms;
@@ -278,8 +284,7 @@ void dns_tmr(uint32_t now_ms) {
                 dns_found_callback cb = q->cb;
                 void *arg = q->arg;
                 char nm[128];
-                strncpy(nm, q->name, sizeof(nm) - 1U);
-                nm[sizeof(nm) - 1U] = '\0';
+                dns_copy_name(nm, sizeof(nm), q->name);
                 q->active = 0;
                 if (cb) cb(nm, NULL, arg);
             } else {

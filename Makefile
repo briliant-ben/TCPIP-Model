@@ -109,15 +109,7 @@ build/libtcpip_posix.a: $(POSIX_LIB_SRCS) include/tcpip/*.h
 	ar rcs $@ build/obj_posix/*.o
 
 size: lib
-	@$(PYTHON) -c "import glob, subprocess; \
-		meas = lambda pat, lbl: (lambda out: (print(f'=== {lbl} ==='), \
-			[print(f'  {l.split()[-1].split(\"/\")[-1]:20s} text={int(l.split()[0]):6d} data={int(l.split()[1]):6d} bss={int(l.split()[2]):7d}') for l in out[1:]], \
-			(sum(int(l.split()[0]) for l in out[1:]), sum(int(l.split()[1]) for l in out[1:]), sum(int(l.split()[2]) for l in out[1:])))[2])(subprocess.check_output(['size'] + sorted(glob.glob(pat)), text=True).strip().splitlines()); \
-		nt, nd, nb = meas('build/obj_nosys/*.o', 'libtcpip_nosys.a'); \
-		pt, pd, pb = meas('build/obj_posix/*.o', 'libtcpip_posix.a'); \
-		print(f'TOTAL libtcpip_nosys.a: text={nt} B ({nt/1024:.2f} KiB), data={nd} B, bss={nb} B'); \
-		print(f'TOTAL libtcpip_posix.a: text={pt} B ({pt/1024:.2f} KiB), data={pd} B, bss={pb} B'); \
-		assert nt <= 92160, f'Core L2-L4 .text {nt} B > 92160 B (90 KiB)'"
+	@$(PYTHON) scripts/check_size.py
 
 test-lib:
 	@mkdir -p build
