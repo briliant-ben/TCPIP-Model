@@ -111,27 +111,27 @@ jobs:
       - name: Build static libraries and enforce core L2-L4 size target (<= 90 KiB .text)
         run: |
           set -o pipefail
-          make lib size | tee build-lib.log
+          make lib size 2>&1 | tee build-lib.log
       - name: Run M1-M4 stack suites (NO_SYS=1 and NO_SYS=0)
         run: |
           set -o pipefail
-          make test-lib | tee -a build-lib.log
+          make test-lib 2>&1 | tee -a build-lib.log
       - name: Run ASan + UBSan suite
         run: |
           set -o pipefail
-          make test-asan | tee -a build-lib.log
+          make test-asan 2>&1 | tee -a build-lib.log
       - name: Run ThreadSanitizer suite
         run: |
           set -o pipefail
-          setarch $(uname -m) -R make test-tsan | tee -a build-lib.log
+          setarch $(uname -m) -R make test-tsan 2>&1 | tee -a build-lib.log
       - name: Run BSD socket & DHCP/DNS demos, benchmarks, and PCAP checks
         run: |
           set -o pipefail
-          make demos bench | tee -a build-lib.log
+          make demos bench 2>&1 | tee -a build-lib.log
           if command -v tcpdump >/dev/null 2>&1; then
-            tcpdump -c 20 -nn -r build/m3_tcp_udp.pcap | tee -a build-lib.log
-            tcpdump -nn -r build/tcp_echo_demo.pcap | tee -a build-lib.log
-            tcpdump -nn -r build/dhcp_dns_demo.pcap | tee -a build-lib.log
+            tcpdump -c 20 -nn -r build/m3_tcp_udp.pcap 2>&1 | tee -a build-lib.log
+            tcpdump -nn -r build/tcp_echo_demo.pcap 2>&1 | tee -a build-lib.log
+            tcpdump -nn -r build/dhcp_dns_demo.pcap 2>&1 | tee -a build-lib.log
           fi
       - name: Verify FreeRTOS port skeleton compilation
         run: |
@@ -188,6 +188,12 @@ jobs:
           EOF
           cc -std=c99 -Wall -Wextra -Werror -Os -DTCPIP_NO_SYS=0 -DTCPIP_PORT_FREERTOS=1 -DTCPIP_VERIFY_FSM=0 -I include -I /tmp/frtos-stub -c port/freertos/sys_port_freertos.c -o build/sys_port_freertos.o
           cc -std=c99 -Wall -Wextra -Werror -Os -DTCPIP_NO_SYS=0 -DTCPIP_PORT_FREERTOS=1 -DTCPIP_VERIFY_FSM=1 -I include -I src/generated -I /tmp/frtos-stub -c port/freertos/sys_port_freertos.c -o build/sys_port_freertos_fsm.o
+      - name: Publish libtcpip build & test summary
+        if: always()
+        run: |
+          echo '```text' >> "$GITHUB_STEP_SUMMARY"
+          tail -n 120 build-lib.log >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo "(no build-lib.log)" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
       - name: Upload libtcpip build & PCAP artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -226,7 +232,7 @@ jobs:
         run: |
           set -o pipefail
           make formal-lib FRAMEWORK=/tmp/Formal-Spec-Agent \
-            LEAN=/tmp/lean-4.35.0-linux/bin/lean | tee formal-lib.log
+            LEAN=/tmp/lean-4.35.0-linux/bin/lean 2>&1 | tee formal-lib.log
       - name: Upload formal library check log
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

@@ -20,7 +20,7 @@ scripts/        C99 FSM library regenerator (regen_lib.py) and 8-module Lean pro
 
 ### Software Architecture Protocol + Dual Execution Model
 1. **Bare-metal (`TCPIP_NO_SYS=1`)**: `libtcpip_nosys.a` — polling loop (`tcpip_poll`), zero threads/locks, callback Raw API (`udp_*`, `tcp_*`), **23.22 KiB** `.text` at `-Os`.
-2. **Multithreaded RTOS/POSIX (`TCPIP_NO_SYS=0`)**: `libtcpip_posix.a` (plus `port/freertos/` skeleton) — single-writer `tcpip_thread` actor mailbox (`tcpip_input`, `tcpip_api_call`, timer wheel) with blocking `netconn_*` and BSD-compatible `tcpip_socket`/`tcpip_bind`/`tcpip_listen`/`tcpip_accept`/`tcpip_connect`/`tcpip_send`/`tcpip_recv`/`tcpip_close` APIs, **38.20 KiB** `.text` at `-Os`.
+2. **Multithreaded RTOS/POSIX (`TCPIP_NO_SYS=0`)**: `libtcpip_posix.a` (plus `port/freertos/` skeleton) — single-writer `tcpip_thread` actor mailbox (`tcpip_input`, `tcpip_api_call`, timer wheel) with blocking `netconn_*` and BSD-compatible `tcpip_socket`/`tcpip_bind`/`tcpip_listen`/`tcpip_accept`/`tcpip_connect`/`tcpip_send`/`tcpip_recv`/`tcpip_close` APIs, **38.27 KiB** `.text` at `-Os`.
 
 ### Stack Capabilities (Exclude TLS, HTTP, IPv6, Wi-Fi/BLE)
 - **OS Port & Memory (`M1`)**: Fixed `memp` pools, chained zero-copy `pbuf` (`PBUF_POOL` / `PBUF_RAM` / `PBUF_REF`), PCAP writer (`DLT_EN10MB`), virtual-Ethernet (`veth`) with configurable drop/reorder/duplicate fault injection.
@@ -56,11 +56,11 @@ Measured locally on Apple Clang arm64 (`-std=c99 -Os -ffunction-sections -fdata-
 | Metric | Value | Target |
 |---|---:|---|
 | Core L2–L4 static lib (`libtcpip_nosys.a` `.text`) | **23,779 B (23.22 KiB)** | 40–90 KiB (`<= 90 KiB`) |
-| Full stack (`libtcpip_posix.a` `.text`) | **39,112 B (38.20 KiB)** | Compact embeddable |
-| `inet_chksum` (1500 B × 200,000) | **5,396.2 MiB/s** (`53.02 ms`) | Fast RFC 1071 32-bit fold |
-| UDP TX+RX (1400 B × 20,000) | **2,200.9 kpps** (**24,650.6 Mbps**) | Line-rate software loopback |
-| TCP bulk TX (8 MiB stream) | **16,276.7 Mbps** (`4.12 ms`) | High-throughput zero-copy path |
-| TCP ping-pong RTT (32 B × 1,000) | **0.28 µs / RTT** | Low-latency single-writer path |
+| Full stack (`libtcpip_posix.a` `.text`) | **39,188 B (38.27 KiB)** | Compact embeddable |
+| `inet_chksum` (1500 B × 200,000) | **4,571.0 MiB/s** (`62.59 ms`) | Fast RFC 1071 32-bit fold |
+| UDP TX+RX (1400 B × 20,000) | **2,154.7 kpps** (**24,132.7 Mbps**) | Line-rate software loopback |
+| TCP bulk TX (8 MiB stream) | **16,268.8 Mbps** (`4.12 ms`) | High-throughput zero-copy path |
+| TCP ping-pong RTT (32 B × 1,000) | **0.31 µs / RTT** | Low-latency single-writer path |
 
 ---
 
