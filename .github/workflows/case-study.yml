@@ -194,6 +194,9 @@ jobs:
           echo '```text' >> "$GITHUB_STEP_SUMMARY"
           tail -n 120 build-lib.log >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo "(no build-lib.log)" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
+          if [ -f build-lib.log ] && [ "${{ job.status }}" = "failure" ]; then
+            python3 -c "import pathlib; lines=pathlib.Path('build-lib.log').read_text(errors='replace').splitlines()[-45:]; print('::error::' + '%0A'.join(lines))"
+          fi
       - name: Upload libtcpip build & PCAP artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
