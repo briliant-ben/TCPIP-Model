@@ -287,7 +287,7 @@ static void process_ack_and_data(struct tcp_pcb *pcb, struct pbuf *p, uint16_t h
                     uint32_t inc = data_acked < pcb->mss ? data_acked : pcb->mss;
                     pcb->cwnd += inc;
                 } else {
-                    uint32_t inc = ((uint32_t)pcb->mss * (uint32_t)pcb->mss) / (pcb->cwnd ? pcb->cwnd : pcb->mss);
+                    uint32_t inc = ((uint32_t)pcb->mss * (uint32_t)pcb->mss) / (pcb->cwnd ? pcb->cwnd : (uint32_t)pcb->mss);
                     if (inc == 0U) inc = 1U;
                     pcb->cwnd += inc;
                 }

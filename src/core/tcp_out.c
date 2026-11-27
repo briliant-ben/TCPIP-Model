@@ -33,7 +33,7 @@ static err_t tcp_ip_send(struct pbuf *seg, const ip4_addr_t *src, const ip4_addr
     ip4_addr_t chosen_src = (!src || ip4_addr_isany(src)) ? outif->ip_addr : *src;
     uint16_t chk = inet_chksum_pseudo(seg, IP_PROTO_TCP, seg->tot_len, &chosen_src, dst);
     wr16be(seg->payload + 16, chk);
-    return ip4_output_if(seg, &chosen_src, dst, ttl ? ttl : 64U, tos, IP_PROTO_TCP, outif);
+    return ip4_output_if(seg, &chosen_src, dst, ttl ? ttl : (uint8_t)64, tos, IP_PROTO_TCP, outif);
 }
 
 err_t tcp_send_ctrl(const ip4_addr_t *src, const ip4_addr_t *dst,

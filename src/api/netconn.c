@@ -221,7 +221,7 @@ static err_t do_listen(void *v) {
     struct netconn *c = a->conn;
     if (c->type != NETCONN_TCP || !c->pcb.tcp) return ERR_VAL;
     if (c->state == NETCONN_LISTEN) return ERR_OK;
-    struct tcp_pcb *lp = tcp_listen_with_backlog(c->pcb.tcp, a->backlog ? a->backlog : 8U);
+    struct tcp_pcb *lp = tcp_listen_with_backlog(c->pcb.tcp, a->backlog ? a->backlog : (uint8_t)8);
     if (!lp) return ERR_MEM;
     c->pcb.tcp = lp;
     c->state = NETCONN_LISTEN;
@@ -580,7 +580,7 @@ err_t netbuf_take(struct netbuf *buf, const void *dataptr, uint16_t size) {
 }
 
 uint16_t netbuf_len(const struct netbuf *buf) {
-    return (buf && buf->p) ? buf->p->tot_len : 0U;
+    return (buf && buf->p) ? buf->p->tot_len : (uint16_t)0;
 }
 
 uint16_t netbuf_copy(const struct netbuf *buf, void *dataptr, uint16_t len) {
@@ -594,7 +594,7 @@ const ip4_addr_t *netbuf_fromaddr(const struct netbuf *buf) {
 }
 
 uint16_t netbuf_fromport(const struct netbuf *buf) {
-    return buf ? buf->port : 0U;
+    return buf ? buf->port : (uint16_t)0;
 }
 
 #endif /* !TCPIP_NO_SYS */

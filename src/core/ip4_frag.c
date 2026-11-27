@@ -95,7 +95,7 @@ static uint16_t insert_span(ip_reass_slot_t *s, uint16_t start, uint16_t end) {
         total = (uint16_t)(total + (s->spans[i].end - s->spans[i].start));
     }
     s->rcv_bytes = total;
-    return (uint16_t)(total > old_total ? total - old_total : 0U);
+    return (uint16_t)(total > old_total ? (uint16_t)(total - old_total) : (uint16_t)0);
 }
 
 struct pbuf *ip4_reass(struct pbuf *p, uint32_t now_ms) {
@@ -284,7 +284,7 @@ err_t ip4_frag(struct pbuf *p, struct netif *netif, const ip4_addr_t *dest) {
     if (orig_flags & IP_DF) {
         return ERR_VAL;
     }
-    uint16_t mtu = netif->mtu ? netif->mtu : 1500U;
+    uint16_t mtu = netif->mtu ? netif->mtu : (uint16_t)1500;
     if (mtu < hlen + 8U) return ERR_VAL;
 
     uint16_t max_pay = (uint16_t)(((mtu - hlen) / 8U) * 8U);

@@ -49,7 +49,7 @@ struct pbuf *pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type) {
         return p;
     }
 
-    uint16_t first_avail = (uint16_t)(TCPIP_PBUF_POOL_BUFSIZE > off ? TCPIP_PBUF_POOL_BUFSIZE - off : 0U);
+    uint16_t first_avail = (uint16_t)(TCPIP_PBUF_POOL_BUFSIZE > off ? (uint16_t)(TCPIP_PBUF_POOL_BUFSIZE - off) : (uint16_t)0);
     if (first_avail == 0 && length > 0) return NULL;
 
     struct pbuf *head = NULL;
@@ -58,7 +58,7 @@ struct pbuf *pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type) {
     int first = 1;
 
     do {
-        uint16_t cur_off = first ? off : 0U;
+        uint16_t cur_off = first ? off : (uint16_t)0;
         uint16_t cur_avail = (uint16_t)(TCPIP_PBUF_POOL_BUFSIZE - cur_off);
         uint16_t chunk = rem > cur_avail ? cur_avail : rem;
 

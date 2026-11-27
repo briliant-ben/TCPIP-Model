@@ -149,7 +149,7 @@ err_t udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
     uint16_t chk = inet_chksum_pseudo(q, IP_PROTO_UDP, q->tot_len, &chosen_src, dst_ip);
     wr16be(uh + 6, chk == 0U ? 0xFFFFU : chk);
 
-    err_t err = ip4_output_if(q, &chosen_src, dst_ip, pcb->ttl ? pcb->ttl : 64U, pcb->tos, IP_PROTO_UDP, netif);
+    err_t err = ip4_output_if(q, &chosen_src, dst_ip, pcb->ttl ? pcb->ttl : (uint8_t)64, pcb->tos, IP_PROTO_UDP, netif);
     if (allocated) {
         pbuf_free(q);
     } else {

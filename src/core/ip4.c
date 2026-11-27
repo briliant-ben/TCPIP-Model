@@ -131,7 +131,7 @@ err_t ip4_output_if(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *dst
     wr16be(hdr + 2, p->tot_len);
     wr16be(hdr + 4, ip_id_seq++);
     wr16be(hdr + 6, 0U);
-    hdr[8] = ttl ? ttl : 64U;
+    hdr[8] = ttl ? ttl : (uint8_t)64;
     hdr[9] = proto;
     hdr[10] = 0;
     hdr[11] = 0;

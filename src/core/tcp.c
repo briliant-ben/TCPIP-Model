@@ -209,7 +209,7 @@ struct tcp_pcb *tcp_listen_with_backlog(struct tcp_pcb *pcb, uint8_t backlog) {
     lpcb->local_ip = pcb->local_ip;
     lpcb->local_port = pcb->local_port;
     lpcb->state = LISTEN;
-    lpcb->backlog = backlog ? backlog : 8U;
+    lpcb->backlog = backlog ? backlog : (uint8_t)8;
     lpcb->callback_arg = pcb->callback_arg;
     lpcb->next = tcp_listen_pcbs;
     tcp_listen_pcbs = lpcb;
@@ -420,7 +420,7 @@ void tcp_poll(struct tcp_pcb *pcb, tcp_poll_fn poll, uint8_t interval) {
 
 uint16_t tcp_sndbuf(const struct tcp_pcb *pcb) {
     if (!pcb || (pcb->state != ESTABLISHED && pcb->state != CLOSE_WAIT)) return 0U;
-    return pcb->snd_buf_used >= TCPIP_TCP_SND_BUF ? 0U : (uint16_t)(TCPIP_TCP_SND_BUF - pcb->snd_buf_used);
+    return pcb->snd_buf_used >= TCPIP_TCP_SND_BUF ? (uint16_t)0 : (uint16_t)(TCPIP_TCP_SND_BUF - pcb->snd_buf_used);
 }
 
 tcp_state_t tcp_state_get(const struct tcp_pcb *pcb) {
