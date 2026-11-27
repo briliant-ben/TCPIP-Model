@@ -1,128 +1,123 @@
 # TCPIP-Model
 
-A minimal, runnable IPv4/TCP/UDP/ICMP/ARP prototype produced with
-[Formal-Spec-Agent](https://github.com/briliant-ben/Formal-Spec-Agent).
+A modular, Lean 4.35.0-verified, embeddable **lwIP-class C99 TCP/IPv4 library (`libtcpip`)** and formalized software-architecture stack, evolved alongside [Formal-Spec-Agent](https://github.com/briliant-ben/Formal-Spec-Agent).
+
+It preserves the **v1 minimal single-endpoint prototype** (`tag v1-minimal-prototype`, [code/generated/protocol.c](code/generated/protocol.c), [demo/live_demo.py](demo/live_demo.py)) while delivering a full embeddable **L2–L4 + DHCPv4 + DNS C99 library** backed by **8 Lean 4.35.0-verified protocol and OS-portability FSM modules**.
+
+## Architecture & Repository Layout
 
 ```text
-spec → model → formal → code → tests → live demo (.pcap)
+spec/           Protocol & OS architecture specifications (sys_port, pbuf_pool, tcpip_actor, L2-L4, DHCP/DNS, RFC pins)
+model/          Authoritative Protocol IR JSON models (v1 endpoint + 8 library modules in model/{arch,stack}/)
+formal/         Lean 4.35.0 proofs (v1 formal/lean/ + 8 library proofs in formal/lib/{arch,stack}/)
+include/tcpip/  Public C99 headers (opt.h, err.h, memp.h, pbuf.h, pcap.h, sys.h, tcpip.h, netif.h, netif_veth.h, inet_chksum.h, etharp.h, ip4_addr.h, ip4.h, icmp.h, udp.h, tcp.h, dhcp.h, dns.h, netconn.h, sockets.h)
+src/            C99 implementation: src/core/ (L2-L4, DHCP, DNS, pbuf, memp, tcpip actor), src/api/ (Netconn & BSD Sockets), src/generated/ (8 FSM C99 verifiers)
+port/           OS/bare-metal ports: port/nosys/, port/posix/ (pthreads + virtual-Ethernet veth + PCAP), port/freertos/
+examples/       tcp_echo_demo.c (BSD sockets), dhcp_dns_demo.c, bench_stack.c
+tests/          v1 conformance suite (test_case_study.py) + M1-M4 C99 library & sanitizer suites (tests/lib/)
+scripts/        C99 FSM library regenerator (regen_lib.py) and 8-module Lean proof verifier (check_formal_lib.py)
 ```
 
-| Directory | Contents |
-|---|---|
-| [spec/](spec/README.md) | Pinned RFC sources and source/interpretation references |
-| [model/](model/README.md) | One authoritative generated Protocol IR |
-| [formal/](formal/README.md) | Runnable Lean 4.35.0 proof and bound verification evidence |
-| [code/](code/README.md) | Standalone generated C; build and optional regeneration |
-| [tests/](tests/README.md) | Frozen C/model conformance checks + live exchange PCAP verification |
-| [demo/](demo/README.md) | Live communicating demo (`live_demo.py`) + retained historical Linux TAP recording |
+### Software Architecture Protocol + Dual Execution Model
+1. **Bare-metal (`TCPIP_NO_SYS=1`)**: `libtcpip_nosys.a` — polling loop (`tcpip_poll`), zero threads/locks, callback Raw API (`udp_*`, `tcp_*`), **23.22 KiB** `.text` at `-Os`.
+2. **Multithreaded RTOS/POSIX (`TCPIP_NO_SYS=0`)**: `libtcpip_posix.a` (plus `port/freertos/` skeleton) — single-writer `tcpip_thread` actor mailbox (`tcpip_input`, `tcpip_api_call`, timer wheel) with blocking `netconn_*` and BSD-compatible `tcpip_socket`/`tcpip_bind`/`tcpip_listen`/`tcpip_accept`/`tcpip_connect`/`tcpip_send`/`tcpip_recv`/`tcpip_close` APIs, **38.20 KiB** `.text` at `-Os`.
 
-For a checkout of just the current example, use `git clone --depth 1` rather
-than downloading the entire development history.
+### Stack Capabilities (Exclude TLS, HTTP, IPv6, Wi-Fi/BLE)
+- **OS Port & Memory (`M1`)**: Fixed `memp` pools, chained zero-copy `pbuf` (`PBUF_POOL` / `PBUF_RAM` / `PBUF_REF`), PCAP writer (`DLT_EN10MB`), virtual-Ethernet (`veth`) with configurable drop/reorder/duplicate fault injection.
+- **L2 / L3 (`M2`)**: Ethernet framing, 16-entry ARP cache + request queueing (`etharp`), RFC 791 IPv4 + 16-bit options/checksum + fragmentation & out-of-order reassembly (`ip4_frag`), RFC 792 ICMP Echo & Destination Unreachable.
+- **L4 (`M3`)**: Multi-PCB UDP (`udp_bind`, `udp_connect`, `udp_send`, `udp_sendto`), RFC 9293 / 6298 / 5681 TCP across all 11 states (`LISTEN` backlog, MSS/window negotiation, Jacobson RTT/RTO backoff, delayed ACK, fast retransmit/recovery, zero-window persist probes, out-of-order segment queue, `TIME_WAIT` expiry).
+- **Control & App API (`M4`)**: DHCPv4 DORA client (`dhcp.c`), DNS A-record stub resolver (`dns.c`), thread-safe Netconn (`netconn.c`), and BSD Sockets (`sockets.c`).
 
-## Live communicating demo & packet capture (`.pcap`)
+---
 
-With one command (only a C99 compiler and Python 3.11+ needed — no root or API keys),
-[demo/live_demo.py](demo/live_demo.py) compiles [code/generated/protocol.c](code/generated/protocol.c)
-and exchanges real Ethernet/ARP/IPv4/TCP/UDP/ICMP traffic between the compiled
-C endpoint (`192.0.2.1:40000`) and an independent peer (`192.0.2.2:8080`) over
-`127.0.0.1` UDP loopback sockets, capturing every frame to a standard
-`DLT_EN10MB` `live-capture.pcap`:
+## Formal Verification Summary (8 Lean 4.35.0 Modules + v1)
+
+All 8 library FSM modules compile to pure C99 headers/sources via `Formal-Spec-Agent` (`c99-lib-v1` backend pinned in [formal/lib/framework.json](formal/lib/framework.json)) and are checked against [formal/lib/](formal/lib/) with **zero `sorry`** and standard Lean axioms only (`propext`, `Classical.choice`, `Quot.sound`):
+
+| Layer | Module | Raw Firings | Conflict Groups | C99 Hook (`-DTCPIP_VERIFY_FSM=1`) |
+|---|---|---:|---:|---|
+| Arch | `arch/sys_port` | 10 | 5 | `sys_port_fsm` |
+| Arch | `arch/pbuf_pool` | 13 | 11 | `pbuf_fsm` |
+| Arch | `arch/tcpip_actor` | 16 | 14 | `actor_fsm` |
+| Stack | `stack/arp_entry` | 17 | 15 | `arp_fsm` |
+| Stack | `stack/ip_reass_slot` | 7 | 5 | `ip_reass_fsm` |
+| Stack | `stack/tcp_pcb` | 52 | 38 | `tcp_fsm` |
+| Stack | `stack/dhcp_client` | 22 | 18 | `dhcp_fsm` |
+| Stack | `stack/dns_stub` | 9 | 7 | `dns_fsm` |
+
+Runtime builds use `-DTCPIP_VERIFY_FSM=0` for zero FSM-shadow overhead, while all CI test suites enable `-DTCPIP_VERIFY_FSM=1` under clean, ASan/UBSan, and TSan instrumentation.
+
+---
+
+## Measured Footprint & Throughput (`make size`, `make bench`)
+
+Measured locally on Apple Clang arm64 (`-std=c99 -Os -ffunction-sections -fdata-sections` for libs, `-O2` over polled in-memory `veth` for `bench_stack`):
+
+| Metric | Value | Target |
+|---|---:|---|
+| Core L2–L4 static lib (`libtcpip_nosys.a` `.text`) | **23,779 B (23.22 KiB)** | 40–90 KiB (`<= 90 KiB`) |
+| Full stack (`libtcpip_posix.a` `.text`) | **39,112 B (38.20 KiB)** | Compact embeddable |
+| `inet_chksum` (1500 B × 200,000) | **5,396.2 MiB/s** (`53.02 ms`) | Fast RFC 1071 32-bit fold |
+| UDP TX+RX (1400 B × 20,000) | **2,200.9 kpps** (**24,650.6 Mbps**) | Line-rate software loopback |
+| TCP bulk TX (8 MiB stream) | **16,276.7 Mbps** (`4.12 ms`) | High-throughput zero-copy path |
+| TCP ping-pong RTT (32 B × 1,000) | **0.28 µs / RTT** | Low-latency single-writer path |
+
+---
+
+## Quick Start (`libtcpip`)
+
+Requires a C99 compiler (`cc`) and Python 3.11+ (`pthreads` for `TCPIP_NO_SYS=0`):
 
 ```sh
+# 1. Build static libraries and enforce core L2-L4 size limit
+make lib size
+
+# 2. Run M1-M4 verification suites (NO_SYS=1 & NO_SYS=0) + ASan/UBSan + TSan
+make test-lib test-asan test-tsan
+
+# 3. Run real-traffic BSD Socket TCP echo & DHCP+DNS demos (produces build/*.pcap)
+make demos
+tcpdump -nn -r build/tcp_echo_demo.pcap
+tcpdump -nn -r build/dhcp_dns_demo.pcap
+
+# 4. Run checksum/UDP/TCP microbenchmarks
+make bench
+
+# 5. Verify C99 FSM regeneration & all 8 Lean 4.35.0 formal proofs
+make regen-lib FRAMEWORK=../Formal-Spec-Agent
+make formal-lib FRAMEWORK=../Formal-Spec-Agent LEAN=/path/to/lean
+```
+
+### Sample Wire Captures (`tcpdump -nn -r`)
+
+`make demos` produces standard Ethernet PCAPs verifiable with Wireshark or `tcpdump`:
+
+```text
+# build/tcp_echo_demo.pcap (11 frames: 3-way handshake, 62B echo, 4-way FIN teardown)
+08:00:00.001000 IP 10.42.0.2.49152 > 10.42.0.2.9090: Flags [S], seq 2542462624, win 32768, options [mss 1460], length 0
+08:00:00.001000 IP 10.42.0.2.9090 > 10.42.0.2.49152: Flags [S.], seq 1382023300, ack 2542462625, win 32768, options [mss 1460], length 0
+08:00:00.001000 IP 10.42.0.2.49152 > 10.42.0.2.9090: Flags [P.], seq 1:63, ack 1, win 32768, length 62
+...
+
+# build/dhcp_dns_demo.pcap (6 frames: DHCP DORA lease 10.50.0.100 + DNS A? example.org -> 93.184.216.34)
+08:00:00.001000 IP 0.0.0.0.68 > 255.255.255.255.67: BOOTP/DHCP, Request from 02:00:00:00:00:a1, length 249
+08:00:00.001000 IP 10.50.0.2.67 > 255.255.255.255.68: BOOTP/DHCP, Reply, length 274
+08:00:00.011000 IP 10.50.0.2.49152 > 10.50.0.2.53: 4352+ A? example.org. (29)
+08:00:00.011000 IP 10.50.0.2.53 > 10.50.0.2.49152: 4352 1/0/0 A 93.184.216.34 (45)
+```
+
+---
+
+## Preserved v1 Minimal Prototype (`v1-minimal-prototype`)
+
+The original single-endpoint verified prototype remains intact and tested in CI (`standalone-case` & `lean-and-regen`):
+
+```sh
+make test
 make live OUT=/tmp/tcpip-live-001
 tcpdump -nn -r /tmp/tcpip-live-001/live-capture.pcap
-# or open /tmp/tcpip-live-001/live-capture.pcap directly in Wireshark
-```
-
-What `make live` exercises in a single captured run (**41 wire packets**):
-1. **Client scenario (`--mode client`)**: active TCP open (`T.app.connect` -> ARP Request/Reply -> `SYN` / `SYN-ACK` / `ACK`), segmented TCP payload echo (`"hello"` -> `"echo:hello"` across SMSS=4 chunks -> `FIN` -> `TIME-WAIT`), UDP datagram echo (`"udp-ping"` -> `"echo:udp-ping"`), and ICMP Echo Request/Reply (`"icmp-ping"`).
-2. **Server scenario (`--mode server`)**: passive TCP open (`T.app.listen` -> `LISTEN` -> incoming peer `SYN` -> ARP Request/Reply -> `SYN-ACK` -> `ACK` -> `ESTABLISHED` -> echoes `"ping"` as `"echo:ping"` -> `CLOSE-WAIT` -> `LAST-ACK` -> `CLOSED`).
-
-Sample `tcpdump -nn -r` output from running `make live`:
-
-```text
-22:06:44.155062 ARP, Request who-has 192.0.2.2 tell 192.0.2.1, length 46
-22:06:44.155208 ARP, Reply 192.0.2.2 is-at 02:00:00:00:00:02, length 46
-22:06:44.155743 IP 192.0.2.1.40000 > 192.0.2.2.8080: Flags [S], seq 1000, win 16, length 0
-22:06:44.155872 IP 192.0.2.2.8080 > 192.0.2.1.40000: Flags [S.], seq 9000, ack 1001, win 16, length 0
-22:06:44.156501 IP 192.0.2.1.40000 > 192.0.2.2.8080: Flags [.], ack 1, win 16, length 0
-22:06:44.157043 IP 192.0.2.1.40000 > 192.0.2.2.8080: Flags [P.], seq 1:5, ack 1, win 16, length 4
-...
-22:06:44.160190 IP 192.0.2.1.40000 > 192.0.2.2.8080: UDP, length 8
-22:06:44.160249 IP 192.0.2.2.8080 > 192.0.2.1.40000: UDP, length 13
-22:06:44.160426 IP 192.0.2.2 > 192.0.2.1: ICMP echo request, id 4660, seq 1, length 17
-22:06:44.160624 IP 192.0.2.1 > 192.0.2.2: ICMP echo reply, id 4660, seq 1, length 17
-22:06:44.164767 IP 192.0.2.2.8080 > 192.0.2.1.40000: Flags [S], seq 5000, win 16, length 0
-... (server ARP + SYN-ACK + echo:ping + CLOSE-WAIT/LAST-ACK/CLOSED)
-```
-
-Options for sniffing or attaching to a real OS kernel interface on Linux:
-
-```sh
-# Sniff UDP loopback traffic live in another terminal while running:
-python3 demo/live_demo.py --mode all --transport udp --port-a 19001 --port-b 19002 --out /tmp/tcpip-live-002
-
-# Attach the compiled C stack (LISTEN mode) to a Linux TAP interface and capture:
-sudo python3 demo/live_demo.py --mode tap --tap tap0 --duration 15 --out /tmp/tcpip-tap-001
-```
-
-## Build and test
-
-Only a C99 compiler and Python 3.11+ are needed for the local build and test scripts:
-
-```sh
-python3 code/build.py --out /tmp/tcpip-case-001 --run-example
-printf 'B\nD 0 T.app.connect\n' | /tmp/tcpip-case-001/tcpip-reference
-python3 -m unittest discover -s tests -v
-```
-
-The generated executable runs independently of Python. You can also compile it
-directly with `cc -std=c99 code/generated/protocol.c -o /tmp/tcpip-reference`.
-To inspect the retained pre-optimization Linux TAP recording, open
-[demo/review.html](demo/review.html) locally or [demo/capture.pcap](demo/capture.pcap) in Wireshark.
-
-## Check the model in Lean
-
-The optional proof uses a separate, pinned Formal-Spec-Agent checkout and
-Lean 4.35.0. It checks the declared invariants on all 335 model rule/timer
-pairings and the scheduler's dispatch and rollback behavior.
-
-```sh
+make run OUT=/tmp/tcpip-case-001
 make formal FRAMEWORK=../Formal-Spec-Agent LEAN=/path/to/lean OUT=/tmp/tcpip-lean-proof
 ```
 
-See [formal/](formal/README.md) for the precise scope and framework pin.
-
-## What this example demonstrates
-
-One declarative IR owns ARP, atomic IPv4, finite TCP, UDP and ICMP Echo behavior.
-The live prototype above (`demo/live_demo.py`) drives the current optimized C99
-program (**651 KiB** source [code/generated/protocol.c](code/generated/protocol.c))
-over local UDP loopback sockets (or Linux TAP with `--mode tap`), capturing
-RFC-checksummed Ethernet frames directly to `.pcap`.
-
-Separately, [demo/](demo/README.md) retains the historical **19-transition,
-25-packet** pre-optimization Linux TAP observation against real Linux peers.
-The current C is regenerated with a pinned, optimized framework backend
-(**2.75 MiB → 651 KiB**), with 24 regression paths / 157 transitions matching
-the original executable output and reference; [code/README.md](code/README.md)
-and [demo/README.md](demo/README.md) keep those evidence epochs distinct.
-
-Scope is a fixed peer/tuple, MTU 1500 and TCP 16-byte buffers / SMSS 4. General routing,
-fragmentation, congestion/recovery, sockets, IPv6 and upper layers are excluded.
-The optional Lean 4.35.0 proof covers declared invariants, timer bounds, guard
-conflict groups, and dispatch/rollback contracts for this fixed endpoint
-profile; see [formal/](formal/README.md) and
-[formal/lean-result.json](formal/lean-result.json). Compiler equivalence and
-unmodeled protocol layers remain outside the claim boundary.
-
-## Regenerating from IR
-
-Generation and protocol-model validation belong to the separate framework, not
-this example repository. [code/regenerate.py](code/README.md) optionally uses an
-external checkout pinned by [code/framework.json](code/framework.json). Building
-the supplied C and viewing the demo do not depend on it.
-
-The full development tree, experiments and original proof bundles remain in
-[Git history](https://github.com/briliant-ben/TCPIP-Model/tree/351f2519c864a05e5b3d5a405ba528862d41fa7d).
-They are intentionally absent from this focused example's working tree.
+See [code/README.md](code/README.md), [demo/README.md](demo/README.md), and [formal/README.md](formal/README.md) for v1 artifact digests, regression paths (`24` paths / `157` transitions), and historical Linux TAP capture ([demo/review.html](demo/review.html)).

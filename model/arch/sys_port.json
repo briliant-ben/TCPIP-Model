@@ -1,0 +1,216 @@
+{
+  "ir_version": "0.6",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "arch-sys-port",
+  "states": ["UNINIT", "ACTIVE", "CLOSED"],
+  "initial_state": "UNINIT",
+  "scope": {
+    "terminal_states": [],
+    "excluded": ["kernel-futex-internals", "priority-inheritance"]
+  },
+  "requirements": {
+    "SYS_PORT": {
+      "source": "spec/arch/sys-port.md#scope",
+      "interpretation": "Single-instance bounded semaphore/mailbox ownership and waiter conservation."
+    }
+  },
+  "variables": {
+    "cap": {"type": "int", "initial": 0},
+    "count": {"type": "int", "initial": 0},
+    "waiters": {"type": "int", "initial": 0}
+  },
+  "events": {
+    "port.init": {"origin": "application", "fields": {"cap": "int"}},
+    "port.signal": {"origin": "application", "fields": {}},
+    "port.wait_enter": {"origin": "application", "fields": {"timeout_ms": "int"}},
+    "port.close": {"origin": "application", "fields": {}},
+    "timer.wait_tmo": {"origin": "timer", "fields": {}}
+  },
+  "messages": {
+    "sys.ready": {"fields": {"cap": "int"}},
+    "sys.woke": {"fields": {"waiters": "int"}},
+    "sys.posted": {"fields": {"count": "int"}},
+    "sys.full": {"fields": {"count": "int"}},
+    "sys.acquired": {"fields": {"count": "int"}},
+    "sys.blocked": {"fields": {"waiters": "int"}},
+    "sys.timeout": {"fields": {"waiters": "int"}},
+    "sys.closed": {"fields": {}}
+  },
+  "timers": {
+    "wait_tmo": {"event": "timer.wait_tmo"}
+  },
+  "invariants": [
+    {
+      "id": "SYS_CAP_BOUNDS",
+      "assert": {"op": "and", "args": [{"op": "le", "args": [0, {"var": "cap"}]}, {"op": "le", "args": [{"var": "cap"}, 64]}]},
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "SYS_COUNT_BOUNDS",
+      "assert": {"op": "and", "args": [{"op": "le", "args": [0, {"var": "count"}]}, {"op": "le", "args": [{"var": "count"}, {"var": "cap"}]}]},
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "SYS_WAITER_BOUNDS",
+      "assert": {"op": "and", "args": [{"op": "le", "args": [0, {"var": "waiters"}]}, {"op": "le", "args": [{"var": "waiters"}, 32]}]},
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "SYS_WAITERS_NO_TOKENS",
+      "assert": {"op": "or", "args": [{"op": "eq", "args": [{"var": "waiters"}, 0]}, {"op": "eq", "args": [{"var": "count"}, 0]}]},
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "SYS_CLEAN_WHEN_INACTIVE",
+      "assert": {
+        "op": "or",
+        "args": [
+          {"state": "ACTIVE"},
+          {"op": "and", "args": [{"op": "eq", "args": [{"var": "count"}, 0]}, {"op": "eq", "args": [{"var": "waiters"}, 0]}]}
+        ]
+      },
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "SYS_TIMER_ONLY_ACTIVE",
+      "assert": {"op": "implies", "args": [{"timer_active": "wait_tmo"}, {"state": "ACTIVE"}]},
+      "requirements": ["SYS_PORT"]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "PORT.INIT_OK",
+      "from": "UNINIT",
+      "to": "ACTIVE",
+      "event": "port.init",
+      "guard": {"op": "and", "args": [{"op": "ge", "args": [{"event": "cap"}, 1]}, {"op": "le", "args": [{"event": "cap"}, 64]}]},
+      "actions": [
+        {"set": {"var": "cap", "value": {"event": "cap"}}},
+        {"set": {"var": "count", "value": 0}},
+        {"set": {"var": "waiters", "value": 0}},
+        {"emit": {"message": "sys.ready", "fields": {"cap": {"event": "cap"}}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "PORT.SIGNAL_WAKE",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "port.signal",
+      "guard": {"op": "ge", "args": [{"var": "waiters"}, 1]},
+      "actions": [
+        {"set": {"var": "waiters", "value": {"op": "sub", "args": [{"var": "waiters"}, 1]}}},
+        {"emit": {"message": "sys.woke", "fields": {"waiters": {"var": "waiters"}}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "PORT.SIGNAL_POST",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "port.signal",
+      "guard": {"op": "and", "args": [{"op": "eq", "args": [{"var": "waiters"}, 0]}, {"op": "le", "args": [{"op": "add", "args": [{"var": "count"}, 1]}, {"var": "cap"}]}]},
+      "actions": [
+        {"set": {"var": "count", "value": {"op": "add", "args": [{"var": "count"}, 1]}}},
+        {"emit": {"message": "sys.posted", "fields": {"count": {"var": "count"}}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "PORT.SIGNAL_FULL",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "port.signal",
+      "guard": {"op": "and", "args": [{"op": "eq", "args": [{"var": "waiters"}, 0]}, {"op": "eq", "args": [{"var": "count"}, {"var": "cap"}]}]},
+      "actions": [
+        {"emit": {"message": "sys.full", "fields": {"count": {"var": "count"}}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "PORT.WAIT_ACQUIRE",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "port.wait_enter",
+      "guard": {"op": "ge", "args": [{"var": "count"}, 1]},
+      "actions": [
+        {"set": {"var": "count", "value": {"op": "sub", "args": [{"var": "count"}, 1]}}},
+        {"emit": {"message": "sys.acquired", "fields": {"count": {"var": "count"}}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "PORT.WAIT_BLOCK",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "port.wait_enter",
+      "guard": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"var": "count"}, 0]},
+          {"op": "and", "args": [{"op": "le", "args": [{"var": "waiters"}, 31]}, {"op": "ge", "args": [{"event": "timeout_ms"}, 1]}]}
+        ]
+      },
+      "actions": [
+        {"set": {"var": "waiters", "value": {"op": "add", "args": [{"var": "waiters"}, 1]}}},
+        {"arm": {"timer": "wait_tmo", "delay_ms": {"op": "min", "args": [{"event": "timeout_ms"}, 60000]}}},
+        {"emit": {"message": "sys.blocked", "fields": {"waiters": {"var": "waiters"}}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "PORT.WAIT_REJECT",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "port.wait_enter",
+      "guard": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"var": "count"}, 0]},
+          {"op": "or", "args": [{"op": "eq", "args": [{"var": "waiters"}, 32]}, {"op": "le", "args": [{"event": "timeout_ms"}, 0]}]}
+        ]
+      },
+      "actions": [
+        {"emit": {"message": "sys.timeout", "fields": {"waiters": {"var": "waiters"}}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "PORT.WAIT_TIMER_EXPIRE",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "timer.wait_tmo",
+      "guard": {"op": "ge", "args": [{"var": "waiters"}, 1]},
+      "actions": [
+        {"set": {"var": "waiters", "value": {"op": "sub", "args": [{"var": "waiters"}, 1]}}},
+        {"emit": {"message": "sys.timeout", "fields": {"waiters": {"var": "waiters"}}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "PORT.WAIT_TIMER_SPURIOUS",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "timer.wait_tmo",
+      "guard": {"op": "eq", "args": [{"var": "waiters"}, 0]},
+      "actions": [
+        {"emit": {"message": "sys.timeout", "fields": {"waiters": 0}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    },
+    {
+      "id": "PORT.CLOSE",
+      "from": "ACTIVE",
+      "to": "CLOSED",
+      "event": "port.close",
+      "guard": true,
+      "actions": [
+        {"cancel": "wait_tmo"},
+        {"set": {"var": "count", "value": 0}},
+        {"set": {"var": "waiters", "value": 0}},
+        {"emit": {"message": "sys.closed", "fields": {}}}
+      ],
+      "requirements": ["SYS_PORT"]
+    }
+  ]
+}

@@ -1,0 +1,360 @@
+{
+  "ir_version": "0.6",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "ip-reassembly-slot",
+  "scope": {
+    "terminal_states": [],
+    "excluded": ["overlap_payload_bytes"]
+  },
+  "states": ["FREE", "ACTIVE", "COMPLETE"],
+  "initial_state": "FREE",
+  "requirements": {
+    "L3.IP4.REASS": {
+      "source": "spec/stack/l3-ipv4-icmp.md#L3.IP4.REASS",
+      "interpretation": "Reassembly slot bounds, last-fragment total length consistency, and 30s timeout reclamation."
+    }
+  },
+  "variables": {
+    "rcv_bytes": {"type": "int", "initial": 0},
+    "tot_len": {"type": "int", "initial": 0},
+    "has_last": {"type": "bool", "initial": false},
+    "frag_count": {"type": "int", "initial": 0}
+  },
+  "events": {
+    "alloc_frag": {
+      "origin": "network",
+      "fields": {"add_bytes": "int", "is_last": "bool", "final_len": "int"}
+    },
+    "add_frag": {
+      "origin": "network",
+      "fields": {"add_bytes": "int", "is_last": "bool", "final_len": "int", "done": "bool"}
+    },
+    "release": {"origin": "application", "fields": {}},
+    "tick_timeout": {"origin": "timer", "fields": {}}
+  },
+  "messages": {
+    "slot_ready": {"fields": {"tot_len": "int"}},
+    "slot_expired": {"fields": {}}
+  },
+  "timers": {
+    "reass_tmo": {"event": "tick_timeout"}
+  },
+  "transitions": [
+    {
+      "id": "REASS.ALLOC.MIDDLE",
+      "from": "FREE",
+      "to": "ACTIVE",
+      "event": "alloc_frag",
+      "guard": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"event": "is_last"}, false]},
+          {
+            "op": "and",
+            "args": [
+              {"op": "ge", "args": [{"event": "add_bytes"}, 1]},
+              {"op": "le", "args": [{"event": "add_bytes"}, 8192]}
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {"set": {"var": "rcv_bytes", "value": {"event": "add_bytes"}}},
+        {"set": {"var": "tot_len", "value": 0}},
+        {"set": {"var": "has_last", "value": false}},
+        {"set": {"var": "frag_count", "value": 1}},
+        {"arm": {"timer": "reass_tmo", "delay_ms": 30000}}
+      ],
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "REASS.ALLOC.LAST_PENDING",
+      "from": "FREE",
+      "to": "ACTIVE",
+      "event": "alloc_frag",
+      "guard": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"event": "is_last"}, true]},
+          {
+            "op": "and",
+            "args": [
+              {"op": "ge", "args": [{"event": "add_bytes"}, 1]},
+              {
+                "op": "and",
+                "args": [
+                  {"op": "ge", "args": [{"event": "final_len"}, {"op": "add", "args": [{"event": "add_bytes"}, 1]}]},
+                  {"op": "le", "args": [{"event": "final_len"}, 8192]}
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {"set": {"var": "rcv_bytes", "value": {"event": "add_bytes"}}},
+        {"set": {"var": "tot_len", "value": {"event": "final_len"}}},
+        {"set": {"var": "has_last", "value": true}},
+        {"set": {"var": "frag_count", "value": 1}},
+        {"arm": {"timer": "reass_tmo", "delay_ms": 30000}}
+      ],
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "REASS.ADD.MORE",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "add_frag",
+      "guard": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"event": "done"}, false]},
+          {
+            "op": "and",
+            "args": [
+              {"op": "le", "args": [{"var": "frag_count"}, 31]},
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "and",
+                    "args": [
+                      {"op": "ge", "args": [{"event": "add_bytes"}, 0]},
+                      {"op": "le", "args": [{"op": "add", "args": [{"var": "rcv_bytes"}, {"event": "add_bytes"}]}, 8192]}
+                    ]
+                  },
+                  {
+                    "op": "or",
+                    "args": [
+                      {"op": "eq", "args": [{"event": "is_last"}, false]},
+                      {
+                        "op": "and",
+                        "args": [
+                          {"op": "ge", "args": [{"event": "final_len"}, {"op": "add", "args": [{"var": "rcv_bytes"}, {"event": "add_bytes"}]}]},
+                          {
+                            "op": "and",
+                            "args": [
+                              {"op": "ge", "args": [{"event": "final_len"}, 1]},
+                              {"op": "le", "args": [{"event": "final_len"}, 8192]}
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {"set": {"var": "rcv_bytes", "value": {"op": "add", "args": [{"var": "rcv_bytes"}, {"event": "add_bytes"}]}}},
+        {"set": {"var": "has_last", "value": {"op": "ite", "args": [{"event": "is_last"}, true, {"var": "has_last"}]}}},
+        {"set": {"var": "tot_len", "value": {"op": "ite", "args": [{"event": "is_last"}, {"event": "final_len"}, {"var": "tot_len"}]}}},
+        {"set": {"var": "frag_count", "value": {"op": "add", "args": [{"var": "frag_count"}, 1]}}}
+      ],
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "REASS.ADD.COMPLETE",
+      "from": "ACTIVE",
+      "to": "COMPLETE",
+      "event": "add_frag",
+      "guard": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "args": [{"event": "done"}, true]},
+          {
+            "op": "and",
+            "args": [
+              {"op": "le", "args": [{"var": "frag_count"}, 31]},
+              {
+                "op": "and",
+                "args": [
+                  {"op": "ge", "args": [{"event": "add_bytes"}, 0]},
+                  {
+                    "op": "and",
+                    "args": [
+                      {"op": "or", "args": [{"var": "has_last"}, {"event": "is_last"}]},
+                      {
+                        "op": "and",
+                        "args": [
+                          {"op": "ge", "args": [{"event": "final_len"}, 1]},
+                          {
+                            "op": "and",
+                            "args": [
+                              {"op": "le", "args": [{"event": "final_len"}, 8192]},
+                              {"op": "eq", "args": [{"op": "add", "args": [{"var": "rcv_bytes"}, {"event": "add_bytes"}]}, {"event": "final_len"}]}
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {"cancel": "reass_tmo"},
+        {"set": {"var": "rcv_bytes", "value": {"event": "final_len"}}},
+        {"set": {"var": "tot_len", "value": {"event": "final_len"}}},
+        {"set": {"var": "has_last", "value": true}},
+        {"set": {"var": "frag_count", "value": {"op": "add", "args": [{"var": "frag_count"}, 1]}}},
+        {"emit": {"message": "slot_ready", "fields": {"tot_len": {"var": "tot_len"}}}}
+      ],
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "REASS.TIMEOUT",
+      "from": "ACTIVE",
+      "to": "FREE",
+      "event": "tick_timeout",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "rcv_bytes", "value": 0}},
+        {"set": {"var": "tot_len", "value": 0}},
+        {"set": {"var": "has_last", "value": false}},
+        {"set": {"var": "frag_count", "value": 0}},
+        {"emit": {"message": "slot_expired", "fields": {}}}
+      ],
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "REASS.RELEASE.ACTIVE",
+      "from": "ACTIVE",
+      "to": "FREE",
+      "event": "release",
+      "guard": true,
+      "actions": [
+        {"cancel": "reass_tmo"},
+        {"set": {"var": "rcv_bytes", "value": 0}},
+        {"set": {"var": "tot_len", "value": 0}},
+        {"set": {"var": "has_last", "value": false}},
+        {"set": {"var": "frag_count", "value": 0}}
+      ],
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "REASS.RELEASE.COMPLETE",
+      "from": "COMPLETE",
+      "to": "FREE",
+      "event": "release",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "rcv_bytes", "value": 0}},
+        {"set": {"var": "tot_len", "value": 0}},
+        {"set": {"var": "has_last", "value": false}},
+        {"set": {"var": "frag_count", "value": 0}}
+      ],
+      "requirements": ["L3.IP4.REASS"]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "RCV_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {"op": "le", "args": [0, {"var": "rcv_bytes"}]},
+          {"op": "le", "args": [{"var": "rcv_bytes"}, 8192]}
+        ]
+      },
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "TOT_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {"op": "le", "args": [0, {"var": "tot_len"}]},
+          {"op": "le", "args": [{"var": "tot_len"}, 8192]}
+        ]
+      },
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "FRAG_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {"op": "le", "args": [0, {"var": "frag_count"}]},
+          {"op": "le", "args": [{"var": "frag_count"}, 32]}
+        ]
+      },
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "LAST_LEN_VALID",
+      "assert": {"op": "implies", "args": [{"var": "has_last"}, {"op": "ge", "args": [{"var": "tot_len"}, 1]}]},
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "STATE_COHERENCE",
+      "assert": {
+        "op": "or",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {"state": "FREE"},
+              {
+                "op": "and",
+                "args": [
+                  {"op": "eq", "args": [{"var": "rcv_bytes"}, 0]},
+                  {
+                    "op": "and",
+                    "args": [
+                      {"op": "eq", "args": [{"var": "tot_len"}, 0]},
+                      {
+                        "op": "and",
+                        "args": [
+                          {"op": "eq", "args": [{"var": "has_last"}, false]},
+                          {"op": "eq", "args": [{"var": "frag_count"}, 0]}
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {"op": "and", "args": [{"state": "ACTIVE"}, {"op": "ge", "args": [{"var": "frag_count"}, 1]}]},
+              {
+                "op": "and",
+                "args": [
+                  {"state": "COMPLETE"},
+                  {
+                    "op": "and",
+                    "args": [
+                      {"var": "has_last"},
+                      {
+                        "op": "and",
+                        "args": [
+                          {"op": "eq", "args": [{"var": "rcv_bytes"}, {"var": "tot_len"}]},
+                          {"op": "ge", "args": [{"var": "frag_count"}, 1]}
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": ["L3.IP4.REASS"]
+    },
+    {
+      "id": "TIMER_ACTIVE_ONLY",
+      "assert": {"op": "implies", "args": [{"timer_active": "reass_tmo"}, {"state": "ACTIVE"}]},
+      "requirements": ["L3.IP4.REASS"]
+    }
+  ]
+}

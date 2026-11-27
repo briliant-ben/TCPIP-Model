@@ -39,8 +39,8 @@ class CaseStudyTests(unittest.TestCase):
         self.assertEqual(rows[0]['snapshot'],rows[-1]['snapshot'])
 
     def test_only_six_case_directories_and_pinned_model_C_identity(self):
-        visible={p.name for p in ROOT.iterdir()if p.is_dir()and not p.name.startswith(('.', '__'))}
-        self.assertEqual(visible,{'spec','model','formal','code','tests','demo'})
+        visible={p.name for p in ROOT.iterdir()if p.is_dir()and not p.name.startswith(('.', '__'))and p.name!='build'}
+        self.assertEqual(visible,{'spec','model','formal','code','tests','demo','include','src','port','examples','scripts'})
         manifest=json.loads((ROOT/'code/generated/manifest.json').read_text())
         for path,key in [('model/ipv4-endpoint-virtual-link.json','model_sha256'),('code/generated/protocol.c','C_sha256')]:
             self.assertEqual(hashlib.sha256((ROOT/path).read_bytes()).hexdigest(),manifest[key])

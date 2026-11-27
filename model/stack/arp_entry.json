@@ -1,0 +1,368 @@
+{
+  "ir_version": "0.6",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "arp-entry-lifecycle",
+  "scope": {
+    "terminal_states": [],
+    "excluded": ["hardware_multicast_filter"]
+  },
+  "states": ["EMPTY", "PENDING", "STABLE", "STALE"],
+  "initial_state": "EMPTY",
+  "requirements": {
+    "L2.ARP.QUEUE": {
+      "source": "spec/stack/l2-arp-netif.md#L2.ARP.QUEUE",
+      "interpretation": "Pending queue length bounded 0..4 and empty outside PENDING."
+    },
+    "L2.ARP.TIMER": {
+      "source": "spec/stack/l2-arp-netif.md#L2.ARP.TIMER",
+      "interpretation": "Retry and aging timers stay bound to PENDING and STABLE/STALE states."
+    }
+  },
+  "variables": {
+    "queue_len": {"type": "int", "initial": 0},
+    "retries": {"type": "int", "initial": 0},
+    "age_s": {"type": "int", "initial": 0}
+  },
+  "events": {
+    "lookup_miss": {"origin": "application", "fields": {}},
+    "enqueue": {"origin": "application", "fields": {}},
+    "rx_reply": {"origin": "network", "fields": {}},
+    "rx_req_learn": {"origin": "network", "fields": {}},
+    "evict": {"origin": "application", "fields": {}},
+    "tick_retry": {"origin": "timer", "fields": {}},
+    "tick_age": {"origin": "timer", "fields": {}}
+  },
+  "messages": {
+    "tx_arp_req": {"fields": {}},
+    "flush_queue": {"fields": {}},
+    "arp_failed": {"fields": {}},
+    "arp_evicted": {"fields": {}}
+  },
+  "timers": {
+    "retry_tmo": {"event": "tick_retry"},
+    "age_tmo": {"event": "tick_age"}
+  },
+  "transitions": [
+    {
+      "id": "ARP.MISS",
+      "from": "EMPTY",
+      "to": "PENDING",
+      "event": "lookup_miss",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "queue_len", "value": 1}},
+        {"set": {"var": "retries", "value": 1}},
+        {"set": {"var": "age_s", "value": 0}},
+        {"arm": {"timer": "retry_tmo", "delay_ms": 1000}},
+        {"emit": {"message": "tx_arp_req", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.QUEUE", "L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.ENQ.INC",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "enqueue",
+      "guard": {"op": "le", "args": [{"var": "queue_len"}, 3]},
+      "actions": [
+        {"set": {"var": "queue_len", "value": {"op": "add", "args": [{"var": "queue_len"}, 1]}}}
+      ],
+      "requirements": ["L2.ARP.QUEUE"]
+    },
+    {
+      "id": "ARP.ENQ.FULL",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "enqueue",
+      "guard": {"op": "eq", "args": [{"var": "queue_len"}, 4]},
+      "actions": [],
+      "requirements": ["L2.ARP.QUEUE"]
+    },
+    {
+      "id": "ARP.RETRY",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "tick_retry",
+      "guard": {"op": "le", "args": [{"var": "retries"}, 4]},
+      "actions": [
+        {"set": {"var": "retries", "value": {"op": "add", "args": [{"var": "retries"}, 1]}}},
+        {"arm": {"timer": "retry_tmo", "delay_ms": 1000}},
+        {"emit": {"message": "tx_arp_req", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.FAIL",
+      "from": "PENDING",
+      "to": "EMPTY",
+      "event": "tick_retry",
+      "guard": {"op": "eq", "args": [{"var": "retries"}, 5]},
+      "actions": [
+        {"set": {"var": "queue_len", "value": 0}},
+        {"set": {"var": "retries", "value": 0}},
+        {"set": {"var": "age_s", "value": 0}},
+        {"emit": {"message": "arp_failed", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.QUEUE", "L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.RESOLVE.PEND",
+      "from": "PENDING",
+      "to": "STABLE",
+      "event": "rx_reply",
+      "guard": true,
+      "actions": [
+        {"cancel": "retry_tmo"},
+        {"set": {"var": "queue_len", "value": 0}},
+        {"set": {"var": "retries", "value": 0}},
+        {"set": {"var": "age_s", "value": 0}},
+        {"arm": {"timer": "age_tmo", "delay_ms": 20000}},
+        {"emit": {"message": "flush_queue", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.QUEUE", "L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.REFRESH.STABLE",
+      "from": "STABLE",
+      "to": "STABLE",
+      "event": "rx_reply",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "age_s", "value": 0}},
+        {"arm": {"timer": "age_tmo", "delay_ms": 20000}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.REFRESH.STALE",
+      "from": "STALE",
+      "to": "STABLE",
+      "event": "rx_reply",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "age_s", "value": 0}},
+        {"arm": {"timer": "age_tmo", "delay_ms": 20000}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.LEARN.EMPTY",
+      "from": "EMPTY",
+      "to": "STABLE",
+      "event": "rx_req_learn",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "queue_len", "value": 0}},
+        {"set": {"var": "retries", "value": 0}},
+        {"set": {"var": "age_s", "value": 0}},
+        {"arm": {"timer": "age_tmo", "delay_ms": 20000}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.LEARN.PEND",
+      "from": "PENDING",
+      "to": "STABLE",
+      "event": "rx_req_learn",
+      "guard": true,
+      "actions": [
+        {"cancel": "retry_tmo"},
+        {"set": {"var": "queue_len", "value": 0}},
+        {"set": {"var": "retries", "value": 0}},
+        {"set": {"var": "age_s", "value": 0}},
+        {"arm": {"timer": "age_tmo", "delay_ms": 20000}},
+        {"emit": {"message": "flush_queue", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.QUEUE", "L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.LEARN.STABLE",
+      "from": "STABLE",
+      "to": "STABLE",
+      "event": "rx_req_learn",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "age_s", "value": 0}},
+        {"arm": {"timer": "age_tmo", "delay_ms": 20000}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.LEARN.STALE",
+      "from": "STALE",
+      "to": "STABLE",
+      "event": "rx_req_learn",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "age_s", "value": 0}},
+        {"arm": {"timer": "age_tmo", "delay_ms": 20000}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.AGE.STALE",
+      "from": "STABLE",
+      "to": "STALE",
+      "event": "tick_age",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "age_s", "value": 240}},
+        {"arm": {"timer": "age_tmo", "delay_ms": 60000}},
+        {"emit": {"message": "tx_arp_req", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.AGE.EXPIRE",
+      "from": "STALE",
+      "to": "EMPTY",
+      "event": "tick_age",
+      "guard": true,
+      "actions": [
+        {"set": {"var": "queue_len", "value": 0}},
+        {"set": {"var": "retries", "value": 0}},
+        {"set": {"var": "age_s", "value": 0}},
+        {"emit": {"message": "arp_evicted", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.EVICT.PEND",
+      "from": "PENDING",
+      "to": "EMPTY",
+      "event": "evict",
+      "guard": true,
+      "actions": [
+        {"cancel": "retry_tmo"},
+        {"cancel": "age_tmo"},
+        {"set": {"var": "queue_len", "value": 0}},
+        {"set": {"var": "retries", "value": 0}},
+        {"set": {"var": "age_s", "value": 0}},
+        {"emit": {"message": "arp_evicted", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.QUEUE", "L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.EVICT.STABLE",
+      "from": "STABLE",
+      "to": "EMPTY",
+      "event": "evict",
+      "guard": true,
+      "actions": [
+        {"cancel": "age_tmo"},
+        {"set": {"var": "queue_len", "value": 0}},
+        {"set": {"var": "retries", "value": 0}},
+        {"set": {"var": "age_s", "value": 0}},
+        {"emit": {"message": "arp_evicted", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "ARP.EVICT.STALE",
+      "from": "STALE",
+      "to": "EMPTY",
+      "event": "evict",
+      "guard": true,
+      "actions": [
+        {"cancel": "age_tmo"},
+        {"set": {"var": "queue_len", "value": 0}},
+        {"set": {"var": "retries", "value": 0}},
+        {"set": {"var": "age_s", "value": 0}},
+        {"emit": {"message": "arp_evicted", "fields": {}}}
+      ],
+      "requirements": ["L2.ARP.TIMER"]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "Q_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {"op": "le", "args": [0, {"var": "queue_len"}]},
+          {"op": "le", "args": [{"var": "queue_len"}, 4]}
+        ]
+      },
+      "requirements": ["L2.ARP.QUEUE"]
+    },
+    {
+      "id": "RETRY_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {"op": "le", "args": [0, {"var": "retries"}]},
+          {"op": "le", "args": [{"var": "retries"}, 5]}
+        ]
+      },
+      "requirements": ["L2.ARP.QUEUE"]
+    },
+    {
+      "id": "AGE_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {"op": "le", "args": [0, {"var": "age_s"}]},
+          {"op": "le", "args": [{"var": "age_s"}, 300]}
+        ]
+      },
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "STATE_COHERENCE",
+      "assert": {
+        "op": "or",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {"state": "EMPTY"},
+              {
+                "op": "and",
+                "args": [
+                  {"op": "eq", "args": [{"var": "queue_len"}, 0]},
+                  {"op": "eq", "args": [{"var": "retries"}, 0]}
+                ]
+              }
+            ]
+          },
+          {
+            "op": "or",
+            "args": [
+              {"op": "and", "args": [{"state": "PENDING"}, {"op": "ge", "args": [{"var": "retries"}, 1]}]},
+              {
+                "op": "and",
+                "args": [
+                  {"op": "or", "args": [{"state": "STABLE"}, {"state": "STALE"}]},
+                  {
+                    "op": "and",
+                    "args": [
+                      {"op": "eq", "args": [{"var": "queue_len"}, 0]},
+                      {"op": "eq", "args": [{"var": "retries"}, 0]}
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": ["L2.ARP.QUEUE"]
+    },
+    {
+      "id": "TIMER_RETRY_OWNERSHIP",
+      "assert": {"op": "implies", "args": [{"timer_active": "retry_tmo"}, {"state": "PENDING"}]},
+      "requirements": ["L2.ARP.TIMER"]
+    },
+    {
+      "id": "TIMER_AGE_OWNERSHIP",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {"timer_active": "age_tmo"},
+          {"op": "or", "args": [{"state": "STABLE"}, {"state": "STALE"}]}
+        ]
+      },
+      "requirements": ["L2.ARP.TIMER"]
+    }
+  ]
+}

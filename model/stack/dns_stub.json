@@ -1,0 +1,387 @@
+{
+  "ir_version": "0.6",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "dns-stub-resolver",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "recursive_resolver",
+      "dnssec"
+    ]
+  },
+  "states": [
+    "IDLE",
+    "QUERYING",
+    "CACHED"
+  ],
+  "initial_state": "IDLE",
+  "requirements": {
+    "CTRL.DNS": {
+      "source": "spec/stack/ctrl-dhcp-dns.md#3",
+      "interpretation": "Query retry bounds, cache capacity bounds, and query timer ownership."
+    }
+  },
+  "variables": {
+    "cache_count": {
+      "type": "int",
+      "initial": 0
+    },
+    "retries": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "events": {
+    "resolve": {
+      "origin": "application",
+      "fields": {}
+    },
+    "rx_answer": {
+      "origin": "network",
+      "fields": {}
+    },
+    "abort": {
+      "origin": "application",
+      "fields": {}
+    },
+    "clear_cache": {
+      "origin": "application",
+      "fields": {}
+    },
+    "tick_query": {
+      "origin": "timer",
+      "fields": {}
+    }
+  },
+  "messages": {},
+  "timers": {
+    "query_tmo": {
+      "event": "tick_query"
+    }
+  },
+  "transitions": [
+    {
+      "id": "DNS.RESOLVE.IDLE",
+      "from": "IDLE",
+      "to": "QUERYING",
+      "event": "resolve",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "arm": {
+            "timer": "query_tmo",
+            "delay_ms": 1000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "DNS.RESOLVE.CACHED",
+      "from": "CACHED",
+      "to": "QUERYING",
+      "event": "resolve",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "arm": {
+            "timer": "query_tmo",
+            "delay_ms": 1000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "DNS.RX.ANSWER.INC",
+      "from": "QUERYING",
+      "to": "CACHED",
+      "event": "rx_answer",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "var": "cache_count"
+          },
+          7
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "query_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "cache_count",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "cache_count"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "DNS.RX.ANSWER.FULL",
+      "from": "QUERYING",
+      "to": "CACHED",
+      "event": "rx_answer",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "cache_count"
+          },
+          8
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "query_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "DNS.RETRY",
+      "from": "QUERYING",
+      "to": "QUERYING",
+      "event": "tick_query",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "var": "retries"
+          },
+          2
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "query_tmo",
+            "delay_ms": 1000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "DNS.TIMEOUT",
+      "from": "QUERYING",
+      "to": "IDLE",
+      "event": "tick_query",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "retries"
+          },
+          3
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "query_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "DNS.ABORT",
+      "from": "QUERYING",
+      "to": "IDLE",
+      "event": "abort",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "query_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "DNS.CLEAR.IDLE",
+      "from": "IDLE",
+      "to": "IDLE",
+      "event": "clear_cache",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "cache_count",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "DNS.CLEAR.CACHED",
+      "from": "CACHED",
+      "to": "IDLE",
+      "event": "clear_cache",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "cache_count",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "CACHE_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "cache_count"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "cache_count"
+              },
+              8
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "RETRY_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "retries"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "retries"
+              },
+              3
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    },
+    {
+      "id": "TIMER_QUERY_OWN",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "timer_active": "query_tmo"
+          },
+          {
+            "state": "QUERYING"
+          }
+        ]
+      },
+      "requirements": [
+        "CTRL.DNS"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1027 @@
+{
+  "ir_version": "0.6",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "dhcpv4-client",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "dhcp_server",
+      "dhcp_relay"
+    ]
+  },
+  "states": [
+    "INIT",
+    "SELECTING",
+    "REQUESTING",
+    "BOUND",
+    "RENEWING",
+    "REBINDING"
+  ],
+  "initial_state": "INIT",
+  "requirements": {
+    "CTRL.DHCP": {
+      "source": "spec/stack/ctrl-dhcp-dns.md#2",
+      "interpretation": "DORA lifecycle, retries, lease bounds, and timer ownership."
+    }
+  },
+  "variables": {
+    "lease_s": {
+      "type": "int",
+      "initial": 0
+    },
+    "retries": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "events": {
+    "start": {
+      "origin": "application",
+      "fields": {}
+    },
+    "rx_offer": {
+      "origin": "network",
+      "fields": {}
+    },
+    "rx_ack": {
+      "origin": "network",
+      "fields": {
+        "lease": "int"
+      }
+    },
+    "rx_nak": {
+      "origin": "network",
+      "fields": {}
+    },
+    "stop": {
+      "origin": "application",
+      "fields": {}
+    },
+    "tick_retry": {
+      "origin": "timer",
+      "fields": {}
+    },
+    "tick_lease": {
+      "origin": "timer",
+      "fields": {}
+    }
+  },
+  "messages": {},
+  "timers": {
+    "retry_tmo": {
+      "event": "tick_retry"
+    },
+    "lease_tmo": {
+      "event": "tick_lease"
+    }
+  },
+  "transitions": [
+    {
+      "id": "DHCP.START",
+      "from": "INIT",
+      "to": "SELECTING",
+      "event": "start",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_tmo",
+            "delay_ms": 1000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.OFFER",
+      "from": "SELECTING",
+      "to": "REQUESTING",
+      "event": "rx_offer",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_tmo",
+            "delay_ms": 1000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.ACK.REQ",
+      "from": "REQUESTING",
+      "to": "BOUND",
+      "event": "rx_ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "event": "lease"
+              },
+              1
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "lease"
+              },
+              86400
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": {
+              "event": "lease"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "lease_tmo",
+            "delay_ms": 30000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.NAK.REQ",
+      "from": "REQUESTING",
+      "to": "INIT",
+      "event": "rx_nak",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.T1",
+      "from": "BOUND",
+      "to": "RENEWING",
+      "event": "tick_lease",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_tmo",
+            "delay_ms": 2000
+          }
+        },
+        {
+          "arm": {
+            "timer": "lease_tmo",
+            "delay_ms": 30000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.ACK.REN",
+      "from": "RENEWING",
+      "to": "BOUND",
+      "event": "rx_ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "event": "lease"
+              },
+              1
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "lease"
+              },
+              86400
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": {
+              "event": "lease"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "lease_tmo",
+            "delay_ms": 30000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.T2",
+      "from": "RENEWING",
+      "to": "REBINDING",
+      "event": "tick_lease",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_tmo",
+            "delay_ms": 2000
+          }
+        },
+        {
+          "arm": {
+            "timer": "lease_tmo",
+            "delay_ms": 15000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.ACK.REB",
+      "from": "REBINDING",
+      "to": "BOUND",
+      "event": "rx_ack",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "event": "lease"
+              },
+              1
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "lease"
+              },
+              86400
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": {
+              "event": "lease"
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "lease_tmo",
+            "delay_ms": 30000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.LEASE.EXP",
+      "from": "REBINDING",
+      "to": "INIT",
+      "event": "tick_lease",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.SELECTING.RETRY",
+      "from": "SELECTING",
+      "to": "SELECTING",
+      "event": "tick_retry",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "var": "retries"
+          },
+          4
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_tmo",
+            "delay_ms": 2000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.SELECTING.FAIL",
+      "from": "SELECTING",
+      "to": "INIT",
+      "event": "tick_retry",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "retries"
+          },
+          5
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.REQUESTING.RETRY",
+      "from": "REQUESTING",
+      "to": "REQUESTING",
+      "event": "tick_retry",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "var": "retries"
+          },
+          4
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_tmo",
+            "delay_ms": 2000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.REQUESTING.FAIL",
+      "from": "REQUESTING",
+      "to": "INIT",
+      "event": "tick_retry",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "retries"
+          },
+          5
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.RENEWING.RETRY",
+      "from": "RENEWING",
+      "to": "RENEWING",
+      "event": "tick_retry",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "var": "retries"
+          },
+          4
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_tmo",
+            "delay_ms": 2000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.RENEWING.FAIL",
+      "from": "RENEWING",
+      "to": "INIT",
+      "event": "tick_retry",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "retries"
+          },
+          5
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.REBINDING.RETRY",
+      "from": "REBINDING",
+      "to": "REBINDING",
+      "event": "tick_retry",
+      "guard": {
+        "op": "le",
+        "args": [
+          {
+            "var": "retries"
+          },
+          4
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_tmo",
+            "delay_ms": 2000
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.REBINDING.FAIL",
+      "from": "REBINDING",
+      "to": "INIT",
+      "event": "tick_retry",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "retries"
+          },
+          5
+        ]
+      },
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.SELECTING.STOP",
+      "from": "SELECTING",
+      "to": "INIT",
+      "event": "stop",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.REQUESTING.STOP",
+      "from": "REQUESTING",
+      "to": "INIT",
+      "event": "stop",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.BOUND.STOP",
+      "from": "BOUND",
+      "to": "INIT",
+      "event": "stop",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.RENEWING.STOP",
+      "from": "RENEWING",
+      "to": "INIT",
+      "event": "stop",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "DHCP.REBINDING.STOP",
+      "from": "REBINDING",
+      "to": "INIT",
+      "event": "stop",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "retry_tmo"
+        },
+        {
+          "cancel": "lease_tmo"
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "lease_s",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "LEASE_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "lease_s"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "lease_s"
+              },
+              86400
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "RETRY_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "retries"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "retries"
+              },
+              5
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "TIMER_RETRY_OWN",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "timer_active": "retry_tmo"
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "state": "SELECTING"
+              },
+              {
+                "op": "or",
+                "args": [
+                  {
+                    "state": "REQUESTING"
+                  },
+                  {
+                    "op": "or",
+                    "args": [
+                      {
+                        "state": "RENEWING"
+                      },
+                      {
+                        "state": "REBINDING"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    },
+    {
+      "id": "TIMER_LEASE_OWN",
+      "assert": {
+        "op": "implies",
+        "args": [
+          {
+            "timer_active": "lease_tmo"
+          },
+          {
+            "op": "or",
+            "args": [
+              {
+                "state": "BOUND"
+              },
+              {
+                "op": "or",
+                "args": [
+                  {
+                    "state": "RENEWING"
+                  },
+                  {
+                    "state": "REBINDING"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "CTRL.DHCP"
+      ]
+    }
+  ]
+}
