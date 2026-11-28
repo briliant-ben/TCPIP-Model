@@ -2,215 +2,430 @@
   "ir_version": "0.6",
   "semantics": "flat-efsm-atomic-ordered-v1",
   "protocol": "arch-sys-port",
-  "states": ["UNINIT", "ACTIVE", "CLOSED"],
-  "initial_state": "UNINIT",
   "scope": {
     "terminal_states": [],
-    "excluded": ["kernel-futex-internals", "priority-inheritance"]
+    "excluded": [
+      "host OS syscalls"
+    ]
   },
+  "states": [
+    "UNINIT",
+    "READY",
+    "STOPPED"
+  ],
+  "initial_state": "UNINIT",
   "requirements": {
-    "SYS_PORT": {
-      "source": "spec/arch/sys-port.md#scope",
-      "interpretation": "Single-instance bounded semaphore/mailbox ownership and waiter conservation."
+    "ARCH.PORT": {
+      "source": "spec/arch/sys-port.md",
+      "interpretation": "OS port abstraction"
     }
   },
   "variables": {
-    "cap": {"type": "int", "initial": 0},
-    "count": {"type": "int", "initial": 0},
-    "waiters": {"type": "int", "initial": 0}
+    "sem_live": {
+      "type": "int",
+      "initial": 0
+    },
+    "mbox_live": {
+      "type": "int",
+      "initial": 0
+    },
+    "threads_live": {
+      "type": "int",
+      "initial": 0
+    }
   },
   "events": {
-    "port.init": {"origin": "application", "fields": {"cap": "int"}},
-    "port.signal": {"origin": "application", "fields": {}},
-    "port.wait_enter": {"origin": "application", "fields": {"timeout_ms": "int"}},
-    "port.close": {"origin": "application", "fields": {}},
-    "timer.wait_tmo": {"origin": "timer", "fields": {}}
-  },
-  "messages": {
-    "sys.ready": {"fields": {"cap": "int"}},
-    "sys.woke": {"fields": {"waiters": "int"}},
-    "sys.posted": {"fields": {"count": "int"}},
-    "sys.full": {"fields": {"count": "int"}},
-    "sys.acquired": {"fields": {"count": "int"}},
-    "sys.blocked": {"fields": {"waiters": "int"}},
-    "sys.timeout": {"fields": {"waiters": "int"}},
-    "sys.closed": {"fields": {}}
-  },
-  "timers": {
-    "wait_tmo": {"event": "timer.wait_tmo"}
-  },
-  "invariants": [
-    {
-      "id": "SYS_CAP_BOUNDS",
-      "assert": {"op": "and", "args": [{"op": "le", "args": [0, {"var": "cap"}]}, {"op": "le", "args": [{"var": "cap"}, 64]}]},
-      "requirements": ["SYS_PORT"]
+    "port.start": {
+      "origin": "application",
+      "fields": {}
     },
-    {
-      "id": "SYS_COUNT_BOUNDS",
-      "assert": {"op": "and", "args": [{"op": "le", "args": [0, {"var": "count"}]}, {"op": "le", "args": [{"var": "count"}, {"var": "cap"}]}]},
-      "requirements": ["SYS_PORT"]
+    "port.stop": {
+      "origin": "application",
+      "fields": {}
     },
-    {
-      "id": "SYS_WAITER_BOUNDS",
-      "assert": {"op": "and", "args": [{"op": "le", "args": [0, {"var": "waiters"}]}, {"op": "le", "args": [{"var": "waiters"}, 32]}]},
-      "requirements": ["SYS_PORT"]
+    "port.sem_alloc": {
+      "origin": "application",
+      "fields": {}
     },
-    {
-      "id": "SYS_WAITERS_NO_TOKENS",
-      "assert": {"op": "or", "args": [{"op": "eq", "args": [{"var": "waiters"}, 0]}, {"op": "eq", "args": [{"var": "count"}, 0]}]},
-      "requirements": ["SYS_PORT"]
+    "port.sem_free": {
+      "origin": "application",
+      "fields": {}
     },
-    {
-      "id": "SYS_CLEAN_WHEN_INACTIVE",
-      "assert": {
-        "op": "or",
-        "args": [
-          {"state": "ACTIVE"},
-          {"op": "and", "args": [{"op": "eq", "args": [{"var": "count"}, 0]}, {"op": "eq", "args": [{"var": "waiters"}, 0]}]}
-        ]
-      },
-      "requirements": ["SYS_PORT"]
+    "port.mbox_alloc": {
+      "origin": "application",
+      "fields": {}
     },
-    {
-      "id": "SYS_TIMER_ONLY_ACTIVE",
-      "assert": {"op": "implies", "args": [{"timer_active": "wait_tmo"}, {"state": "ACTIVE"}]},
-      "requirements": ["SYS_PORT"]
+    "port.mbox_free": {
+      "origin": "application",
+      "fields": {}
+    },
+    "port.thread_spawn": {
+      "origin": "application",
+      "fields": {}
+    },
+    "port.thread_join": {
+      "origin": "application",
+      "fields": {}
     }
-  ],
+  },
+  "messages": {},
+  "timers": {},
   "transitions": [
     {
-      "id": "PORT.INIT_OK",
+      "id": "SP.START",
       "from": "UNINIT",
-      "to": "ACTIVE",
-      "event": "port.init",
-      "guard": {"op": "and", "args": [{"op": "ge", "args": [{"event": "cap"}, 1]}, {"op": "le", "args": [{"event": "cap"}, 64]}]},
-      "actions": [
-        {"set": {"var": "cap", "value": {"event": "cap"}}},
-        {"set": {"var": "count", "value": 0}},
-        {"set": {"var": "waiters", "value": 0}},
-        {"emit": {"message": "sys.ready", "fields": {"cap": {"event": "cap"}}}}
-      ],
-      "requirements": ["SYS_PORT"]
-    },
-    {
-      "id": "PORT.SIGNAL_WAKE",
-      "from": "ACTIVE",
-      "to": "ACTIVE",
-      "event": "port.signal",
-      "guard": {"op": "ge", "args": [{"var": "waiters"}, 1]},
-      "actions": [
-        {"set": {"var": "waiters", "value": {"op": "sub", "args": [{"var": "waiters"}, 1]}}},
-        {"emit": {"message": "sys.woke", "fields": {"waiters": {"var": "waiters"}}}}
-      ],
-      "requirements": ["SYS_PORT"]
-    },
-    {
-      "id": "PORT.SIGNAL_POST",
-      "from": "ACTIVE",
-      "to": "ACTIVE",
-      "event": "port.signal",
-      "guard": {"op": "and", "args": [{"op": "eq", "args": [{"var": "waiters"}, 0]}, {"op": "le", "args": [{"op": "add", "args": [{"var": "count"}, 1]}, {"var": "cap"}]}]},
-      "actions": [
-        {"set": {"var": "count", "value": {"op": "add", "args": [{"var": "count"}, 1]}}},
-        {"emit": {"message": "sys.posted", "fields": {"count": {"var": "count"}}}}
-      ],
-      "requirements": ["SYS_PORT"]
-    },
-    {
-      "id": "PORT.SIGNAL_FULL",
-      "from": "ACTIVE",
-      "to": "ACTIVE",
-      "event": "port.signal",
-      "guard": {"op": "and", "args": [{"op": "eq", "args": [{"var": "waiters"}, 0]}, {"op": "eq", "args": [{"var": "count"}, {"var": "cap"}]}]},
-      "actions": [
-        {"emit": {"message": "sys.full", "fields": {"count": {"var": "count"}}}}
-      ],
-      "requirements": ["SYS_PORT"]
-    },
-    {
-      "id": "PORT.WAIT_ACQUIRE",
-      "from": "ACTIVE",
-      "to": "ACTIVE",
-      "event": "port.wait_enter",
-      "guard": {"op": "ge", "args": [{"var": "count"}, 1]},
-      "actions": [
-        {"set": {"var": "count", "value": {"op": "sub", "args": [{"var": "count"}, 1]}}},
-        {"emit": {"message": "sys.acquired", "fields": {"count": {"var": "count"}}}}
-      ],
-      "requirements": ["SYS_PORT"]
-    },
-    {
-      "id": "PORT.WAIT_BLOCK",
-      "from": "ACTIVE",
-      "to": "ACTIVE",
-      "event": "port.wait_enter",
-      "guard": {
-        "op": "and",
-        "args": [
-          {"op": "eq", "args": [{"var": "count"}, 0]},
-          {"op": "and", "args": [{"op": "le", "args": [{"var": "waiters"}, 31]}, {"op": "ge", "args": [{"event": "timeout_ms"}, 1]}]}
-        ]
-      },
-      "actions": [
-        {"set": {"var": "waiters", "value": {"op": "add", "args": [{"var": "waiters"}, 1]}}},
-        {"arm": {"timer": "wait_tmo", "delay_ms": {"op": "min", "args": [{"event": "timeout_ms"}, 60000]}}},
-        {"emit": {"message": "sys.blocked", "fields": {"waiters": {"var": "waiters"}}}}
-      ],
-      "requirements": ["SYS_PORT"]
-    },
-    {
-      "id": "PORT.WAIT_REJECT",
-      "from": "ACTIVE",
-      "to": "ACTIVE",
-      "event": "port.wait_enter",
-      "guard": {
-        "op": "and",
-        "args": [
-          {"op": "eq", "args": [{"var": "count"}, 0]},
-          {"op": "or", "args": [{"op": "eq", "args": [{"var": "waiters"}, 32]}, {"op": "le", "args": [{"event": "timeout_ms"}, 0]}]}
-        ]
-      },
-      "actions": [
-        {"emit": {"message": "sys.timeout", "fields": {"waiters": {"var": "waiters"}}}}
-      ],
-      "requirements": ["SYS_PORT"]
-    },
-    {
-      "id": "PORT.WAIT_TIMER_EXPIRE",
-      "from": "ACTIVE",
-      "to": "ACTIVE",
-      "event": "timer.wait_tmo",
-      "guard": {"op": "ge", "args": [{"var": "waiters"}, 1]},
-      "actions": [
-        {"set": {"var": "waiters", "value": {"op": "sub", "args": [{"var": "waiters"}, 1]}}},
-        {"emit": {"message": "sys.timeout", "fields": {"waiters": {"var": "waiters"}}}}
-      ],
-      "requirements": ["SYS_PORT"]
-    },
-    {
-      "id": "PORT.WAIT_TIMER_SPURIOUS",
-      "from": "ACTIVE",
-      "to": "ACTIVE",
-      "event": "timer.wait_tmo",
-      "guard": {"op": "eq", "args": [{"var": "waiters"}, 0]},
-      "actions": [
-        {"emit": {"message": "sys.timeout", "fields": {"waiters": 0}}}
-      ],
-      "requirements": ["SYS_PORT"]
-    },
-    {
-      "id": "PORT.CLOSE",
-      "from": "ACTIVE",
-      "to": "CLOSED",
-      "event": "port.close",
+      "to": "READY",
+      "event": "port.start",
       "guard": true,
+      "actions": [],
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.RESTART",
+      "from": "STOPPED",
+      "to": "READY",
+      "event": "port.start",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.STOP",
+      "from": "READY",
+      "to": "STOPPED",
+      "event": "port.stop",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.SEM_ALLOC",
+      "from": "READY",
+      "to": "READY",
+      "event": "port.sem_alloc",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "sem_live"
+              },
+              256
+            ]
+          }
+        ]
+      },
       "actions": [
-        {"cancel": "wait_tmo"},
-        {"set": {"var": "count", "value": 0}},
-        {"set": {"var": "waiters", "value": 0}},
-        {"emit": {"message": "sys.closed", "fields": {}}}
+        {
+          "set": {
+            "var": "sem_live",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "sem_live"
+                },
+                1
+              ]
+            }
+          }
+        }
       ],
-      "requirements": ["SYS_PORT"]
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.SEM_FREE",
+      "from": "READY",
+      "to": "READY",
+      "event": "port.sem_free",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "sem_live"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "sem_live",
+            "value": {
+              "op": "sub",
+              "args": [
+                {
+                  "var": "sem_live"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.MBOX_ALLOC",
+      "from": "READY",
+      "to": "READY",
+      "event": "port.mbox_alloc",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "mbox_live"
+              },
+              256
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "mbox_live",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "mbox_live"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.MBOX_FREE",
+      "from": "READY",
+      "to": "READY",
+      "event": "port.mbox_free",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "mbox_live"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "mbox_live",
+            "value": {
+              "op": "sub",
+              "args": [
+                {
+                  "var": "mbox_live"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.THR_SPAWN",
+      "from": "READY",
+      "to": "READY",
+      "event": "port.thread_spawn",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "threads_live"
+              },
+              64
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "threads_live",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "threads_live"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.THR_JOIN",
+      "from": "READY",
+      "to": "READY",
+      "event": "port.thread_join",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "threads_live"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "threads_live",
+            "value": {
+              "op": "sub",
+              "args": [
+                {
+                  "var": "threads_live"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "SP.SEM_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "sem_live"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "sem_live"
+              },
+              256
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.MBOX_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "mbox_live"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "mbox_live"
+              },
+              256
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "ARCH.PORT"
+      ]
+    },
+    {
+      "id": "SP.THR_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "threads_live"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "threads_live"
+              },
+              64
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "ARCH.PORT"
+      ]
     }
   ]
 }

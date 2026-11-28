@@ -1,0 +1,1063 @@
+{
+  "schema": "fsa-system-v1",
+  "system_name": "tcpip_stack",
+  "bus_queue_cap": 32,
+  "bus_byte_cap": 8192,
+  "modules": {
+    "sys_port": {
+      "model": "arch/sys_port.json",
+      "prefix": "fsa_sys_port",
+      "capacity": 1,
+      "byte_cap": 64,
+      "arena_cap": 1024
+    },
+    "frame_pool": {
+      "model": "arch/frame_pool.json",
+      "prefix": "fsa_frame_pool",
+      "capacity": 1,
+      "byte_cap": 64,
+      "arena_cap": 1024
+    },
+    "stack_actor": {
+      "model": "arch/stack_actor.json",
+      "prefix": "fsa_stack_actor",
+      "capacity": 1,
+      "byte_cap": 64,
+      "arena_cap": 1024
+    },
+    "eth_ipv4_icmp": {
+      "model": "stack/eth_ipv4_icmp.json",
+      "prefix": "fsa_eth_ip",
+      "capacity": 1,
+      "byte_cap": 4608,
+      "arena_cap": 24576
+    },
+    "arp_neighbor": {
+      "model": "stack/arp_neighbor.json",
+      "prefix": "fsa_arp",
+      "capacity": 16,
+      "byte_cap": 1536,
+      "arena_cap": 4096,
+      "free_state": "FREE"
+    },
+    "ipv4_reass": {
+      "model": "stack/ipv4_reass.json",
+      "prefix": "fsa_reass",
+      "capacity": 4,
+      "byte_cap": 4608,
+      "arena_cap": 16384,
+      "free_state": "IDLE"
+    },
+    "udp_endpoint": {
+      "model": "stack/udp_endpoint.json",
+      "prefix": "fsa_udp",
+      "capacity": 16,
+      "byte_cap": 2048,
+      "arena_cap": 8192,
+      "free_state": "UNBOUND"
+    },
+    "tcp_connection": {
+      "model": "stack/tcp_connection.json",
+      "prefix": "fsa_tcp",
+      "capacity": 12,
+      "byte_cap": 8192,
+      "arena_cap": 65536,
+      "free_state": "CLOSED"
+    },
+    "dhcpv4_client": {
+      "model": "stack/dhcpv4_client.json",
+      "prefix": "fsa_dhcp",
+      "capacity": 1,
+      "byte_cap": 600,
+      "arena_cap": 4096
+    },
+    "dns_resolver": {
+      "model": "stack/dns_resolver.json",
+      "prefix": "fsa_dns",
+      "capacity": 4,
+      "byte_cap": 512,
+      "arena_cap": 4096,
+      "free_state": "IDLE"
+    }
+  },
+  "architecture_hooks": {
+    "port": "sys_port",
+    "port_start_ev": "port.start",
+    "port_stop_ev": "port.stop",
+    "actor": "stack_actor",
+    "actor_start_ev": "actor.start",
+    "actor_stop_ev": "actor.stop",
+    "actor_post_rx_ev": "actor.post_rx",
+    "actor_post_api_ev": "actor.post_api",
+    "actor_dispatch_ev": "actor.dispatch",
+    "actor_complete_ev": "actor.complete"
+  },
+  "host_outputs": [
+    "WIRE_TX",
+    "TCP_ACCEPTED",
+    "TCP_CONNECTED",
+    "TCP_RX_DATA",
+    "TCP_PEER_EOF",
+    "TCP_CLOSED",
+    "UDP_RX",
+    "DHCP_BOUND",
+    "DNS_RESOLVED",
+    "DNS_FAILED"
+  ],
+  "routes": {
+    "eth_ipv4_icmp.wire_tx": {
+      "kind": "host_out",
+      "out_id": "WIRE_TX"
+    },
+    "arp_neighbor.wire_tx": {
+      "kind": "host_out",
+      "out_id": "WIRE_TX"
+    },
+    "eth_ipv4_icmp.arp_learn": {
+      "kind": "upsert",
+      "target": "arp_neighbor",
+      "match_vars": [
+        {
+          "var": "ip",
+          "from_field": "ip"
+        }
+      ],
+      "event": "arp.learn",
+      "args": [
+        {
+          "from_field": "ip"
+        },
+        {
+          "from_field": "mac"
+        }
+      ]
+    },
+    "eth_ipv4_icmp.arp_send": {
+      "kind": "upsert",
+      "target": "arp_neighbor",
+      "match_vars": [
+        {
+          "var": "ip",
+          "from_field": "ip"
+        }
+      ],
+      "event": "arp.resolve_tx",
+      "args": [
+        {
+          "from_field": "ip"
+        },
+        {
+          "from_field": "src_mac"
+        },
+        {
+          "from_field": "src_ip"
+        },
+        {
+          "from_field": "pkt"
+        }
+      ]
+    },
+    "eth_ipv4_icmp.frag_in": {
+      "kind": "upsert",
+      "target": "ipv4_reass",
+      "match_vars": [
+        {
+          "var": "src_ip",
+          "from_field": "src_ip"
+        },
+        {
+          "var": "dst_ip",
+          "from_field": "dst_ip"
+        },
+        {
+          "var": "ip_id",
+          "from_field": "ip_id"
+        },
+        {
+          "var": "proto",
+          "from_field": "proto"
+        }
+      ],
+      "event": "reass.frag",
+      "args": [
+        {
+          "from_field": "src_ip"
+        },
+        {
+          "from_field": "dst_ip"
+        },
+        {
+          "from_field": "ip_id"
+        },
+        {
+          "from_field": "proto"
+        },
+        {
+          "from_field": "frag_off"
+        },
+        {
+          "from_field": "mf"
+        },
+        {
+          "from_field": "hdr"
+        },
+        {
+          "from_field": "payload"
+        }
+      ]
+    },
+    "ipv4_reass.reassembled": {
+      "kind": "singleton",
+      "target": "eth_ipv4_icmp",
+      "event": "l3.reassembled",
+      "args": [
+        {
+          "from_field": "src_ip"
+        },
+        {
+          "from_field": "dst_ip"
+        },
+        {
+          "from_field": "proto"
+        },
+        {
+          "from_field": "payload"
+        },
+        {
+          "from_field": "orig_hdr"
+        }
+      ]
+    },
+    "eth_ipv4_icmp.udp_rx": {
+      "kind": "lookup_chain",
+      "attempts": [
+        {
+          "kind": "match",
+          "target": "udp_endpoint",
+          "in_states": [
+            "CONNECTED"
+          ],
+          "match_vars": [
+            {
+              "var": "local_port",
+              "from_field": "dst_port"
+            },
+            {
+              "var": "remote_port",
+              "from_field": "src_port"
+            },
+            {
+              "var": "remote_ip",
+              "from_field": "src_ip"
+            },
+            {
+              "var": "local_ip",
+              "from_field": "dst_ip",
+              "wildcard_empty_or_zero": true
+            }
+          ],
+          "event": "udp.rx",
+          "args": [
+            {
+              "from_field": "src_ip"
+            },
+            {
+              "from_field": "dst_ip"
+            },
+            {
+              "from_field": "src_port"
+            },
+            {
+              "from_field": "dst_port"
+            },
+            {
+              "from_field": "data"
+            }
+          ]
+        },
+        {
+          "kind": "match",
+          "target": "udp_endpoint",
+          "in_states": [
+            "BOUND"
+          ],
+          "match_vars": [
+            {
+              "var": "local_port",
+              "from_field": "dst_port"
+            },
+            {
+              "var": "local_ip",
+              "from_field": "dst_ip",
+              "wildcard_empty_or_zero": true
+            }
+          ],
+          "event": "udp.rx",
+          "args": [
+            {
+              "from_field": "src_ip"
+            },
+            {
+              "from_field": "dst_ip"
+            },
+            {
+              "from_field": "src_port"
+            },
+            {
+              "from_field": "dst_port"
+            },
+            {
+              "from_field": "data"
+            }
+          ]
+        },
+        {
+          "kind": "match",
+          "target": "dhcpv4_client",
+          "in_states": [
+            "SELECTING",
+            "REQUESTING"
+          ],
+          "when_field_eq": [
+            {
+              "field": "dst_port",
+              "int": 68
+            }
+          ],
+          "match_vars": [],
+          "event": "dhcp.rx",
+          "args": [
+            {
+              "from_field": "src_ip"
+            },
+            {
+              "from_field": "data"
+            }
+          ]
+        },
+        {
+          "kind": "match",
+          "target": "dns_resolver",
+          "in_states": [
+            "QUERYING"
+          ],
+          "when_field_eq": [
+            {
+              "field": "src_port",
+              "int": 53
+            }
+          ],
+          "match_vars": [],
+          "event": "dns.rx",
+          "args": [
+            {
+              "from_field": "data"
+            }
+          ]
+        }
+      ],
+      "on_miss": {
+        "kind": "singleton",
+        "target": "eth_ipv4_icmp",
+        "event": "l3.send_icmp_unreach",
+        "args": [
+          {
+            "from_field": "src_ip"
+          },
+          {
+            "from_field": "dst_ip"
+          },
+          {
+            "from_field": "orig_prefix"
+          }
+        ]
+      }
+    },
+    "eth_ipv4_icmp.tcp_rx": {
+      "kind": "lookup_chain",
+      "attempts": [
+        {
+          "kind": "match",
+          "target": "tcp_connection",
+          "not_in_states": [
+            "CLOSED",
+            "LISTEN"
+          ],
+          "match_vars": [
+            {
+              "var": "local_port",
+              "from_field": "dst_port"
+            },
+            {
+              "var": "remote_port",
+              "from_field": "src_port"
+            },
+            {
+              "var": "remote_ip",
+              "from_field": "src_ip"
+            },
+            {
+              "var": "local_ip",
+              "from_field": "dst_ip",
+              "wildcard_empty_or_zero": true
+            }
+          ],
+          "event": "net.seg",
+          "args": [
+            {
+              "from_field": "src_ip"
+            },
+            {
+              "from_field": "dst_ip"
+            },
+            {
+              "from_field": "src_port"
+            },
+            {
+              "from_field": "dst_port"
+            },
+            {
+              "from_field": "seq"
+            },
+            {
+              "from_field": "ack"
+            },
+            {
+              "from_field": "is_fin"
+            },
+            {
+              "from_field": "is_syn"
+            },
+            {
+              "from_field": "is_rst"
+            },
+            {
+              "from_field": "is_ack"
+            },
+            {
+              "from_field": "wnd"
+            },
+            {
+              "from_field": "mss"
+            },
+            {
+              "from_field": "data"
+            }
+          ]
+        },
+        {
+          "kind": "fork_from_match",
+          "target": "tcp_connection",
+          "in_states": [
+            "LISTEN"
+          ],
+          "when_field_eq": [
+            {
+              "field": "is_syn",
+              "bool": true
+            },
+            {
+              "field": "is_ack",
+              "bool": false
+            },
+            {
+              "field": "is_rst",
+              "bool": false
+            }
+          ],
+          "match_vars": [
+            {
+              "var": "local_port",
+              "from_field": "dst_port"
+            },
+            {
+              "var": "local_ip",
+              "from_field": "dst_ip",
+              "wildcard_empty_or_zero": true
+            }
+          ],
+          "copy_vars": [
+            "local_ip",
+            "local_port"
+          ],
+          "parent_slot_var": "parent_slot",
+          "event": "net.listen_syn",
+          "args": [
+            {
+              "from_field": "src_ip"
+            },
+            {
+              "from_field": "dst_ip"
+            },
+            {
+              "from_field": "src_port"
+            },
+            {
+              "from_field": "dst_port"
+            },
+            {
+              "from_field": "seq"
+            },
+            {
+              "from_field": "ack"
+            },
+            {
+              "from_field": "is_fin"
+            },
+            {
+              "from_field": "is_syn"
+            },
+            {
+              "from_field": "is_rst"
+            },
+            {
+              "from_field": "is_ack"
+            },
+            {
+              "from_field": "wnd"
+            },
+            {
+              "from_field": "mss"
+            },
+            {
+              "from_field": "data"
+            }
+          ]
+        }
+      ],
+      "on_miss": {
+        "kind": "singleton",
+        "target": "eth_ipv4_icmp",
+        "when_field_eq": [
+          {
+            "field": "is_rst",
+            "bool": false
+          }
+        ],
+        "event": "l3.send_tcp_rst",
+        "args": [
+          {
+            "from_field": "src_ip"
+          },
+          {
+            "from_field": "dst_ip"
+          },
+          {
+            "from_field": "src_port"
+          },
+          {
+            "from_field": "dst_port"
+          },
+          {
+            "from_field": "seq"
+          },
+          {
+            "from_field": "ack"
+          },
+          {
+            "from_field": "is_ack"
+          },
+          {
+            "int": 1
+          }
+        ]
+      }
+    },
+    "udp_endpoint.tx_ip": {
+      "kind": "singleton",
+      "target": "eth_ipv4_icmp",
+      "event": "l3.tx_ip",
+      "args": [
+        {
+          "from_field": "src_ip"
+        },
+        {
+          "from_field": "dst_ip"
+        },
+        {
+          "from_field": "proto"
+        },
+        {
+          "from_field": "payload"
+        }
+      ]
+    },
+    "tcp_connection.tx_ip": {
+      "kind": "singleton",
+      "target": "eth_ipv4_icmp",
+      "event": "l3.tx_ip",
+      "args": [
+        {
+          "from_field": "src_ip"
+        },
+        {
+          "from_field": "dst_ip"
+        },
+        {
+          "from_field": "proto"
+        },
+        {
+          "from_field": "payload"
+        }
+      ]
+    },
+    "dhcpv4_client.tx_ip": {
+      "kind": "singleton",
+      "target": "eth_ipv4_icmp",
+      "event": "l3.tx_ip",
+      "args": [
+        {
+          "from_field": "src_ip"
+        },
+        {
+          "from_field": "dst_ip"
+        },
+        {
+          "from_field": "proto"
+        },
+        {
+          "from_field": "payload"
+        }
+      ]
+    },
+    "dns_resolver.tx_ip": {
+      "kind": "singleton",
+      "target": "eth_ipv4_icmp",
+      "event": "l3.tx_ip",
+      "args": [
+        {
+          "from_field": "src_ip"
+        },
+        {
+          "from_field": "dst_ip"
+        },
+        {
+          "from_field": "proto"
+        },
+        {
+          "from_field": "payload"
+        }
+      ]
+    },
+    "dhcpv4_client.lease_assigned": [
+      {
+        "kind": "singleton",
+        "target": "eth_ipv4_icmp",
+        "event": "cfg.set_ip",
+        "args": [
+          {
+            "from_field": "ip"
+          },
+          {
+            "from_field": "mask"
+          },
+          {
+            "from_field": "gw"
+          },
+          {
+            "from_field": "dns_ip"
+          }
+        ]
+      },
+      {
+        "kind": "host_out",
+        "out_id": "DHCP_BOUND"
+      }
+    ],
+    "udp_endpoint.app_rx": {
+      "kind": "host_out",
+      "out_id": "UDP_RX"
+    },
+    "tcp_connection.accepted": {
+      "kind": "host_out",
+      "out_id": "TCP_ACCEPTED"
+    },
+    "tcp_connection.connected": {
+      "kind": "host_out",
+      "out_id": "TCP_CONNECTED"
+    },
+    "tcp_connection.tcp_rx_data": {
+      "kind": "host_out",
+      "out_id": "TCP_RX_DATA"
+    },
+    "tcp_connection.peer_eof": {
+      "kind": "host_out",
+      "out_id": "TCP_PEER_EOF"
+    },
+    "tcp_connection.closed": {
+      "kind": "host_out",
+      "out_id": "TCP_CLOSED"
+    },
+    "dns_resolver.dns_resolved": {
+      "kind": "host_out",
+      "out_id": "DNS_RESOLVED"
+    },
+    "dns_resolver.dns_failed": {
+      "kind": "host_out",
+      "out_id": "DNS_FAILED"
+    }
+  },
+  "entrypoints": [
+    {
+      "name": "init_if",
+      "target": "eth_ipv4_icmp",
+      "slot_mode": "singleton",
+      "event": "cfg.init_if",
+      "params": [
+        {
+          "name": "ip",
+          "type": "bytes"
+        },
+        {
+          "name": "mask",
+          "type": "bytes"
+        },
+        {
+          "name": "gw",
+          "type": "bytes"
+        },
+        {
+          "name": "mac",
+          "type": "bytes"
+        },
+        {
+          "name": "mtu",
+          "type": "int"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "rx_frame",
+      "target": "eth_ipv4_icmp",
+      "slot_mode": "singleton",
+      "event": "net.rx_frame",
+      "params": [
+        {
+          "name": "frame",
+          "type": "bytes"
+        }
+      ],
+      "is_rx": true
+    },
+    {
+      "name": "tx_ip",
+      "target": "eth_ipv4_icmp",
+      "slot_mode": "singleton",
+      "event": "l3.tx_ip",
+      "params": [
+        {
+          "name": "src_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "dst_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "proto",
+          "type": "int"
+        },
+        {
+          "name": "payload",
+          "type": "bytes"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "udp_bind",
+      "target": "udp_endpoint",
+      "slot_mode": "slot_arg",
+      "event": "app.bind",
+      "params": [
+        {
+          "name": "local_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "local_port",
+          "type": "int"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "udp_connect",
+      "target": "udp_endpoint",
+      "slot_mode": "slot_arg",
+      "event": "app.connect",
+      "params": [
+        {
+          "name": "remote_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "remote_port",
+          "type": "int"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "udp_sendto",
+      "target": "udp_endpoint",
+      "slot_mode": "slot_arg",
+      "event": "app.sendto",
+      "params": [
+        {
+          "name": "src_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "dst_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "dst_port",
+          "type": "int"
+        },
+        {
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "udp_send",
+      "target": "udp_endpoint",
+      "slot_mode": "slot_arg",
+      "event": "app.send",
+      "params": [
+        {
+          "name": "src_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "udp_close",
+      "target": "udp_endpoint",
+      "slot_mode": "slot_arg",
+      "event": "app.close",
+      "params": [],
+      "is_api": true
+    },
+    {
+      "name": "tcp_listen",
+      "target": "tcp_connection",
+      "slot_mode": "slot_arg",
+      "event": "app.listen",
+      "params": [
+        {
+          "name": "local_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "local_port",
+          "type": "int"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "tcp_connect",
+      "target": "tcp_connection",
+      "slot_mode": "slot_arg",
+      "event": "app.connect",
+      "params": [
+        {
+          "name": "local_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "local_port",
+          "type": "int"
+        },
+        {
+          "name": "remote_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "remote_port",
+          "type": "int"
+        },
+        {
+          "name": "iss",
+          "type": "seq32"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "tcp_send",
+      "target": "tcp_connection",
+      "slot_mode": "slot_arg",
+      "event": "app.send",
+      "params": [
+        {
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "tcp_pump",
+      "target": "tcp_connection",
+      "slot_mode": "slot_arg",
+      "event": "app.pump",
+      "params": [],
+      "is_api": true
+    },
+    {
+      "name": "tcp_recved",
+      "target": "tcp_connection",
+      "slot_mode": "slot_arg",
+      "event": "app.recved",
+      "params": [
+        {
+          "name": "len",
+          "type": "int"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "tcp_close",
+      "target": "tcp_connection",
+      "slot_mode": "slot_arg",
+      "event": "app.close",
+      "params": [],
+      "is_api": true
+    },
+    {
+      "name": "tcp_abort",
+      "target": "tcp_connection",
+      "slot_mode": "slot_arg",
+      "event": "app.abort",
+      "params": [],
+      "is_api": true
+    },
+    {
+      "name": "dhcp_start",
+      "target": "dhcpv4_client",
+      "slot_mode": "singleton",
+      "event": "dhcp.start",
+      "params": [
+        {
+          "name": "mac",
+          "type": "bytes"
+        },
+        {
+          "name": "xid",
+          "type": "int"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "dns_resolve",
+      "target": "dns_resolver",
+      "slot_mode": "slot_arg",
+      "event": "dns.resolve",
+      "params": [
+        {
+          "name": "src_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "server_ip",
+          "type": "bytes"
+        },
+        {
+          "name": "qname_wire",
+          "type": "bytes"
+        },
+        {
+          "name": "txid",
+          "type": "int"
+        }
+      ],
+      "is_api": true
+    },
+    {
+      "name": "pool_alloc",
+      "target": "frame_pool",
+      "slot_mode": "singleton",
+      "event": "pool.alloc",
+      "params": [],
+      "is_api": false
+    },
+    {
+      "name": "pool_free",
+      "target": "frame_pool",
+      "slot_mode": "singleton",
+      "event": "pool.free",
+      "params": [],
+      "is_api": false
+    },
+    {
+      "name": "pool_reset",
+      "target": "frame_pool",
+      "slot_mode": "singleton",
+      "event": "pool.reset",
+      "params": [],
+      "is_api": false
+    },
+    {
+      "name": "port_sem_alloc",
+      "target": "sys_port",
+      "slot_mode": "singleton",
+      "event": "port.sem_alloc",
+      "params": [],
+      "is_api": false
+    },
+    {
+      "name": "port_sem_free",
+      "target": "sys_port",
+      "slot_mode": "singleton",
+      "event": "port.sem_free",
+      "params": [],
+      "is_api": false
+    },
+    {
+      "name": "port_mbox_alloc",
+      "target": "sys_port",
+      "slot_mode": "singleton",
+      "event": "port.mbox_alloc",
+      "params": [],
+      "is_api": false
+    },
+    {
+      "name": "port_mbox_free",
+      "target": "sys_port",
+      "slot_mode": "singleton",
+      "event": "port.mbox_free",
+      "params": [],
+      "is_api": false
+    },
+    {
+      "name": "port_thread_spawn",
+      "target": "sys_port",
+      "slot_mode": "singleton",
+      "event": "port.thread_spawn",
+      "params": [],
+      "is_api": false
+    },
+    {
+      "name": "port_thread_join",
+      "target": "sys_port",
+      "slot_mode": "singleton",
+      "event": "port.thread_join",
+      "params": [],
+      "is_api": false
+    }
+  ]
+}

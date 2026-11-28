@@ -1,0 +1,392 @@
+{
+  "ir_version": "0.6",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "arch-stack-actor",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "kernel scheduler"
+    ]
+  },
+  "states": [
+    "STOPPED",
+    "IDLE",
+    "DISPATCHING"
+  ],
+  "initial_state": "STOPPED",
+  "requirements": {
+    "ARCH.ACTOR": {
+      "source": "spec/arch/stack-actor.md",
+      "interpretation": "Single-writer stack actor"
+    }
+  },
+  "variables": {
+    "q_depth": {
+      "type": "int",
+      "initial": 0
+    },
+    "dispatched_total": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "events": {
+    "actor.start": {
+      "origin": "application",
+      "fields": {}
+    },
+    "actor.stop": {
+      "origin": "application",
+      "fields": {}
+    },
+    "actor.post_rx": {
+      "origin": "application",
+      "fields": {}
+    },
+    "actor.post_api": {
+      "origin": "application",
+      "fields": {}
+    },
+    "actor.dispatch": {
+      "origin": "application",
+      "fields": {}
+    },
+    "actor.complete": {
+      "origin": "application",
+      "fields": {}
+    }
+  },
+  "messages": {},
+  "timers": {},
+  "transitions": [
+    {
+      "id": "SA.START",
+      "from": "STOPPED",
+      "to": "IDLE",
+      "event": "actor.start",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    },
+    {
+      "id": "SA.STOP",
+      "from": "IDLE",
+      "to": "STOPPED",
+      "event": "actor.stop",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "q_depth",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    },
+    {
+      "id": "SA.RX_IDLE",
+      "from": "IDLE",
+      "to": "IDLE",
+      "event": "actor.post_rx",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "q_depth"
+              },
+              64
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "q_depth",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "q_depth"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    },
+    {
+      "id": "SA.RX_BUSY",
+      "from": "DISPATCHING",
+      "to": "DISPATCHING",
+      "event": "actor.post_rx",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "q_depth"
+              },
+              64
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "q_depth",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "q_depth"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    },
+    {
+      "id": "SA.API_IDLE",
+      "from": "IDLE",
+      "to": "IDLE",
+      "event": "actor.post_api",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "q_depth"
+              },
+              64
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "q_depth",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "q_depth"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    },
+    {
+      "id": "SA.API_BUSY",
+      "from": "DISPATCHING",
+      "to": "DISPATCHING",
+      "event": "actor.post_api",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "q_depth"
+              },
+              64
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "q_depth",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "q_depth"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    },
+    {
+      "id": "SA.DISP_QUEUED",
+      "from": "IDLE",
+      "to": "DISPATCHING",
+      "event": "actor.dispatch",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "q_depth"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "q_depth",
+            "value": {
+              "op": "sub",
+              "args": [
+                {
+                  "var": "q_depth"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "dispatched_total",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "dispatched_total"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    },
+    {
+      "id": "SA.DISP_TMR",
+      "from": "IDLE",
+      "to": "DISPATCHING",
+      "event": "actor.dispatch",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "q_depth"
+          },
+          0
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "dispatched_total",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "dispatched_total"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    },
+    {
+      "id": "SA.COMPLETE",
+      "from": "DISPATCHING",
+      "to": "IDLE",
+      "event": "actor.complete",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "SA.Q_BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "q_depth"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "q_depth"
+              },
+              64
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    },
+    {
+      "id": "SA.TOT_NONNEG",
+      "assert": {
+        "op": "ge",
+        "args": [
+          {
+            "var": "dispatched_total"
+          },
+          0
+        ]
+      },
+      "requirements": [
+        "ARCH.ACTOR"
+      ]
+    }
+  ]
+}

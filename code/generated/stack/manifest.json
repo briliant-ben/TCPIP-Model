@@ -1,0 +1,114 @@
+{
+  "schema": "fsa-system-v1",
+  "system_prefix": "tcpip_stack",
+  "recipe": "tcpip-stack-system.json",
+  "recipe_sha256": "64afdf3e0271478295fb2fc4ae5fae500f5512705ccce4500b94cefdd092cd56",
+  "fast_dispatch": true,
+  "modules": {
+    "sys_port": {
+      "model": "arch/sys_port.json",
+      "model_sha256": "6c4bf5674e6504476852145be96c983c2efa51d8129c7103f3ebad336f4df717",
+      "prefix": "fsa_sys_port",
+      "capacity": 1,
+      "rules": 9,
+      "shared_helpers": 0
+    },
+    "frame_pool": {
+      "model": "arch/frame_pool.json",
+      "model_sha256": "5049b55cef436d8826b05176b10c46fb247b6773e0d01460db4f69097414898f",
+      "prefix": "fsa_frame_pool",
+      "capacity": 1,
+      "rules": 3,
+      "shared_helpers": 0
+    },
+    "stack_actor": {
+      "model": "arch/stack_actor.json",
+      "model_sha256": "449c20c193ef03526367ebfd8b52b6228760a3d64b650e625ecaffa7848bbec9",
+      "prefix": "fsa_stack_actor",
+      "capacity": 1,
+      "rules": 9,
+      "shared_helpers": 0
+    },
+    "eth_ipv4_icmp": {
+      "model": "stack/eth_ipv4_icmp.json",
+      "model_sha256": "ea409ff294ef5427f3ba3e53c67f2b95dcde34ae006432638c7940f32c71f3c4",
+      "prefix": "fsa_eth_ip",
+      "capacity": 1,
+      "rules": 22,
+      "shared_helpers": 117
+    },
+    "arp_neighbor": {
+      "model": "stack/arp_neighbor.json",
+      "model_sha256": "3c369ad34a30f303c1ee656084bf6d051641829dc372ea47dda661a95279c4fc",
+      "prefix": "fsa_arp",
+      "capacity": 16,
+      "rules": 19,
+      "shared_helpers": 3
+    },
+    "ipv4_reass": {
+      "model": "stack/ipv4_reass.json",
+      "model_sha256": "7f64194dd95e79fb55f612ee1a1778771190ee29b6a4b5bdee49e21d4829c64a",
+      "prefix": "fsa_reass",
+      "capacity": 4,
+      "rules": 5,
+      "shared_helpers": 21
+    },
+    "udp_endpoint": {
+      "model": "stack/udp_endpoint.json",
+      "model_sha256": "a7dd02f6ad5577366edcb72463ff3f99df4950ccd58829ba07c99d6b27080416",
+      "prefix": "fsa_udp",
+      "capacity": 16,
+      "rules": 10,
+      "shared_helpers": 1
+    },
+    "tcp_connection": {
+      "model": "stack/tcp_connection.json",
+      "model_sha256": "eac272b2eb86cf884f99199e1dab78009d0361e7ba27098d39e0b2a8ea68197e",
+      "prefix": "fsa_tcp",
+      "capacity": 12,
+      "rules": 144,
+      "shared_helpers": 90
+    },
+    "dhcpv4_client": {
+      "model": "stack/dhcpv4_client.json",
+      "model_sha256": "4dfabe03a28b5e7ea22d9993299d59b584369e984f662f8c934229f9affc1fe7",
+      "prefix": "fsa_dhcp",
+      "capacity": 1,
+      "rules": 12,
+      "shared_helpers": 29
+    },
+    "dns_resolver": {
+      "model": "stack/dns_resolver.json",
+      "model_sha256": "e92e4e1277f0b594a55c99fea2a1e19060e2e6d577962cc83bf365470c12259c",
+      "prefix": "fsa_dns",
+      "capacity": 4,
+      "rules": 10,
+      "shared_helpers": 17
+    }
+  },
+  "outputs": {
+    "fsa_lib_runtime.h": "0b77b88591d93a38e59162075e3c470ec2ddaa69ddade4d6e7a8a0ec609e8efc",
+    "fsa_sys_port.h": "6ea7ebded74e82f97f28df825ea5e21f4fdcfb9324d9c69278aa02f020f63bac",
+    "fsa_sys_port.c": "af27db864146e56d362d91be88e275915e6b94d239d0e916333ea4c6d09bb624",
+    "fsa_frame_pool.h": "ef85cc70c102c71c43f2443dc6b670ee91043060b078df7aa0ed0faeb86b8539",
+    "fsa_frame_pool.c": "c2154152622a07f827968228387be01985d0e8d9dff7e84cc611c7f2f3d77225",
+    "fsa_stack_actor.h": "c803a80f13e41915dcd4025d2732679e6eb19f13d01db663f76700163deb1ad3",
+    "fsa_stack_actor.c": "9f96db6e1ae39ea5b8a35b28dc532fe6b95d5360098e85046d1db6ffea4777bd",
+    "fsa_eth_ip.h": "7b54addac849cd820967c9cd68a716a7411e0f7860998c84f7032a6b12d53920",
+    "fsa_eth_ip.c": "a0eeb458ffaa80aa075f3c8b8f7e614aa7a35465a69460722357012b8e00f35c",
+    "fsa_arp.h": "d64ad5f316a9913b24020dbbce4cdf4ee8200e27765b2ed6aacb97b7ae8170c0",
+    "fsa_arp.c": "21d96bb95c544a7596fc29903aca0b20d826680ab6dc4d13f62c56dc982bb91b",
+    "fsa_reass.h": "54672d80d2ce7bec0dcdb2f1d495b5744a90078fff7a16263ee229bfa3ca1029",
+    "fsa_reass.c": "a571b4823b9e3c69c79b7c4736434222a6da1f4d51d20774c6c3413d2f1c9d74",
+    "fsa_udp.h": "80c13c5f4f14ada56e5a43b4e5f50ae90dce4203e5cee61adf00dde7bc4db6a3",
+    "fsa_udp.c": "f343207b16b6a824ae73755034e9b9e665be73696352ba8bab2d30daac72ff8f",
+    "fsa_tcp.h": "0ff9d0fa844c6637b09c8024ec9797e1870e7f60fb36b27ce0d5464bae27405b",
+    "fsa_tcp.c": "ec1ca160fe638802b1fda03ed11876fa3e44fef7b73d18c51e66ad85f5b08ed8",
+    "fsa_dhcp.h": "e6ecfdde72fd9b7fdf8e3d67c7f753ccd891569045e680cb0d11f64f88b89f12",
+    "fsa_dhcp.c": "d6e0db14f91ccbec42c295fb91db8d021d0200e84ad2be7e7d48e0b138da1a68",
+    "fsa_dns.h": "9ad0e6148a57bda69cfb5be85ff8a01ca81c9d64d93de0d2628cc63a8f7e2f67",
+    "fsa_dns.c": "5d9328a471f0aac44cd1f26c46afd0874fb9f4ec8c9710de1c5dd74aee932112",
+    "tcpip_stack.h": "3fcccb79372ad2edd46d066c52b20464390b9d27be786ecbaf9f25b181adf009",
+    "tcpip_stack.c": "d1f934437f4858ab8616c23204a73572e6038dd9636e6510932fe8e6d2c52071"
+  }
+}

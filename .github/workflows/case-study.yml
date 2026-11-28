@@ -9,12 +9,12 @@ permissions:
 jobs:
   standalone-case:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-      - name: Compile standalone C, compare frozen fixture, and rebuild recorded demo
+      - name: Compile standalone C & generated stack, compare fixtures, and run unit suites
         run: python3 -m unittest discover -s tests -v > case-tests.log 2>&1
       - name: Run live communicating prototype over UDP loopback and capture PCAP
         run: |
@@ -101,129 +101,72 @@ jobs:
             formal-check.log
             /tmp/tcpip-ci-formal/result.json
           if-no-files-found: warn
-  tcpip-lib-c99:
+  tcpip-stack-c99:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-      - name: Build static libraries and enforce core L2-L4 size target (<= 90 KiB .text)
+      - name: Build with GCC & Clang (-Werror), enforce <= 90 KiB .text budget, and check FreeRTOS port
         run: |
           set -o pipefail
-          make lib size 2>&1 | tee build-lib.log
-      - name: Run M1-M4 stack suites (NO_SYS=1 and NO_SYS=0)
+          make stack-build CC=gcc OUT=/tmp/tcpip-ci-gcc 2>&1 | tee stack-c99.log
+          if command -v clang >/dev/null 2>&1; then
+            make stack-build CC=clang OUT=/tmp/tcpip-ci-clang 2>&1 | tee -a stack-c99.log
+          fi
+      - name: Run generated stack suites (NO_SYS=1, NO_SYS=0 actor, fast & FSA_STRICT)
         run: |
           set -o pipefail
-          make test-lib 2>&1 | tee -a build-lib.log
+          make stack-test CC=gcc OUT=/tmp/tcpip-ci-stack 2>&1 | tee -a stack-c99.log
       - name: Run ASan + UBSan suite
         run: |
           set -o pipefail
-          make test-asan 2>&1 | tee -a build-lib.log
+          make stack-asan CC=gcc OUT=/tmp/tcpip-ci-stack 2>&1 | tee -a stack-c99.log
       - name: Run ThreadSanitizer suite
         run: |
           set -o pipefail
-          setarch $(uname -m) -R make test-tsan 2>&1 | tee -a build-lib.log
-      - name: Run BSD socket & DHCP/DNS demos, benchmarks, and PCAP checks
+          setarch $(uname -m) -R make stack-tsan CC=gcc OUT=/tmp/tcpip-ci-stack 2>&1 | tee -a stack-c99.log
+      - name: Run live PCAP demo, tcpdump verification, and -O2 throughput benchmark
         run: |
           set -o pipefail
-          make demos bench 2>&1 | tee -a build-lib.log
+          make stack-demo stack-bench CC=gcc OUT=/tmp/tcpip-ci-stack 2>&1 | tee -a stack-c99.log
           if command -v tcpdump >/dev/null 2>&1; then
-            tcpdump -c 20 -nn -r build/m3_tcp_udp.pcap 2>&1 | tee -a build-lib.log
-            tcpdump -nn -r build/tcp_echo_demo.pcap 2>&1 | tee -a build-lib.log
-            tcpdump -nn -r build/dhcp_dns_demo.pcap 2>&1 | tee -a build-lib.log
+            tcpdump -nn -r /tmp/tcpip-ci-stack/demo/stack-live.pcap 2>&1 | tee -a stack-c99.log
           fi
-      - name: Verify FreeRTOS port skeleton compilation
-        run: |
-          mkdir -p /tmp/frtos-stub
-          cat > /tmp/frtos-stub/FreeRTOS.h <<'EOF'
-          #ifndef FREERTOS_H
-          #define FREERTOS_H
-          #include <stdint.h>
-          typedef uint32_t TickType_t;
-          typedef uint32_t UBaseType_t;
-          typedef uint32_t StackType_t;
-          typedef long BaseType_t;
-          typedef void *TaskHandle_t;
-          typedef void *SemaphoreHandle_t;
-          typedef void *QueueHandle_t;
-          typedef void (*TaskFunction_t)(void *);
-          #define pdTRUE ((BaseType_t)1)
-          #define pdFALSE ((BaseType_t)0)
-          #define pdPASS pdTRUE
-          #define portMAX_DELAY ((TickType_t)0xFFFFFFFFUL)
-          #define portTICK_PERIOD_MS ((TickType_t)1U)
-          #define pdMS_TO_TICKS(ms) ((TickType_t)(ms))
-          #endif
-          EOF
-          cat > /tmp/frtos-stub/task.h <<'EOF'
-          #ifndef TASK_H
-          #define TASK_H
-          #include "FreeRTOS.h"
-          TickType_t xTaskGetTickCount(void);
-          void vTaskDelay(TickType_t ticks);
-          BaseType_t xTaskCreate(TaskFunction_t fn, const char *name, uint16_t stk, void *arg, UBaseType_t prio, TaskHandle_t *h);
-          void vTaskDelete(TaskHandle_t h);
-          #endif
-          EOF
-          cat > /tmp/frtos-stub/semphr.h <<'EOF'
-          #ifndef SEMPHR_H
-          #define SEMPHR_H
-          #include "FreeRTOS.h"
-          SemaphoreHandle_t xSemaphoreCreateCounting(UBaseType_t max_cnt, UBaseType_t init_cnt);
-          BaseType_t xSemaphoreTake(SemaphoreHandle_t s, TickType_t ticks);
-          BaseType_t xSemaphoreGive(SemaphoreHandle_t s);
-          void vSemaphoreDelete(SemaphoreHandle_t s);
-          #endif
-          EOF
-          cat > /tmp/frtos-stub/queue.h <<'EOF'
-          #ifndef QUEUE_H
-          #define QUEUE_H
-          #include "FreeRTOS.h"
-          QueueHandle_t xQueueCreate(UBaseType_t len, UBaseType_t item_sz);
-          BaseType_t xQueueSend(QueueHandle_t q, const void *item, TickType_t ticks);
-          BaseType_t xQueueReceive(QueueHandle_t q, void *item, TickType_t ticks);
-          void vQueueDelete(QueueHandle_t q);
-          #endif
-          EOF
-          cc -std=c99 -Wall -Wextra -Werror -Os -DTCPIP_NO_SYS=0 -DTCPIP_PORT_FREERTOS=1 -DTCPIP_VERIFY_FSM=0 -I include -I /tmp/frtos-stub -c port/freertos/sys_port_freertos.c -o build/sys_port_freertos.o
-          cc -std=c99 -Wall -Wextra -Werror -Os -DTCPIP_NO_SYS=0 -DTCPIP_PORT_FREERTOS=1 -DTCPIP_VERIFY_FSM=1 -I include -I src/generated -I /tmp/frtos-stub -c port/freertos/sys_port_freertos.c -o build/sys_port_freertos_fsm.o
-      - name: Publish libtcpip build & test summary
+      - name: Publish stack build & test summary
         if: always()
         run: |
           echo '```text' >> "$GITHUB_STEP_SUMMARY"
-          tail -n 120 build-lib.log >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo "(no build-lib.log)" >> "$GITHUB_STEP_SUMMARY"
+          tail -n 120 stack-c99.log >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo "(no stack-c99.log)" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
-          if [ -f build-lib.log ] && [ "${{ job.status }}" = "failure" ]; then
-            python3 -c "import pathlib; lines=pathlib.Path('build-lib.log').read_text(errors='replace').splitlines()[-45:]; print('::error::' + '%0A'.join(lines))"
-          fi
-      - name: Upload libtcpip build & PCAP artifacts
+      - name: Upload generated stack logs & PCAP artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: libtcpip-c99-${{ github.sha }}
+          name: tcpip-stack-c99-${{ github.sha }}
           path: |
-            build-lib.log
-            build/m2_l2l3.pcap
-            build/m3_tcp_udp.pcap
-            build/tcp_echo_demo.pcap
-            build/dhcp_dns_demo.pcap
+            stack-c99.log
+            /tmp/tcpip-ci-stack/demo/stack-live.pcap
+            /tmp/tcpip-ci-stack/demo/summary.json
           if-no-files-found: warn
-  tcpip-lib-formal:
+  tcpip-stack-formal:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-      - name: Clone pinned Formal-Spec-Agent framework for libtcpip
+      - name: Clone pinned Formal-Spec-Agent framework for generated stack
         run: |
-          FW_COMMIT=$(python3 -c "import json; print(json.load(open('formal/lib/framework.json'))['commit'])")
-          git clone https://github.com/briliant-ben/Formal-Spec-Agent.git /tmp/Formal-Spec-Agent
-          git -C /tmp/Formal-Spec-Agent checkout --detach "$FW_COMMIT"
-      - name: Verify C99 FSM library regeneration matches committed sources
-        run: make regen-lib FRAMEWORK=/tmp/Formal-Spec-Agent
-      - name: Install checksum-pinned official Lean
+          FW_COMMIT=$(python3 -c "import json; f=json.load(open('formal/stack/framework.json'))['commit']; c=json.load(open('code/stack_framework.json'))['commit']; assert f==c, (f, c); print(f)")
+          git clone https://github.com/briliant-ben/Formal-Spec-Agent.git /tmp/Formal-Spec-Agent-Stack
+          git -C /tmp/Formal-Spec-Agent-Stack checkout --detach "$FW_COMMIT"
+      - name: Verify C99 stack snapshot matches system-codegen output byte-for-byte
+        run: |
+          set -o pipefail
+          make stack-regen FRAMEWORK=/tmp/Formal-Spec-Agent-Stack 2>&1 | tee stack-formal.log
+      - name: Install checksum-pinned official Lean 4.35.0
         run: |
           curl --fail --location --connect-timeout 20 --max-time 300 \
             https://github.com/leanprover/lean4/releases/download/v4.35.0/lean-4.35.0-linux.tar.zst \
@@ -231,15 +174,17 @@ jobs:
           echo '7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d  /tmp/lean.tar.zst' | sha256sum --check
           tar --zstd -xf /tmp/lean.tar.zst -C /tmp
           /tmp/lean-4.35.0-linux/bin/lean --version
-      - name: Verify all 8 Lean 4.35.0 timed FSM proofs
+      - name: Verify all 10 stack & architecture Lean 4.35.0 timed proofs
         run: |
           set -o pipefail
-          make formal-lib FRAMEWORK=/tmp/Formal-Spec-Agent \
-            LEAN=/tmp/lean-4.35.0-linux/bin/lean 2>&1 | tee formal-lib.log
-      - name: Upload formal library check log
+          make stack-formal FRAMEWORK=/tmp/Formal-Spec-Agent-Stack \
+            LEAN=/tmp/lean-4.35.0-linux/bin/lean OUT=/tmp/tcpip-ci-stack-formal 2>&1 | tee -a stack-formal.log
+      - name: Upload stack formal verification artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: libtcpip-formal-${{ github.sha }}
-          path: formal-lib.log
+          name: tcpip-stack-formal-${{ github.sha }}
+          path: |
+            stack-formal.log
+            /tmp/tcpip-ci-stack-formal/stack-formal-summary.json
           if-no-files-found: warn

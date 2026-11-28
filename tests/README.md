@@ -1,26 +1,18 @@
-# Focused example tests
+# Verification & Conformance Tests
 
 ```sh
 python3 -m unittest discover -s tests -v
 ```
 
-These standard-library tests compile and run the actual standalone C, compare a
-frozen full input/output fixture, check model/source integrity, rebuild the
-recorded HTML and reject changed evidence hashes. No API calls, network privilege,
-framework clone or Lean installation is needed.
-
-`example.in` and `expected.json` came unchanged from a previously accepted
-reference/native run; [fixture.json](fixture.json) records the source archive,
-member and exact hashes. The expected output is model-derived, not an independent
-RFC or wire oracle. It is never fed to the subject or recomputed to make it pass.
-
-Broader protocol/formal/network experiments are in the pinned Git history, not
-silently claimed by this focused test suite.
+- **[test_case_study.py](test_case_study.py)**: Unchanged v1 conformance gate verifying the strict 6-directory repository layout, frozen v1 model/C SHA-256 digests (`fixture.json`, `example.in`, `expected.json`, `optimization-regression.json`), live v1 loopback demo, and Lean manifest integrity.
+- **[test_generated_stack.py](test_generated_stack.py)** & **[stack_suite.c](stack_suite.c)**: End-to-end verification of the 10-module generated C99 stack across `FSA_HOST_NO_SYS=1`, multithreaded `FSA_HOST_NO_SYS=0` POSIX actor mode, `-DFSA_STRICT=1` runtime invariant/conflict/rollback checking, ASan+UBSan (`make stack-asan`), and ThreadSanitizer (`make stack-tsan`):
+  - `sys_port`, `frame_pool`, and `stack_actor` live accounting invariants
+  - ARP pending queue + resolution flush + timeout expiry, ICMP Echo, UDP Port Unreachable, and TCP RST
+  - IPv4 2- and 3-fragment TX split + in-order & out-of-order RX reassembly + timeout
+  - Multi-endpoint UDP (`bind`, `connect`, `send`, `sendto`, `close`)
+  - 8 concurrent passive/active TCP connections, payload echo, and 4-way FIN / `TIME_WAIT` reclamation
+  - Impaired-wire TCP chaos (SYN drop RTO, segment loss + 3-dupACK fast retransmit + out-of-order coalescing, zero-window persist probing + window updates, FIN retransmit)
+  - 2 MiB TCP bulk transfer with exact byte-by-byte verification
+  - DHCPv4 DORA lease auto-configuration + DNS A resolution & timeout fallback
 
 Next: [demo](../demo/README.md).
-
-`optimization-regression.json` freezes inputs and complete stdout/stderr digests
-from the pre-optimization generated C for 24 existing paths (157 transitions).
-The initial optimization gate also compared the new output against the reference
-interpreter. These digests must not be refreshed from changed code to make it pass.
-The standalone regression uses no framework or expected output as subject input.

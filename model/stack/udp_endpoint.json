@@ -1,0 +1,2406 @@
+{
+  "ir_version": "0.6",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "udp-endpoint",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "multicast join"
+    ]
+  },
+  "states": [
+    "UNBOUND",
+    "BOUND",
+    "CONNECTED"
+  ],
+  "initial_state": "UNBOUND",
+  "requirements": {
+    "L4.UDP": {
+      "source": "spec/stack/l4-udp-tcp.md",
+      "interpretation": "RFC 768 multi-endpoint UDP"
+    }
+  },
+  "variables": {
+    "local_ip": {
+      "type": "bytes",
+      "initial": []
+    },
+    "remote_ip": {
+      "type": "bytes",
+      "initial": []
+    },
+    "local_port": {
+      "type": "int",
+      "initial": 0
+    },
+    "remote_port": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "events": {
+    "app.bind": {
+      "origin": "application",
+      "fields": {
+        "local_ip": "bytes",
+        "local_port": "int"
+      }
+    },
+    "app.connect": {
+      "origin": "application",
+      "fields": {
+        "remote_ip": "bytes",
+        "remote_port": "int"
+      }
+    },
+    "app.sendto": {
+      "origin": "application",
+      "fields": {
+        "src_ip": "bytes",
+        "dst_ip": "bytes",
+        "dst_port": "int",
+        "data": "bytes"
+      }
+    },
+    "app.send": {
+      "origin": "application",
+      "fields": {
+        "src_ip": "bytes",
+        "data": "bytes"
+      }
+    },
+    "app.close": {
+      "origin": "application",
+      "fields": {}
+    },
+    "udp.rx": {
+      "origin": "network",
+      "fields": {
+        "src_ip": "bytes",
+        "dst_ip": "bytes",
+        "src_port": "int",
+        "dst_port": "int",
+        "data": "bytes"
+      }
+    }
+  },
+  "messages": {
+    "tx_ip": {
+      "fields": {
+        "src_ip": "bytes",
+        "dst_ip": "bytes",
+        "proto": "int",
+        "payload": "bytes"
+      }
+    },
+    "app_rx": {
+      "fields": {
+        "src_ip": "bytes",
+        "src_port": "int",
+        "dst_port": "int",
+        "data": "bytes"
+      }
+    }
+  },
+  "timers": {},
+  "transitions": [
+    {
+      "id": "UDP.BIND",
+      "from": "UNBOUND",
+      "to": "BOUND",
+      "event": "app.bind",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "le",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "local_ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "local_port"
+                  },
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "local_port"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "local_ip",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "local_ip"
+                },
+                0,
+                4
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "local_port",
+            "value": {
+              "event": "local_port"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.CONN_UNBOUND",
+      "from": "UNBOUND",
+      "to": "CONNECTED",
+      "event": "app.connect",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "remote_ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "remote_port"
+                  },
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "remote_port"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "local_port",
+            "value": 49152
+          }
+        },
+        {
+          "set": {
+            "var": "remote_ip",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "remote_ip"
+                },
+                0,
+                4
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "remote_port",
+            "value": {
+              "event": "remote_port"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.CONN_BOUND",
+      "from": "BOUND",
+      "to": "CONNECTED",
+      "event": "app.connect",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "remote_ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "event": "remote_port"
+                  },
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "event": "remote_port"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "remote_ip",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "remote_ip"
+                },
+                0,
+                4
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "remote_port",
+            "value": {
+              "event": "remote_port"
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.SENDTO_BOUND",
+      "from": "BOUND",
+      "to": "BOUND",
+      "event": "app.sendto",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "dst_ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "src_ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "event": "dst_port"
+              },
+              1
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tx_ip",
+            "fields": {
+              "src_ip": {
+                "op": "ite",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "src_ip"
+                          }
+                        ]
+                      },
+                      4
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "src_ip"
+                      },
+                      0,
+                      4
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "local_ip"
+                      },
+                      0,
+                      4
+                    ]
+                  }
+                ]
+              },
+              "dst_ip": {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "event": "dst_ip"
+                  },
+                  0,
+                  4
+                ]
+              },
+              "proto": 17,
+              "payload": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_pack16be_mod",
+                                "args": [
+                                  {
+                                    "var": "local_port"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_pack16be_mod",
+                                "args": [
+                                  {
+                                    "event": "dst_port"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "bytes_pack16be_mod",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  8,
+                                  {
+                                    "op": "bytes_len",
+                                    "args": [
+                                      {
+                                        "event": "data"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "bytes_pack16be_mod",
+                        "args": [
+                          {
+                            "op": "ite",
+                            "args": [
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_internet_checksum16",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "ite",
+                                                        "args": [
+                                                          {
+                                                            "op": "eq",
+                                                            "args": [
+                                                              {
+                                                                "op": "bytes_len",
+                                                                "args": [
+                                                                  {
+                                                                    "event": "src_ip"
+                                                                  }
+                                                                ]
+                                                              },
+                                                              4
+                                                            ]
+                                                          },
+                                                          {
+                                                            "op": "bytes_slice",
+                                                            "args": [
+                                                              {
+                                                                "event": "src_ip"
+                                                              },
+                                                              0,
+                                                              4
+                                                            ]
+                                                          },
+                                                          {
+                                                            "op": "bytes_slice",
+                                                            "args": [
+                                                              {
+                                                                "var": "local_ip"
+                                                              },
+                                                              0,
+                                                              4
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_slice",
+                                                        "args": [
+                                                          {
+                                                            "event": "dst_ip"
+                                                          },
+                                                          0,
+                                                          4
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "bytes": [
+                                                      0,
+                                                      17
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "op": "bytes_pack16be_mod",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_len",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_concat",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_concat",
+                                                            "args": [
+                                                              {
+                                                                "op": "bytes_concat",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "bytes_concat",
+                                                                    "args": [
+                                                                      {
+                                                                        "op": "bytes_pack16be_mod",
+                                                                        "args": [
+                                                                          {
+                                                                            "var": "local_port"
+                                                                          }
+                                                                        ]
+                                                                      },
+                                                                      {
+                                                                        "op": "bytes_pack16be_mod",
+                                                                        "args": [
+                                                                          {
+                                                                            "event": "dst_port"
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "op": "bytes_pack16be_mod",
+                                                                    "args": [
+                                                                      {
+                                                                        "op": "add",
+                                                                        "args": [
+                                                                          8,
+                                                                          {
+                                                                            "op": "bytes_len",
+                                                                            "args": [
+                                                                              {
+                                                                                "event": "data"
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "bytes": [
+                                                                  0,
+                                                                  0
+                                                                ]
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "event": "data"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_concat",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_pack16be_mod",
+                                                            "args": [
+                                                              {
+                                                                "var": "local_port"
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "op": "bytes_pack16be_mod",
+                                                            "args": [
+                                                              {
+                                                                "event": "dst_port"
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_pack16be_mod",
+                                                        "args": [
+                                                          {
+                                                            "op": "add",
+                                                            "args": [
+                                                              8,
+                                                              {
+                                                                "op": "bytes_len",
+                                                                "args": [
+                                                                  {
+                                                                    "event": "data"
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "bytes": [
+                                                      0,
+                                                      0
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "event": "data"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  0
+                                ]
+                              },
+                              65535,
+                              {
+                                "op": "bytes_internet_checksum16",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "ite",
+                                                    "args": [
+                                                      {
+                                                        "op": "eq",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_len",
+                                                            "args": [
+                                                              {
+                                                                "event": "src_ip"
+                                                              }
+                                                            ]
+                                                          },
+                                                          4
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_slice",
+                                                        "args": [
+                                                          {
+                                                            "event": "src_ip"
+                                                          },
+                                                          0,
+                                                          4
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_slice",
+                                                        "args": [
+                                                          {
+                                                            "var": "local_ip"
+                                                          },
+                                                          0,
+                                                          4
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "op": "bytes_slice",
+                                                    "args": [
+                                                      {
+                                                        "event": "dst_ip"
+                                                      },
+                                                      0,
+                                                      4
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  0,
+                                                  17
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "bytes_pack16be_mod",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_concat",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_concat",
+                                                            "args": [
+                                                              {
+                                                                "op": "bytes_concat",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "bytes_pack16be_mod",
+                                                                    "args": [
+                                                                      {
+                                                                        "var": "local_port"
+                                                                      }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "op": "bytes_pack16be_mod",
+                                                                    "args": [
+                                                                      {
+                                                                        "event": "dst_port"
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "op": "bytes_pack16be_mod",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "add",
+                                                                    "args": [
+                                                                      8,
+                                                                      {
+                                                                        "op": "bytes_len",
+                                                                        "args": [
+                                                                          {
+                                                                            "event": "data"
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "bytes": [
+                                                              0,
+                                                              0
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "event": "data"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_pack16be_mod",
+                                                        "args": [
+                                                          {
+                                                            "var": "local_port"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_pack16be_mod",
+                                                        "args": [
+                                                          {
+                                                            "event": "dst_port"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "op": "bytes_pack16be_mod",
+                                                    "args": [
+                                                      {
+                                                        "op": "add",
+                                                        "args": [
+                                                          8,
+                                                          {
+                                                            "op": "bytes_len",
+                                                            "args": [
+                                                              {
+                                                                "event": "data"
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  0,
+                                                  0
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "event": "data"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "event": "data"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.SENDTO_CONN",
+      "from": "CONNECTED",
+      "to": "CONNECTED",
+      "event": "app.sendto",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "dst_ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "src_ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              }
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "event": "dst_port"
+              },
+              1
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tx_ip",
+            "fields": {
+              "src_ip": {
+                "op": "ite",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "src_ip"
+                          }
+                        ]
+                      },
+                      4
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "src_ip"
+                      },
+                      0,
+                      4
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "local_ip"
+                      },
+                      0,
+                      4
+                    ]
+                  }
+                ]
+              },
+              "dst_ip": {
+                "op": "bytes_slice",
+                "args": [
+                  {
+                    "event": "dst_ip"
+                  },
+                  0,
+                  4
+                ]
+              },
+              "proto": 17,
+              "payload": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_pack16be_mod",
+                                "args": [
+                                  {
+                                    "var": "local_port"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_pack16be_mod",
+                                "args": [
+                                  {
+                                    "event": "dst_port"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "bytes_pack16be_mod",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  8,
+                                  {
+                                    "op": "bytes_len",
+                                    "args": [
+                                      {
+                                        "event": "data"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "bytes_pack16be_mod",
+                        "args": [
+                          {
+                            "op": "ite",
+                            "args": [
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_internet_checksum16",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "ite",
+                                                        "args": [
+                                                          {
+                                                            "op": "eq",
+                                                            "args": [
+                                                              {
+                                                                "op": "bytes_len",
+                                                                "args": [
+                                                                  {
+                                                                    "event": "src_ip"
+                                                                  }
+                                                                ]
+                                                              },
+                                                              4
+                                                            ]
+                                                          },
+                                                          {
+                                                            "op": "bytes_slice",
+                                                            "args": [
+                                                              {
+                                                                "event": "src_ip"
+                                                              },
+                                                              0,
+                                                              4
+                                                            ]
+                                                          },
+                                                          {
+                                                            "op": "bytes_slice",
+                                                            "args": [
+                                                              {
+                                                                "var": "local_ip"
+                                                              },
+                                                              0,
+                                                              4
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_slice",
+                                                        "args": [
+                                                          {
+                                                            "event": "dst_ip"
+                                                          },
+                                                          0,
+                                                          4
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "bytes": [
+                                                      0,
+                                                      17
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "op": "bytes_pack16be_mod",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_len",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_concat",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_concat",
+                                                            "args": [
+                                                              {
+                                                                "op": "bytes_concat",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "bytes_concat",
+                                                                    "args": [
+                                                                      {
+                                                                        "op": "bytes_pack16be_mod",
+                                                                        "args": [
+                                                                          {
+                                                                            "var": "local_port"
+                                                                          }
+                                                                        ]
+                                                                      },
+                                                                      {
+                                                                        "op": "bytes_pack16be_mod",
+                                                                        "args": [
+                                                                          {
+                                                                            "event": "dst_port"
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "op": "bytes_pack16be_mod",
+                                                                    "args": [
+                                                                      {
+                                                                        "op": "add",
+                                                                        "args": [
+                                                                          8,
+                                                                          {
+                                                                            "op": "bytes_len",
+                                                                            "args": [
+                                                                              {
+                                                                                "event": "data"
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "bytes": [
+                                                                  0,
+                                                                  0
+                                                                ]
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "event": "data"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_concat",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_pack16be_mod",
+                                                            "args": [
+                                                              {
+                                                                "var": "local_port"
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "op": "bytes_pack16be_mod",
+                                                            "args": [
+                                                              {
+                                                                "event": "dst_port"
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_pack16be_mod",
+                                                        "args": [
+                                                          {
+                                                            "op": "add",
+                                                            "args": [
+                                                              8,
+                                                              {
+                                                                "op": "bytes_len",
+                                                                "args": [
+                                                                  {
+                                                                    "event": "data"
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "bytes": [
+                                                      0,
+                                                      0
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "event": "data"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  0
+                                ]
+                              },
+                              65535,
+                              {
+                                "op": "bytes_internet_checksum16",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "ite",
+                                                    "args": [
+                                                      {
+                                                        "op": "eq",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_len",
+                                                            "args": [
+                                                              {
+                                                                "event": "src_ip"
+                                                              }
+                                                            ]
+                                                          },
+                                                          4
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_slice",
+                                                        "args": [
+                                                          {
+                                                            "event": "src_ip"
+                                                          },
+                                                          0,
+                                                          4
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_slice",
+                                                        "args": [
+                                                          {
+                                                            "var": "local_ip"
+                                                          },
+                                                          0,
+                                                          4
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "op": "bytes_slice",
+                                                    "args": [
+                                                      {
+                                                        "event": "dst_ip"
+                                                      },
+                                                      0,
+                                                      4
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  0,
+                                                  17
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "bytes_pack16be_mod",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_concat",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_concat",
+                                                            "args": [
+                                                              {
+                                                                "op": "bytes_concat",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "bytes_pack16be_mod",
+                                                                    "args": [
+                                                                      {
+                                                                        "var": "local_port"
+                                                                      }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "op": "bytes_pack16be_mod",
+                                                                    "args": [
+                                                                      {
+                                                                        "event": "dst_port"
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "op": "bytes_pack16be_mod",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "add",
+                                                                    "args": [
+                                                                      8,
+                                                                      {
+                                                                        "op": "bytes_len",
+                                                                        "args": [
+                                                                          {
+                                                                            "event": "data"
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "bytes": [
+                                                              0,
+                                                              0
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "event": "data"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_pack16be_mod",
+                                                        "args": [
+                                                          {
+                                                            "var": "local_port"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_pack16be_mod",
+                                                        "args": [
+                                                          {
+                                                            "event": "dst_port"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "op": "bytes_pack16be_mod",
+                                                    "args": [
+                                                      {
+                                                        "op": "add",
+                                                        "args": [
+                                                          8,
+                                                          {
+                                                            "op": "bytes_len",
+                                                            "args": [
+                                                              {
+                                                                "event": "data"
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  0,
+                                                  0
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "event": "data"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "event": "data"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.SEND_CONN",
+      "from": "CONNECTED",
+      "to": "CONNECTED",
+      "event": "app.send",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "event": "src_ip"
+              }
+            ]
+          },
+          4
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "tx_ip",
+            "fields": {
+              "src_ip": {
+                "op": "ite",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "src_ip"
+                          }
+                        ]
+                      },
+                      4
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "src_ip"
+                      },
+                      0,
+                      4
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "local_ip"
+                      },
+                      0,
+                      4
+                    ]
+                  }
+                ]
+              },
+              "dst_ip": {
+                "var": "remote_ip"
+              },
+              "proto": 17,
+              "payload": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_pack16be_mod",
+                                "args": [
+                                  {
+                                    "var": "local_port"
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_pack16be_mod",
+                                "args": [
+                                  {
+                                    "var": "remote_port"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "bytes_pack16be_mod",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  8,
+                                  {
+                                    "op": "bytes_len",
+                                    "args": [
+                                      {
+                                        "event": "data"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "bytes_pack16be_mod",
+                        "args": [
+                          {
+                            "op": "ite",
+                            "args": [
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "bytes_internet_checksum16",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "ite",
+                                                        "args": [
+                                                          {
+                                                            "op": "eq",
+                                                            "args": [
+                                                              {
+                                                                "op": "bytes_len",
+                                                                "args": [
+                                                                  {
+                                                                    "event": "src_ip"
+                                                                  }
+                                                                ]
+                                                              },
+                                                              4
+                                                            ]
+                                                          },
+                                                          {
+                                                            "op": "bytes_slice",
+                                                            "args": [
+                                                              {
+                                                                "event": "src_ip"
+                                                              },
+                                                              0,
+                                                              4
+                                                            ]
+                                                          },
+                                                          {
+                                                            "op": "bytes_slice",
+                                                            "args": [
+                                                              {
+                                                                "var": "local_ip"
+                                                              },
+                                                              0,
+                                                              4
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "var": "remote_ip"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "bytes": [
+                                                      0,
+                                                      17
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "op": "bytes_pack16be_mod",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_len",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_concat",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_concat",
+                                                            "args": [
+                                                              {
+                                                                "op": "bytes_concat",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "bytes_concat",
+                                                                    "args": [
+                                                                      {
+                                                                        "op": "bytes_pack16be_mod",
+                                                                        "args": [
+                                                                          {
+                                                                            "var": "local_port"
+                                                                          }
+                                                                        ]
+                                                                      },
+                                                                      {
+                                                                        "op": "bytes_pack16be_mod",
+                                                                        "args": [
+                                                                          {
+                                                                            "var": "remote_port"
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "op": "bytes_pack16be_mod",
+                                                                    "args": [
+                                                                      {
+                                                                        "op": "add",
+                                                                        "args": [
+                                                                          8,
+                                                                          {
+                                                                            "op": "bytes_len",
+                                                                            "args": [
+                                                                              {
+                                                                                "event": "data"
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "bytes": [
+                                                                  0,
+                                                                  0
+                                                                ]
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "event": "data"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_concat",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_pack16be_mod",
+                                                            "args": [
+                                                              {
+                                                                "var": "local_port"
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "op": "bytes_pack16be_mod",
+                                                            "args": [
+                                                              {
+                                                                "var": "remote_port"
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_pack16be_mod",
+                                                        "args": [
+                                                          {
+                                                            "op": "add",
+                                                            "args": [
+                                                              8,
+                                                              {
+                                                                "op": "bytes_len",
+                                                                "args": [
+                                                                  {
+                                                                    "event": "data"
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "bytes": [
+                                                      0,
+                                                      0
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "event": "data"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  0
+                                ]
+                              },
+                              65535,
+                              {
+                                "op": "bytes_internet_checksum16",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "ite",
+                                                    "args": [
+                                                      {
+                                                        "op": "eq",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_len",
+                                                            "args": [
+                                                              {
+                                                                "event": "src_ip"
+                                                              }
+                                                            ]
+                                                          },
+                                                          4
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_slice",
+                                                        "args": [
+                                                          {
+                                                            "event": "src_ip"
+                                                          },
+                                                          0,
+                                                          4
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_slice",
+                                                        "args": [
+                                                          {
+                                                            "var": "local_ip"
+                                                          },
+                                                          0,
+                                                          4
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "var": "remote_ip"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  0,
+                                                  17
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "op": "bytes_pack16be_mod",
+                                            "args": [
+                                              {
+                                                "op": "bytes_len",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_concat",
+                                                        "args": [
+                                                          {
+                                                            "op": "bytes_concat",
+                                                            "args": [
+                                                              {
+                                                                "op": "bytes_concat",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "bytes_pack16be_mod",
+                                                                    "args": [
+                                                                      {
+                                                                        "var": "local_port"
+                                                                      }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "op": "bytes_pack16be_mod",
+                                                                    "args": [
+                                                                      {
+                                                                        "var": "remote_port"
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "op": "bytes_pack16be_mod",
+                                                                "args": [
+                                                                  {
+                                                                    "op": "add",
+                                                                    "args": [
+                                                                      8,
+                                                                      {
+                                                                        "op": "bytes_len",
+                                                                        "args": [
+                                                                          {
+                                                                            "event": "data"
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "bytes": [
+                                                              0,
+                                                              0
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "event": "data"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "op": "bytes_concat",
+                                                "args": [
+                                                  {
+                                                    "op": "bytes_concat",
+                                                    "args": [
+                                                      {
+                                                        "op": "bytes_pack16be_mod",
+                                                        "args": [
+                                                          {
+                                                            "var": "local_port"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "op": "bytes_pack16be_mod",
+                                                        "args": [
+                                                          {
+                                                            "var": "remote_port"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "op": "bytes_pack16be_mod",
+                                                    "args": [
+                                                      {
+                                                        "op": "add",
+                                                        "args": [
+                                                          8,
+                                                          {
+                                                            "op": "bytes_len",
+                                                            "args": [
+                                                              {
+                                                                "event": "data"
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "bytes": [
+                                                  0,
+                                                  0
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "event": "data"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "event": "data"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.RX_BOUND",
+      "from": "BOUND",
+      "to": "BOUND",
+      "event": "udp.rx",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "app_rx",
+            "fields": {
+              "src_ip": {
+                "event": "src_ip"
+              },
+              "src_port": {
+                "event": "src_port"
+              },
+              "dst_port": {
+                "event": "dst_port"
+              },
+              "data": {
+                "event": "data"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.RX_CONN",
+      "from": "CONNECTED",
+      "to": "CONNECTED",
+      "event": "udp.rx",
+      "guard": true,
+      "actions": [
+        {
+          "emit": {
+            "message": "app_rx",
+            "fields": {
+              "src_ip": {
+                "event": "src_ip"
+              },
+              "src_port": {
+                "event": "src_port"
+              },
+              "dst_port": {
+                "event": "dst_port"
+              },
+              "data": {
+                "event": "data"
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.CLOSE_B",
+      "from": "BOUND",
+      "to": "UNBOUND",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "local_ip",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "remote_ip",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "local_port",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "remote_port",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.CLOSE_C",
+      "from": "CONNECTED",
+      "to": "UNBOUND",
+      "event": "app.close",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "local_ip",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "remote_ip",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "local_port",
+            "value": 0
+          }
+        },
+        {
+          "set": {
+            "var": "remote_port",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "L4.UDP"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "UDP.IPS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "le",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "local_ip"
+                  }
+                ]
+              },
+              4
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "remote_ip"
+                  }
+                ]
+              },
+              4
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "L4.UDP"
+      ]
+    },
+    {
+      "id": "UDP.PORTS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "ge",
+                    "args": [
+                      {
+                        "var": "local_port"
+                      },
+                      0
+                    ]
+                  },
+                  {
+                    "op": "le",
+                    "args": [
+                      {
+                        "var": "local_port"
+                      },
+                      65535
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "ge",
+                "args": [
+                  {
+                    "var": "remote_port"
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "remote_port"
+              },
+              65535
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "L4.UDP"
+      ]
+    }
+  ]
+}

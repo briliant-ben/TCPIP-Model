@@ -1,0 +1,1837 @@
+{
+  "ir_version": "0.6",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "arp-neighbor",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "proxy ARP"
+    ]
+  },
+  "states": [
+    "FREE",
+    "PENDING",
+    "REACHABLE"
+  ],
+  "initial_state": "FREE",
+  "requirements": {
+    "L2.ARP": {
+      "source": "spec/stack/l2-arp-netif.md",
+      "interpretation": "RFC 826 neighbor cache"
+    }
+  },
+  "variables": {
+    "ip": {
+      "type": "bytes",
+      "initial": []
+    },
+    "mac": {
+      "type": "bytes",
+      "initial": []
+    },
+    "src_ip": {
+      "type": "bytes",
+      "initial": []
+    },
+    "src_mac": {
+      "type": "bytes",
+      "initial": []
+    },
+    "pending_pkt": {
+      "type": "bytes",
+      "initial": []
+    },
+    "retries": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "events": {
+    "arp.resolve_tx": {
+      "origin": "application",
+      "fields": {
+        "ip": "bytes",
+        "src_mac": "bytes",
+        "src_ip": "bytes",
+        "pkt": "bytes"
+      }
+    },
+    "arp.learn": {
+      "origin": "network",
+      "fields": {
+        "ip": "bytes",
+        "mac": "bytes"
+      }
+    },
+    "arp.clear": {
+      "origin": "application",
+      "fields": {}
+    },
+    "arp.retry_tmr": {
+      "origin": "timer",
+      "fields": {}
+    },
+    "arp.ttl_tmr": {
+      "origin": "timer",
+      "fields": {}
+    }
+  },
+  "messages": {
+    "wire_tx": {
+      "fields": {
+        "frame": "bytes"
+      }
+    }
+  },
+  "timers": {
+    "retry_timer": {
+      "event": "arp.retry_tmr"
+    },
+    "ttl_timer": {
+      "event": "arp.ttl_tmr"
+    }
+  },
+  "transitions": [
+    {
+      "id": "ARP.RESOLVE_BCAST_FREE",
+      "from": "FREE",
+      "to": "FREE",
+      "event": "arp.resolve_tx",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ip"
+                  },
+                  {
+                    "bytes": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "event": "src_mac"
+                  }
+                ]
+              },
+              6
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "wire_tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "bytes": [
+                              255,
+                              255,
+                              255,
+                              255,
+                              255,
+                              255
+                            ]
+                          },
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "src_mac"
+                              },
+                              0,
+                              6
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          8,
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "pkt"
+                      },
+                      0,
+                      1500
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RESOLVE_BCAST_PENDING",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "arp.resolve_tx",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ip"
+                  },
+                  {
+                    "bytes": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "event": "src_mac"
+                  }
+                ]
+              },
+              6
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "wire_tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "bytes": [
+                              255,
+                              255,
+                              255,
+                              255,
+                              255,
+                              255
+                            ]
+                          },
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "src_mac"
+                              },
+                              0,
+                              6
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          8,
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "pkt"
+                      },
+                      0,
+                      1500
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RESOLVE_BCAST_REACHABLE",
+      "from": "REACHABLE",
+      "to": "REACHABLE",
+      "event": "arp.resolve_tx",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "event": "ip"
+                  },
+                  {
+                    "bytes": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "event": "src_mac"
+                  }
+                ]
+              },
+              6
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "wire_tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "bytes": [
+                              255,
+                              255,
+                              255,
+                              255,
+                              255,
+                              255
+                            ]
+                          },
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "src_mac"
+                              },
+                              0,
+                              6
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          8,
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "pkt"
+                      },
+                      0,
+                      1500
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RESOLVE_NEW",
+      "from": "FREE",
+      "to": "PENDING",
+      "event": "arp.resolve_tx",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "ip"
+                          }
+                        ]
+                      },
+                      4
+                    ]
+                  },
+                  {
+                    "op": "ne",
+                    "args": [
+                      {
+                        "event": "ip"
+                      },
+                      {
+                        "bytes": [
+                          255,
+                          255,
+                          255,
+                          255
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "src_mac"
+                      }
+                    ]
+                  },
+                  6
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "event": "src_ip"
+                  }
+                ]
+              },
+              4
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "ip",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "ip"
+                },
+                0,
+                4
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "src_mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "src_mac"
+                },
+                0,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "src_ip",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "src_ip"
+                },
+                0,
+                4
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "pending_pkt",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "pkt"
+                },
+                0,
+                1500
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_timer",
+            "delay_ms": 250
+          }
+        },
+        {
+          "emit": {
+            "message": "wire_tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_concat",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "bytes": [
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255
+                                                ]
+                                              },
+                                              {
+                                                "var": "src_mac"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              8,
+                                              6,
+                                              0,
+                                              1,
+                                              8,
+                                              0,
+                                              6,
+                                              4
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "bytes_pack16be_mod",
+                                        "args": [
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "var": "src_mac"
+                                  }
+                                ]
+                              },
+                              {
+                                "var": "src_ip"
+                              }
+                            ]
+                          },
+                          {
+                            "bytes": [
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "var": "ip"
+                      }
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RESOLVE_PEND",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "arp.resolve_tx",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "ip"
+                          }
+                        ]
+                      },
+                      4
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "event": "ip"
+                      },
+                      {
+                        "bytes": [
+                          255,
+                          255,
+                          255,
+                          255
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "src_mac"
+                      }
+                    ]
+                  },
+                  6
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "pending_pkt",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "pkt"
+                },
+                0,
+                1500
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "src_mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "src_mac"
+                },
+                0,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "src_ip",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "src_ip"
+                },
+                0,
+                4
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RESOLVE_HIT",
+      "from": "REACHABLE",
+      "to": "REACHABLE",
+      "event": "arp.resolve_tx",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "event": "src_mac"
+                  }
+                ]
+              },
+              6
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "bytes_len",
+                        "args": [
+                          {
+                            "event": "ip"
+                          }
+                        ]
+                      },
+                      4
+                    ]
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "event": "ip"
+                      },
+                      {
+                        "bytes": [
+                          255,
+                          255,
+                          255,
+                          255
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "emit": {
+            "message": "wire_tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "var": "mac"
+                              },
+                              0,
+                              6
+                            ]
+                          },
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "event": "src_mac"
+                              },
+                              0,
+                              6
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          8,
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "event": "pkt"
+                      },
+                      0,
+                      1500
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.LEARN_FREE",
+      "from": "FREE",
+      "to": "REACHABLE",
+      "event": "arp.learn",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "event": "ip"
+                  }
+                ]
+              },
+              4
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "event": "mac"
+                  }
+                ]
+              },
+              6
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "ip",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "ip"
+                },
+                0,
+                4
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "mac"
+                },
+                0,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        },
+        {
+          "arm": {
+            "timer": "ttl_timer",
+            "delay_ms": 60000
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.LEARN_PEND_FLUSH",
+      "from": "PENDING",
+      "to": "REACHABLE",
+      "event": "arp.learn",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "mac"
+                      }
+                    ]
+                  },
+                  6
+                ]
+              }
+            ]
+          },
+          {
+            "op": "not",
+            "args": [
+              {
+                "op": "le",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "var": "pending_pkt"
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "mac"
+                },
+                0,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "cancel": "retry_timer"
+        },
+        {
+          "arm": {
+            "timer": "ttl_timer",
+            "delay_ms": 60000
+          }
+        },
+        {
+          "emit": {
+            "message": "wire_tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "var": "mac"
+                              },
+                              0,
+                              6
+                            ]
+                          },
+                          {
+                            "op": "bytes_slice",
+                            "args": [
+                              {
+                                "var": "src_mac"
+                              },
+                              0,
+                              6
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "bytes": [
+                          8,
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "bytes_slice",
+                    "args": [
+                      {
+                        "var": "pending_pkt"
+                      },
+                      0,
+                      1500
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "pending_pkt",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.LEARN_PEND_EMPTY",
+      "from": "PENDING",
+      "to": "REACHABLE",
+      "event": "arp.learn",
+      "guard": {
+        "op": "and",
+        "args": [
+          {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "ip"
+                      }
+                    ]
+                  },
+                  4
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "op": "bytes_len",
+                    "args": [
+                      {
+                        "event": "mac"
+                      }
+                    ]
+                  },
+                  6
+                ]
+              }
+            ]
+          },
+          {
+            "op": "eq",
+            "args": [
+              {
+                "op": "bytes_len",
+                "args": [
+                  {
+                    "var": "pending_pkt"
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "mac"
+                },
+                0,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "cancel": "retry_timer"
+        },
+        {
+          "arm": {
+            "timer": "ttl_timer",
+            "delay_ms": 60000
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.LEARN_REFRESH",
+      "from": "REACHABLE",
+      "to": "REACHABLE",
+      "event": "arp.learn",
+      "guard": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "event": "mac"
+              }
+            ]
+          },
+          6
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "mac",
+            "value": {
+              "op": "bytes_slice",
+              "args": [
+                {
+                  "event": "mac"
+                },
+                0,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "ttl_timer",
+            "delay_ms": 60000
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RETRY",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "arp.retry_tmr",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "retries"
+              },
+              4
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "retries",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "retries"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "arm": {
+            "timer": "retry_timer",
+            "delay_ms": 250
+          }
+        },
+        {
+          "emit": {
+            "message": "wire_tx",
+            "fields": {
+              "frame": {
+                "op": "bytes_concat",
+                "args": [
+                  {
+                    "op": "bytes_concat",
+                    "args": [
+                      {
+                        "op": "bytes_concat",
+                        "args": [
+                          {
+                            "op": "bytes_concat",
+                            "args": [
+                              {
+                                "op": "bytes_concat",
+                                "args": [
+                                  {
+                                    "op": "bytes_concat",
+                                    "args": [
+                                      {
+                                        "op": "bytes_concat",
+                                        "args": [
+                                          {
+                                            "op": "bytes_concat",
+                                            "args": [
+                                              {
+                                                "bytes": [
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255
+                                                ]
+                                              },
+                                              {
+                                                "op": "bytes_slice",
+                                                "args": [
+                                                  {
+                                                    "var": "src_mac"
+                                                  },
+                                                  0,
+                                                  6
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "bytes": [
+                                              8,
+                                              6,
+                                              0,
+                                              1,
+                                              8,
+                                              0,
+                                              6,
+                                              4
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "op": "bytes_pack16be_mod",
+                                        "args": [
+                                          1
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "bytes_slice",
+                                    "args": [
+                                      {
+                                        "var": "src_mac"
+                                      },
+                                      0,
+                                      6
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "bytes_slice",
+                                "args": [
+                                  {
+                                    "var": "src_ip"
+                                  },
+                                  0,
+                                  4
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "bytes": [
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "bytes_slice",
+                        "args": [
+                          {
+                            "var": "ip"
+                          },
+                          0,
+                          4
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "bytes": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RETRY_FAIL",
+      "from": "PENDING",
+      "to": "FREE",
+      "event": "arp.retry_tmr",
+      "guard": {
+        "op": "ge",
+        "args": [
+          {
+            "var": "retries"
+          },
+          4
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "ip",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "pending_pkt",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RETRY_NOOP_FREE",
+      "from": "FREE",
+      "to": "FREE",
+      "event": "arp.retry_tmr",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RETRY_NOOP_REACH",
+      "from": "REACHABLE",
+      "to": "REACHABLE",
+      "event": "arp.retry_tmr",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.TTL_EXP",
+      "from": "REACHABLE",
+      "to": "FREE",
+      "event": "arp.ttl_tmr",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "ip",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "mac",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.TTL_NOOP_FREE",
+      "from": "FREE",
+      "to": "FREE",
+      "event": "arp.ttl_tmr",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.TTL_NOOP_PEND",
+      "from": "PENDING",
+      "to": "PENDING",
+      "event": "arp.ttl_tmr",
+      "guard": true,
+      "actions": [],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.CLR_PEND",
+      "from": "PENDING",
+      "to": "FREE",
+      "event": "arp.clear",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "retry_timer"
+        },
+        {
+          "set": {
+            "var": "ip",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "pending_pkt",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "retries",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.CLR_REACH",
+      "from": "REACHABLE",
+      "to": "FREE",
+      "event": "arp.clear",
+      "guard": true,
+      "actions": [
+        {
+          "cancel": "ttl_timer"
+        },
+        {
+          "set": {
+            "var": "ip",
+            "value": {
+              "bytes": []
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "mac",
+            "value": {
+              "bytes": []
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "L2.ARP"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "ARP.LEN_IP",
+      "assert": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "var": "ip"
+              }
+            ]
+          },
+          4
+        ]
+      },
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.LEN_MAC",
+      "assert": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "var": "mac"
+              }
+            ]
+          },
+          6
+        ]
+      },
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.LEN_PKT",
+      "assert": {
+        "op": "le",
+        "args": [
+          {
+            "op": "bytes_len",
+            "args": [
+              {
+                "var": "pending_pkt"
+              }
+            ]
+          },
+          1500
+        ]
+      },
+      "requirements": [
+        "L2.ARP"
+      ]
+    },
+    {
+      "id": "ARP.RETRIES",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "retries"
+              },
+              0
+            ]
+          },
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "retries"
+              },
+              4
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "L2.ARP"
+      ]
+    }
+  ]
+}

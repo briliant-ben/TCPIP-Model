@@ -1,0 +1,68 @@
+{
+  "schema": "tcpip-stack-formal-framework-v1",
+  "repository": "https://github.com/briliant-ben/Formal-Spec-Agent",
+  "commit": "a11c5e860d0e8552332caf42a0ba9f305bad889e",
+  "lean_toolchain": "leanprover/lean4:v4.35.0",
+  "modules": [
+    {
+      "id": "arch/sys_port",
+      "model": "model/arch/sys_port.json",
+      "manifest": "formal/stack/arch/sys_port/manifest.json",
+      "proof_manifest_sha256": "01c2bac60cd5582a74a221f297201f85b399d0b02223b0727ec83bdf0140d35c"
+    },
+    {
+      "id": "arch/frame_pool",
+      "model": "model/arch/frame_pool.json",
+      "manifest": "formal/stack/arch/frame_pool/manifest.json",
+      "proof_manifest_sha256": "cf19411b4b4d631bf57ebdaa97c716303b360adfc44d24f4ad0ca7ab9c2f091e"
+    },
+    {
+      "id": "arch/stack_actor",
+      "model": "model/arch/stack_actor.json",
+      "manifest": "formal/stack/arch/stack_actor/manifest.json",
+      "proof_manifest_sha256": "e6c4dd7cd54875d722fd531dd05921e8e3d719abe46a02a31f18b9cf625f369c"
+    },
+    {
+      "id": "stack/arp_neighbor",
+      "model": "model/stack/arp_neighbor.json",
+      "manifest": "formal/stack/stack/arp_neighbor/manifest.json",
+      "proof_manifest_sha256": "c5c253320186528c1b3175052aea36531cd1b27198c57cf8784d544374298222"
+    },
+    {
+      "id": "stack/ipv4_reass",
+      "model": "model/stack/ipv4_reass.json",
+      "manifest": "formal/stack/stack/ipv4_reass/manifest.json",
+      "proof_manifest_sha256": "021d4e49380feb0fbd57c20518105fd880e8c3a82245234853fca21a50bf4914"
+    },
+    {
+      "id": "stack/eth_ipv4_icmp",
+      "model": "model/stack/eth_ipv4_icmp.json",
+      "manifest": "formal/stack/stack/eth_ipv4_icmp/manifest.json",
+      "proof_manifest_sha256": "1e2f191acec91140953c294c61e9157c572d05aa0ab058bfefe941b34c20949f"
+    },
+    {
+      "id": "stack/udp_endpoint",
+      "model": "model/stack/udp_endpoint.json",
+      "manifest": "formal/stack/stack/udp_endpoint/manifest.json",
+      "proof_manifest_sha256": "8c7388bf944de8d223ed71e2dec1ccc8ca85d3c3128def7af36eebb035772a44"
+    },
+    {
+      "id": "stack/tcp_connection",
+      "model": "model/stack/tcp_connection.json",
+      "manifest": "formal/stack/stack/tcp_connection/manifest.json",
+      "proof_manifest_sha256": "ac080c84b03fad7a4904ca86f14b5a3a3b40d5ec89417a9882b0046f6b71d354"
+    },
+    {
+      "id": "stack/dhcpv4_client",
+      "model": "model/stack/dhcpv4_client.json",
+      "manifest": "formal/stack/stack/dhcpv4_client/manifest.json",
+      "proof_manifest_sha256": "d1a0799776d09c0ee6cf039bd8a503cf2ec18bc8668adea454715b21a088fbcf"
+    },
+    {
+      "id": "stack/dns_resolver",
+      "model": "model/stack/dns_resolver.json",
+      "manifest": "formal/stack/stack/dns_resolver/manifest.json",
+      "proof_manifest_sha256": "3ad7d3e9c403b9758191ea3c6d2077780d7f3b5cecf6016b156029026bb33ed1"
+    }
+  ]
+}

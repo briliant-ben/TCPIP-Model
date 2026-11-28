@@ -1,0 +1,233 @@
+{
+  "ir_version": "0.6",
+  "semantics": "flat-efsm-atomic-ordered-v1",
+  "protocol": "arch-frame-pool",
+  "scope": {
+    "terminal_states": [],
+    "excluded": [
+      "malloc/free"
+    ]
+  },
+  "states": [
+    "ACTIVE"
+  ],
+  "initial_state": "ACTIVE",
+  "requirements": {
+    "ARCH.POOL": {
+      "source": "spec/arch/frame-pool.md",
+      "interpretation": "Fixed frame pool accounting"
+    }
+  },
+  "variables": {
+    "free_slots": {
+      "type": "int",
+      "initial": 128
+    },
+    "used_slots": {
+      "type": "int",
+      "initial": 0
+    }
+  },
+  "events": {
+    "pool.alloc": {
+      "origin": "application",
+      "fields": {}
+    },
+    "pool.free": {
+      "origin": "application",
+      "fields": {}
+    },
+    "pool.reset": {
+      "origin": "application",
+      "fields": {}
+    }
+  },
+  "messages": {},
+  "timers": {},
+  "transitions": [
+    {
+      "id": "FP.ALLOC",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "pool.alloc",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "free_slots"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "free_slots",
+            "value": {
+              "op": "sub",
+              "args": [
+                {
+                  "var": "free_slots"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "used_slots",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "used_slots"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.POOL"
+      ]
+    },
+    {
+      "id": "FP.FREE",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "pool.free",
+      "guard": {
+        "op": "not",
+        "args": [
+          {
+            "op": "le",
+            "args": [
+              {
+                "var": "used_slots"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "set": {
+            "var": "free_slots",
+            "value": {
+              "op": "add",
+              "args": [
+                {
+                  "var": "free_slots"
+                },
+                1
+              ]
+            }
+          }
+        },
+        {
+          "set": {
+            "var": "used_slots",
+            "value": {
+              "op": "sub",
+              "args": [
+                {
+                  "var": "used_slots"
+                },
+                1
+              ]
+            }
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.POOL"
+      ]
+    },
+    {
+      "id": "FP.RESET",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "event": "pool.reset",
+      "guard": true,
+      "actions": [
+        {
+          "set": {
+            "var": "free_slots",
+            "value": 128
+          }
+        },
+        {
+          "set": {
+            "var": "used_slots",
+            "value": 0
+          }
+        }
+      ],
+      "requirements": [
+        "ARCH.POOL"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "FP.CONSERVATION",
+      "assert": {
+        "op": "eq",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "var": "free_slots"
+              },
+              {
+                "var": "used_slots"
+              }
+            ]
+          },
+          128
+        ]
+      },
+      "requirements": [
+        "ARCH.POOL"
+      ]
+    },
+    {
+      "id": "FP.BOUNDS",
+      "assert": {
+        "op": "and",
+        "args": [
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "free_slots"
+              },
+              0
+            ]
+          },
+          {
+            "op": "ge",
+            "args": [
+              {
+                "var": "used_slots"
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "requirements": [
+        "ARCH.POOL"
+      ]
+    }
+  ]
+}
